@@ -289,7 +289,7 @@
 
 				return(true);
 			}
-			elseif(is_object($query) && $query->num_rows)
+			elseif(is_object($query))
 			{
 				$this->queries[] = $sql;
 
@@ -369,7 +369,7 @@
 		{
 			if(!is_object($this->result))
 			{
-				return(false);
+				return($this->cached_num_rows);
 			}
 
 			return((integer) $this->result->num_rows);

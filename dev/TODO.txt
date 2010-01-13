@@ -1,0 +1,35 @@
+
+
+	Tuxxedo Engine RC8 dev
+	----------------------
+
+	Internationalization support
+	- Implement the Tuxxedo_Internationalization class kinda like how Tuxxedo_Style was implemented
+	- Implement internationalization /dev/tools
+	Fix database drivers to use the new "cached" number of rows to allow resultsets to be instanciated without any rows in a buffer
+
+	Tuxxedo Engine XXX
+	------------------
+
+	Implement an SQL exception, Tuxxedo_SQL_Exception
+	Implement ENGINE_LITE mode
+	Replace EG with a Tuxxedo::$globals magic reference
+
+	Tuxxedo Engine XXX
+	------------------
+
+	Implement autoloader + static/dynamic class router
+	Implement ArrayAccess for Tuxxedo_Internationalization & Tuxxedo_Style
+	Consider adding an optional reference parameter to the DAL query method for recieving the number of matched rows even if it returns false
+	Remove Tuxxedo_Style::getStyleInfo() & Tuxxedo_Internationlization::getLanguageInfo()
+
+
+	$language->getPhraseGroup($title);
+	$language->getPhraseGroups();
+	$language->cache(Array $phrasegroups = $language->getPhraseGroups());
+
+	$phrasegroup = new Tuxxedo_Internationlization_Phrasegroup(Tuxxedo_Internationlization $internationalization);
+	$phrasegroup->getPhrase($title);
+	$phrasegroup->getPhrases();
+
+	format_phrase($translation, ...);

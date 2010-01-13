@@ -63,7 +63,7 @@
 		 *
 		 * @var		string
 		 */
-		const VERSION_STRING		= '1.0.0 Release Candidate 7 (dev)';
+		const VERSION_STRING		= '1.0.0 Release Candidate 8 (dev)';
 
 		/**
 		 * For if we're in debug mode, this must be uncommented in order to 
@@ -987,7 +987,7 @@
 		 */
 		public function getStyleinfo($varname = NULL)
 		{
-			if(is_scalar($varname) && array_key_exists($varname, $this->styleinfo))
+			if(isset($this->styleinfo[$varname]))
 			{
 				return($this->styleinfo[$varname]);
 			}
@@ -1071,6 +1071,157 @@
 			}
 
 			return($this->templates[$template]);
+		}
+	}
+
+	/**
+	 * Internationalization Interface
+	 *
+	 * This class deals with basic routines for internationalization 
+	 * support and its relative components.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_Internationalization
+	{
+		/**
+		 * Private instance to the Tuxxedo registry
+		 *
+		 * @var		Tuxxedo
+		 */
+		protected $tuxxedo;
+
+		/**
+		 * Holds the current language data
+		 *
+		 * @var		array
+		 */
+		protected $languageinfo	= Array();
+
+		/**
+		 * Holds the current loaded phrases
+		 *
+		 * @var		array
+		 */
+		protected $phrases	= Array();
+
+
+		/**
+		 * Constructs a new internationalization object
+		 *
+		 * @param	array			The language data to use
+		 */
+		public function __construct(Array $languageinfo)
+		{
+			$this->tuxxedo		= Tuxxedo::init();
+			$this->languageinfo 	= $languageinfo;
+		}
+
+		/**
+		 * Magic method called when creating a new instance of the 
+		 * object from the registry
+		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	array			The configuration array
+		 * @param	array			The options array
+		 * @return	object			Object instance
+		 *
+		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if an invalid (or not cached) language id was used
+		 */
+		public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
+		{
+			$languagedata 	= $tuxxedo->cache->languages;
+			$languageid	= ($options ? (!empty($tuxxedo->userinfo->id) && $tuxxedo->userinfo->language_id != $options['language_id'] ? $tuxxedo->userinfo->language_id : $options['language_id']) : 0);
+
+			if($languageid && isset($languagedata[$languageid]))
+			{
+				return(new self($languagedata[$languageid]));
+			}
+
+			throw new Tuxxedo_Basic_Exception('Invalid language id, try rebuild the datastore or use the repair tools');
+		}
+
+		/**
+		 * Gets the language information
+		 *
+		 * @param	string			If set, then a the language info value is returned
+		 * @return	array			Returns an array with information about the current language
+		 */
+		public function getLanguageinfo($varname = NULL)
+		{
+			if(isset($this->languageinfo[$varname]))
+			{
+				return($this->languageinfo[$varname]);
+			}
+
+			return($this->languageinfo);
+		}
+
+		/**
+		 * Caches a phrase group, trying to cache an already loaded 
+		 * phrase group will recache it
+		 *
+		 * @param	array			A list of phrase groups to load
+		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @return	boolean			Returns true on success otherwise false
+		 *
+		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 */
+		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
+		{
+			if(!sizeof($phrasegroups))
+			{
+				return(false);
+			}
+
+			$result = $this->tuxxedo->db->query('
+								SELECT 
+									`title`, 
+									`translation`, 
+									`phrasegroup`
+								FROM 
+									`' . TUXXEDO_PREFIX . 'phrases` 
+								WHERE 
+										`languageid` = %d 
+									AND 
+										`phrasegroup` IN (
+											\'%s\'
+										);', 
+								$this->languageinfo['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $phrasegroups)));
+
+			if($result === false)
+			{
+				if(!is_null($error_buffer))
+				{
+					$error_buffer = $phrasegroups;
+				}
+
+				return(false);
+			}
+
+			$loaded = Array();
+
+			while($row = $result->fetchObject())
+			{
+				if(!isset($this->phrases[$row->phrasegroup]))
+				{
+					$this->phrases[$row->phrasegroup] = Array();
+				}
+
+				$loaded[]					= $row->phrasegroup;
+				$this->phrases[$row->phrasegroup][$row->title] 	= $row->translation;
+			}
+
+			if(!is_null($error_buffer) && ($diff = array_diff($phrasegroups, $loaded)) && sizeof($diff))
+			{
+				$error_buffer = $diff;
+
+				return(false);
+			}
+
+			return(true);
 		}
 	}
 

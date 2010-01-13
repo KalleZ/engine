@@ -202,7 +202,7 @@
 	 * Precache elements from datastore
 	 */
 	$cache_buffer		= Array();
-	$default_precache 	= Array('options', 'styleinfo', 'usergroups');
+	$default_precache 	= Array('options', 'styleinfo', 'usergroups', 'languages', 'phrasegroups');
 
 	$cache->cache((!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
 
@@ -241,10 +241,12 @@
 	unset($tz);
 
 	/**
-	 * We can only load the styling API once the datastore
-	 * elements are loaded
+	 * We can only load the styling & internationalization APIs 
+	 * once the datastore elements are loaded and user sessions 
+	 * have been instanciated
 	 */
 	$tuxxedo->register('style', 'Tuxxedo_Style');
+	$tuxxedo->register('language', 'Tuxxedo_Internationalization');
 
 	/**
 	 * Precache templates
@@ -267,6 +269,19 @@
 	}
 
 	$style->cache((!isset($templates) ? $default_templates : array_merge($default_templates, (array) $templates)), $cache_buffer) or tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);
+
+	unset($cache_buffer);
+
+	/**
+	 * Precache phrase groups
+	 */
+	$cache_buffer		= Array();
+	$default_phrasegroups	= Array(
+					/* Common groups */
+					'global'
+					);
+
+	$language->cache((!isset($phrasegroups) ? $default_phrasegroups : array_merge($default_phrasegroups, (array) $phrasegroups)), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase groups \'%s\'', $cache_buffer);
 
 	unset($cache_buffer);
 
