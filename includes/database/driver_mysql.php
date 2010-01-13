@@ -360,7 +360,7 @@
 		{
 			if(!is_resource($this->result))
 			{
-				return($this->cached_num_rows);
+				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
 			}
 
 			return((integer) mysql_num_rows($this->result));
