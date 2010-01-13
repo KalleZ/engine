@@ -319,15 +319,13 @@
 
 			EG('error_reporting', true);
 
-			/* TODO: FIX p->rowCount() / p->columnCount() to detect correct behaviour */
-
-			if($query !== false && !$query->columnCount())
+			if($query !== false && (!$query->columnCount() && $query->num_rows))
 			{
 				$this->queries[] = $sql;
 
 				return(true);
 			}
-			elseif($query !== false)
+			elseif($query instanceof PDOStatement && $query->columnCount())
 			{
 				$this->queries[] = $sql;
 
@@ -348,8 +346,6 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
-	 *
-	 * @todo		Implement support for cached_num_rows here
 	 */
 	final class Tuxxedo_Database_Driver_PDO_Result extends Tuxxedo_Database_Result
 	{
@@ -359,13 +355,6 @@
 		 * @var		PDOStatement
 		 */
 		protected $result;
-
-		/**
-		 * Number of rows in this result
-		 *
-		 * @var		integer
-		 */
-		protected $num_rows;
 
 
 		/**
@@ -383,13 +372,13 @@
 				throw new Tuxxedo_Basic_Exception('Passed result resource is not a valid result');
 			}
 
-			$this->instance	= $instance;
-			$this->result	= $result;
-			$this->num_rows = $result->columnCount();
+			$this->instance		= $instance;
+			$this->result		= $result;
+			$this->cached_num_rows 	= $result->columnCount();
 
-			if(!$this->num_rows)
+			if(!$this->cached_num_rows)
 			{
-				throw new Tuxxedo_Basic_Exception('A result must have atleast one row before it can be initialized');
+				$this->result = NULL;
 			}
 		}
 
@@ -429,10 +418,10 @@
 		{
 			if(!is_object($this->result))
 			{
-				return(false);
+				return($this->cached_num_rows);
 			}
 
-			return((integer) $this->num_rows);
+			return((integer) $this->result->rowCount());
 		}
 
 		/**

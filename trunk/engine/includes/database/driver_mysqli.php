@@ -369,7 +369,7 @@
 		{
 			if(!is_object($this->result))
 			{
-				return($this->cached_num_rows);
+				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
 			}
 
 			return((integer) $this->result->num_rows);

@@ -459,11 +459,12 @@
 			}
 
 			$this->instance		= $instance;
+			$this->result 		= $result;
 			$this->cached_num_rows	= $this->getNumRows();
 
-			if($this->cached_num_rows)
+			if(!$this->cached_num_rows)
 			{
-				$this->result = $result;
+				$this->result = NULL;
 			}
 		}
 

@@ -1191,7 +1191,11 @@
 										);', 
 								$this->languageinfo['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $phrasegroups)));
 
-			if($result === false)
+			if($result && !$result->getNumRows())
+			{
+				return(true);
+			}
+			elseif($result === false)
 			{
 				if(!is_null($error_buffer))
 				{
