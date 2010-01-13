@@ -25,12 +25,6 @@
 	Remove Tuxxedo_Style::getStyleInfo() & Tuxxedo_Internationlization::getLanguageInfo()
 
 
-	$language->getPhraseGroup($title);
-	$language->getPhraseGroups();
-	$language->cache(Array $phrasegroups = $language->getPhraseGroups());
-
-	$phrasegroup = new Tuxxedo_Internationlization_Phrasegroup(Tuxxedo_Internationlization $internationalization);
-	$phrasegroup->getPhrase($title);
-	$phrasegroup->getPhrases();
-
-	format_phrase($translation, ...);
+	$intl->getPhraseGroup($title, $object = true);
+	$intl->getPhraseGroups();
+	$intl->find($phrase, $phrasegroup = NULL);
