@@ -1227,6 +1227,85 @@
 
 			return(true);
 		}
+
+		public function getPhrasegroup($phrasegroup, $object = true)
+		{
+		}
+
+		public function getPhrasegroups()
+		{
+		}
+
+		public function find($phrase, $phrasegroup = NULL)
+		{
+		}
+	}
+
+	/**
+	 * Internationalization phrasegroup class
+	 *
+	 * Contains basic routines for working with single phrasegroups.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_Internationalization_Phrasegroup
+	{
+		/**
+		 * Holds the list of loaded phrases for 
+		 * this phrasegroup
+		 *
+		 * @var		array
+		 */
+		protected $phrases	= Array();
+
+
+		/**
+		 * Constructs a new phrasegroup object
+		 *
+		 * @param	Tuxxedo_Internationalization	Reference to the internationalization object to use for this phrasegroup
+		 * @param	string				Name of the phrasegroup to instanciate
+		 *
+		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the phrasegroup isnt cached in the internationalization object
+		 */
+		public function __construct(Tuxxedo_Internationalization $intl, $phrasegroup)
+		{
+			$phrases = $intl->getPhrasegroup($phrasegroup, false);
+
+			if($phrases === false)
+			{
+				throw Tuxxedo_Basic_Exception('Unable to instanciate phrasegroup. Phrasegroup \'%s\' is not loaded into cache', $phrasegroup);
+			}
+
+			$this->phrases = $phrases;
+		}
+
+		/**
+		 * Gets a specific phrase from this phrasegroup
+		 *
+		 * @param	string			Title of the phrase to get
+		 * @return	string			Returns the phrase translation, and false on error
+		 */
+		public function getPhrase($title)
+		{
+			if(isset($this->phrases[$title]))
+			{
+				return($this->phrases[$title]);
+			}
+
+			return(false);
+		}
+
+		/**
+		 * Gets all loaded phrases from this phrasegroup
+		 * 
+		 * @return	array			Returns all loaded phrases for this phrasegroup
+		 */
+		public function getPhrases()
+		{
+			return($this->phrases);
+		}
 	}
 
 	/**

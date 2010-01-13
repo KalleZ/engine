@@ -246,7 +246,7 @@
 	 * have been instanciated
 	 */
 	$tuxxedo->register('style', 'Tuxxedo_Style');
-	$tuxxedo->register('language', 'Tuxxedo_Internationalization');
+	$tuxxedo->register('intl', 'Tuxxedo_Internationalization');
 
 	/**
 	 * Precache templates
@@ -281,7 +281,7 @@
 					'global'
 					);
 
-	$language->cache((!isset($phrasegroups) ? $default_phrasegroups : array_merge($default_phrasegroups, (array) $phrasegroups)), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase groups \'%s\'', $cache_buffer);
+	$intl->cache((!isset($phrasegroups) ? $default_phrasegroups : array_merge($default_phrasegroups, (array) $phrasegroups)), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase groups \'%s\'', $cache_buffer);
 
 	unset($cache_buffer);
 
