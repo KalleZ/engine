@@ -435,6 +435,13 @@
 		 */
 		protected $result;
 
+		/**
+		 * Cached number of rows
+		 *
+		 * @var		integer
+		 */
+		private $cached_num_rows	= 0;
+
 
 		/**
 		 * Constructs a new result object
@@ -451,12 +458,12 @@
 				throw new Tuxxedo_Basic_Exception('Passed result resource is not a valid result');
 			}
 
-			$this->instance	= $instance;
-			$this->result	= $result;
+			$this->instance		= $instance;
+			$this->cached_num_rows	= $this->getNumRows();
 
-			if(!$this->getNumRows())
+			if($this->cached_num_rows)
 			{
-				throw new Tuxxedo_Basic_Exception('A result must have atleast one row before it can be initialized');
+				$this->result = $result;
 			}
 		}
 

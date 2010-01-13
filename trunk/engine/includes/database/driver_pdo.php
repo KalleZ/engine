@@ -319,6 +319,8 @@
 
 			EG('error_reporting', true);
 
+			/* TODO: FIX p->rowCount() / p->columnCount() to detect correct behaviour */
+
 			if($query !== false && !$query->columnCount())
 			{
 				$this->queries[] = $sql;
@@ -346,6 +348,8 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 *
+	 * @todo		Implement support for cached_num_rows here
 	 */
 	final class Tuxxedo_Database_Driver_PDO_Result extends Tuxxedo_Database_Result
 	{

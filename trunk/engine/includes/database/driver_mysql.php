@@ -280,7 +280,7 @@
 
 				return(true);
 			}
-			elseif(is_resource($query) && mysql_num_rows($query))
+			elseif(is_resource($query))
 			{
 				$this->queries[] = $sql;
 
@@ -360,7 +360,7 @@
 		{
 			if(!is_resource($this->result))
 			{
-				return(false);
+				return($this->cached_num_rows);
 			}
 
 			return((integer) mysql_num_rows($this->result));

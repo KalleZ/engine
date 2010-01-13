@@ -2,7 +2,9 @@
 	require('./bootstrap.php');
 
 	$index	= Array(
+			'languages'	=> 'id', 
 			'options'	=> 'option', 
+			'phrasegroups'	=> 'id', 
 			'styleinfo'	=> 'id', 
 			'usergroups'	=> 'id', 
 			'timezones'	=> NULL
@@ -70,7 +72,9 @@
 		echo('<ul>');
 
 		$tables = Array(
+				'languages'	=> 'languages', 
 				'options'	=> 'options', 
+				'phrasegroups'	=> 'phrasegroups', 
 				'styleinfo'	=> 'styles', 
 				'usergroups'	=> 'usergroups', 
 				'timezones'	=> NULL
@@ -84,7 +88,9 @@
 
 			switch($element)
 			{
+				case('languages'):
 				case('options'):
+				case('phrasegroups'):
 				case('styleinfo'):
 				case('usergroups'):
 				{
@@ -105,6 +111,12 @@
 									$datastore[$s['option']] = convert_to_option_type(strtolower($s['type']{0}), $s['value']);
 								}
 								break;
+								case('phrasegroups'):
+								{
+									$datastore[$s['id']][] = $s['title'];
+								}
+								break;
+								case('languages'):
 								case('styleinfo'):
 								case('usergroups'):
 								{
