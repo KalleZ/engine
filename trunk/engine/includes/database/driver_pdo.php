@@ -78,8 +78,6 @@
 				return(true);
 			}
 
-			EG('error_reporting', false);
-
 			$unix_socket = '';
 
 			switch(strtolower($this->configuration['subdriver']))
@@ -121,11 +119,8 @@
 				throw new Tuxxedo_Basic_Exception($format, $e->getCode(), $e->getMessage());
 			}
 
-			$this->persistent = $link->getAttribute(PDO::ATTR_PERSISTENT);
-
-			EG('error_reporting', true);
-
-			$this->link = $link;
+			$this->persistent 	= $link->getAttribute(PDO::ATTR_PERSISTENT);
+			$this->link 		= $link;
 		}
 
 		/**
@@ -299,8 +294,6 @@
 				$sql 		= call_user_func_array('sprintf', $args);
 			}
 
-			EG('error_reporting', false);
-
 			try
 			{
 				$query = $this->link->query($sql);
@@ -316,8 +309,6 @@
 
 				throw new Tuxxedo_Basic_Exception($format, $e->getCode(), $e->getMessage());
 			}
-
-			EG('error_reporting', true);
 
 			if($query !== false && (!$query->columnCount() && $query->num_rows))
 			{

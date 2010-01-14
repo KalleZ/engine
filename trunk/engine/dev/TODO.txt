@@ -5,7 +5,6 @@
 
 	Implement an SQL exception, Tuxxedo_SQL_Exception
 	Implement ENGINE_LITE mode
-	Replace EG with a Tuxxedo::$globals magic reference
 	Update user manager to work with the newly added user fields
 
 	Tuxxedo Engine XXX
@@ -18,4 +17,5 @@
 	 - Language
 	 - Phrasegroup
 	 - Phrase
+	Fix SQL queries to be non-mysql compatible
 	Remove Tuxxedo_Style::getStyleInfo() & Tuxxedo_Internationlization::getLanguageInfo()

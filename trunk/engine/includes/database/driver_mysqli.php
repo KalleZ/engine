@@ -77,7 +77,7 @@
 				return(true);
 			}
 
-			EG('error_reporting', false);
+			Tuxxedo::globals('error_reporting', false);
 
 			$hostname 		= $this->configuration['hostname'];
 			$this->persistent 	= false;
@@ -92,7 +92,7 @@
 			$link->options(MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
 			$link->real_connect($hostname, $this->configuration['username'], $this->configuration['password'], $this->configuration['database'], (($port = $this->configuration['port']) ? $port : 3306), (($unix_socket = $this->configuration['socket']) ? $unix_socket : ''), ($this->configuration['ssl'] ? MYSQLI_CLIENT_SSL : 0));
 
-			EG('error_reporting', true);
+			Tuxxedo::globals('error_reporting', true);
 
 			if($link->connect_errno)
 			{
@@ -279,9 +279,9 @@
 				$sql 		= call_user_func_array('sprintf', $args);
 			}
 
-			EG('error_reporting', false);
+			Tuxxedo::globals('error_reporting', false);
 			$query = $this->link->query($sql);
-			EG('error_reporting', true);
+			Tuxxedo::globals('error_reporting', true);
 
 			if($query === true)
 			{

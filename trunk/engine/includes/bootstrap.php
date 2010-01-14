@@ -120,9 +120,6 @@
 	 */
 	error_reporting(-1);
 
-	EG('error_reporting', 	true);
-	EG('errors', 		new ArrayObject);
-
 	/**
 	 * Set default timezone
 	 */
@@ -190,6 +187,12 @@
 	 * Construct the main registry
 	 */
 	$tuxxedo = Tuxxedo::init($configuration);
+
+	/**
+	 * Set globals
+	 */
+	Tuxxedo::globals('error_reporting', 	true);
+	Tuxxedo::globals('errors', 		new ArrayObject);
 
 	/**
 	 * Register the default instances

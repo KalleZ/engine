@@ -24,8 +24,8 @@
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
 	define('TUXXEDO_PHP_VERSION', 	PHP_VERSION_ID);
 
-	EG('error_reporting', 	true);
-	EG('errors', 		new ArrayObject);
+	Tuxxedo::globals('error_reporting', 	true);
+	Tuxxedo::globals('errors', 		new ArrayObject);
 
 	$tuxxedo = Tuxxedo::init($configuration);
 
