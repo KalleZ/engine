@@ -97,6 +97,14 @@
 
 
 		/**
+		 * Holds the list of global variables across 
+		 * Engine
+		 *
+		 * @var		array
+		 */
+		private $globals		= Array();
+
+		/**
 		 * Disable the ability to construct the object
 		 */
 		private function __construct()
@@ -249,6 +257,27 @@
 			}
 
 			return(false);
+		}
+
+		/**
+		 * Sets or gets a new global
+		 *
+		 * @param	string			The name of the variable to set
+		 * @param	mixed			A value, this can be of any type, this is only used if adding or editing a variable
+		 * @return	mixed			Returns the value of variable on both set and get, and boolean false if trying to get an undefined variable
+		 */
+		public static function globals($name, $value = NULL)
+		{
+			if(func_num_args() > 1)
+			{
+				self::$instance->globals[$name] = $value;
+			}
+			elseif(!array_key_exists($name, self::$instance->globals))
+			{
+				return(false);
+			}
+
+			return(self::$instance->globals[$name]);
 		}
 	}
 

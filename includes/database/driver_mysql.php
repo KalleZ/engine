@@ -82,11 +82,11 @@
 				$hostname .= ':' . $port;
 			}
 
-			EG('error_reporting', false);
+			Tuxxedo::globals('error_reporting', false);
 
 			if(($link = $connect_function($hostname, $this->configuration['username'], $this->configuration['password'], false, ($this->configuration['ssl'] ? MYSQL_CLIENT_SSL : 0))) === false || !mysql_select_db($this->configuration['database'], $link))
 			{
-				EG('error_reporting', true);
+				Tuxxedo::globals('error_reporting', true);
 
 				$format = 'Database error: failed to connect database';
 
@@ -98,7 +98,7 @@
 				throw new Tuxxedo_Basic_Exception($format, mysql_errno(), mysql_error());
 			}
 
-			EG('error_reporting', true);
+			Tuxxedo::globals('error_reporting', true);
 
 			$this->link = $link;
 		}
@@ -270,9 +270,9 @@
 				$sql 		= call_user_func_array('sprintf', $args);
 			}
 
-			EG('error_reporting', false);
+			Tuxxedo::globals('error_reporting', false);
 			$query = mysql_query($sql);
-			EG('error_reporting', true);
+			Tuxxedo::globals('error_reporting', true);
 
 			if($query === true)
 			{

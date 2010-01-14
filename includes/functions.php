@@ -47,9 +47,9 @@
 			tuxxedo_gui_error($e->getMessage());
 		}
 
-		if(EG('error_reporting'))
+		if(Tuxxedo::globals('error_reporting'))
 		{
-			EG('errors')->append($e->getMessage());
+			Tuxxedo::globals('errors')->append($e->getMessage());
 		}
 	}
 
@@ -71,7 +71,7 @@
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
-		if(!EG('error_reporting') || !(error_reporting() & $level))
+		if(!Tuxxedo::globals('error_reporting') || !(error_reporting() & $level))
 		{
 			return;
 		}
@@ -106,7 +106,7 @@
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
 
-		EG('errors')->append($message);
+		Tuxxedo::globals('errors')->append($message);
 	}
 
 	/**
@@ -129,7 +129,7 @@
 		$buffer 	= ob_get_clean();
 		$exception	= ($e instanceof Exception);
 		$message	= ($exception ? $e->getMessage() : (string) $e);
-		$errors 	= EG('errors');
+		$errors 	= Tuxxedo::globals('errors');
 
 		if(empty($message))
 		{
@@ -460,7 +460,7 @@
 	 */
 	function tuxxedo_shutdown()
 	{
-		$errors = EG('errors');
+		$errors = Tuxxedo::globals('errors');
 
 		if(!TUXXEDO_DEBUG || (!$errors || !$errors->count()))
 		{
@@ -476,7 +476,7 @@
 			$buffer .= $error . '<br />';
 		}
 
-		EG('errors', new ArrayObject);
+		Tuxxedo::globals('errors', new ArrayObject);
 
 		if(!$tuxxedo->style)
 		{
@@ -497,48 +497,6 @@
 
 			echo($output);
 		}
-	}
-
-	/**
-	 * Set or get global defined variables
-	 *
-	 * If NULL is passed as value for the variable name, the 
-	 * all the stored variables are returned:
-	 *
-	 * <code>
-	 * EG('greeting', 'Hello Kalle');
-	 *
-	 * $globals = EG(NULL);
-	 * echo $globals['greeting'];
-	 * </code>
-	 *
-	 * @param	string			The name of the variable to set
-	 * @param	mixed			A value, this can be of any type, this is only used if adding or editing a variable
-	 * @return	mixed			Returns the value of variable on both set and get, and boolean false if trying to get an undefined variable
-	 */
-	function EG($name, $value = NULL)
-	{
-		static $variables;
-
-		if(!$variables)
-		{
-			$variables = Array();
-		}
-
-		if($name === NULL)
-		{
-			return($variables);
-		}
-		elseif(func_num_args() > 1)
-		{
-			$variables[$name] = $value;
-		}
-		elseif(!array_key_exists($name, $variables))
-		{
-			return(false);
-		}
-
-		return($variables[$name]);
 	}
 
 	/**
