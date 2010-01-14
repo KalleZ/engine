@@ -1,11 +1,5 @@
 
 
-	Tuxxedo Engine RC8 dev
-	----------------------
-
-	Internationalization support
-	- Implement the Tuxxedo_Internationalization class kinda like how Tuxxedo_Style was implemented
-
 	Tuxxedo Engine XXX
 	------------------
 
@@ -21,10 +15,7 @@
 	Implement ArrayAccess for Tuxxedo_Internationalization & Tuxxedo_Style
 	Implement internationalization /dev/tools
 	Implement internationalization datamanagers
-	Consider adding an optional reference parameter to the DAL query method for recieving the number of matched rows even if it returns false
+	 - Language
+	 - Phrasegroup
+	 - Phrase
 	Remove Tuxxedo_Style::getStyleInfo() & Tuxxedo_Internationlization::getLanguageInfo()
-
-
-	$intl->getPhraseGroup($title, $object = true);
-	$intl->getPhraseGroups();
-	$intl->find($phrase, $phrasegroup = NULL);

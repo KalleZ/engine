@@ -1228,16 +1228,78 @@
 			return(true);
 		}
 
+		/**
+		 * Gets all phrases from a specific phrasegroup
+		 *
+		 * @param	string			The phrasegroup to get
+		 * @param	boolean			Whether to return a new phrasegroup object or just an array
+		 * @return	mixed			Depending on the value of second parameter, an object or array is returned. False is returned on faliure
+		 */
 		public function getPhrasegroup($phrasegroup, $object = true)
 		{
+			if(!isset($this->phrases[$phrasegroup]))
+			{
+				return(false);
+			}
+
+			if($object)
+			{
+				return(new Tuxxedo_Internationalization_Phrasegroup($this, $phrasegroup));
+			}
+
+			return($this->phrases[$phrasegroup]);
 		}
 
+		/**
+		 * Gets all phrasegroups
+		 *
+		 * @return	array			Returns an array with all loaded phrasegroups, false is returned if no phrasegroups is loaded.
+		 */
 		public function getPhrasegroups()
 		{
+			if(!sizeof($this->phrases))
+			{
+				return(false);
+			}
+
+			return(array_keys($this->phrases));
 		}
 
+		/**
+		 * Finds a phrase
+		 *
+		 * @param	string			The phrase to find
+		 * @param	string			Optionally search in a specific phrasegroup, defaults to search in all
+		 * @return	string			Returns a phrases translation, false is returned on failure
+		 */
 		public function find($phrase, $phrasegroup = NULL)
 		{
+			if($phrasegroup)
+			{
+				if(!isset($this->phrases[$phrasegroup]))
+				{
+					return(false);
+				}
+
+				$search = array_search($this->phrases[$phrasegroup], $phrase);
+
+				if($search === false)
+				{
+					return(false);
+				}
+
+				return($this->phrases[$phrasegroup][$search]);
+			}
+
+			foreach($this->phrases as $phrasegroup => $phrases)
+			{
+				if(($search = array_search($phrases, $phrase)) !== false)
+				{
+					return($phrases[$search]);
+				}
+			}
+
+			return(false);
 		}
 	}
 
