@@ -63,7 +63,7 @@
 		 *
 		 * @var		string
 		 */
-		const VERSION_STRING		= '1.0.0 Release Candidate 8 (dev)';
+		const VERSION_STRING		= '1.0.0 Alpha 1 (dev)';
 
 		/**
 		 * For if we're in debug mode, this must be uncommented in order to 

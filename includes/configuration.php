@@ -46,7 +46,7 @@
 	 *
 	 * Drivers marked with (*) requires a sub driver to be defined
 	 */
-	'driver' 	=> 'mysql', 
+	'driver' 	=> 'mysqli', 
 
 	/**
 	 * Sub driver

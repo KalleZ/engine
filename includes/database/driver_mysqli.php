@@ -27,6 +27,14 @@
 	final class Tuxxedo_Database_Driver_MySQLi extends Tuxxedo_Database
 	{
 		/**
+		 * Driver name
+		 *
+		 * @var		string
+		 */
+		const DRIVER_NAME		= 'mysqli';
+
+
+		/**
 		 * Link pointer, this contains the internal link 
 		 * to the database from the driver
 		 *
@@ -297,14 +305,7 @@
 			}
 			elseif($this->link->errno)
 			{
-				$format = 'Database error: failed to execute query';
-
-				if(TUXXEDO_DEBUG)
-				{
-					$format = 'Failed to execute query: [%d] \'%s\' (SQLSTATE: %d)';
-				}
-
-				throw new Tuxxedo_Basic_Exception($format, $this->link->errno, $this->link->error, $this->link->sqlstate);
+				throw new Tuxxedo_SQL_Exception($this->link->error, $this->link->errno, $this->link->sqlstate);
 			}
 
 			return(false);

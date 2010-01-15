@@ -477,4 +477,50 @@
 			$this->free();
 		}
 	}
+
+	/**
+	 * SQL Exception
+	 *
+	 * Exception designed to carry error information from a failed 
+	 * query call.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_SQL_Exception extends Tuxxedo_Basic_Exception
+	{
+		/**
+		 * Current SQL state
+		 *
+		 * @var		string
+		 */
+		public $sqlstate;
+
+
+		/**
+		 * Constructs a new SQL exception
+		 *
+		 * @param	string			The error that occured
+		 * @param	integer			The associated error number for the error
+		 * @param	string			Optionally, an SQL state if the database driver supports it
+		 */
+		public function __construct($error, $errno, $sqlstate = NULL)
+		{
+			$this->message 		= $error;
+			$this->code		= (integer) $errno;
+			$this->sqlstate		= ($sqlstate ? $sqlstate : false);
+		}
+
+		/**
+		 * Gets the current SQL state if the underlaying database 
+		 * driver that threw this exception supports it.
+		 *
+		 * @return	string			Returns the SQL state if supported, otherwise false is returned
+		 */
+		public function getSQLState()
+		{
+			return($this->sqlstate);
+		}
+	}
 ?>
