@@ -29,6 +29,14 @@
 	final class Tuxxedo_Database_Driver_MySQL extends Tuxxedo_Database
 	{
 		/**
+		 * Driver name
+		 *
+		 * @var		string
+		 */
+		const DRIVER_NAME		= 'mysql';
+
+
+		/**
 		 * Link pointer, this contains the internal link 
 		 * to the database from the driver
 		 *
@@ -288,14 +296,7 @@
 			}
 			elseif(!is_resource($query) && mysql_errno($this->link))
 			{
-				$format = 'Database error: failed to execute query';
-
-				if(TUXXEDO_DEBUG)
-				{
-					$format = 'Database error: Failed to execute query: [%d] \'%s\'';
-				}
-
-				throw new Tuxxedo_Basic_Exception($format, mysql_errno($this->link), mysql_error($this->link));
+				throw new Tuxxedo_SQL_Exception(mysql_error($this->link), mysql_errno($this->link));
 			}
 
 			return(false);

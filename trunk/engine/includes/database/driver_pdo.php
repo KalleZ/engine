@@ -28,6 +28,14 @@
 	final class Tuxxedo_Database_Driver_PDO extends Tuxxedo_Database
 	{
 		/**
+		 * Driver name
+		 *
+		 * @var		string
+		 */
+		const DRIVER_NAME		= 'pdo';
+
+
+		/**
 		 * Link pointer, this contains the internal link 
 		 * to the database from the driver
 		 *
@@ -300,14 +308,7 @@
 			}
 			catch(PDOException $e)
 			{
-				$format = 'Database error: failed to execute query';
-
-				if(TUXXEDO_DEBUG)
-				{
-					$format = 'Failed to execute query: [%d] \'%s\'';
-				}
-
-				throw new Tuxxedo_Basic_Exception($format, $e->getCode(), $e->getMessage());
+				throw new Tuxxedo_SQL_Exception($e->getMessage(), $e->getCode());
 			}
 
 			if($query !== false && (!$query->columnCount() && $query->num_rows))

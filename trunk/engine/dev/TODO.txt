@@ -1,21 +1,25 @@
 
 
-	Tuxxedo Engine XXX
-	------------------
+	Tuxxedo Engine Alpha 1
+	----------------------
 
-	Implement an SQL exception, Tuxxedo_SQL_Exception
-	Implement ENGINE_LITE mode
 	Update user manager to work with the newly added user fields
 
+	Tuxxedo Engine Alpha 2
+	----------------------
+	Implement ENGINE_LITE mode
+	Implement autoloader + static/dynamic class router
+
 	Tuxxedo Engine XXX
 	------------------
-
-	Implement autoloader + static/dynamic class router
 	Implement ArrayAccess for Tuxxedo_Internationalization & Tuxxedo_Style
+	Implement Engine hooks, for various points where its needed to hook into engine
 	Implement internationalization /dev/tools
 	Implement internationalization datamanagers
 	 - Language
 	 - Phrasegroup
 	 - Phrase
+	Add a new tool to show whether Engine's PHP requirements have been forfilled
 	Fix SQL queries to be non-mysql compatible
+	Fix guest sessions not being logged?
 	Remove Tuxxedo_Style::getStyleInfo() & Tuxxedo_Internationlization::getLanguageInfo()
