@@ -1504,7 +1504,7 @@
 											' . TUXXEDO_PREFIX . 'users.id = %d
 										LIMIT 1', session_id(), $userid);
 
-					if($query)
+					if($query && $query->getNumRows())
 					{
 						$userinfo = $query->fetchObject();
 						$query->free();
