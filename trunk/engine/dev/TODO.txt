@@ -2,7 +2,6 @@
 
 	Tuxxedo Engine Alpha 1
 	----------------------
-
 	Update user manager to work with the newly added user fields
 
 	Tuxxedo Engine Alpha 2
