@@ -282,6 +282,53 @@
 	}
 
 	/**
+	 * ...
+	 */
+	class Tuxxedo_InfoAccess implements ArrayAccess
+	{
+		/**
+		 * ...
+		 */
+		protected $information		= Array();
+
+
+		/**
+		 * ...
+		 */
+		public function offsetExists($offset)
+		{
+			return(isset($this->information[$offset]));
+		}
+
+		/**
+		 * ...
+		 */
+		public function offsetGet($offset)
+		{
+			if(isset($this->information[$offset]))
+			{
+				return($this->information[$offset]);
+			}
+		}
+
+		/**
+		 * ...
+		 */
+		public function offsetSet($offset, $value)
+		{
+			throw new Tuxxedo_Basic_Exception('Information data may not be changed');
+		}
+
+		/**
+		 * ...
+		 */
+		public function offsetUnset($offset)
+		{
+			throw new Tuxxedo_Basic_Exception('Infomation data may not be unset');
+		}
+	}
+
+	/**
 	 * Default exception, mainly used for general errors. All 
 	 * Tuxxedo specific exceptions extend this exception.
 	 *
@@ -949,7 +996,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Style
+	class Tuxxedo_Style extends Tuxxedo_InfoAccess
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -957,13 +1004,6 @@
 		 * @var		Tuxxedo
 		 */
 		protected $tuxxedo;
-
-		/**
-		 * Holds the current style data
-		 *
-		 * @var		array
-		 */
-		protected $styleinfo	= Array();
 
 		/**
 		 * Holds the current loaded templates
@@ -981,7 +1021,7 @@
 		public function __construct(Array $styleinfo)
 		{
 			$this->tuxxedo		= Tuxxedo::init();
-			$this->styleinfo 	= $styleinfo;
+			$this->information 	= $styleinfo;
 		}
 
 		/**
@@ -1006,22 +1046,6 @@
 			}
 
 			throw new Tuxxedo_Basic_Exception('Invalid style id, try rebuild the datastore or use the repair tools');
-		}
-
-		/**
-		 * Gets the style information
-		 *
-		 * @param	string			If set, then a the style info value is returned
-		 * @return	array			Returns an array with information about the current style
-		 */
-		public function getStyleinfo($varname = NULL)
-		{
-			if(isset($this->styleinfo[$varname]))
-			{
-				return($this->styleinfo[$varname]);
-			}
-
-			return($this->styleinfo);
 		}
 
 		/**
@@ -1053,7 +1077,7 @@
 										`title` IN (
 											\'%s\'
 										);', 
-								$this->styleinfo['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
+								$this['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
 
 			if($result === false || !sizeof($result))
 			{
@@ -1113,7 +1137,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Internationalization
+	class Tuxxedo_Internationalization extends Tuxxedo_InfoAccess
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -1121,13 +1145,6 @@
 		 * @var		Tuxxedo
 		 */
 		protected $tuxxedo;
-
-		/**
-		 * Holds the current language data
-		 *
-		 * @var		array
-		 */
-		protected $languageinfo	= Array();
 
 		/**
 		 * Holds the current loaded phrases
@@ -1145,7 +1162,7 @@
 		public function __construct(Array $languageinfo)
 		{
 			$this->tuxxedo		= Tuxxedo::init();
-			$this->languageinfo 	= $languageinfo;
+			$this->information 	= $languageinfo;
 		}
 
 		/**
@@ -1170,22 +1187,6 @@
 			}
 
 			throw new Tuxxedo_Basic_Exception('Invalid language id, try rebuild the datastore or use the repair tools');
-		}
-
-		/**
-		 * Gets the language information
-		 *
-		 * @param	string			If set, then a the language info value is returned
-		 * @return	array			Returns an array with information about the current language
-		 */
-		public function getLanguageinfo($varname = NULL)
-		{
-			if(isset($this->languageinfo[$varname]))
-			{
-				return($this->languageinfo[$varname]);
-			}
-
-			return($this->languageinfo);
 		}
 
 		/**
@@ -1218,7 +1219,7 @@
 										`phrasegroup` IN (
 											\'%s\'
 										);', 
-								$this->languageinfo['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $phrasegroups)));
+								$this['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $phrasegroups)));
 
 			if($result && !$result->getNumRows())
 			{
