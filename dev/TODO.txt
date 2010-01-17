@@ -11,7 +11,6 @@
 
 	Tuxxedo Engine XXX
 	------------------
-	Implement ArrayAccess for Tuxxedo_Internationalization & Tuxxedo_Style
 	Implement Engine hooks, for various points where its needed to hook into engine
 	Implement internationalization /dev/tools
 	Implement internationalization datamanagers
@@ -21,4 +20,3 @@
 	Add a new tool to show whether Engine's PHP requirements have been forfilled
 	Fix SQL queries to be non-mysql compatible
 	Fix guest sessions not being logged?
-	Remove Tuxxedo_Style::getStyleInfo() & Tuxxedo_Internationlization::getLanguageInfo()
