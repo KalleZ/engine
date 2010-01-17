@@ -282,18 +282,29 @@
 	}
 
 	/**
-	 * ...
+	 * Information access, enables the ability for classes 
+	 * to access their loaded information through the array-alike 
+	 * syntax.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
 	 */
-	class Tuxxedo_InfoAccess implements ArrayAccess
+	abstract class Tuxxedo_InfoAccess implements ArrayAccess
 	{
 		/**
-		 * ...
+		 * Information array
+		 * 
+		 * @var		array
 		 */
 		protected $information		= Array();
 
 
 		/**
-		 * ...
+		 * Checks whether an information is available 
+		 *
+		 * @param	scalar			The information row name to check
+		 * @return	boolean			Returns true if the information is stored, otherwise false
 		 */
 		public function offsetExists($offset)
 		{
@@ -301,7 +312,10 @@
 		}
 
 		/**
-		 * ...
+		 * Gets a value from the information store
+		 * 
+		 * @param	scalar			The information row name to get
+		 * @return	mixed			Returns the information value, and NULL if the value wasn't found
 		 */
 		public function offsetGet($offset)
 		{
@@ -312,7 +326,13 @@
 		}
 
 		/**
-		 * ...
+		 * Sets a new information value, this is however not 
+		 * allowed by default and the extending class must 
+		 * override this method to allow it
+		 *
+		 * @param	scalar			The information row name to set
+		 * @param	mixed			The new/update value for this row
+		 * @return	void			No value is returned
 		 */
 		public function offsetSet($offset, $value)
 		{
@@ -320,7 +340,12 @@
 		}
 
 		/**
-		 * ...
+		 * Deletes an information value, this is however not 
+		 * allowed by default and the extending class must 
+		 * override this method to allow it
+		 *
+		 * @param	scalar			The information row name to delete
+		 * @return	void			No value is returned
 		 */
 		public function offsetUnset($offset)
 		{
