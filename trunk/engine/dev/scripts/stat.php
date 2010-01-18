@@ -1,9 +1,8 @@
 <?php
-	const ENGINE_LOCATION = '../..';
+	define('ENGINE_LOCATION', '../..');
 
-	$recursive_glob = function($expression)
+	function recursive_glob($expression)
 	{
-		global $recursive_glob;
 		static $expression_prefix;
 
 		if(!$expression_prefix)
@@ -24,7 +23,7 @@
 		{
 			if(is_dir($entry))
 			{
-				if(($entries = $recursive_glob($entry)) !== false)
+				if(($entries = recursive_glob($entry)) !== false)
 				{
 					foreach($entries as $sub_entry)
 					{
@@ -41,7 +40,7 @@
 		return($return_value);
 	};
 
-	$files = $recursive_glob(ENGINE_LOCATION);
+	$files = recursive_glob(ENGINE_LOCATION);
 
 	if(!$files || !sizeof($files))
 	{
@@ -51,6 +50,7 @@
 	$statistics = Array(
 				'lines'		=> Array(), 
 				'size'		=> Array(), 
+				'files'		=> Array(), 
 				'total'		=> Array(
 								'lines'		=> 0, 
 								'size'		=> 0
@@ -76,6 +76,11 @@
 			$statistics['size'][$extension] = 0;
 		}
 
+		if(!isset($statistics['files'][$extension]))
+		{
+			$statistics['files'][$extension] = 0;
+		}
+
 		$l = file($path);
 
 		if(stripos($extension, 'php') !== false)
@@ -98,6 +103,8 @@
 
 		$statistics['total']['lines']		+= sizeof($l);
 		$statistics['total']['size']		+= $s;
+
+		++$statistics['files'][$extension];
 	}
 
 	echo('<h1>Statistics</h1>');
@@ -128,7 +135,8 @@
 			echo(') ');
 		}
 
-		echo('Total size: ' . $statistics['size'][$ext]);
+		echo('Total size: ' . $statistics['size'][$ext] . ' ');
+		echo('Total files: ' . $statistics['files'][$ext] . ' ');
 		echo('</li>');
 	}
 
