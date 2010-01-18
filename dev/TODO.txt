@@ -17,6 +17,5 @@
 	 - Language
 	 - Phrasegroup
 	 - Phrase
-	Add a new tool to show whether Engine's PHP requirements have been forfilled
 	Fix SQL queries to be non-mysql compatible
 	Fix guest sessions not being logged?
