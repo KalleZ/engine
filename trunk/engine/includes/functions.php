@@ -589,7 +589,9 @@
 	{
 		global $tuxxedo;
 
-		return($tuxxedo->datetime->format($tuxxedo->cache->options['date_format'], $timestamp));
+		$tuxxedo->datetime->modify($timestamp);
+
+		return($tuxxedo->datetime->format($tuxxedo->cache->options['date_format']));
 	}
 
 	/**

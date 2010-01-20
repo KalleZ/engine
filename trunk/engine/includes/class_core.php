@@ -145,7 +145,7 @@
 		 */
 		public static function init(Array $configuration = NULL)
 		{
-			if(!is_object(self::$instance))
+			if(!(self::$instance instanceof self))
 			{
 				self::$instance = new self;
 			}
@@ -1497,17 +1497,6 @@
 				}
 
 				self::set('userid', $userinfo->id);
-
-				$this->tuxxedo->db->query('
-								REPLACE INTO 
-									`' . TUXXEDO_PREFIX . 'sessions` 
-								VALUES
-								(
-									\'%s\', 
-									%d,
-									\'%s\', 
-									UNIX_TIMESTAMP()
-								)', session_id(), $userinfo->id, $this->tuxxedo->db->escape(TUXXEDO_SELF));
 			}
 
 			if($userid = self::get('userid'))
@@ -1557,6 +1546,17 @@
 											`sessionid` = \'%s\'', $this->tuxxedo->db->escape(TUXXEDO_SELF), session_id());
 				}
 			}
+
+			$this->tuxxedo->db->query('
+							REPLACE INTO 
+								`' . TUXXEDO_PREFIX . 'sessions` 
+							VALUES
+							(
+								\'%s\', 
+								%s,
+								\'%s\', 
+								UNIX_TIMESTAMP()
+							)', session_id(), (is_object($this->userinfo) ? $this->userinfo->id : '\'\''), $this->tuxxedo->db->escape(TUXXEDO_SELF));
 
 			$this->tuxxedo->db->setShutdownQuery('
 								DELETE FROM 

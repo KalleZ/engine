@@ -32,7 +32,7 @@
 	echo('<tr>');
 	echo('<td><strong>Session Id</strong></td>');
 	echo('<td><strong>User Id</strong></td>');
-	echo('<td><strong>Email</strong></td>');
+	echo('<td><strong>Username</strong></td>');
 	echo('<td><strong>Usergroup</strong></td>');
 	echo('<td><strong>Last activity</strong></td>');
 	echo('<td><strong>Expires in</strong></td>');
@@ -43,12 +43,22 @@
 	while($session = $sessions->fetchObject())
 	{
 		$userinfo = fetch_userinfo($session->userid);
+
 		echo('<tr>');
 		echo('<td>' . $session->sessionid . '</td>');
 		echo('<td>' . $session->userid . '</td>');
-		echo('<td>' . $userinfo->email . '</td>');
-		echo('<td>' . $cache->usergroups[$userinfo->usergroupid]['title'] . ' (Id: ' . $userinfo->usergroupid . ')</td>');
-		echo('<td>' . $session->lastactivity . '</td>');
+
+		if($userinfo)
+		{
+			echo('<td>' . $userinfo->username . '</td>');
+			echo('<td>' . $cache->usergroups[$userinfo->usergroupid]['title'] . ' (Id: ' . $userinfo->usergroupid . ')</td>');
+		}
+		else
+		{
+			echo('<td colspan="2"><em>Session not authenticated</em></td>');
+		}
+
+		echo('<td>' . $session->lastactivity . ' (' . tuxxedo_date($session->lastactivity) . ')</td>');
 		echo('<td>' . ($cache->options['cookie_expires'] - (time() - $session->lastactivity)) . '</td>');
 		echo('<td>' . htmlspecialchars(html_entity_decode($session->location)) . '</td>');
 		echo('<td><a href="./sessions.php?kill=' . $session->sessionid . '">kill</a></td>');
