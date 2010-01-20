@@ -46,16 +46,16 @@
 
 		echo('<tr>');
 		echo('<td>' . $session->sessionid . '</td>');
-		echo('<td>' . $session->userid . '</td>');
 
 		if($userinfo)
 		{
+			echo('<td>' . $session->userid . '</td>');
 			echo('<td>' . $userinfo->username . '</td>');
 			echo('<td>' . $cache->usergroups[$userinfo->usergroupid]['title'] . ' (Id: ' . $userinfo->usergroupid . ')</td>');
 		}
 		else
 		{
-			echo('<td colspan="2"><em>Session not authenticated</em></td>');
+			echo('<td colspan="3"><em>Session not authenticated</em></td>');
 		}
 
 		echo('<td>' . $session->lastactivity . ' (' . tuxxedo_date($session->lastactivity) . ')</td>');
