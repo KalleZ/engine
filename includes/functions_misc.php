@@ -54,7 +54,7 @@
 	 * @param	integer			How many bytes the salt should be, defaults to 8
 	 * @return	string			Returns the salt as a string
 	 */
-	function get_password_salt($length = 8)
+	function generate_password_salt($length = 8)
 	{
 		$length = (integer) $length;
 

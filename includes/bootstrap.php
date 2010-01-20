@@ -126,11 +126,6 @@
 	date_default_timezone_set('UTC');
 
 	/**
-	 * Current time constant
-	 */
-	define('TIMENOW', time());
-
-	/**
 	 * Data filter constant, numeric value
 	 *
 	 * @var		integer
@@ -242,6 +237,11 @@
 	$tuxxedo->set('datetime', new DateTime('now', $timezone));
 
 	unset($tz);
+
+	/**
+	 * Current time constant
+	 */
+	define('TIMENOW', $datetime->getTimestamp());
 
 	/**
 	 * We can only load the styling & internationalization APIs 

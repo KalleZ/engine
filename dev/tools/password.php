@@ -4,7 +4,7 @@
 
 	if(isset($_POST['password']) && !empty($_POST['password']))
 	{
-		$salt = get_password_salt($_POST['length']);
+		$salt = generate_password_salt($_POST['length']);
 		$hash = password_hash($_POST['password'], $salt);
 
 		echo('<textarea rows="10" style="width: 90%;">');
