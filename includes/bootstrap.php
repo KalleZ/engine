@@ -86,11 +86,6 @@
 	require(TUXXEDO_DIR . '/includes/class_core.php');
 
 	/**
-	 * Include database driver interfaces ect.
-	 */
-	require(TUXXEDO_DIR . '/includes/class_database.php');
-
-	/**
 	 * Include general functions
 	 */
 	require(TUXXEDO_DIR . '/includes/functions.php');
@@ -101,7 +96,8 @@
 	 */
 	set_error_handler('tuxxedo_error_handler');
 	set_exception_handler('tuxxedo_exception_handler');
-	register_shutdown_function('tuxxedo_shutdown');
+	register_shutdown_function('tuxxedo_shutdown_handler');
+	spl_autoload_register('tuxxedo_autoload_handler');
 
 	/**
 	 * Set database table prefix constant
@@ -114,6 +110,18 @@
 	 * Set the debug mode constant
 	 */
 	define('TUXXEDO_DEBUG', defined('Tuxxedo::DEBUG') && Tuxxedo::DEBUG);
+
+	/**
+	 * If debug mode is activated we need the special 
+	 * debugging functions
+	 */
+	if(TUXXEDO_DEBUG)
+	{
+		/**
+		 * Include the debugging functions
+		 */
+		require(TUXXEDO_DIR . '/includes/functions_debug.php');
+	}
 
 	/**
 	 * Set error reporting level

@@ -329,135 +329,6 @@
 	}
 
 	/**
-	 * Backtrace handler
-	 * 
-	 * Generates a backtrace with extended information so theres 
-	 * less to parse from the regular debug_backtrace() function 
-	 * in PHP
-	 *
-	 * @param	Exception		If the current trace is combined with an exception, then pass the exception to get a better trace
-	 * @return	array			Returns an array with object as keys carrying information about each trace bit
-	 */
-	function tuxxedo_debug_backtrace(Exception $e = NULL)
-	{
-		static $includes, $callbacks;
-
-		if(!$includes)
-		{
-			$includes	= Array('require', 'require_once', 'include', 'include_once');
-			$callbacks	= Array('call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
-		}
-
-		$stack 	= Array();
-		$skip	= ($e ? 3 : 2);
-		$bt 	= debug_backtrace();
-
-		if($e)
-		{
-			$bt = array_merge($bt, $e->getTrace());
-		}
-
-		foreach($bt as $n => $t)
-		{
-			if($n < $skip)
-			{
-				continue;
-			}
-
-			$trace = new stdClass;
-
-			$trace->current		= ($n == $skip);
-			$trace->callargs	= '';
-			$trace->notes		= (isset($t['type']) && $t['type'] == '::' ? 'Static call' : '');
-			$trace->line		= $trace->file = '';
-
-			if(isset($t['function']))
-			{
-				$argument_list = true;
-
-				if(isset($t['class']))
-				{
-					if($t['type'] == '->')
-					{
-						switch(strtolower($t['function']))
-						{
-							case('__construct'):
-							{
-								$trace->call 	= 'new ' . $t['class'];
-								$trace->notes	= 'Class construction';
-							}
-							break;
-							case('__destruct'):
-							{
-								$trace->call 	= '(unset) $' . $t['class'];
-								$trace->notes	= 'Class destruction';
-
-								$argument_list	= false;
-							}
-							break;
-							default:
-							{
-								$trace->call = '$' . $t['class'] . '->' . $t['function'];
-							}
-						}
-					}
-					elseif($t['type'] == '::')
-					{
-						$trace->call = $t['class'] . '::' . $t['function'];
-					}
-				}
-				elseif(in_array(strtolower($t['function']), $includes))
-				{
-					$trace->call		= $t['function'];
-					$trace->callargs	= $t['function'] . ' \'' . tuxxedo_trim_path($t['args'][0]) . '\'';
-					$trace->notes 		= 'Include';
-
-					$argument_list		= false;
-				}
-				else
-				{
-					$trace->call = $t['function'];
-				}
-
-				if($argument_list)
-				{
-					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && sizeof($t['args']) ? join(', ', array_map('gettype', $t['args'])) : '') . ')';
-					$trace->call 		.= '()';
-				}
-			}
-			else
-			{
-				$trace->call	= 'Main()';
-				$trace->notes 	= 'Called from main scope';
-			}
-
-			if(isset($t['line']))
-			{
-				$trace->line = $t['line'];
-			}
-
-			if(isset($t['file']))
-			{
-				$trace->file = $t['file'];
-			}
-
-			if($n > $skip && !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
-			{
-				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Callback';
-			}
-
-			if($trace->file !== 'Unknown')
-			{
-				$trace->file = tuxxedo_trim_path($trace->file);
-			}
-
-			$stack[] = $trace;
-		}
-
-		return($stack);
-	}
-
-	/**
 	 * Trims a file path to hide its path prior to the root 
 	 * of the application
 	 *
@@ -480,7 +351,7 @@
 	 *
 	 * @return	void			No value is returned
 	 */
-	function tuxxedo_shutdown()
+	function tuxxedo_shutdown_handler()
 	{
 		$errors = Tuxxedo::globals('errors');
 
@@ -519,6 +390,93 @@
 
 			echo($output);
 		}
+	}
+
+	/**
+	 * Autoload handler
+	 *
+	 * The autoloader routes builtin classes to their respective 
+	 * root file and its dependencies. If a non builtin class is 
+	 * attempted to be loaded, then the autoloader will assume 
+	 * the class to be declared in the file `class_<lowercase_name>.php'
+	 *
+	 * @param	string			Class name to load
+	 */
+	function tuxxedo_autoload_handler($class)
+	{
+		static $map, $dependencies;
+
+		if(!$map)
+		{
+			$map 		= Array(
+						/* Core classes, always available */
+						'tuxxedo'					=> 'core', 
+						'tuxxedo_infoaccess'				=> 'core', 
+						'tuxxedo_exception'				=> 'core', 
+						'tuxxedo_formdata_exception'			=> 'core', 
+						'tuxxedo_named_formdata_exception'		=> 'core', 
+						'tuxxedo_basic_exception'			=> 'core', 
+
+						/* Database core, drivers are not autoloadable */
+						'tuxxedo_database'				=> 'database', 
+						'tuxxedo_database_result'			=> 'database', 
+						'tuxxedo_database_driver'			=> 'database', 
+						'tuxxedo_database_driver_result'		=> 'database', 
+						'tuxxedo_sql_exception'				=> 'database', 
+
+						/* Caching utilities */
+						'tuxxedo_datastore'				=> 'cache', 
+
+						/* Data filtering */
+						'tuxxedo_datafilter'				=> 'filter', 
+
+						/* Data managers, drivers are not autoloadable */
+						'tuxxedo_datamanager'				=> 'datamanager', 
+						'tuxxedo_datamanager_api'			=> 'datamanager', 
+
+						/* Style API */
+						'tuxxedo_style'					=> 'template', 
+
+						/* Template compiler */
+						'tuxxedo_template_compiler'			=> 'template_compiler', 
+						'tuxxedo_template_compiler_exception'		=> 'template_compiler', 
+						'tuxxedo_template_compiler_dummy'		=> 'template_compiler', 
+
+						/* Internationalization API */
+						'tuxxedo_internationalization'			=> 'intl', 
+						'tuxxedo_internationalization_phrasegroup'	=> 'intl', 
+
+						/* Users and sessions API */
+						'tuxxedo_usersession'				=> 'user'
+						);
+
+			$dependencies 	= Array(
+						/* */
+						);
+		}
+
+		$class = strtolower((string) $class);
+
+		if(empty($class))
+		{
+			return;
+		}
+
+		if(!isset($map[$class]))
+		{
+			require(TUXXEDO_DIR . '/includes/class_' . $class . '.php');
+			return;
+		}
+
+		if(isset($dependencies[$class]))
+		{
+			foreach($dependencies[$class] as $dependency)
+			{
+				tuxxedo_autoloader($dependency);
+			}
+		}
+
+		require(TUXXEDO_DIR . '/includes/class_' . $map[$class] . '.php');
 	}
 
 	/**
