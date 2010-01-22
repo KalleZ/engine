@@ -66,12 +66,18 @@
 		const VERSION_STRING		= '1.0.0 Alpha 1 (dev)';
 
 		/**
-		 * For if we're in debug mode, this must be uncommented in order to 
-		 * disable debug mode.
+		 * For if we're in debug mode
 		 *
 		 * @var		boolean
 		 */
-		const DEBUG			= true;
+		const DEBUG			= false;
+
+		/**
+		 * For exposing that an application using Engine
+		 *
+		 * @var		boolean
+		 */
+		const EXPOSE			= true;
 
 
 		/**

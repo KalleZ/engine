@@ -14,7 +14,8 @@
 	Tuxxedo Engine Alpha 3
 	----------------------
 	Improve Engine debugger mode by monitoring general load times, thrus adding a heavy load on each debug request
-	Improve the de
+	Improve the debug mode by adding a verbosity level to show things like
+	 - Source code snippets on backtrace
 
 	Tuxxedo Engine XXX
 	------------------
