@@ -109,7 +109,12 @@
 	/**
 	 * Set the debug mode constant
 	 */
-	define('TUXXEDO_DEBUG', defined('Tuxxedo::DEBUG') && Tuxxedo::DEBUG);
+	define('TUXXEDO_DEBUG', Tuxxedo::DEBUG);
+
+	/**
+	 * Set the exposure constant
+	 */
+	define('TUXXEDO_EXPOSE', Tuxxedo::EXPOSE);
 
 	/**
 	 * If debug mode is activated we need the special 

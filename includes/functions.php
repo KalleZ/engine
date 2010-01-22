@@ -172,6 +172,11 @@
 
 		header('Content-Type: text/html');
 
+		if(TUXXEDO_EXPOSE)
+		{
+			header('Tuxxedo-Engine: ' . Tuxxedo::VERSION_STRING);
+		}
+
 		echo(
 			'<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL . 
 			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . PHP_EOL . 
