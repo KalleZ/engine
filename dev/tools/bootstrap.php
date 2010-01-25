@@ -27,6 +27,11 @@
 	Tuxxedo::globals('error_reporting', 	true);
 	Tuxxedo::globals('errors', 		new ArrayObject);
 
+	set_error_handler('tuxxedo_error_handler');
+	set_exception_handler('tuxxedo_exception_handler');
+	register_shutdown_function('tuxxedo_devmenu');
+	spl_autoload_register('tuxxedo_autoload_handler');
+
 	$tuxxedo = Tuxxedo::init($configuration);
 
 	$tuxxedo->register('db', 	'Tuxxedo_Database');
@@ -34,10 +39,6 @@
 
 	$tuxxedo->set('timezone', new DateTimeZone('UTC'));
 	$tuxxedo->set('datetime', new DateTime('now', $timezone));
-
-	set_error_handler('tuxxedo_error_handler');
-	set_exception_handler('tuxxedo_exception_handler');
-	register_shutdown_function('tuxxedo_devmenu');
 
 	function tuxxedo_devmenu()
 	{
