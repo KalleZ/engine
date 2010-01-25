@@ -401,9 +401,9 @@
 	 * Autoload handler
 	 *
 	 * The autoloader routes builtin classes to their respective 
-	 * root file and its dependencies. If a non builtin class is 
-	 * attempted to be loaded, then the autoloader will assume 
-	 * the class to be declared in the file `class_<lowercase_name>.php'
+	 * root file. If a non builtin class is attempted to be loaded, 
+	 * then the autoloader will assume the class to be declared in 
+	 * the file `class_<lowercase_name>.php'
 	 *
 	 * @param	string			Class name to load
 	 */
@@ -454,15 +454,11 @@
 						/* Users and sessions API */
 						'tuxxedo_usersession'				=> 'user'
 						);
-
-			$dependencies 	= Array(
-						/* */
-						);
 		}
 
 		$class = strtolower((string) $class);
 
-		if(empty($class))
+		if(empty($class) || class_exists($class))
 		{
 			return;
 		}
@@ -471,14 +467,6 @@
 		{
 			require(TUXXEDO_DIR . '/includes/class_' . $class . '.php');
 			return;
-		}
-
-		if(isset($dependencies[$class]))
-		{
-			foreach($dependencies[$class] as $dependency)
-			{
-				tuxxedo_autoloader($dependency);
-			}
 		}
 
 		require(TUXXEDO_DIR . '/includes/class_' . $map[$class] . '.php');

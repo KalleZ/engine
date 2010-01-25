@@ -3,6 +3,8 @@
 	Tuxxedo Engine Alpha 1
 	----------------------
 	Implement ENGINE_LITE mode
+	Implement Logos (dev/scripts/logos.php)
+	 - Engine logo
 	Implement autoloader + static/dynamic class router
 	- Dependencies
 
