@@ -348,21 +348,16 @@
 				return(new $class($configuration));
 			}
 
-			if(!is_file($path))
-			{
-				throw new Tuxxedo_Basic_Exception('Unable to find database driver file for \'%s\'', $driver);
-			}
-
 			require($path);
 
-			if(!class_exists($class) || !class_exists($result_class))
+			if(!class_exists($class, false) || !class_exists($result_class, false))
 			{
-				throw new Tuxxedo_Basic_Exception('Corrupt database driver, driver class(es) not found for \'%s\'', $driver);
+				throw new Tuxxedo_Basic_Exception('Corrupt database driver, driver classes was not found');
 			}
 
 			if(!is_subclass_of($class, __CLASS__) || !is_subclass_of($result_class, 'Tuxxedo_Database_Result'))
 			{
-				throw new Tuxxedo_Basic_Exception('Corrupt database driver, driver class(es) does not follow the driver specification');
+				throw new Tuxxedo_Basic_Exception('Corrupt database driver, driver classes does not follow the driver specification');
 			}
 
 			self::$loaded_drivers[] = $driver;

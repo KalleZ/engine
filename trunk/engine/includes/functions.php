@@ -406,10 +406,12 @@
 	 * the file `class_<lowercase_name>.php'
 	 *
 	 * @param	string			Class name to load
+	 * @param	string			Class file prefix
+	 * @param	string			Optional sub directory within the includes folder to autoload from
 	 */
-	function tuxxedo_autoload_handler($class)
+	function tuxxedo_autoload_handler($class, $prefix = 'class_', $directory = '')
 	{
-		static $map, $dependencies;
+		static $map;
 
 		if(!$map)
 		{
@@ -465,11 +467,12 @@
 
 		if(!isset($map[$class]))
 		{
-			require(TUXXEDO_DIR . '/includes/class_' . $class . '.php');
+			require(TUXXEDO_DIR . '/includes/' . ($directory ? $directory . '/' : '') . $prefix . $class . '.php');
+
 			return;
 		}
 
-		require(TUXXEDO_DIR . '/includes/class_' . $map[$class] . '.php');
+		require(TUXXEDO_DIR . '/includes/' . ($directory ? $directory . '/' : '') . $prefix . $map[$class] . '.php');
 	}
 
 	/**

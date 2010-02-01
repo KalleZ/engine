@@ -39,7 +39,7 @@
 	ini_set('magic_quotes_runtime', 'Off');
 
 	/**
-	 * Sets the php version id for php versions that doesn't 
+	 * Sets the PHP version id for PHP versions that doesn't 
 	 * have the PHP_VERSION_ID constant
 	 */
 	if(defined('PHP_VERSION_ID'))
@@ -137,6 +137,16 @@
 	 * Set default timezone
 	 */
 	date_default_timezone_set('UTC');
+
+	/**
+	 * URL of the current page being executed, including its 
+	 * query string, note that this constant is using the 
+	 * raw data. It is up to the user of this constant to 
+	 * proper filter it.
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_SELF',		$_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 
 	/**
 	 * Data filter constant, numeric value
