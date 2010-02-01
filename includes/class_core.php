@@ -70,7 +70,7 @@
 		 *
 		 * @var		boolean
 		 */
-		const DEBUG			= false;
+		const DEBUG			= true;
 
 		/**
 		 * For exposing that an application using Engine

@@ -1,26 +1,13 @@
 
 
-	Tuxxedo Engine Alpha 1
+	Tuxxedo Engine 1.0.X
 	----------------------
 	Implement ENGINE_LITE mode
-	Implement Logos (dev/scripts/logos.php)
-	 - Engine logo
-	Implement autoloader + static/dynamic class router
-	- Dependencies
-
-	Tuxxedo Engine Alpha 2
-	----------------------
 	Update user manager to work with the newly added user fields
 	Rewrite the entire usersession part, its using an old and deprecated API and is generally very slow
-
-	Tuxxedo Engine Alpha 3
-	----------------------
 	Improve Engine debugger mode by monitoring general load times, thrus adding a heavy load on each debug request
 	Improve the debug mode by adding a verbosity level to show things like
 	 - Source code snippets on backtrace
-
-	Tuxxedo Engine XXX
-	------------------
 	Implement internationalization /dev/tools
 	Implement internationalization datamanagers
 	 - Language
@@ -28,3 +15,4 @@
 	 - Phrase
 	Add number of phrases per phrase group so we can skip $intl->cache() if there is no phrases to load
 	Fix SQL queries to be non-mysql compatible
+	Database and Datamanager factories should use the autoload handler for loading its drivers
