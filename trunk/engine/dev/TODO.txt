@@ -16,3 +16,6 @@
 	Add number of phrases per phrase group so we can skip $intl->cache() if there is no phrases to load
 	Fix SQL queries to be non-mysql compatible
 	Database and Datamanager factories should use the autoload handler for loading its drivers
+	Fix date() call in tuxxedo_doc_error() to use $tuxxedo->datetime
+	Add a new constant for application specific versions/names (Tuxxedo::APPLICATION, Tuxxedo::APPLICATION_VERSION)
+	Remove EG() from the template compiler allowed function list

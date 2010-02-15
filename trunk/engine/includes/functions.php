@@ -49,6 +49,11 @@
 
 		if(Tuxxedo::globals('error_reporting'))
 		{
+			if(!(Tuxxedo::globals('errors') instanceof ArrayObject))
+			{
+				Tuxxedo::globals('errors', new ArrayObject);
+			}
+
 			Tuxxedo::globals('errors')->append($e->getMessage());
 		}
 	}
@@ -104,6 +109,11 @@
 		if(!is_null($file) && !is_null($line))
 		{
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
+		}
+
+		if(!(Tuxxedo::globals('errors') instanceof ArrayObject))
+		{
+			Tuxxedo::globals('errors', new ArrayObject);
 		}
 
 		Tuxxedo::globals('errors')->append($message);
