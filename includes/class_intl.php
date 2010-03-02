@@ -130,16 +130,12 @@
 				{
 					$this->phrases[$row->phrasegroup] = Array();
 				}
+				elseif(!in_array($row->phrasegroup, $loaded))
+				{
+					$loaded[] = $row->phrasegroup;
+				}
 
-				$loaded[]					= $row->phrasegroup;
 				$this->phrases[$row->phrasegroup][$row->title] 	= $row->translation;
-			}
-
-			if(!is_null($error_buffer) && ($diff = array_diff($phrasegroups, $loaded)) && sizeof($diff))
-			{
-				$error_buffer = $diff;
-
-				return(false);
 			}
 
 			return(true);
