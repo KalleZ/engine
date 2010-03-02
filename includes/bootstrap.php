@@ -312,6 +312,11 @@
 	unset($cache_buffer);
 
 	/**
+	 * Get phrases
+	 */
+	$tuxxedo->set('phrase', $intl->getPhrases());
+
+	/**
 	 * Header and footer templates for the main site
 	 */
 	eval('$header = "' . $style->fetch('header') . '";');
