@@ -214,6 +214,29 @@
 
 			return(false);
 		}
+
+		/**
+		 * Gets all phrases, note that phrases may be overridden by 
+		 * another if there is more with the same name. To overcome this 
+		 * limitation you must fetch the phrasegroup in which the phrase 
+		 * belongs and fetch it from there
+		 *
+		 * @return	array			Returns an array containing all loaded phrases
+		 */
+		public function getPhrases()
+		{
+			$phrases = Array();
+
+			if(sizeof($this->phrases))
+			{
+				foreach($this->phrases as $group => $group_phrases)
+				{
+					$phrases = array_merge($phrases, $group_phrases);
+				}
+			}
+
+			return($phrases);
+		}
 	}
 
 	/**
