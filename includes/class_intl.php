@@ -122,20 +122,14 @@
 				return(false);
 			}
 
-			$loaded = Array();
-
 			while($row = $result->fetchObject())
 			{
 				if(!isset($this->phrases[$row->phrasegroup]))
 				{
 					$this->phrases[$row->phrasegroup] = Array();
 				}
-				elseif(!in_array($row->phrasegroup, $loaded))
-				{
-					$loaded[] = $row->phrasegroup;
-				}
 
-				$this->phrases[$row->phrasegroup][$row->title] 	= $row->translation;
+				$this->phrases[$row->phrasegroup][$row->title] = $row->translation;
 			}
 
 			return(true);
