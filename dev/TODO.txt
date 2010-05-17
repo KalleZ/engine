@@ -17,6 +17,5 @@
 	Add number of phrases per phrase group so we can skip $intl->cache() if there is no phrases to load
 	Fix SQL queries to be non-mysql compatible
 	Database and Datamanager factories should use the autoload handler for loading its drivers
-	Replace the fetchObject calls to fetchAssoc where its reasonable
 	Implement file system based templates
 	 - Check if style storage engines extend the abstraction class

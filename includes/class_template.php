@@ -233,9 +233,9 @@
 				return(false);
 			}
 
-			while($row = $result->fetchObject())
+			while($row = $result->fetchAssoc())
 			{
-				$this->templates->{$row->title} = $row->compiledsource;
+				$this->templates->{$row['title']} = $row['compiledsource'];
 			}
 
 			return(true);
