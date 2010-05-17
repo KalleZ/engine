@@ -68,9 +68,7 @@
 							'array', 
 							'defined', 
 							'empty', 
-							'isset', 
-
-							'eg'
+							'isset'
 							);
 
 		/**

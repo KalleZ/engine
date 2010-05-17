@@ -18,8 +18,14 @@
 	require(CWD . '/includes/class_core.php');
 	require(CWD . '/includes/class_database.php');
 	require(CWD . '/includes/functions.php');
+	require(CWD . '/includes/functions_debug.php');
 
-	define('TUXXEDO_DEBUG', 	defined('Tuxxedo::DEBUG') && Tuxxedo::DEBUG);
+	if(!defined('Tuxxedo::DEBUG') || !Tuxxedo::DEBUG)
+	{
+		throw new Tuxxedo_Basic_Exception('Debug mode must be enabled to load the development tools');
+	}
+
+	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
 	define('TUXXEDO_PHP_VERSION', 	PHP_VERSION_ID);
