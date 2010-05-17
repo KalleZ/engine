@@ -20,4 +20,3 @@
 	Replace the fetchObject calls to fetchAssoc where its reasonable
 	Implement file system based templates
 	 - Check if style storage engines extend the abstraction class
-	 - Fix the references stuff

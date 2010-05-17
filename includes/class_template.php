@@ -40,7 +40,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $templates	= Array();
+		protected $templates;
 
 
 		/**
@@ -52,7 +52,8 @@
 		{
 			$this->tuxxedo		= $tuxxedo = Tuxxedo::init();
 			$this->information 	= $styleinfo;
-			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $tuxxedo->options->style_storage);
+			$this->templates	= new stdClass;
+			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $tuxxedo->options->style_storage, $this->templates);
 		}
 
 		/**
@@ -91,15 +92,7 @@
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
-			$loaded	= Array();
-			$cached = $this->storage->cache($templates, $error_buffer, $loaded);
-
-			if(!is_null($error_buffer) && ($diff = array_diff($templates, $loaded)) && sizeof($diff))
-			{
-				$error_buffer = $diff;
-			}
-
-			return($cached);
+			return($this->storage->cache($templates, $error_buffer));
 		}
 
 		/**
@@ -112,12 +105,12 @@
 		{
 			$template = strtolower($template);
 
-			if(!array_key_exists($template, $this->templates))
+			if(!isset($this->templates->{$template}))
 			{
 				return(false);
 			}
 
-			return($this->templates[$template]);
+			return($this->templates->{$template});
 		}
 	}
 
@@ -137,8 +130,15 @@
 		 */
 		protected $tuxxedo;
 
+		/**
+		 * Reference to the template storage
+		 *
+		 * @var		object
+		 */
+		private $templates;
 
-		abstract protected function __construct(Tuxxedo $tuxxedo);
+
+		abstract protected function __construct(Tuxxedo $tuxxedo, stdClass $templates);
 
 		/**
 		 * Caches a template, trying to cache an already loaded 
@@ -146,12 +146,11 @@
 		 *
 		 * @param	array			A list of templates to load
 		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
-		 * @param	array			An array passed by reference, this contains all the elements that where loaded if referenced
 		 * @return	boolean			Returns true on success otherwise false
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
 		 */
-		abstract public function cache(Array $templates, Array &$error_buffer = NULL, Array &$loaded = NULL);
+		abstract public function cache(Array $templates, Array &$error_buffer = NULL);
 
 
 		/**
@@ -159,11 +158,12 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	string			The storage engine to instanciate
+		 * @param	object			Reference to the template storage object
 		 * @return	object			Returns a style storage engine object reference
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception on invalid style storage engines
 		 */ 
-		final public static function factory(Tuxxedo $tuxxedo, $engine)
+		final public static function factory(Tuxxedo $tuxxedo, $engine, stdClass $templates)
 		{
 			$class = 'Tuxxedo_Style_Storage_' . $engine;
 
@@ -172,7 +172,7 @@
 				throw new Tuxxedo_Basic_Exception('Invalid style storage engine specified');
 			}
 
-			return(new $class($tuxxedo));
+			return(new $class($tuxxedo, $templates));
 		}
 	}
 
@@ -185,9 +185,10 @@
 	 */
 	class Tuxxedo_Style_Storage_Database extends Tuxxedo_Style_Storage
 	{
-		protected function __construct(Tuxxedo $tuxxedo)
+		protected function __construct(Tuxxedo $tuxxedo, stdClass $templates)
 		{
 			$this->tuxxedo 		= $tuxxedo;
+			$this->templates	= $templates;
 		}
 
 		/**
@@ -201,7 +202,7 @@
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
 		 */
-		public function cache(Array $templates, Array &$error_buffer = NULL, Array &$loaded = NULL)
+		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
 			if(!sizeof($templates))
 			{
@@ -234,7 +235,7 @@
 
 			while($row = $result->fetchObject())
 			{
-				$loaded[] = $row->title;
+				$this->templates->{$row->title} = $row->compiledsource;
 			}
 
 			return(true);
@@ -250,9 +251,10 @@
 	 */
 	class Tuxxedo_Style_Storage_FileSystem extends Tuxxedo_Style_Storage
 	{
-		protected function __construct(Tuxxedo $tuxxedo)
+		protected function __construct(Tuxxedo $tuxxedo, stdClass $templates)
 		{
 			$this->tuxxedo 		= $tuxxedo;
+			$this->template		= $templates;
 		}
 
 		/**
@@ -266,8 +268,12 @@
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
 		 */
-		public function cache(Array $templates, Array &$error_buffer = NULL, Array &$loaded = NULL)
+		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
+			foreach($templates as $template)
+			{
+				printf('attempting to load \'%s\'<br />', $template);
+			}
 		}
 	}
 ?>
