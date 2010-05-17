@@ -135,7 +135,7 @@
 		 *
 		 * @var		object
 		 */
-		private $templates;
+		protected $templates;
 
 
 		abstract protected function __construct(Tuxxedo $tuxxedo, stdClass $templates);
