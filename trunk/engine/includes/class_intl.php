@@ -122,14 +122,14 @@
 				return(false);
 			}
 
-			while($row = $result->fetchObject())
+			while($row = $result->fetchAssoc())
 			{
-				if(!isset($this->phrases[$row->phrasegroup]))
+				if(!isset($this->phrases[$row['phrasegroup']]))
 				{
-					$this->phrases[$row->phrasegroup] = Array();
+					$this->phrases[$row['phrasegroup']] = Array();
 				}
 
-				$this->phrases[$row->phrasegroup][$row->title] = $row->translation;
+				$this->phrases[$row['phrasegroup']][$row['title']] = $row['translation'];
 			}
 
 			return(true);

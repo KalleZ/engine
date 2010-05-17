@@ -218,14 +218,14 @@
 
 			$loaded = Array();
 
-			while($row = $result->fetchObject())
+			while($row = $result->fetchAssoc())
 			{
-				$row->data = @unserialize($row->data);
+				$row['data'] = @unserialize($row['data']);
 
-				if($row->data !== false)
+				if($row['data'] !== false)
 				{
-					$loaded[] 			= $row->name;
-					$this->cache[$row->name] 	= $row->data;
+					$loaded[] 			= $row['name'];
+					$this->cache[$row['name']] 	= $row['data'];
 				}
 			}
 
