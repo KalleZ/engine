@@ -106,6 +106,13 @@
 		 */
 		const VALIDATE_CALLBACK			= TYPE_CALLBACK;
 
+		/**
+		 * Validation option constant, escape HTML
+		 *
+		 * @var		integer
+		 */
+		const VALIDATE_OPT_ESCAPEHTML		= 0x001F;
+
 
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -382,7 +389,7 @@
 
 			foreach($virtual as $field => $data)
 			{
-				if(isset($this->fields[$field]['validation']) && $this->fields[$field]['validation'] == self::VALIDATE_STRING)
+				if(isset($this->fields[$field]['validation']) && $this->fields[$field]['validation'] & self::VALIDATE_OPT_ESCAPEHTML)
 				{
 					$data = htmlspecialchars($data, ENT_QUOTES);
 				}

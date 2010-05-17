@@ -112,11 +112,6 @@
 	define('TUXXEDO_DEBUG', Tuxxedo::DEBUG);
 
 	/**
-	 * Set the exposure constant
-	 */
-	define('TUXXEDO_EXPOSE', Tuxxedo::EXPOSE);
-
-	/**
 	 * If debug mode is activated we need the special 
 	 * debugging functions
 	 */
@@ -142,7 +137,7 @@
 	 * URL of the current page being executed, including its 
 	 * query string, note that this constant is using the 
 	 * raw data. It is up to the user of this constant to 
-	 * proper filter it.
+	 * proper filter it
 	 *
 	 * @var		string
 	 */

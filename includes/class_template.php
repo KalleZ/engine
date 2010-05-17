@@ -50,8 +50,9 @@
 		 */
 		public function __construct(Array $styleinfo)
 		{
-			$this->tuxxedo		= Tuxxedo::init();
+			$this->tuxxedo		= $tuxxedo = Tuxxedo::init();
 			$this->information 	= $styleinfo;
+			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $tuxxedo->options->style_storage);
 		}
 
 		/**
@@ -90,6 +91,118 @@
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
+			$loaded	= Array();
+			$cached = $this->storage->cache($templates, $error_buffer, $loaded);
+
+			if(!is_null($error_buffer) && ($diff = array_diff($templates, $loaded)) && sizeof($diff))
+			{
+				$error_buffer = $diff;
+			}
+
+			return($cached);
+		}
+
+		/**
+		 * Fetches a cached template
+		 *
+		 * @param	string			The name of the template to fetch
+		 * @return	string			Returns the compiled template code for execution, and boolean false on error
+		 */
+		public function fetch($template)
+		{
+			$template = strtolower($template);
+
+			if(!array_key_exists($template, $this->templates))
+			{
+				return(false);
+			}
+
+			return($this->templates[$template]);
+		}
+	}
+
+	/**
+	 * Interface for template storage engines
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	abstract class Tuxxedo_Style_Storage
+	{
+		/**
+		 * Private instance to the Tuxxedo registry
+		 *
+		 * @var		Tuxxedo
+		 */
+		protected $tuxxedo;
+
+
+		abstract protected function __construct(Tuxxedo $tuxxedo);
+
+		/**
+		 * Caches a template, trying to cache an already loaded 
+		 * template will recache it
+		 *
+		 * @param	array			A list of templates to load
+		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @param	array			An array passed by reference, this contains all the elements that where loaded if referenced
+		 * @return	boolean			Returns true on success otherwise false
+		 *
+		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 */
+		abstract public function cache(Array $templates, Array &$error_buffer = NULL, Array &$loaded = NULL);
+
+
+		/**
+		 * Factory method for creating a new storage engine instance
+		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	string			The storage engine to instanciate
+		 * @return	object			Returns a style storage engine object reference
+		 *
+		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception on invalid style storage engines
+		 */ 
+		final public static function factory(Tuxxedo $tuxxedo, $engine)
+		{
+			$class = 'Tuxxedo_Style_Storage_' . $engine;
+
+			if(!class_exists($class))
+			{
+				throw new Tuxxedo_Basic_Exception('Invalid style storage engine specified');
+			}
+
+			return(new $class($tuxxedo));
+		}
+	}
+
+	/**
+	 * Style storage engine for database based templates
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_Style_Storage_Database extends Tuxxedo_Style_Storage
+	{
+		protected function __construct(Tuxxedo $tuxxedo)
+		{
+			$this->tuxxedo 		= $tuxxedo;
+		}
+
+		/**
+		 * Caches a template, trying to cache an already loaded 
+		 * template will recache it
+		 *
+		 * @param	array			A list of templates to load
+		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @param	array			An array passed by reference, this contains all the elements that where loaded if referenced
+		 * @return	boolean			Returns true on success otherwise false
+		 *
+		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 */
+		public function cache(Array $templates, Array &$error_buffer = NULL, Array &$loaded = NULL)
+		{
 			if(!sizeof($templates))
 			{
 				return(false);
@@ -107,9 +220,9 @@
 										`title` IN (
 											\'%s\'
 										);', 
-								$this['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
+								$this->tuxxedo->style['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
 
-			if($result === false || !sizeof($result))
+			if($result === false || !$result->getNumRows())
 			{
 				if(!is_null($error_buffer))
 				{
@@ -119,41 +232,42 @@
 				return(false);
 			}
 
-			$loaded = Array();
-
 			while($row = $result->fetchObject())
 			{
-				$loaded[] 			= $row->title;
-				$this->templates[$row->title] 	= $row->compiledsource;
-			}
-
-			if(!is_null($error_buffer) && ($diff = array_diff($templates, $loaded)) && sizeof($diff))
-			{
-				$error_buffer = $diff;
-
-				return(false);
+				$loaded[] = $row->title;
 			}
 
 			return(true);
 		}
+	}
+
+	/**
+	 * Style storage engine for file system based templates
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_Style_Storage_FileSystem extends Tuxxedo_Style_Storage
+	{
+		protected function __construct(Tuxxedo $tuxxedo)
+		{
+			$this->tuxxedo 		= $tuxxedo;
+		}
 
 		/**
-		 * Fetches a cached template
+		 * Caches a template, trying to cache an already loaded 
+		 * template will recache it
 		 *
-		 * @param	string			The name of the template to fetch
-		 * @return	string			Returns the compiled template code for execution, and boolean false on error
+		 * @param	array			A list of templates to load
+		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @param	array			An array passed by reference, this contains all the elements that where loaded if referenced
+		 * @return	boolean			Returns true on success otherwise false
+		 *
+		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
 		 */
-		public function fetch($template)
+		public function cache(Array $templates, Array &$error_buffer = NULL, Array &$loaded = NULL)
 		{
-
-			$template = strtolower($template);
-
-			if(!array_key_exists($template, $this->templates))
-			{
-				return(false);
-			}
-
-			return($this->templates[$template]);
 		}
 	}
 ?>
