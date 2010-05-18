@@ -22,6 +22,7 @@
 	 - Improve performance in the login method and fetch_userinfo() function to use less queries if possible
 	 - Store online statistics in the datastore cache
 	 - Update the datamanager with the latest profile fields
+	 - See if there could be any future issues now that timestamps are stored as UTC in the session table
 
 	Improve the debug mode
 	 - Make it possible to add different levels of verbosity so the developer can decide which things to display
