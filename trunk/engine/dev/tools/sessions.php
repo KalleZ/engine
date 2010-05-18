@@ -16,7 +16,7 @@
 		}
 	}
 
-	$db->query('DELETE FROM `' . TUXXEDO_PREFIX . 'sessions` WHERE `lastactivity` + %d < UNIX_TIMESTAMP()', $cache->options['cookie_expires']);
+	$db->query('DELETE FROM `' . TUXXEDO_PREFIX . 'sessions` WHERE `lastactivity` + %d < %d', $cache->options['cookie_expires'], TIMENOW);
 
 	echo('<h4>Active user sessions</h4>');
 
