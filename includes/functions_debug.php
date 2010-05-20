@@ -126,7 +126,7 @@
 				$trace->file = $t['file'];
 			}
 
-			if($n > $skip && !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
+			if($n > 3 && !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
 			{
 				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Callback';
 			}
