@@ -30,4 +30,3 @@
 	 - Improve the debug backtrace
 
 	Change SQL queries to be non-mysql compatible
-	 - Add missing AUTO_INCREMENT to languages table for mysql

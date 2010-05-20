@@ -152,9 +152,6 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- Data dump for tabellen `sessions`
 --
 
-INSERT INTO `sessions` (`sessionid`, `userid`, `location`, `lastactivity`) VALUES
-('kiaee8hlem60c9ukealp8abc95', 0, '/engine/index.php', 1274068055);
-
 -- --------------------------------------------------------
 
 --
