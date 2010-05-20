@@ -31,5 +31,3 @@
 
 	Change SQL queries to be non-mysql compatible
 	 - Add missing AUTO_INCREMENT to languages table for mysql
-
-	Change database and datamanger factory methods to use the autoload handler for loading its drivers

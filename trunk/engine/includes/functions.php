@@ -430,7 +430,7 @@
 	 */
 	function tuxxedo_autoload_handler($class, $prefix = 'class_', $directory = '')
 	{
-		static $map;
+		static $map, $drivers;
 
 		if(!$map)
 		{
@@ -443,7 +443,7 @@
 						'tuxxedo_named_formdata_exception'		=> 'core', 
 						'tuxxedo_basic_exception'			=> 'core', 
 
-						/* Database core, drivers are not autoloadable */
+						/* Database core */
 						'tuxxedo_database'				=> 'database', 
 						'tuxxedo_database_result'			=> 'database', 
 						'tuxxedo_database_driver'			=> 'database', 
@@ -456,7 +456,7 @@
 						/* Data filtering */
 						'tuxxedo_datafilter'				=> 'filter', 
 
-						/* Data managers, drivers are not autoloadable */
+						/* Data managers */
 						'tuxxedo_datamanager'				=> 'datamanager', 
 						'tuxxedo_datamanager_api'			=> 'datamanager', 
 
@@ -478,6 +478,21 @@
 						/* Users and sessions API */
 						'tuxxedo_usersession'				=> 'user'
 						);
+
+			$drivers	= Array(
+						/* Database drivers */
+						'tuxxedo_database_driver_mysql'			=> Array('database', 'driver', 'mysql'), 
+						'tuxxedo_database_driver_mysql_result'		=> Array('database', 'driver', 'mysql'), 
+						'tuxxedo_database_driver_mysqli'		=> Array('database', 'driver', 'mysqli'), 
+						'tuxxedo_database_driver_mysqli_result'		=> Array('database', 'driver', 'mysqli'), 
+						'tuxxedo_database_driver_pdo'			=> Array('database', 'driver', 'pdo'), 
+						'tuxxedo_database_driver_pdo_result'		=> Array('database', 'driver', 'pdo'), 
+
+						/* Data managers */
+						'tuxxedo_datamanager_api_style'			=> Array('datamanagers', 'dm', 'style'), 
+						'tuxxedo_datamanager_api_user'			=> Array('datamanagers', 'dm', 'user'), 
+						'tuxxedo_datamanager_api_usergroup'		=> Array('datamanagers', 'dm', 'usergroup')
+						);
 		}
 
 		$class = strtolower((string) $class);
@@ -487,7 +502,13 @@
 			return;
 		}
 
-		if(!isset($map[$class]))
+		if(isset($drivers[$class]))
+		{
+			require(TUXXEDO_DIR . '/includes/' . $drivers[$class][0] . '/' . $drivers[$class][1] . '_' . $drivers[$class][2] . '.php');
+
+			return;
+		}
+		elseif(!isset($map[$class]))
 		{
 			require(TUXXEDO_DIR . '/includes/' . ($directory ? $directory . '/' : '') . $prefix . $class . '.php');
 

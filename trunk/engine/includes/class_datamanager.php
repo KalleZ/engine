@@ -189,26 +189,13 @@
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $cached = false)
 		{
-			$datamanager 	= (string) $datamanager;
-			$path		= TUXXEDO_DIR . '/includes/datamanagers/dm_' . $datamanager . '.php';
-			$class		= 'Tuxxedo_Datamanager_API_' . $datamanager;
-
 			if(in_array($datamanager, self::$loaded_datamanagers))
 			{
 				return(new $class($identifier, $cached));
 			}
 
-			if(!is_file($path))
-			{
-				throw new Tuxxedo_Basic_Exception('Unable to find datamanager driver file for \'%s\'', $datamanager);
-			}
-
-			require($path);
-
-			if(!class_exists($class))
-			{
-				throw new Tuxxedo_Basic_Exception('Corrupt datamanager driver, driver class not found for \'%s\'', $datamanager);
-			}
+			$class	= 'Tuxxedo_Datamanager_API_' . $datamanager;
+			$dm 	= new $class($identifier, $cached);
 
 			if(!is_subclass_of($class, __CLASS__))
 			{
@@ -217,7 +204,7 @@
 
 			self::$loaded_datamanagers[] = $datamanager;
 
-			return(new $class($identifier, $cached));
+			return($dm);
 		}
 
 		/**
