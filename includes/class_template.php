@@ -288,7 +288,7 @@
 		protected function __construct(Tuxxedo $tuxxedo, Tuxxedo_Style $style, stdClass $templates)
 		{
 			$this->tuxxedo 		= $tuxxedo;
-			$this->template		= $templates;
+			$this->templates	= $templates;
 			$this->path		= TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/';
 		}
 
@@ -312,9 +312,9 @@
 
 			foreach($templates as $title)
 			{
-				if($contents = @file_get_contents($this->path . $title . '.src') !== false)
+				if(($contents = @file_get_contents($this->path . $title . '.src')) !== false)
 				{
-					$this->templates[$title] = $contents;
+					$this->templates->{$title} = $contents;
 				}
 				else
 				{
