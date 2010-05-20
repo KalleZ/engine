@@ -350,7 +350,10 @@
 		 */
 		public function offsetSet($offset, $value)
 		{
-			throw new Tuxxedo_Basic_Exception('Information data may not be changed');
+			if(isset($this->information[$offset]))
+			{
+				$this->information[$offset] = $value;
+			}
 		}
 
 		/**
@@ -363,7 +366,10 @@
 		 */
 		public function offsetUnset($offset)
 		{
-			throw new Tuxxedo_Basic_Exception('Infomation data may not be unset');
+			if(isset($this->information[$offset]))
+			{
+				unset($this->information[$offset]);
+			}
 		}
 	}
 
