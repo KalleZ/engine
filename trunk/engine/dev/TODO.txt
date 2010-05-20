@@ -3,17 +3,11 @@
 	Tuxxedo Engine 1.1.X
 	----------------------
 
-	Implement template storage engines
-	 - File system storage engine
-	 - Fix factory check to check if a storage engine extends the abstraction class
-
 	Add new datamanagers
 	 - Language
 	 - Phrase
 	 - Phrasegroup
 	 - Template
-
-	Add internationalization developmental tools
 
 	Rewrite the user session API
 	 - Session constructor should use a username as identifier instead of the email
@@ -28,5 +22,9 @@
 	 - Make it possible to add different levels of verbosity so the developer can decide which things to display
 	 - Add instanciation monitor hooks in the registry for debug mode
 	 - Improve the debug backtrace
+
+	Improve development tools
+	 - Add internationalization support
+	 - Add styles support
 
 	Change SQL queries to be non-mysql compatible

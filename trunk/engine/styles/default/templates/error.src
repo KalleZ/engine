@@ -1,0 +1,10 @@
+{$header}
+
+<h2>Error</h2>
+<p>
+	{$message}
+</p>
+
+<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+
+{$footer}

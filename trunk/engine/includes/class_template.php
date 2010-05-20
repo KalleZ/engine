@@ -53,7 +53,7 @@
 			$this->tuxxedo		= $tuxxedo = Tuxxedo::init();
 			$this->information 	= $styleinfo;
 			$this->templates	= new stdClass;
-			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $tuxxedo->options->style_storage, $this->templates);
+			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $this, $tuxxedo->options->style_storage, $this->templates);
 		}
 
 		/**
@@ -138,7 +138,14 @@
 		protected $templates;
 
 
-		abstract protected function __construct(Tuxxedo $tuxxedo, stdClass $templates);
+		/**
+		 * Constructs a new storage engine
+		 *
+	 	 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	Tuxxedo_Style		Reference to the style object
+		 * @param	object			Object reference to the templates data table
+		 */
+		abstract protected function __construct(Tuxxedo $tuxxedo, Tuxxedo_Style $style, stdClass $templates);
 
 		/**
 		 * Caches a template, trying to cache an already loaded 
@@ -157,13 +164,14 @@
 		 * Factory method for creating a new storage engine instance
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	Tuxxedo_Style		Reference to the style object
 		 * @param	string			The storage engine to instanciate
 		 * @param	object			Reference to the template storage object
 		 * @return	object			Returns a style storage engine object reference
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception on invalid style storage engines
 		 */ 
-		final public static function factory(Tuxxedo $tuxxedo, $engine, stdClass $templates)
+		final public static function factory(Tuxxedo $tuxxedo, Tuxxedo_Style $style, $engine, stdClass $templates)
 		{
 			$class = 'Tuxxedo_Style_Storage_' . $engine;
 
@@ -171,8 +179,12 @@
 			{
 				throw new Tuxxedo_Basic_Exception('Invalid style storage engine specified');
 			}
+			elseif(!is_subclass_of($class, __CLASS__))
+			{
+				throw new Tuxxedo_Basic_Exception('Corrupt style storage engine');
+			}
 
-			return(new $class($tuxxedo, $templates));
+			return(new $class($tuxxedo, $style, $templates));
 		}
 	}
 
@@ -185,7 +197,14 @@
 	 */
 	class Tuxxedo_Style_Storage_Database extends Tuxxedo_Style_Storage
 	{
-		protected function __construct(Tuxxedo $tuxxedo, stdClass $templates)
+		/**
+		 * Constructs a new storage engine
+		 *
+	 	 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	Tuxxedo_Style		Reference to the style object
+		 * @param	object			Object reference to the templates data table
+		 */
+		protected function __construct(Tuxxedo $tuxxedo, Tuxxedo_Style $style, stdClass $templates)
 		{
 			$this->tuxxedo 		= $tuxxedo;
 			$this->templates	= $templates;
@@ -251,10 +270,26 @@
 	 */
 	class Tuxxedo_Style_Storage_FileSystem extends Tuxxedo_Style_Storage
 	{
-		protected function __construct(Tuxxedo $tuxxedo, stdClass $templates)
+		/**
+		 * Directory where the compiled templates are saved
+		 *
+		 * @var		string
+		 */
+		protected $path;
+
+
+		/**
+		 * Constructs a new storage engine
+		 *
+	 	 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	Tuxxedo_Style		Reference to the style object
+		 * @param	object			Object reference to the templates data table
+		 */
+		protected function __construct(Tuxxedo $tuxxedo, Tuxxedo_Style $style, stdClass $templates)
 		{
 			$this->tuxxedo 		= $tuxxedo;
 			$this->template		= $templates;
+			$this->path		= TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/';
 		}
 
 		/**
@@ -270,10 +305,29 @@
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
-			foreach($templates as $template)
+			if(!sizeof($templates))
 			{
-				printf('attempting to load \'%s\'<br />', $template);
+				return(false);
 			}
+
+			foreach($templates as $title)
+			{
+				if($contents = @file_get_contents($this->path . $title . '.src') !== false)
+				{
+					$this->templates[$title] = $contents;
+				}
+				else
+				{
+					if(!is_null($error_buffer))
+					{
+						$error_buffer[] = $title;
+					}
+
+					return(false);
+				}
+			}
+
+			return(true);			
 		}
 	}
 ?>
