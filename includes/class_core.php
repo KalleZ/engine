@@ -340,9 +340,7 @@
 		}
 
 		/**
-		 * Sets a new information value, this is however not 
-		 * allowed by default and the extending class must 
-		 * override this method to allow it
+		 * Sets a new information value
 		 *
 		 * @param	scalar			The information row name to set
 		 * @param	mixed			The new/update value for this row
@@ -357,9 +355,7 @@
 		}
 
 		/**
-		 * Deletes an information value, this is however not 
-		 * allowed by default and the extending class must 
-		 * override this method to allow it
+		 * Deletes an information value
 		 *
 		 * @param	scalar			The information row name to delete
 		 * @return	void			No value is returned
