@@ -338,31 +338,22 @@
 		 */
 		final public static function factory($driver, Array $configuration)
 		{
-			$driver 	= (string) $driver;
-			$path		= TUXXEDO_DIR . '/includes/database/driver_' . $driver . '.php';
-			$class		= 'Tuxxedo_Database_Driver_' . $driver;
-			$result_class	= $class . '_Result';
-
 			if(in_array($driver, self::$loaded_drivers))
 			{
 				return(new $class($configuration));
 			}
 
-			require($path);
+			$class 		= 'Tuxxedo_Database_Driver_' . $driver;
+			$instance 	= new $class($configuration);
 
-			if(!class_exists($class, false) || !class_exists($result_class, false))
-			{
-				throw new Tuxxedo_Basic_Exception('Corrupt database driver, driver classes was not found');
-			}
-
-			if(!is_subclass_of($class, __CLASS__) || !is_subclass_of($result_class, 'Tuxxedo_Database_Result'))
+			if(!is_subclass_of($class, __CLASS__) || !is_subclass_of($class . '_Result', 'Tuxxedo_Database_Result'))
 			{
 				throw new Tuxxedo_Basic_Exception('Corrupt database driver, driver classes does not follow the driver specification');
 			}
 
 			self::$loaded_drivers[] = $driver;
 
-			return(new $class($configuration));
+			return($instance);
 		}
 
 		/**
