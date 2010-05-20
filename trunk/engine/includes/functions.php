@@ -476,6 +476,7 @@
 						'tuxxedo_internationalization_phrasegroup'	=> 'intl', 
 
 						/* Users and sessions API */
+						'tuxxedo_session'				=> 'session', 
 						'tuxxedo_usersession'				=> 'user'
 						);
 
