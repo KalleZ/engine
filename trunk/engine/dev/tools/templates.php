@@ -70,8 +70,10 @@
 		}
 		else
 		{
-			$db->query('UPDATE `' . TUXXEDO_PREFIX . 'templates` SET `title` = \'' . $db->escape($_POST['title']) . '\', `source` = \'' . $source . '\', `defaultsource` = \'' . $source . '\', `compiledsource` = \'' . $db->escape($compiler->get()) . '\', `revision` = ' . $t->revision . ' WHERE `id` = ' . $t->id);
+			$db->query('UPDATE `' . TUXXEDO_PREFIX . 'templates` SET `title` = \'' . $db->escape($t->title) . '\', `source` = \'' . $source . '\', `defaultsource` = \'' . $source . '\', `compiledsource` = \'' . $db->escape($compiler->get()) . '\', `revision` = ' . $t->revision . ' WHERE `id` = ' . $t->id);
 		}
+
+		sync_template((!is_null($t) ? $t->title : $_POST['title']), $compiler->get());
 	}
 
 	function e($message)
@@ -79,13 +81,13 @@
 		throw new Tuxxedo_Basic_Exception('Validation failed: ' . $message);
 	}
 
-	function sync_template(stdClass $template)
+	function sync_template($title, $compiledsource)
 	{
 		global $cache;
 
-		$fp = fopen(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($template->title) . '.src', 'w+');
+		$fp = fopen(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($title) . '.src', 'w+');
 
-		fwrite($fp, $template->compiledsource);
+		fwrite($fp, $compiledsource);
 		fclose($fp);
 	}
 
@@ -203,6 +205,8 @@
 			{
 				$t = validate_template();
 				$db->query('DELETE FROM `' . TUXXEDO_PREFIX . 'templates` WHERE `id` = ' . $t->id);
+
+				unlink(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($t->title) . '.src');
 
 				redirect('./templates.php');
 			}
@@ -400,6 +404,7 @@
 					foreach($sources as $title => $source)
 					{
 						$db->query('INSERT INTO `' . TUXXEDO_PREFIX . 'templates` (`title`, `source`, `compiledsource`, `defaultsource`, `styleid`, `revision`) VALUES (\'' . $db->escape($title) . '\', \'' . $db->escape($source['source']) . '\', \'' . $db->escape($source['compiled']) . '\', \'' . $db->escape($source['source']) . '\', ' . $styleid . ', ' . $source['revision'] . ')');
+						sync_template($title, $source['compiled']);
 					}
 
 					echo('<h4>Style imported</h4>');
@@ -432,7 +437,7 @@
 				while($template = $templates->fetchObject())
 				{
 					echo('- ' . $template->title . '<br />');
-					sync_template($template);
+					sync_template($template->title, $template->compiledsource);
 				}
 
 				echo('<p>Done!</p>');
