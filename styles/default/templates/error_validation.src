@@ -1,0 +1,14 @@
+{$header}
+
+<h2>Error</h2>
+<p>
+	The following fields failed to validate, please go back and fill in the correct values.
+</p>
+
+<ul>
+{$list}
+</ul>
+
+<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+
+{$footer}

@@ -79,6 +79,21 @@
 		throw new Tuxxedo_Basic_Exception('Validation failed: ' . $message);
 	}
 
+	function sync_template(stdClass $template)
+	{
+		global $cache;
+
+		$fp = fopen(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($template->title) . '.src', 'w+');
+
+		fwrite($fp, $template->compiledsource);
+		fclose($fp);
+	}
+
+	function normalize_title($title)
+	{
+		return(strtolower(str_replace(Array('-', ' '), '_', $title)));
+	}
+
 	if(isset($_GET['action']))
 	{
 		require(TUXXEDO_DIR . '/includes/class_template_compiler.php');
@@ -402,6 +417,27 @@
 				}
 			}
 			break;
+			case('storage'):
+			{
+				echo('<p>Synchronizing...</p>');
+
+				$templates = $db->query('SELECT `title`, `compiledsource` FROM `' . TUXXEDO_PREFIX . 'templates` WHERE `styleid` = 1 ORDER BY `id` ASC');
+
+				if(!$templates || !$templates->getNumRows())
+				{
+					echo('<p>No templates to synchronize. <a href="./templates.php?action=add">Add a new template?</a></p>');
+					die;
+				}
+
+				while($template = $templates->fetchObject())
+				{
+					echo('- ' . $template->title . '<br />');
+					sync_template($template);
+				}
+
+				echo('<p>Done!</p>');
+			}
+			break;
 			default:
 			{
 				throw new Tuxxedo_Basic_Exception('Invalid action');
@@ -456,5 +492,12 @@
 		echo('<input type="text" name="index" value="' . (integer) $db->query('SHOW TABLE STATUS FROM `' . $configuration['database']['database'] . '` LIKE \'' . TUXXEDO_PREFIX . 'templates\'')->fetchObject()->Auto_increment . '" /> ');
 		echo('<input type="submit" value="Change" />');
 		echo('</form>');
+
+		echo('<h4>File system storage</h4>');
+		echo('<p>Storage engine: <strong>' . $cache->options['style_storage'] . '</strong></p>');
+		echo('<form action="./templates.php?action=storage" method="post">');
+		echo('<input type="submit" value="Synchronize" />');
+		echo('</form>');
+
 	}
 ?>
