@@ -9,6 +9,8 @@
 	 - Phrasegroup
 	 - Template
 
+	Add a generic pagination class with a default Engine database pagination driver
+
 	Rewrite the user session API
 	 - Session constructor should use a username as identifier instead of the email
 	 - Add a 'login' method so we don't need to do hacky things like: $tuxxedo->set('user', new Tuxxedo_UserSession(...))
