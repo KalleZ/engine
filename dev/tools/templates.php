@@ -424,7 +424,7 @@
 			break;
 			case('storage'):
 			{
-				echo('<p>Synchronizing...</p>');
+				echo('<h4>Synchronizing templates</h2>');
 
 				$templates = $db->query('SELECT `title`, `compiledsource` FROM `' . TUXXEDO_PREFIX . 'templates` WHERE `styleid` = 1 ORDER BY `id` ASC');
 
