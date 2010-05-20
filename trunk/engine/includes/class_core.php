@@ -186,7 +186,7 @@
 		 *
 		 * @param	string			The name of this instance
 		 * @param	string			The class to register, this must implement a 'magic' method called invoke to work
-		 * @return	void			No value is returned
+		 * @return	object			Returns a reference to the created instance
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	This a basic exception if the class doesn't exists or implements the magic invoke method
 		 */
@@ -204,8 +204,14 @@
 			{
 				$instance = call_user_func(Array($class, 'invoke'), self::$instance, self::$instance->configuration, (array) self::getOptions());
 			}
+			else
+			{
+				$instance = new $class;
+			}
 
-			self::$instance->set($refname, (isset($instance) ? $instance : new $class));
+			self::$instance->set($refname, $instance);
+
+			return($instance);
 		}
 
 		/**
@@ -322,6 +328,11 @@
 		 */
 		public function offsetExists($offset)
 		{
+			if(is_object($this->information))
+			{
+				return(isset($this->information->{$offset}));
+			}
+
 			return(isset($this->information[$offset]));
 		}
 
@@ -333,7 +344,11 @@
 		 */
 		public function offsetGet($offset)
 		{
-			if(isset($this->information[$offset]))
+			if(is_object($this->information))
+			{
+				return($this->information->{$offset});
+			}
+			else
 			{
 				return($this->information[$offset]);
 			}
@@ -348,7 +363,11 @@
 		 */
 		public function offsetSet($offset, $value)
 		{
-			if(isset($this->information[$offset]))
+			if(is_object($this->information))
+			{
+				$this->information->{$offset} = $value;
+			}
+			else
 			{
 				$this->information[$offset] = $value;
 			}
@@ -362,7 +381,11 @@
 		 */
 		public function offsetUnset($offset)
 		{
-			if(isset($this->information[$offset]))
+			if(is_object($this->information))
+			{
+				unset($this->information->{$offset});
+			}
+			else
 			{
 				unset($this->information[$offset]);
 			}
