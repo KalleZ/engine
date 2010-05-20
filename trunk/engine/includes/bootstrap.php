@@ -104,7 +104,7 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_PREFIX', (string) $configuration['database']['prefix']);
+	define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 
 	/**
 	 * Set the debug mode constant
