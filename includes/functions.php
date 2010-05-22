@@ -477,7 +477,7 @@
 
 						/* Users and sessions API */
 						'tuxxedo_session'				=> 'session', 
-						'tuxxedo_usersession'				=> 'user'
+						'tuxxedo_user'					=> 'user'
 						);
 
 			$drivers	= Array(
@@ -669,76 +669,6 @@
 		}
 
 		return(true);
-	}
-
-	/**
-	 * Fetches user and usergroup information for 
-	 * a specific user. This function will return 
-	 * session information about the user if the 
-	 * user id matches the one thats currently 
-	 * logged in, in this session.
-	 *
-	 * @param	mixed			A unique identifier to find the user
-	 * @param	boolean			Find by email? Defaults to find by id
-	 * @return	object			Returns an object with user and usergroup information on success, otherwise false
-	 *
-	 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if the database call fails
-	 */
-	function fetch_userinfo($identifier, $by_email = false)
-	{
-		global $tuxxedo;
-
-		if($tuxxedo->userinfo !== false && (!$by_email && $tuxxedo->userinfo->id == $identifier || $by_email && $tuxxedo->userinfo->email == $identifier))
-		{
-			return($tuxxedo->userinfo);
-		}
-
-		$query = $tuxxedo->db->query('
-						SELECT 
-							* 
-						FROM 
-							`' . TUXXEDO_PREFIX . 'users` 
-						WHERE 
-							' . ($by_email ? '`email` = \'%s\'' : '`id` = %d') . '
-						LIMIT 1', $identifier);
-
-		if(!$query || !$query->getNumRows())
-		{
-			return(false);
-		}
-		elseif(($userinfo = $query->fetchObject()) !== false && !isset($tuxxedo->cache->usergroups[$tuxxedo->userinfo->usergroupid]))
-		{
-			return(false);
-		}
-
-		$userinfo->usergroupinfo = $tuxxedo->cache->usergroups[$userinfo->usergroupid];
-
-		return($userinfo);
-	}
-
-	/**
-	 * Hashes a password using a salt
-	 *
-	 * @param	string			The password to encrypt
-	 * @param	string			The unique salt for this password
-	 * @return	string			Returns the computed password
-	 */
-	function password_hash($password, $salt)
-	{
-		return(sha1(sha1($password) . $salt));
-	}
-
-	/**
-	 * Checks if a password matches with its hash value
-	 *
-	 * @param	string			The raw password
-	 * @param	string			The user salt that generated the password
-	 * @param	string			The hashed password
-	 * @return	boolean			Returns true if the password matches, otherwise false
-	 */
-	function is_valid_password($password, $salt, $hash)
-	{
-		return(password_hash($password, $salt) === $hash);
 	}
 
 	/**

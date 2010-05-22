@@ -22,14 +22,21 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	abstract class Tuxxedo_Session extends Tuxxedo_InfoAccess
+	class Tuxxedo_Session extends Tuxxedo_InfoAccess
 	{
 		/**
 		 * Whether a session is started or not
 		 *
 		 * @var		boolean
 		 */
-		protected static $started	= false;
+		public static $started	= false;
+
+		/**
+		 * The session id
+		 *
+		 * @var		string
+		 */
+		public static $id	= '';
 
 		/**
 		 * The session options, such as prefix, path etc.
@@ -55,7 +62,6 @@
 		 */
 		final public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
 		{
-			self::$started = true;
 			self::$options = Array(
 						'expires'	=> $options['cookie_expires'], 
 						'prefix'	=> $options['cookie_prefix'], 
@@ -63,8 +69,7 @@
 						'path'		=> $options['cookie_path']
 						);
 
-			session_set_cookie_params($options['cookie_expires'], $options['cookie_domain'], $options['cookie_path'], false, true);
-			session_start();
+			self::start();
 		}
 
 		/**
@@ -108,12 +113,36 @@
 		}
 
 		/**
+		 * Starts a session
+		 *
+		 * @return	void			No value is returned
+		 */
+		final public static function start()
+		{
+			if(self::$started)
+			{
+				return;
+			}
+
+			session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
+			session_start();
+
+			self::$started 	= true;
+			self::$id	= session_id();
+		}
+
+		/**
 		 * Terminates a session
 		 *
 		 * @return	void			No value is returned
 		 */
 		final public static function terminate()
 		{
+			if(!self::$started)
+			{
+				return;
+			}
+
 			session_unset();
 			session_destroy();
 

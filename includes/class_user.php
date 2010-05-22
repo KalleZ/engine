@@ -22,7 +22,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_UserSession
+	class Tuxxedo_User extends Tuxxedo_InfoAccess
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -46,95 +46,44 @@
 		protected $usergroupinfo;
 
 		/**
-		 * The session options, such as prefix, path etc.
+		 * User session
+		 *
+		 * @var		Tuxxedo_Session
+		 */
+		protected $session;
+
+		/**
+		 * Cached userinfo, for calls to get user information 
+		 * about a specific user
 		 *
 		 * @var		array
 		 */
-		protected static $options	= Array(
-							'expires'	=> 1800, 
-							'prefix'	=> '', 
-							'domain'	=> '', 
-							'path'		=> ''
-							);
+		protected $cache	= Array();
+
 
 		/**
-		 * Constructor, instanciates a new user session. It detects 
-		 * the session data automaticlly so it can be created instantly
+		 * Constructor, instanciates a new user session.
 		 *
-		 * @param	string			Email address of the user, if creating a new user session only
-		 * @param	string			Raw password associated with the above email, if creating a new user session only
-		 *
-		 * @throws	Tuxxedo_Exception	Throws a regular exception with no error message if the email and password supplied was invalid
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if the usergroup information fails to load from the datastore or if one of the database queries should fail
+		 * @param	boolean				Whether to auto detect if a user is logged in or not
 		 */
-		public function __construct($email = NULL, $password = NULL)
+		public function __construct($autodetect = true)
 		{
-			$this->tuxxedo = Tuxxedo::init();
+			$this->tuxxedo 			= Tuxxedo::init();
+			$this->session			= $this->tuxxedo->register('session', 'Tuxxedo_Session');
 
-			if(!is_null($email) && !is_null($password))
+			if($autodetect && $userid = Tuxxedo_Session::get('userid') && ($userinfo = $this->getUserInfo($userid)) !== false)
 			{
-				if(!$email || empty($password))
-				{
-					throw new Tuxxedo_Exception('Invalid email or password');
-				}
-
-				$userinfo = fetch_userinfo($email, true);
-
-				if(!$userinfo || !$email || !is_valid_password($password, $userinfo->salt, $userinfo->password))
-				{
-					throw new Tuxxedo_Exception('Invalid email or password');
-				}
-
-				self::set('userid', $userinfo->id);
+				$this->userinfo		= $userinfo;
+				$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
+			}
+			else
+			{
+				$this->userinfo		= new stdClass;
+				$this->usergroupinfo	= new stdClass;
 			}
 
-			if($userid = self::get('userid'))
-			{
-				if(!isset($userinfo))
-				{
-					$query = $this->tuxxedo->db->query('
-										SELECT 
-											' . TUXXEDO_PREFIX . 'sessions.*,
-											' . TUXXEDO_PREFIX . 'users.*
-										FROM 
-											`' . TUXXEDO_PREFIX . 'sessions`
-										LEFT JOIN 
-											`' . TUXXEDO_PREFIX . 'users` 
-											ON 
-												' . TUXXEDO_PREFIX . 'sessions.userid = ' . TUXXEDO_PREFIX . 'users.id
-										WHERE 
-											' . TUXXEDO_PREFIX . 'sessions.sessionid = \'%s\'
-											AND 
-											' . TUXXEDO_PREFIX . 'users.id = %d
-										LIMIT 1', session_id(), $userid);
-
-					if($query && $query->getNumRows())
-					{
-						$userinfo = $query->fetchObject();
-						$query->free();
-					}
-				}
-
-				if(isset($userinfo))
-				{
-					if(!isset($this->tuxxedo->cache->usergroups[$userinfo->usergroupid]))
-					{
-						throw new Tuxxedo_Basic_Exception('Unable to usergroup permissions, datastore possibly corrupted');
-					}
-
-					$this->userinfo		= $userinfo;
-					$this->usergroupinfo 	= (object) $this->tuxxedo->cache->usergroups[$this->userinfo->usergroupid];
-
-					$this->tuxxedo->db->setShutdownQuery('
-										UPDATE 
-											`' . TUXXEDO_PREFIX . 'sessions` 
-										SET 
-											`location` = \'%s\', 
-											`lastactivity` = %d 
-										WHERE 
-											`sessionid` = \'%s\'', $this->tuxxedo->db->escape(TUXXEDO_SELF), session_id(), time());
-				}
-			}
+			$this->userinfo->session 	= $this->session;
+			$this->information		= $this->userinfo;
 
 			$this->tuxxedo->db->query('
 							REPLACE INTO 
@@ -145,151 +94,168 @@
 								%s,
 								\'%s\', 
 								%d
-							)', session_id(), (is_object($this->userinfo) ? $this->userinfo->id : '\'\''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : '\'\''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+		}
 
+		/**
+		 * Destructor, executes the cleanup queries etc.
+		 */
+		public function __destruct()
+		{
+			$this->cleanup();
+		}
+
+		/**
+		 * Cleans the user session up by running shutdown queries 
+		 * and updates the user location if the user session still
+		 * is active
+		 *
+		 * @return		void			No value is returned
+		 */
+		protected function cleanup()
+		{
+		}
+
+		public function login($identifier, $password, $identifier_field = 'username')
+		{
+			if(isset($this->userinfo->id))
+			{
+				$this->logout();
+			}
+
+			$userinfo = $this->getUserInfo($identifer, $identifier_field);
+
+			if(!$userinfo || !self::isValidPassword($password, $userinfo->salt, $userinfo->password))
+			{
+				return(false);
+			}
+
+			$this->userinfo		= $userinfo;
+			$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
+
+			return(true);
+		}
+
+		public function logout($restart = false)
+		{
+			$this->userinfo = $this->usergroupinfo = new stdClass;
+
+			$this->cleanup();
 			$this->tuxxedo->db->setShutdownQuery('
 								DELETE FROM 
 									`' . TUXXEDO_PREFIX . 'sessions` 
 								WHERE 
-									`lastactivity` + %d < %d', self::$options['expires'], time());
-		}
+									`sessionid` = \'%s\'', Tuxxedo_Session::$id);
 
-		/**
-		 * Magic method called when creating a new instance of the 
-		 * object from the registry
-		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	array			The configuration array
-		 * @param	array			The options array
-		 * @return	object			Object instance
-		 */
-		public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
-		{
-			self::$options = Array(
-						'expires'	=> $options['cookie_expires'], 
-						'prefix'	=> $options['cookie_prefix'], 
-						'domain'	=> $options['cookie_domain'], 
-						'path'		=> $options['cookie_path']
-						);
+			Tuxxedo_Session::terminate();
 
-			session_set_cookie_params($options['cookie_expires'], $options['cookie_domain'], $options['cookie_path'], false, true);
-			session_start();
-		}
-
-		/**
-		 * Gets a session variable
-		 *
-		 * @param	string			Variable name
-		 * @param	boolean			Whether to include the session prefix or not, defaults to true
-		 * @return	mixed			Returns the session variable value on success, or null on failure
-		 */
-		public static function get($name, $prefix = true)
-		{
-			if($prefix)
+			if($restart)
 			{
-				$name = self::$options['prefix'] . $name;
+				Tuxxedo_Session::start();
+			}
+		}
+
+		public function getUserInfo($identifier = NULL, $identifier_field = 'id', $cache = false)
+		{
+			$identifier_field = strtolower($identifier_field);
+
+			if(isset($this->userinfo->id) && $this->userinfo->{$identifier_field} == $identifier)
+			{
+				return($this->userinfo);
+			}
+			elseif($cache)
+			{
+				if($identifier_field == 'id' && isset($this->cache[$identifier]))
+				{
+					return($this->cache[$identifier]);
+				}
+				elseif(sizeof($this->cache))
+				{
+					foreach($this->cache as $userinfo)
+					{
+						if($userinfo->{$identifier_field} == $identifier)
+						{
+							return($userinfo);
+						}
+					}
+				}
 			}
 
-			if(!isset($_SESSION[$name]))
+			$query = $this->tuxxedo->db->query('
+								SELECT 
+									* 
+								FROM 
+									`' . TUXXEDO_PREFIX . 'users` 
+								WHERE 
+									`%s` = \'%s\'
+								LIMIT 1', $this->tuxxedo->db->escape($identifier_field), $this->tuxxedo->db->escape($identifier));
+
+			if($query && $query->getNumRows())
 			{
-				return(NULL);
+				$userinfo = $query->fetchObject();
+
+				if($cache)
+				{
+					$this->cache[$userinfo->id] = $userinfo;
+				}
+
+				return($this->userinfo);
 			}
 
-			return($_SESSION[$name]);
+			return(false);
 		}
 
-		/**
-		 * Sets a session variable
-		 *
-		 * @param	string			Variable name
-		 * @param	mixed			Variable value
-		 * @param	boolean			Whether to include the session prefix or not, defaults to true
-		 * @return	void			No value is returned
-		 */
-		public static function set($name, $value, $prefix = true)
+		public function getUserGroupInfo($id = NULL)
 		{
-			if($prefix)
+			if($id === NULL)
 			{
-				$name = self::$options['prefix'] . $name;
+				return($this->usergroupinfo);
 			}
 
-			$_SESSION[$name] = $value;
+			return($this->tuxxedo->cache->usergroups[$id]);
 		}
 
-		/**
-		 * Checks if a user is logged in or not
-		 *
-		 * @return	boolean			True if a user is logged in, otherwise false
-		 */
-		public function isLoggedIn()
-		{
-			return(is_object($this->userinfo));
-		}
-
-		/**
-		 * Gets the user information for the current logged 
-		 * in user
-		 *
-		 * @return	object			Returns an object with the users information, or boolean false if user isnt logged in
-		 */
-		public function getUserinfo()
-		{
-			if(!is_object($this->userinfo))
-			{
-				return(false);
-			}
-
-			return($this->userinfo);
-		}
-
-		/**
-		 * Gets the usergroup information for the current 
-		 * logged in user
-		 *
-		 * @return	object			Returns an object with the users usergroup information, or boolean false if user isnt logged in
-		 */
-		public function getUsergroup()
-		{
-			if(!is_object($this->userinfo))
-			{
-				return(false);
-			}
-
-			return($this->usergroupinfo);
-		}
-
-		/**
-		 * Checks if a user is a member of a specific usergroup
-		 *
-		 * @return	boolean			Returns true if the user is a member of that group, otherwise false
-		 */
 		public function isMemberOf($groupid)
 		{
-			return(is_object($this->usergroupinfo) && $this->usergroupinfo->id == $groupid);
+			return(isset($this->userinfo->id) && $this->userinfo->usergroupid == $groupid);
+		}
+
+		public function isLoggedIn()
+		{
+			return(isset($this->userinfo->id));
+		}
+
+		public function isGranted($permission)
+		{
+			/**
+			 * Checks whether the current logged in user is granted 
+			 * a specific permission mask
+			 */
 		}
 
 		/**
-		 * Logs a user out
+		 * Checks if a password matches with its hash value
 		 *
-		 * @return	void			No value is returned
+		 * @param	string			The raw password
+		 * @param	string			The user salt that generated the password
+		 * @param	string			The hashed password
+		 * @return	boolean			Returns true if the password matches, otherwise false
 		 */
-		public function logout()
+		public static function isValidPassword($password, $salt, $hash)
 		{
-			if(!is_object($this->userinfo))
-			{
-				return;
-			}
+			return(password_hash($password, $salt) === $hash);
+		}
 
-			session_unset();
-			session_destroy();
-
-			$this->tuxxedo->db->setShutdownQuery('
-								DELETE FROM 
-									`' . TUXXEDO_PREFIX . 'sessions` 
-								WHERE 
-									`sessionid` = \'%s\'', $this->userinfo->sessionid);
-
-			$this->userinfo = $this->usergroupinfo = NULL;
+		/**
+		 * Hashes a password using a salt
+		 *
+		 * @param	string			The password to encrypt
+		 * @param	string			The unique salt for this password
+		 * @return	string			Returns the computed password
+		 */
+		public static function getPasswordHash($password, $salt)
+		{
+			return(sha1(sha1($password) . $salt));
 		}
 	}
 ?>

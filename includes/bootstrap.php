@@ -227,7 +227,7 @@
 	 * user session, note that the invoke method sets the 
 	 * cookie parameters and starts session itself here
 	 */
-	$tuxxedo->register('user', 'Tuxxedo_UserSession');
+	$tuxxedo->register('user', 'Tuxxedo_User');
 
 	/**
 	 * Options and configuration references
@@ -238,8 +238,8 @@
 	/**
 	 * User information references
 	 */
-	$tuxxedo->set('userinfo', $user->getUserinfo());
-	$tuxxedo->set('usergroup', $user->getUsergroup());
+	$tuxxedo->set('userinfo', $user->getUserInfo());
+	$tuxxedo->set('usergroup', $user->getUserGroupInfo());
 
 	/**
 	 * Date and Timezone references
