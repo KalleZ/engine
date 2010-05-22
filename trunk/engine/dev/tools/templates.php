@@ -85,7 +85,7 @@
 	{
 		global $cache;
 
-		$fp = fopen(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($title) . '.src', 'w+');
+		$fp = fopen(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($title) . '.tuxx', 'w+');
 
 		fwrite($fp, $compiledsource);
 		fclose($fp);
@@ -206,7 +206,7 @@
 				$t = validate_template();
 				$db->query('DELETE FROM `' . TUXXEDO_PREFIX . 'templates` WHERE `id` = ' . $t->id);
 
-				unlink(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($t->title) . '.src');
+				unlink(TUXXEDO_DIR . '/styles/' . $cache->styleinfo[1]['styledir'] . '/templates/' . normalize_title($t->title) . '.tuxx');
 
 				redirect('./templates.php');
 			}
