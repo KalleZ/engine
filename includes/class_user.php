@@ -243,7 +243,7 @@
 		 */
 		public static function isValidPassword($password, $salt, $hash)
 		{
-			return(password_hash($password, $salt) === $hash);
+			return(self::getPasswordHash($password, $salt) === $hash);
 		}
 
 		/**
