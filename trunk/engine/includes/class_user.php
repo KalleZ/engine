@@ -71,7 +71,7 @@
 			$this->tuxxedo 			= Tuxxedo::init();
 			$this->session			= $this->tuxxedo->register('session', 'Tuxxedo_Session');
 
-			if($autodetect && $userid = Tuxxedo_Session::get('userid') && ($userinfo = $this->getUserInfo($userid)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
+			if($autodetect && ($userid = Tuxxedo_Session::get('userid')) !== false && ($userinfo = $this->getUserInfo($userid)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
 			{
 				$this->userinfo		= $userinfo;
 				$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
@@ -116,14 +116,28 @@
 		{
 		}
 
+		/**
+		 * Authenticates a user. If a user is currently logged in, then it 
+		 * will be logged out and the session id will be regenerated.
+		 *
+		 * A user can be logged in by a unique identifier, such as:
+		 *  - Username
+		 *  - Email
+		 *  - etc.
+		 *
+		 * @param	string			User identifier
+		 * @param	string			User's password (raw format)
+		 * @param	string			The identifier field to check and validate against
+		 * @return	boolean			Returns true if the user was logged in with success, otherwise false
+		 */
 		public function login($identifier, $password, $identifier_field = 'username')
 		{
 			if(isset($this->userinfo->id))
 			{
-				$this->logout();
+				$this->logout(true);
 			}
 
-			$userinfo = $this->getUserInfo($identifer, $identifier_field);
+			$userinfo = $this->getUserInfo($identifier, $identifier_field);
 
 			if(!$userinfo || !self::isValidPassword($password, $userinfo->salt, $userinfo->password))
 			{
@@ -136,11 +150,25 @@
 			$this->userinfo		= $userinfo;
 			$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
 
+			$this->tuxxedo->set('userinfo', $userinfo);
+			$this->tuxxedo->set('usergroup', $this->usergroupinfo);
+
 			return(true);
 		}
 
+		/**
+		 * Log the current logged in user out
+		 *
+		 * @param	boolean			Whether to restart the session or not
+		 * @return	void			No value is returned
+		 */
 		public function logout($restart = false)
 		{
+			if(!isset($this->userinfo->id))
+			{
+				return;
+			}
+
 			$this->userinfo = $this->usergroupinfo = new stdClass;
 
 			$this->cleanup();
@@ -162,9 +190,12 @@
 		{
 			$identifier_field = strtolower($identifier_field);
 
-			if(isset($this->userinfo->id) && $this->userinfo->{$identifier_field} == $identifier)
+			if(isset($this->userinfo->id))
 			{
-				return($this->userinfo);
+				if(($identifier !== NULL && isset($this->userinfo->{$identifier_field}) && $this->userinfo->{$identifier_field} == $identifier) || $identifier === NULL)
+				{
+					return($this->userinfo);
+				}
 			}
 			elseif($cache)
 			{
@@ -202,7 +233,7 @@
 					$this->cache[$userinfo->id] = $userinfo;
 				}
 
-				return($this->userinfo);
+				return($userinfo);
 			}
 
 			return(false);
@@ -212,10 +243,19 @@
 		{
 			if($id === NULL)
 			{
-				return($this->usergroupinfo);
+				if(isset($this->usergroupinfo->id))
+				{
+					return($this->usergroupinfo);
+				}
+
+				return(false);
+			}
+			elseif(isset($this->tuxxedo->cache->usergroups[$id]))
+			{
+				return($this->tuxxedo->cache->usergroups[$id]);
 			}
 
-			return($this->tuxxedo->cache->usergroups[$id]);
+			return(false);
 		}
 
 		public function isMemberOf($groupid)

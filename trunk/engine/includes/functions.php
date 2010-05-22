@@ -195,7 +195,7 @@
 			'code { font-family: Consolas, Monaco,  \'Courier New\', Monospace; }' . PHP_EOL . 
 			'div.container-clear { clear: both; }' . PHP_EOL . 
 			'div.container-left { float: left;' . (TUXXEDO_DEBUG ? ' width: 50%;' : '') . ' }' . PHP_EOL . 
-			'div.container-right { background-color: #FFFFFF; float: right; width: 400px; }' . PHP_EOL . 
+			'div.container-right { background-color: #FFFFFF; float: right; width: 500px; }' . PHP_EOL . 
 			'div.head { padding: 3px; }' . PHP_EOL . 
 			'li, ul { margin: 0px; }' . PHP_EOL . 
 			'td.strong, tr.strong { font-weight: bold; }' . PHP_EOL . 

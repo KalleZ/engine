@@ -70,7 +70,7 @@
 		public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
 		{
 			$styledata 	= $tuxxedo->cache->styleinfo;
-			$styleid	= ($options ? (!empty($tuxxedo->userinfo->id) && $tuxxedo->userinfo->style_id != $options['style_id'] ? $tuxxedo->userinfo->style_id : $options['style_id']) : 0);
+			$styleid	= ($options ? (isset($tuxxedo->userinfo->id) && $tuxxedo->userinfo->style_id !== NULL && $tuxxedo->userinfo->style_id != $options['style_id'] ? $tuxxedo->userinfo->style_id : $options['style_id']) : 0);
 
 			if($styleid && isset($styledata[$styleid]))
 			{
