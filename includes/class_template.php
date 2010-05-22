@@ -312,7 +312,7 @@
 
 			foreach($templates as $title)
 			{
-				if(($contents = @file_get_contents($this->path . $title . '.src')) !== false)
+				if(($contents = @file_get_contents($this->path . $title . '.tuxx')) !== false)
 				{
 					$this->templates->{$title} = $contents;
 				}
