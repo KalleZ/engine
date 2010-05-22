@@ -66,7 +66,7 @@
 		public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
 		{
 			$languagedata 	= $tuxxedo->cache->languages;
-			$languageid	= ($options ? (!empty($tuxxedo->userinfo->id) && $tuxxedo->userinfo->language_id != $options['language_id'] ? $tuxxedo->userinfo->language_id : $options['language_id']) : 0);
+			$languageid	= ($options ? (isset($tuxxedo->userinfo->id) && $tuxxedo->userinfo->language_id !== NULL && $tuxxedo->userinfo->language_id != $options['language_id'] ? $tuxxedo->userinfo->language_id : $options['language_id']) : 0);
 
 			if($languageid && isset($languagedata[$languageid]))
 			{

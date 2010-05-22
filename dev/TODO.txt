@@ -11,6 +11,8 @@
 
 	Add a generic pagination class with a default Engine database pagination driver
 
+	Add missing phrase translations for datamanager fields
+
 	Add an interface (Tuxxedo_Component) that will have the tuxxedo reference passed by its first parameter to prevent Tuxxedo:Init() calls
 
 	Rewrite the user session API
