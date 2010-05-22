@@ -11,14 +11,11 @@
 
 	Add a generic pagination class with a default Engine database pagination driver
 
+	Add an interface (Tuxxedo_Component) that will have the tuxxedo reference passed by its first parameter to prevent Tuxxedo:Init() calls
+
 	Rewrite the user session API
-	 - Session constructor should use a username as identifier instead of the email
-	 - Add a 'login' method so we don't need to do hacky things like: $tuxxedo->set('user', new Tuxxedo_UserSession(...))
-	 - Remove deprecated API methods
-	 - Improve performance in the login method and fetch_userinfo() function to use less queries if possible
 	 - Store online statistics in the datastore cache
 	 - Update the datamanager with the latest profile fields
-	 - See if there could be any future issues now that timestamps are stored as UTC in the session table
 
 	Improve the debug mode
 	 - Make it possible to add different levels of verbosity so the developer can decide which things to display
