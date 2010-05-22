@@ -71,7 +71,7 @@
 			$this->tuxxedo 			= Tuxxedo::init();
 			$this->session			= $this->tuxxedo->register('session', 'Tuxxedo_Session');
 
-			if($autodetect && $userid = Tuxxedo_Session::get('userid') && ($userinfo = $this->getUserInfo($userid)) !== false)
+			if($autodetect && $userid = Tuxxedo_Session::get('userid') && ($userinfo = $this->getUserInfo($userid)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
 			{
 				$this->userinfo		= $userinfo;
 				$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
@@ -129,6 +129,9 @@
 			{
 				return(false);
 			}
+
+			Tuxxedo_Session::set('userid', $userinfo->id);
+			Tuxxedo_Session::set('password', $userinfo->password);
 
 			$this->userinfo		= $userinfo;
 			$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
