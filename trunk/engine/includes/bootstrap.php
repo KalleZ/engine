@@ -212,7 +212,6 @@
 	 */
 	$tuxxedo->register('db', 'Tuxxedo_Database');
 	$tuxxedo->register('cache', 'Tuxxedo_Datastore');
-	$tuxxedo->register('filter', 'Tuxxedo_DataFilter');
 
 	/**
 	 * Precache elements from datastore
@@ -238,7 +237,7 @@
 	/**
 	 * User information references
 	 */
-	$tuxxedo->set('userinfo', $user->getUserInfo());
+	$tuxxedo->set('userinfo', $user->getUserInfo(NULL, NULL, Tuxxedo_User::OPT_CURRENT_ONLY));
 	$tuxxedo->set('usergroup', $user->getUserGroupInfo());
 
 	/**

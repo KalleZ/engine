@@ -27,21 +27,21 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	final class Tuxxedo_Template_Compiler
+	class Tuxxedo_Template_Compiler
 	{
 		/**
 		 * The uncompiled raw source code
 		 *
 		 * @var		string
 		 */
-		private $source;
+		protected $source;
 
 		/**
 		 * The compiled source code
 		 *
 		 * @var		string
 		 */
-		private $compiled_source;
+		protected $compiled_source;
 
 		/**
 		 * The current number of parsed conditions, this is used for 
@@ -50,7 +50,7 @@
 		 *
 		 * @var		integer
 		 */
-		private $conditions		= 0;
+		protected $conditions		= 0;
 
 		/**
 		 * The default functions to allow in expressions, note 
@@ -60,7 +60,7 @@
 		 *
 		 * @var		array
 		 */
-		private $functions		= Array(
+		protected $functions		= Array(
 							'and', 
 							'or', 
 							'xor', 
@@ -76,7 +76,7 @@
 		 *
 		 * @var		array
 		 */
-		private $classes		= Array(
+		protected $classes		= Array(
 							'user', 
 							'usergroup'
 							);
@@ -395,7 +395,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	final class Tuxxedo_Template_Compiler_Exception extends Tuxxedo_Basic_Exception
+	class Tuxxedo_Template_Compiler_Exception extends Tuxxedo_Basic_Exception
 	{
 		/**
 		 * Constructs a template compiler excepton
@@ -425,7 +425,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	final class Tuxxedo_Template_Compiler_Dummy
+	class Tuxxedo_Template_Compiler_Dummy
 	{
 		/**
 		 * Dummy method to emulate method overloading 
