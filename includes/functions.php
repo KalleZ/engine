@@ -397,7 +397,7 @@
 
 		if(!$tuxxedo->style)
 		{
-			Tuxxedo_doc_error($buffer);
+			tuxxedo_doc_error($buffer);
 		}
 		else
 		{
@@ -454,7 +454,7 @@
 						'tuxxedo_datastore'				=> 'cache', 
 
 						/* Data filtering */
-						'tuxxedo_datafilter'				=> 'filter', 
+						'tuxxedo_filter'				=> 'filter', 
 
 						/* Data managers */
 						'tuxxedo_datamanager'				=> 'datamanager', 
@@ -498,7 +498,7 @@
 
 		$class = strtolower((string) $class);
 
-		if(empty($class) || class_exists($class))
+		if(empty($class) || class_exists($class, false))
 		{
 			return;
 		}
@@ -628,7 +628,14 @@
 	 */
 	function is_valid_email($email)
 	{
-		if(extension_loaded('filter'))
+		static $have_filter_ext;
+
+		if($have_filter_ext === NULL)
+		{
+			$have_filter_ext = extension_loaded('filter');
+		}
+
+		if($have_filter_ext)
 		{
 			return((boolean) filter_var($email, FILTER_VALIDATE_EMAIL));
 		}

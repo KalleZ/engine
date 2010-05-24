@@ -117,11 +117,16 @@
 		 *
 		 * @return	void			No value is returned
 		 */
-		final public static function start()
+		final public static function start($regenerate_id = false)
 		{
 			if(self::$started)
 			{
 				return;
+			}
+
+			if($regenerate_id)
+			{
+				session_regenerate_id(true);
 			}
 
 			session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);

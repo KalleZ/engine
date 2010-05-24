@@ -1,6 +1,7 @@
 <?php
 	require('./bootstrap.php');
 
+	$tuxxedo->set('user', new Tuxxedo_User(false, false));
 	$cache->cache(Array('options', 'usergroups'));
 
 	if(!is_array($cache->usergroups))
@@ -42,7 +43,7 @@
 
 	while($session = $sessions->fetchObject())
 	{
-		$userinfo = fetch_userinfo($session->userid);
+		$userinfo = $user->getUserInfo($session->userid);
 
 		echo('<tr>');
 		echo('<td>' . $session->sessionid . '</td>');

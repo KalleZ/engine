@@ -24,21 +24,21 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_DataFilter
+	class Tuxxedo_Filter
 	{
 		/**
 		 * Whether the filter extension is available
 		 *
 		 * @var		boolean
 		 */
-		protected static $have_filter_ext	= false;
+		public static $have_filter_ext	= false;
 
 		/**
 		 * Whether magic_quotes_gpc is enabled or not
 		 *
 		 * @var		boolean
 		 */
-		protected static $have_magic_quotes	= false;
+		public static $have_magic_quotes	= false;
 
 
 		/**

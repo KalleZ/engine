@@ -13,8 +13,6 @@
 
 	Add missing phrase translations for datamanager fields
 
-	Add an interface (Tuxxedo_Component) that will have the tuxxedo reference passed by its first parameter to prevent Tuxxedo:Init() calls
-
 	Rewrite the user session API
 	 - Store online statistics in the datastore cache
 	 - Update the datamanager with the latest profile fields
@@ -27,5 +25,10 @@
 	Improve development tools
 	 - Add internationalization support
 	 - Add styles support
+	 - Add user support
 
 	Change SQL queries to be non-mysql compatible
+
+	Change as calls to Tuxxedo::Init() to global $tuxxedo; $this->tuxxedo = $tuxxedo; ...
+
+	Change some of the constant definitions in boostrap.php to be class constants and reside within their related class
