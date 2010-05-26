@@ -85,27 +85,28 @@
 		/**
 		 * Constructor, fetches a new user based on its id if set
 		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	integer			The user id
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the user id is set and it failed to load for some reason
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
 		 */
-		public function __construct($identifier = NULL)
+		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL)
 		{
-			$this->tuxxedo 		= Tuxxedo::init();
+			$this->tuxxedo 		= $tuxxedo;
 
 			$this->tablename	= TUXXEDO_PREFIX . 'users';
 			$this->idname		= 'id';
 
 			if(!is_null($identifier))
 			{
-				$user = $this->tuxxedo->db->query('
-									SELECT 
-										* 
-									FROM 
-										`' . TUXXEDO_PREFIX . 'users` 
-									WHERE 
-										`id` = %d', $identifier);
+				$user = $tuxxedo->db->query('
+								SELECT 
+									* 
+								FROM 
+									`' . TUXXEDO_PREFIX . 'users` 
+								WHERE 
+									`id` = %d', $identifier);
 
 				if(!$user)
 				{

@@ -40,13 +40,6 @@
 		 */
 		protected $cache	= Array();
 
-		/**
-		 * True if the datastore is ready to use
-		 *
-		 * @var		boolean
-		 */
-		protected $ready	= false;
-
 
 		/**
 		 * Constructor
@@ -55,14 +48,14 @@
 		 */
 		public function __construct()
 		{
-			$this->tuxxedo = Tuxxedo::init();
+			global $tuxxedo;
 
-			if($this->tuxxedo->db === false)
+			$this->tuxxedo = $tuxxedo;
+
+			if($tuxxedo->db === false)
 			{
 				throw new Tuxxedo_Basic_Exception('A database driver must be initalized before the datastore can be constructed');
 			}
-
-			$this->ready = true;
 		}
 
 		/**
@@ -124,11 +117,7 @@
 		 */
 		public function rebuild($name, Array $data = NULL, $delay = true)
 		{
-			if(!$this->ready)
-			{
-				return(false);
-			}
-			elseif(is_null($data))
+			if(is_null($data))
 			{
 				$sql = sprintf('
 						DELETE FROM 
@@ -188,7 +177,7 @@
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
-			if(!$this->ready || !sizeof($elements))
+			if(!sizeof($elements))
 			{
 				return(false);
 			}

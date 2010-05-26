@@ -50,7 +50,9 @@
 		 */
 		public function __construct(Array $styleinfo)
 		{
-			$this->tuxxedo		= $tuxxedo = Tuxxedo::init();
+			global $tuxxedo;
+
+			$this->tuxxedo		= $tuxxedo;
 			$this->information 	= $styleinfo;
 			$this->templates	= new stdClass;
 			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $this, $tuxxedo->options->style_storage, $this->templates);

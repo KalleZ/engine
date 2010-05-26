@@ -63,15 +63,16 @@
 		/**
 		 * Constructor, fetches a new usergroup based on its id if set
 		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	integer			The usergroup id
 		 * @param	boolean			Load from datastore?
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the usergroup id is set and it failed to load for some reason
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
 		 */
-		public function __construct($identifier = NULL, $cached = false)
+		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL, $cached = false)
 		{
-			$this->tuxxedo 		= Tuxxedo::init();
+			$this->tuxxedo 		= $tuxxedo;
 
 			$this->tablename	= TUXXEDO_PREFIX . 'usergroups';
 			$this->idname		= 'id';
@@ -80,7 +81,7 @@
 			{
 				if($cached)
 				{
-					$usergroups = $this->tuxxedo->cache->fetch('usergroups');
+					$usergroups = $tuxxedo->cache->fetch('usergroups');
 
 					if(!$usergroups || !isset($usergroups[$identifier]))
 					{
@@ -91,7 +92,7 @@
 				}
 				else
 				{
-					$usergroups = $this->tuxxedo->db->query('
+					$usergroups = $tuxxedo->db->query('
 										SELECT 
 											* 
 										FROM 

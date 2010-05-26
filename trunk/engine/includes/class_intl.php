@@ -48,7 +48,9 @@
 		 */
 		public function __construct(Array $languageinfo)
 		{
-			$this->tuxxedo		= Tuxxedo::init();
+			global $tuxxedo;
+
+			$this->tuxxedo		= $tuxxedo;
 			$this->information 	= $languageinfo;
 		}
 
