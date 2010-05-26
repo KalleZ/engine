@@ -29,6 +29,4 @@
 
 	Change SQL queries to be non-mysql compatible
 
-	Change as calls to Tuxxedo::Init() to global $tuxxedo; $this->tuxxedo = $tuxxedo; ...
-
 	Change some of the constant definitions in boostrap.php to be class constants and reside within their related class

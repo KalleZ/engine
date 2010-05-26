@@ -67,15 +67,16 @@
 		/**
 		 * Constructor, fetches a new style based on its id if set
 		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	integer			The style id
 		 * @param	boolean			Load from datastore?
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the style id is set and it failed to load for some reason
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
 		 */
-		public function __construct($identifier = NULL, $cached = false)
+		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL, $cached = false)
 		{
-			$this->tuxxedo 		= Tuxxedo::init();
+			$this->tuxxedo 		= $tuxxedo;
 
 			$this->tablename	= TUXXEDO_PREFIX . 'styles';
 			$this->idname		= 'id';
@@ -84,7 +85,7 @@
 			{
 				if($cached)
 				{
-					$styles = $this->tuxxedo->cache->fetch('styleinfo');
+					$styles = $tuxxedo->cache->fetch('styleinfo');
 
 					if(!$styles || !isset($styles[$identifier]))
 					{
@@ -95,13 +96,13 @@
 				}
 				else
 				{
-					$styles = $this->tuxxedo->db->query('
-										SELECT 
-											* 
-										FROM 
-											`' . TUXXEDO_PREFIX . 'styles` 
-										WHERE 
-											`id` = %d', $identifier);
+					$styles = $tuxxedo->db->query('
+									SELECT 
+										* 
+									FROM 
+										`' . TUXXEDO_PREFIX . 'styles` 
+									WHERE 
+										`id` = %d', $identifier);
 
 					if(!$styles)
 					{

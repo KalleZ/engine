@@ -189,13 +189,15 @@
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $cached = false)
 		{
+			global $tuxxedo;
+
 			if(in_array($datamanager, self::$loaded_datamanagers))
 			{
-				return(new $class($identifier, $cached));
+				return(new $class($tuxxedo, $identifier, $cached));
 			}
 
 			$class	= 'Tuxxedo_Datamanager_API_' . $datamanager;
-			$dm 	= new $class($identifier, $cached);
+			$dm 	= new $class($tuxxedo, $identifier, $cached);
 
 			if(!is_subclass_of($class, __CLASS__))
 			{

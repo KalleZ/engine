@@ -96,16 +96,18 @@
 		 */
 		public function __construct($autodetect = true, $session = true)
 		{
-			$this->tuxxedo = Tuxxedo::init();
+			global $tuxxedo;
+
+			$this->tuxxedo = $tuxxedo;
 
 			if($session && $autodetect)
 			{
-				$this->session	= $this->tuxxedo->register('session', 'Tuxxedo_Session');
+				$this->session	= $tuxxedo->register('session', 'Tuxxedo_Session');
 
 				if(($userid = Tuxxedo_Session::get('userid')) !== false && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
 				{
 					$this->userinfo		= $userinfo;
-					$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
+					$this->usergroupinfo	= $tuxxedo->cache->usergroups[$userinfo->usergroupid];
 				}
 			}
 
@@ -118,16 +120,16 @@
 			$this->userinfo->session	= $this->session;
 			$this->information		= $this->userinfo;
 
-			$this->tuxxedo->db->query('
-							REPLACE INTO 
-								`' . TUXXEDO_PREFIX . 'sessions` 
-							VALUES
-							(
-								\'%s\', 
-								\'%s\',
-								\'%s\', 
-								%d
-							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+			$tuxxedo->db->query('
+						REPLACE INTO 
+							`' . TUXXEDO_PREFIX . 'sessions` 
+						VALUES
+						(
+							\'%s\', 
+							\'%s\',
+							\'%s\', 
+							%d
+						)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
 		}
 
 		/**
