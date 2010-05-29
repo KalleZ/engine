@@ -116,6 +116,12 @@
 			Tuxxedo::globals('errors', new ArrayObject);
 		}
 
+		if(TUXXEDO_DEBUG)
+		{
+			echo($message . '<br /> <br />');
+			return;
+		}
+
 		Tuxxedo::globals('errors')->append($message);
 	}
 
@@ -243,7 +249,7 @@
 				'</tr>' . PHP_EOL . 
 				'<tr>' . PHP_EOL . 
 				'<td class="head strong">Timestamp</td>' . PHP_EOL . 
-				'<td nowrap="nowrap">' . ($tuxxedo->datetime ? $tuxxedo->datetime->format('H:i:s, j/n - Y') : date('H:i:s, j/n - Y')) . '</td>' . PHP_EOL . 
+				'<td nowrap="nowrap">' . tuxxedo_date(NULL, 'H:i:s j/n - Y') . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL . 
 				'</table>' . PHP_EOL . 
 				'</td>' . PHP_EOL . 
@@ -581,15 +587,35 @@
 	 * Date format function
 	 *
 	 * @param	integer			The timestamp to format
+	 * @param	string			Optional format to use, defaults to the format defined within the options
 	 * @return	string			Returns the formatted date
 	 */
-	function tuxxedo_date($timestamp)
+	function tuxxedo_date($timestamp = NULL, $format = NULL)
 	{
 		global $tuxxedo;
 
-		$tuxxedo->datetime->modify($timestamp);
+		if($timestamp === NULL)
+		{
+			$timestamp = TIMENOW;
+		}
 
-		return($tuxxedo->datetime->format($tuxxedo->cache->options['date_format']));
+		if($format === NULL)
+		{
+			$format = $tuxxedo->cache->options['date_format'];
+		}
+
+		if(!$tuxxedo->datetime)
+		{
+			return(date($format, $timestamp));
+		}
+
+		$old_timestamp = $tuxxedo->datetime->getTimestamp();
+
+		$tuxxedo->datetime->modify($timestamp);
+		$format = $tuxxedo->datetime->format($format);
+		$tuxxedo->datetime->modify($old_timestamp);
+
+		return($format);
 	}
 
 	/**

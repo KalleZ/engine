@@ -46,6 +46,8 @@
 	$tuxxedo->set('timezone', new DateTimeZone('UTC'));
 	$tuxxedo->set('datetime', new DateTime('now', $timezone));
 
+	define('TIMENOW', $datetime->getTimestamp());
+
 	function tuxxedo_devmenu()
 	{
 		if(stristr(ob_get_contents(), '<?xml') !== false)
@@ -54,6 +56,7 @@
 		}
 
 		echo('<hr>');
+		echo('<div style="float: left;">');
 		echo('<a href="./datastore.php">datastore rebuilder</a>');
 		echo(' | ');
 		echo('<a href="./templates.php">template manager</a>');
@@ -63,6 +66,11 @@
 		echo('<a href="./sessions.php">user sessions</a>');
 		echo(' | ');
 		echo('<a href="./password.php">password generator</a>');
+		echo('</div>');
+		echo('<div style="float: right;">');
+		echo('<strong>Date/Time:</strong> ' . tuxxedo_date(NULL, 'H:i:s j/n -Y (e)'));
+		echo('</div>');
+		echo('<div style="clear: both;"></div>');
 	}
 
 	function redirect($location)
