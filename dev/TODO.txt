@@ -15,11 +15,6 @@
 	 - Store online statistics in the datastore cache
 	 - Update the datamanager with the latest profile fields
 
-	Improve the debug mode
-	 - Make it possible to add different levels of verbosity so the developer can decide which things to display
-	 - Add instanciation monitor hooks in the registry for debug mode
-	 - Improve the debug backtrace
-
 	Improve development tools
 	 - Add internationalization support
 	 - Add styles support
