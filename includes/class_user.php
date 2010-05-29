@@ -330,6 +330,9 @@
 		/**
 		 * Checks whether the user id a member of a 
 		 * specific 
+		 *
+		 * ...
+		 */
 		public function isMemberOf($groupid)
 		{
 			return(isset($this->userinfo->id) && $this->userinfo->usergroupid == $groupid);

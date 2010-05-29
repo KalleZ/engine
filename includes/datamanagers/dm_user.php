@@ -32,6 +32,11 @@
 							'id'			=> Array(
 												'type'		=> self::FIELD_PROTECTED
 												), 
+							'username'		=> Array(
+												'type'		=> self::FIELD_REQUIRED, 
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isValidUsername')
+												), 
 							'email'			=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
 												'validation'	=> self::VALIDATE_EMAIL
@@ -53,6 +58,16 @@
 												'type'		=> self::FIELD_REQUIRED, 
 												'validation'	=> self::VALIDATE_STRING
 												), 
+							'styleid'		=> Array(
+												'type'		=> self::FIELD_REQUIRED, 
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isStyleId')
+												), 
+							'languageid'		=> Array(
+												'type'		=> self::FIELD_REQUIRED, 
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isLanguageId')
+												), 
 							'timezone'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
 												'validation'	=> self::VALIDATE_CALLBACK, 
@@ -72,11 +87,14 @@
 		 * @var		array
 		 */
 		protected $field_names		= Array(
+							'username'		=> 'Username', 
 							'email'			=> 'Email address', 
 							'name'			=> 'Name', 
 							'password'		=> 'Password hash', 
 							'usergroupid'		=> 'Usergroup identifier', 
 							'salt'			=> 'Password salt', 
+							'styleid'		=> 'Style identifier', 
+							'languageid'		=> 'Language identifier', 
 							'timezone'		=> 'Timezone'
 							);
 
@@ -95,10 +113,11 @@
 		{
 			$this->tuxxedo 		= $tuxxedo;
 
+			$this->dmname		= 'user';
 			$this->tablename	= TUXXEDO_PREFIX . 'users';
 			$this->idname		= 'id';
 
-			if(!is_null($identifier))
+			if($identifier !== NULL)
 			{
 				$user = $tuxxedo->db->query('
 								SELECT 
@@ -178,6 +197,18 @@
 			}
 
 			return($tuxxedo->cache->timezones[$timezone]);
+		}
+
+		public static function isValidUsername(Tuxxedo $tuxxedo, $username)
+		{
+		}
+
+		public static function isValidStyleId(Tuxxedo $tuxxedo, $styleid)
+		{
+		}
+
+		public static function isValidLanguageId(Tuxxedo $tuxxedo, $languageid)
+		{
 		}
 	}
 ?>

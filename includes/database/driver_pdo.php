@@ -76,7 +76,7 @@
 		 */
 		public function connect(Array $configuration = NULL)
 		{
-			if(!is_null($configuration))
+			if($configuration !== NULL)
 			{
 				$this->configuration = $configuration;
 			}
@@ -398,7 +398,7 @@
 		 */
 		public function isFreed()
 		{
-			return(is_null($this->result));
+			return($this->result !== NULL);
 		}
 
 		/**

@@ -122,6 +122,13 @@
 		protected $tuxxedo;
 
 		/**
+		 * Datamanager name, set by the datamanager
+		 *
+		 * @var		string
+		 */
+		protected $dmname;
+
+		/**
 		 * Table name, set by the datamanager
 		 *
 		 * @var		array
@@ -187,9 +194,22 @@
 		 * @note	If loading from the datastore, then only the data in the cache will be loaded, meaning 
 		 * 		that not all the data that exists in the database may be available.
 		 */
-		final public static function factory($datamanager, $identifier = NULL, $cached = false)
+		final public static function factory($datamanager, $identifier = NULL, $cached = false, $intl = true)
 		{
 			global $tuxxedo;
+
+			if($intl)
+			{
+				if(!$tuxxedo->intl)
+				{
+					throw new Tuxxedo_Basic_Exception('Initialization is not instanciated for form data phrases');
+				}
+
+				if(!$tuxxedo->intl->cache(Array('datamanagers')))
+				{
+					throw new Tuxxedo_Basic_Exception('Unable to cache datamanager phrases');
+				}
+			}
 
 			if(in_array($datamanager, self::$loaded_datamanagers))
 			{
@@ -240,7 +260,7 @@
 		 */
 		public function get($field = NULL)
 		{
-			if(is_null($field))
+			if($field === NULL)
 			{
 				return($this->data);
 			}
@@ -331,7 +351,7 @@
 				{
 					$filtered = $this->tuxxedo->filter->user($this->userdata[$field], $properties['validation']);
 
-					if(is_null($filtered))
+					if($filtered === NULL)
 					{
 						$this->invalid_fields[] = $field;
 						unset($this->userdata[$field]);
@@ -343,28 +363,30 @@
 				}
 			}
 
-			return((boolean) !sizeof($this->invalid_fields));
+			return(!sizeof($this->invalid_fields));
 		}
 
 		/**
 		 * Save method, attempts to validate and save the data 
 		 * into the database
 		 *
-		 * @param	boolean				Whether to rebuild the datastore elements for this datamanager
-		 * @return	boolean				Returns true if the data is saved with success, otherwise boolean false
+		 * @param	boolean					Whether to rebuild the datastore elements for this datamanager
+		 * @return	boolean					Returns true if the data is saved with success, otherwise boolean false
 		 *
-		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the query should fail
+		 * @throws	Tuxxedo_Basic_Exception			Throws a basic exception if the query should fail
 		 * @throws	Tuxxedo_Named_FormData_Exception	Throws a named formdata exception if validation fails
 		 */
 		public function save($rebuild = true)
 		{
 			if(!$this->validate())
 			{
+				global $phrase;
+
 				$formdata = Array();
 
 				foreach($this->invalid_fields as $field)
 				{
-					$formdata[$field] = $this->field_names[$field];
+					$formdata[$field] = (isset($phrase['dm_' . $this->dmname . '_' . $field]) ? $phrase['dm_' . $this->dmname . '_' . $field] : $this->field_names[$field]);
 				}
 
 				throw new Tuxxedo_Named_Formdata_Exception($formdata);
@@ -373,7 +395,7 @@
 			$values		= '';
 			$sql 		= 'REPLACE INTO `' . $this->tablename . '` (';
 			$virtual	= array_merge($this->data, $this->userdata);
-			$virtual	= (!is_null($this->identifier) ? array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
+			$virtual	= ($this->identifier !== NULL ? array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
 			$n 		= sizeof($virtual);
 
 			foreach($virtual as $field => $data)
