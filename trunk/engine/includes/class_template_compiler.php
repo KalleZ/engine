@@ -149,7 +149,7 @@
 		 */
 		public function get()
 		{
-			if($this->compiled_source !== NULL)
+			if($this->compiled_source === NULL)
 			{
 				return(false);
 			}
