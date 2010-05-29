@@ -27,6 +27,60 @@
 	class Tuxxedo_Filter
 	{
 		/**
+		 * Data filter constant, numeric value
+		 *
+		 * @var		integer
+		 */
+		const TYPE_NUMERIC	= 0x0001;
+
+		/**
+		 * Data filter constant, string value
+		 *
+		 * @var		integer
+		 */
+		const TYPE_STRING	= 0x0002;
+
+		/**
+		 * Data filter constant, email value
+		 *
+		 * @var		integer
+		 */
+		const TYPE_EMAIL	= 0x0003;
+
+		/**
+		 * Data filter constant, boolean value
+		 *
+		 * @var		integer
+		 */
+		const TYPE_BOOLEAN	= 0x0004;
+
+		/**
+		 * Data filter constant, callback value
+		 *
+		 * @var		integer
+		 */
+		const TYPE_CALLBACK	= 0x0005;
+
+		/**
+		 * Data filter option, gets the raw value 
+		 * of the input without any type of santizing
+		 *
+		 * @var		integer
+		 */
+		const INPUT_OPT_RAW	= 0x01FF;
+
+		/**
+		 * Data filter option, tells the cleaner that this 
+		 * is an array input and any of its elements must be of 
+		 * the given type. Note that recursive operations are not 
+		 * done by the data filter
+		 *
+		 * @var		integer
+		 */
+		const INPUT_OPT_ARRAY	= 0x02FF;
+
+
+		/**
 		 * Whether the filter extension is available
 		 *
 		 * @var		boolean
@@ -81,7 +135,7 @@
 		 * @param	integer			Additional filtering options
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		public function get($field, $type = TYPE_STRING, $options = 0)
+		public function get($field, $type = self::TYPE_STRING, $options = 0)
 		{
 			return($this->filter(1, $field, $type, $options));
 		}
@@ -94,7 +148,7 @@
 		 * @param	integer			Additional filtering options
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		public function post($field, $type = TYPE_STRING, $options = 0)
+		public function post($field, $type = self::TYPE_STRING, $options = 0)
 		{
 			return($this->filter(2, $field, $type, $options));
 		}
@@ -107,7 +161,7 @@
 		 * @param	integer			Additional filtering options
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		public function cookie($field, $type = TYPE_STRING, $options = 0)
+		public function cookie($field, $type = self::TYPE_STRING, $options = 0)
 		{
 			return($this->filter(3, $field, $type, $options));
 		}
@@ -119,7 +173,7 @@
 		 * @param	integer			Type of input filtering performed
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		public function user($field, $type = TYPE_STRING)
+		public function user($field, $type = self::TYPE_STRING)
 		{
 			return($this->filter(4, $field, $type, 0));
 		}
@@ -134,7 +188,7 @@
 		 * @param	integer			Additional filtering options
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		private function filter($source, $field, $type = TYPE_STRING, $options = 0)
+		private function filter($source, $field, $type = self::TYPE_STRING, $options = 0)
 		{
 			switch($source)
 			{
@@ -179,24 +233,24 @@
 					return;
 				}
 
-				if($options & INPUT_OPT_RAW)
+				if($options & self::INPUT_OPT_RAW)
 				{
 					return(filter_input($data, $field, FILTER_UNSAFE_RAW));
 				}
 
 				switch($type)
 				{
-					case(TYPE_NUMERIC):
+					case(self::TYPE_NUMERIC):
 					{
 						$flags = FILTER_VALIDATE_INT;
 					}
 					break;
-					case(TYPE_EMAIL):
+					case(self::TYPE_EMAIL):
 					{
 						$flags = FILTER_VALIDATE_EMAIL;
 					}
 					break;
-					case(TYPE_BOOLEAN):
+					case(self::TYPE_BOOLEAN):
 					{
 						$flags = FILTER_VALIDATE_BOOLEAN;
 					}
@@ -214,7 +268,7 @@
 				}
 				else
 				{
-					$input = filter_input($data, $field, $flags, ($options & INPUT_OPT_ARRAY ? FILTER_REQUIRE_ARRAY | FILTER_FORCE_ARRAY : 0));
+					$input = filter_input($data, $field, $flags, ($options & self::INPUT_OPT_ARRAY ? FILTER_REQUIRE_ARRAY | FILTER_FORCE_ARRAY : 0));
 				}
 
 				return($input);
@@ -226,12 +280,12 @@
 					return;
 				}
 
-				if($options & INPUT_OPT_RAW)
+				if($options & self::INPUT_OPT_RAW)
 				{
 					return($data[$field]);
 				}
 
-				if($options & INPUT_OPT_ARRAY)
+				if($options & self::INPUT_OPT_ARRAY)
 				{
 					$data[$field] = (array) $data[$field];
 
@@ -246,17 +300,17 @@
 						{
 							switch($type)
 							{
-								case(TYPE_NUMERIC):
+								case(self::TYPE_NUMERIC):
 								{
 									$data[$field][$var] = (integer) $tmp;
 								}
 								break;
-								case(TYPE_EMAIL):
+								case(self::TYPE_EMAIL):
 								{
 									$data[$field][$var] = (is_valid_email($data[$field]) ? $data[$field] : false);
 								}
 								break;
-								case(TYPE_BOOLEAN):
+								case(self::TYPE_BOOLEAN):
 								{
 									$data[$field][$var] = (boolean) $tmp;
 								}
@@ -279,17 +333,17 @@
 
 					switch($type)
 					{
-						case(TYPE_NUMERIC):
+						case(self::TYPE_NUMERIC):
 						{
 							$data[$field] = (integer) $data[$field];
 						}
 						break;
-						case(TYPE_EMAIL):
+						case(self::TYPE_EMAIL):
 						{
 							$data[$field] = (is_valid_email($data[$field]) ? $data[$field] : false);
 						}
 						break;
-						case(TYPE_BOOLEAN):
+						case(self::TYPE_BOOLEAN):
 						{
 							$data[$field] = (boolean) $tmp;
 						}
@@ -302,7 +356,7 @@
 					}
 				}
 
-				if($type == TYPE_NUMERIC && $data[$field] == 0)
+				if($type == self::TYPE_NUMERIC && $data[$field] == 0)
 				{
 					$data[$field] = NULL;
 				}

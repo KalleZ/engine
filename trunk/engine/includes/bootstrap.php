@@ -112,6 +112,16 @@
 	define('TUXXEDO_DEBUG', Tuxxedo::DEBUG);
 
 	/**
+	 * URL of the current page being executed, including its 
+	 * query string, note that this constant is using the 
+	 * raw data. It is up to the user of this constant to 
+	 * proper filter it
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_SELF',		$_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+
+	/**
 	 * If debug mode is activated we need the special 
 	 * debugging functions
 	 */
@@ -127,74 +137,6 @@
 	 * Set error reporting level
 	 */
 	error_reporting(-1);
-
-	/**
-	 * Set default timezone
-	 */
-	date_default_timezone_set('UTC');
-
-	/**
-	 * URL of the current page being executed, including its 
-	 * query string, note that this constant is using the 
-	 * raw data. It is up to the user of this constant to 
-	 * proper filter it
-	 *
-	 * @var		string
-	 */
-	define('TUXXEDO_SELF',		$_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
-
-	/**
-	 * Data filter constant, numeric value
-	 *
-	 * @var		integer
-	 */
-	define('TYPE_NUMERIC', 		0x0001);
-
-	/**
-	 * Data filter constant, string value
-	 *
-	 * @var		integer
-	 */
-	define('TYPE_STRING', 		0x0002);
-
-	/**
-	 * Data filter constant, email value
-	 *
-	 * @var		integer
-	 */
-	define('TYPE_EMAIL', 		0x0003);
-
-	/**
-	 * Data filter constant, boolean value
-	 *
-	 * @var		integer
-	 */
-	define('TYPE_BOOLEAN', 		0x0004);
-
-	/**
-	 * Data filter constant, callback value
-	 *
-	 * @var		integer
-	 */
-	define('TYPE_CALLBACK', 	0x0005);
-
-	/**
-	 * Data filter option, gets the raw value 
-	 * of the input without any type of santizing
-	 *
-	 * @var		integer
-	 */
-	define('INPUT_OPT_RAW',		0x01FF);
-
-	/**
-	 * Data filter option, tells the cleaner that this 
-	 * is an array input and any of its elements must be of 
-	 * the given type. Note that recursive operations are not 
-	 * done by the data filter
-	 *
-	 * @var		integer
-	 */
-	define('INPUT_OPT_ARRAY', 	0x02FF);
 
 	/**
 	 * Construct the main registry
