@@ -106,7 +106,7 @@
 			$message = '<strong>Warning:</strong> ' . $message;
 		}
 
-		if(!is_null($file) && !is_null($line))
+		if($file !== NULL && $line !== NULL)
 		{
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
@@ -130,7 +130,7 @@
 		static $called;
 		global $tuxxedo;
 
-		if(!is_null($called))
+		if($called !== NULL)
 		{
 			return;
 		}

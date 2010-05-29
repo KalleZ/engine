@@ -246,7 +246,7 @@
 
 			if($result === false || !$result->getNumRows())
 			{
-				if(!is_null($error_buffer))
+				if($error_buffer !== NULL)
 				{
 					$error_buffer = $templates;
 				}
@@ -320,7 +320,7 @@
 				}
 				else
 				{
-					if(!is_null($error_buffer))
+					if($error_buffer !== NULL)
 					{
 						$error_buffer[] = $title;
 					}

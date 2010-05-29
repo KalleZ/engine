@@ -78,10 +78,11 @@
 		{
 			$this->tuxxedo 		= $tuxxedo;
 
+			$this->dmname		= 'style';
 			$this->tablename	= TUXXEDO_PREFIX . 'styles';
 			$this->idname		= 'id';
 
-			if(!is_null($identifier))
+			if($identifier !== NULL)
 			{
 				if($cached)
 				{

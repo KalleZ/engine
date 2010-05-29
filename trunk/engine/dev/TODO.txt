@@ -11,8 +11,6 @@
 
 	Add a generic pagination class with a default Engine database pagination driver
 
-	Add missing phrase translations for datamanager fields
-
 	Rewrite the user session API
 	 - Store online statistics in the datastore cache
 	 - Update the datamanager with the latest profile fields
@@ -30,3 +28,5 @@
 	Change SQL queries to be non-mysql compatible
 
 	Change some of the constant definitions in boostrap.php to be class constants and reside within their related class
+
+	Change the auto check for using cached data in datamanagers

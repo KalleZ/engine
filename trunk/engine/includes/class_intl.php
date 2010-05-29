@@ -116,7 +116,7 @@
 			}
 			elseif($result === false)
 			{
-				if(!is_null($error_buffer))
+				if($error_buffer !== NULL)
 				{
 					$error_buffer = $phrasegroups;
 				}
@@ -243,7 +243,7 @@
 		 */
 		private function filter($phrasegroup)
 		{
-			return($this->tuxxedo->cache->phrasegroups[$phrasegroup]['phrases']);
+			return(isset($this->tuxxedo->cache->phrasegroups[$phrasegroup]) && $this->tuxxedo->cache->phrasegroups[$phrasegroup]['phrases']);
 		}
 	}
 

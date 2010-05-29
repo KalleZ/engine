@@ -117,7 +117,7 @@
 		 */
 		public function rebuild($name, Array $data = NULL, $delay = true)
 		{
-			if(is_null($data))
+			if($data === NULL)
 			{
 				$sql = sprintf('
 						DELETE FROM 
@@ -152,7 +152,7 @@
 
 			if($retval)
 			{
-				if(is_null($data))
+				if($data === NULL)
 				{
 					unset($this->cache[$name]);
 				}
@@ -197,7 +197,7 @@
 
 			if($result === false)
 			{
-				if(!is_null($error_buffer))
+				if($error_buffer !== NULL)
 				{
 					$error_buffer = $elements;
 				}
@@ -218,7 +218,7 @@
 				}
 			}
 
-			if(!is_null($error_buffer))
+			if($error_buffer !== NULL)
 			{
 				$diff = array_diff($elements, $loaded);
 

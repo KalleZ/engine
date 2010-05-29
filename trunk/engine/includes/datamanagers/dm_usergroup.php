@@ -74,10 +74,11 @@
 		{
 			$this->tuxxedo 		= $tuxxedo;
 
+			$this->dmname		= 'usergroup';
 			$this->tablename	= TUXXEDO_PREFIX . 'usergroups';
 			$this->idname		= 'id';
 
-			if(!is_null($identifier))
+			if($identifier !== NULL)
 			{
 				if($cached)
 				{

@@ -89,7 +89,7 @@
 		 */
 		public function __construct($conditions = NULL)
 		{
-			if(!is_null($conditions))
+			if($conditions !== NULL)
 			{
 				$this->conditions = $conditions;
 			}
@@ -149,7 +149,7 @@
 		 */
 		public function get()
 		{
-			if(is_null($this->compiled_source))
+			if($this->compiled_source !== NULL)
 			{
 				return(false);
 			}
@@ -359,7 +359,7 @@
 		 */
 		public function test()
 		{
-			if(is_null($this->compiled_source))
+			if($this->compiled_source !== NULL)
 			{
 				return;
 			}
@@ -405,7 +405,7 @@
 		 */
 		public function __construct($message, $conditions = NULL)
 		{
-			if(!is_null($conditions) && !empty($conditions))
+			if($conditions !== NULL && !empty($conditions))
 			{
 				parent::__construct('%s at condition #%d', $message, $conditions);
 			}
