@@ -102,7 +102,7 @@
 
 			if($session && $autodetect)
 			{
-				$this->session	= $tuxxedo->register('session', 'Tuxxedo_Session');
+				$this->session = $tuxxedo->register('session', 'Tuxxedo_Session');
 
 				if(($userid = Tuxxedo_Session::get('userid')) !== false && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
 				{
@@ -120,16 +120,19 @@
 			$this->userinfo->session	= $this->session;
 			$this->information		= $this->userinfo;
 
-			$tuxxedo->db->query('
-						REPLACE INTO 
-							`' . TUXXEDO_PREFIX . 'sessions` 
-						VALUES
-						(
-							\'%s\', 
-							\'%s\',
-							\'%s\', 
-							%d
-						)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+			if($session)
+			{
+				$tuxxedo->db->query('
+							REPLACE INTO 
+								`' . TUXXEDO_PREFIX . 'sessions` 
+							VALUES
+							(
+								\'%s\', 
+								\'%s\',
+								\'%s\', 
+								%d
+							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+			}
 		}
 
 		/**
