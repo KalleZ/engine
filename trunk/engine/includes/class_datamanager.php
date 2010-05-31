@@ -211,6 +211,11 @@
 				}
 			}
 
+			if(!$tuxxedo->filter)
+			{
+				$tuxxedo->register('filter', 'Tuxxedo_Filter');
+			}
+
 			if(in_array($datamanager, self::$loaded_datamanagers))
 			{
 				return(new $class($tuxxedo, $identifier, $cached));
