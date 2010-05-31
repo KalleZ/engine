@@ -76,35 +76,35 @@
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_NUMERIC			= TYPE_NUMERIC;
+		const VALIDATE_NUMERIC			= Tuxxedo_Filter::TYPE_NUMERIC;
 
 		/**
 		 * Validation constant, string value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_STRING			= TYPE_STRING;
+		const VALIDATE_STRING			= Tuxxedo_Filter::TYPE_STRING;
 
 		/**
 		 * Validation constant, email value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_EMAIL			= TYPE_EMAIL;
+		const VALIDATE_EMAIL			= Tuxxedo_Filter::TYPE_EMAIL;
 
 		/**
 		 * Validation constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_BOOLEAN			= TYPE_BOOLEAN;
+		const VALIDATE_BOOLEAN			= Tuxxedo_Filter::TYPE_BOOLEAN;
 
 		/**
 		 * Validation constant, callback
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_CALLBACK			= TYPE_CALLBACK;
+		const VALIDATE_CALLBACK			= Tuxxedo_Filter::TYPE_CALLBACK;
 
 		/**
 		 * Validation option constant, escape HTML
@@ -209,11 +209,6 @@
 				{
 					throw new Tuxxedo_Basic_Exception('Unable to cache datamanager phrases');
 				}
-			}
-
-			if(!$tuxxedo->filter)
-			{
-				$tuxxedo->register('filter', 'Tuxxedo_Filter');
 			}
 
 			if(in_array($datamanager, self::$loaded_datamanagers))
