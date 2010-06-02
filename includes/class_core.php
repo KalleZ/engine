@@ -204,7 +204,8 @@
 			{
 				$instance = call_user_func(Array($class, 'invoke'), self::$instance, self::$instance->configuration, (array) self::getOptions());
 			}
-			else
+
+			if(!isset($instance) || !is_object($instance))
 			{
 				$instance = new $class;
 			}
