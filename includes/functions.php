@@ -611,9 +611,9 @@
 
 		$old_timestamp = $tuxxedo->datetime->getTimestamp();
 
-		$tuxxedo->datetime->modify($timestamp);
+		$tuxxedo->datetime->setTimestamp($timestamp);
 		$format = $tuxxedo->datetime->format($format);
-		$tuxxedo->datetime->modify($old_timestamp);
+		$tuxxedo->datetime->setTimestamp($old_timestamp);
 
 		return($format);
 	}
