@@ -49,9 +49,9 @@
 
 		if(Tuxxedo::globals('error_reporting'))
 		{
-			if(!is_array(Tuxxedo::globals('errors'))
+			if(!is_array(Tuxxedo::globals('errors')))
 			{
-				Tuxxedo::globals('errors', Array);
+				Tuxxedo::globals('errors', Array());
 			}
 
 			array_push(Tuxxedo::globals('errors'), $e->getMessage());
@@ -111,9 +111,9 @@
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
 
-		if(!is_array(Tuxxedo::globals('errors'))
+		if(!is_array(Tuxxedo::globals('errors')))
 		{
-			Tuxxedo::globals('errors', Array);
+			Tuxxedo::globals('errors', Array());
 		}
 
 		if(TUXXEDO_DEBUG)
@@ -385,7 +385,7 @@
 	{
 		$errors = Tuxxedo::globals('errors');
 
-		if(!TUXXEDO_DEBUG || (!$errors || !sizeof($errors))
+		if(!TUXXEDO_DEBUG || (!$errors || !sizeof($errors)))
 		{
 			return;
 		}
