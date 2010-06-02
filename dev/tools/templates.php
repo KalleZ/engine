@@ -1,5 +1,5 @@
 <?php
-	require('./bootstrap.php');
+	require('./includes/bootstrap.php');
 
 	$cache->cache(Array('options', 'styleinfo'));
 

@@ -1,0 +1,20 @@
+{$header}
+
+<form action=\"./datastore.php\" method=\"post\">
+	<div class=\"box\">
+		<h4>Datastore Rebuild</h4>
+		<p>
+			Rebuilding the cache, this will update the following 
+			cache indexes:
+		</p>
+
+		<ul>
+		{$cache_items}
+		</ul>
+	</div>
+	<div class=\"box\">
+		<input type=\"submit\" name=\"progress\" value=\"Rebuild cache\" />
+	</div>
+</form>
+
+{$footer}

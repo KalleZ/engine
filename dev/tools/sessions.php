@@ -1,5 +1,5 @@
 <?php
-	require('./bootstrap.php');
+	require('./includes/bootstrap.php');
 
 	$tuxxedo->set('user', new Tuxxedo_User(false, false));
 	$cache->cache(Array('options', 'usergroups'));
