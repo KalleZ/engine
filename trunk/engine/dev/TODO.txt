@@ -12,7 +12,6 @@
 	 - Add styles support
 	 - Add user support
 	 - Re-implement missing tools
-	   - Datastore
 	   - Options
 	   - Passwords
 	   - Sessions
