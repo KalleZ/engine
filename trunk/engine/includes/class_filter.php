@@ -345,7 +345,7 @@
 						break;
 						case(self::TYPE_BOOLEAN):
 						{
-							$data[$field] = (boolean) $tmp;
+							$data[$field] = (boolean) $data[$field];
 						}
 						break;
 						default:
