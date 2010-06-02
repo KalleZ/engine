@@ -37,7 +37,7 @@
 		}
 	}
 ?>
-<form action="./template_compiler.php" method="POST">
+<form action="./template_compiler.php" method="post">
 	<h2>Template compiler</h2>
 
 	<textarea name="sourcecode" cols="100" rows="15"><?php echo(htmlspecialchars($filter->post('sourcecode'))); ?></textarea>

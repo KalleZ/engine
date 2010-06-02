@@ -1,5 +1,5 @@
 <?php
-	require('./bootstrap.php');
+	require('./includes/bootstrap.php');
 	require(TUXXEDO_DIR . '/includes/functions_misc.php');
 
 	if(isset($_POST['password']) && !empty($_POST['password']))
