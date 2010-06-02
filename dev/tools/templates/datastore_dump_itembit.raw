@@ -1,0 +1,15 @@
+<tr>
+	<td valign="top">
+		{$row->name}
+	</td>
+	<td valign="top">
+		{$row->length} bytes
+	</td>
+	<td valign="top">
+<if expression="empty($row->data)">
+		<em>No data cached</em>
+<else />
+		<pre>{$row->data}</pre>
+</if>
+	</td>
+</tr>

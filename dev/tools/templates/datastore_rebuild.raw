@@ -1,0 +1,29 @@
+{$header}
+
+<form action="./datastore.php" method="post">
+	<div class="box">
+		<h4>Rebuilding datastore caches</h4>
+
+		<ul>
+		{$result_list}
+		</ul>
+
+		<p>
+			Datastore caches have been rebuilt.
+		</p>
+	</div>
+
+<if expression="$corrupt_warn">
+	<div class="box">
+		<h3>Warning</h3>
+
+		<p>
+			Not all datastore elements was re-cached with success. This 
+			can be caused by no elements were available to cache or 
+			if there was a database error.
+		</p>
+	</div>
+</if>
+</form>
+
+{$footer}
