@@ -147,7 +147,7 @@
 	 * Set globals
 	 */
 	Tuxxedo::globals('error_reporting', 	true);
-	Tuxxedo::globals('errors', 		new ArrayObject);
+	Tuxxedo::globals('errors', 		Array());
 
 	/**
 	 * Register the default instances

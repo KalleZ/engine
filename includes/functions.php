@@ -49,12 +49,12 @@
 
 		if(Tuxxedo::globals('error_reporting'))
 		{
-			if(!(Tuxxedo::globals('errors') instanceof ArrayObject))
+			if(!is_array(Tuxxedo::globals('errors'))
 			{
-				Tuxxedo::globals('errors', new ArrayObject);
+				Tuxxedo::globals('errors', Array);
 			}
 
-			Tuxxedo::globals('errors')->append($e->getMessage());
+			array_push(Tuxxedo::globals('errors'), $e->getMessage());
 		}
 	}
 
@@ -111,9 +111,9 @@
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
 
-		if(!(Tuxxedo::globals('errors') instanceof ArrayObject))
+		if(!is_array(Tuxxedo::globals('errors'))
 		{
-			Tuxxedo::globals('errors', new ArrayObject);
+			Tuxxedo::globals('errors', Array);
 		}
 
 		if(TUXXEDO_DEBUG)
@@ -122,7 +122,7 @@
 			return;
 		}
 
-		Tuxxedo::globals('errors')->append($message);
+		array_push(Tuxxedo::globals('errors'), $message);
 	}
 
 	/**
@@ -385,7 +385,7 @@
 	{
 		$errors = Tuxxedo::globals('errors');
 
-		if(!TUXXEDO_DEBUG || (!$errors || !$errors->count()))
+		if(!TUXXEDO_DEBUG || (!$errors || !sizeof($errors))
 		{
 			return;
 		}
@@ -399,7 +399,7 @@
 			$buffer .= $error . '<br />';
 		}
 
-		Tuxxedo::globals('errors', new ArrayObject);
+		Tuxxedo::globals('errors', Array());
 
 		if(!$tuxxedo->style)
 		{
