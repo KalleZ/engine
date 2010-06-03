@@ -231,7 +231,7 @@
 					'redirect'
 					);
 
-	if(isset($action_templates) && isset($_REQUEST['do']) && array_key_exists((string) $_REQUEST['do'], $action_templates))
+	if(isset($action_templates) && isset($_REQUEST['do']) && isset($action_templates[(string) $_REQUEST['do']]))
 	{
 		$default_templates = array_merge($default_templates, (array) $action_templates[(string) $_REQUEST['do']]);
 	}
