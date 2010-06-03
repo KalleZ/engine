@@ -29,6 +29,7 @@
 	 - Template
 
 	Add a generic pagination class with a default Engine database pagination driver
+	Add cronjobs and move the related user/session code into its own cronjob
 
 	Change SQL queries to be non-mysql compatible
 	Change the auto check for using cached data in datamanagers
