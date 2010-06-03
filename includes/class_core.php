@@ -141,7 +141,7 @@
 		 */
 		public function __get($name)
 		{
-			if(array_key_exists($name, self::$instance->instances))
+			if(isset(self::$instance->instances[$name]))
 			{
 				return(self::$instance->instances[$name]);
 			}
@@ -192,7 +192,7 @@
 		 */
 		public function register($refname, $class)
 		{
-			if(array_key_exists($refname, self::$instance->instances))
+			if(isset(self::$instance->instances[$refname]))
 			{
 				return;
 			}
@@ -236,12 +236,12 @@
 		 */
 		public static function get($obj)
 		{
-			if(!array_key_exists($obj, self::$instance->instances))
+			if(isset(self::$instance->instances[$obj]))
 			{
-				return(false);
+				return(self::$instance->instances[$obj]);
 			}
 
-			return(self::$instance->instances[$obj]);
+			return(false);
 		}
 
 		/**
@@ -293,7 +293,7 @@
 			{
 				self::$instance->globals[$name] = $value;
 			}
-			elseif(!array_key_exists($name, self::$instance->globals))
+			elseif(!isset(self::$instance->globals[$name]))
 			{
 				return(false);
 			}
