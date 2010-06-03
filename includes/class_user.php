@@ -131,7 +131,7 @@
 								\'%s\',
 								\'%s\', 
 								%d
-							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), TIMENOW_UTC);
 			}
 		}
 
@@ -191,7 +191,7 @@
 								%d,
 								\'%s\', 
 								%d
-							)', Tuxxedo_Session::$id, $userinfo->id , $this->tuxxedo->db->escape(TUXXEDO_SELF), time());
+							)', Tuxxedo_Session::$id, $userinfo->id , $this->tuxxedo->db->escape(TUXXEDO_SELF), TIMENOW_UTC);
 
 			Tuxxedo_Session::set('userid', $userinfo->id);
 			Tuxxedo_Session::set('password', $userinfo->password);
