@@ -183,7 +183,7 @@
 				<li><a href=\"./datastore.php\">Datastore cache</a></li>
 				<li><a href=\"./#\">Styles &amp; Templates</a></li>
 				<li><a href=\"./#\">Options</a></li>
-				<li><a href=\"./#\">Sessions</a></li>
+				<li><a href=\"./sessions.php\">Sessions</a></li>
 				<li><a href=\"./#\">Tools</a></li>
 			</ul>
 			<div class=\"clear\"></div>
@@ -204,6 +204,26 @@
 						<li><a href=\"./datastore.php\">Cache rebuilder</a></li>
 						<li><a href=\"./datastore.php?do=truncate\">Clean datastore</a></li>
 						<li><a href=\"./datastore.php?do=dump\">Dump contents</a></li>
+					</ul>
+				</div>
+") : '') . "
+" . ((SCRIPT_NAME == 'sessions') ? ("
+				<div class=\"box\">
+					<h4>Sessions</h4>
+					<p>
+						Sessions in the engine means a user session. User sessions 
+						help identify where a user currently is located and how long 
+						again that session last was active.
+					</p>
+					<p>
+						This tool allows you to view the current active sessions, aswell 
+						as killing a specific session or them all.
+					</p>
+
+					<ul>
+						<li><a href=\"./sessions.php\">Display active sessions</a></li>
+						<li><a href=\"./sessions.php?do=kill&action=all\">Kill all active sessions</a></li>
+						<li><a href=\"./sessions.php?do=cron\">Run clean-up cron</a></li>
 					</ul>
 				</div>
 ") : '') . "

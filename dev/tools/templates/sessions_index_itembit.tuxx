@@ -1,0 +1,32 @@
+<tr>
+	<td>
+		{$session->sessionid}
+	</td>
+" . (($session->userid) ? ("
+	<td>
+		{$userinfo->id}
+	</td>
+	<td>
+		{$userinfo->username}
+	</td>
+	<td>
+		{$usergroup}
+	</td>
+") : ("
+	<td colspan=\"3\" style=\"text-align: center;\">
+		<em>User session not authenticated</em>
+	</td>
+")) . "
+	<td>
+		{$session->lastactivity}
+	</td>
+	<td>
+		{$session->expires}
+	</td>
+	<td nowrap=\"nowrap\">
+		{$session->location}
+	</td>
+	<td>
+		<a href=\"./sessions.php?do=kill&action=single&id={$session->sessionid}\">Kill</a>
+	</td>
+</tr>

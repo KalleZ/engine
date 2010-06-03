@@ -14,7 +14,6 @@
 	 - Re-implement missing tools
 	   - Options
 	   - Passwords
-	   - Sessions
 	   - Templates
 	 - Finish DevTools v2
 
