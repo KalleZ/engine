@@ -183,6 +183,12 @@
 	$tuxxedo->set('usergroup', $user->getUserGroupInfo());
 
 	/**
+	 * Set the UTC timestamp, we need this for things such as 
+	 * session handling
+	 */
+	define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : $datetime->getTimestamp()));
+
+	/**
 	 * Date and Timezone references
 	 */
 	$tz = strtoupper(empty($userinfo->id) ? $options->date_timezone : $userinfo->timezone);
