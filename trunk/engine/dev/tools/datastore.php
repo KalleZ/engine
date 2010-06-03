@@ -73,7 +73,7 @@
 							`' . TUXXEDO_PREFIX . 'datastore` 
 						ORDER BY `name` ASC');
 
-			if($ds || !$ds->getNumRows())
+			if(!$ds || !$ds->getNumRows())
 			{
 				tuxxedo_gui_error('No datastore elements to show');
 			}
