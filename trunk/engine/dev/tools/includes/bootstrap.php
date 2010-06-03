@@ -72,12 +72,14 @@
 
 	$tuxxedo->register('db', 	'Tuxxedo_Database');
 	$tuxxedo->register('cache', 	'Tuxxedo_Datastore');
+	$tuxxedo->register('filter',	'Tuxxedo_Filter');
 
 	$tuxxedo->set('timezone', new DateTimeZone('UTC'));
 	$tuxxedo->set('datetime', new DateTime('now', $timezone));
 	$tuxxedo->set('style', new Tuxxedo_Dev_Style);
 
 	define('TIMENOW', $datetime->getTimestamp());
+	define('TIMENOW_UTC', TIMENOW);
 
 	$cache_buffer		= Array();
 	$default_templates 	= Array('header', 'footer', 'error', 'redirect');
