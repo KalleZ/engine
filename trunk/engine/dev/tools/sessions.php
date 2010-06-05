@@ -42,7 +42,7 @@
 
 	if(!$sessions || !$sessions->getNumRows())
 	{
-		tuxxedo_gui_error('There is currently no users logged in.');
+		tuxxedo_gui_error('There is currently no users logged in.', false);
 	}
 
 	switch(strtolower($filter->get('do')))
