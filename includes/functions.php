@@ -575,9 +575,10 @@
 	 * theme and then terminates the script
 	 *
 	 * @param	string			The error message
+	 * @param	boolean			Whether to show the 'Go back' button or not
 	 * @return	void			No value is returned
 	 */
-	function tuxxedo_gui_error($message)
+	function tuxxedo_gui_error($message, $goback = true)
 	{
 		eval(page('error'));
 		exit;

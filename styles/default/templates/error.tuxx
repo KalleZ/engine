@@ -5,6 +5,8 @@
 	{$message}
 </p>
 
-<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+" . ((isset($go_back) && $go_back) ? ("
+	<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+") : '') . "
 
 {$footer}

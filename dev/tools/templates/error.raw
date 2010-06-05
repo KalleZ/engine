@@ -8,8 +8,10 @@
 	</p>
 </div>
 
-<div class="box">
-	<input type="button" onclick="history.back(-1);" value="Go back" />
-</div>
+<if expression="isset($goback) && $goback">
+	<div class="box">
+		<input type="button" onclick="history.back(-1);" value="Go back" />
+	</div>
+</if>
 
 {$footer}
