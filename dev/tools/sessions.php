@@ -38,7 +38,14 @@
 	 */
 	require('./includes/bootstrap.php');
 
-	$sessions = $db->query('SELECT * FROM `' . TUXXEDO_PREFIX . 'sessions` ORDER BY `userid` ASC');
+	$sessions = $db->query('
+				SELECT 
+					* 
+				FROM 
+					`' . TUXXEDO_PREFIX . 'sessions` 
+				ORDER BY 
+					`userid` 
+				ASC');
 
 	if(!$sessions || !$sessions->getNumRows())
 	{
@@ -53,7 +60,11 @@
 			{
 				case('single'):
 				{
-					if(($result = $db->query('DELETE FROM `' . TUXXEDO_PREFIX . 'sessions` WHERE `sessionid` = \'%s\'', $db->escape($filter->get('id')))) !== false && $db->getAffectedRows($result))
+					if(($result = $db->query('
+									DELETE FROM 
+										`' . TUXXEDO_PREFIX . 'sessions` 
+									WHERE 
+										`sessionid` = \'%s\'', $db->escape($filter->get('id')))) !== false && $db->getAffectedRows($result))
 					{
 						tuxxedo_redirect('Killed session with success', './sessions.php');
 					}
