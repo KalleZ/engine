@@ -21,6 +21,14 @@
 					);
 
 	/**
+	 * Precache datastore elements
+	 */
+	$precache 		= Array(
+					'options', 
+					'usergroups'
+					);
+
+	/**
 	 * Set script name
 	 */
 	define('SCRIPT_NAME', 'sessions');
@@ -29,14 +37,6 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
-
-	$tuxxedo->set('user', new Tuxxedo_User(false, false));
-
-	$cache_buffer = Array();
-	$cache->cache(Array('options', 'usergroups'), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
-	unset($cache_buffer);
-
-	$tuxxedo->set('options', $cache->options);
 
 	$sessions = $db->query('SELECT * FROM `' . TUXXEDO_PREFIX . 'sessions` ORDER BY `userid` ASC');
 
@@ -88,6 +88,9 @@
 		default:
 		{
 			$userlist = '';
+
+			$tuxxedo->set('user', new Tuxxedo_User(false, false));
+			$tuxxedo->set('options', Tuxxedo::getOptions());
 
 			while($session = $sessions->fetchObject())
 			{
