@@ -43,19 +43,12 @@
 
 		/**
 		 * Constructor
-		 *
-		 * @throws	Tuxxedo_Basic_Exception	Throws a regular exception if the database interface isn't loaded
 		 */
 		public function __construct()
 		{
 			global $tuxxedo;
 
 			$this->tuxxedo = $tuxxedo;
-
-			if($tuxxedo->db === false)
-			{
-				throw new Tuxxedo_Basic_Exception('A database driver must be initalized before the datastore can be constructed');
-			}
 		}
 
 		/**
