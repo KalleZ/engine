@@ -150,6 +150,12 @@
 	Tuxxedo::globals('errors', 		Array());
 
 	/**
+	 * Set the UTC timestamp, we need this for things such as 
+	 * session handling
+	 */
+	define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time());
+
+	/**
 	 * Register the default instances
 	 */
 	$tuxxedo->register('db', 'Tuxxedo_Database');
@@ -162,12 +168,6 @@
 	$default_precache 	= Array('options', 'styleinfo', 'usergroups', 'languages', 'phrasegroups');
 
 	$cache->cache((!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
-
-	/**
-	 * Set the UTC timestamp, we need this for things such as 
-	 * session handling
-	 */
-	define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time());
 
 	/**
 	 * Now the datastore is loaded we must instanciate the 

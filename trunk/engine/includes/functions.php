@@ -249,7 +249,7 @@
 				'</tr>' . PHP_EOL . 
 				'<tr>' . PHP_EOL . 
 				'<td class="head strong">Timestamp</td>' . PHP_EOL . 
-				'<td nowrap="nowrap">' . tuxxedo_date(NULL, 'H:i:s j/n - Y') . '</td>' . PHP_EOL . 
+				'<td nowrap="nowrap">' . tuxxedo_date(NULL, 'H:i:s j/n - Y (e)') . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL . 
 				'</table>' . PHP_EOL . 
 				'</td>' . PHP_EOL . 
@@ -597,7 +597,7 @@
 
 		if($timestamp === NULL)
 		{
-			$timestamp = TIMENOW;
+			$timestamp = (defined('TIMENOW') ? TIMENOW : TIMENOW_UTC);
 		}
 
 		if($format === NULL)
