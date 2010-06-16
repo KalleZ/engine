@@ -35,7 +35,7 @@
 		$n		= 0;
 		$timezones 	= Array();
 
-		foreach($cache->timezones as $name => $offset)
+		foreach($tuxxedo->cache->timezones as $name => $offset)
 		{
 			$timezones[$n++] = $name . ' (' . ($offset > -1 ? '+' : '') . $offset . ')';
 
