@@ -27,6 +27,41 @@
 	$configuration = Array(
 
 	/**
+	 * Application configuration
+	 */
+	'application' => Array(
+
+	/**
+	 * Name
+	 *
+	 * Name of the application, used on error screens. This is not 
+	 * required
+	 */
+	'name'		=> 'Test', 
+
+	/**
+	 * Version
+	 *
+	 * Version of the application, if any. Used together with the name 
+	 * on error screens
+	 */
+	'version'	=> '1.0 Beta', 
+
+	/**
+	 * Debug mode
+	 *
+	 * Enables the debugging mode, error screens become more expressive 
+	 * and some error messages will become more verbose. Fatal errors 
+	 * will display a backtrace
+	 */
+	'debug'		=> true, 
+
+	/**
+	 * End application configuration
+	 */
+	), 
+
+	/**
 	 * Database configuration
 	 */
 	'database' => Array(

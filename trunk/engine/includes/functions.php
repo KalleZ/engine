@@ -134,7 +134,7 @@
 	function tuxxedo_doc_error($e)
 	{
 		static $called;
-		global $tuxxedo;
+		global $tuxxedo, $configuration;
 
 		if($called !== NULL)
 		{
@@ -146,7 +146,7 @@
 		$exception	= ($e instanceof Exception);
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors 	= Tuxxedo::globals('errors');
-		$application	= (Tuxxedo::APPLICATION ? Tuxxedo::APPLICATION . (Tuxxedo::APPLICATION_VERSION ? ' ' . Tuxxedo::APPLICATION_VERSION : '') : false);
+		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if($exception && $tuxxedo->db && $e instanceof Tuxxedo_SQL_Exception)
 		{
