@@ -109,7 +109,7 @@
 	/**
 	 * Set the debug mode constant
 	 */
-	define('TUXXEDO_DEBUG', Tuxxedo::DEBUG);
+	define('TUXXEDO_DEBUG', $configuration['application']['debug']);
 
 	/**
 	 * URL of the current page being executed, including its 
@@ -119,7 +119,7 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_SELF',		$_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+	define('TUXXEDO_SELF', $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 
 	/**
 	 * If debug mode is activated we need the special 
