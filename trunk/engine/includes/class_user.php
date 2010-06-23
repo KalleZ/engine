@@ -235,6 +235,14 @@
 			}
 		}
 
+		/**
+		 * Fetch user data about a specific user
+		 *
+		 * @param	string			The user identifier
+		 * @param	string			The user identifier field, this defaults to 'id' to lookup by user id
+		 * @param	integer			Additional options, this uses the Tuxxedo_User::OPT_* constants as a bitmask
+		 * @return	object			Returns a user data object with all user information if a user was found, otherwise false
+		 */
 		public function getUserInfo($identifier = NULL, $identifier_field = 'id', $options = 0)
 		{
 			$identifier_field = strtolower($identifier_field);
@@ -340,8 +348,7 @@
 		/**
 		 * Checks whether the user id a member of a 
 		 * specific usergroup. This only checks for the 
-		 * primary usergroup as additional usergroups aren't 
-		 * supported yet
+		 * primary usergroup
 		 *
 		 * @param	integer			The usergroup id to check
 		 * @return	boolean			Returns true if the user is a member of that usergroup otherwise false
@@ -361,12 +368,42 @@
 			return(isset($this->userinfo->id));
 		}
 
+		/**
+		 * Checks whether the user's permissions can access a 
+		 * certain feature. Note that this checks for the user's 
+		 * permissions only, not per usergroup permissions
+		 *
+		 * @param	integer			The permission to check
+		 * @return	boolean			Returns true if the user is granted access, otherwise false
+		 */
 		public function isGranted($permission)
 		{
-			/**
-			 * Checks whether the current logged in user is granted 
-			 * a specific permission mask
-			 */
+			if(!isset($this->userinfo->id))
+			{
+				return;
+			}
+
+			return($this->userinfo->permissions & $permission !== 0);
+		}
+
+
+		/**
+		 * Checks whether the user's usergroup permissions can 
+		 * access a certain feature. Note that this checks for 
+		 * the user's usergroup permissions only, not per 
+		 * user permissions
+		 *
+		 * @param	integer			The permission to check
+		 * @return	boolean			Returns true if the usergroup is granted access, otherwise false
+		 */
+		public function isGroupGranted($permission)
+		{
+			if(!isset($this->userinfo->id))
+			{
+				return;
+			}
+
+			return($this->usergroupinfo->permissions & $permission !== 0);
 		}
 
 		/**
@@ -394,11 +431,17 @@
 			return(sha1(sha1($password) . $salt));
 		}
 
+		/**
+		 * Generates a salt for using with password hashing
+		 *
+		 * @param	integer			The number of bytes the salt should be, must be 8 or greater
+		 * @return	string			Returns the computed salt
+		 */
 		public static function getPasswordSalt($length = 8)
 		{
 			static $salt_range;
 
-			if($length < 1)
+			if($length < 8)
 			{
 				return(false);
 			}

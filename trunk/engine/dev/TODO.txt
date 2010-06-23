@@ -6,7 +6,6 @@
 	Rewrite the user session API
 	 - Store online statistics in the datastore cache
 	 - Update the datamanager with the latest profile fields
-	 - Implement access masks/levels
 
 	Improve development tools
 	 - Add internationalization support

@@ -42,8 +42,9 @@
 											'callback'	=> Array(__CLASS__, 'isValidType')
 											), 
 							'permissions'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_NUMERIC
+											'type'		=> self::FIELD_OPTIONAL, 
+											'validation'	=> self::VALIDATE_NUMERIC, 
+											'default'	=> 0
 											)
 							);
 

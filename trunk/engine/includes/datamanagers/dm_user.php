@@ -77,6 +77,12 @@
 												'type'		=> self::FIELD_PROTECTED, 
 												'callback'	=> Array(__CLASS__, 'getTimezoneOffset'), 
 												'parameters'	=> Array()
+												), 
+
+							'permissions'		=> Array(
+												'type'		=> self::FIELD_OPTIONAL, 
+												'validation'	=> self::VALIDATE_NUMERIC, 
+												'default'	=> 0
 												)
 							);
 
