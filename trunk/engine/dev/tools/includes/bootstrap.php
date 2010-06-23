@@ -31,7 +31,7 @@
 
 	require('./includes/functions.php');
 
-	if(!defined('Tuxxedo::DEBUG') || !Tuxxedo::DEBUG)
+	if(!$configuration['application']['debug'])
 	{
 		throw new Tuxxedo_Basic_Exception('Debug mode must be enabled to load the development tools');
 	}
