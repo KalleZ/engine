@@ -148,6 +148,11 @@
 				return;
 			}
 
+			if(ini_get('session.use_cookies'))
+			{
+				setcookie(session_name(), '', TIMENOW_UTC - 3600, self::$options['path'], self::$options['domain'], false, true);
+			}
+
 			session_unset();
 			session_destroy();
 
