@@ -47,31 +47,4 @@
 
 		return($timezones);
 	}
-
-	/**
-	 * Generates a user salt for password hashing
-	 *
-	 * @param	integer			How many bytes the salt should be, defaults to 8
-	 * @return	string			Returns the salt as a string
-	 */
-	function generate_password_salt($length = 8)
-	{
-		$length = (integer) $length;
-
-		if($length < 1)
-		{
-			return(false);
-		}
-
-		$salt 		= '';
-		$salt_range 	= 'abcdefghijklmnopqrstuvwxyz0123456789!"#¤%&/()=?^*_-.,;:<>|@£$€{[]}~\'';
-
-		for($char = 0; $char < $length; ++$char)
-		{
-			$c 	= $salt_range{mt_rand(0, strlen($salt_range) - 1)};
-			$salt 	.= (mt_rand(0, 1) ? strtoupper($c) : $c);
-		}
-
-		return($salt);
-	}
 ?>
