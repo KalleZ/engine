@@ -311,6 +311,13 @@
 			return(false);
 		}
 
+		/**
+		 * Get usergroup information about the current user's group 
+		 * or a customed defined based on the usergroup id
+		 *
+		 * @param	integer			The usergroup id to check, if NULL is passed then the current logged in usergroup is returned
+		 * @return	object			Returns a standard object with the relevant usergroup information if found, otherwise false is returned
+		 */
 		public function getUserGroupInfo($id = NULL)
 		{
 			if($id === NULL)
@@ -332,9 +339,12 @@
 
 		/**
 		 * Checks whether the user id a member of a 
-		 * specific 
+		 * specific usergroup. This only checks for the 
+		 * primary usergroup as additional usergroups aren't 
+		 * supported yet
 		 *
-		 * ...
+		 * @param	integer			The usergroup id to check
+		 * @return	boolean			Returns true if the user is a member of that usergroup otherwise false
 		 */
 		public function isMemberOf($groupid)
 		{
@@ -382,6 +392,31 @@
 		public static function getPasswordHash($password, $salt)
 		{
 			return(sha1(sha1($password) . $salt));
+		}
+
+		public static function getPasswordSalt($length = 8)
+		{
+			static $salt_range;
+
+			if($length < 1)
+			{
+				return(false);
+			}
+
+			if(!$salt_range)
+			{
+				$salt_range = 'abcdefghijklmnopqrstuvwxyz0123456789!"#¤%&/()=?^*_-.,;:<>|@£$€{[]}~\'';
+			}
+
+			$salt = '';
+
+			for($char = 0; $char < $length; ++$char)
+			{
+				$c 	= $salt_range{mt_rand(0, strlen($salt_range) - 1)};
+				$salt 	.= (mt_rand(0, 1) ? strtoupper($c) : $c);
+			}
+
+			return($salt);
 		}
 	}
 ?>
