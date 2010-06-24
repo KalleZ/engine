@@ -16,9 +16,6 @@
 	Fix the SQL warnings
 	 - Incorrect integer value: '' for column 'userid' at row 1 (Probably the session table borking, since its the only table using a userid column)
 
-	Remove the $cached parameter on the datamanagers, so they always are allocated with the current data, but keep the exists check using the datastore if possible
-
-
 
 	Tuxxedo Engine Future
 	----------------------
@@ -37,7 +34,6 @@
 	Implement the concept of the Factory-factory pattern for component drivers
 
 	Change SQL queries to be non-mysql compatible
-	Change the auto check for using cached data in datamanagers
 	Change the autoloader from a function to a class so its easier to update the class mapping at runtime
 
 	Check if all optional components have a loaded check when used within the engine

@@ -444,10 +444,12 @@
 						/* Core classes, always available */
 						'tuxxedo'					=> 'core', 
 						'tuxxedo_infoaccess'				=> 'core', 
-						'tuxxedo_exception'				=> 'core', 
-						'tuxxedo_formdata_exception'			=> 'core', 
-						'tuxxedo_named_formdata_exception'		=> 'core', 
-						'tuxxedo_basic_exception'			=> 'core', 
+
+						/* Exceptions */
+						'tuxxedo_exception'				=> 'exceptions', 
+						'tuxxedo_formdata_exception'			=> 'exceptions', 
+						'tuxxedo_named_formdata_exception'		=> 'exceptions', 
+						'tuxxedo_basic_exception'			=> 'exceptions', 
 
 						/* Database core */
 						'tuxxedo_database'				=> 'database', 

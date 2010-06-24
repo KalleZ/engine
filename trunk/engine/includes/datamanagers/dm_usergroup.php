@@ -66,12 +66,11 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	integer			The usergroup id
-		 * @param	boolean			Load from datastore?
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the usergroup id is set and it failed to load for some reason
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
 		 */
-		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL, $cached = false)
+		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL)
 		{
 			$this->tuxxedo 		= $tuxxedo;
 
@@ -81,36 +80,21 @@
 
 			if($identifier !== NULL)
 			{
-				if($cached)
+				$usergroups = $tuxxedo->db->query('
+									SELECT 
+										* 
+									FROM 
+										`' . TUXXEDO_PREFIX . 'usergroups` 
+									WHERE 
+										`id` = %d', $identifier);
+
+				if(!$usergroups)
 				{
-					$usergroups = $tuxxedo->cache->fetch('usergroups');
-
-					if(!$usergroups || !isset($usergroups[$identifier]))
-					{
-						throw new Tuxxedo_Exception('Invalid usergroup id passed to datamanager');
-					}
-
-					$this->data = $usergroups[$identifier];
-				}
-				else
-				{
-					$usergroups = $tuxxedo->db->query('
-										SELECT 
-											* 
-										FROM 
-											`' . TUXXEDO_PREFIX . 'usergroups` 
-										WHERE 
-											`id` = %d', $identifier);
-
-					if(!$usergroups)
-					{
-						throw new Tuxxedo_Exception('Invalid usergroup id passed to datamanager');
-					}
-
-					$this->data = $usergroups->fetchAssoc();
+					throw new Tuxxedo_Exception('Invalid usergroup id passed to datamanager');
 				}
 
-				$this->identifier = $identifier;
+				$this->data 		= $usergroups->fetchAssoc();
+				$this->identifier 	= $identifier;
 			}
 		}
 

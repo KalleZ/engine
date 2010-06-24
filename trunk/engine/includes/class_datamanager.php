@@ -186,7 +186,7 @@
 		 *
 		 * @param	string				Datamanger name
 		 * @param	mixed				An identifier to send to the datamanager to load default data upon instanciating it
-		 * @param	boolean				Load from datastore if the datamanager supports it, or from the database?
+		 * @param	boolean				Whether to use internationalization for formdata exceptions
 		 * @return	Tuxxedo_Datamanager		Returns a new database instance
 		 *
 		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if loading of a datamanger should fail for some reason
@@ -194,7 +194,7 @@
 		 * @note	If loading from the datastore, then only the data in the cache will be loaded, meaning 
 		 * 		that not all the data that exists in the database may be available.
 		 */
-		final public static function factory($datamanager, $identifier = NULL, $cached = false, $intl = true)
+		final public static function factory($datamanager, $identifier = NULL, $intl = true)
 		{
 			global $tuxxedo;
 
@@ -213,11 +213,11 @@
 
 			if(in_array($datamanager, self::$loaded_datamanagers))
 			{
-				return(new $class($tuxxedo, $identifier, $cached));
+				return(new $class($tuxxedo, $identifier));
 			}
 
 			$class	= 'Tuxxedo_Datamanager_API_' . $datamanager;
-			$dm 	= new $class($tuxxedo, $identifier, $cached);
+			$dm 	= new $class($tuxxedo, $identifier);
 
 			if(!is_subclass_of($class, __CLASS__))
 			{
@@ -370,11 +370,11 @@
 		 * Save method, attempts to validate and save the data 
 		 * into the database
 		 *
-		 * @param	boolean					Whether to rebuild the datastore elements for this datamanager
-		 * @return	boolean					Returns true if the data is saved with success, otherwise boolean false
+		 * @param	boolean				Whether to rebuild the datastore elements for this datamanager
+		 * @return	boolean				Returns true if the data is saved with success, otherwise boolean false
 		 *
-		 * @throws	Tuxxedo_Basic_Exception			Throws a basic exception if the query should fail
-		 * @throws	Tuxxedo_Named_FormData_Exception	Throws a named formdata exception if validation fails
+		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the query should fail
+		 * @throws	Tuxxedo_FormData_Exception	Throws a formdata exception if validation fails
 		 */
 		public function save($rebuild = true)
 		{
@@ -389,7 +389,7 @@
 					$formdata[$field] = (isset($phrase['dm_' . $this->dmname . '_' . $field]) ? $phrase['dm_' . $this->dmname . '_' . $field] : $this->field_names[$field]);
 				}
 
-				throw new Tuxxedo_Named_Formdata_Exception($formdata);
+				throw new Tuxxedo_Formdata_Exception($formdata);
 			}
 
 			$values		= '';

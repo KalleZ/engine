@@ -69,12 +69,11 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	integer			The style id
-		 * @param	boolean			Load from datastore?
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the style id is set and it failed to load for some reason
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
 		 */
-		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL, $cached = false)
+		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL)
 		{
 			$this->tuxxedo 		= $tuxxedo;
 
@@ -84,36 +83,22 @@
 
 			if($identifier !== NULL)
 			{
-				if($cached)
+				$styles = $tuxxedo->db->query('
+								SELECT 
+									* 
+								FROM 
+									`' . TUXXEDO_PREFIX . 'styles` 
+								WHERE 
+									`id` = %d
+								LIMIT 1', $identifier);
+
+				if(!$styles || !$styles->getNumRows())
 				{
-					$styles = $tuxxedo->cache->fetch('styleinfo');
-
-					if(!$styles || !isset($styles[$identifier]))
-					{
-						throw new Tuxxedo_Exception('Invalid style id passed to datamanager');
-					}
-
-					$this->data = $styles[$identifier];
-				}
-				else
-				{
-					$styles = $tuxxedo->db->query('
-									SELECT 
-										* 
-									FROM 
-										`' . TUXXEDO_PREFIX . 'styles` 
-									WHERE 
-										`id` = %d', $identifier);
-
-					if(!$styles)
-					{
-						throw new Tuxxedo_Exception('Invalid style id passed to datamanager');
-					}
-
-					$this->data = $styles->fetchAssoc();
+					throw new Tuxxedo_Exception('Invalid style id passed to datamanager');
 				}
 
-				$this->identifier = $identifier;
+				$this->data 		= $styles->fetchAssoc();
+				$this->identifier 	= $identifier;
 			}
 		}
 
