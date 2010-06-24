@@ -111,8 +111,7 @@
 					$usergroup	= $usergroup['title'];
 				}
 
-				$session->expires	= ($session->lastactivity + $options['cookie_expires']);
-				$session->expires	= ($session->expires < TIMENOW_UTC ? 'Expired' : sprintf('Expires in %d second(s)', $session->expires - TIMENOW_UTC));
+				$session->expires	= ($expires = ($session->lastactivity + $options['cookie_expires']) < TIMENOW_UTC ? 'Expired' : sprintf('Expires in %d second(s)', $expires - TIMENOW_UTC));
 				$session->lastactivity 	= tuxxedo_date($session->lastactivity);
 				$session->location	= htmlspecialchars(html_entity_decode($session->location));
 
