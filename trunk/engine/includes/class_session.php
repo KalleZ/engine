@@ -156,7 +156,8 @@
 			session_unset();
 			session_destroy();
 
-			self::$started = false;
+			self::$started 	= false;
+			self::$id	= '';
 		}
 
 		/**
