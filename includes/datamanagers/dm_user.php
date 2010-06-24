@@ -205,16 +205,47 @@
 			return($tuxxedo->cache->timezones[$timezone]);
 		}
 
+		/**
+		 * Checks whether a user name is taken or not
+		 *
+		 * @param	Tuxxedo			Instance to the Tuxxedo registry
+		 * @param	string			The username to check
+		 * @return	boolean			Returns true if the username is free to be taken, otherwise false
+		 */
 		public static function isValidUsername(Tuxxedo $tuxxedo, $username)
 		{
+			$query = $tuxxedo->db->query('
+							SELECT 
+								* 
+							FROM 
+								`' . TUXXEDO_PREFIX . 'users` 
+							WHERE 
+								`username` = \'%s\' 
+							LIMIT 1', $tuxxedo->db->escape($username))
+
+			return($query && $query->getNumRows() == 0);
 		}
 
+		/**
+		 * Checks whether a style id is valid or not
+		 *
+		 * @param	integer			The style id
+		 * @return	boolean			True if the style exists, otherwise false
+		 */
 		public static function isValidStyleId(Tuxxedo $tuxxedo, $styleid)
 		{
+			return($tuxxedo->cache->styleinfo && isset($tuxxedo->cache->styleinfo[$styleid]));
 		}
 
+		/**
+		 * Checks whether a language id is valid or not
+		 *
+		 * @param	integer			The language id
+		 * @return	boolean			True if the language exists, otherwise false
+		 */
 		public static function isValidLanguageId(Tuxxedo $tuxxedo, $languageid)
 		{
+			return($tuxxedo->cache->languages && isset($tuxxedo->cache->languages[$languageid]));
 		}
 	}
 ?>
