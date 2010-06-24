@@ -140,18 +140,23 @@
 		 */
 		public function __destruct()
 		{
-			$this->cleanup();
-		}
+			if(isset($this->userinfo->id))
+			{
+				$this->tuxxedo->db->query('
+								UPDATE 
+									`' . TUXXEDO_PREFIX . 'sessions`
+								SET 
+									`location` = \'%s\', 
+									`lastactivity` = %d
+								WHERE 
+									`userid` = %d', $this->tuxxedo->db(TUXXEDO_SELF), TIMENOW_UTC, $this->userinfo->id);
+			}
 
-		/**
-		 * Cleans the user session up by running shutdown queries 
-		 * and updates the user location if the user session still
-		 * is active
-		 *
-		 * @return		void			No value is returned
-		 */
-		protected function cleanup()
-		{
+			$this->tuxxedo->db->query('
+							DELETE FROM 
+								`' . TUXXEDO_PREFIX . 'sessions` 
+							WHERE 
+								`lastactivity` + %d < %d', $this->tuxxedo->options->cookie_expires, TIMENOW_UTC);
 		}
 
 		/**
@@ -220,12 +225,11 @@
 
 			$this->userinfo = $this->usergroupinfo = new stdClass;
 
-			$this->cleanup();
-			$this->tuxxedo->db->setShutdownQuery('
-								DELETE FROM 
-									`' . TUXXEDO_PREFIX . 'sessions` 
-								WHERE 
-									`sessionid` = \'%s\'', Tuxxedo_Session::$id);
+			$this->tuxxedo->db->query('
+							DELETE FROM 
+								`' . TUXXEDO_PREFIX . 'sessions` 
+							WHERE 
+								`sessionid` = \'%s\'', Tuxxedo_Session::$id);
 
 			Tuxxedo_Session::terminate();
 

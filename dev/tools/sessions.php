@@ -90,8 +90,7 @@
 						DELETE FROM 
 							`' . TUXXEDO_PREFIX . 'sessions` 
 						WHERE 
-							`lastactivity` + %d < %d', 
-						$options['cookie_expires'], TIMENOW_UTC);
+							`lastactivity` + %d < %d', $options['cookie_expires'], TIMENOW_UTC);
 
 			tuxxedo_redirect('Executed cronjob, ' . ($result ? $db->getAffectedRows($result) : '0') . ' session(s) affected', './sessions.php');
 		}

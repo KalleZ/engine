@@ -3,9 +3,6 @@
 	Tuxxedo Engine 1.1.X
 	----------------------
 
-	Rewrite the user session API
-	 - Store online statistics in the datastore cache
-
 	Improve development tools
 	 - Add internationalization support
 	 - Add styles support
@@ -15,6 +12,9 @@
 	   - Passwords
 	   - Templates
 	 - Finish DevTools v2
+
+	Fix the SQL warnings
+	 - Incorrect integer value: '' for column 'userid' at row 1 (Probably the session table borking, since its the only table using a userid column)
 
 	Remove the $cached parameter on the datamanagers, so they always are allocated with the current data, but keep the exists check using the datastore if possible
 
@@ -32,6 +32,7 @@
 
 	Add a generic pagination class with a default Engine database pagination driver
 	Add cronjobs and move the related user/session code into its own cronjob
+	Add useragent to the session table
 
 	Implement the concept of the Factory-factory pattern for component drivers
 
