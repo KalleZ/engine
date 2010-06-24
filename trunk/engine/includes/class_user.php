@@ -152,11 +152,14 @@
 									`userid` = %d', $this->tuxxedo->db(TUXXEDO_SELF), TIMENOW_UTC, $this->userinfo->id);
 			}
 
-			$this->tuxxedo->db->query('
-							DELETE FROM 
-								`' . TUXXEDO_PREFIX . 'sessions` 
-							WHERE 
-								`lastactivity` + %d < %d', $this->tuxxedo->options->cookie_expires, TIMENOW_UTC);
+			if($this->session instanceof Tuxxedo_Session)
+			{
+				$this->tuxxedo->db->query('
+								DELETE FROM 
+									`' . TUXXEDO_PREFIX . 'sessions` 
+								WHERE 
+									`lastactivity` + %d < %d', $this->tuxxedo->options->cookie_expires, TIMENOW_UTC);
+			}
 		}
 
 		/**
