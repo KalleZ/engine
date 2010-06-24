@@ -100,7 +100,6 @@
 			$userlist = '';
 
 			$tuxxedo->set('user', new Tuxxedo_User(false, false));
-			$tuxxedo->set('options', Tuxxedo::getOptions());
 
 			while($session = $sessions->fetchObject())
 			{
@@ -111,7 +110,7 @@
 					$usergroup	= $usergroup['title'];
 				}
 
-				$session->expires	= ($expires = ($session->lastactivity + $options['cookie_expires']) < TIMENOW_UTC ? 'Expired' : sprintf('Expires in %d second(s)', $expires - TIMENOW_UTC));
+				$session->expires	= (($expires = ($session->lastactivity + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('Expires in %d second(s)', $expires - TIMENOW_UTC));
 				$session->lastactivity 	= tuxxedo_date($session->lastactivity);
 				$session->location	= htmlspecialchars(html_entity_decode($session->location));
 

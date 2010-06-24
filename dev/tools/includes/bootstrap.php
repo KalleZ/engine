@@ -81,6 +81,13 @@
 	define('TIMENOW', $datetime->getTimestamp());
 	define('TIMENOW_UTC', TIMENOW);
 
+	if(isset($precache) && sizeof($precache))
+	{
+		$cache_buffer = Array();
+
+		$cache->cache($precache, $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+	}
+
 	$cache_buffer		= Array();
 	$default_templates 	= Array('header', 'footer', 'error', 'redirect');
 
@@ -92,6 +99,8 @@
 	$style->cache((!isset($templates) ? $default_templates : array_merge($default_templates, (array) $templates)), $cache_buffer) or tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);
 
 	unset($cache_buffer);
+
+	$tuxxedo->set('options', (object) Tuxxedo::getOptions());
 
 	$engine_version = Tuxxedo::VERSION_STRING;
 
