@@ -13,9 +13,6 @@
 	   - Templates
 	 - Finish DevTools v2
 
-	Fix the SQL warnings
-	 - Incorrect integer value: '' for column 'userid' at row 1 (Probably the session table borking, since its the only table using a userid column)
-
 
 	Tuxxedo Engine Future
 	----------------------
