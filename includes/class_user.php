@@ -128,10 +128,10 @@
 							VALUES
 							(
 								\'%s\', 
-								\'%s\',
+								%d,
 								\'%s\', 
 								%d
-							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : ''), $this->tuxxedo->db->escape(TUXXEDO_SELF), TIMENOW_UTC);
+							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : 0), $this->tuxxedo->db->escape(TUXXEDO_SELF), TIMENOW_UTC);
 			}
 		}
 
