@@ -22,6 +22,7 @@
 	 - Permission
 	 - Phrase
 	 - Phrasegroup
+	 - Session
 	 - Template
 
 	Add a generic pagination class with a default Engine database pagination driver
@@ -29,8 +30,12 @@
 	Add useragent to the session table
 
 	Implement the concept of the Factory-factory pattern for component drivers
+	Implement use of the session datamanager within the user API, so we don't have to dynamiclly generate the SQL all the time
+	Implement an ActiveRecord alike pattern for the datamanagers using property overloading, so its possible to: $dm->field = $value; 
 
 	Change SQL queries to be non-mysql compatible
 	Change the autoloader from a function to a class so its easier to update the class mapping at runtime
 
 	Check if all optional components have a loaded check when used within the engine
+
+	Remove the datastore fetch method, and require the overloading for checking if it exists and or fetch the cache element
