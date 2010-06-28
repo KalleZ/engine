@@ -69,17 +69,6 @@
 		}
 
 		/**
-		 * Fetches a new item from the datastore cache
-		 *
-		 * @param	string			The datastore element to load
-		 * @return	array			An array is returned, otherwise boolean false on error
-		 */
-		public function fetch($name)
-		{
-			return($this->{$name});
-		}
-
-		/**
 		 * Frees a datastore from the loaded cache
 		 *
 		 * @param	string			The datastore element to free from cache

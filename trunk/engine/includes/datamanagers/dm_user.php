@@ -21,7 +21,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	final class Tuxxedo_Datamanager_API_User extends Tuxxedo_Datamanager
+	class Tuxxedo_Datamanager_API_User extends Tuxxedo_Datamanager
 	{
 		/**
 		 * Fields for validation of users
@@ -122,6 +122,7 @@
 			$this->dmname		= 'user';
 			$this->tablename	= TUXXEDO_PREFIX . 'users';
 			$this->idname		= 'id';
+			$this->information	= &$this->userdata;
 
 			if($identifier !== NULL)
 			{

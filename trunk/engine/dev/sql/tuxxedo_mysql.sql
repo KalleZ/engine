@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Vært: localhost
--- Genereringstid: 23. 06 2010 kl. 06:12:11
+-- Genereringstid: 28. 06 2010 kl. 07:12:38
 -- Serverversion: 5.1.36
 -- PHP-version: 5.3.0
 
@@ -52,6 +52,7 @@ INSERT INTO `datastore` (`name`, `data`) VALUES
 CREATE TABLE IF NOT EXISTS `languages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(128) NOT NULL,
+  `developer` varchar(128) NOT NULL,
   `isotitle` varchar(5) NOT NULL,
   `default` tinyint(1) NOT NULL DEFAULT '0',
   `charset` enum('UTF-8','ISO-8859-1') NOT NULL DEFAULT 'UTF-8',
@@ -62,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `languages` (
 -- Data dump for tabellen `languages`
 --
 
-INSERT INTO `languages` (`id`, `title`, `isotitle`, `default`, `charset`) VALUES
-(1, 'English', 'en', 1, 'UTF-8');
+INSERT INTO `languages` (`id`, `title`, `developer`, `isotitle`, `default`, `charset`) VALUES
+(1, 'English', 'Tuxxedo Software Development', 'en', 1, 'UTF-8');
 
 -- --------------------------------------------------------
 

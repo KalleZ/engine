@@ -21,7 +21,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	final class Tuxxedo_Datamanager_API_Usergroup extends Tuxxedo_Datamanager
+	class Tuxxedo_Datamanager_API_Usergroup extends Tuxxedo_Datamanager
 	{
 		/**
 		 * Fields for validation of usergroups
@@ -77,6 +77,7 @@
 			$this->dmname		= 'usergroup';
 			$this->tablename	= TUXXEDO_PREFIX . 'usergroups';
 			$this->idname		= 'id';
+			$this->information	= &$this->userdata;
 
 			if($identifier !== NULL)
 			{
@@ -107,7 +108,11 @@
 		 */
 		protected function rebuild(Array $virtual)
 		{
-			$datastore 				= $this->tuxxedo->cache->fetch('usergroups');
+			if(($datastore = $this->tuxxedo->cache->usergroups) === false)
+			{
+				return(false);
+			}
+			
 			$datastore[(integer) $this->identifier] = $virtual;
 
 			return($this->tuxxedo->cache->rebuild('usergroups', $datastore));

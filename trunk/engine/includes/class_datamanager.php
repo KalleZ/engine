@@ -15,29 +15,6 @@
 
 
 	/**
-	 * Datamanager driver API, a datamanger must extend this interface 
-	 * in order to by loadable by the datamanger class.
-	 *
-	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version		1.0
-	 * @package		Engine
-	 */
-	interface Tuxxedo_Datamanger_API
-	{
-		/**
-		 * Constructor for the current datamanager, this 
-		 * can be used to either create a datamanager based 
-		 * on a certain record determined by the passed identifier 
-		 * or as a clean datamanager to insert a new record.
-		 *
-		 * @param	mixed			The unique identifier to send to the datamanager
-		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the unique identifier sent to the datamanager was invalid
-		 */
-		public function __construct($identifier = NULL);
-	}
-
-	/**
 	 * Abstract datamanager class
 	 *
 	 * Every datamanager class must extend this class in order to be loadable and to 
@@ -48,7 +25,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	abstract class Tuxxedo_Datamanager implements Tuxxedo_Datamanger_API
+	abstract class Tuxxedo_Datamanager extends Tuxxedo_InfoAccess
 	{
 		/**
 		 * Indicates that a field is required
@@ -182,6 +159,18 @@
 
 
 		/**
+		 * Constructor for the current datamanager, this 
+		 * can be used to either create a datamanager based 
+		 * on a certain record determined by the passed identifier 
+		 * or as a clean datamanager to insert a new record.
+		 *
+		 * @param	mixed			The unique identifier to send to the datamanager
+		 *
+		 * @throws	Tuxxedo_Exception	Throws an exception if the unique identifier sent to the datamanager was invalid
+		 */
+		abstract public function __construct($identifier = NULL);
+
+		/**
 		 * Constructs a new datamanger instance
 		 *
 		 * @param	string				Datamanger name
@@ -238,18 +227,6 @@
 		public function getInvalidFields()
 		{
 			return($this->invalid_fields);
-		}
-
-		/**
-		 * Updates a field
-		 *
-		 * @param	string				The field to update
-		 * @param	mixed				The field value
-		 * @return	void				No value is returned
-		 */
-		public function set($field, $value)
-		{
-			$this->userdata[strtolower($field)] = $value;
 		}
 
 		/**

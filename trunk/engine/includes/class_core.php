@@ -250,7 +250,7 @@
 		{
 			static $options;
 
-			if(is_array($options) || isset(self::$instance->instances['cache']) && ($options = self::$instance->instances['cache']->fetch('options')))
+			if(is_array($options) || isset(self::$instance->instances['cache']) && ($options = self::$instance->instances['cache']->options) !== false)
 			{
 				return($options);
 			}
