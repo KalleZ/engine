@@ -183,7 +183,7 @@
 				$this->logout(true);
 			}
 
-			$userinfo = $this->getUserInfo($identifier, $identifier_field, 0);
+			$userinfo = $this->getUserInfo($identifier, $identifier_field);
 
 			if(!$userinfo || !self::isValidPassword($password, $userinfo->salt, $userinfo->password))
 			{

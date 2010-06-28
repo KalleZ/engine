@@ -21,7 +21,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	final class Tuxxedo_Datamanager_API_Style extends Tuxxedo_Datamanager
+	class Tuxxedo_Datamanager_API_Style extends Tuxxedo_Datamanager
 	{
 		/**
 		 * Fields for validation of styles
@@ -80,6 +80,7 @@
 			$this->dmname		= 'style';
 			$this->tablename	= TUXXEDO_PREFIX . 'styles';
 			$this->idname		= 'id';
+			$this->information	= &$this->userdata;
 
 			if($identifier !== NULL)
 			{
@@ -111,7 +112,11 @@
 		 */
 		protected function rebuild(Array $virtual)
 		{
-			$datastore 				= $this->tuxxedo->cache->fetch('styleinfo');
+			if(($datastore = $this->tuxxedo->cache->styleinfo) === false)
+			{
+				return(false);
+			}
+			
 			$datastore[(integer) $this->identifier] = $virtual;
 
 			return($this->tuxxedo->cache->rebuild('styleinfo', $datastore));
