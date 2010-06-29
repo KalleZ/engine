@@ -88,7 +88,7 @@
 
 			if(!isset($_SESSION[$name]))
 			{
-				return(NULL);
+				return;
 			}
 
 			return($_SESSION[$name]);
