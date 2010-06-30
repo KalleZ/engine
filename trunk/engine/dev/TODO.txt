@@ -13,32 +13,34 @@
 	   - Templates
 	 - Finish DevTools v2
 
+	Implement use of the session datamanager within the user API, so we don't have to dynamiclly generate the SQL all the time
+
+	Add new datamanagers
+	 - Session
+
+	Add a CHANGELOG file for all the improvements from 1.0 to 1.1
+	Add useragent to the session table
+
+	Check if all optional components have a loaded check when used within the engine
+	Change the autoloader from a function to a class so its easier to update the class mapping at runtime
+
+	Remove the hardcoded english phrases and return field names if validation fails
+
 
 	Tuxxedo Engine Future
 	----------------------
-
-	Add a CHANGELOG file for all the improvements from 1.0 to 1.1
 
 	Add new datamanagers
 	 - Language
 	 - Permission
 	 - Phrase
 	 - Phrasegroup
-	 - Session
 	 - Template
 
 	Add a generic pagination class with a default Engine database pagination driver
 	Add cronjobs and move the related user/session code into its own cronjob
-	Add useragent to the session table
 
 	Implement the concept of the Factory-factory pattern for component drivers
-	Implement use of the session datamanager within the user API, so we don't have to dynamiclly generate the SQL all the time
-	Implement an ActiveRecord alike pattern for the datamanagers using property overloading, so its possible to: $dm->field = $value;
 	Implement a temporary memory storage, with backends for APC etc.
 
 	Change SQL queries to be non-mysql compatible
-	Change the autoloader from a function to a class so its easier to update the class mapping at runtime
-
-	Check if all optional components have a loaded check when used within the engine
-
-	Remove the hardcoded english phrases and return field names if validation fails
