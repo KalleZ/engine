@@ -370,4 +370,160 @@
 			}
 		}
 	}
+
+	/**
+	 * Autoloader mapping class, this class provides the ability to 
+	 * map custom classes, or redirect class locations at runtime. 
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_Autoloader
+	{
+		/**
+		 * Class autoloader mappings
+		 *
+		 * @var		array
+		 */
+		protected static $classes	= Array(
+							/* Core classes, always available */
+							'tuxxedo'					=> 'core', 
+							'tuxxedo_infoaccess'				=> 'core', 
+
+							/* Exceptions */
+							'tuxxedo_exception'				=> 'exceptions', 
+							'tuxxedo_formdata_exception'			=> 'exceptions', 
+							'tuxxedo_named_formdata_exception'		=> 'exceptions', 
+							'tuxxedo_basic_exception'			=> 'exceptions', 
+
+							/* Database core */
+							'tuxxedo_database'				=> 'database', 
+							'tuxxedo_database_result'			=> 'database', 
+							'tuxxedo_database_driver'			=> 'database', 
+							'tuxxedo_database_driver_result'		=> 'database', 
+							'tuxxedo_sql_exception'				=> 'database', 
+
+							/* Caching utilities */
+							'tuxxedo_datastore'				=> 'cache', 
+
+							/* Data filtering */
+							'tuxxedo_filter'				=> 'filter', 
+
+							/* Data managers */
+							'tuxxedo_datamanager'				=> 'datamanager', 
+							'tuxxedo_datamanager_api'			=> 'datamanager', 
+
+							/* Style API */
+							'tuxxedo_style'					=> 'template', 
+							'tuxxedo_style_storage'				=> 'template', 
+							'tuxxedo_style_storage_database'		=> 'template', 
+							'tuxxedo_style_storage_filesystem'		=> 'template', 
+
+							/* Template compiler */
+							'tuxxedo_template_compiler'			=> 'template_compiler', 
+							'tuxxedo_template_compiler_exception'		=> 'template_compiler', 
+							'tuxxedo_template_compiler_dummy'		=> 'template_compiler', 
+
+							/* Internationalization API */
+							'tuxxedo_internationalization'			=> 'intl', 
+							'tuxxedo_internationalization_phrasegroup'	=> 'intl', 
+
+							/* Users and sessions API */
+							'tuxxedo_session'				=> 'session', 
+							'tuxxedo_user'					=> 'user'
+							);
+
+		/**
+		 * Driver autoloader mappings
+		 *
+		 * @var		array
+		 */
+		protected static $drivers	= Array(
+							/* Database drivers */
+							'tuxxedo_database_driver_mysql'			=> Array('database', 'driver', 'mysql'), 
+							'tuxxedo_database_driver_mysql_result'		=> Array('database', 'driver', 'mysql'), 
+							'tuxxedo_database_driver_mysqli'		=> Array('database', 'driver', 'mysqli'), 
+							'tuxxedo_database_driver_mysqli_result'		=> Array('database', 'driver', 'mysqli'), 
+							'tuxxedo_database_driver_pdo'			=> Array('database', 'driver', 'pdo'), 
+							'tuxxedo_database_driver_pdo_result'		=> Array('database', 'driver', 'pdo'), 
+
+							/* Data managers */
+							'tuxxedo_datamanager_api_style'			=> Array('datamanagers', 'dm', 'style'), 
+							'tuxxedo_datamanager_api_user'			=> Array('datamanagers', 'dm', 'user'), 
+							'tuxxedo_datamanager_api_usergroup'		=> Array('datamanagers', 'dm', 'usergroup')
+							);
+
+
+		/**
+		 * Defines a new class mapping
+		 *
+		 * @param	string			The name of the class to add to the autoloader
+		 * @param	string			The file name in the includes directory prefixed with class to be autoloaded
+		 * @return	boolean			True if the file was added to the map, otherwise false
+		 */
+		public static function setClassMap($class, $file)
+		{
+			if(empty($class) || empty($file))
+			{
+				return(false);
+			}
+
+			self::$classes[strtolower($class)] = $file;
+
+			return(true);
+		}
+
+		/**
+		 * Defines a new driver mapping
+		 *
+		 * @param	string			The name of the driver class to add to the autoloader
+		 * @param	string			The name of the driver, aka. the directory within the includes folder to load from
+		 * @param	string			The name of the driver file
+		 * @param	string			Optionally a file name prefix, if specified, then while loading it will be suffixed with an underscore
+		 * @return	boolean			True if the file was added to the map, otherwise false
+		 */
+		public static function setDriverMap($class, $driver, $file, $prefix = '')
+		{
+			if(empty($class) || empty($driver) || empty($file))
+			{
+				return(false);
+			}
+
+			self::$drivers[strtolower($class)] = Array($driver, $prefix, $file);
+
+			return(true);
+		}
+
+		/**
+		 * Attempts to autoload a class
+		 *
+		 * @param	string			The class to autoload
+		 * @return	void			No value is returned
+		 */
+		public static function load($class)
+		{
+			if(class_exists($class, false))
+			{
+				return;
+			}
+
+			$class = strtolower($class);
+
+			if(isset(self::$drivers[$class]))
+			{
+				require(TUXXEDO_DIR . '/includes/' . self::$drivers[$class][0] . '/' . (!empty(self::$drivers[$class][1]) ? self::$drivers[$class][1] . '_' : '') . self::$drivers[$class][2] . '.php');
+
+				return;
+			}
+			elseif(isset(self::$classes[$class]))
+			{
+				require(TUXXEDO_DIR . '/includes/class_' . self::$classes[$class] . '.php');
+
+				return;
+			}
+
+			require(TUXXEDO_DIR . '/includes/' . $class . '.php');
+		}
+	}
 ?>
