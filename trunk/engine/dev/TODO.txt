@@ -22,7 +22,6 @@
 	Add useragent to the session table
 
 	Check if all optional components have a loaded check when used within the engine
-	Change the autoloader from a function to a class so its easier to update the class mapping at runtime
 
 	Remove the hardcoded english phrases and return field names if validation fails
 
@@ -42,5 +41,6 @@
 
 	Implement the concept of the Factory-factory pattern for component drivers
 	Implement a temporary memory storage, with backends for APC etc.
+	Implement a dependency mapping
 
 	Change SQL queries to be non-mysql compatible

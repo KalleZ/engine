@@ -60,7 +60,7 @@
 	set_error_handler('tuxxedo_error_handler');
 	set_exception_handler('tuxxedo_exception_handler');
 	register_shutdown_function('tuxxedo_shutdown_handler');
-	spl_autoload_register('tuxxedo_autoload_handler');
+	spl_autoload_register(Array('Tuxxedo_Autoloader', 'load'));
 
 	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
