@@ -92,7 +92,7 @@
 	 * If you for example are using PDO and want to use MySQL as 
 	 * your backend, then this value have to be 'mysql'.
 	 */
-	'subdriver'	=> 'mysql', 
+	'subdriver'	=> '', 
 
 	/**
 	 * DSN prefix
