@@ -86,24 +86,6 @@
 												)
 							);
 
-		/**
-		 * Field names for if a required field 
-		 * fails validation
-		 *
-		 * @var		array
-		 */
-		protected $field_names		= Array(
-							'username'		=> 'Username', 
-							'email'			=> 'Email address', 
-							'name'			=> 'Name', 
-							'password'		=> 'Password hash', 
-							'usergroupid'		=> 'Usergroup identifier', 
-							'salt'			=> 'Password salt', 
-							'styleid'		=> 'Style identifier', 
-							'languageid'		=> 'Language identifier', 
-							'timezone'		=> 'Timezone'
-							);
-
 
 
 		/**

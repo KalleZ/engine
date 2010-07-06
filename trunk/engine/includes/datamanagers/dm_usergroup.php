@@ -48,18 +48,6 @@
 											)
 							);
 
-		/**
-		 * Field names for if a required field 
-		 * fails validation
-		 *
-		 * @var		array
-		 */
-		protected $field_names		= Array(
-							'title'		=> 'Usergroup title', 
-							'type'		=> 'Usergroup type', 
-							'permissions'	=> 'Permission mask'
-							);
-
 
 		/**
 		 * Constructor, fetches a new usergroup based on its id if set

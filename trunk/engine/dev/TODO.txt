@@ -23,8 +23,6 @@
 
 	Check if all optional components have a loaded check when used within the engine
 
-	Remove the hardcoded english phrases and return field names if validation fails
-
 
 	Tuxxedo Engine Future
 	----------------------

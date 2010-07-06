@@ -51,18 +51,6 @@
 											)
 							);
 
-		/**
-		 * Field names for if a required field 
-		 * fails validation
-		 *
-		 * @var		array
-		 */
-		protected $field_names		= Array(
-							'name'		=> 'Style name', 
-							'developer'	=> 'Style developer', 
-							'styledir'	=> 'Style directory'
-							);
-
 
 		/**
 		 * Constructor, fetches a new style based on its id if set
