@@ -364,7 +364,7 @@
 
 				foreach($this->invalid_fields as $field)
 				{
-					$formdata[$field] = ($intl && isset($phrase['dm_' . $this->dmname . '_' . $field]) ? $phrase['dm_' . $this->dmname . '_' . $field] : $this->field_names[$field]);
+					$formdata[$field] = ($intl && isset($phrase['dm_' . $this->dmname . '_' . $field]) ? $phrase['dm_' . $this->dmname . '_' . $field] : $field);
 				}
 
 				throw new Tuxxedo_Formdata_Exception($formdata);
