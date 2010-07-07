@@ -54,6 +54,7 @@
 		unset($version);
 	}
 
+	Tuxxedo::globals('hooks', 		false);
 	Tuxxedo::globals('error_reporting', 	true);
 	Tuxxedo::globals('errors', 		Array());
 

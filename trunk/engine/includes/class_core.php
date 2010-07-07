@@ -97,6 +97,20 @@
 		private $globals		= Array();
 
 		/**
+		 * Holds a list of available hooks and their 
+		 * callbacks, these are used for deep integration 
+		 * with core functions in the engine
+		 *
+		 * @var		array
+		 */
+		private $hooks			= Array(
+							'errors'		=> NULL, 
+ 							'exceptions'		=> NULL, 
+							'docerror' 		=> NULL
+							);
+
+
+		/**
 		 * Disable the ability to construct the object
 		 */
 		private function __construct()
@@ -267,16 +281,46 @@
 		 */
 		public static function globals($name, $value = NULL)
 		{
-			if(func_num_args() > 1)
-			{
-				self::$instance->globals[$name] = $value;
-			}
-			elseif(!isset(self::$instance->globals[$name]))
+			return(self::symtable('globals', $name, $value));
+		}
+
+		/**
+		 * Sets or gets a new hook callback
+		 *
+		 * @param	string			The name of the hook to set a callback for
+		 * @param	mixed			A value, this can be of any type, this is only used if adding or editing a hook callback
+		 * @return	mixed			Returns the value of the hook callback on both set and get, and boolean false if trying to get an invalid hook location
+		 */
+		public static function hook($location, $callback = NULL)
+		{
+			if($callback != NULL && !is_callable($callback))
 			{
 				return(false);
 			}
 
-			return(self::$instance->globals[$name]);
+			return(self::symtable('hooks', $location, $callback));
+		}
+
+		/**
+		 * Sets or gets a new value in a symbol table
+		 *
+		 * @param	string			The name of the symbol table to read from/write to
+		 * @param	string			The name of the variable to set
+		 * @param	mixed			A value, this can be of any type, this is only used if adding or editing a variable
+		 * @return	mixed			Returns the value of variable on both set and get, and boolean false if trying to get an undefined variable
+		 */
+		private static function symtable($symtable, $name, $value = NULL)
+		{
+			if($value != NULL)
+			{
+				self::$instance->{$symtable}[$name] = $value;
+			}
+			elseif(!isset(self::$instance->{$symtable}[$name]))
+			{
+				return(false);
+			}
+
+			return(self::$instance->{$symtable}[$name]);
 		}
 	}
 

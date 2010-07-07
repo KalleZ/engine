@@ -146,6 +146,7 @@
 	/**
 	 * Set globals
 	 */
+	Tuxxedo::globals('hooks', 		true);
 	Tuxxedo::globals('error_reporting', 	true);
 	Tuxxedo::globals('errors', 		Array());
 
@@ -225,7 +226,7 @@
 					'header', 'footer', 
 
 					/* Error handling */
-					'error', 'error_validation', 'error_validationbit', 
+					'error', 
 
 					/* Miscellaneous */
 					'redirect'
