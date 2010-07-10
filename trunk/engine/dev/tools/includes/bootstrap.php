@@ -24,10 +24,10 @@
 	define('CWD', 		'../..');
 	define('TUXXEDO', 	1337);
 
-	require(CWD . '/includes/configuration.php');
-	require(CWD . '/includes/class_core.php');
-	require(CWD . '/includes/functions.php');
-	require(CWD . '/includes/functions_debug.php');
+	require(CWD . '/library/configuration.php');
+	require(CWD . '/library/core.php');
+	require(CWD . '/library/functions.php');
+	require(CWD . '/library/functions_debug.php');
 
 	require('./includes/functions.php');
 
@@ -65,9 +65,10 @@
 
 	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
+	define('TUXXEDO_LIBRARY', 	CWD . '/library');
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
 
-	require('./includes/class_template.php');
+	require('./includes/template.php');
 
 	$tuxxedo = Tuxxedo::init($configuration);
 

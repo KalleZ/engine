@@ -11,7 +11,6 @@
 	   - Options
 	   - Passwords
 	   - Templates
-	 - Finish DevTools v2
 
 	Implement use of the session datamanager within the user API, so we don't have to dynamiclly generate the SQL all the time
 
