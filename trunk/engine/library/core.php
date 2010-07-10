@@ -459,10 +459,10 @@
 							'tuxxedo_datamanager_api'			=> 'datamanager', 
 
 							/* Style API */
-							'tuxxedo_style'					=> 'template', 
-							'tuxxedo_style_storage'				=> 'template', 
-							'tuxxedo_style_storage_database'		=> 'template', 
-							'tuxxedo_style_storage_filesystem'		=> 'template', 
+							'tuxxedo_style'					=> 'styles', 
+							'tuxxedo_style_storage'				=> 'styles', 
+							'tuxxedo_style_storage_database'		=> 'styles', 
+							'tuxxedo_style_storage_filesystem'		=> 'styles', 
 
 							/* Template compiler */
 							'tuxxedo_template_compiler'			=> 'template_compiler', 
@@ -470,8 +470,8 @@
 							'tuxxedo_template_compiler_dummy'		=> 'template_compiler', 
 
 							/* Internationalization API */
-							'tuxxedo_internationalization'			=> 'intl', 
-							'tuxxedo_internationalization_phrasegroup'	=> 'intl', 
+							'tuxxedo_internationalization'			=> 'internationalization', 
+							'tuxxedo_internationalization_phrasegroup'	=> 'internationalization', 
 
 							/* Users and sessions API */
 							'tuxxedo_session'				=> 'session', 
@@ -556,18 +556,18 @@
 
 			if(isset(self::$drivers[$class]))
 			{
-				require(TUXXEDO_DIR . '/includes/' . self::$drivers[$class][0] . '/' . (!empty(self::$drivers[$class][1]) ? self::$drivers[$class][1] . '_' : '') . self::$drivers[$class][2] . '.php');
+				require(TUXXEDO_LIBRARY . '/' . self::$drivers[$class][0] . '/' . (!empty(self::$drivers[$class][1]) ? self::$drivers[$class][1] . '_' : '') . self::$drivers[$class][2] . '.php');
 
 				return;
 			}
 			elseif(isset(self::$classes[$class]))
 			{
-				require(TUXXEDO_DIR . '/includes/class_' . self::$classes[$class] . '.php');
+				require(TUXXEDO_LIBRARY . '/' . self::$classes[$class] . '.php');
 
 				return;
 			}
 
-			require(TUXXEDO_DIR . '/includes/' . $class . '.php');
+			require(TUXXEDO_LIBRARY . '/' . $class . '.php');
 		}
 	}
 ?>

@@ -15,7 +15,7 @@
 	/**
 	 * Include the boostraper
 	 */
-	require('./includes/bootstrap.php');
+	require('./library/bootstrap.php');
 
 	/**
 	 * Just print the engine version to show that 

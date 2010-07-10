@@ -76,19 +76,26 @@
 	define('TUXXEDO_DIR', 	(defined('CWD') ? CWD : getcwd()));
 
 	/**
+	 * Sets the library path
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_LIBRARY', TUXXEDO_DIR . '/library');
+
+	/**
 	 * Configuration
 	 */
-	require(TUXXEDO_DIR . '/includes/configuration.php');
+	require(TUXXEDO_LIBRARY . '/configuration.php');
 
 	/**
 	 * Include core classes
 	 */
-	require(TUXXEDO_DIR . '/includes/class_core.php');
+	require(TUXXEDO_LIBRARY . '/core.php');
 
 	/**
 	 * Include general functions
 	 */
-	require(TUXXEDO_DIR . '/includes/functions.php');
+	require(TUXXEDO_LIBRARY . '/functions.php');
 
 	/**
 	 * Set various handlers for errors, exceptions and 
@@ -108,6 +115,8 @@
 
 	/**
 	 * Set the debug mode constant
+	 *
+	 * @var		boolean
 	 */
 	define('TUXXEDO_DEBUG', $configuration['application']['debug']);
 
@@ -130,7 +139,7 @@
 		/**
 		 * Include the debugging functions
 		 */
-		require(TUXXEDO_DIR . '/includes/functions_debug.php');
+		require(TUXXEDO_LIBRARY . '/functions_debug.php');
 	}
 
 	/**
