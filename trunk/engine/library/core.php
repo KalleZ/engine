@@ -34,7 +34,7 @@
 	 	 *
 		 * @var		string
 		 */
-		const VERSION			= '1.1.0';
+		const VERSION			= '2.0.0';
 
 		/**
 		 * Tuxxedo version ID, this contains the version id in the form 
@@ -50,7 +50,7 @@
 		 *
 		 * @var		integer
 		 */
-		const VERSION_ID		= 10100;
+		const VERSION_ID		= 20000;
 
 		/**
 		 * Tuxxedo version string, this is the full version string, which 
@@ -63,7 +63,7 @@
 		 *
 		 * @var		string
 		 */
-		const VERSION_STRING		= '1.1.0 (development preview)';
+		const VERSION_STRING		= '2.0.0 (development preview)';
 
 
 		/**

@@ -1,6 +1,6 @@
 
 
-	Tuxxedo Engine 1.1.X
+	Tuxxedo Engine 2.0.0
 	----------------------
 
 	Improve development tools
@@ -17,10 +17,8 @@
 	Add new datamanagers
 	 - Session
 
-	Add a CHANGELOG file for all the improvements from 1.0 to 1.1
+	Add a CHANGELOG file for all the improvements from 1.0 to 2.0
 	Add useragent to the session table
-
-	Check if all optional components have a loaded check when used within the engine
 
 
 	Tuxxedo Engine Future
@@ -36,8 +34,6 @@
 	Add a generic pagination class with a default Engine database pagination driver
 	Add cronjobs and move the related user/session code into its own cronjob
 
-	Implement the concept of the Factory-factory pattern for component drivers
 	Implement a temporary memory storage, with backends for APC etc.
-	Implement a dependency mapping
 
 	Change SQL queries to be non-mysql compatible
