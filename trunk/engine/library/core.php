@@ -485,17 +485,17 @@
 		 */
 		protected static $drivers	= Array(
 							/* Database drivers */
-							'tuxxedo_database_driver_mysql'			=> Array('database', 'driver', 'mysql'), 
-							'tuxxedo_database_driver_mysql_result'		=> Array('database', 'driver', 'mysql'), 
-							'tuxxedo_database_driver_mysqli'		=> Array('database', 'driver', 'mysqli'), 
-							'tuxxedo_database_driver_mysqli_result'		=> Array('database', 'driver', 'mysqli'), 
-							'tuxxedo_database_driver_pdo'			=> Array('database', 'driver', 'pdo'), 
-							'tuxxedo_database_driver_pdo_result'		=> Array('database', 'driver', 'pdo'), 
+							'tuxxedo_database_driver_mysql'			=> Array('database', 'mysql'), 
+							'tuxxedo_database_driver_mysql_result'		=> Array('database', 'mysql'), 
+							'tuxxedo_database_driver_mysqli'		=> Array('database', 'mysqli'), 
+							'tuxxedo_database_driver_mysqli_result'		=> Array('database', 'mysqli'), 
+							'tuxxedo_database_driver_pdo'			=> Array('database', 'pdo'), 
+							'tuxxedo_database_driver_pdo_result'		=> Array('database', 'pdo'), 
 
 							/* Data managers */
-							'tuxxedo_datamanager_api_style'			=> Array('datamanagers', 'dm', 'style'), 
-							'tuxxedo_datamanager_api_user'			=> Array('datamanagers', 'dm', 'user'), 
-							'tuxxedo_datamanager_api_usergroup'		=> Array('datamanagers', 'dm', 'usergroup')
+							'tuxxedo_datamanager_api_style'			=> Array('datamanagers', 'style'), 
+							'tuxxedo_datamanager_api_user'			=> Array('datamanagers', 'user'), 
+							'tuxxedo_datamanager_api_usergroup'		=> Array('datamanagers', 'usergroup')
 							);
 
 
@@ -527,14 +527,14 @@
 		 * @param	string			Optionally a file name prefix, if specified, then while loading it will be suffixed with an underscore
 		 * @return	boolean			True if the file was added to the map, otherwise false
 		 */
-		public static function setDriverMap($class, $driver, $file, $prefix = '')
+		public static function setDriverMap($class, $driver, $file)
 		{
 			if(empty($class) || empty($driver) || empty($file))
 			{
 				return(false);
 			}
 
-			self::$drivers[strtolower($class)] = Array($driver, $prefix, $file);
+			self::$drivers[strtolower($class)] = Array($driver, $file);
 
 			return(true);
 		}
@@ -556,7 +556,7 @@
 
 			if(isset(self::$drivers[$class]))
 			{
-				require(TUXXEDO_LIBRARY . '/' . self::$drivers[$class][0] . '/' . (!empty(self::$drivers[$class][1]) ? self::$drivers[$class][1] . '_' : '') . self::$drivers[$class][2] . '.php');
+				require(TUXXEDO_LIBRARY . '/' . self::$drivers[$class][0] . '/' . self::$drivers[$class][1] . '.php');
 
 				return;
 			}
