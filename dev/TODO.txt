@@ -13,12 +13,15 @@
 	   - Templates
 
 	Implement use of the session datamanager within the user API, so we don't have to dynamiclly generate the SQL all the time
+	Implement the $storage/globals/instances parameter to the registry
 
 	Add new datamanagers
 	 - Session
 
 	Add a CHANGELOG file for all the improvements from 1.0 to 2.0
 	Add useragent to the session table
+
+	Rewrite the email validator, so we have our very own
 
 
 	Tuxxedo Engine Future
@@ -37,3 +40,5 @@
 	Implement a temporary memory storage, with backends for APC etc.
 
 	Change SQL queries to be non-mysql compatible
+	Change the class names, and remove the 'Tuxxedo_' prefix
+	Change to use namespaces, or atleast have a plan and make the code ready for it without breaking compatibility

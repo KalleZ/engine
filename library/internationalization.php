@@ -24,7 +24,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Internationalization extends Tuxxedo_InfoAccess
+	class Tuxxedo_Internationalization extends Tuxxedo_InfoAccess implements Tuxxedo_Invokable
 	{
 		/**
 		 * Private instance to the Tuxxedo registry

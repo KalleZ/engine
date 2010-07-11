@@ -210,7 +210,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	abstract class Tuxxedo_Database implements Tuxxedo_Database_Driver
+	abstract class Tuxxedo_Database implements Tuxxedo_Database_Driver, Tuxxedo_Invokable
 	{
 		/**
 		 * Link pointer, this contains the internal link 

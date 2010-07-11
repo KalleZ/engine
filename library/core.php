@@ -192,7 +192,7 @@
 			{
 				throw new Tuxxedo_Basic_Exception('Passed object class (%s) does not exists', $class);
 			}
-			elseif(method_exists($class, 'invoke'))
+			elseif(($ifaces = class_implements($class, false)) !== false && isset($ifaces['Tuxxedo_Invokable']))
 			{
 				$instance = call_user_func(Array($class, 'invoke'), self::$instance, self::$instance->configuration, (array) self::getOptions());
 			}
@@ -325,6 +325,30 @@
 	}
 
 	/**
+	 * Interface for requring the registry to pass certain information 
+	 * before the constructor is called.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	interface Tuxxedo_Invokable
+	{
+		/**
+		 * Magic method called when creating a new instance of the 
+		 * object from the registry
+		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	array			The configuration array
+		 * @param	array			The options array
+		 * @return	object			Object instance
+		 *
+		 * @throws	Tuxxedo_Basic_Exception	Only thrown on poorly a configured database section in the configuration file
+		 */
+		public static function invoke(Tuxxedo $tuxxedo, Array $configuration, Array $options);
+	}
+
+	/**
 	 * Information access, enables the ability for classes 
 	 * to access their loaded information through the array-alike 
 	 * syntax.
@@ -433,7 +457,9 @@
 		protected static $classes	= Array(
 							/* Core classes, always available */
 							'tuxxedo'					=> 'core', 
+							'tuxxedo_invokable'				=> 'core', 
 							'tuxxedo_infoaccess'				=> 'core', 
+							'tuxxedo_autoloader'				=> 'core', 
 
 							/* Exceptions */
 							'tuxxedo_exception'				=> 'exceptions', 
