@@ -22,7 +22,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Session extends Tuxxedo_InfoAccess
+	class Tuxxedo_Session extends Tuxxedo_InfoAccess implements Tuxxedo_Invokable
 	{
 		/**
 		 * Whether a session is started or not

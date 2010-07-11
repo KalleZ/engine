@@ -222,7 +222,7 @@
 			$message = utf8_encode($message);
 		}
 
-		if(TUXXEDO_DEBUG && sizeof($errors) && !$tuxxedo->style)
+		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && !$tuxxedo->style)
 		{
 			$message .= 	PHP_EOL . 
 					PHP_EOL . 

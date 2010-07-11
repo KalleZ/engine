@@ -24,7 +24,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Filter
+	class Tuxxedo_Filter implements Tuxxedo_Invokable
 	{
 		/**
 		 * Data filter constant, numeric value

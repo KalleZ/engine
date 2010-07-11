@@ -390,7 +390,7 @@
 				return;
 			}
 
-			return($this->userinfo->permissions & $permission !== 0);
+			return(($this->userinfo->permissions & $permission) !== 0);
 		}
 
 
@@ -410,7 +410,7 @@
 				return;
 			}
 
-			return($this->usergroupinfo->permissions & $permission !== 0);
+			return(($this->usergroupinfo->permissions & $permission) !== 0);
 		}
 
 		/**
