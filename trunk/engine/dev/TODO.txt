@@ -17,6 +17,7 @@
 
 	Add a CHANGELOG file for all the improvements from 1.0 to 2.0
 	Add a new option to the datamanagers to allow developers to override optional fields and marking them as required
+	Add a new interface for datamanagers to let the code know that this class rebuilds the datastore
 
 	Rewrite the email validator, so we have our very own
 
