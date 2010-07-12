@@ -287,6 +287,8 @@
 						if(isset($this->userdata[$field]))
 						{
 							$this->invalid_fields[] = $field;
+
+							continue 2;
 						}
 
 						if(isset($properties['default']))
