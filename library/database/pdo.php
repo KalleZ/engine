@@ -308,7 +308,7 @@
 			}
 			catch(PDOException $e)
 			{
-				throw new Tuxxedo_SQL_Exception($e->getMessage(), $e->getCode());
+				throw new Tuxxedo_SQL_Exception($sql, $e->getMessage(), $e->getCode());
 			}
 
 			if($query !== false && (!$query->columnCount() && $query->num_rows))

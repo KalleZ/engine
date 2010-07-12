@@ -305,7 +305,7 @@
 			}
 			elseif($this->link->errno)
 			{
-				throw new Tuxxedo_SQL_Exception($this->link->error, $this->link->errno, $this->link->sqlstate);
+				throw new Tuxxedo_SQL_Exception($sql, $this->link->error, $this->link->errno, $this->link->sqlstate);
 			}
 
 			return(false);

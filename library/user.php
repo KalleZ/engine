@@ -104,7 +104,7 @@
 			{
 				$this->session = $tuxxedo->register('session', 'Tuxxedo_Session');
 
-				if(($userid = Tuxxedo_Session::get('userid')) !== false && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
+				if(($userid = Tuxxedo_Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
 				{
 					$this->userinfo		= $userinfo;
 					$this->usergroupinfo	= $tuxxedo->cache->usergroups[$userinfo->usergroupid];
@@ -130,8 +130,9 @@
 								\'%s\', 
 								%d,
 								\'%s\', 
+								\'%s\', 
 								%d
-							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : 0), $this->tuxxedo->db->escape(TUXXEDO_SELF), TIMENOW_UTC);
+							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : 0), $this->tuxxedo->db->escape(TUXXEDO_SELF), $this->tuxxedo->db->escape(TUXXEDO_USERAGENT), TIMENOW_UTC);
 			}
 		}
 
@@ -147,9 +148,10 @@
 									`' . TUXXEDO_PREFIX . 'sessions`
 								SET 
 									`location` = \'%s\', 
+									`useragent` = \'%s\', 
 									`lastactivity` = %d
 								WHERE 
-									`userid` = %d', $this->tuxxedo->db(TUXXEDO_SELF), TIMENOW_UTC, $this->userinfo->id);
+									`userid` = %d', $this->tuxxedo->db(TUXXEDO_SELF), $this->tuxxedo->db(TUXXEDO_USERAGENT), TIMENOW_UTC, $this->userinfo->id);
 			}
 
 			if($this->session instanceof Tuxxedo_Session)
@@ -198,8 +200,9 @@
 								\'%s\', 
 								%d,
 								\'%s\', 
+								\'%s\', 
 								%d
-							)', Tuxxedo_Session::$id, $userinfo->id , $this->tuxxedo->db->escape(TUXXEDO_SELF), TIMENOW_UTC);
+							)', Tuxxedo_Session::$id, $userinfo->id , $this->tuxxedo->db->escape(TUXXEDO_SELF), $this->tuxxedo->db->escape(TUXXEDO_USERAGENT), TIMENOW_UTC);
 
 			Tuxxedo_Session::set('userid', $userinfo->id);
 			Tuxxedo_Session::set('password', $userinfo->password);

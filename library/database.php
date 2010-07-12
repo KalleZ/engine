@@ -491,11 +491,22 @@
 		 * @param	integer			The associated error number for the error
 		 * @param	string			Optionally, an SQL state if the database driver supports it
 		 */
-		public function __construct($error, $errno, $sqlstate = NULL)
+		public function __construct($sql, $error, $errno, $sqlstate = NULL)
 		{
+			$this->sql		= $sql;
 			$this->message 		= $error;
 			$this->code		= (integer) $errno;
 			$this->sqlstate		= ($sqlstate ? $sqlstate : false);
+		}
+
+		/**
+		 * Gets the SQL string that caused the exception to trigger
+		 *
+		 * @return	string			Returns the SQL string
+		 */
+		public function getSQL()
+		{
+			return($this->sql);
 		}
 
 		/**

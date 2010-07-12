@@ -131,6 +131,15 @@
 	define('TUXXEDO_SELF', $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 
 	/**
+	 * User agent string if any for the browsing user, note that 
+	 * like the TUXXEDO_SELF constant, this have to be escaped if 
+	 * used in database context
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_USERAGENT', (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
+
+	/**
 	 * If debug mode is activated we need the special 
 	 * debugging functions
 	 */
