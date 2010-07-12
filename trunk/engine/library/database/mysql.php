@@ -296,7 +296,7 @@
 			}
 			elseif(!is_resource($query) && mysql_errno($this->link))
 			{
-				throw new Tuxxedo_SQL_Exception(mysql_error($this->link), mysql_errno($this->link));
+				throw new Tuxxedo_SQL_Exception($sql, mysql_error($this->link), mysql_errno($this->link));
 			}
 
 			return(false);

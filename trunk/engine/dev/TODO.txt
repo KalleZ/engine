@@ -15,11 +15,8 @@
 	Implement use of the session datamanager within the user API, so we don't have to dynamiclly generate the SQL all the time
 	Implement the $storage/globals/instances parameter to the registry
 
-	Add new datamanagers
-	 - Session
-
 	Add a CHANGELOG file for all the improvements from 1.0 to 2.0
-	Add useragent to the session table
+	Add a new option to the datamanagers to allow developers to override optional fields and marking them as required
 
 	Rewrite the email validator, so we have our very own
 

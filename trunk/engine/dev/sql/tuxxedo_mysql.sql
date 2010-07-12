@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Vært: localhost
--- Genereringstid: 28. 06 2010 kl. 07:12:38
+-- Genereringstid: 12. 07 2010 kl. 00:50:08
 -- Serverversion: 5.1.36
 -- PHP-version: 5.3.0
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `phrases` (
   `languageid` int(11) NOT NULL,
   `phrasegroup` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Data dump for tabellen `phrases`
@@ -150,7 +150,13 @@ INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`
 (12, 'dm_user_languageid', 'Language identifier', 1, 'datamanagers'),
 (13, 'dm_usergroup_title', 'Usergroup title', 1, 'datamanagers'),
 (14, 'dm_usergroup_type', 'Usergroup type', 1, 'datamanagers'),
-(15, 'dm_usergroup_permissions', 'Permission mask', 1, 'datamanagers');
+(15, 'dm_usergroup_permissions', 'Permission mask', 1, 'datamanagers'),
+(16, 'dm_session_sessionid', 'Session identifier', 1, 'datamanagers'),
+(17, 'dm_session_userid', 'User identifier', 0, ''),
+(18, 'dm_session_sessionid', 'Session identifier', 1, 'datamanagers'),
+(19, 'dm_session_userid', 'User identifier', 1, 'datamanagers'),
+(20, 'dm_session_location', 'User location', 1, 'datamanagers'),
+(21, 'dm_session_useragent', 'User agent string', 1, 'datamanagers');
 
 -- --------------------------------------------------------
 
@@ -162,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `sessionid` varchar(32) NOT NULL,
   `userid` int(11) NOT NULL,
   `location` tinytext NOT NULL,
+  `useragent` varchar(255) NOT NULL,
   `lastactivity` int(11) NOT NULL,
   UNIQUE KEY `session` (`sessionid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

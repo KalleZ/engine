@@ -210,7 +210,11 @@
 						(($sqlstate = $e->getSQLState()) !== false ? '<strong>SQL State:</strong> ' . $sqlstate . PHP_EOL : '') . 
 						'<strong>Error code:</strong> ' . $e->getCode() . PHP_EOL . 
 						PHP_EOL . 
-						str_replace(Array("\r", "\n"), '', $e->getMessage());
+						'<strong>Error message:</strong>' . PHP_EOL . 
+						str_replace(Array("\r", "\n"), '', $e->getMessage()) . PHP_EOL . 
+						PHP_EOL . 
+						'<strong>SQL:</strong>' . PHP_EOL . 
+						str_replace(Array("\r", "\n"), '', $e->getSQL());
 			}
 		}
 		elseif(empty($message))
