@@ -192,7 +192,7 @@
 			{
 				throw new Tuxxedo_Basic_Exception('Passed object class (%s) does not exists', $class);
 			}
-			elseif(($ifaces = class_implements($class, false)) !== false && isset($ifaces['Tuxxedo_Invokable']))
+			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['Tuxxedo_Invokable']))
 			{
 				$instance = call_user_func(Array($class, 'invoke'), self::$instance, self::$instance->configuration, (array) self::getOptions());
 			}
