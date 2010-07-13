@@ -296,7 +296,7 @@
 				}
 				catch(Tuxxedo_Basic_Exception $e)
 				{
-					if(Tuxxedo_DEBUG)
+					if(TUXXEDO_DEBUG)
 					{
 						tuxxedo_doc_error($e);
 					}

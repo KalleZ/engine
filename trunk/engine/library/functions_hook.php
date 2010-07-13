@@ -27,6 +27,7 @@
 			global $tuxxedo;
 
 			$cache_buffer = Array();
+
 			$tuxxedo->style->cache(Array('error_validation', 'error_validationbit'))  or tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);
 
 			$list 		= '';
