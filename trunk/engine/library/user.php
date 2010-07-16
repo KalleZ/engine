@@ -80,6 +80,13 @@
 		protected $session;
 
 		/**
+		 * User session datamanager
+		 *
+		 * @var		Tuxxedo_Datamanager_API_Session
+		 */
+		protected $sessiondm;
+
+		/**
 		 * Cached userinfo, for calls to get user information 
 		 * about a specific user
 		 *
@@ -102,7 +109,8 @@
 
 			if($session && $autodetect)
 			{
-				$this->session = $tuxxedo->register('session', 'Tuxxedo_Session');
+				$this->session 		= $tuxxedo->register('session', 'Tuxxedo_Session');
+				$this->sessiondm	= Tuxxedo_Datamanager::factory('session', Tuxxedo_Session::$id, false);
 
 				if(($userid = Tuxxedo_Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Tuxxedo_Session::get('password'))
 				{
@@ -122,17 +130,9 @@
 
 			if($session)
 			{
-				$tuxxedo->db->query('
-							REPLACE INTO 
-								`' . TUXXEDO_PREFIX . 'sessions` 
-							VALUES
-							(
-								\'%s\', 
-								%d,
-								\'%s\', 
-								\'%s\', 
-								%d
-							)', Tuxxedo_Session::$id, (isset($this->userinfo->id) ? $this->userinfo->id : 0), $this->tuxxedo->db->escape(TUXXEDO_SELF), $this->tuxxedo->db->escape(TUXXEDO_USERAGENT), TIMENOW_UTC);
+				$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
+				$this->sessiondm['location']		= $tuxxedo->db->escape(TUXXEDO_SELF);
+				$this->sessiondm['useragent']		= $tuxxedo->db->escape(TUXXEDO_USERAGENT);
 			}
 		}
 
@@ -143,15 +143,7 @@
 		{
 			if(isset($this->userinfo->id))
 			{
-				$this->tuxxedo->db->query('
-								UPDATE 
-									`' . TUXXEDO_PREFIX . 'sessions`
-								SET 
-									`location` = \'%s\', 
-									`useragent` = \'%s\', 
-									`lastactivity` = %d
-								WHERE 
-									`userid` = %d', $this->tuxxedo->db(TUXXEDO_SELF), $this->tuxxedo->db(TUXXEDO_USERAGENT), TIMENOW_UTC, $this->userinfo->id);
+				$this->sessiondm->save();
 			}
 
 			if($this->session instanceof Tuxxedo_Session)
@@ -173,6 +165,9 @@
 		 *  - Email
 		 *  - etc.
 		 *
+		 * To attempt a login, the constructor must be instanciated with the 
+		 * $session parameter set to true (default)
+		 *
 		 * @param	string			User identifier
 		 * @param	string			User's password (raw format)
 		 * @param	string			The identifier field to check and validate against
@@ -180,7 +175,11 @@
 		 */
 		public function login($identifier, $password, $identifier_field = 'username')
 		{
-			if(isset($this->userinfo->id))
+			if(empty(Tuxxedo_Session::$id))
+			{
+				return(false);
+			}
+			elseif(isset($this->userinfo->id))
 			{
 				$this->logout(true);
 			}
@@ -192,23 +191,12 @@
 				return(false);
 			}
 
-			$this->tuxxedo->db->query('
-							REPLACE INTO 
-								`' . TUXXEDO_PREFIX . 'sessions` 
-							VALUES
-							(
-								\'%s\', 
-								%d,
-								\'%s\', 
-								\'%s\', 
-								%d
-							)', Tuxxedo_Session::$id, $userinfo->id , $this->tuxxedo->db->escape(TUXXEDO_SELF), $this->tuxxedo->db->escape(TUXXEDO_USERAGENT), TIMENOW_UTC);
-
 			Tuxxedo_Session::set('userid', $userinfo->id);
 			Tuxxedo_Session::set('password', $userinfo->password);
 
-			$this->userinfo		= $userinfo;
-			$this->usergroupinfo	= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
+			$this->userinfo			= $userinfo;
+			$this->usergroupinfo		= $this->tuxxedo->cache->usergroups[$userinfo->usergroupid];
+			$this->sessiondm['userid'] 	= $userinfo->id;
 
 			$this->tuxxedo->set('userinfo', $userinfo);
 			$this->tuxxedo->set('usergroup', $this->usergroupinfo);
@@ -231,12 +219,7 @@
 
 			$this->userinfo = $this->usergroupinfo = new stdClass;
 
-			$this->tuxxedo->db->query('
-							DELETE FROM 
-								`' . TUXXEDO_PREFIX . 'sessions` 
-							WHERE 
-								`sessionid` = \'%s\'', Tuxxedo_Session::$id);
-
+			$this->sessiondm->delete();
 			Tuxxedo_Session::terminate();
 
 			if($restart)

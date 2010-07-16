@@ -30,7 +30,7 @@
 		 */
 		protected $fields		= Array(
 							'sessionid'	=> Array(
-											'type'		=> self::FIELD_REQUIRED
+											'type'		=> self::FIELD_PROTECTED
 											), 
 							'userid'	=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
@@ -67,6 +67,7 @@
 			$this->tablename	= TUXXEDO_PREFIX . 'sessions';
 			$this->idname		= 'sessionid';
 			$this->information	= &$this->userdata;
+			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;
 		}
 	}
 ?>
