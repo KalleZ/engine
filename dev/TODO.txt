@@ -21,8 +21,6 @@
 
 	Rewrite the email validator, so we have our very own
 
-	Remove the functions_*.php files and their associated templates
-
 
 	Tuxxedo Engine Future
 	----------------------
