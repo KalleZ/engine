@@ -265,6 +265,11 @@
 				return(true);
 			}
 
+			if(!$this->tuxxedo->filter)
+			{
+				$this->tuxxedo->register('filter', 'Tuxxedo_Filter');
+			}
+
 			foreach($this->fields as $field => $properties)
 			{
 				switch($properties['type'])
@@ -349,13 +354,12 @@
 		 * Save method, attempts to validate and save the data 
 		 * into the database
 		 *
-		 * @param	boolean				Whether to rebuild the datastore elements for this datamanager
 		 * @return	boolean				Returns true if the data is saved with success, otherwise boolean false
 		 *
 		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the query should fail
 		 * @throws	Tuxxedo_FormData_Exception	Throws a formdata exception if validation fails
 		 */
-		public function save($rebuild = true)
+		public function save()
 		{
 			if(!$this->validate())
 			{
@@ -394,12 +398,36 @@
 				return(false);
 			}
 
-			if($rebuild && method_exists($this, 'rebuild'))
+			if(method_exists($this, 'rebuild'))
 			{
 				return($this->rebuild($this->tuxxedo, $virtual));
 			}
 
 			return(true);
+		}
+
+		/**
+	 	 * Deletes the data, within the database if an identifier was specified, else 
+		 * the current set data is removed
+		 *
+		 * @return	boolean				Returns true if the deletion was a success otherwise boolean false
+		 *
+		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the query should fail
+		 */
+		public function delete()
+		{
+			if($this->identifier === NULL)
+			{
+				$this->invalid_fields = $this->userdata = Array();
+
+				return(true);
+			}
+
+			return($this->tuxxedo->db->query('
+								DELETE FROM 
+									`' . $this->tablename . '`
+								WHERE 
+									`' . $this->idname .'` = \'%s\'', $this->tuxxedo->db->escape($this->identifier)));
 		}
 	}
 ?>

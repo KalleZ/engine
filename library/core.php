@@ -519,6 +519,7 @@
 							'tuxxedo_database_driver_pdo_result'		=> Array('database', 'pdo'), 
 
 							/* Data managers */
+							'tuxxedo_datamanager_api_session'		=> Array('datamanagers', 'session'), 
 							'tuxxedo_datamanager_api_style'			=> Array('datamanagers', 'style'), 
 							'tuxxedo_datamanager_api_user'			=> Array('datamanagers', 'user'), 
 							'tuxxedo_datamanager_api_usergroup'		=> Array('datamanagers', 'usergroup')
