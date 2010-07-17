@@ -21,7 +21,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	class Tuxxedo_Datamanager_API_Session extends Tuxxedo_Datamanager
+	class Tuxxedo_Datamanager_Session extends Tuxxedo_Datamanager
 	{
 		/**
 		 * Fields for validation of styles

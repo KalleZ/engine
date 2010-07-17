@@ -15,11 +15,7 @@
 	Implement the $storage/globals/instances parameter to the registry
 
 	Add a CHANGELOG file for all the improvements from 1.0 to 2.0
-	Add a new option to the datamanagers to allow developers to override optional fields and marking them as required
-	Add a new interface for datamanagers to let the code know that this class rebuilds the datastore
 	Add the ability to format messages in formdata exceptions
-
-	Rewrite the email validator, so we have our very own
 
 
 	Tuxxedo Engine Future
