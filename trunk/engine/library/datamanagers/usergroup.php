@@ -21,7 +21,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	class Tuxxedo_Datamanager_API_Usergroup extends Tuxxedo_Datamanager
+	class Tuxxedo_Datamanager_API_Usergroup extends Tuxxedo_Datamanager implements Tuxxedo_Datamanager_API_Cache
 	{
 		/**
 		 * Fields for validation of usergroups
@@ -91,19 +91,20 @@
 		 * Save the usergroup in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	array			A virtually populated array from the datamanager abstraction
 		 * @return	boolean			Returns true if the datastore was updated with success, otherwise false
 		 */
-		protected function rebuild(Array $virtual)
+		public function rebuild(Tuxxedo $tuxxedo, Array $virtual)
 		{
-			if(($datastore = $this->tuxxedo->cache->usergroups) === false)
+			if(($datastore = $tuxxedo->cache->usergroups) === false)
 			{
 				return(false);
 			}
 			
 			$datastore[(integer) $this->identifier] = $virtual;
 
-			return($this->tuxxedo->cache->rebuild('usergroups', $datastore));
+			return($tuxxedo->cache->rebuild('usergroups', $datastore));
 		}
 
 		/**

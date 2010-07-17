@@ -21,7 +21,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	class Tuxxedo_Datamanager_API_User extends Tuxxedo_Datamanager
+	class Tuxxedo_Datamanager_User extends Tuxxedo_Datamanager implements Tuxxedo_Datamanager_API_Cache
 	{
 		/**
 		 * Fields for validation of users

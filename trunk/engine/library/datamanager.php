@@ -205,7 +205,7 @@
 				return(new $class($tuxxedo, $identifier));
 			}
 
-			$class	= 'Tuxxedo_Datamanager_API_' . $datamanager;
+			$class	= 'Tuxxedo_Datamanager_' . $datamanager;
 			$dm 	= new $class($tuxxedo, $identifier);
 
 			if(!is_subclass_of($class, __CLASS__))
@@ -351,6 +351,26 @@
 		}
 
 		/**
+		 * Updates a field type (required or optional), note that its 
+		 * not possible to set a field to protected
+		 *
+		 * @param	string				Name of the field
+		 * @param	integer				The new type of the field
+		 * @return	boolean				Returns true if the new type was set, otherwise false
+		 */
+		public function setFieldType($field, $type)
+		{
+			if(!isset($this->fields[$field]) || ($type != self::FIELD_OPTIONAL && $type != self::FIELD_REQUIRED))
+			{
+				return(false);
+			}
+
+			$this->fields[$field]['type'] = (integer) $type;
+
+			return(true);
+		}
+
+		/**
 		 * Save method, attempts to validate and save the data 
 		 * into the database
 		 *
@@ -398,7 +418,7 @@
 				return(false);
 			}
 
-			if(method_exists($this, 'rebuild'))
+			if($this instanceof Tuxxedo_Datamanager_API_Cache)
 			{
 				return($this->rebuild($this->tuxxedo, $virtual));
 			}
@@ -429,5 +449,29 @@
 								WHERE 
 									`' . $this->idname .'` = \'%s\'', $this->tuxxedo->db->escape($this->identifier)));
 		}
+	}
+
+
+	/**
+	 * Datastore requirement for using the datamanager
+	 *
+	 * This interface is for datamanagers that interacts with the datastore 
+	 * cache to rebuild it to prevent manual update of it.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	interface Tuxxedo_Datamanager_API_Cache
+	{
+		/**
+		 * This event method is called if the query to store the 
+		 * data was success, to rebuild the datastore cache
+		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	array			A virtually populated array from the datamanager abstraction
+		 * @return	boolean			Returns true if the datastore was updated with success, otherwise false
+		 */
+		public function rebuild(Tuxxedo $tuxxedo, Array $virtual);
 	}
 ?>
