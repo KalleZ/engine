@@ -436,10 +436,10 @@
 		 */
 		public function delete()
 		{
+			$this->invalid_fields = $this->userdata = Array();
+
 			if($this->identifier === NULL)
 			{
-				$this->invalid_fields = $this->userdata = Array();
-
 				return(true);
 			}
 
