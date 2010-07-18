@@ -570,7 +570,12 @@
 
 							/* Users and sessions API */
 							'tuxxedo_session'				=> 'session', 
-							'tuxxedo_user'					=> 'user'
+							'tuxxedo_user'					=> 'user',
+							
+							/* MVC components */
+							'tuxxedo_controller'            => 'controller',
+							'tuxxedo_router'                => 'router',
+							'tuxxedo_router_uri'            => 'router'
 							);
 
 		/**
