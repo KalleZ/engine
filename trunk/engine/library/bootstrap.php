@@ -177,8 +177,7 @@
 	/**
 	 * Register the default instances
 	 */
-	$tuxxedo->register('db', 'Tuxxedo_Database');
-	$tuxxedo->register('cache', 'Tuxxedo_Datastore');
+	$tuxxedo->load(Array('db', 'cache'), false);
 
 	/**
 	 * Precache elements from datastore
@@ -232,8 +231,7 @@
 	 * once the datastore elements are loaded and user sessions 
 	 * have been instanciated
 	 */
-	$tuxxedo->register('style', 'Tuxxedo_Style');
-	$tuxxedo->register('intl', 'Tuxxedo_Internationalization');
+	$tuxxedo->load(Array('style', 'intl'), false);
 
 	/**
 	 * Precache templates

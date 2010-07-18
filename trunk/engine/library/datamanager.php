@@ -265,10 +265,7 @@
 				return(true);
 			}
 
-			if(!$this->tuxxedo->filter)
-			{
-				$this->tuxxedo->register('filter', 'Tuxxedo_Filter');
-			}
+			$filter = $this->tuxxedo->load('filter');
 
 			foreach($this->fields as $field => $properties)
 			{
@@ -324,7 +321,7 @@
 
 				if($properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
 				{
-					if(!$this->tuxxedo->filter->validate($this->userdata[$field], $properties['callback']))
+					if(!$filter->validate($this->userdata[$field], $properties['callback']))
 					{
 						$this->invalid_fields[] = $field;
 
@@ -333,9 +330,7 @@
 				}
 				else
 				{
-					$filtered = $this->tuxxedo->filter->user($this->userdata[$field], $properties['validation']);
-
-					if($filtered === NULL)
+					if(($filtered = $filter->user($this->userdata[$field], $properties['validation'])) === NULL)
 					{
 						$this->invalid_fields[] = $field;
 						unset($this->userdata[$field]);
