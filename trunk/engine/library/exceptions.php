@@ -80,7 +80,8 @@
 		 * Constructs a new formdata exception from an extended class
 		 *
 		 * @param	array			Form data to store as an array
-		 * @param	string			The exception error message
+		 * @param	string			The error message, in a printf-alike formatted string or just a normal string
+		 * @param	mixed			Optional argument #n for formatting
 		 */
 		public function __construct(Array $formdata, $message = NULL)
 		{
@@ -91,7 +92,18 @@
 
 			if($message)
 			{
-				parent::__construct($message);
+				if(func_num_args() > 2)
+				{
+					$args = func_get_args();
+
+					unset($args[0]);
+
+					call_user_func_array(Array('parent', '__construct'), $args);
+				}
+				else
+				{
+					parent::__construct($message);
+				}
 			}
 
 			$this->formdata = $formdata;
