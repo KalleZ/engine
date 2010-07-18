@@ -12,9 +12,6 @@
 	   - Passwords
 	   - Templates
 
-	Add a CHANGELOG file for all the improvements from 1.0 to 2.0
-	Add the ability to format messages in formdata exceptions
-
 
 	Tuxxedo Engine Future
 	----------------------
