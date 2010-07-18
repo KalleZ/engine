@@ -109,6 +109,20 @@
 							'docerror' 		=> NULL
 							);
 
+		/**
+		 * Holds a list of components that can be loaded 
+		 * without specifying the class or reference point 
+		 * like the register and set method does
+		 *
+		 * @var		array
+		 */
+		private $components		= Array(
+							'db'			=> 'Tuxxedo_Database', 
+							'cache'			=> 'Tuxxedo_Datastore', 
+							'filter'		=> 'Tuxxedo_Filter', 
+							'intl'			=> 'Tuxxedo_Internationalization', 
+							'style'			=> 'Tuxxedo_Style'
+							);
 
 		/**
 		 * Disable the ability to construct the object
@@ -184,7 +198,7 @@
 		 */
 		public function register($refname, $class)
 		{
-			if(isset(self::$instance->instances[$refname]))
+			if(isset($this->instances[$refname]))
 			{
 				return;
 			}
@@ -194,7 +208,7 @@
 			}
 			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['Tuxxedo_Invokable']))
 			{
-				$instance = call_user_func(Array($class, 'invoke'), self::$instance, self::$instance->configuration, (array) self::getOptions());
+				$instance = call_user_func(Array($class, 'invoke'), $this, $this->configuration, (array) self::getOptions());
 			}
 
 			if(!isset($instance) || !is_object($instance))
@@ -202,7 +216,7 @@
 				$instance = new $class;
 			}
 
-			self::$instance->set($refname, $instance);
+			$this->set($refname, $instance);
 
 			return($instance);
 		}
@@ -217,8 +231,46 @@
 		public function set($refname, $reference)
 		{
 			$refname 		= strtolower($refname);
-			$GLOBALS[$refname]	= self::$instance->instances[$refname] = $reference;
+			$GLOBALS[$refname]	= $this->instances[$refname] = $reference;
 		}
+
+		/**
+		 * Loads a component, or multiple if the component is an array with 
+		 * component names as values
+		 *
+		 * @param	string		The component name, either builtin or user defined thru the component static method
+		 * @param	boolean		Whether to re-use an already existing instance, defaults to true
+		 * @param	object		Returns an array with values as references to the created instances
+		 */
+		public function load($loadable, $reuse = true)
+		{
+			$multiple	= is_array($loadable);
+			$retval 	= Array();
+
+			if(!$multiple)
+			{
+				$loadable = Array($loadable);
+			}
+
+			foreach($loadable as $component)
+			{
+				if($reuse && isset($this->instances[$component]))
+				{
+					$retval[] = $this->instances[$component];
+				}
+				elseif(isset($this->components[$component]))
+				{
+					$retval[] = $this->register($component, $this->components[$component]);
+				}
+			}
+
+			if(!$multiple)
+			{
+				$retval = $retval[0];
+			}
+
+			return($retval);
+		}	
 
 		/**
 		 * Gets a registered object instance
@@ -299,6 +351,23 @@
 			}
 
 			return(self::symtable('hooks', $location, $callback));
+		}
+
+		/**
+		 * Sets or gets a new component
+		 *
+		 * @param	string			The name of the component to set
+		 * @param	mixed			The class associated with the name above
+		 * @return	mixed			Returns the class value on both set and get, and boolean false if trying to get an undefined comonent
+		 */
+		public static function component($component, $class = NULL)
+		{
+			if($class != NULL && !class_exists($class, false))
+			{
+				return(false);
+			}
+
+			return(self::symtable('components', $component, $class));
 		}
 
 		/**
