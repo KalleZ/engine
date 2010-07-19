@@ -2,8 +2,8 @@
 	define('TUXXEDO', 1337);
 	define('TEMPLATE_DIR', '../tools/templates/');
 
-	require('../../includes/class_core.php');
-	require('../../includes/class_template_compiler.php');
+	require('../../includes/core.php');
+	require('../../includes/template_compiler.php');
 	require('../../includes/functions.php');
 
 	if(isset($_POST['compile']))

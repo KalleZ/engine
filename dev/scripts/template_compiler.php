@@ -1,8 +1,8 @@
 <?php
 	define('TUXXEDO', 1337);
-	require('../../includes/class_core.php');
-	require('../../includes/class_filter.php');
-	require('../../includes/class_template_compiler.php');
+	require('../../includes/core.php');
+	require('../../includes/filter.php');
+	require('../../includes/template_compiler.php');
 	require('../../includes/functions.php');
 
 	$filter	= new Tuxxedo_Filter;
