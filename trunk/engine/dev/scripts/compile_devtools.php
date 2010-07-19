@@ -2,9 +2,9 @@
 	define('TUXXEDO', 1337);
 	define('TEMPLATE_DIR', '../tools/templates/');
 
-	require('../../includes/core.php');
-	require('../../includes/template_compiler.php');
-	require('../../includes/functions.php');
+	require('../../library/core.php');
+	require('../../library/template_compiler.php');
+	require('../../library/functions.php');
 
 	if(isset($_POST['compile']))
 	{
