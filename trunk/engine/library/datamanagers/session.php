@@ -57,7 +57,7 @@
 		 * Constructor for the sessions datamanager
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	integer			Void identifier
+		 * @param	integer			Session identifier
 		 */
 		public function __construct(Tuxxedo $tuxxedo, $identifier = NULL)
 		{
