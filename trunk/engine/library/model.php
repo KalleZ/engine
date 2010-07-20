@@ -24,6 +24,16 @@
     class Tuxxedo_Model
     {
         /**
+         * Constructor, creates a new model from a set of properties
+         * @param   array|null  An associative array of properties to set
+         */
+        public function __construct(array $properties = null) {
+            if ($properties) {
+                $this->setOptions($properties);
+            }
+        }
+        
+        /**
          * Set an array of properties (without having to set each one 
          * individually).
          * @param   array   An associative array of properties to set
