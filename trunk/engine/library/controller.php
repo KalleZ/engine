@@ -158,7 +158,7 @@
 			$this->preDispatch();
 		
 			// Get the action name and call its method
-			$method = $this->router()->getAction() . "Action";
+			$method = $this->router->getAction() . "Action";
 		
 			// Check the method exists first
 			if (!method_exists($this, $method))
