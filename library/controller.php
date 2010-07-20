@@ -85,7 +85,7 @@
 		 * Set the template object used for the layout
 		 * @param		Tuxxedo_Template	Layout template
 		 */
-		public function setLayout(Tuxxedo_Template $layout)
+		public function setLayout(Tuxxedo_View $layout)
 		{
 			$this->layout = $layout;
 		}
@@ -172,8 +172,5 @@
 		
 			// Call the post-dispatch hook
 			$this->postDispatch();
-		
-			// Return view object
-			return $this->view;
 		}
 	}
