@@ -18,10 +18,10 @@
      * A configuration object
      * @package     Engine
      */
-    class Tuxxedo_Config
+    class Tuxxedo_Config implements ArrayAccess
     {
         /**
-         * @var     ArrayObject     The configuration options held
+         * @var     array     The configuration options held
          */
         protected $options;
         
@@ -33,27 +33,16 @@
             if ($options) {
                 $this->options = $this->setOptions($options);
             } else {
-                $this->options = new ArrayObject;
+                $this->options = array();
             }
         }
         
         /**
          * Recursively convert an array of properties to an ArrayObject
          * @param   array           An array of properties to convert
-         * @return  ArrayObject
          */
-        protected function setOptions(array $properties) {
-            $return = new ArrayObject;
-            $return->setFlags(ArrayObject::ARRAY_AS_PROPS);
-            
-            foreach ($properties as $key => $value) {
-                if (is_array($value)) {
-                    $value = $this->recursiveArrayObject($value);
-                }
-                $return->$key = $value;
-            }
-            
-            return $return;
+        protected function setOptions(array $properties) {            
+            $this->options = $properties;
         }
         
         /**
@@ -61,11 +50,8 @@
          * @param   string  Name of the option to set
          * @param   mixed   Value of the option to set
          */
-        public function __set($name, $value) {
-            if (is_array($value)) {
-                $value = $this->setOptions($value);
-            }
-            $this->options->$name = $value;
+        public function offsetSet($name, $value) {
+            $this->options[$name] = $value;
         }
         
         /**
@@ -73,8 +59,8 @@
          * @param   string  Name of the option to retrieve
          * @return  mixed   Value of the option
          */
-        public function __get($name) {
-            return $this->options->$name;
+        public function offsetGet($name) {
+            return $this->options[$name];
         }
         
         /**
@@ -82,16 +68,24 @@
          * @param   string  Name of the option to check
          * @return  bool
          */
-        public function __isset($name) {
-            return isset($this->options->$name);
+        public function offsetExists($name) {
+            return isset($this->options[$name]);
         }
         
         /**
          * Unset an option
          * @param   string  Name of the option to remove
          */
-        public function __unset($name) {
-            unset($this->options->$name);
+        public function offsetUnset($name) {
+            unset($this->options[$name]);
+        }        
+        
+        /**
+         * Dump the contents of the configuration to an array
+         * @return  array
+         */
+        public function getOptions() {
+            return $this->options;
         }
     }
 
@@ -109,10 +103,13 @@
          * @param   bool    Whether to interpret input as a path or XML.
          */
         public function parse($input, $inputAsPath = true) {
-            $fileContents = file_get_contents($path);
-            $xml = new SimpleXmlElement($xml);
+            if ($inputAsPath) {
+                $input = file_get_contents($input);
+            }
             
-            $this->options = $this->setOptions($options);
+            $xml = new SimpleXmlElement($input);
+
+            $this->options = $this->xmlToArray($xml);
         }
         
         /**
