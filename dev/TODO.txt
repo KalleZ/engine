@@ -12,6 +12,15 @@
 	   - Passwords
 	   - Templates
 
+	Restructure the library folder (again!): (Kalle)
+		/library/
+		|				Main folder
+		/library/class/
+		|				Class within the Tuxxedo namespace (Tuxxedo_Class -> /library/class/class.php)
+		....
+
+	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
+
 
 	Tuxxedo Engine Future
 	----------------------
