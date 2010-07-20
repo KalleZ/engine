@@ -25,13 +25,13 @@
 		 * @var		string	Controller name
 		 * Private, set using {@see setController}
 		 */
-		private $controller;
+		protected $controller;
 		
 		/**
 		 * @var		string	Action name
 		 * Private, set using {@see setAction}
 		 */
-		private $action;
+		protected $action;
 		
 		/**
 		 * @var		array	Any parameters encoded in the input
@@ -62,7 +62,7 @@
 		 * @param	string	Controller name
 		 */
 		public function setController($controller) {
-			$this->controller = ucfirst($controler);
+			$this->controller = ucfirst($controller);
 		}
 		
 		/**
@@ -118,7 +118,7 @@
 		 * Parse the router information from a URI string
 		 * @param	string	Input URI
 		 */
-		public function parse($input) {
+		public function parse($uri) {
 			// Explode the array into parts and clean it (remove empty values 
 			// "//")
 			$uri = ltrim($uri, "/");
@@ -147,8 +147,8 @@
 			 * odd = #4, even = #5)
 			 */
 	
-			$controller = "";
-			$action = "";
+			$controller = self::$defaultController;
+			$action = self::$defaultAction;
 			$params = array();
 
 			switch (count($parts)) {
