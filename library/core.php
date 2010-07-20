@@ -553,6 +553,10 @@
 							/* Data managers */
 							'tuxxedo_datamanager'				=> 'datamanager', 
 							'tuxxedo_datamanager_api_cache'			=> 'datamanager', 
+							
+							/* Configuration */
+							'tuxxedo_config'                => 'config',
+							'tuxxedo_config_xml'            => 'config',
 
 							/* Style API */
 							'tuxxedo_style'					=> 'styles', 
