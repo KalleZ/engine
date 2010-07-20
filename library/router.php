@@ -22,11 +22,6 @@
 	class Tuxxedo_Router
 	{
 		/**
-		 * @var		Tuxxedo_Router	Singleton instance
-		 */
-		protected static $instance;
-
-		/**
 		 * @var		string	Controller name
 		 * Private, set using {@see setController}
 		 */
@@ -60,18 +55,6 @@
 			// Set default names
 			$this->controller = self::$defaultController;
 			$this->action = self::$defaultAction;
-		}
-
-		/**
-		 * Return the singleton instance (create it if it doesn't already exist)
-		 * @return	Tuxxedo_Router
-		 */
-		public static function getInstance() {
-			// Instantiate the class if it doesn't exist
-			if (self::$instance == null) {
-				self::$instance = new self;
-			}
-			return self::$instance;
 		}
 
 		/**
