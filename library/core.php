@@ -555,8 +555,8 @@
 							'tuxxedo_datamanager_api_cache'			=> 'datamanager', 
 							
 							/* Configuration */
-							'tuxxedo_config'                => 'config',
-							'tuxxedo_config_xml'            => 'config',
+							'tuxxedo_config'				=> 'config', 
+							'tuxxedo_config_xml'				=> 'config', 
 
 							/* Style API */
 							'tuxxedo_style'					=> 'styles', 
@@ -581,7 +581,7 @@
 							'tuxxedo_controller'				=> 'controller',
 							'tuxxedo_router'				=> 'router',
 							'tuxxedo_router_uri'				=> 'router',
-							'tuxxedo_model'                 => 'model'
+							'tuxxedo_model'					=> 'model'
 							);
 
 		/**
