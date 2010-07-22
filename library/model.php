@@ -79,7 +79,7 @@
             } elseif ($prefix == "get") {
                 $this->get($property);
             } else {
-                throw new Tuxxedo_Exception_Basic("Undefined method '$method' called.");
+                throw new Tuxxedo_Basic_Exception("Undefined method '$method' called.");
             }
         }
         
@@ -95,7 +95,7 @@
             } elseif (property_exists($this, $property)) {
                 $this->$property = $value;
             } else {
-                throw new Tuxxedo_Exception_Basic("Invalid property given.");
+                throw new Tuxxedo_Basic_Exception("Invalid property given.");
             }
         }
         
