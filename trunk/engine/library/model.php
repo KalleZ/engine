@@ -23,13 +23,30 @@
      */
     class Tuxxedo_Model
     {
+        protected $methods;
+        
         /**
          * Constructor, creates a new model from a set of properties
          * @param   array|null  An associative array of properties to set
          */
         public function __construct(array $properties = null) {
+            $this->initMapper();
+        
             if ($properties) {
                 $this->setOptions($properties);
+            }
+        }
+        
+        /**
+         * If a getMapper method is defined, we can use it to allow access to
+         * the mapper's find, fetchAll, save etc. methods in the model class
+         */
+        protected function initMapper() {
+            if (method_exists($this, "getMapper")) {
+                $mapper = $this->getMapper();
+                
+                // Get the public methods of the mapper
+                $this->methods = get_class_methods($mapper);
             }
         }
         
@@ -71,6 +88,32 @@
          * @throws  Tuxxedo_Exception_Basic If the method is not a getter/setter
          */
         public function __call($method, $arguments) {
+            // Mapper methods
+            if (count($this->methods) != 0) {
+                if (in_array($method, $this->methods)) {
+                    $mapper = $this->getMapper();
+                    
+                    // Build the arguments for the method
+                    $argString = "";
+                    foreach ($arguments as $i => $arg) {
+                        if (is_string($arg)) {
+                            $argString .= "\"$arg\"";
+                        } elseif (is_bool($arg)) {
+                            $argString .= ($arg) ? "true" : "false";
+                        } else {
+                            $argString .= $arg;
+                        }
+                        
+                        if ($i < count($arguments) - 1) {
+                            $argString .= ", ";
+                        }
+                    }
+                    
+                    return eval("return \$mapper->$method($argString);");
+                }
+            }
+        
+            // Getter/setter methods
             $prefix = substr($method, 0, 3);
             $property = substr($method, 3);
             
