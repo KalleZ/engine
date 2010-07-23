@@ -93,23 +93,7 @@
                 if (in_array($method, $this->methods)) {
                     $mapper = $this->getMapper();
                     
-                    // Build the arguments for the method
-                    $argString = "";
-                    foreach ($arguments as $i => $arg) {
-                        if (is_string($arg)) {
-                            $argString .= "\"$arg\"";
-                        } elseif (is_bool($arg)) {
-                            $argString .= ($arg) ? "true" : "false";
-                        } else {
-                            $argString .= $arg;
-                        }
-                        
-                        if ($i < count($arguments) - 1) {
-                            $argString .= ", ";
-                        }
-                    }
-                    
-                    return eval("return \$mapper->$method($argString);");
+                    return call_user_func_array(array($mapper, $method), $arguments);
                 }
             }
         
