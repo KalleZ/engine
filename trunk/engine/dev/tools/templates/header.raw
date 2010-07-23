@@ -189,43 +189,9 @@
 			<div class="clear"></div>
 		</div>
 		<div class="wrapper">
+<if expression="isset($widget)">
 			<div class="panel">
-<if expression="SCRIPT_NAME == 'datastore'">
-				<div class="box">
-					<h4>Datastore</h4>
-					<p>
-						The datastore is where all the Engine's cached items are 
-						stored. The datastore dublicates commonly used values from 
-						tables to prevent generating overheat on tables that grows 
-						large.
-					</p>
-
-					<ul>
-						<li><a href="./datastore.php">Cache rebuilder</a></li>
-						<li><a href="./datastore.php?do=truncate">Clean datastore</a></li>
-						<li><a href="./datastore.php?do=dump">Dump contents</a></li>
-					</ul>
-				</div>
-</if>
-<if expression="SCRIPT_NAME == 'sessions'">
-				<div class="box">
-					<h4>Sessions</h4>
-					<p>
-						Sessions in the engine means a user session. User sessions 
-						help identify where a user currently is located and how long 
-						again that session last was active.
-					</p>
-					<p>
-						This tool allows you to view the current active sessions, aswell 
-						as killing a specific session or them all.
-					</p>
-
-					<ul>
-						<li><a href="./sessions.php">Display active sessions</a></li>
-						<li><a href="./sessions.php?do=kill&action=all">Kill all active sessions</a></li>
-						<li><a href="./sessions.php?do=cron">Run clean-up cron</a></li>
-					</ul>
-				</div>
-</if>
+				{$widget}
 			</div>
+</if>
 			<div class="content">

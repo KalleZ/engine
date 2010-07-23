@@ -52,6 +52,25 @@
 		public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
 		{
 		}
+
+		/**
+		 * Gets a sidebar widget template
+		 *
+		 * @return	boolean			Returns the template contents on success and boolean false on failure
+		 */
+		public function getSidebarWidget()
+		{
+			$widget = 'widget_' . SCRIPT_NAME;
+
+			if(!$this->storage->exists($widget))
+			{
+				return(false);
+			}
+
+			$this->cache(Array($widget));
+
+			return($this->fetch($widget));
+		}
 	}
 
 	/**
@@ -77,6 +96,17 @@
 			$this->tuxxedo 		= $tuxxedo;
 			$this->templates	= $templates;
 			$this->path		= './templates/';
+		}
+
+		/**
+		 * Checks whether a template file exists on the file system
+		 *
+		 * @param	string			The name of the template to check
+		 * @return	boolean			Returns true if the template file exists otherwise false
+		 */
+		public function exists($template)
+		{
+			return(is_file($this->path . $template . '.tuxx'));
 		}
 	}
 ?>
