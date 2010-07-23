@@ -24,6 +24,10 @@
 		</p>
 	</div>
 </if>
+	<div class="box">
+		<input type="hidden" name="do" value="rebuild" />
+		<input type="submit" name="progress" value="Rebuild cache" />
+	</div>
 </form>
 
 {$footer}
