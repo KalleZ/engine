@@ -1,0 +1,11 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Development Tools</h4>
+
+	<p>
+		Hello!
+	</p>
+</div>
+
+{$footer}
