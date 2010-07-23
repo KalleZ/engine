@@ -1,6 +1,7 @@
 <?php
 	define('TUXXEDO', 1337);
 	require('../../library/core.php');
+	require('../../library/exceptions.php');
 	require('../../library/filter.php');
 	require('../../library/template_compiler.php');
 	require('../../library/functions.php');

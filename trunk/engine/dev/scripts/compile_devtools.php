@@ -3,6 +3,7 @@
 	define('TEMPLATE_DIR', '../tools/templates/');
 
 	require('../../library/core.php');
+	require('../../library/exceptions.php');
 	require('../../library/template_compiler.php');
 	require('../../library/functions.php');
 
