@@ -107,6 +107,11 @@
 
 	$engine_version = Tuxxedo::VERSION_STRING;
 
+	if(($widget = $style->getSidebarWidget()) !== false)
+	{
+		eval('$widget = "' . $style->getSidebarWidget() . '";');
+	}
+
 	eval('$header = "' . $style->fetch('header') . '";');
 	eval('$footer = "' . $style->fetch('footer') . '";');
 ?>
