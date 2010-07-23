@@ -1,0 +1,11 @@
+{$header}
+
+<div class="box">
+	<h4>Index</h4>
+
+	<p>
+		Display some general info here perhaps?
+	</p>
+</div>
+
+{$footer}

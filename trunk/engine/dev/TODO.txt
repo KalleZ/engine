@@ -4,6 +4,7 @@
 	----------------------
 
 	Improve development tools
+	 - Add index
 	 - Add internationalization support
 	 - Add styles support
 	 - Add user support
@@ -20,6 +21,7 @@
 		....
 
 	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
+	Redesign the tuxxedo_doc_error() output (Kalle)
 
 
 	Tuxxedo Engine Future
