@@ -119,19 +119,6 @@
 		private $globals		= Array();
 
 		/**
-		 * Holds a list of available hooks and their 
-		 * callbacks, these are used for deep integration 
-		 * with core functions in the engine
-		 *
-		 * @var		array
-		 */
-		private $hooks			= Array(
-							'errors'		=> NULL, 
- 							'exceptions'		=> NULL, 
-							'docerror' 		=> NULL
-							);
-
-		/**
 		 * Holds a list of components that can be loaded 
 		 * without specifying the class or reference point 
 		 * like the register and set method does
@@ -356,23 +343,6 @@
 		public static function globals($name, $value = NULL)
 		{
 			return(self::symtable('globals', $name, $value));
-		}
-
-		/**
-		 * Sets or gets a new hook callback
-		 *
-		 * @param	string			The name of the hook to set a callback for
-		 * @param	mixed			A value, this can be of any type, this is only used if adding or editing a hook callback
-		 * @return	mixed			Returns the value of the hook callback on both set and get, and boolean false if trying to get an invalid hook location
-		 */
-		public static function hook($location, $callback = NULL)
-		{
-			if($callback != NULL && !is_callable($callback))
-			{
-				return(false);
-			}
-
-			return(self::symtable('hooks', $location, $callback));
 		}
 
 		/**

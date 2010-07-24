@@ -55,7 +55,6 @@
 		unset($version);
 	}
 
-	Tuxxedo::globals('hooks', 		false);
 	Tuxxedo::globals('error_reporting', 	true);
 	Tuxxedo::globals('errors', 		Array());
 
@@ -73,9 +72,7 @@
 
 	$tuxxedo = Tuxxedo::init($configuration);
 
-	$tuxxedo->register('db', 	'Tuxxedo_Database');
-	$tuxxedo->register('cache', 	'Tuxxedo_Datastore');
-	$tuxxedo->register('filter',	'Tuxxedo_Filter');
+	$tuxxedo->load(Array('db', 'cache', 'filter'));
 
 	$tuxxedo->set('timezone', new DateTimeZone('UTC'));
 	$tuxxedo->set('datetime', new DateTime('now', $timezone));

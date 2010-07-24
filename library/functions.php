@@ -25,18 +25,6 @@
 	 */
 	function tuxxedo_exception_handler(Exception $e)
 	{
-		if(Tuxxedo::globals('hooks') && ($hook = Tuxxedo::hook('exceptions')) !== false)
-		{
-			$executed = false;
-
-			tuxxedo_execute_hook('exception', $hook, Array($e), $executed);
-
-			if($executed)
-			{
-				return;
-			}
-		}
-
 		if($e instanceof Tuxxedo_Basic_Exception)
 		{
 			tuxxedo_doc_error($e);
@@ -75,18 +63,6 @@
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
-		if(Tuxxedo::globals('hooks') && ($hook = Tuxxedo::hook('errors')) !== false)
-		{
-			$executed = false;
-
-			tuxxedo_execute_hook('errors', $hook, Array($level, $message, $file, $line), $executed);
-
-			if($executed)
-			{
-				return;
-			}
-		}
-
 		if(!Tuxxedo::globals('error_reporting') || !(error_reporting() & $level))
 		{
 			return;
@@ -186,18 +162,6 @@
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors 	= Tuxxedo::globals('errors');
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
-
-		if(Tuxxedo::globals('hooks') && ($hook = Tuxxedo::hook('docerror')) !== false)
-		{
-			$executed = false;
-
-			tuxxedo_execute_hook('docerror', $hook, Array($e, $buffer, $message), $executed);
-
-			if($executed)
-			{
-				return;
-			}
-		}
 
 		if($exception && $tuxxedo->db && $e instanceof Tuxxedo_SQL_Exception)
 		{
