@@ -23,75 +23,80 @@
 	}
 	
 	/**
-	 * HTTP Request
-	 * Information specific to HTTP requests
+	 * Generates a HTTP request
 	 */
 	class Tuxxedo_Request_Http extends Tuxxedo_Request
 	{
-		/**
-		 * @param   array   Variables sent in $_GET
-		 */
-		protected $getVars;
-		
-		/**
-		 * @param   array   Variables sent in $_POST
-		 */
-		protected $postVars;
-		
-		/**
-		 * @param   array   Variables sent in $_SESSION
-		 */
-		protected $sessionVars;
-		
-		/**
-		 * @param   string  The client's remote-address (IP address)
-		 */
-		protected $remoteAddr;
-		
-		/**
-		 * @param   string  The client's user-agent
-		 * @todo	Create a parser for this string to give easier information
-		 *		  (clean browser name & version, possibly capabilities etc.)
-		 */
-		protected $userAgent;
-		
-		/**
-		 * @param   int	 A timestamp of when the request was sent
-		 */
-		protected $requestTime;
-		
-		/**
-		 * Set an array of options. 
-		 * If a method exists (in the form set{normalisedName}) then it will be
-		 * called (allowing for pseudo properties); alternatively if a property
-		 * exists in the class then that will be used. If neither is found an
-		 * exception is thrown.
-		 * @param   array   Array of options (try $_SERVER)
-		 * @throws  Tuxxedo_Exception_Basic	 If an unknown property is given
-		 */
-		public function setOptions(array $options) {
-			foreach ($options as $key => $value) {
-				// Normalise the key name (e.g. for $_SERVER)
-				$key = strtolower($key);
-				
-				// Convert "_*" to remove the _ and uppercase the next letter
-				// E.g. remote_addr becomes remoteAddr
-				while ($pos = strpos($key, "_")) {
-					var_dump($pos);
-					$key = substr($key, 0, $pos) . ucfirst(substr($key, $pos + 1));
-					var_dump($key);
-				}
-			
-				// Attempt to set the variable (using a setter method if 
-				// available).
-				$method = "set" . ucfirst($key);
-				if (method_exists($this, $method)) {
-					$this->$method($value);
-				} elseif (property_exists($this, $key)) {
-					$this->$key = $value;
-				} else {
-					throw new Tuxxedo_Exception_Basic("Invalid property $key.");
-				}
-			}
-		}
+	    protected static $validMethods = array("GET", "POST", "PUT", 
+	                                               "DELETE", "HEAD", "OPTIONS",
+	                                               "TRACE", "CONNECT");
+	    protected $method;
+	    protected $resource;
+	    protected $headers = array();
+	    protected $getVars = array();
+	    protected $postVars = array();
+	    
+	    public function setVars(array $vars = $_GET) {
+	        $this->getVars = $vars;
+	    }
+	    
+	    public function getVars() {
+	        return $this->getVars;
+	    }
+	    
+	    public function setPost(array $vars = $_POST) {
+	        $this->postVars = $vars;
+	    }
+	    
+	    public function getPost() {
+	        return $this->postVars;
+	    }
+	    
+	    public function setHeaders(array $headers) {
+	        $this->headers = $headers;
+	    }
+	    
+	    public function addHeader($name, $value) {
+	        $this->headers[$name] = $value;
+	    }
+	    
+	    public function getHeaders() {
+	        return $this->headers;
+	    }
+	    
+	    /**
+	     * Output a HTTP request, conforming to RFC 2616 (sect 5)
+	     * @return  string  HTTP request
+	     */
+	    public function __toString() {
+	        define("CRLF", "\r\n");
+	        
+	        $this->method = strtoupper($this->method);
+	        $output = $this->method . " " . $this->resource . 
+	                  " HTTP/1.0" . CRLF;
+	        
+	        foreach ($this->headers as $name => $value) {
+	            // For headers with multiple values the values are passed as an
+	            // array, so we need to format the value part.
+	            // For example: Content-type: text/html; charset=utf-8 would be
+	            // array("text/html", "charset" => "utf-8")
+	            if (is_array($value)) {
+	                $valStr = "";
+	                
+	                foreach ($value as $key => $val) {
+	                    if (is_int($key)) {
+    	                    $valStr .= "$val";
+    	                } else {
+    	                    $valStr .= "$key=$val";
+    	                }
+    	                
+        	            $valStr .= "; ";
+	                }
+	                
+	                $value = trim($valStr, "; ");
+	            }
+	            
+	            $output .= "$name: $value" . CRLF;
+	        }
+	    }
 	}
