@@ -99,7 +99,7 @@
 
 					unset($args[0]);
 
-					call_user_func_array(Array('parent', '__construct'), $args);
+					parent::__construct(call_user_func_array('sprintf', $args));
 				}
 				else
 				{
