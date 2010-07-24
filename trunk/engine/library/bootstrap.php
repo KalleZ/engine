@@ -165,7 +165,6 @@
 	/**
 	 * Set globals
 	 */
-	Tuxxedo::globals('hooks', 		true);
 	Tuxxedo::globals('error_reporting', 	true);
 	Tuxxedo::globals('errors', 		Array());
 
