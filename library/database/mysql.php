@@ -246,6 +246,13 @@
 		 */
 		public function escape($data)
 		{
+			if($this->delayed)
+			{
+				$this->delayed = false;
+
+				$this->connect();
+			}
+
 			if(!is_resource($this->link))
 			{
 				return(false);
@@ -267,6 +274,13 @@
 		public function query($sql)
 		{
 			$sql = (string) $sql;
+
+			if($this->delayed)
+			{
+				$this->delayed = false;
+
+				$this->connect();
+			}
 
 			if(empty($sql) || !is_resource($this->link))
 			{

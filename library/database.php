@@ -222,6 +222,14 @@
 		protected $link;
 
 		/**
+		 * Whether the database connection still is delayed
+		 * or not
+		 *
+		 * @var		boolean
+		 */
+		protected $delayed			= true;
+
+		/**
 		 * List of executed queries during execution
 		 *
 		 * @var		array
@@ -267,14 +275,18 @@
 				throw new Tuxxedo_Basic_Exception('Cannot call base constructor directly from a non-initalized instance');
 			}
 
-			$this->configuration = $configuration;
+			$this->configuration 	= $configuration;
+			$this->delayed		= $configuration['delay'];
 
 			if(!$this->isDriverSupported())
 			{
 				throw new Tuxxedo_Basic_Exception('Unable to load database driver, one or more of the driver dependencies is missing');
 			}
 
-			$this->connect();
+			if(!$configuration['delay'])
+			{
+				$this->connect();
+			}
 		}
 
 		/**

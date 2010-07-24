@@ -292,6 +292,13 @@
 		{
 			$sql = (string) $sql;
 
+			if($this->delayed)
+			{
+				$this->delayed = false;
+
+				$this->connect();
+			}
+
 			if(empty($sql) || !is_object($this->link))
 			{
 				return(false);
