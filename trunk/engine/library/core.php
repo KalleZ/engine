@@ -38,6 +38,27 @@
 		const VERSION			= '2.0.0';
 
 		/**
+		 * Major version number
+		 *
+		 * @var		integer
+		 */
+		const VERSION_MAJOR		= 2;
+
+		/**
+		 * Minor version number
+		 *
+		 * @var		integer
+		 */
+		const VERSION_MINOR		= 0;
+
+		/**
+		 * Release version number
+		 *
+		 * @var		integer
+		 */
+		const VERSION_RELEASE		= 0;
+
+		/**
 		 * Tuxxedo version ID, this contains the version id in the form 
 		 * of:
 		 *
