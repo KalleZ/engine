@@ -165,6 +165,15 @@
 	'socket'	=> '', 
 
 	/**
+	 * Connection delay
+	 *
+	 * This options delays creating the actual database 
+	 * connection until the first query call within the 
+	 * instance.
+	 */
+	'delay'		=> true, 
+
+	/**
 	 * Persistent connection
 	 *
 	 * Select whenever you want the use persistent connection 
