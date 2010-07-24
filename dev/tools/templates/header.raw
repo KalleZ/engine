@@ -10,45 +10,45 @@
 		<!--
 		a
 		{
-			color:			#A8A8A8;
-			text-decoration:	none;
+			color:				#A8A8A8;
+			text-decoration:		none;
 		}
 			a:hover
 			{
-				color:			#FFFFFF;
+				color:				#FFFFFF;
 			}
 		body
 		{
-			background-color:	#F2F2F2;
-			color:			#545454;
-			font-family:		"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
-			font-size:		82%;
+			background-color:		#F2F2F2;
+			color:				#545454;
+			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
 		}
 		code
 		{
-			font-family:		Consolas, Monaco, 'Courier New', Monospace;
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
 		input, textarea
 		{
-			background-color:	#3D301C;
-			border:			1px solid #4F3E23;
-			border-radius:		4px;
-			color:			#FFFFFF;
-			padding:		5px;
+			background-color:		#3D301C;
+			border:				1px solid #4F3E23;
+			border-radius:			4px;
+			color:				#FFFFFF;
+			padding:			5px;
 		}
 		p.spacer
 		{
-			margin-bottom:		10px;
+			margin-bottom:			10px;
 		}
 		table
 		{
-			width:			100%;
+			width:				100%;
 		}
 			table tr.heading td
 			{
-				background-color:	#3D301C;
-				color:			#FFFFFF;
-				font-weight:		bold;
+				background-color:		#3D301C;
+				color:				#FFFFFF;
+				font-weight:			bold;
 			}
 				table tr.heading td.end
 				{
@@ -62,113 +62,123 @@
 				}
 			table tr td
 			{
-				padding:		10px;
+				padding:			10px;
 			}
 		.box
 		{
-			background-color:	#FFFFFF;
-			border:			1px solid #E9E4E4;
-			border-radius:		4px;
-			margin-bottom:		10px;
-			padding:		10px;
+			background-color:		#FFFFFF;
+			border:				1px solid #E9E4E4;
+			border-radius:			4px;
+			margin-bottom:			10px;
+			padding:			10px;
 		}
 			.box a:hover
 			{
-				color:			#4F3E23;
+				color:				#4F3E23;
 			}
 			.box h3, .box h4
 			{
-				color:			#4F3E23;
-				font-size:		18px;
-				margin:			0px;
-				padding:		0px;
+				color:				#4F3E23;
+				font-size:			18px;
+				margin:				0px;
+				padding:			0px;
 			}
 			.box h4
 			{
-				background-color:	#4F3E23;
-				border-radius:		4px;
-				color:			#FFFFFF;
-				margin:			-10px -10px 5px -10px;
-				padding:		10px;
+				background-color:		#4F3E23;
+				border-radius:			4px;
+				color:				#FFFFFF;
+				margin:				-10px -10px 5px -10px;
+				padding:			10px;
 			}
 		.clear
 		{
-			clear:			both;
+			clear:				both;
 		}
 		.content
 		{
-			margin-left:		270px;
+			margin-left:			270px;
 		}
 			.content .box p
 			{
-				margin:			0px;
+				margin:				0px;
 			}
 		.error
 		{
-			color:			#A50000;
+			color:				#A50000;
+		}
+		.infotable td
+		{
+			background-color:		#4F3E23;
+			border:				1px solid #FFFFFF;
+			border-radius:			8px;
+			color:				#FFFFFF;
+			font-size:			18px;
+			height:				100px;
+			text-align:			center;
 		}
 		.panel
 		{
-			float:			left;
-			width:			250px;
+			float:				left;
+			width:				250px;
 		}
 			.panel a
 			{
-				color:			#545454;
-				text-decoration:	underline;
+				color:				#545454;
+				text-decoration:		underline;
 			}
 			.panel h4
 			{
-				font-size:		14px;
+				font-size:			14px;
 			}
 			.panel ul
 			{
-				list-style-type:	square;
-				margin:			0px;
-				padding:		0px 0px 0px 20px;
+				list-style-type:		square;
+				margin:				0px;
+				padding:			0px 0px 0px 20px;
 			}
 		.top
 		{
-			background-color:	#3D301C;
-			border-radius:		4px;
-			padding:		0px 4px;
+			background-color:		#3D301C;
+			border-radius:			4px;
+			padding:			0px 4px;
 		}
 			.top h2
 			{
-				color:			#FFFFFF;
-				float:			right;
-				margin:			0px 5px 0px 0px;
-				padding:		0px;
-				width:			250px;
+				color:				#FFFFFF;
+				float:				right;
+				margin:				0px 5px 0px 0px;
+				padding:			0px;
+				width:				250px;
 			}
 				.top h2 div
 				{
-					font-size:		10px;
-					margin-top:		-5px;
+					font-size:			10px;
+					margin-top:			-5px;
 				}
 			.top ul
 			{
-				list-style-type:	none;
-				margin:			0px;
-				padding:		0px;
+				list-style-type:		none;
+				margin:				0px;
+				padding:			0px;
 			}
 				.top ul li
 				{
-					float:			left;
+					float:				left;
 				}
 					.top ul li a
 					{
-						display:		block;
-						padding:		10px;
+						display:			block;
+						padding:			10px;
 					}
 						.top ul li a:hover
 						{
-							background-color:	#4F3E23;
+							background-color:		#4F3E23;
 						}
 		.wrapper
 		{
-			color:			#545454;
-			padding:		10px 0px;
+			color:				#545454;
+			padding:			10px 0px;
 		}
 		-->
 		</style>
