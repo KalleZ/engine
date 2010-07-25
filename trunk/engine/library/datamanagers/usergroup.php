@@ -22,7 +22,7 @@
 	 * @version	1.0
 	 * @package	Engine
 	 */
-	class Tuxxedo_Datamanager_API_Usergroup extends Tuxxedo_Datamanager implements Tuxxedo_Datamanager_API_Cache
+	class Tuxxedo_Datamanager_Usergroup extends Tuxxedo_Datamanager implements Tuxxedo_Datamanager_API_Cache
 	{
 		/**
 		 * Fields for validation of usergroups
