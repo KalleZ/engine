@@ -307,12 +307,11 @@
 				{
 					$this->query($sql);
 				}
-				catch(Tuxxedo_Basic_Exception $e)
+				catch(Tuxxedo_SQL_Exception $e)
 				{
-					if(TUXXEDO_DEBUG)
-					{
-						tuxxedo_doc_error($e);
-					}
+					$this->close();
+
+					tuxxedo_exception_handler($e);
 				}
 			}
 
