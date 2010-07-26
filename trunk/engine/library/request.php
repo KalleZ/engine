@@ -73,7 +73,7 @@
 	        
 	        $this->method = strtoupper($this->method);
 	        $output = $this->method . " " . $this->resource . 
-	                  " HTTP/1.0" . CRLF;
+	                  " HTTP/1.1" . CRLF;
 	        
 	        foreach ($this->headers as $name => $value) {
 	            // For headers with multiple values the values are passed as an
