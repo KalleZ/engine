@@ -113,34 +113,6 @@
 	}
 
 	/**
-	 * Executes a hook an API level hook
-	 *
-	 * @param	string			Hook location, only for reference
-	 * @param	callable		A callable function to execute
-	 * @param	array			An array with elements to pass to the callee
-	 * @param	boolean			Reference variable to check whether the function was executed or not
-	 * @return	void			No value is returned
-	 */
-	function tuxxedo_execute_hook($location, $callback, Array $arguments = NULL, &$executed = false)
-	{
-		if($arguments == NULL || !sizeof($arguments))
-		{
-			$executed = call_user_func($callback);
-		}
-		else
-		{
-			$executed = call_user_func_array($callback, $arguments);
-		}
-
-		if($executed === false)
-		{
-			Tuxxedo::globals('hooks', false);
-
-			throw new Tuxxedo_Basic_Exception('Failed to execute hook callback at \'%s\'', $location);
-		}
-	}
-
-	/**
 	 * Print a document error (startup) and halts script execution
 	 *
 	 * @param 	string 			The message to show
