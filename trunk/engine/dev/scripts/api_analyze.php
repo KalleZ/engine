@@ -107,7 +107,7 @@
 
 					if($context->current !== false)
 					{
-						$datamap[$file][$context->type_multiple]['constants'][] = $const;
+						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] = $const;
 
 						printf('- CLASS CONSTANT (%s)<br />', $const);
 					}
