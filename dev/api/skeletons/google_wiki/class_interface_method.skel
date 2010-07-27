@@ -1,0 +1,34 @@
+#summary Method documentation for {TUXX::METHOD_CANONICAL_NAME}
+#labels undocumented method {TUXX::NAME}
+
+={TUXX::METHOD_CANONICAL_NAME}()=
+
+...
+
+==Parameter list==
+
+...
+
+|| *Parameter* || *Type* || *Description* || *Notes* ||
+|| ... || ... || ... || ... ||
+
+==Examples==
+
+{{{
+...
+}}}
+
+
+==Change Log==
+
+...
+
+|| *Version* || *Description* ||
+|| ... || ... ||
+
+==See Also==
+
+  * ...
+
+[{TUXX::TOC} Table of Contents]
+[{TUXX::CLASS_CANONICAL_NAME} {TUXX::CLASS}]

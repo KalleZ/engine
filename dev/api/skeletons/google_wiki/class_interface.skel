@@ -1,0 +1,17 @@
+#summary Class documentation for {TUXX::NAME}
+#labels undocumented {TUXX::TYPE}
+
+={TUXX::NAME}=
+
+...
+
+|| *Type* || {TUXX::TYPE} ||
+|| *Declared in* || {TUXX::FILE} ||
+
+...
+
+{TUXX::CONSTANTS}
+{TUXX::PROPERTIES}
+{TUXX::METHODS}
+
+[{TUXX::TOC} Table of Contents]
