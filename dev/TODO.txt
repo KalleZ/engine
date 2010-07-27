@@ -22,6 +22,7 @@
 
 	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
 	Redesign the tuxxedo_doc_error() output (Kalle)
+	Update the api_analyze.php script to work with namespaced code once the convertion is done (Kalle)
 
 
 	Tuxxedo Engine Future

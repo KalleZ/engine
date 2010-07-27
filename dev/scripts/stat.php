@@ -1,6 +1,4 @@
 <?php
-	define('ENGINE_LOCATION', '../..');
-
 	function recursive_glob($expression)
 	{
 		static $expression_prefix;
@@ -40,7 +38,7 @@
 		return($return_value);
 	};
 
-	$files = recursive_glob(ENGINE_LOCATION);
+	$files = recursive_glob('../..');
 
 	if(!$files || !sizeof($files))
 	{
