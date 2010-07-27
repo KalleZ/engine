@@ -15,8 +15,9 @@
 
 
 	/**
-	 * Core engine namespace, the only dependency from the core is the 
-	 * exceptions namespace.
+	 * Core engine namespace, standard exceptions are integrated within this 
+	 * part of the namespace, functions that previously were procedural is 
+	 * defined as static classes.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
