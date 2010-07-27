@@ -61,7 +61,7 @@
 
 	foreach($files as $path)
 	{
-		$path		= ENGINE_LOCATION . '/' . $path;
+		$path		= '../../' . $path;
 		$extension 	= pathinfo($path, PATHINFO_EXTENSION);
 
 		if(!isset($statistics['lines'][$extension]))
