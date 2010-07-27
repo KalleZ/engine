@@ -127,7 +127,7 @@
 					}
 
 					$property 										= substr($token[1], 1);
-					$datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']	= $property;
+					$datamap[$file][$context->type_multiple][$context->{$context->type}]['properties'][]	= $property;
 
 					printf('- PROPERTY (%s)<br />', $property);
 				}
