@@ -98,18 +98,14 @@
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
 
-		if(!is_array(Tuxxedo::globals('errors')))
+		$errors = Tuxxedo::globals('errors');
+
+		if(!is_array($errors))
 		{
-			Tuxxedo::globals('errors', Array());
+			Tuxxedo::globals('errors', $errors = Array());
 		}
 
-		if(TUXXEDO_DEBUG)
-		{
-			echo($message . '<br /> <br />');
-			return;
-		}
-
-		array_push(Tuxxedo::globals('errors'), $message);
+		array_push($errors, $message);
 	}
 
 	/**
