@@ -232,7 +232,7 @@
 		 * @param	mixed					A value, this can be of any type, this is only used if adding or editing a variable
 		 * @return	mixed					Returns the value of variable on both set and get, and boolean false if trying to get an undefined variable
 		 */
-		private static function symtable($symtable, $name, $value = NULL)
+		protected static function symtable($symtable, $name, $value = NULL)
 		{
 			if($value != NULL)
 			{
