@@ -43,8 +43,8 @@
 	}
 
 	$tests = Array(
-			'PHP Version'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.1.0', PHP_VERSION)), 
-			'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('spl')), 
+			'PHP Version'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
+			'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('spl')), 
 			'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysql')), 
 			'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysqli')), 
 			'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo')), 
