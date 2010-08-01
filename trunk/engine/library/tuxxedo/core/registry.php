@@ -25,7 +25,7 @@
 	 * @package		Engine
 	 * @subpackage		Core
 	 */
-	namespace \Tuxxedo\Core;
+	namespace Tuxxedo\Core;
 
 	/**
 	 * Registry class, this acts as a mixed singleton/registry 
@@ -145,6 +145,9 @@
 		 */
 		public function register($refname, $class)
 		{
+/* HACK HACK HACK */
+			$class = '\Tuxxedo\\' . $class;
+
 			if(isset($this->instances[$refname]))
 			{
 				return;

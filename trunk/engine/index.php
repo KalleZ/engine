@@ -14,15 +14,24 @@
 
 
 	/**
-	 * Include the boostraper
+	 * Whether to trigger the namespace test or not
 	 */
-	require('./library/bootstrap.php');
+	if(isset($_GET['nstest']))
+	{
+		require('./library/bootstrap_ns.php');
 
-	/**
-	 * Just print the engine version to show that 
-	 * the bootstraper was a success
-	 */
-	echo($header);
-	echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
-	echo($footer);
+		echo('Tuxxedo Engine version: ' . Core\Versioning::FULL . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
+	}
+	else
+	{
+		require('./library/bootstrap.php');
+
+		/**
+		 * Just print the engine version to show that 
+		 * the bootstraper was a success
+		 */
+		echo($header);
+		echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
+		echo($footer);
+	}
 ?>

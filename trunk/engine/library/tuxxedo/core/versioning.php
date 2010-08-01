@@ -25,7 +25,7 @@
 	 * @package		Engine
 	 * @subpackage		Core
 	 */
-	namespace \Tuxxedo\Core;
+	namespace Tuxxedo\Core;
 
 	/**
 	 * Versioning class, contains all of the Core versioning
@@ -47,28 +47,28 @@
 	 	 *
 		 * @var		string
 		 */
-		const VERSION			= '1.0.0';
+		const SIMPLE			= '1.0.0';
 
 		/**
 		 * Major version number
 		 *
 		 * @var		integer
 		 */
-		const VERSION_MAJOR		= 1;
+		const MAJOR			= 1;
 
 		/**
 		 * Minor version number
 		 *
 		 * @var		integer
 		 */
-		const VERSION_MINOR		= 0;
+		const MINOR			= 0;
 
 		/**
 		 * Release version number
 		 *
 		 * @var		integer
 		 */
-		const VERSION_RELEASE		= 0;
+		const RELEASE			= 0;
 
 		/**
 		 * Engine version ID, this contains the version id in the form 
@@ -84,7 +84,7 @@
 		 *
 		 * @var		integer
 		 */
-		const VERSION_ID		= 10000;
+		const ID			= 10000;
 
 		/**
 		 * Engine version string, this is the full version string, which 
@@ -97,6 +97,6 @@
 		 *
 		 * @var		string
 		 */
-		const VERSION_STRING		= '1.0.0 (development preview)';
+		const FULL			= '1.0.0 (development preview)';
 	}
 ?>

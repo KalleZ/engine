@@ -25,7 +25,7 @@
 	 * @package		Engine
 	 * @subpackage		Core
 	 */
-	namespace \Tuxxedo\Core;
+	namespace Tuxxedo\Core;
 
 	/**
 	 * Information access, enables the ability for classes 
