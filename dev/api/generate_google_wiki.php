@@ -164,7 +164,77 @@ echo 'generating global context elements<br />';
 
 	function generate_toc($datamap, $global_context)
 	{
-echo 'generating toc<br />';
+		printf('Generating table of contents');
+
+		$toc		= new Skeleton('toc');
+		$globals 	= new Skeleton('toc_globals');
+
+		$globals->replace('title', '');
+
+		foreach(Array('constants', 'functions') as $element)
+		{
+			if(sizeof($global_context[$element]))
+			{
+				$matched	= true;
+				$item_skel 	= new Skeleton('toc_globals_item');
+
+				$item_skel->replace('title', $element);
+				$item_skel->replace('title_canonical_name', canonical_name($element));
+			}
+
+			$globals->replace($element, (isset($item_skel) ? $item_skel->get() : ''));
+
+			unset($item_skel);
+		}
+
+		$toc->replace('globals', (isset($matched) ? $globals->get() : ''));
+
+		foreach(Array('interfaces', 'classes') as $element)
+		{
+			${$element} = Array();
+
+			foreach($datamap as $file => $objects)
+			{
+				if(!sizeof($objects[$element]))
+				{
+					continue;
+				}
+
+				foreach($objects[$element] as $name => $object)
+				{
+					${$element}[$name] = $object;
+				}
+			}
+
+			if(!sizeof(${$element}))
+			{
+				$toc->replace($element, '');
+			}
+
+			ksort(${$element});
+
+			$category 		= new Skeleton('toc_classes_interfaces');
+			$category_contents	= '';
+
+			foreach(${$element} as $name => $contents)
+			{
+				$item_skel = new Skeleton('toc_classes_interfaces_item');
+
+				$item_skel->replace('title', $name);
+				$item_skel->replace('title_canonical_name', canonical_name($name, ($element == 'interfaces' ? 'interface' : 'class')));
+
+				$category_contents .= $item_skel->get();
+			}
+
+			$category->replace('type', ucwords($element));
+
+
+			$category->replace('items', $category_contents);
+
+			$toc->replace($element, $category->get());
+		}
+
+		$toc->save('api_engine');
 	}
 
 	function canonical_name($name, $prefix = '')

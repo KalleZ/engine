@@ -3,7 +3,8 @@
 
 =Table of Contents=
 
-{TUXX::CONSTANTS}
-{TUXX::FUNCTIONS}
+...
+
+{TUXX::GLOBALS}
 {TUXX::INTERFACES}
 {TUXX::CLASSES}
