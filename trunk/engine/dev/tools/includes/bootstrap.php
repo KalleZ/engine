@@ -42,19 +42,6 @@
 		throw new Tuxxedo_Basic_Exception('A script name must be defined prior to use');
 	}
 
-	if(defined('PHP_VERSION_ID'))
-	{
-		define('TUXXEDO_PHP_VERSION', PHP_VERSION_ID);
-	}
-	else
-	{
-		$version = PHP_VERSION;
-
-		define('TUXXEDO_PHP_VERSION', ($version{0} * 10000 + $version{2} * 100 + $version{4}));
-
-		unset($version);
-	}
-
 	Tuxxedo::globals('error_reporting', 	true);
 	Tuxxedo::globals('errors', 		Array());
 

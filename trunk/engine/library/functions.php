@@ -80,7 +80,7 @@
 		{
 			$message = '<strong>Notice:</strong> ' . $message;
 		}
-		elseif(TUXXEDO_PHP_VERSION >= 50300 && ($level & E_DEPRECATED || $level & E_USER_DEPRECATED))
+		elseif($level & E_DEPRECATED || $level & E_USER_DEPRECATED)
 		{
 			$message = '<strong>Deprecated:</strong> ' . $message;
 		}
