@@ -91,7 +91,7 @@
 			$hostname 		= $this->configuration['hostname'];
 			$this->persistent 	= false;
 
-			if(TUXXEDO_PHP_VERSION >= 50300 && $this->configuration['persistent'])
+			if($this->configuration['persistent'])
 			{
 				$host 			= 'p:' . $hostname;
 				$this->persistent	= true;

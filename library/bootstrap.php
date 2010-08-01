@@ -40,34 +40,6 @@
 	ini_set('magic_quotes_runtime', 'Off');
 
 	/**
-	 * Sets the PHP version id for PHP versions that doesn't 
-	 * have the PHP_VERSION_ID constant
-	 */
-	if(defined('PHP_VERSION_ID'))
-	{
-		/**
-		 * Set the version id constant, PHP_VERSION_ID is defined
-		 *
-		 * @var 	integer
-		 */
-		define('TUXXEDO_PHP_VERSION', PHP_VERSION_ID);
-	}
-	else
-	{
-		$version = PHP_VERSION;
-
-		/**
-		 * Set the version id constant, PHP_VERSION_ID is not defined 
-		 * lets emulate it
-		 *
-		 * @var 	integer
-		 */
-		define('TUXXEDO_PHP_VERSION', ($version{0} * 10000 + $version{2} * 100 + $version{4}));
-
-		unset($version);
-	}
-
-	/**
 	 * Sets the path to where the root script is, if the 
 	 * constant CWD is defined before including this file, 
 	 * then it will be used as root dir
