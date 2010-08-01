@@ -25,7 +25,7 @@
 	 * @package		Engine
 	 * @subpackage		Core
 	 */
-	namespace \Tuxxedo\Core\Interfaces;
+	namespace Tuxxedo\Core\Interfaces;
 
 
 	/**
