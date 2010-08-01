@@ -165,11 +165,12 @@
 		 * on a certain record determined by the passed identifier 
 		 * or as a clean datamanager to insert a new record.
 		 *
+		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	mixed			The unique identifier to send to the datamanager
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the unique identifier sent to the datamanager was invalid
 		 */
-		abstract public function __construct($identifier = NULL);
+		abstract public function __construct(Tuxxedo $tuxxedo, $identifier = NULL);
 
 		/**
 		 * Constructs a new datamanger instance
