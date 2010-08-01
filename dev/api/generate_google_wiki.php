@@ -1,7 +1,14 @@
 <?php
-	if(!is_file('./dump.serialized'))
+	is_file('./dump.serialized') or die('The \'dump.serialized\' file was not found');
+
+	if(!is_dir('./output/'))
 	{
-		die('The \'dump.serialized\' file was not found');
+		mkdir('./output/') or die('Unable to make output directory');
+	}
+
+	if(!is_dir('./output/google_wiki/'))
+	{
+		mkdir('./output/google_wiki/') or die('Unable to make google wiki output directory');
 	}
 
 	define('FLAG_CLASS',		1);
