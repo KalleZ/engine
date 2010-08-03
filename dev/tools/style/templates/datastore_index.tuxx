@@ -2,7 +2,7 @@
 
 <form action=\"./datastore.php\" method=\"post\">
 	<div class=\"box\">
-		<h4>Datastore Rebuild</h4>
+		<h4>Datastore rebuilder</h4>
 		<p>
 			Rebuilding the cache, this will update the following 
 			cache indexes:

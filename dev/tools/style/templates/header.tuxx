@@ -30,8 +30,8 @@
 		}
 		input, textarea
 		{
-			background:			#044968 url('./style/images/top-background.png') repeat-x top left;
-			border:				1px solid #4F3E23;
+			background:			#044968 url('./style/images/top-background.png') repeat-x center left;
+			border:				0px;
 			border-radius:			4px;
 			color:				#FFFFFF;
 			padding:			5px;
