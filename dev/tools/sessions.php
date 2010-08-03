@@ -70,7 +70,7 @@
 						tuxxedo_redirect('Killed session with success', './sessions.php');
 					}
 
-					tuxxedo_gui_message('Invalid session');
+					tuxxedo_gui_error('Invalid session');
 				}
 				break;
 				default:
