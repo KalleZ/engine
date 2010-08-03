@@ -19,7 +19,7 @@
 			}
 		body
 		{
-			background-color:		#F2F2F2;
+			background-color:		#021420;
 			color:				#545454;
 			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
 			font-size:			82%;
@@ -66,8 +66,7 @@
 			}
 		.box
 		{
-			background-color:		#FFFFFF;
-			border:				1px solid #E9E4E4;
+			background-color:		#D5F6FF;
 			border-radius:			4px;
 			margin-bottom:			10px;
 			padding:			10px;
@@ -85,7 +84,7 @@
 			}
 			.box h4
 			{
-				background-color:		#4F3E23;
+				background-color:		#044968;
 				border-radius:			4px;
 				color:				#FFFFFF;
 				margin:				-10px -10px 5px -10px;
@@ -106,16 +105,6 @@
 		.error
 		{
 			color:				#A50000;
-		}
-		.infotable td
-		{
-			background-color:		#4F3E23;
-			border:				1px solid #FFFFFF;
-			border-radius:			8px;
-			color:				#FFFFFF;
-			font-size:			18px;
-			height:				100px;
-			text-align:			center;
 		}
 		.panel
 		{
@@ -139,7 +128,7 @@
 			}
 		.top
 		{
-			background-color:		#3D301C;
+			background-color:		#044968;
 			border-radius:			4px;
 			padding:			0px 4px;
 		}

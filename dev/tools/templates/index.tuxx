@@ -1,53 +1,13 @@
 {$header}
 
 <div class=\"box\">
-	<h4>Index</h4>
+	<h4>Development Tools</h4>
 
-	<table class=\"infotable\">
-	<tr>
-		<td style=\"width: 33%;\">
-			<a href=\"\">
-				</a>
-		</td>
-		<td style=\"width: 33%;\">
-			<a href=\"\">
-				</a>
-		</td>
-		<td>
-			<a href=\"\">
-				</a>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href=\"\">
-				</a>
-		</td>
-		<td>
-			Tuxxedo Engine
-		</td>
-		<td>
-			<a href=\"\">
-				</a>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<a href=\"\">
-				</a>
-		</td>
-		<td>
-			<a href=\"\">
-				</a>
-		</td>
-		<td>
-			<a href=\"\">
-				</a>
-		</td>
-	</tr>
-	</table>
 	<p>
-		Display some general info here perhaps?
+		The development tools is designed for engine application developers 
+		and is even used for developing engine itself. It provides a simple 
+		interface for interacting with configurable core components and 
+		concepts within the engine.
 	</p>
 </div>
 

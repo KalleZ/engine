@@ -1,14 +1,4 @@
 <div class="box">
-	<h4>Development Tools</h4>
-	<p>
-		The development tools is designed for engine application developers 
-		and is even used for developing engine itself. It provides a simple 
-		interface for interacting with configurable core components and 
-		concepts within the engine.
-	</p>
-</div>
-
-<div class="box">
 	<h4>About</h4>
 	<p>
 		The development tools are written as an application on top of the engine 
