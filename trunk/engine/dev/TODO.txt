@@ -3,7 +3,7 @@
 	Tuxxedo Engine 2.0.0
 	----------------------
 
-	Improve development tools
+	Improve development tools (Kalle)
 	 - Add index
 	 - Add internationalization support
 	 - Add styles support
@@ -13,16 +13,20 @@
 	   - Passwords
 	   - Templates
 
+	Add new datamanagers (Kalle)
+	 - Generic
+
 	Restructure the library folder (again!): (Kalle)
 		/library/
 		|				Main folder
 		/library/class/
-		|				Class within the Tuxxedo namespace (Tuxxedo_Class -> /library/class/class.php)
+		|				Class within the Tuxxedo namespace (Tuxxedo_Class -> /library/ns/class.php)
 		....
 
 	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
 	Redesign the tuxxedo_doc_error() output (Kalle)
 	Update the api_analyze.php script to work with namespaced code once the convertion is done (Kalle)
+	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
 
 
 	Tuxxedo Engine Future
@@ -37,10 +41,7 @@
 	 - Template
 
 	Add a generic pagination class with a default Engine database pagination driver
-	Add cronjobs and move the related user/session code into its own cronjob
 
 	Implement a temporary memory storage, with backends for APC etc.
 
 	Change SQL queries to be non-mysql compatible
-	Change the class names, and remove the 'Tuxxedo_' prefix
-	Change to use namespaces, or atleast have a plan and make the code ready for it without breaking compatibility
