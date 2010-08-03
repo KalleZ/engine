@@ -1,6 +1,6 @@
 <?php
 	define('TUXXEDO', 1337);
-	define('TEMPLATE_DIR', '../tools/templates/');
+	define('TEMPLATE_DIR', '../tools/style/templates/');
 
 	require('../../library/core.php');
 	require('../../library/exceptions.php');

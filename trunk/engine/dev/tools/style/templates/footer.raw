@@ -1,3 +1,7 @@
+			<div class="clear copyright">
+				Powered by Tuxxedo Engine {$engine_version}<br />
+				Copyright 2006+ Tuxxedo Software Development
+			</div>
 		</div>
 	</body>
 </html>
