@@ -201,9 +201,7 @@
 					<li><a href=\"./#\">Users &amp; Usergroups</a></li>
 -->
 					<li><a href=\"./sessions.php\">Sessions</a></li>
-<!--
-					<li><a href=\"./#\">Tools</a></li>
--->
+					<li><a href=\"./tools.php\">Tools</a></li>
 				</ul>
 				<div class=\"clear\"></div>
 			</div>
