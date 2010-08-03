@@ -69,7 +69,9 @@
 							'array', 
 							'defined', 
 							'empty', 
-							'isset'
+							'isset', 
+							'sizeof', 
+							'count'
 							);
 
 		/**
