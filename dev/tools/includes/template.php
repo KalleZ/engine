@@ -95,7 +95,7 @@
 		{
 			$this->tuxxedo 		= $tuxxedo;
 			$this->templates	= $templates;
-			$this->path		= './templates/';
+			$this->path		= './style/templates/';
 		}
 
 		/**
