@@ -111,22 +111,6 @@
 		}
 
 		/**
-		 * Gets the form data for a specific field
-		 *
-		 * @param	string			The field name to get
-		 * @return	string			Returns the value of the form field, or false if field does not exists
-		 */
-		public function getField($name)
-		{
-			if(!isset($this->formdata[$name]))
-			{
-				return(false);
-			}
-
-			return((string) $this->formdata[$name]);
-		}
-
-		/**
 		 * Gets all the fields within the form data exception
 		 *
 		 * @return	array			Returns an array with all the registered elements
