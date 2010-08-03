@@ -1,0 +1,22 @@
+<tr>
+	<td>
+		{$name}
+	</td>
+	<td>
+		{$lines}
+	</td>
+	<td>
+		{$statistics['files'][$ext]}
+	</td>
+	<td>
+		{$statistics['size'][$ext]}
+	</td>
+	<td>
+		{$statistics['extensions'][$ext]['blanks']}
+	</td>
+	<td>
+<if expression="$statistics['extensions'][$ext]['tokens']">
+		Tokens: {$statistics['extensions'][$ext]['tokens']}
+</if>
+	</td>
+</tr>
