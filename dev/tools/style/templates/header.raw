@@ -10,17 +10,17 @@
 		<!--
 		a
 		{
-			color:				#A8A8A8;
+			color:				#3B7286;
 			text-decoration:		none;
 		}
 			a:hover
 			{
-				color:				#FFFFFF;
+				color:				#000000;
 			}
 		body
 		{
 			background-color:		#021420;
-			color:				#545454;
+			color:				#3B7286;
 			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
 			font-size:			82%;
 		}
@@ -30,7 +30,7 @@
 		}
 		input, textarea
 		{
-			background-color:		#3D301C;
+			background:			#044968 url('./style/images/top-background.png') repeat-x top left;
 			border:				1px solid #4F3E23;
 			border-radius:			4px;
 			color:				#FFFFFF;
@@ -46,12 +46,14 @@
 		}
 			table tr.heading td
 			{
-				background-color:		#3D301C;
-				color:				#FFFFFF;
+				background-color:		#FFFFFF;
+				border:				1px solid #21A7CD;
+				border-right:			0px;
 				font-weight:			bold;
 			}
 				table tr.heading td.end
 				{
+					border-right:			1px solid #21A7CD;
 					border-bottom-right-radius:	4px;
 					border-top-right-radius:	4px;
 				}
@@ -64,17 +66,17 @@
 			{
 				padding:			10px;
 			}
+		textarea
+		{
+			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
+		}
 		.box
 		{
-			background-color:		#D5F6FF;
+			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
 			border-radius:			4px;
 			margin-bottom:			10px;
 			padding:			10px;
 		}
-			.box a:hover
-			{
-				color:				#4F3E23;
-			}
 			.box h3, .box h4
 			{
 				color:				#4F3E23;
@@ -84,7 +86,7 @@
 			}
 			.box h4
 			{
-				background-color:		#044968;
+				background:			#044968 url('./style/images/top-background.png') repeat-x top left;
 				border-radius:			4px;
 				color:				#FFFFFF;
 				margin:				-10px -10px 5px -10px;
@@ -102,9 +104,19 @@
 			{
 				margin:				0px;
 			}
+		.copyright
+		{
+			color:				#FFFFFF;
+			font-size:			75%;
+			text-align:			right;
+		}
 		.error
 		{
 			color:				#A50000;
+		}
+		.logo
+		{
+			color:				#FFFFFF;
 		}
 		.panel
 		{
@@ -113,7 +125,6 @@
 		}
 			.panel a
 			{
-				color:				#545454;
 				text-decoration:		underline;
 			}
 			.panel h4
@@ -128,8 +139,9 @@
 			}
 		.top
 		{
-			background-color:		#044968;
+			background:			#044968 url('./style/images/top-background.png') repeat-x top left;
 			border-radius:			4px;
+			margin-bottom:			10px;
 			padding:			0px 4px;
 		}
 			.top h2
@@ -157,44 +169,45 @@
 				}
 					.top ul li a
 					{
+						color:				#FFFFFF;
 						display:			block;
 						padding:			10px;
 					}
 						.top ul li a:hover
 						{
-							background-color:		#4F3E23;
+							text-decoration:		underline;
 						}
 		.wrapper
 		{
-			color:				#545454;
-			padding:			10px 0px;
+			color:				#3B7286;
+			padding:			0px 30px;
 		}
 		-->
 		</style>
 	</head>
 	<body>
-		<div class="top">
-			<h2>
-				Tuxxedo Software Engine
-				<div>{$engine_version}</div>
-			</h2>
-			<ul>
-				<li><a href="./">Index</a></li>
-				<li><a href="./datastore.php">Datastore cache</a></li>
-<!--
-				<li><a href="./#">Styles &amp; Templates</a></li>
-				<li><a href="./#">Internationalization</a></li>
-				<li><a href="./#">Options</a></li>
-				<li><a href="./#">Users &amp; Usergroups</a></li>
--->
-				<li><a href="./sessions.php">Sessions</a></li>
-<!--
-				<li><a href="./#">Tools</a></li>
--->
-			</ul>
-			<div class="clear"></div>
-		</div>
 		<div class="wrapper">
+			<h2 class="logo">
+				Tuxxedo Software Engine</h2>
+
+			<div class="top">
+				<ul>
+					<li><a href="./">Index</a></li>
+					<li><a href="./datastore.php">Datastore cache</a></li>
+<!--
+					<li><a href="./#">Styles &amp; Templates</a></li>
+					<li><a href="./#">Internationalization</a></li>
+					<li><a href="./#">Options</a></li>
+					<li><a href="./#">Users &amp; Usergroups</a></li>
+-->
+					<li><a href="./sessions.php">Sessions</a></li>
+<!--
+					<li><a href="./#">Tools</a></li>
+-->
+				</ul>
+				<div class="clear"></div>
+			</div>
+
 <if expression="isset($widget)">
 			<div class="panel">
 				{$widget}
