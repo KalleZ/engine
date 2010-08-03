@@ -128,6 +128,13 @@
 		protected $identifier;
 
 		/**
+		 * Whether the datamanager needs to re-validate
+		 *
+		 * @var		boolean
+		 */
+		protected $revalidate			= true;
+
+		/**
 		 * The original data if instanciated by an identifier
 		 *
 		 * @var		array
@@ -264,6 +271,8 @@
 
 			if(!sizeof($this->userdata))
 			{
+				$this->revalidate = false;
+
 				return(true);
 			}
 
@@ -344,7 +353,14 @@
 				}
 			}
 
-			return(!sizeof($this->invalid_fields));
+			if(!sizeof($this->invalid_fields))
+			{
+				$this->revalidate = false;
+
+				return(true);
+			}
+
+			return(false);
 		}
 
 		/**
@@ -362,7 +378,8 @@
 				return(false);
 			}
 
-			$this->fields[$field]['type'] = (integer) $type;
+			$this->fields[$field]['type'] 	= (integer) $type;
+			$this->revalidate		= true;
 
 			return(true);
 		}
@@ -378,7 +395,7 @@
 		 */
 		public function save()
 		{
-			if(!$this->validate())
+			if($this->revalidate && !$this->validate())
 			{
 				global $phrase;
 
@@ -393,11 +410,12 @@
 				throw new Tuxxedo_Formdata_Exception($formdata);
 			}
 
-			$values		= '';
-			$sql 		= 'REPLACE INTO `' . $this->tablename . '` (';
-			$virtual	= array_merge($this->data, $this->userdata);
-			$virtual	= ($this->identifier !== NULL ? array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
-			$n 		= sizeof($virtual);
+			$values			= '';
+			$sql 			= 'REPLACE INTO `' . $this->tablename . '` (';
+			$virtual		= array_merge($this->data, $this->userdata);
+			$virtual		= ($this->identifier !== NULL ? array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
+			$n 			= sizeof($virtual);
+			$this->revalidate 	= true;
 
 			foreach($virtual as $field => $data)
 			{
