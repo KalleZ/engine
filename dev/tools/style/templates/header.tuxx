@@ -28,7 +28,7 @@
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
-		input, textarea
+		input, select, textarea
 		{
 			background:			#044968 url('./style/images/top-background.png') repeat-x center left;
 			border:				0px;
@@ -66,6 +66,10 @@
 			{
 				padding:			10px;
 			}
+				table tr td.spacer
+				{
+					font-size:		5px;
+				}
 		textarea
 		{
 			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
