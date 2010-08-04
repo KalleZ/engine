@@ -74,6 +74,9 @@
 		textarea
 		{
 			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
+			border:				1px solid #21A7CD;
+			color:				#000000;
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
 		.box
 		{
