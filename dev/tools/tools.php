@@ -175,7 +175,8 @@
 						'SPL'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_REQUIRED, Array('spl')), 
 						'mysql'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysql')), 
 						'mysqli'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysqli')), 
-						'pdo'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo'))
+						'pdo'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo')), 
+						'pdo_mysql'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo_mysql'))
 						);
 
 			$failed = false;
