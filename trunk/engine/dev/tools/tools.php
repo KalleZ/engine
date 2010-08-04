@@ -7,7 +7,8 @@
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -31,6 +32,10 @@
 					'password'	=> Array(
 									'tools_password', 
 									'tools_password_result'
+									), 
+					'requirements'	=> Array(
+									'tools_requirements', 
+									'tools_requirements_itembit'
 									)
 					);
 
@@ -158,6 +163,36 @@
 			}
 
 			eval(page('tools_password'));
+		}
+		break;
+		case('requirements'):
+		{
+			require('./includes/test.php');
+
+			$results 	= '';
+			$tests 		= Array(
+						'PHP 5.3.0'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_VERSION | Tuxxedo_Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
+						'SPL'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_REQUIRED, Array('spl')), 
+						'mysql'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysql')), 
+						'mysqli'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysqli')), 
+						'pdo'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo'))
+						);
+
+			$failed = false;
+
+			foreach($tests as $component => $test)
+			{
+				$required = $test->isRequired();
+
+				if(($passed = $test->test()) === false)
+				{
+					$failed = true;
+				}
+
+				eval('$results .= "' . $style->fetch('tools_requirements_itembit') . '";');
+			}
+
+			eval(page('tools_requirements'));
 		}
 		break;
 		default:

@@ -27,6 +27,7 @@
 	Redesign the tuxxedo_doc_error() output (Kalle)
 	Update the api_analyze.php script to work with namespaced code once the convertion is done (Kalle)
 	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
+	Fix the template compiler to not expand \t, \n, etc. (Kalle)
 
 
 	Tuxxedo Engine Future
