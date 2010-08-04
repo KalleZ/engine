@@ -441,7 +441,7 @@
 		 */
 		public static function getPasswordSalt($length = 8)
 		{
-			static $salt_range;
+			static $salt_range, $salt_range_len;
 
 			if($length < 8)
 			{
@@ -450,15 +450,15 @@
 
 			if(!$salt_range)
 			{
-				$salt_range = 'abcdefghijklmnopqrstuvwxyz0123456789!"#¤%&/()=?^*_-.,;:<>|@£$€{[]}~\'';
+				$salt_range 	= 'AbcdEfghIjklmnOpqrstUvwxYz0123456789|()[]{}!?=%&-_';
+				$salt_range_len	= strlen($salt_range);
 			}
 
 			$salt = '';
 
 			for($char = 0; $char < $length; ++$char)
 			{
-				$c 	= $salt_range{mt_rand(0, strlen($salt_range) - 1)};
-				$salt 	.= (mt_rand(0, 1) ? strtoupper($c) : $c);
+				$salt .= $salt_range{mt_rand(0, $salt_range_len)};
 			}
 
 			return($salt);

@@ -27,6 +27,10 @@
 					'statistics'	=> Array(
 									'tools_statistics', 
 									'tools_statistics_itembit'
+									), 
+					'password'	=> Array(
+									'tools_password', 
+									'tools_password_result'
 									)
 					);
 
@@ -140,7 +144,20 @@
 			$statistics['lines'] = sizeof($statistics['lines']);
 
 			eval(page('tools_statistics'));
+		}
+		break;
+		case('password'):
+		{
+			if(isset($_POST['submit']) && ($password = $filter->post('keyword')) !== false && !empty($password) && ($chars = $filter->post('characters')) % 8 === 0)
+			{
+				$salt 		= htmlspecialchars(Tuxxedo_User::getPasswordSalt($chars));
+				$hash 		= Tuxxedo_User::getPasswordHash($password, $salt);
+				$password	= htmlspecialchars($password);
 
+				eval('$results = "' . $style->fetch('tools_password_result') . '";');
+			}
+
+			eval(page('tools_password'));
 		}
 		break;
 		default:
