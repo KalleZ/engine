@@ -368,16 +368,24 @@
 		 * permissions only, not per usergroup permissions
 		 *
 		 * @param	integer			The permission to check
+		 * @param	boolean			Whether to check if the user's group have permission as a fallback
 		 * @return	boolean			Returns true if the user is granted access, otherwise false
 		 */
-		public function isGranted($permission)
+		public function isGranted($permission, $checkgroup = true)
 		{
 			if(!isset($this->userinfo->id))
 			{
 				return;
 			}
 
-			return(($this->userinfo->permissions & $permission) !== 0);
+			$granted = ($this->userinfo->permissions & $permission) !== 0;
+
+			if(!$granted && $checkgroup)
+			{
+				return($this->isGroupGranted($permission));
+			}
+
+			return($granted);
 		}
 
 
