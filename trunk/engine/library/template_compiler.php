@@ -362,7 +362,7 @@
 		 */
 		public function test()
 		{
-			if($this->compiled_source !== NULL)
+			if($this->compiled_source === NULL)
 			{
 				return;
 			}

@@ -36,6 +36,9 @@
 					'requirements'	=> Array(
 									'tools_requirements', 
 									'tools_requirements_itembit'
+									), 
+					'compiler'	=> Array(
+									'tools_compiler'
 									)
 					);
 
@@ -175,8 +178,7 @@
 						'SPL'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_REQUIRED, Array('spl')), 
 						'mysql'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysql')), 
 						'mysqli'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysqli')), 
-						'pdo'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo')), 
-						'pdo_mysql'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo_mysql'))
+						'pdo'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo'))
 						);
 
 			$failed = false;
@@ -194,6 +196,33 @@
 			}
 
 			eval(page('tools_requirements'));
+		}
+		break;
+		case('compiler'):
+		{
+
+			$source = '';
+
+			if(isset($_POST['submit']) && ($src = $filter->post('sourcecode')) !== false && !empty($src))
+			{
+				$source 	= htmlspecialchars($src);
+				$compiler	= new Tuxxedo_Template_Compiler;
+
+				try
+				{
+					$compiler->set($src);
+					$compiler->compile();
+
+					$test 	= $compiler->test();
+					$result = $compiler->get();
+				}
+				catch(Tuxxedo_Template_Compiler_Exception $e)
+				{
+					$error = $e->getMessage();
+				}
+			}
+
+			eval(page('tools_compiler'));
 		}
 		break;
 		default:
