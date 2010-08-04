@@ -4,13 +4,11 @@
 	----------------------
 
 	Improve development tools (Kalle)
-	 - Add index
 	 - Add internationalization support
 	 - Add styles support
 	 - Add user support
 	 - Re-implement missing tools
 	   - Options
-	   - Passwords
 	   - Templates
 
 	Add new datamanagers (Kalle)
