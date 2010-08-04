@@ -7,7 +7,8 @@
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -23,6 +24,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		DevTools
 	 */
 	class Tuxxedo_Dev_Style extends Tuxxedo_Style
 	{
@@ -81,6 +83,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		DevTools
 	 */
 	class Tuxxedo_Style_Storage_DevTools extends Tuxxedo_Style_Storage_Filesystem
 	{
