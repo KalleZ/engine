@@ -42,12 +42,39 @@
 
 	switch(strtolower($filter->get('do')))
 	{
-/*
-		case(''):
+		case('reset'):
 		{
+			$option = $filter->get('option');
+
+			if($option !== NULL)
+			{
+				if(!options_is_valid($option))
+				{
+					tuxxedo_gui_error('Invalid option');
+				}
+
+				options_reset($option);
+
+				tuxxedo_redirect('Option reset to default value', './options.php');
+			}
+			else
+			{
+				$options = options_get_all();
+
+				if(!$options)
+				{
+					tuxxedo_gui_error('No options found');
+				}
+
+				foreach($options as $name => $data)
+				{
+					options_reset($name);
+				}
+
+				tuxxedo_redirect('All options reset to their default value', './options.php');
+			}
 		}
 		break;
-*/
 		default:
 		{
 			$query = $db->query('

@@ -11,7 +11,7 @@
 	<p>
 		<em>
 		If you are not redirected within a few seconds, then 
-		click <a href="{$location}">here</a> to be redirected 
+		click <a href="{$location}" class="redirect">here</a> to be redirected 
 		manually.
 		</em>
 	</p>

@@ -70,4 +70,83 @@
 
 		return('unknown');
 	}
+
+	/**
+	 * Gets all available options from the database
+	 *
+	 * @return	array			Returns an array with all the option names as values, and false on error
+	 */
+	function options_get_all()
+	{
+		static $options;
+
+		if(!$options)
+		{
+			global $tuxxedo;
+
+			$query = $tuxxedo->db->query('
+							SELECT 
+								*
+							FROM 
+								`' . TUXXEDO_PREFIX . 'options`');
+
+			if(!$query || !$query->getNumRows())
+			{
+				return(false);
+			}
+
+			while($row = $query->fetchAssoc())
+			{
+				$options[$row['option']] = $row;
+			}
+
+			return($options);
+		}
+
+		return(false);
+	}
+
+	/**
+	 * Checks whether an option is valid or not
+	 *
+	 * @param	string			The option name
+	 * @returns	boolean			Returns true if the option was valid, and false on error
+	 */
+	function options_is_valid($option)
+	{
+		return((($options = options_get_all()) !== false ? isset($options[$option]) : false));
+	}
+
+	/**
+	 * Resets an option to its default value
+	 *
+	 * @param	string			The option name
+	 * @return	boolean			True if the value was reset, and false on error
+	 */
+	function options_reset($option)
+	{
+		if(($options = options_get_all()) === false)
+		{
+			return(false);
+		}
+
+		$option = $options[$option];
+
+		if($option['value'] == $option['defaultvalue']);
+		{
+			return(true);
+		}
+
+		global $tuxxedo;
+
+		$query = $tuxxedo->db->query('
+						UPDATE 
+							`' . TUXXEDO_PREFIX . 'options` 
+						SET 
+							`value` = \'%s\' 
+						WHERE 
+							`option` = \'%s\'', $tuxxedo->db->escape($option['defaultvalue']), $tuxxedo->db->escape($option['option']));
+
+		return($query && $tuxxedo->db->getAffectedRows($query));
+	}
 ?>
