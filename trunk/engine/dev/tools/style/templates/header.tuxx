@@ -160,22 +160,9 @@
 			font-size:			75%;
 			text-align:			right;
 		}
-			.copyright .logo
-			{
-				float:				right;
-				margin-left:			10px;
-			}
-			.copyright .text
-			{
-				float:				right;
-			}
 		.error
 		{
 			color:				#A50000;
-		}
-		.logo
-		{
-			color:				#FFFFFF;
 		}
 		.panel
 		{
@@ -248,10 +235,6 @@
 	</head>
 	<body>
 		<div class=\"wrapper\">
-<!--
-			<h2 class=\"logo\">
-				Tuxxedo Software Engine</h2>
--->
 			<img src=\"./style/images/logo-tuxxedo.png\" alt=\"Tuxxedo\" />
 
 			<div class=\"top\">
