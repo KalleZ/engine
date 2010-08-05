@@ -351,6 +351,42 @@
 				$ptr['if_close'] 	= $ptr['if_open'] + strlen($expression) - 1;
 			}
 
+			foreach(Array('\t', '\r', '\n', '\x', '\0', '\\\\', '\\\'', '\v') as $s)
+			{
+				$ptr = $pos = 0;
+
+				while(($pos = strpos($src, $s, $pos + $ptr)) !== false)
+				{
+					if($s == '\x' || $s == '\0')
+					{
+						if(!is_numeric($src{$pos + 1}))
+						{
+							$src = str_replace($s, '" . (\'' . $s . '\') . "', $src);
+							$ptr += 14;
+						}
+						else
+						{
+							$x = 1;
+
+							do
+							{
+								$s .= $src{$pos + $x};
+								++$x;
+							}
+							while(isset($src{$pos + $x}) && is_numeric($src{$pos + $x}));
+
+							$src = str_replace($s, '" . (\'' . $s . '\') . "', $src);
+							$ptr += (12 + strlen($s));
+						}
+					}
+					else
+					{
+						$src = str_replace($s, '" . (\'' . $s . '\') . "', $src);
+						$ptr += 14;
+					}
+				}
+			}
+
 			$this->compiled_source 	= $src;
 			$this->conditions	= 0;
 		}
