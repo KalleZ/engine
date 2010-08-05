@@ -1,6 +1,12 @@
 			<div class="clear copyright">
-				Powered by Tuxxedo Engine {$engine_version}<br />
-				Copyright 2006+ Tuxxedo Software Development
+				<div class="logo">
+					<img src="./style/images/logo-engine.png" alt="Engine" />
+				</div>
+				<div class="text">
+					Powered by Tuxxedo Engine {$engine_version}<br />
+					Copyright 2006+ Tuxxedo Software Development
+				</div>
+				<div class="clear"></div>
 			</div>
 		</div>
 	</body>
