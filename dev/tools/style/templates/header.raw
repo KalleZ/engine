@@ -43,6 +43,10 @@
 			{
 				color:				#000000;
 			}
+			a.redirect
+			{
+				text-decoration:		underline;
+			}
 		body
 		{
 			background:			#021420;
