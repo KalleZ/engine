@@ -235,10 +235,6 @@
 	</head>
 	<body>
 		<div class="wrapper">
-<!--
-			<h2 class="logo">
-				Tuxxedo Software Engine</h2>
--->
 			<img src="./style/images/logo-tuxxedo.png" alt="Tuxxedo" />
 
 			<div class="top">
