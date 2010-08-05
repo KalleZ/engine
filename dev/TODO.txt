@@ -16,7 +16,6 @@
 
 	Redesign the tuxxedo_doc_error() output (Kalle)
 	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
-	Fix the template compiler to not expand \t, \n, etc. (Kalle)
 
 
 	Tuxxedo Engine NS
