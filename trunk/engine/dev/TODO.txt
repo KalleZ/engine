@@ -1,6 +1,6 @@
 
 
-	Tuxxedo Engine 2.0.0
+	Tuxxedo Engine 1.0.0
 	----------------------
 
 	Improve development tools (Kalle)
@@ -14,25 +14,28 @@
 	Add new datamanagers (Kalle)
 	 - Generic
 
+	Redesign the tuxxedo_doc_error() output (Kalle)
+	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
+	Fix the template compiler to not expand \t, \n, etc. (Kalle)
+
+
+	Tuxxedo Engine NS
+	----------------------
+
 	Restructure the library folder (again!): (Kalle)
 		/library/
 		|				Main folder
 		/library/class/
 		|				Class within the Tuxxedo namespace (Tuxxedo_Class -> /library/ns/class.php)
-		....
 
-	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
-	Redesign the tuxxedo_doc_error() output (Kalle)
 	Update the api_analyze.php script to work with namespaced code once the convertion is done (Kalle)
-	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
-	Fix the template compiler to not expand \t, \n, etc. (Kalle)
+	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
 
 
 	Tuxxedo Engine Future
 	----------------------
 
 	Add new datamanagers
-	 - Generic
 	 - Language
 	 - Permission
 	 - Phrase
