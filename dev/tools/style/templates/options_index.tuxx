@@ -1,0 +1,46 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Configurative options</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td class=\"start\">
+				Name
+			</td>
+			<td>
+				Value
+			</td>
+			<td nowrap=\"nowrap\">
+				Default Value
+			</td>
+			<td>
+				Datatype
+			</td>
+			<td>
+				Cached?
+			</td>
+			<td nowrap=\"nowrap\">
+				Datastore value
+			</td>
+			<td class=\"end\">
+				&nbsp;
+			</td>
+		</tr>
+		{$table}
+	</table>
+</div>
+
+" . (($reminder) ? ("
+<div class=\"box\">
+	<h3>Notice</h3>
+
+	<p>
+		Not all elements are cached in the datastore or some may be 
+		outdated, you need to rebuild the datastore for these changes 
+		to take effect.
+	</p>
+</div>
+") : '') . "
+
+{$footer}

@@ -26,6 +26,8 @@
 <?php
 		$compiler = new Tuxxedo_Template_Compiler;
 
+		$compiler->allowFunction('strlen');
+
 		foreach($templates as $template)
 		{
 			$result 	= 'Failed';
