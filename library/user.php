@@ -142,13 +142,10 @@
 		 */
 		public function __destruct()
 		{
-			if(isset($this->userinfo->id))
-			{
-				$this->sessiondm->save();
-			}
-
 			if($this->session instanceof Tuxxedo_Session)
 			{
+				$this->sessiondm->save();
+
 				$this->tuxxedo->db->query('
 								DELETE FROM 
 									`' . TUXXEDO_PREFIX . 'sessions` 
