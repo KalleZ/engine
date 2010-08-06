@@ -375,6 +375,7 @@
 	function tuxxedo_shutdown_handler()
 	{
 		$errors = Tuxxedo::globals('errors');
+
 		if(!TUXXEDO_DEBUG || (!$errors || !sizeof($errors)))
 		{
 			return;
