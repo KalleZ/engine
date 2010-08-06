@@ -139,7 +139,7 @@
 
 		global $tuxxedo;
 
-		$query = $tuxxedo->db->query('
+		$result = $tuxxedo->db->query('
 						UPDATE 
 							`' . TUXXEDO_PREFIX . 'options` 
 						SET 
@@ -147,6 +147,25 @@
 						WHERE 
 							`option` = \'%s\'', $tuxxedo->db->escape($option['defaultvalue']), $tuxxedo->db->escape($option['option']));
 
-		return($query && $tuxxedo->db->getAffectedRows($query));
+		return($result && $tuxxedo->db->getAffectedRows($result));
+	}
+
+	/**
+	 * Deletes an option
+	 *
+	 * @param	string			The option name
+	 * @return	boolean			Returns true if the option was deleted, and false on error
+	 */
+	function options_delete($option)
+	{
+		global $tuxxedo;
+
+		$result = $tuxxedo->db->query('
+						DELETE FROM 
+							`' . TUXXEDO_PREFIX . 'options`
+						WHERE 
+							`option` = \'%s\'', $tuxxedo->db->escape($option));
+
+		return($result && $tuxxedo->db->getAffectedRows($result));
 	}
 ?>
