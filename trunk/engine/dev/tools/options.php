@@ -42,6 +42,20 @@
 
 	switch(strtolower($filter->get('do')))
 	{
+		case('delete'):
+		{
+			$option = $filter->get('option');
+
+			if(!options_is_valid($option))
+			{
+				tuxxedo_gui_error('Invalid option');
+			}
+
+			options_delete($option) or tuxxedo_gui_error('Unable to delete option');
+
+			tuxxedo_redirect('Deleted option', './options.php');
+		}
+		break;
 		case('reset'):
 		{
 			$option = $filter->get('option');
@@ -92,9 +106,11 @@
 
 			$table 		= '';
 			$reminder	= false;
+			$found		= Array();
 
 			while($opt = $query->fetchAssoc())
 			{
+				$found[]	= $opt['option'];
 				$cached 	= isset($cache->options[$opt['option']]);
 				$type		= options_long_type($opt['type']);
 				$value		= ($opt['value'] !== $opt['defaultvalue'] ? options_value_dump($opt['type'], $opt['value']) : '');
@@ -107,6 +123,11 @@
 				{
 					$reminder = true;
 				}
+			}
+
+			if(sizeof(array_diff(array_keys($cache->options), $found)))
+			{
+				$reminder = true;
 			}
 
 			eval(page('options_index'));
