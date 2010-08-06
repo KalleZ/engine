@@ -102,10 +102,14 @@
 
 		if(!is_array($errors))
 		{
-			Tuxxedo::globals('errors', $errors = Array());
+			Tuxxedo::globals('errors', $errors = Array($message));
 		}
+		else
+		{
+			array_push($errors, $message);
 
-		array_push($errors, $message);
+			Tuxxedo::globals('errors', $errors);
+		}
 	}
 
 	/**
@@ -371,7 +375,6 @@
 	function tuxxedo_shutdown_handler()
 	{
 		$errors = Tuxxedo::globals('errors');
-
 		if(!TUXXEDO_DEBUG || (!$errors || !sizeof($errors)))
 		{
 			return;
