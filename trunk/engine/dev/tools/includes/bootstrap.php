@@ -35,7 +35,7 @@
 
 	if(!$configuration['application']['debug'])
 	{
-		throw new Tuxxedo_Basic_Exception('Debug mode must be enabled to load the development tools');
+		$configuration['application']['debug'] = $debug_notice = true;
 	}
 
 	if(!defined('SCRIPT_NAME'))
