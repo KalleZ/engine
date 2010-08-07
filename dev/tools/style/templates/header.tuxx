@@ -263,6 +263,13 @@
 				</ul>
 				<div class=\"clear\"></div>
 			</div>
+" . ((isset($debug_notice)) ? ("
+			<div class=\"box\">
+				Warning, your configuration had debug mode set to false. This was automaticlly 
+				changed to true while executing the development tools. To remove this warning, then 
+				set debug to true in your configuration file.
+			</div>
+") : '') . "
 
 " . ((isset($widget)) ? ("
 			<div class=\"panel\">
