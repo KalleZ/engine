@@ -218,6 +218,7 @@
 			$this->userinfo = $this->usergroupinfo = new stdClass;
 
 			$this->sessiondm->delete();
+
 			Tuxxedo_Session::terminate();
 
 			if($restart)
@@ -372,7 +373,7 @@
 		{
 			if(!isset($this->userinfo->id))
 			{
-				return;
+				return(false);
 			}
 
 			$granted = ($this->userinfo->permissions & $permission) !== 0;
@@ -399,7 +400,7 @@
 		{
 			if(!isset($this->userinfo->id))
 			{
-				return;
+				return(false);
 			}
 
 			return(($this->usergroupinfo->permissions & $permission) !== 0);
