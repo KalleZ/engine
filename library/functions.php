@@ -36,12 +36,18 @@
 
 		if(Tuxxedo::globals('error_reporting'))
 		{
-			if(!is_array(Tuxxedo::globals('errors')))
-			{
-				Tuxxedo::globals('errors', Array());
-			}
+			$errors = Tuxxedo::globals('errors');
 
-			array_push(Tuxxedo::globals('errors'), $e->getMessage());
+			if(!is_array($errors))
+			{
+				Tuxxedo::globals('errors', Array($e->getMessage()));
+			}
+			else
+			{
+				array_push($errors, $e->getMessage());
+
+				Tuxxedo::globals('errors', $errors);
+			}
 		}
 	}
 
@@ -617,7 +623,7 @@
 
 		for($i = 0; $i < $size; ++$i)
 		{
-			$args[0] = str_replace('{' . $i . '}', $args[$i], $args[0]);
+			$args[0] = str_replace('{' . ($i + 1) . '}', $args[$i], $args[0]);
 		}
 
 		return($args[0]);
