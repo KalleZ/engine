@@ -1,7 +1,5 @@
 <?php
-    define("PATH", dirname(__FILE__));
-
-	$engine_path	= realpath(PATH . '/../../library/');
+	$engine_path	= realpath(__DIR__ . '/../../library/');
 	$files 		= analyze(new DirectoryIterator($engine_path), Array('database', 'datamanagers'));
 	$datamap	= Array();
 
@@ -138,7 +136,7 @@
 		}
 	}
 
-	file_put_contents(PATH . '/../api/dump.serialized', serialize($datamap));
+	file_put_contents(__DIR__ . '/../api/dump.serialized', serialize($datamap));
 
 
 	function analyze(DirectoryIterator $iterator, $scan_dirs = Array())
