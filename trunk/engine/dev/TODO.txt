@@ -44,5 +44,7 @@
 	Add a generic pagination class with a default Engine database pagination driver
 
 	Implement a temporary memory storage, with backends for APC etc.
+	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
+	Implement the query builder classes
 
 	Change SQL queries to be non-mysql compatible
