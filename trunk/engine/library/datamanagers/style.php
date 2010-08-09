@@ -104,7 +104,7 @@
 		{
 			if(($datastore = $this->tuxxedo->cache->styleinfo) === false)
 			{
-				return(false);
+				$datastore = Array();
 			}
 			
 			$datastore[(integer) $this->identifier] = $virtual;
