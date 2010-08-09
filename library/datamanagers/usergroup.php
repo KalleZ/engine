@@ -100,7 +100,7 @@
 		{
 			if(($datastore = $tuxxedo->cache->usergroups) === false)
 			{
-				return(false);
+				$datastore = Array();
 			}
 			
 			$datastore[(integer) $this->identifier] = $virtual;
