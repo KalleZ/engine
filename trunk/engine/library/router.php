@@ -62,7 +62,7 @@
 		 * @param	string	Controller name
 		 */
 		public function setController($controller) {
-			$this->controller = ucfirst($controller);
+			$this->controller = $controller;
 		}
 		
 		/**
@@ -78,7 +78,7 @@
 		 * @param	string	Action name
 		 */
 		public function setAction($action) {
-			$this->action = lcfirst($action);
+			$this->action = $action;
 		}
 		
 		/**
