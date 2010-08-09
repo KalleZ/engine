@@ -139,7 +139,7 @@
             } elseif (property_exists($this, $property)) {
                 return $this->$property;
             } else {
-                throw new Tuxxedo_Exception_Basic("Invalid property given.");
+                throw new Tuxxedo_Basic_Exception("Invalid property given.");
             }
         }
     }
