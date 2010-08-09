@@ -569,7 +569,8 @@
 							'tuxxedo_user'					=> 'user',
 							
 							/* MVC components */
-							'tuxxedo_controller'				=> 'controller',
+							'tuxxedo_controller'				=> 'controller', 
+							'tuxxedo_controller_dispatchable'		=> 'controller', 
 							'tuxxedo_router'				=> 'router',
 							'tuxxedo_router_uri'				=> 'router',
 							'tuxxedo_model'					=> 'model'
