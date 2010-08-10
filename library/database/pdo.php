@@ -12,8 +12,8 @@
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo\Database\Driver;
-    use Tuxxedo\Exception;
+	defined('TUXXEDO') or exit;
+
 
 	/**
 	 * PDO abstraction driver for Tuxxedo Engine
@@ -26,7 +26,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	final class PDO extends Tuxxedo\Database
+	final class Tuxxedo_Database_Driver_PDO extends Tuxxedo_Database
 	{
 		/**
 		 * Driver name
@@ -125,7 +125,7 @@
 					$format = 'Database error: [%d] %s';
 				}
 
-				throw new Exception\Basic($format, $e->getCode(), $e->getMessage());
+				throw new Tuxxedo_Basic_Exception($format, $e->getCode(), $e->getMessage());
 			}
 
 			$this->persistent 	= $link->getAttribute(PDO::ATTR_PERSISTENT);
@@ -314,9 +314,9 @@
 			{
 				$query = $this->link->query($sql);
 			}
-			catch(\PDOException $e)
+			catch(PDOException $e)
 			{
-				throw new Exception\SQL($sql, $e->getMessage(), $e->getCode());
+				throw new Tuxxedo_SQL_Exception($sql, $e->getMessage(), $e->getCode());
 			}
 
 			if($query !== false && (!$query->columnCount() && $query->num_rows))
@@ -325,13 +325,144 @@
 
 				return(true);
 			}
-			elseif($query instanceof \PDOStatement && $query->columnCount())
+			elseif($query instanceof PDOStatement && $query->columnCount())
 			{
 				$this->queries[] = $sql;
 
-				return(new PDO\Result($this, $query));
+				return(new Tuxxedo_Database_Driver_PDO_Result($this, $query));
 			}
 
 			return(false);
 		}
 	}
+
+	/**
+	 * PDO abstraction result driver for Tuxxedo
+	 *
+	 * This implements the result class for PDO based subdrivers for 
+	 * Tuxxedo, this contains methods to fetch, count result rows and 
+	 * such for working with a resultset.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	final class Tuxxedo_Database_Driver_PDO_Result extends Tuxxedo_Database_Result
+	{
+		/**
+		 * The result resource
+		 *
+		 * @var		PDOStatement
+		 */
+		protected $result;
+
+
+		/**
+		 * Constructs a new result object
+		 *
+		 * @param	Tuxxedo_Database	A database instance
+		 * @param	mixed			A database result, this must be delivered from the driver it was created from
+		 *
+		 * @throws	Tuxxedo_Basic_Exception	If the result passed is from a different driver type, or if the result does not contain any results
+		 */
+		public function __construct(Tuxxedo_Database $instance, $result)
+		{
+			if(!$instance->isResult($result))
+			{
+				throw new Tuxxedo_Basic_Exception('Passed result resource is not a valid result');
+			}
+
+			$this->instance		= $instance;
+			$this->result		= $result;
+			$this->cached_num_rows 	= $result->columnCount();
+
+			if(!$this->cached_num_rows)
+			{
+				$this->result = NULL;
+			}
+		}
+
+		/**
+		 * Frees the result from memory, and makes it unusable
+		 *
+		 * @return	boolean			Returns true if the result was freed, otherwise false
+		 */
+		public function free()
+		{
+			if(is_object($this->result))
+			{
+				$this->result = NULL;
+
+				return(true);
+			}
+
+			return(false);
+		}
+
+		/**
+		 * Checks whenever the result is freed or not
+		 *
+		 * @return	boolean			Returns true if the result is freed from memory, otherwise false
+		 */
+		public function isFreed()
+		{
+			return($this->result !== NULL);
+		}
+
+		/**
+		 * Get the number of rows in the result
+		 *
+		 * @return	integer			Returns the number of rows in the result, and boolean false on error
+		 */
+		public function getNumRows()
+		{
+			if(!is_object($this->result))
+			{
+				return($this->cached_num_rows);
+			}
+
+			return((integer) $this->result->rowCount());
+		}
+
+		/**
+		 * Fetch result with both associative and indexed indexes array
+		 *
+		 * @return	array			Returns an array with the result
+		 */
+		public function fetchArray()
+		{
+			return($this->result->fetch());
+		}
+
+		/**
+		 * Fetches the result and returns an associative array
+		 *
+		 * @return	array			Returns an associative array with the result
+		 */
+		public function fetchAssoc()
+		{
+			return($this->result->fetch(PDO::FETCH_ASSOC));
+		}
+
+		/**
+		 * Fetches the result and returns an indexed array
+		 *
+		 * @return	array			Returns an indexed array with the result
+		 */
+		public function fetchRow()
+		{
+			return($this->result->fetch(PDO::FETCH_NUM));
+		}
+
+		/**
+		 * Fetches the result and returns an object, with overloaded 
+		 * properties for rows names
+		 *
+		 * @return	object			Returns an object with the result
+		 */
+		public function fetchObject()
+		{
+			return($this->result->fetchObject());
+		}
+	}
+?>
