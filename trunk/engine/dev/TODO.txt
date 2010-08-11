@@ -18,19 +18,6 @@
 	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
 
 
-	Tuxxedo Engine NS
-	----------------------
-
-	Restructure the library folder (again!): (Kalle)
-		/library/
-		|				Main folder
-		/library/class/
-		|				Class within the Tuxxedo namespace (Tuxxedo_Class -> /library/ns/class.php)
-
-	Update the api_analyze.php script to work with namespaced code once the convertion is done (Kalle)
-	Unify the coding style used in the files, some of the new ones is rather different from the current ones in core (Kalle)
-
-
 	Tuxxedo Engine Future
 	----------------------
 
@@ -42,9 +29,11 @@
 	 - Template
 
 	Add a generic pagination class with a default Engine database pagination driver
+	Add language auto detection based on the request headers and iso codes
 
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement the query builder classes
+	Implement session adapters with backends for APC etc.
 
 	Change SQL queries to be non-mysql compatible
