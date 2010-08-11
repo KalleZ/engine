@@ -13,25 +13,13 @@
 	 */
 
 
+	require('./library/bootstrap.php');
+
 	/**
-	 * Whether to trigger the namespace test or not
+	 * Just print the engine version to show that 
+	 * the bootstraper was a success
 	 */
-	if(isset($_GET['nstest']))
-	{
-		require('./library/bootstrap_ns.php');
-
-		echo('Tuxxedo Engine version: ' . Core\Versioning::FULL . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
-	}
-	else
-	{
-		require('./library/bootstrap.php');
-
-		/**
-		 * Just print the engine version to show that 
-		 * the bootstraper was a success
-		 */
-		echo($header);
-		echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
-		echo($footer);
-	}
+	echo($header);
+	echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
+	echo($footer);
 ?>
