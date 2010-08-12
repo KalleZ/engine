@@ -4,11 +4,9 @@
 	----------------------
 
 	Improve development tools (Kalle)
-	 - Add internationalization support
 	 - Add styles support
-	 - Add user support
 	 - Add configuration generator tool
-	 - Re-implement missing tools
+	 - Re-implement old tools
 	   - Options
 	   - Templates
 
@@ -31,6 +29,10 @@
 	 - Phrase
 	 - Phrasegroup
 	 - Template
+
+	Improve development tools
+	 - Add internationalization support
+	 - Add user support
 
 	Add a generic pagination class with a default Engine database pagination driver
 
