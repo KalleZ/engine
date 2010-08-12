@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tuxxedo>
+	<document type="configuration">
+		<meta>
+			<parameter name="configuration-name" value="Development" />
+		</meta>
+		<section name="application">
+			<object name="debug">
+				<parameter name="type" value="boolean" />
+				<parameter name="value" value="true" />
+				<parameter name="default" value="false" />
+				<description>
+					<![CDATA[ Debug mode ]]>
+				</description>
+			</object>
+		</section>
+	</document>
+</tuxxedo>
