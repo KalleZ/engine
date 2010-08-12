@@ -85,7 +85,7 @@
 		 *
 		 * @var		string
 		 */
-		const VERSION_STRING		= '1.0.0 (development preview)';
+		const VERSION_STRING		= '1.0.0 Alpha 1';
 
 
 		/**
