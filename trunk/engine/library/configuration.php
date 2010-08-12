@@ -180,10 +180,6 @@
 	 * for when connecting the database. Note that not all 
 	 * drivers support this and will fallback to regular 
 	 * connections even if this option is on.
-	 *
-	 * To use persistent connections with mysqli, you must 
-	 * use PHP 5.3 or greater, else Tuxxedo Engine will 
-	 * fallback on regular connections.
 	 */
 	'persistent'	=> false, 
 
