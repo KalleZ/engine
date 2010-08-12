@@ -25,7 +25,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Internationalization extends Tuxxedo_InfoAccess implements Tuxxedo_Invokable
+	class Tuxxedo_Intl extends Tuxxedo_InfoAccess implements Tuxxedo_Invokable
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -154,7 +154,7 @@
 
 			if($object)
 			{
-				return(new Tuxxedo_Internationalization_Phrasegroup($this, $phrasegroup));
+				return(new Tuxxedo_Intl_Phrasegroup($this, $phrasegroup));
 			}
 
 			return($this->phrases[$phrasegroup]);
@@ -249,6 +249,33 @@
 	}
 
 	/**
+	 * Internationalization exception, used to format phrases for language 
+	 * verbose error messages.
+	 *
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 */
+	class Tuxxedo_Intl_Exception extends Tuxxedo_Exception
+	{
+		/**
+		 * Constructs a new internationalization exception from an extended class
+		 *
+		 * @param	array			The phrase name to use for the error
+		 * @param	mixed			Optional argument #n for formatting
+		 */
+		public function __construct($phrase)
+		{
+			if(func_num_args() > 1)
+			{
+				$message = call_user_func_array('format_phrase', func_get_args());
+			}
+
+			$this->message = $message;
+		}
+	}
+
+	/**
 	 * Internationalization phrasegroup class
 	 *
 	 * Contains basic routines for working with single phrasegroups.
@@ -257,7 +284,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Tuxxedo_Internationalization_Phrasegroup
+	class Tuxxedo_Intl_Phrasegroup
 	{
 		/**
 		 * Holds the list of loaded phrases for 
@@ -271,12 +298,12 @@
 		/**
 		 * Constructs a new phrasegroup object
 		 *
-		 * @param	Tuxxedo_Internationalization	Reference to the internationalization object to use for this phrasegroup
+		 * @param	Tuxxedo_Intl			Reference to the internationalization object to use for this phrasegroup
 		 * @param	string				Name of the phrasegroup to instanciate
 		 *
 		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the phrasegroup isnt cached in the internationalization object
 		 */
-		public function __construct(Tuxxedo_Internationalization $intl, $phrasegroup)
+		public function __construct(Tuxxedo_Intl $intl, $phrasegroup)
 		{
 			$phrases = $intl->getPhrasegroup($phrasegroup, false);
 

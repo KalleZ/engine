@@ -13,9 +13,6 @@
 		{$defaultvalue}
 	</td>
 	<td>
-		{$type}
-	</td>
-	<td>
 		" . (($cached) ? ("Yes") : ("No")) . "
 	</td>
 	<td nowrap=\"nowrap\">
