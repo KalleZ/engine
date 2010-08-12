@@ -13,34 +13,8 @@
 	 * =============================================================================
 	 */
 
+	defined('TUXXEDO') or exit;
 
-	/**
-	 * Converts an option short hand name into 
-	 * its full name
-	 *
-	 * @param	string			The option datatype
-	 * @param	string			Returns the expanded datatype name or 'unknown' on error
-	 */
-	function options_long_type($short)
-	{
-		switch(strtolower($short{0}))
-		{
-			case('s'):
-			{
-				return('string');
-			}
-			case('i'):
-			{
-				return('integer');
-			}
-			case('b'):
-			{
-				return('boolean');
-			}
-		}
-
-		return('unknown');
-	}
 
 	/**
 	 * Returns a var_dump() a-like syntax for an option

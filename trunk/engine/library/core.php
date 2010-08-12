@@ -129,7 +129,7 @@
 							'db'			=> 'Tuxxedo_Database', 
 							'cache'			=> 'Tuxxedo_Datastore', 
 							'filter'		=> 'Tuxxedo_Filter', 
-							'intl'			=> 'Tuxxedo_Internationalization', 
+							'intl'			=> 'Tuxxedo_Intl', 
 							'style'			=> 'Tuxxedo_Style'
 							);
 
@@ -561,8 +561,9 @@
 							'tuxxedo_template_compiler_dummy'		=> 'template_compiler', 
 
 							/* Internationalization API */
-							'tuxxedo_internationalization'			=> 'internationalization', 
-							'tuxxedo_internationalization_phrasegroup'	=> 'internationalization', 
+							'tuxxedo_intl'					=> 'internationalization', 
+							'tuxxedo_intl_exception' 			=> 'internationalization', 
+							'tuxxedo_intl_phrasegroup'			=> 'internationalization', 
 
 							/* Users and sessions API */
 							'tuxxedo_session'				=> 'session', 

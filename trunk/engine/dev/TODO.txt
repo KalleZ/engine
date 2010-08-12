@@ -15,8 +15,11 @@
 	Add new datamanagers (Kalle)
 	 - Generic
 
+	Add docblock (Kalle)
+	 - /dev/tools/includes/test.php
+
 	Redesign the tuxxedo_doc_error() output (Kalle)
-	Fix datamanagers not respecting the $intl setting when an identifier is not found when loading (Kalle)
+	Fix std exception error messages not respecting the $intl setting when an identifier is not found when loading (Kalle)
 
 
 	Tuxxedo Engine Future
@@ -30,11 +33,15 @@
 	 - Template
 
 	Add a generic pagination class with a default Engine database pagination driver
-	Add language auto detection based on the request headers and iso codes
 
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement the query builder classes
 	Implement session adapters with backends for APC etc.
+
+	Improve internationalization
+	 - Add the possibility to have different backends for phrases
+	 - Add language auto detection based on the request headers and iso codes for non logged in users
+	 - Add translation for /dev/tools
 
 	Change SQL queries to be non-mysql compatible

@@ -13,9 +13,6 @@
 		{$defaultvalue}
 	</td>
 	<td>
-		{$type}
-	</td>
-	<td>
 		<if expression="$cached">Yes<else />No</if>
 	</td>
 	<td nowrap="nowrap">

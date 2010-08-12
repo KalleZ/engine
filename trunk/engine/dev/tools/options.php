@@ -112,7 +112,6 @@
 			{
 				$found[]	= $opt['option'];
 				$cached 	= isset($cache->options[$opt['option']]);
-				$type		= options_long_type($opt['type']);
 				$value		= ($opt['value'] !== $opt['defaultvalue'] ? options_value_dump($opt['type'], $opt['value']) : '');
 				$defaultvalue	= options_value_dump($opt['type'], $opt['defaultvalue']);
 				$cachevalue	= ($cached ? options_value_dump($opt['type'], $cache->options[$opt['option']]) : 'N/A');
