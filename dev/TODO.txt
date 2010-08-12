@@ -13,9 +13,6 @@
 	Add new datamanagers (Kalle)
 	 - Generic
 
-	Add docblock (Kalle)
-	 - /dev/tools/includes/test.php
-
 	Redesign the tuxxedo_doc_error() output (Kalle)
 	Fix std exception error messages not respecting the $intl setting when an identifier is not found when loading (Kalle)
 
@@ -25,6 +22,7 @@
 
 	Add new datamanagers
 	 - Language
+	 - Options
 	 - Permission
 	 - Phrase
 	 - Phrasegroup
