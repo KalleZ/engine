@@ -561,9 +561,9 @@
 							'tuxxedo_template_compiler_dummy'		=> 'template_compiler', 
 
 							/* Internationalization API */
-							'tuxxedo_intl'					=> 'internationalization', 
-							'tuxxedo_intl_exception' 			=> 'internationalization', 
-							'tuxxedo_intl_phrasegroup'			=> 'internationalization', 
+							'tuxxedo_intl'					=> 'intl', 
+							'tuxxedo_intl_exception' 			=> 'intl', 
+							'tuxxedo_intl_phrasegroup'			=> 'intl', 
 
 							/* Users and sessions API */
 							'tuxxedo_session'				=> 'session', 
