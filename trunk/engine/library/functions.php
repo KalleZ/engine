@@ -108,7 +108,7 @@
 
 		if(!is_array($errors))
 		{
-			Tuxxedo::globals('errors', $errors = Array($message));
+			Tuxxedo::globals('errors', Array($message));
 		}
 		else
 		{
@@ -137,6 +137,7 @@
 		$called		= true;
 		$buffer 	= ob_get_clean();
 		$exception	= ($e instanceof Exception);
+		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors 	= Tuxxedo::globals('errors');
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
@@ -164,7 +165,7 @@
 		{
 			$message = 'Unknown error occured!';
 		}
-		elseif(function_exists('utf8_encode'))
+		elseif($utf8)
 		{
 			$message = utf8_encode($message);
 		}
@@ -172,13 +173,12 @@
 		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && !$tuxxedo->style)
 		{
 			$message .= 	PHP_EOL . 
-					PHP_EOL . 
-					'The following error(s) were not sent to the output buffer:' . PHP_EOL . 
+					'The following errors were logged while executing:' . PHP_EOL . 
 					'<ul>' . PHP_EOL;
 
 			foreach($errors as $error)
 			{
-				$message .= '<li>' . $error . '</li>';
+				$message .= '<li>' . (!$utf8 ?: utf8_encode($error)) . '</li>';
 			}
 
 			$message .= '</ul>' . PHP_EOL;
@@ -194,69 +194,41 @@
 			'<title>Tuxxedo Software Engine Error</title>' . PHP_EOL . 
 			'<style type="text/css">' . PHP_EOL . 
 			'<!--' . PHP_EOL . 
-			'* { font-family: Calibri, Tahoma, Sans-serif; }' . PHP_EOL . 
-			'code { font-family: Consolas, Monaco,  \'Courier New\', Monospace; }' . PHP_EOL . 
-			'div.container-clear { clear: both; }' . PHP_EOL . 
-			'div.container-left { float: left;' . (TUXXEDO_DEBUG ? ' width: 50%;' : '') . ' }' . PHP_EOL . 
-			'div.container-right { background-color: #FFFFFF; float: right; width: 500px; }' . PHP_EOL . 
-			'div.head { padding: 3px; }' . PHP_EOL . 
-			'li, ul { margin: 0px; }' . PHP_EOL . 
-			'td.strong, tr.strong { font-weight: bold; }' . PHP_EOL . 
-			'.error, .head { background-color: #D2D2D2; }' . PHP_EOL . 
-			'.error, td { padding: 7px; }' . PHP_EOL .
+			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
+			'h1 { color: #FFFFFF; }' . PHP_EOL . 
+			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
+			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.box .outer { padding: 6px; }' . PHP_EOL . 
 			'// -->' . PHP_EOL .
 			'</style>' . PHP_EOL . 	
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
 			(!stristr($buffer, '<?xml') ? $buffer . PHP_EOL : '') . 
-			'<h1>Tuxxedo Engine Error</h1>' . PHP_EOL . 
-			'<div class="error">' . PHP_EOL
+			'<h1>Tuxxedo Engine Error</h1>' . PHP_EOL
 			);
 
 		if(TUXXEDO_DEBUG)
 		{
-			global $tuxxedo;
-
 			echo(
-				'<div class="container-right">' . PHP_EOL . 
-				'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
-				'<tr>' . PHP_EOL . 
-				'<td valign="top">' . 
-				'<table width="25%" cellspacing="0" cellpadding="0">' . PHP_EOL
+				'<div class="box">' . PHP_EOL . 
+				'<div class="outer">' . PHP_EOL
 				);
 
 			if($application)
 			{
 				echo(
-					'<tr>' . PHP_EOL . 
-					'<td class="head strong">Application</td>' . PHP_EOL . 
-					'<td nowrap="nowrap">' . $application . '</td>' . PHP_EOL . 
-					'</tr>' . PHP_EOL
+					'<strong>Application:</strong> ' . $application . ' - '
 					);
 			}
 
 			echo(
-				'<tr>' . PHP_EOL . 
-				'<td class="head strong" nowrap="nowrap">Engine Version</td>' . PHP_EOL . 
-				'<td nowrap="nowrap">' . Tuxxedo::VERSION_STRING . '</td>' . PHP_EOL . 
-				'</tr>' . PHP_EOL . 
-				'<tr>' . PHP_EOL . 
-				'<td class="head strong">Script</td>' . PHP_EOL . 
-				'<td nowrap="nowrap">' . realpath($_SERVER['SCRIPT_FILENAME']) . '</td>' . PHP_EOL . 
-				'</tr>' . PHP_EOL . 
-				'<tr>' . PHP_EOL . 
-				'<td class="head strong">Timestamp</td>' . PHP_EOL . 
-				'<td nowrap="nowrap">' . tuxxedo_date(NULL, 'H:i:s j/n - Y (e)') . '</td>' . PHP_EOL . 
-				'</tr>' . PHP_EOL . 
-				'</table>' . PHP_EOL . 
-				'</td>' . PHP_EOL . 
-				'</tr>' . PHP_EOL . 
-				'</table>' . PHP_EOL . 
+				'<strong>Engine Version:</strong> ' . Tuxxedo::VERSION_STRING . ' - ' . 
+				'<strong>Script:</strong> ' . realpath($_SERVER['SCRIPT_FILENAME']) . ' - ' . 
+				'<strong>Timestamp:</strong> ' . tuxxedo_date(NULL, 'H:i:s j/n - Y (e)') . PHP_EOL . 
 				'</div>' . PHP_EOL . 
-				'<div class="container-left">' . PHP_EOL . 
-				nl2br($message) .  PHP_EOL . 
+				'<div class="inner">' . PHP_EOL . 
+				nl2br($message) . PHP_EOL . 
 				'</div>' . PHP_EOL . 
-				'<div class="container-clear"></div>' . PHP_EOL . 
 				'</div>' . PHP_EOL
 				);
 
@@ -266,6 +238,8 @@
 			{
 				echo(
 					'<h1>Debug backtrace</h1>' . PHP_EOL . 
+					'<div class="box">' . PHP_EOL . 
+					'<div class="inner">' . PHP_EOL . 
 					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td>&nbsp;</td>' . PHP_EOL . 
@@ -303,7 +277,9 @@
 				}
 
 				echo(
-					'</table>' . PHP_EOL
+					'</table>' . PHP_EOL . 
+					'</div>' . PHP_EOL . 
+					'</div>' . PHP_EOL
 					);
 			}
 
@@ -311,6 +287,8 @@
 			{
 				echo(
 					'<h1>Executed SQL Queries</h1>' . PHP_EOL . 
+					'<div class="box">' . PHP_EOL . 
+					'<div class="inner">' . PHP_EOL . 
 					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td width="100">&nbsp;</td>' . PHP_EOL . 
@@ -329,17 +307,19 @@
 				}
 
 				echo(
-					'</table>' . PHP_EOL
+					'</table>' . PHP_EOL . 
+					'</div>' . PHP_EOL . 
+					'</div>' . PHP_EOL
 					);
 			}
 		}
 		else
 		{
 			echo(
-				'<div class="container-left">' . PHP_EOL . 
+				'<div class="box">' . PHP_EOL . 
+				'<div class="inner">' . PHP_EOL . 
 				nl2br($message) .  PHP_EOL . 
 				'</div>' . PHP_EOL . 
-				'<div class="container-clear"></div>' . PHP_EOL . 
 				'</div>' . PHP_EOL . 
 				'<p>' . PHP_EOL . 
 				'<em>' . 
