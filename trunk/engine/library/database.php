@@ -309,13 +309,9 @@
 				}
 				catch(Tuxxedo_SQL_Exception $e)
 				{
-					$this->close();
-
-					tuxxedo_exception_handler($e);
+					tuxxedo_doc_error($e);
 				}
 			}
-
-			$this->close();
 		}
 
 		/**
