@@ -49,7 +49,7 @@
 			}
 		body
 		{
-			background:			#021420;
+			background-color:		#021420;
 			color:				#3B7286;
 			font-family:			\"Helvetica Neue\", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
 			font-size:			82%;
