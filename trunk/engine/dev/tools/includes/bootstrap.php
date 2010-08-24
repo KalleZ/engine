@@ -92,9 +92,9 @@
 
 	$engine_version = Tuxxedo::VERSION_STRING;
 
-	if(($widget = $style->getSidebarWidget()) !== false)
+	if(($widget_panel = $style->getSidebarWidget()) !== false)
 	{
-		eval('$widget = "' . $style->getSidebarWidget() . '";');
+		eval('$widget = "' . $widget_panel . '";');
 	}
 
 	eval('$header = "' . $style->fetch('header') . '";');
