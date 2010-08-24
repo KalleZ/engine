@@ -13,13 +13,12 @@
 	 */
 
 
-	require('./library/bootstrap.php');
+    require('./library/bootstrap.php');
 
-	/**
-	 * Just print the engine version to show that 
-	 * the bootstraper was a success
-	 */
-	echo($header);
-	echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
-	echo($footer);
-?>
+    /**
+     * Just print the engine version to show that 
+     * the bootstraper was a success
+     */
+    echo($header);
+    echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
+    echo($footer);

@@ -13,8 +13,6 @@
 	 * =============================================================================
 	 */
 
-	defined('TUXXEDO') or exit;
-
 
 	/**
 	 * Returns a var_dump() a-like syntax for an option

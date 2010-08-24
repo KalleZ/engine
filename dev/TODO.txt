@@ -5,7 +5,6 @@
 
 	Improve development tools (Kalle)
 	 - Add styles support
-	 - Add configuration generator tool
 	 - Re-implement old tools
 	   - Options
 	   - Templates
@@ -19,6 +18,7 @@
 
 	Tuxxedo Engine Future
 	----------------------
+	
 
 	Add new datamanagers
 	 - Language
@@ -28,9 +28,10 @@
 	 - Phrasegroup
 	 - Template
 
-	Improve development tools
-	 - Add internationalization support
-	 - Add user support
+    
+    Improve development tools
+     - Add internationalization support
+     - Add user support
 
 	Add a generic pagination class with a default Engine database pagination driver
 
@@ -38,7 +39,7 @@
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement the query builder classes
 	Implement session adapters with backends for APC etc.
-
+	
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases
 	 - Add language auto detection based on the request headers and iso codes for non logged in users

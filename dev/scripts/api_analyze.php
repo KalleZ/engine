@@ -190,10 +190,9 @@
 			$t = $tokens[$start_index + $inc - 1];
 
 			if(is_array($t) && $searching_for_token && $t[0] === $token)
-			{
 				return($t[1]);
 			}
-			elseif($t === $token)
+			elseif($t == $token)
 			{
 				return($start_index + $inc);
 			}

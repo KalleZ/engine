@@ -264,7 +264,6 @@
 				<div class=\"clear\"></div>
 			</div>
 			<br />
-
 " . ((isset($debug_notice)) ? ("
 			<div class=\"box\">
 				Warning, your configuration had debug mode set to false. This was automaticlly 
