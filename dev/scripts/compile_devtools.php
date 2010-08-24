@@ -2,10 +2,11 @@
 	define('TUXXEDO', 1337);
 	define('TEMPLATE_DIR', '../tools/style/templates/');
 
-	require('../../library/core.php');
-	require('../../library/exceptions.php');
-	require('../../library/template_compiler.php');
-	require('../../library/functions.php');
+	require('../../library/Tuxxedo/Exception.php');
+	require('../../library/Tuxxedo/Exception/TemplateCompiler.php');
+	require('../../library/Tuxxedo/Template/Compiler.php');
+	require('../../library/Tuxxedo/Template/Compiler/Dummy.php');
+	require('../../library/Tuxxedo/functions.php');
 
 	if(isset($_POST['compile']))
 	{
@@ -24,7 +25,7 @@
 <h2>Compiling ...</h2>
 <ul>
 <?php
-		$compiler = new Tuxxedo_Template_Compiler;
+		$compiler = new Tuxxedo\Template\Compiler;
 
 		$compiler->allowFunction('strlen');
 

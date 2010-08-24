@@ -1,4 +1,14 @@
 <?php
+	/**
+	 * TODO:
+	 *
+	 *  - Generate constant list
+	 *  - Generate function list
+	 *  - Integrate namespaces
+	 *  - Fix file paths to work correct, as dash seems to be special
+	 */
+
+
 	is_file('./dump.serialized') or die('The \'dump.serialized\' file was not found');
 
 	if(!is_dir('./output/'))

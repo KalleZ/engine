@@ -1,6 +1,6 @@
 <?php
 	$engine_path	= realpath(__DIR__ . '/../../library/');
-	$files 		= analyze(new DirectoryIterator($engine_path), Array('database', 'datamanagers'));
+	$files 		= analyze(new DirectoryIterator($engine_path));
 	$datamap	= Array();
 
 	echo('<h1>Lexical analyze of engine API</h1>');
@@ -15,6 +15,7 @@
 		$context->current 	= false;
 
 		$datamap[$file]		= Array(
+						'namespaces'	=> Array(), 
 						'classes'	=> Array(), 
 						'interfaces'	=> Array(), 
 						'constants'	=> Array(), 
@@ -32,6 +33,18 @@
 
 			switch($token[0])
 			{
+				case(T_NAMESPACE):
+				{
+					if(($name = lexical_scan_concat($tokens_copy, $index, ';')) == false)
+					{
+						continue;
+					}
+
+					$datamap[$file]['namespaces'][] = $name;
+
+					printf('NAMESPACE (%s)<br />', $name);
+				}
+				break;
 				case(T_INTERFACE):
 				case(T_CLASS):
 				{
@@ -139,7 +152,7 @@
 	file_put_contents(__DIR__ . '/../api/dump.serialized', serialize($datamap));
 
 
-	function analyze(DirectoryIterator $iterator, $scan_dirs = Array())
+	function analyze(DirectoryIterator $iterator)
 	{
 		$files = $extra = Array();
 
@@ -154,20 +167,7 @@
 
 			if($entry->isDir())
 			{
-				if(!in_array(strtolower($entry->getBaseName()), $scan_dirs))
-				{
-					continue;
-				}
-
-				foreach(new DirectoryIterator($entry->getPathName()) as $sub)
-				{
-					if(!$sub->isFile() || strtolower(pathinfo($path = $sub->getPathName(), PATHINFO_EXTENSION)) != 'php')
-					{
-						continue;
-					}
-
-					$extra[] = realpath($path);
-				}
+				$extra = analyze(new DirectoryIterator($entry->getPathName()));
 			}
 			elseif(strtolower(pathinfo($path = $entry->getPathName(), PATHINFO_EXTENSION)) == 'php')
 			{
@@ -190,6 +190,7 @@
 			$t = $tokens[$start_index + $inc - 1];
 
 			if(is_array($t) && $searching_for_token && $t[0] === $token)
+			{
 				return($t[1]);
 			}
 			elseif($t == $token)
@@ -199,5 +200,33 @@
 		}
 
 		return(false);
+	}
+
+	function lexical_scan_concat(Array $tokens, $start_index, $token, $skip_whitespace = true)
+	{
+		$scanned 		= '';
+		$inc			= 0;
+		$searching_for_token 	= is_numeric($token);
+
+		++$start_index;
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data 	= $tokens[$start_index + $inc - 1];
+			$token_array 	= isset($token_data[1]);
+
+			if($skip_whitespace && $token_array && $token_data[0] == T_WHITESPACE)
+			{
+				continue;
+			}
+			elseif($token_array && $searching_for_token && $token_data[0] === $token || $token_data == $token)
+			{
+				break;
+			}
+
+			$scanned .= (isset($token_data[1]) ? $token_data[1] : $token_data);
+		}
+
+		return($scanned);
 	}
 ?>
