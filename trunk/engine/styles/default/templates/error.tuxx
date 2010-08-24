@@ -1,0 +1,12 @@
+{$header}
+
+<h2>Error</h2>
+<p>
+	{$message}
+</p>
+
+" . ((isset($go_back) && $go_back) ? ("
+	<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+") : '') . "
+
+{$footer}

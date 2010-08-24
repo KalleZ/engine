@@ -1,0 +1,15 @@
+<div class="box">
+	<h4>Datastore</h4>
+	<p>
+		The datastore is where all the Engine's cached items are 
+		stored. The datastore dublicates commonly used values from 
+		tables to prevent generating overheat on tables that grows 
+		large.
+	</p>
+
+	<ul>
+		<li><a href="./datastore.php">Cache rebuilder</a></li>
+		<li><a href="./datastore.php?do=truncate">Clean datastore</a></li>
+		<li><a href="./datastore.php?do=dump">Dump contents</a></li>
+	</ul>
+</div>
