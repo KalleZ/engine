@@ -9,7 +9,7 @@
 	 */
 
 
-	is_file('./dump.serialized') or die('The \'dump.serialized\' file was not found');
+	is_file('./dumps/serialized.dump') or die('The \'serialized.dump\' file was not found');
 
 	if(!is_dir('./output/'))
 	{
@@ -33,7 +33,7 @@
 				'functions'	=> Array()
 				);
 
-	foreach($datamap = unserialize(file_get_contents('./dump.serialized')) as $file => $api)
+	foreach($datamap = unserialize(file_get_contents('./dumps/serialized.dump')) as $file => $api)
 	{
 		foreach(Array('interfaces', 'classes') as $type)
 		{
