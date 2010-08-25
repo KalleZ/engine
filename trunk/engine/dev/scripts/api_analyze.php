@@ -149,7 +149,8 @@
 		}
 	}
 
-	file_put_contents(__DIR__ . '/../api/dump.serialized', serialize($datamap));
+	file_put_contents(__DIR__ . '/../api/dumps/serialized.dump', serialize($datamap));
+	file_put_contents(__DIR__ . '/../api/dumps/json.dump', json_encode($datamap));
 
 
 	function analyze(DirectoryIterator $iterator)
@@ -167,7 +168,7 @@
 
 			if($entry->isDir())
 			{
-				$extra = analyze(new DirectoryIterator($entry->getPathName()));
+				$extra = array_merge($extra, analyze(new DirectoryIterator($entry->getPathName())));
 			}
 			elseif(strtolower(pathinfo($path = $entry->getPathName(), PATHINFO_EXTENSION)) == 'php')
 			{
