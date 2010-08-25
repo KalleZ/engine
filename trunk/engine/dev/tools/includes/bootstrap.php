@@ -27,9 +27,9 @@
 	define('TUXXEDO', 	1337);
 
 	require(CWD . '/library/configuration.php');
-	require(CWD . '/library/core.php');
-	require(CWD . '/library/functions.php');
-	require(CWD . '/library/functions_debug.php');
+	require(CWD . '/library/Tuxxedo/Loader.php');
+	require(CWD . '/library/Tuxxedo/functions.php');
+	require(CWD . '/library/Tuxxedo/functions_debug.php');
 
 	require('./includes/functions.php');
 
@@ -43,13 +43,13 @@
 		throw new Tuxxedo_Basic_Exception('A script name must be defined prior to use');
 	}
 
-	Tuxxedo::globals('error_reporting', 	true);
-	Tuxxedo::globals('errors', 		Array());
-
 	set_error_handler('tuxxedo_error_handler');
 	set_exception_handler('tuxxedo_exception_handler');
 	register_shutdown_function('tuxxedo_shutdown_handler');
-	spl_autoload_register(Array('Tuxxedo_Autoloader', 'load'));
+	spl_autoload_register('Tuxxedo\Loader::load');
+
+	Tuxxedo\Registry::globals('error_reporting', 	true);
+	Tuxxedo\Registry::globals('errors', 		Array());
 
 	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
@@ -58,13 +58,13 @@
 
 	require('./includes/template.php');
 
-	$tuxxedo = Tuxxedo::init($configuration);
+	$registry = Tuxxedo\Registry::init($configuration);
 
-	$tuxxedo->load(Array('db', 'cache', 'filter'));
+	$registry->load(Array('db', 'cache', 'filter'));
 
-	$tuxxedo->set('timezone', new DateTimeZone('UTC'));
-	$tuxxedo->set('datetime', new DateTime('now', $timezone));
-	$tuxxedo->set('style', new Tuxxedo_Dev_Style);
+	$registry->set('timezone', new DateTimeZone('UTC'));
+	$registry->set('datetime', new DateTime('now', $timezone));
+	$registry->set('style', new Tuxxedo_Dev_Style);
 
 	define('TIMENOW', $datetime->getTimestamp());
 	define('TIMENOW_UTC', TIMENOW);
@@ -88,9 +88,9 @@
 
 	unset($cache_buffer);
 
-	$tuxxedo->set('options', (object) Tuxxedo::getOptions());
+	$registry->set('options', (object) Tuxxedo\Registry::getOptions());
 
-	$engine_version = Tuxxedo::VERSION_STRING;
+	$engine_version = Tuxxedo\Registry::VERSION_STRING;
 
 	if(($widget_panel = $style->getSidebarWidget()) !== false)
 	{
