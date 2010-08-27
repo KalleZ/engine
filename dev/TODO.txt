@@ -29,9 +29,9 @@
 	 - Template
 
     
-    Improve development tools
-     - Add internationalization support
-     - Add user support
+	Improve development tools
+	 - Add internationalization support
+	 - Add user support
 
 	Add a generic pagination class with a default Engine database pagination driver
 
