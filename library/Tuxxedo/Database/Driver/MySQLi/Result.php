@@ -7,6 +7,7 @@
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
+	 * @license		Apache License, Version 2.0
 	 * @package		Engine
 	 *
 	 * =============================================================================
