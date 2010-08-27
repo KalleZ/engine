@@ -9,11 +9,16 @@
 	   - Options
 	   - Templates
 
-	Add new datamanagers (Kalle)
-	 - Generic
-
 	Redesign the tuxxedo_doc_error() output (Kalle)
 	Fix std exception error messages not respecting the $intl setting when an identifier is not found when loading (Kalle)
+
+
+	Namespaces (Kalle)
+	 - Fix loading, line feeds mixing, tabs vs spaces and all that happens to be very inconsistent in the engine
+	 - Fix Registry references and class references
+	 - Redesign bootstrap.php from the ground and up to make it easier to work on
+
+	Move query builder, generic dm and configuration parsers to its own playground branch so we can focus on Engine (Kalle)
 
 
 	Tuxxedo Engine Future
@@ -27,7 +32,6 @@
 	 - Phrase
 	 - Phrasegroup
 	 - Template
-
     
 	Improve development tools
 	 - Add internationalization support
@@ -39,10 +43,17 @@
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement the query builder classes
 	Implement session adapters with backends for APC etc.
+	Implement validators
+	Implement API accessors
 	
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases
 	 - Add language auto detection based on the request headers and iso codes for non logged in users
 	 - Add translation for /dev/tools
+
+	Look at implementing playground projects
+	 - Query builder
+	 - Configuration parser (Array, Xml, Ini, JSON)
+	 - Generic Datamanager
 
 	Change SQL queries to be non-mysql compatible
