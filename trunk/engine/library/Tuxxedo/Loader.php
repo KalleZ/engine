@@ -31,7 +31,7 @@ class Loader
         }
         
         self::$customPaths[$match] = array(
-            "path" => realpath($path),
+            "path" => $path,
             "separator" => $separator
         );
     }
@@ -133,14 +133,6 @@ class Loader
             return $path;
         }
         
-        $found = false;
-        foreach (explode(PATH_SEPARATOR, get_include_path()) as $incPath) {
-            $fullPath = $incPath . "/" . $path;
-            if (file_exists($fullPath)) {
-                $found = realpath($fullPath);
-            }
-        }
-        
-        return $found;
+        return false;
     }
 }

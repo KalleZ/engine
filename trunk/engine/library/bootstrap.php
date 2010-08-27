@@ -41,22 +41,18 @@
 	 */
 	define('TUXXEDO_LIBRARY', TUXXEDO_DIR . '/library');
 
-    /**
-     * Start autoloading
-     */
-    set_include_path(get_include_path() . PATH_SEPARATOR . TUXXEDO_LIBRARY);
-    require "Tuxxedo/Loader.php";
-    spl_autoload_register("Tuxxedo\Loader::load");
-
 	/**
 	 * Configuration
 	 */
-	require('configuration.php');
+	require(TUXXEDO_LIBRARY . '/configuration.php');
 
 	/**
-	 * Include general functions
+	 * Include functions we cannot autoload
 	 */
-	require('Tuxxedo/functions.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception/Basic.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 
 	/**
 	 * Set various handlers for errors, exceptions and 
@@ -65,6 +61,7 @@
 	set_error_handler('Tuxxedo\tuxxedo_error_handler');
 	set_exception_handler('Tuxxedo\tuxxedo_exception_handler');
 	register_shutdown_function('Tuxxedo\tuxxedo_shutdown_handler');
+	spl_autoload_register('Tuxxedo\Loader::load');
 
 	/**
 	 * Set database table prefix constant
