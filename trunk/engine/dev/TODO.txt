@@ -17,6 +17,8 @@
 	 - Fix loading, line feeds mixing, tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Fix Registry references and class references
 	 - Redesign bootstrap.php from the ground and up to make it easier to work on
+	 - Remove TUXXEDO constant check
+	 - Fix docblocks
 
 	Move query builder, generic dm and configuration parsers to its own playground branch so we can focus on Engine (Kalle)
 
@@ -57,3 +59,4 @@
 	 - Generic Datamanager
 
 	Change SQL queries to be non-mysql compatible
+	Change the API generators to be generic and with more output formats
