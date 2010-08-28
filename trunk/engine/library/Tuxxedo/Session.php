@@ -61,7 +61,7 @@
 		 * @param	array			The options array
 		 * @return	object			Object instance
 		 */
-		final public static function invoke(Registry $registry, Array $configuration = NULL, Array $options = NULL)
+		public static function invoke(Registry $registry, Array $configuration = NULL, Array $options = NULL)
 		{
 			self::$options = Array(
 						'expires'	=> $options['cookie_expires'], 
@@ -80,7 +80,7 @@
 		 * @param	boolean			Whether to include the session prefix or not, defaults to true
 		 * @return	mixed			Returns the session variable value on success, or null on failure
 		 */
-		final public static function get($name, $prefix = true)
+		public static function get($name, $prefix = true)
 		{
 			if($prefix)
 			{
@@ -103,7 +103,7 @@
 		 * @param	boolean			Whether to include the session prefix or not, defaults to true
 		 * @return	void			No value is returned
 		 */
-		final public static function set($name, $value, $prefix = true)
+		public static function set($name, $value, $prefix = true)
 		{
 			if($prefix)
 			{
@@ -118,7 +118,7 @@
 		 *
 		 * @return	void			No value is returned
 		 */
-		final public static function start($regenerate_id = false)
+		public static function start($regenerate_id = false)
 		{
 			if(self::$started)
 			{
@@ -142,7 +142,7 @@
 		 *
 		 * @return	void			No value is returned
 		 */
-		final public static function terminate()
+		public static function terminate()
 		{
 			if(!self::$started)
 			{
