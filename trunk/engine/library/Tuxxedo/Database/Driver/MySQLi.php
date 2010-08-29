@@ -89,8 +89,6 @@
 				return(true);
 			}
 
-			Registry::globals('error_reporting', false);
-
 			$hostname 		= $this->configuration['hostname'];
 			$this->persistent 	= false;
 
@@ -99,6 +97,8 @@
 				$host 			= 'p:' . $hostname;
 				$this->persistent	= true;
 			}
+
+			Registry::globals('error_reporting', false);
 
 			$link = mysqli_init();
 			$link->options(MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));

@@ -58,7 +58,7 @@
 
 	Look at implementing playground projects
 	 - Query builder
-	 - Configuration parser (Array, Xml, Ini, JSON)
+	 - Configuration parser (Xml, Ini, JSON)
 	 - Generic Datamanager
 
 	Change SQL queries to be non-mysql compatible
