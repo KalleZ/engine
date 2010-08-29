@@ -106,7 +106,7 @@
 		 * the same object is returned
 		 *
 		 * @param	array					The configuration array, this is only needed first time this is called
-		 * @return	\Tuxxedo\Core\Registry			An instance to the Tuxxedo object
+		 * @return	\Tuxxedo\Registry			An instance to the Tuxxedo object
 		 */
 		final public static function init(Array $configuration = NULL)
 		{
@@ -153,9 +153,11 @@
 			{
 				throw new Tuxxedo_Basic_Exception('Passed object class (%s) does not exists', $class);
 			}
-			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['\Tuxxedo\Invokable']))
+			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Invokable']))
 			{
-				$instance = call_user_func(Array($class, 'invoke'), $this, $this->configuration);
+				global $configuration;
+
+				$instance = call_user_func(Array($class, 'invoke'), $this, $configuration);
 			}
 
 			if(!isset($instance) || !is_object($instance))

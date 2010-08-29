@@ -52,6 +52,8 @@
 	 */
 	require('./includes/bootstrap.php');
 
+	use Tuxxedo\Development;
+
 	switch(strtolower($filter->get('do')))
 	{
 		case('statistics'):
@@ -174,11 +176,11 @@
 
 			$results 	= '';
 			$tests 		= Array(
-						'PHP 5.3.0'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_VERSION | Tuxxedo_Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
-						'SPL'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_REQUIRED, Array('spl')), 
-						'mysql'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysql')), 
-						'mysqli'	=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('mysqli')), 
-						'pdo'		=> new Tuxxedo_Test(Tuxxedo_Test::OPT_EXTENSION | Tuxxedo_Test::OPT_OPTIONAL, Array('pdo'))
+						'PHP 5.3.0'	=> new Development\Test(Development\Test::OPT_VERSION | Development\Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
+						'SPL'		=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_REQUIRED, Array('spl')), 
+						'mysql'		=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_OPTIONAL, Array('mysql')), 
+						'mysqli'	=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_OPTIONAL, Array('mysqli')), 
+						'pdo'		=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_OPTIONAL, Array('pdo'))
 						);
 
 			$failed = false;

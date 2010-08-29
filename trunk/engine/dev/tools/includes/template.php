@@ -39,7 +39,7 @@
 
 			$this->registry		= $registry;
 			$this->information 	= Array();
-			$this->templates	= new stdClass;
+			$this->templates	= new \stdClass;
 			$this->storage		= \Tuxxedo\Style\Storage::factory($registry, $this, 'DevTools', $this->templates);
 		}
 
@@ -74,44 +74,6 @@
 			$this->cache(Array($widget));
 
 			return($this->fetch($widget));
-		}
-	}
-
-	/**
-	 * Development Tools style storage, this class overrides the 
-	 * default filesystem storage engine so we can define our own 
-	 * template location.
-	 *
-	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version		1.0
-	 * @package		Engine
-	 * @subpackage		DevTools
-	 */
-	class DevTools extends \Tuxxedo\Style\Storage\Filesystem
-	{
-		/**
-		 * Constructs a new storage engine
-		 *
-	 	 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	Tuxxedo_Style		Reference to the style object
-		 * @param	object			Object reference to the templates data table
-		 */
-		protected function __construct(Registry $registry, \Tuxxedo\Style $style, stdClass $templates)
-		{
-			$this->tuxxedo 		= $registry;
-			$this->templates	= $templates;
-			$this->path		= './style/templates/';
-		}
-
-		/**
-		 * Checks whether a template file exists on the file system
-		 *
-		 * @param	string			The name of the template to check
-		 * @return	boolean			Returns true if the template file exists otherwise false
-		 */
-		public function exists($template)
-		{
-			return(is_file($this->path . $template . '.tuxx'));
 		}
 	}
 ?>

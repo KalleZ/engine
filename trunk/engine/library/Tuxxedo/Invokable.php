@@ -46,11 +46,10 @@
 		 *
 		 * @param	\Tuxxedo\Registry			The registry object reference
 		 * @param	array					The configuration array
-		 * @param	array					The options array
 		 * @return	object					Object instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Only thrown on poorly a configured database section in the configuration file
 		 */
-		public static function invoke(Registry $registry, Array $configuration, Array $options);
+		public static function invoke(Registry $registry, Array $configuration);
 	}
 ?>

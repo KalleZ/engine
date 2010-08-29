@@ -13,8 +13,6 @@
 	 * =============================================================================
 	 */
 
-	namespace Tuxxedo;
-
 	/**
 	 * Backtrace handler
 	 * 
@@ -70,13 +68,13 @@
 							case('__construct'):
 							{
 								$trace->call 	= 'new ' . $t['class'];
-								$trace->notes	= 'Class construction';
+								$trace->notes	= 'Class constructor';
 							}
 							break;
 							case('__destruct'):
 							{
 								$trace->call 	= '(unset) $' . $t['class'];
-								$trace->notes	= 'Class destruction';
+								$trace->notes	= 'Class destructor';
 
 								$argument_list	= false;
 							}
@@ -107,7 +105,7 @@
 
 				if($argument_list)
 				{
-					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && sizeof($t['args']) ? join(', ', array_map('gettype', $t['args'])) : '') . ')';
+					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && sizeof($t['args']) ? join(', ', array_map('tuxxedo_debug_typedata', $t['args'])) : '') . ')';
 					$trace->call 		.= '()';
 				}
 			}
@@ -141,5 +139,27 @@
 		}
 
 		return($stack);
+	}
+
+	function tuxxedo_debug_typedata($variable)
+	{
+		switch(gettype($variable))
+		{
+			case('object'):
+			{
+				return('(' . get_class($variable) . ')');
+			}
+			case('array'):
+			{
+				return('Array(' . sizeof($variable) . ')');
+			}
+			default:
+			{
+				ob_start();
+				var_dump($variable);
+
+				return(rtrim(ob_get_clean()));
+			}
+		}
 	}
 ?>

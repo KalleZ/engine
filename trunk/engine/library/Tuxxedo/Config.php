@@ -89,3 +89,4 @@
             return $this->options;
         }
     }
+?>

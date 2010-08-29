@@ -27,6 +27,9 @@
 	define('TUXXEDO', 	1337);
 
 	use Tuxxedo\Development;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
+	use Tuxxedo\Version;
 
 	require(CWD . '/library/configuration.php');
 	require(CWD . '/library/Tuxxedo/Loader.php');
@@ -42,33 +45,34 @@
 
 	if(!defined('SCRIPT_NAME'))
 	{
-		throw new Tuxxedo_Basic_Exception('A script name must be defined prior to use');
+		throw new Exception\Basic('A script name must be defined prior to use');
 	}
 
-	set_error_handler('Tuxxedo\tuxxedo_error_handler');
-	set_exception_handler('Tuxxedo\tuxxedo_exception_handler');
-	register_shutdown_function('Tuxxedo\tuxxedo_shutdown_handler');
-	spl_autoload_register('Tuxxedo\Loader::load');
+	set_error_handler('tuxxedo_error_handler');
+	set_exception_handler('tuxxedo_exception_handler');
+	register_shutdown_function('tuxxedo_shutdown_handler');
+	spl_autoload_register('\Tuxxedo\Loader::load');
 
 	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
 	define('TUXXEDO_LIBRARY', 	CWD . '/library');
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
 
-	Tuxxedo\Registry::globals('error_reporting', 	true);
-	Tuxxedo\Registry::globals('errors', 		Array());
+	Registry::globals('error_reporting', 	true);
+	Registry::globals('errors', 		Array());
 
 	require('./includes/template.php');
+	require('./includes/template_storage.php');
 
 	$registry = Tuxxedo\Registry::init($configuration);
 
-	$registry->register('db', 'Database');
-	$registry->register('cache', 'Datastore');
-	$registry->register('filter', 'Filter');
+	$registry->register('db', '\Tuxxedo\Database');
+	$registry->register('cache', '\Tuxxedo\Datastore');
+	$registry->register('filter', '\Tuxxedo\Filter');
 
 	$registry->set('timezone', new DateTimeZone('UTC'));
 	$registry->set('datetime', new DateTime('now', $timezone));
-	$registry->set('style', new Tuxxedo_Dev_Style);
+	$registry->set('style', new Development\Style);
 
 	define('TIMENOW', $datetime->getTimestamp());
 	define('TIMENOW_UTC', TIMENOW);
@@ -92,9 +96,9 @@
 
 	unset($cache_buffer);
 
-	$registry->set('options', (object) Tuxxedo\Registry::getOptions());
+	$registry->set('options', (object) $cache->options);
 
-	$engine_version = Tuxxedo\Registry::VERSION_STRING;
+	$engine_version = Version::FULL;
 
 	if(($widget_panel = $style->getSidebarWidget()) !== false)
 	{

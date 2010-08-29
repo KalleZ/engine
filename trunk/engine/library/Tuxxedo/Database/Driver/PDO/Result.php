@@ -145,3 +145,4 @@
 			return($this->result->fetchObject());
 		}
 	}
+?>

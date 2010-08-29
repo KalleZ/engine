@@ -77,3 +77,4 @@
 			return($this->formdata);
 		}
 	}
+?>

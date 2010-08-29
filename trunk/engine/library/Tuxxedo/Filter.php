@@ -102,10 +102,9 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	array			The configuration array
-		 * @param	array			The options array
 		 * @return	object			Object instance
 		 */
-		public static function invoke(Registry $registry, Array $configuration, Array $options)
+		public static function invoke(Registry $registry, Array $configuration)
 		{
 			self::$have_filter_ext 		= extension_loaded('filter');
 			self::$have_magic_quotes	= get_magic_quotes_gpc();
@@ -138,7 +137,7 @@
 		 */
 		public function get($field, $type = self::TYPE_STRING, $options = 0)
 		{
-			return($this->filter(1, $field, $type, $options));
+			return($this->process(1, $field, $type, $options));
 		}
 
 		/**
@@ -151,7 +150,7 @@
 		 */
 		public function post($field, $type = self::TYPE_STRING, $options = 0)
 		{
-			return($this->filter(2, $field, $type, $options));
+			return($this->process(2, $field, $type, $options));
 		}
 
 		/**
@@ -164,7 +163,7 @@
 		 */
 		public function cookie($field, $type = self::TYPE_STRING, $options = 0)
 		{
-			return($this->filter(3, $field, $type, $options));
+			return($this->process(3, $field, $type, $options));
 		}
 
 		/**
@@ -176,7 +175,7 @@
 		 */
 		public function user($field, $type = self::TYPE_STRING)
 		{
-			return($this->filter(4, $field, $type, 0));
+			return($this->process(4, $field, $type, 0));
 		}
 
 		/**
@@ -189,7 +188,7 @@
 		 * @param	integer			Additional filtering options
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		private function filter($source, $field, $type = self::TYPE_STRING, $options = 0)
+		private function process($source, $field, $type = self::TYPE_STRING, $options = 0)
 		{
 			switch($source)
 			{
@@ -366,3 +365,4 @@
 			}
 		}
 	}
+?>

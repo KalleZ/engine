@@ -14,6 +14,7 @@
 	 */
 	
 	namespace Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
 	
 		/**
@@ -72,3 +73,4 @@
 			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;
 		}
 	}
+?>

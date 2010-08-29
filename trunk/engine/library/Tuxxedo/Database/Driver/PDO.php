@@ -13,8 +13,10 @@
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo\Database\Driver;
-    use Tuxxedo\Exception;
+	namespace Tuxxedo\Database\Driver;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
+	use Tuxxedo\Database\Driver\PDO;
 
 	/**
 	 * PDO abstraction driver for Tuxxedo Engine
@@ -336,3 +338,4 @@
 			return(false);
 		}
 	}
+?>

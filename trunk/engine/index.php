@@ -13,6 +13,7 @@
 	 * =============================================================================
 	 */
 
+	use Tuxxedo\Version;
 
 	require('./library/bootstrap.php');
 
@@ -21,6 +22,6 @@
 	 * the bootstraper was a success
 	 */
 	echo($header);
-	echo('Tuxxedo Engine version: ' . Tuxxedo::VERSION_STRING . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
+	echo('Tuxxedo Engine version: ' . Version::FULL . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
 	echo($footer);
 ?>

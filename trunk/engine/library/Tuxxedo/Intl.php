@@ -62,14 +62,14 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	array			The configuration array
-		 * @param	array			The options array
 		 * @return	object			Object instance
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if an invalid (or not cached) language id was used
 		 */
-		public static function invoke(Registry $registry, Array $configuration = NULL, Array $options = NULL)
+		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			$languagedata 	= $tuxxedo->cache->languages;
+			$options	= $registry->cache->options;
+			$languagedata 	= $registry->cache->languages;
 			$languageid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $options['language_id'] ? $registry->userinfo->language_id : $options['language_id']) : 0);
 
 			if($languageid && isset($languagedata[$languageid]))
@@ -248,3 +248,4 @@
 			return(isset($this->registry->cache->phrasegroups[$phrasegroup]) && $this->registry->cache->phrasegroups[$phrasegroup]['phrases']);
 		}
 	}
+?>

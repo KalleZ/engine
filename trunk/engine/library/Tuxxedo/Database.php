@@ -136,12 +136,11 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	array			The configuration array
-		 * @param	array			The options array
 		 * @return	object			Object instance
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Only thrown on poorly a configured database section in the configuration file
 		 */
-		final public static function invoke(Registry $registry, array $configuration, array $options)
+		final public static function invoke(Registry $registry, Array $configuration)
 		{
 			if(!isset($configuration['database']) || !isset($configuration['database']['driver']))
 			{
@@ -167,12 +166,12 @@
 				return(new $class($configuration));
 			}
 
-			$class 		= 'Database\Driver\\' . $driver;
+			$class 		= '\Tuxxedo\Database\Driver\\' . $driver;
 			$instance 	= new $class($configuration);
 
-			if(!is_subclass_of($class, __CLASS__) || !is_subclass_of($class . '_Result', 'Database\Result'))
+			if(!is_subclass_of($class, __CLASS__))
 			{
-				throw new Exception\Basic('Corrupt database driver, driver classes does not follow the driver specification');
+				throw new Exception\Basic('Corrupt database driver, driver class does not follow the driver specification');
 			}
 
 			self::$loaded_drivers[] = $driver;
@@ -218,3 +217,4 @@
 			return($this->queries);
 		}
 	}
+?>

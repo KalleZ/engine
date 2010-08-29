@@ -90,7 +90,7 @@ class Loader
         }
 
 	/* @TODO this is seriously bad */
-        @require $path;
+	if (!is_file($path)) { tuxxedo_doc_errorf('Unable to locate class or interface file, for \'%s\'', $name); } else { require $path; }
         
         // Check class/interface actually declared
         if (!class_exists($name) && !interface_exists($name)) {
@@ -146,3 +146,4 @@ class Loader
         return false;
     }
 }
+?>

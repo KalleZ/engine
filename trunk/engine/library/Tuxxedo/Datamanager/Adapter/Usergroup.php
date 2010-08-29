@@ -14,7 +14,9 @@
 	 */
 	 
 	namespace Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Datamanager;
 	
 	/**
 	 * Datamanager for usergroups
@@ -123,3 +125,4 @@
 			return($type > 0 && $type < 4);
 		}
 	}
+?>

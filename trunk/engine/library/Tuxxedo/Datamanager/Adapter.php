@@ -14,6 +14,7 @@
 	 */
 
 	namespace Tuxxedo\Datamanager;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
 
 	/**
@@ -27,7 +28,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	abstract class Adapter extends InfoAccess
+	abstract class Adapter extends \Tuxxedo\InfoAccess
 	{
 		/**
 		 * Indicates that a field is required
@@ -55,35 +56,35 @@
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_NUMERIC			= Filter::TYPE_NUMERIC;
+		const VALIDATE_NUMERIC			= \Tuxxedo\Filter::TYPE_NUMERIC;
 
 		/**
 		 * Validation constant, string value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_STRING			= Filter::TYPE_STRING;
+		const VALIDATE_STRING			= \Tuxxedo\Filter::TYPE_STRING;
 
 		/**
 		 * Validation constant, email value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_EMAIL			= Filter::TYPE_EMAIL;
+		const VALIDATE_EMAIL			= \Tuxxedo\Filter::TYPE_EMAIL;
 
 		/**
 		 * Validation constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_BOOLEAN			= Filter::TYPE_BOOLEAN;
+		const VALIDATE_BOOLEAN			= \Tuxxedo\Filter::TYPE_BOOLEAN;
 
 		/**
 		 * Validation constant, callback
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_CALLBACK			= Filter::TYPE_CALLBACK;
+		const VALIDATE_CALLBACK			= \Tuxxedo\Filter::TYPE_CALLBACK;
 
 		/**
 		 * Validation option constant, escape HTML
@@ -178,7 +179,7 @@
 		 *
 		 * @throws	Tuxxedo_Exception	Throws an exception if the unique identifier sent to the datamanager was invalid
 		 */
-		abstract public function __construct(Tuxxedo $tuxxedo, $identifier = NULL);
+		abstract public function __construct(Registry $registry, $identifier = NULL);
 
 		/**
 		 * Constructs a new datamanger instance
@@ -195,16 +196,16 @@
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $intl = true)
 		{
-			global $tuxxedo;
+			global $registry;
 
 			if($intl)
 			{
-				if(!$tuxxedo->intl)
+				if(!$registry->intl)
 				{
 					throw new Exception\Basic('Internationalization is not instanciated for form data phrases');
 				}
 
-				if(!$tuxxedo->intl->cache(array('datamanagers')))
+				if(!$registry->intl->cache(array('datamanagers')))
 				{
 					throw new Exception\Basic('Unable to cache datamanager phrases');
 				}
@@ -212,11 +213,11 @@
 
 			if(in_array($datamanager, self::$loaded_datamanagers))
 			{
-				return(new $class($tuxxedo, $identifier));
+				return(new $class($registry, $identifier));
 			}
 
-			$class	= 'Datamanager\\' . $datamanager;
-			$dm 	= new $class($tuxxedo, $identifier);
+			$class	= '\Tuxxedo\Datamanager\Adapter\\' . $datamanager;
+			$dm 	= new $class($registry, $identifier);
 
 			if(!is_subclass_of($class, __CLASS__))
 			{
@@ -277,7 +278,7 @@
 				return(true);
 			}
 
-			$filter = $this->tuxxedo->load('filter');
+			$filter = $this->registry->register('filter', '\Tuxxedo\Filter');
 
 			foreach($this->fields as $field => $properties)
 			{
@@ -313,11 +314,11 @@
 						{
 							if(isset($properties['parameters']))
 							{
-								$this->data[$field] = call_user_func_array($properties['callback'], array_merge(Array($this->tuxxedo), $properties['parameters']));
+								$this->data[$field] = call_user_func_array($properties['callback'], array_merge(Array($this->registry), $properties['parameters']));
 							}
 							else
 							{
-								$this->data[$field] = call_user_func($properties['callback'], $this->tuxxedo);
+								$this->data[$field] = call_user_func($properties['callback'], $this->registry);
 							}
 						}
 
@@ -400,7 +401,7 @@
 			{
 				global $phrase;
 
-				$intl		= isset($this->tuxxedo->intl);
+				$intl		= isset($this->registry->intl);
 				$formdata 	= Array();
 
 				foreach($this->invalid_fields as $field)
@@ -426,17 +427,17 @@
 				}
 
 				$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
-				$values .= '\'' . $this->tuxxedo->db->escape($data) . '\'' . ($n ? ', ' : '');
+				$values .= '\'' . $this->registry->db->escape($data) . '\'' . ($n ? ', ' : '');
 			}
 
-			if(!$this->tuxxedo->db->query($sql . ') VALUES (' . $values . ')'))
+			if(!$this->registry->db->query($sql . ') VALUES (' . $values . ')'))
 			{
 				return(false);
 			}
 
 			if($this instanceof Datamanager\APICache)
 			{
-				return($this->rebuild($this->tuxxedo, $virtual));
+				return($this->rebuild($this->registry, $virtual));
 			}
 
 			return(true);
@@ -466,3 +467,4 @@
 									`' . $this->idname .'` = \'%s\'', $this->tuxxedo->db->escape($this->identifier)));
 		}
 	}
+?>

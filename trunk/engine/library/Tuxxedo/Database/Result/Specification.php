@@ -25,7 +25,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	interface Tuxxedo_Database_Driver_Result
+	interface Specification
 	{
 		/**
 		 * Frees the result from memory, and makes it unusable

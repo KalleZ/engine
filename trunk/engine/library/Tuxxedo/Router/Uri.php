@@ -93,3 +93,4 @@
 			$this->params = $params;
 		}
 	}
+?>

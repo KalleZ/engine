@@ -13,9 +13,9 @@
 	 * =============================================================================
 	 */
 
-	namespace Tuxxedo;
-
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Version;
 
 	/**
 	 * Exception handler, this terminates the script execution 
@@ -27,6 +27,13 @@
 	 */
 	function tuxxedo_exception_handler(\Exception $e)
 	{
+		static $registry;
+
+		if(!$registry)
+		{
+			$registry = class_exists('\Tuxxedo\Registry', false);
+		}
+
 		if($e instanceof Exception\Basic)
 		{
 			tuxxedo_doc_error($e);
@@ -36,7 +43,7 @@
 			tuxxedo_gui_error($e->getMessage());
 		}
 
-		if(Registry::globals('error_reporting'))
+		if($registry && Registry::globals('error_reporting'))
 		{
 			$errors = Registry::globals('errors');
 
@@ -50,6 +57,10 @@
 
 				Registry::globals('errors', $errors);
 			}
+		}
+		else
+		{
+			echo('<strong>Exception:</strong> ' . $e->getMessage() . '<br /> <br />');
 		}
 	}
 
@@ -155,7 +166,7 @@
 		$exception	  = ($e instanceof \Exception);
 		$utf8	   = function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
-		$errors	= $registry && Registry::globals('errors');
+		$errors	= $registry instanceof Registry && Registry::globals('errors');
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if($exception && $registry->db && $e instanceof Exception\SQL)
@@ -212,6 +223,9 @@
 			'<!--' . PHP_EOL . 
 			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
 			'h1 { color: #FFFFFF; }' . PHP_EOL . 
+			'table td { padding: 5px; }' . PHP_EOL . 
+			'table td div.hr { border-top: 2px solid #3B7286; height: 1px; }' . PHP_EOL . 
+			'table tr.head { background-color: #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
 			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
 			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
@@ -250,7 +264,7 @@
 
 			$bt = ($exception ? tuxxedo_debug_backtrace($e) : tuxxedo_debug_backtrace());
 
-			if(sizeof($bt))
+			if($bts = sizeof($bt))
 			{
 				echo(
 					'<h1>Debug backtrace</h1>' . PHP_EOL . 
@@ -270,7 +284,7 @@
 				{
 					echo(
 						'<tr' . ($trace->current ? ' class="strong"' : '') . '>' . PHP_EOL . 
-						'<td rowspan="2" class="strong">' . ++$n . '</td>' . PHP_EOL . 
+						'<td rowspan="2"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->call . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap" width="100%">' . $trace->file . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->line . '</td>' . PHP_EOL . 
@@ -282,9 +296,21 @@
 					{
 						echo(
 							'<tr>' . PHP_EOL . 
-							'<td colspan="4">' . PHP_EOL . 
+							'<td colspan="5">' . PHP_EOL . 
 							'<div class="head">' . PHP_EOL . 
-							$trace->callargs . PHP_EOL . 
+							'<em>' . $trace->callargs . '</em>' . PHP_EOL . 
+							'</div>' . PHP_EOL . 
+							'</rd>' . PHP_EOL . 
+							'</tr>' . PHP_EOL
+							);
+					}
+
+					if($n != $bts)
+					{
+						echo(
+							'<tr>' . PHP_EOL . 
+							'<td colspan="5">' . PHP_EOL . 
+							'<div class="hr">' . PHP_EOL . 
 							'</div>' . PHP_EOL . 
 							'</rd>' . PHP_EOL . 
 							'</tr>' . PHP_EOL
@@ -316,7 +342,7 @@
 				{
 					echo(
 						'<tr>' . PHP_EOL . 
-						'<td class="strong">' . ++$n . '</td>' . PHP_EOL . 
+						'<td><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
 						'<td><code>' . $sql . '</code></td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
@@ -385,7 +411,12 @@
 			return($path);
 		}
 
-		return(ltrim(str_replace(Array('/', '\\', TUXXEDO_DIR), Array(DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, ''), $path), DIRECTORY_SEPARATOR));
+		if(empty($path))
+		{
+			return('');
+		}
+
+		return(DIRECTORY_SEPARATOR . ltrim(str_replace(Array('/', '\\', TUXXEDO_DIR), Array(DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, ''), $path), DIRECTORY_SEPARATOR));
 	}
 
 	/**
@@ -395,9 +426,16 @@
 	 */
 	function tuxxedo_shutdown_handler()
 	{
-		$errors = Registry::globals('errors');
+		static $registry;
 
-		if(!TUXXEDO_DEBUG || (!$errors || !sizeof($errors)))
+		if(!$registry)
+		{
+			$registry = class_exists('\Tuxxedo\Registry', false);
+		}
+
+		$errors = ($registry ? Registry::globals('errors') : false);
+
+		if(!$registry || !TUXXEDO_DEBUG || (!$errors || !sizeof($errors)))
 		{
 			return;
 		}
@@ -536,11 +574,11 @@
 	 */
 	function page($template)
 	{
-		global $tuxxedo;
+		global $registry;
 
 		return(
 			'global $header, $footer;' . 
-			'echo("' . $tuxxedo->style->fetch($template) . '");'
+			'echo("' . $registry->style->fetch($template) . '");'
 			);
 	}
 

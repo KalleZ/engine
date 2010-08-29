@@ -15,7 +15,9 @@
 	
 	namespace Tuxxedo\Database;
 
-    /**
+	use Tuxxedo\Exception;
+
+	/**
 	 * Abstract database result class
 	 *
 	 * Every driver result class must extend this class in order to be loadable 
@@ -25,7 +27,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	abstract class Result implements Result\Interface
+	abstract class Result implements Result\Specification
 	{
 		/**
 		 * The database instance from where the result was created
@@ -57,11 +59,11 @@
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	If the result passed is from a different driver type, or if the result does not contain any results
 		 */
-		public function __construct(Tuxxedo_Database $instance, $result)
+		public function __construct(\Tuxxedo\Database $instance, $result)
 		{
 			if(!$instance->isResult($result))
 			{
-				throw new Tuxxedo_Basic_Exception('Passed result resource is not a valid result');
+				throw new Exception\Basic('Passed result resource is not a valid result');
 			}
 
 			$this->instance		= $instance;
@@ -83,3 +85,4 @@
 			$this->free();
 		}
 	}
+?>
