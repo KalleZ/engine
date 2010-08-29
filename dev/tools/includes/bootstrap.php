@@ -43,18 +43,18 @@
 		throw new Tuxxedo_Basic_Exception('A script name must be defined prior to use');
 	}
 
-	set_error_handler('tuxxedo_error_handler');
-	set_exception_handler('tuxxedo_exception_handler');
-	register_shutdown_function('tuxxedo_shutdown_handler');
+	set_error_handler('Tuxxedo\tuxxedo_error_handler');
+	set_exception_handler('Tuxxedo\tuxxedo_exception_handler');
+	register_shutdown_function('Tuxxedo\tuxxedo_shutdown_handler');
 	spl_autoload_register('Tuxxedo\Loader::load');
-
-	Tuxxedo\Registry::globals('error_reporting', 	true);
-	Tuxxedo\Registry::globals('errors', 		Array());
 
 	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
 	define('TUXXEDO_LIBRARY', 	CWD . '/library');
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
+
+	Tuxxedo\Registry::globals('error_reporting', 	true);
+	Tuxxedo\Registry::globals('errors', 		Array());
 
 	require('./includes/template.php');
 
