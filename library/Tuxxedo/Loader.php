@@ -55,7 +55,6 @@ class Loader
      * @throws  Tuxxedo_Loader_Exception
      */
     public static function load($name) {
-var_dump('attempting to load: ' . $name);
         /**
          * Check for a match in the custom paths array
          * Essentially, if the class/interface starts with the match text, then
@@ -89,12 +88,13 @@ var_dump('attempting to load: ' . $name);
         } else {
             $path = self::getPathDefault($name);
         }
-        var_dump($path, $matched);
-        require_once $path;
+
+	/* @TODO this is seriously bad */
+        @require $path;
         
         // Check class/interface actually declared
         if (!class_exists($name) && !interface_exists($name)) {
-            throw new Exception\Basic("Class/interface $name not declared in $path.");
+		tuxxedo_doc_errorf('Class or interface \'%s\' must be declared in \'%s\'', $name, tuxxedo_trim_path(realpath($path)));
         }
     }
     
@@ -113,11 +113,7 @@ var_dump('attempting to load: ' . $name);
         $path = $matchInfo["path"] . str_replace($matchInfo["separator"], "/", $unmatched) . ".php";
         
         $fullPath = self::getFullPath($path);
-        
-        if (!$fullPath) {
-            throw new Exception\Basic("Could not find $name (assumed to be in $path) in the include path.");
-        }
-        
+    
         return $fullPath;
     }
     
@@ -127,10 +123,12 @@ var_dump('attempting to load: ' . $name);
      * checking in the PHP include path.
      */
     protected static function getPathDefault($name) {
+	$name = TUXXEDO_LIBRARY . '/' . $name . '.php';
+
         $fullPath = self::getFullPath($name);
         
-        if (!$fullPath) {
-		tuxxedo_doc_errorf('Unable to resolve \'%s\' (assumed to be located in: \'%s\')', $name, $fullpath);
+        if ($fullPath === false) {
+		tuxxedo_doc_errorf('Unable to resolve \'%s\'', $name);
         }
         
         return $fullPath;
@@ -141,7 +139,7 @@ var_dump('attempting to load: ' . $name);
      */
     protected static function getFullPath($path) {
         // Check if the path is already a full path
-        if (file_exists($path)) {
+        if (is_file($path)) {
             return $path;
         }
         

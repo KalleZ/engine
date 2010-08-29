@@ -25,7 +25,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	interface Tuxxedo_Database_Driver
+	interface Driver
 	{
 		/**
 		 * Returns if the current system supports the  driver, if this 

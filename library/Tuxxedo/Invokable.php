@@ -27,6 +27,7 @@
 	 */
 	namespace Tuxxedo;
 
+	use Tuxxedo\Registry;
 
 	/**
 	 * Interface for requring the registry to pass certain information 
@@ -43,13 +44,13 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	\Tuxxedo\Core\Registry			The registry object reference
+		 * @param	\Tuxxedo\Registry			The registry object reference
 		 * @param	array					The configuration array
 		 * @param	array					The options array
 		 * @return	object					Object instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	Only thrown on poorly a configured database section in the configuration file
+		 * @throws	\Tuxxedo\Exception\Basic	Only thrown on poorly a configured database section in the configuration file
 		 */
-		public static function invoke(Registry $registry, array $configuration array $options);
+		public static function invoke(Registry $registry, Array $configuration, Array $options);
 	}
 ?>

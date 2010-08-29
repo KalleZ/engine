@@ -129,12 +129,12 @@
 		 * like the example below:
 		 *
 		 * <code>
-		 * use \Tuxxedo\Core;
+		 * use Tuxxedo\Registry;
 		 *
-		 * $registry = Core\Registry::init();
+		 * $registry = Registry::init();
 		 * $registry->register('test', 'Classname');
  		 *
-		 * $test->Methodname(); // or $tuxxedo->test->Methodname();
+		 * $test->Methodname(); // or $registry->test->Methodname();
 		 * </code>
 		 *
 		 * @param	string					The name of this instance
@@ -145,9 +145,6 @@
 		 */
 		public function register($refname, $class)
 		{
-/* HACK HACK HACK */
-			$class = '\Tuxxedo\\' . $class;
-
 			if(isset($this->instances[$refname]))
 			{
 				return;
@@ -156,7 +153,7 @@
 			{
 				throw new Tuxxedo_Basic_Exception('Passed object class (%s) does not exists', $class);
 			}
-			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['\Tuxxedo\Core\Interfaces\Invokable']))
+			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['\Tuxxedo\Invokable']))
 			{
 				$instance = call_user_func(Array($class, 'invoke'), $this, $this->configuration);
 			}

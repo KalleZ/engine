@@ -14,6 +14,8 @@
 	 */
 
 
+	namespace Tuxxedo\Development;
+
 	/**
 	 * A recursive glob function
 	 *

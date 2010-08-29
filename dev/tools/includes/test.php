@@ -13,8 +13,7 @@
 	 * =============================================================================
 	 */
 
-    defined('TUXXEDO') or exit;
-
+	namespace Tuxxedo\Development;
 
     /**
      * Minor testing class, used for testing availability for 

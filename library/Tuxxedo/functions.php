@@ -71,7 +71,14 @@
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
-		if(!Registry::globals('error_reporting') || !(error_reporting() & $level))
+		static $registry;
+
+		if(!$registry)
+		{
+			$registry = class_exists('\Tuxxedo\Registry', false);
+		}
+
+		if($registry && !Registry::globals('error_reporting') || !(error_reporting() & $level))
 		{
 			return;
 		}
@@ -106,17 +113,24 @@
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
 
-		$errors = Registry::globals('errors');
-
-		if(!is_array($errors))
+		if($registry)
 		{
-			Registry::globals('errors', Array($message));
+			$errors = Registry::globals('errors');
+
+			if(!is_array($errors))
+			{
+				Registry::globals('errors', Array($message));
+			}
+			else
+			{
+				array_push($errors, $message);
+
+				Registry::globals('errors', $errors);
+			}
 		}
 		else
 		{
-			array_push($errors, $message);
-
-			Registry::globals('errors', $errors);
+			echo($message . '<br /> <br />');
 		}
 	}
 
@@ -224,7 +238,7 @@
 			}
 
 			echo(
-				'<strong>Engine Version:</strong> ' . Version::STRING . ' - ' . 
+				'<strong>Engine Version:</strong> ' . Version::SIMPLE . ' - ' . 
 				'<strong>Script:</strong> ' . realpath($_SERVER['SCRIPT_FILENAME']) . ' - ' . 
 				'<strong>Timestamp:</strong> ' . tuxxedo_date(NULL, 'H:i:s j/n - Y (e)') . PHP_EOL . 
 				'</div>' . PHP_EOL . 
