@@ -236,7 +236,7 @@
 		 */
 		protected static function symtable($symtable, $name, $value = NULL)
 		{
-			if($value != NULL)
+			if($value !== NULL)
 			{
 				self::$instance->{$symtable}[$name] = $value;
 			}
