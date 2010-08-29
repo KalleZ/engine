@@ -141,7 +141,7 @@
 		$exception	  = ($e instanceof \Exception);
 		$utf8	   = function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
-		$errors	= Registry::globals('errors');
+		$errors	= $registry && Registry::globals('errors');
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if($exception && $registry->db && $e instanceof Exception\SQL)
@@ -335,6 +335,25 @@
 			'</body>' . PHP_EOL . 
 			'</html>'
 			);
+	}
+
+	/**
+	 * Formattable doc error
+	 *
+	 * @param	string			The error message, in a printf-alike formatted string or just a normal string
+	 * @param	mixed			Optional argument #n for formatting
+	 * @return	Void			No value is returned
+	 */
+	function tuxxedo_doc_errorf()
+	{
+		$args = func_get_args();
+
+		if(!sizeof($args))
+		{
+			$args[0] = 'Unknown error';
+		}
+
+		tuxxedo_doc_error(call_user_func_array('sprintf', $args));
 	}
 
 	/**

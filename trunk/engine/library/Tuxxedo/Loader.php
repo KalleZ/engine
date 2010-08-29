@@ -55,6 +55,7 @@ class Loader
      * @throws  Tuxxedo_Loader_Exception
      */
     public static function load($name) {
+var_dump('attempting to load: ' . $name);
         /**
          * Check for a match in the custom paths array
          * Essentially, if the class/interface starts with the match text, then
@@ -81,14 +82,14 @@ class Loader
                 }
             }
         }
-        
+
         // Get the path for the class
         if ($matched) {
             $path = self::getPathMatched($name, $matched, self::$customPaths[$matched]);
         } else {
             $path = self::getPathDefault($name);
         }
-        
+        var_dump($path, $matched);
         require_once $path;
         
         // Check class/interface actually declared
@@ -126,12 +127,10 @@ class Loader
      * checking in the PHP include path.
      */
     protected static function getPathDefault($name) {
-        $path = str_replace(self::$separator, "/", $name) . ".php";
-        
-        $fullPath = self::getFullPath($path);
+        $fullPath = self::getFullPath($name);
         
         if (!$fullPath) {
-            throw new Exception\Basic("Could not find $name (assumed to be in $path) in the include path.");
+		tuxxedo_doc_errorf('Unable to resolve \'%s\' (assumed to be located in: \'%s\')', $name, $fullpath);
         }
         
         return $fullPath;
