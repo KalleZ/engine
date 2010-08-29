@@ -50,8 +50,6 @@
 	/**
 	 * Include functions we cannot autoload
 	 */
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception/Basic.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 
@@ -59,9 +57,9 @@
 	 * Set various handlers for errors, exceptions and 
 	 * shutdown
 	 */
-	set_error_handler('Tuxxedo\tuxxedo_error_handler');
-	set_exception_handler('Tuxxedo\tuxxedo_exception_handler');
-	register_shutdown_function('Tuxxedo\tuxxedo_shutdown_handler');
+//	set_error_handler('tuxxedo_error_handler');
+//	set_exception_handler('tuxxedo_exception_handler');
+//	register_shutdown_function('tuxxedo_shutdown_handler');
 	spl_autoload_register('Tuxxedo\Loader::load');
 
 	/**
@@ -114,19 +112,20 @@
 	 */
 	error_reporting(-1);
 
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
 	use Tuxxedo\User;
 
 	/**
 	 * Construct the main registry
 	 */
-	$tuxxedo = Tuxxedo\Registry::init($configuration);
+	$registry = Registry::init($configuration);
 
 	/**
 	 * Set globals
 	 */
-	Tuxxedo\Registry::globals('error_reporting', 	true);
-	Tuxxedo\Registry::globals('errors', 		Array());
+	Registry::globals('error_reporting', 	true);
+	Registry::globals('errors', 		Array());
 
 	/**
 	 * Set the UTC timestamp, we need this for things such as 
@@ -137,8 +136,8 @@
 	/**
 	 * Register the default instances
 	 */
-	$tuxxedo->load(Array('db', 'cache'), false);
-
+	$registry->register('db', '\Tuxxedo\Database');
+	$registry->register('cache', '\Tuxxedo\Datastore');
 	/**
 	 * Precache elements from datastore
 	 */
@@ -152,19 +151,19 @@
 	 * user session, note that the invoke method sets the 
 	 * cookie parameters and starts session itself here
 	 */
-	$tuxxedo->register('user', 'User\Registry');
+	$registry->register('user', 'Tuxxedo\User');
 
 	/**
 	 * Options and configuration references
 	 */
-	$tuxxedo->set('options', $datastore->options);
-	$tuxxedo->set('configuration', $configuration);
+	$registry->set('options', (object) $cache->options);
+	$registry->set('configuration', $configuration);
 
 	/**
 	 * User information references
 	 */
-	$tuxxedo->set('userinfo', $user->getUserInfo(NULL, NULL, Tuxxedo_User::OPT_CURRENT_ONLY));
-	$tuxxedo->set('usergroup', $user->getUserGroupInfo());
+	$registry->set('userinfo', $user->getUserInfo(NULL, NULL, \Tuxxedo\User::OPT_CURRENT_ONLY));
+	$registry->set('usergroup', $user->getUserGroupInfo());
 
 	/**
 	 * Date and Timezone references
@@ -176,8 +175,8 @@
 		date_default_timezone_set($tz);
 	}
 
-	$tuxxedo->set('timezone', new DateTimeZone($tz));
-	$tuxxedo->set('datetime', new DateTime('now', $timezone));
+	$registry->set('timezone', new DateTimeZone($tz));
+	$registry->set('datetime', new DateTime('now', $timezone));
 
 	unset($tz);
 
@@ -191,7 +190,8 @@
 	 * once the datastore elements are loaded and user sessions 
 	 * have been instanciated
 	 */
-	$tuxxedo->load(Array('style', 'intl'), false);
+	$registry->register('style', '\Tuxxedo\Style');
+	$registry->register('intl', '\Tuxxedo\Intl');
 
 	/**
 	 * Precache templates
@@ -233,7 +233,7 @@
 	/**
 	 * Get phrases
 	 */
-	$tuxxedo->set('phrase', $intl->getPhrases());
+	$registry->set('phrase', $intl->getPhrases());
 
 	/**
 	 * Header and footer templates for the main site

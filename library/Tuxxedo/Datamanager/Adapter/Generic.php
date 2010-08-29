@@ -14,6 +14,7 @@
 	 */
 	
 	namespace Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
 	
 	/**
@@ -76,3 +77,4 @@
 		 */
 		
 	}
+?>

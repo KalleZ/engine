@@ -37,3 +37,4 @@
 		 */
 		public function rebuild(Registry $registry, Array $virtual);
 	}
+?>

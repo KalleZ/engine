@@ -23,3 +23,4 @@
 	    abstract public function order(array $fields);
 	    abstract public function limit($count, $offset = null);
 	}
+?>

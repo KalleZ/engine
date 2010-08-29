@@ -14,7 +14,9 @@
 	 */
 
 	namespace Tuxxedo\Style;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Style;
 	
 	/**
 	 * Interface for template storage engines
@@ -47,7 +49,7 @@
 		 * @param	Tuxxedo_Style		Reference to the style object
 		 * @param	object			Object reference to the templates data table
 		 */
-		abstract protected function __construct(Registry $registry, Style $style, stdClass $templates);
+		abstract protected function __construct(Registry $registry, Style $style, \stdClass $templates);
 
 		/**
 		 * Caches a template, trying to cache an already loaded 
@@ -73,9 +75,9 @@
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception on invalid style storage engines
 		 */ 
-		final public static function factory(Registry $registry, Style $style, $engine, stdClass $templates)
+		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates)
 		{
-			$class = 'Style\Storage\\' . $engine;
+			$class = '\Tuxxedo\Style\Storage\\' . $engine;
 
 			if(!class_exists($class))
 			{
@@ -89,3 +91,4 @@
 			return(new $class($registry, $style, $templates));
 		}
 	}
+?>

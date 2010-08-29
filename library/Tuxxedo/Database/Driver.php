@@ -136,3 +136,4 @@
 		 */
 		public function query($sql);
 	}
+?>

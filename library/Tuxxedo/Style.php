@@ -35,7 +35,7 @@
 		 *
 		 * @var		Tuxxedo
 		 */
-		protected $tuxxedo;
+		protected $registry;
 
 		/**
 		 * Holds the current loaded templates
@@ -52,12 +52,12 @@
 		 */
 		public function __construct(Array $styleinfo)
 		{
-			global $tuxxedo;
+			global $registry;
 
-			$this->tuxxedo		= $tuxxedo;
+			$this->registry		= $registry;
 			$this->information 	= $styleinfo;
-			$this->templates	= new stdClass;
-			$this->storage		= Style\Storage::factory($tuxxedo, $this, $tuxxedo->options->style_storage, $this->templates);
+			$this->templates	= new \stdClass;
+			$this->storage		= Style\Storage::factory($registry, $this, $registry->options->style_storage, $this->templates);
 		}
 
 		/**
@@ -66,13 +66,13 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	array			The configuration array
-		 * @param	array			The options array
 		 * @return	object			Object instance
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if an invalid (or not cached) style id was used
 		 */
-		public static function invoke(Registry $registry, Array $configuration = NULL, Array $options = NULL)
+		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
+			$options	= $registry->cache->options;
 			$styledata 	= $registry->cache->styleinfo;
 			$styleid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->style_id !== NULL && $registry->userinfo->style_id != $options['style_id'] ? $registry->userinfo->style_id : $options['style_id']) : 0);
 
@@ -117,3 +117,4 @@
 			return($this->templates->{$template});
 		}
 	}
+?>

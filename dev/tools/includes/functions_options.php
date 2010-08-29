@@ -13,9 +13,6 @@
 	 * =============================================================================
 	 */
 
-
-	namespace Tuxxedo\Development;
-
 	/**
 	 * Returns a var_dump() a-like syntax for an option
 	 * and its datatype
@@ -141,5 +138,31 @@
 							`option` = \'%s\'', $tuxxedo->db->escape($option));
 
 		return($result && $tuxxedo->db->getAffectedRows($result));
+	}
+
+	/**
+	 * Converts a value to an option type
+	 *
+	 * @param	string			The one character option type: b, i etc.
+	 * @param	string			The value to convert
+	 * @return	string			Converts the value into the desired type, and string for unknown types
+	 */
+	function options_convert_type($type, $value)
+	{
+		switch($type)
+		{
+			case('b'):
+			{
+				return((boolean) $value);
+			}
+			break;
+			case('i'):
+			{
+				return((integer) $value);
+			}
+			break;
+		}
+
+		return((string) $value);
 	}
 ?>

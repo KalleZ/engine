@@ -24,7 +24,7 @@
      * @package             Engine
      * @subpackage          DevTools
      */
-    class Tuxxedo_Test
+    class Test
     {
         /**
          * Option constant - test is required
@@ -115,7 +115,7 @@
             }
             elseif($this->options & self::OPT_VERSION)
             {
-                    return(version_compare($this->argv[0], $this->argv[1], '>=') == 0);
+                    return(version_compare($this->argv[0], $this->argv[1], '>='));
             }
 
             return(false);

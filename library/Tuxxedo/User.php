@@ -112,8 +112,8 @@
 
 			if($session && $autodetect)
 			{
-				$this->session 		= $registry->register('session', 'Session');
-				$this->sessiondm	= Datamanager::factory('session', Session::$id, false);
+				$this->session 		= $registry->register('session', '\Tuxxedo\Session');
+				$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id, false);
 
 				if(($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 				{
@@ -124,8 +124,7 @@
 
 			if(!$this->userinfo)
 			{
-				$this->userinfo		= new stdClass;
-				$this->usergroupinfo	= new stdClass;
+				$this->userinfo = $this->usergroupinfo = new \stdClass;
 			}
 
 			$this->userinfo->session	= $this->session;
@@ -217,7 +216,7 @@
 				return;
 			}
 
-			$this->userinfo = $this->usergroupinfo = new stdClass;
+			$this->userinfo = $this->usergroupinfo = new \stdClass;
 
 			$this->sessiondm->delete();
 

@@ -14,7 +14,9 @@
 	 */
 
 	namespace Tuxxedo\Database\Driver;
-    use Tuxxedo\Exception;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
+	use Tuxxedo\Database\Driver\MySQLi;
 
 	/**
 	 * MySQL Improved driver for Tuxxedo Engine
@@ -87,7 +89,7 @@
 				return(true);
 			}
 
-			Tuxxedo::globals('error_reporting', false);
+			Registry::globals('error_reporting', false);
 
 			$hostname 		= $this->configuration['hostname'];
 			$this->persistent 	= false;
@@ -102,7 +104,7 @@
 			$link->options(MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
 			$link->real_connect($hostname, $this->configuration['username'], $this->configuration['password'], $this->configuration['database'], (($port = $this->configuration['port']) ? $port : 3306), (($unix_socket = $this->configuration['socket']) ? $unix_socket : ''), ($this->configuration['ssl'] ? MYSQLI_CLIENT_SSL : 0));
 
-			Tuxxedo::globals('error_reporting', true);
+			Registry::globals('error_reporting', true);
 
 			if($link->connect_errno)
 			{
@@ -156,7 +158,7 @@
 		 */
 		public function isLink($link)
 		{
-			return(is_object($link) && $link instanceof MySQLi);
+			return(is_object($link) && $link instanceof \MySQLi);
 		}
 
 		/**
@@ -178,7 +180,7 @@
 		 */
 		public function isResult($result)
 		{
-			return(is_object($result) && $result instanceof MySQLi_Result);
+			return(is_object($result) && $result instanceof \MySQLi_Result);
 		}
 
 		/**
@@ -303,9 +305,9 @@
 				$sql 		= call_user_func_array('sprintf', $args);
 			}
 
-			Tuxxedo::globals('error_reporting', false);
+			Registry::globals('error_reporting', false);
 			$query = $this->link->query($sql);
-			Tuxxedo::globals('error_reporting', true);
+			Registry::globals('error_reporting', true);
 
 			if($query === true)
 			{
@@ -317,7 +319,7 @@
 			{
 				$this->queries[] = $sql;
 
-				return(new MySQLi\Result($this, $query));
+				return(new \Tuxxedo\Database\Driver\MySQLi\Result($this, $query));
 			}
 			elseif($this->link->errno)
 			{
@@ -327,3 +329,4 @@
 			return(false);
 		}
 	}
+?>

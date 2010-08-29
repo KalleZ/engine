@@ -104,6 +104,8 @@
 		{
 			if($filter->post('progress'))
 			{
+				require('./includes/functions_options.php');
+
 				$result_list 	= '';
 				$corrupt_warn	= false;
 				$tables 	= Array(
@@ -146,7 +148,7 @@
 								{
 									case('options'):
 									{
-										$current[$s['option']] = convert_to_option_type(strtolower($s['type']{0}), $s['value']);
+										$current[$s['option']] = options_convert_type(strtolower($s['type']{0}), $s['value']);
 									}
 									break;
 									case('phrasegroups'):

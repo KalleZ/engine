@@ -20,3 +20,4 @@
 	    abstract public function __construct($tableName);
 	    abstract public function values(array $values);
 	}
+?>

@@ -101,7 +101,7 @@
 		{
 			$userlist = '';
 
-			$tuxxedo->set('user', new Tuxxedo_User(false, false));
+			$registry->set('user', new \Tuxxedo\User(false, false));
 
 			while($session = $sessions->fetchObject())
 			{

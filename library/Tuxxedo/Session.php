@@ -58,11 +58,12 @@
 		 *
 		 * @param	Tuxxedo			The Tuxxedo object reference
 		 * @param	array			The configuration array
-		 * @param	array			The options array
 		 * @return	object			Object instance
 		 */
-		public static function invoke(Registry $registry, Array $configuration = NULL, Array $options = NULL)
+		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
+			$options = $registry->cache->options;
+
 			self::$options = Array(
 						'expires'	=> $options['cookie_expires'], 
 						'prefix'	=> $options['cookie_prefix'], 
@@ -212,3 +213,4 @@
 			}
 		}
 	}
+?>

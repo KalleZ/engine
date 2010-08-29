@@ -19,6 +19,8 @@
 	 - Redesign bootstrap.php from the ground and up to make it easier to work on
 	 - Remove TUXXEDO constant check
 	 - Fix docblocks
+	 - Fix global constants to be prefixed with \
+	 - Rewrite the autoloader for better error handling, or atleast refactor it internally
 
 	Move query builder, generic dm and configuration parsers to its own playground branch so we can focus on Engine (Kalle)
 
@@ -38,6 +40,8 @@
 	Improve development tools
 	 - Add internationalization support
 	 - Add user support
+	 - Add documenetation generator (eliminate /dev/api/ stuff)
+	 - Integrate api_analyze.php
 
 	Add a generic pagination class with a default Engine database pagination driver
 
@@ -60,3 +64,4 @@
 
 	Change SQL queries to be non-mysql compatible
 	Change the API generators to be generic and with more output formats
+	Change the structure of the /dev/tools utilities structure to be autoloadable

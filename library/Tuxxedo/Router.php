@@ -108,3 +108,4 @@
 			return isset($this->params[$paramName]);
 		}
 	}
+?>

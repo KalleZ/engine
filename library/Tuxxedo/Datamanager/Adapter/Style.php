@@ -14,7 +14,9 @@
 	 */
 	
 	namespace Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Datamanager;
 	
 		/**
 	 * Datamanager for styles
@@ -113,3 +115,4 @@
 			return($this->registry->cache->rebuild('styleinfo', $datastore));
 		}
 	}
+?>

@@ -14,7 +14,9 @@
 	 */
 
 	namespace Tuxxedo\Style\Storage;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Style;
 	
 	/**
 	 * Style storage engine for file system based templates
@@ -23,7 +25,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class FileSystem extends \Tuxxedo\Style\Storage
+	class FileSystem extends Style\Storage
 	{
 		/**
 		 * Directory where the compiled templates are saved
@@ -40,7 +42,7 @@
 		 * @param	Tuxxedo_Style		Reference to the style object
 		 * @param	object			Object reference to the templates data table
 		 */
-		protected function __construct(Registry $registry, \Tuxxedo\Style $style, stdClass $templates)
+		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
 			$this->registry 		= $registry;
 			$this->templates	= $templates;
@@ -85,3 +87,4 @@
 			return(true);			
 		}
 	}
+?>

@@ -238,7 +238,7 @@
 				for($c = $expr_start, $bounds = strlen($src); $c < $bounds; ++$c)
 				{
 					if($src{$c} == $delimiter && $src{$c - 2} != '\\' && $src{$c + 1} == '>')
-					{
+*					{
 						$expr_end = ($delimiter == '"' ? $c - 1 : $c);
 
 						break;
@@ -424,3 +424,4 @@
 			return(stripos(ob_get_clean(), 'Parse error') === false);
 		}
 	}
+?>

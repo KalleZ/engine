@@ -52,3 +52,4 @@
 		 */
 		public function dispatcher($mode);
 	}
+?>

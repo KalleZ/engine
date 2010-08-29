@@ -14,7 +14,9 @@
 	 */
 	
 	namespace Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Datamanager;
 	
 	/**
 	 * Datamanager for users
@@ -233,3 +235,4 @@
 			return($registry->cache->languages && isset($registry->cache->languages[$languageid]));
 		}
 	}
+?>

@@ -13,8 +13,10 @@
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo\Database\Driver;
-    use Tuxxedo\Exception;
+	namespace Tuxxedo\Database\Driver;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
+	use Tuxxedo\Database\Driver\MySQL;
 
 	/**
 	 * MySQL driver for Tuxxedo
@@ -92,11 +94,11 @@
 				$hostname .= ':' . $port;
 			}
 
-			Tuxxedo::globals('error_reporting', false);
+			Registry::globals('error_reporting', false);
 
 			if(($link = $connect_function($hostname, $this->configuration['username'], $this->configuration['password'], false, ($this->configuration['ssl'] ? MYSQL_CLIENT_SSL : 0))) === false || !mysql_select_db($this->configuration['database'], $link))
 			{
-				Tuxxedo::globals('error_reporting', true);
+				Registry::globals('error_reporting', true);
 
 				$format = 'Database error: failed to connect database';
 
@@ -108,7 +110,7 @@
 				throw new Exception\Basic($format, mysql_errno(), mysql_error());
 			}
 
-			Tuxxedo::globals('error_reporting', true);
+			Registry::globals('error_reporting', true);
 
 			$this->link = $link;
 		}
@@ -294,9 +296,9 @@
 				$sql 		= call_user_func_array('sprintf', $args);
 			}
 
-			Tuxxedo::globals('error_reporting', false);
+			Registry::globals('error_reporting', false);
 			$query = mysql_query($sql);
-			Tuxxedo::globals('error_reporting', true);
+			Registry::globals('error_reporting', true);
 
 			if($query === true)
 			{
@@ -318,3 +320,4 @@
 			return(false);
 		}
 	}
+?>
