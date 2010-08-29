@@ -22,8 +22,6 @@
 	 - Fix global constants to be prefixed with \
 	 - Rewrite the autoloader for better error handling, or atleast refactor it internally
 
-	Move query builder, generic dm and configuration parsers to its own playground branch so we can focus on Engine (Kalle)
-
 
 	Tuxxedo Engine Future
 	----------------------
@@ -42,6 +40,7 @@
 	 - Add user support
 	 - Add documenetation generator (eliminate /dev/api/ stuff)
 	 - Integrate api_analyze.php
+	 - Implement installation generators
 
 	Add a generic pagination class with a default Engine database pagination driver
 
