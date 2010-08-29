@@ -13,8 +13,10 @@
 	 * =============================================================================
 	 */
 
-	defined('TUXXEDO') or exit;
 
+	namespace Tuxxedo\Development;
+
+	use Tuxxedo\Registry;
 
 	/**
 	 * Development Tools styling class, this class overrides the 
@@ -26,19 +28,19 @@
 	 * @package		Engine
 	 * @subpackage		DevTools
 	 */
-	class Tuxxedo_Dev_Style extends Tuxxedo_Style
+	class Style extends \Tuxxedo\Style
 	{
 		/**
 		 * Constructs a new style object
 		 */
 		public function __construct()
 		{
-			global $tuxxedo;
+			global $registry;
 
-			$this->tuxxedo		= $tuxxedo;
+			$this->registry		= $registry;
 			$this->information 	= Array();
 			$this->templates	= new stdClass;
-			$this->storage		= Tuxxedo_Style_Storage::factory($tuxxedo, $this, 'DevTools', $this->templates);
+			$this->storage		= \Tuxxedo\Style\Storage::factory($registry, $this, 'DevTools', $this->templates);
 		}
 
 
@@ -51,7 +53,7 @@
 		 * @param	array			The options array
 		 * @return	void			No value is returned
 		 */
-		public static function invoke(Tuxxedo $tuxxedo, Array $configuration = NULL, Array $options = NULL)
+		public static function invoke(Registry $registry, Array $configuration = NULL, Array $options = NULL)
 		{
 		}
 
@@ -85,7 +87,7 @@
 	 * @package		Engine
 	 * @subpackage		DevTools
 	 */
-	class Tuxxedo_Style_Storage_DevTools extends Tuxxedo_Style_Storage_Filesystem
+	class DevTools extends \Tuxxedo\Style\Storage\Filesystem
 	{
 		/**
 		 * Constructs a new storage engine
@@ -94,9 +96,9 @@
 		 * @param	Tuxxedo_Style		Reference to the style object
 		 * @param	object			Object reference to the templates data table
 		 */
-		protected function __construct(Tuxxedo $tuxxedo, Tuxxedo_Style $style, stdClass $templates)
+		protected function __construct(Registry $registry, \Tuxxedo\Style $style, stdClass $templates)
 		{
-			$this->tuxxedo 		= $tuxxedo;
+			$this->tuxxedo 		= $registry;
 			$this->templates	= $templates;
 			$this->path		= './style/templates/';
 		}

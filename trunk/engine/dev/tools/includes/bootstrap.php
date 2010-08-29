@@ -26,6 +26,8 @@
 	define('CWD', 		'../..');
 	define('TUXXEDO', 	1337);
 
+	use Tuxxedo\Development;
+
 	require(CWD . '/library/configuration.php');
 	require(CWD . '/library/Tuxxedo/Loader.php');
 	require(CWD . '/library/Tuxxedo/functions.php');
@@ -60,7 +62,9 @@
 
 	$registry = Tuxxedo\Registry::init($configuration);
 
-	$registry->load(Array('db', 'cache', 'filter'));
+	$registry->register('db', 'Database');
+	$registry->register('cache', 'Datastore');
+	$registry->register('filter', 'Filter');
 
 	$registry->set('timezone', new DateTimeZone('UTC'));
 	$registry->set('datetime', new DateTime('now', $timezone));

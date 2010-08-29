@@ -14,6 +14,8 @@
 	 */
 
 
+	namespace Tuxxedo\Development;
+
 	/**
 	 * Returns a var_dump() a-like syntax for an option
 	 * and its datatype
