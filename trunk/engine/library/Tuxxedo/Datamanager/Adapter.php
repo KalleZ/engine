@@ -97,9 +97,9 @@
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Tuxxedo
+		 * @var		\Tuxxedo\Registry
 		 */
-		protected $tuxxedo;
+		protected $registry;
 
 		/**
 		 * Datamanager name, set by the datamanager

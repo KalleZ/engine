@@ -112,7 +112,7 @@
 
 			if($identifier !== NULL)
 			{
-				$user = $tuxxedo->db->query('
+				$user = $registry->db->query('
 								SELECT 
 									* 
 								FROM 

@@ -99,9 +99,9 @@
 		 * @param	array			A virtually populated array from the datamanager abstraction
 		 * @return	boolean			Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Tuxxedo $tuxxedo, Array $virtual)
+		public function rebuild(Registry $registry, Array $virtual)
 		{
-			if(($datastore = $tuxxedo->cache->usergroups) === false)
+			if(($datastore = $registry->cache->usergroups) === false)
 			{
 				$datastore = Array();
 			}
@@ -120,7 +120,7 @@
 		 * @param	integer			The type to check
 		 * @return	boolean			Returns true if the type is valid, otherwise false
 		 */
-		public static function isValidType(Tuxxedo $tuxxedo, $type)
+		public static function isValidType(Registry $registry, $type)
 		{
 			return($type > 0 && $type < 4);
 		}
