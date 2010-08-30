@@ -30,7 +30,7 @@
 		if(!$includes)
 		{
 			$includes	= Array('require', 'require_once', 'include', 'include_once');
-			$callbacks	= Array('call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
+			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
 		}
 
 		$stack 	= Array();
@@ -40,6 +40,8 @@
 		{
 			$bt = array_merge($bt, $e->getTrace());
 		}
+
+		$bts = sizeof($bt);
 
 		foreach($bt as $n => $t)
 		{
@@ -115,6 +117,16 @@
 				$trace->notes 	= 'Called from main scope';
 			}
 
+			if($bts == 4)
+			{
+				if(empty($trace->call))
+				{
+					$trace->call = 'Main()';
+				}
+
+				$trace->notes 	= 'Called from main scope';
+			}
+
 			if(isset($t['line']))
 			{
 				$trace->line = $t['line'];
@@ -125,7 +137,7 @@
 				$trace->file = $t['file'];
 			}
 
-			if($n > 3 && !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
+			if(!isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
 			{
 				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Callback';
 			}

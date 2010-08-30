@@ -4,18 +4,14 @@
 	----------------------
 
 	Improve development tools (Kalle)
-	 - Add styles support
+	 - Add styles & Templates support
 	 - Re-implement old tools
 	   - Options
-	   - Templates
 
-	Redesign the tuxxedo_doc_error() output (Kalle)
 	Fix std exception error messages not respecting the $intl setting when an identifier is not found when loading (Kalle)
 
-
 	Namespaces (Kalle)
-	 - Fix loading, line feeds mixing, tabs vs spaces and all that happens to be very inconsistent in the engine
-	 - Fix Registry references and class references
+	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Redesign bootstrap.php from the ground and up to make it easier to work on
 	 - Remove TUXXEDO constant check
 	 - Fix docblocks
@@ -46,7 +42,6 @@
 
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
-	Implement the query builder classes
 	Implement session adapters with backends for APC etc.
 	Implement validators
 	Implement API accessors
