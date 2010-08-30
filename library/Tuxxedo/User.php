@@ -133,8 +133,8 @@
 			if($session)
 			{
 				$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
-				$this->sessiondm['location']		= $registry->db->escape(TUXXEDO_SELF);
-				$this->sessiondm['useragent']		= $registry->db->escape(TUXXEDO_USERAGENT);
+				$this->sessiondm['location']		= $registry->db->escape(\TUXXEDO_SELF);
+				$this->sessiondm['useragent']		= $registry->db->escape(\TUXXEDO_USERAGENT);
 			}
 		}
 
@@ -149,9 +149,9 @@
 
 				$this->registry->db->query('
 								DELETE FROM 
-									`' . TUXXEDO_PREFIX . 'sessions` 
+									`' . \TUXXEDO_PREFIX . 'sessions` 
 								WHERE 
-									`lastactivity` + %d < %d', $this->registry->options->cookie_expires, TIMENOW_UTC);
+									`lastactivity` + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
 			}
 		}
 
@@ -273,16 +273,16 @@
 			{
 				$query = $this->registry->db->query('
 									SELECT
-										' . TUXXEDO_PREFIX . 'sessions.*, 
-										' . TUXXEDO_PREFIX . 'users.*
+										' . \TUXXEDO_PREFIX . 'sessions.*, 
+										' . \TUXXEDO_PREFIX . 'users.*
 									FROM
-										`' . TUXXEDO_PREFIX . 'sessions` 
+										`' . \TUXXEDO_PREFIX . 'sessions` 
 									LEFT JOIN
-										`' . TUXXEDO_PREFIX . 'users` 
+										`' . \TUXXEDO_PREFIX . 'users` 
 										ON 
-											' . TUXXEDO_PREFIX . 'sessions.userid = ' . TUXXEDO_PREFIX . 'users.id 
+											' . \TUXXEDO_PREFIX . 'sessions.userid = ' . \TUXXEDO_PREFIX . 'users.id 
 										WHERE 
-											' . TUXXEDO_PREFIX . 'users.%s = \'%s\' 
+											' . \TUXXEDO_PREFIX . 'users.%s = \'%s\' 
 									LIMIT 1', $this->registry->db->escape($identifier_field), $this->registry->db->escape($identifier));
 			}
 			else
@@ -291,7 +291,7 @@
 									SELECT 
 										* 
 									FROM 
-										`' . TUXXEDO_PREFIX . 'users` 
+										`' . \TUXXEDO_PREFIX . 'users` 
 									WHERE 
 										`%s` = \'%s\'
 									LIMIT 1', $this->registry->db->escape($identifier_field), $this->registry->db->escape($identifier));
@@ -450,14 +450,14 @@
 			if(!$salt_range)
 			{
 				$salt_range 	= 'AbcdEfghIjklmnOpqrstUvwxYz0123456789|()[]{}!?=%&-_';
-				$salt_range_len	= strlen($salt_range);
+				$salt_range_len	= \strlen($salt_range);
 			}
 
 			$salt = '';
 
 			for($char = 0; $char < $length; ++$char)
 			{
-				$salt .= $salt_range{mt_rand(0, $salt_range_len)};
+				$salt .= $salt_range{\mt_rand(0, $salt_range_len)};
 			}
 
 			return($salt);

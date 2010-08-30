@@ -36,7 +36,7 @@
 		 */
 		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
-			$this->registry 		= $registry;
+			$this->registry 	= $registry;
 			$this->templates	= $templates;
 		}
 
@@ -53,7 +53,7 @@
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
-			if(!sizeof($templates))
+			if(!\sizeof($templates))
 			{
 				return(false);
 			}
@@ -63,14 +63,14 @@
 									`title`, 
 									`compiledsource` 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'templates` 
+									`' . \TUXXEDO_PREFIX . 'templates` 
 								WHERE 
 										`styleid` = %d 
 									AND 
 										`title` IN (
 											\'%s\'
 										);', 
-								$this->tuxxedo->style['id'], join('\', \'', array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
+								$this->tuxxedo->style['id'], \join('\', \'', \array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
 
 			if($result === false || !$result->getNumRows())
 			{

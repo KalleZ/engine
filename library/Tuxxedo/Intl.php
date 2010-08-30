@@ -92,7 +92,7 @@
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{
-			if(!sizeof($phrasegroups) || !sizeof($phrasegroups = array_filter($phrasegroups, Array($this, 'filter'))))
+			if(!\sizeof($phrasegroups) || !\sizeof($phrasegroups = \array_filter($phrasegroups, Array($this, 'filter'))))
 			{
 				return(false);
 			}
@@ -103,14 +103,14 @@
 									`translation`, 
 									`phrasegroup`
 								FROM 
-									`' . TUXXEDO_PREFIX . 'phrases` 
+									`' . \TUXXEDO_PREFIX . 'phrases` 
 								WHERE 
 										`languageid` = %d 
 									AND 
 										`phrasegroup` IN (
 											\'%s\'
 										);', 
-								$this['id'], join('\', \'', array_map(Array($this->registry->db, 'escape'), $phrasegroups)));
+								$this['id'], join('\', \'', \array_map(Array($this->registry->db, 'escape'), $phrasegroups)));
 
 			if($result && !$result->getNumRows())
 			{
@@ -168,12 +168,12 @@
 		 */
 		public function getPhrasegroups()
 		{
-			if(!sizeof($this->phrases))
+			if(!\sizeof($this->phrases))
 			{
 				return(false);
 			}
 
-			return(array_keys($this->phrases));
+			return(\array_keys($this->phrases));
 		}
 
 		/**
@@ -192,7 +192,7 @@
 					return(false);
 				}
 
-				$search = array_search($this->phrases[$phrasegroup], $phrase);
+				$search = \array_search($this->phrases[$phrasegroup], $phrase);
 
 				if($search === false)
 				{
@@ -204,7 +204,7 @@
 
 			foreach($this->phrases as $phrasegroup => $phrases)
 			{
-				if(($search = array_search($phrases, $phrase)) !== false)
+				if(($search = \array_search($phrases, $phrase)) !== false)
 				{
 					return($phrases[$search]);
 				}
@@ -223,10 +223,12 @@
 		 */
 		public function format()
 		{
-			$args = func_get_args();
-			$size = sizeof($args);
+			$args = \func_get_args();
+			$size = \sizeof($args);
 
-			if(!$size)
+			$args[0] = $this->find($args[0]);
+
+			if(!$args[0] || !$size)
 			{
 				return('');
 			}
@@ -237,7 +239,7 @@
 
 			for($i = 0; $i < $size; ++$i)
 			{
-				$args[0] = str_replace('{' . ($i + 1) . '}', $args[$i], $args[0]);
+				$args[0] = \str_replace('{' . ($i + 1) . '}', $args[$i], $args[0]);
 			}
 
 			return($args[0]);
@@ -255,11 +257,11 @@
 		{
 			$phrases = Array();
 
-			if(sizeof($this->phrases))
+			if(\sizeof($this->phrases))
 			{
 				foreach($this->phrases as $group => $group_phrases)
 				{
-					$phrases = array_merge($phrases, $group_phrases);
+					$phrases = \array_merge($phrases, $group_phrases);
 				}
 			}
 

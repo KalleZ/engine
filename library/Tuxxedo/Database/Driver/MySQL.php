@@ -59,7 +59,7 @@
 
 		public function isDriverSupported()
 		{
-			return(extension_loaded('mysql'));
+			return(\extension_loaded('mysql'));
 		}
 
 		/**
@@ -83,10 +83,10 @@
 				return(true);
 			}
 
-			ini_set('mysql.connect_timeout', (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
+			\ini_set('mysql.connect_timeout', (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
 
 			$port			= $this->configuration['port'];
-			$connect_function 	= ($this->configuration['persistent'] ? 'mysql_pconnect' : 'mysql_connect');
+			$connect_function 	= ($this->configuration['persistent'] ? '\mysql_pconnect' : '\mysql_connect');
 			$hostname		= (($socket = $this->configuration['socket']) ? $this->configuration['hostname'] . ':' . $socket : $this->configuration['hostname']);
 
 			if(empty($socket) && $port)
@@ -102,7 +102,7 @@
 
 				$format = 'Database error: failed to connect database';
 
-				if(TUXXEDO_DEBUG)
+				if(\TUXXEDO_DEBUG)
 				{
 					$format = 'Database error: [%d] %s';
 				}
@@ -122,9 +122,9 @@
 		 */
 		public function close()
 		{
-			if(is_resource($this->link))
+			if(\is_resource($this->link))
 			{
-				$retval 	= (boolean) mysql_close($this->link);
+				$retval 	= (boolean) \mysql_close($this->link);
 				$this->link 	= NULL;
 
 				return($retval);
@@ -140,7 +140,7 @@
 		 */
 		public function isConnected()
 		{
-			return(is_resource($this->link));
+			return(\is_resource($this->link));
 		}
 
 		/**
@@ -152,7 +152,7 @@
 		 */
 		public function isLink($link)
 		{
-			return(is_resource($link) && get_resource_type($link) == 'mysql link');
+			return(\is_resource($link) && \get_resource_type($link) == 'mysql link');
 		}
 
 		/**
@@ -174,7 +174,7 @@
 		 */
 		public function isResult($result)
 		{
-			return(is_resource($result) && get_resource_type($result) == 'mysql result');
+			return(\is_resource($result) && \get_resource_type($result) == 'mysql result');
 		}
 
 		/**
@@ -185,12 +185,12 @@
 		 */
 		public function getError()
 		{
-			if(!is_resource($this->link))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return(mysql_error($this->link));
+			return(\mysql_error($this->link));
 		}
 
 		/**
@@ -200,12 +200,12 @@
 		 */
 		public function getErrno()
 		{
-			if(!is_resource($this->link))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return(mysql_errno($this->link));
+			return(\mysql_errno($this->link));
 		}
 
 		/**
@@ -215,12 +215,12 @@
 		 */
 		public function getInsertId()
 		{
-			if(!is_resource($this->link))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return(mysql_insert_id($this->link));
+			return(\mysql_insert_id($this->link));
 		}
 
 		/**
@@ -232,12 +232,12 @@
 		 */
 		public function getAffectedRows($result)
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
 
-			return((integer) mysql_affected_rows($this->link));
+			return((integer) \mysql_affected_rows($this->link));
 		}
 
 		/**
@@ -256,12 +256,12 @@
 				$this->connect();
 			}
 
-			if(!is_resource($this->link))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return(mysql_real_escape_string((string) $data, $this->link));
+			return(\mysql_real_escape_string((string) $data, $this->link));
 		}
 
 		/**
@@ -285,19 +285,19 @@
 				$this->connect();
 			}
 
-			if(empty($sql) || !is_resource($this->link))
+			if(empty($sql) || !\is_resource($this->link))
 			{
 				return(false);
 			}
-			elseif(func_num_args() > 1)
+			elseif(\func_num_args() > 1)
 			{
-				$args 		= func_get_args();
+				$args 		= \func_get_args();
 				$args[0]	= $sql;
-				$sql 		= call_user_func_array('sprintf', $args);
+				$sql 		= \call_user_func_array('\sprintf', $args);
 			}
 
 			Registry::globals('error_reporting', false);
-			$query = mysql_query($sql);
+			$query = \mysql_query($sql);
 			Registry::globals('error_reporting', true);
 
 			if($query === true)
@@ -306,15 +306,15 @@
 
 				return(true);
 			}
-			elseif(is_resource($query))
+			elseif(\is_resource($query))
 			{
 				$this->queries[] = $sql;
 
 				return(new MySQL\Result($this, $query));
 			}
-			elseif(!is_resource($query) && mysql_errno($this->link))
+			elseif(!\is_resource($query) && \mysql_errno($this->link))
 			{
-				throw new Exception\SQL($sql, mysql_error($this->link), mysql_errno($this->link));
+				throw new Exception\SQL($sql, \mysql_error($this->link), \mysql_errno($this->link));
 			}
 
 			return(false);

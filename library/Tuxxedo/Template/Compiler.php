@@ -106,7 +106,7 @@
 		 */
 		public function allowFunction($function)
 		{
-			if(!function_exists($function) || in_array($function, $this->functions))
+			if(!\function_exists($function) || \in_array($function, $this->functions))
 			{
 				return(false);
 			}
@@ -124,7 +124,7 @@
 		 */
 		public function allowClass($class)
 		{
-			if(in_array($class, $this->classes))
+			if(\in_array($class, $this->classes))
 			{
 				return(false);
 			}
@@ -197,11 +197,11 @@
 					'else_bytes'		=> -1
 					);
 
-			$src = str_replace('"', '\\"', $src);
+			$src = \str_replace('"', '\\"', $src);
 
 			while(1)
 			{
-				$ptr['if_open'] = stripos($src, $tokens['if_start'], $ptr['if_close'] + 1);
+				$ptr['if_open'] = \stripos($src, $tokens['if_start'], $ptr['if_close'] + 1);
 
 				if($ptr['if_open'] === false)
 				{
@@ -210,7 +210,7 @@
 
 				++$this->conditions;
 
-				$expr_start 		= $ptr['if_open'] + strlen($tokens['if_start']) + 1;
+				$expr_start 		= $ptr['if_open'] + \strlen($tokens['if_start']) + 1;
 				$delimiter 		= $src{$expr_start - 1};
 				$ptr['else_bytes']	= 2;
 
@@ -226,7 +226,7 @@
 					throw new Exception\TemplateCompiler('Invalid expression delimiter, must be either \' or "', $this->conditions);
 				}
 
-				$ptr['if_close'] = stripos($src, $tokens['if_end'], $expr_start + 3);
+				$ptr['if_close'] = \stripos($src, $tokens['if_end'], $expr_start + 3);
 
 				if($ptr['if_close'] === false)
 				{
@@ -235,7 +235,7 @@
 
 				$expr_end = -1;
 
-				for($c = $expr_start, $bounds = strlen($src); $c < $bounds; ++$c)
+				for($c = $expr_start, $bounds = \strlen($src); $c < $bounds; ++$c)
 				{
 					if($src{$c} == $delimiter && $src{$c - 2} != '\\' && $src{$c + 1} == '>')
 *					{
@@ -250,23 +250,23 @@
 					throw new Exception\TemplateCompiler('No end of expression found or malformed expression', $this->conditions);
 				}
 
-				$expr_value = substr($src, $expr_start, $expr_end - $expr_start);
+				$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
 
 				if(empty($expr_value) && $expr_value != 0)
 				{
 					throw new Exception\TemplateCompiler('Expressions may not be empty', $this->conditions);
 				}
-				elseif(strpos($expr_value, '`') !== false)
+				elseif(\strpos($expr_value, '`') !== false)
 				{
 					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->conditions);
 				}
-				elseif(preg_match_all('#([a-z0-9_{}$>-]+)(\s|/\*.*\*/|(\#|//)[^\r\n]*(\r|\n))*\(#si', $expr_value, $matches))
+				elseif(\preg_match_all('#([a-z0-9_{}$>-]+)(\s|/\*.*\*/|(\#|//)[^\r\n]*(\r|\n))*\(#si', $expr_value, $matches))
 				{
 					foreach($matches[1] as $function)
 					{
-						$function = strtolower(stripslashes($function));
+						$function = \strtolower(\stripslashes($function));
 
-						if(in_array($function, $this->functions) || $function{0} == '$' && ($pos = strpos($function, '->')) !== false && in_array(substr($function, 1, $pos - 1), $this->classes))
+						if(\in_array($function, $this->functions) || $function{0} == '$' && ($pos = \strpos($function, '->')) !== false && \in_array(\substr($function, 1, $pos - 1), $this->classes))
 						{
 							continue;
 						}
@@ -279,14 +279,14 @@
 
 				while(1)
 				{
-					$ptr['recursive_if'] = stripos($src, $tokens['if_start'], $ptr['recursive_if'] + 1);
+					$ptr['recursive_if'] = \stripos($src, $tokens['if_start'], $ptr['recursive_if'] + 1);
 
 					if($ptr['recursive_if'] === false || $ptr['recursive_if'] >= $ptr['if_close'])
 					{
 						break;
 					}
 
-					$ptr['if_close'] = stripos($src, $tokens['if_end'], $ptr['if_close'] + 1);
+					$ptr['if_close'] = \stripos($src, $tokens['if_end'], $ptr['if_close'] + 1);
 
 					if($ptr['if_close'] === false)
 					{
@@ -294,7 +294,7 @@
 					}
 				}
 
-				$ptr['else'] = stripos($src, $tokens['else'], $expr_end + $ptr['else_bytes']);
+				$ptr['else'] = \stripos($src, $tokens['else'], $expr_end + $ptr['else_bytes']);
 
 				while(1)
 				{
@@ -305,33 +305,33 @@
 						break;
 					}
 
-					$body = substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end + $ptr['else_bytes']);
+					$body = \substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end + $ptr['else_bytes']);
 
-					if(substr_count($body, $tokens['if_start']) == substr_count($body, $tokens['if_end']))
+					if(\substr_count($body, $tokens['if_start']) == \substr_count($body, $tokens['if_end']))
 					{
 						break;
 					}
 
-					$ptr['else'] = stripos($src, $tokens['else'], $ptr['else'] + 1);
+					$ptr['else'] = \stripos($src, $tokens['else'], $ptr['else'] + 1);
 				}
 
 				$true = $false = '';
 
 				if($ptr['else'] == -1)
 				{
-					$true = substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - strlen($tokens['if_end']) - $expr_end + 2);
+					$true = \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - \strlen($tokens['if_end']) - $expr_end + 2);
 				}
 				else
 				{
-					$true 	= substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end - $ptr['else_bytes']);
-					$false	= substr($src, $ptr['else'] + strlen($tokens['else']), $ptr['if_close'] - strlen($tokens['if_end']) - $ptr['else'] - $ptr['else_bytes']);
+					$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end - $ptr['else_bytes']);
+					$false	= \substr($src, $ptr['else'] + \strlen($tokens['else']), $ptr['if_close'] - \strlen($tokens['if_end']) - $ptr['else'] - $ptr['else_bytes']);
 				}
 
 				$template = new self($this->conditions);
 
-				if(stripos($true, $tokens['if_start']))
+				if(\stripos($true, $tokens['if_start']))
 				{
-					$template->set(str_replace('\\"', '"', $true));
+					$template->set(\str_replace('\\"', '"', $true));
 					$template->compile();
 
 					$true = $template->get();
@@ -339,7 +339,7 @@
 
 				if(stripos($false, $tokens['if_start']))
 				{
-					$template->set(str_replace('\\"', '"', $false));
+					$template->set(\str_replace('\\"', '"', $false));
 					$template->compile();
 
 					$false = $template->get();
@@ -347,21 +347,21 @@
 
 				$template 		= NULL;
 				$expression 		= '" . ((' . $expr_value . ') ? ("' . $true . '") : ' . ($false ? '("' . $false . '")' : '\'\'') . ') . "';
-				$src 			= substr_replace($src, $expression, $ptr['if_open'], $ptr['if_close'] + strlen($tokens['if_end']) - $ptr['if_open']);
-				$ptr['if_close'] 	= $ptr['if_open'] + strlen($expression) - 1;
+				$src 			= \substr_replace($src, $expression, $ptr['if_open'], $ptr['if_close'] + \strlen($tokens['if_end']) - $ptr['if_open']);
+				$ptr['if_close'] 	= $ptr['if_open'] + \strlen($expression) - 1;
 			}
 
 			foreach(Array('\t', '\r', '\n', '\x', '\0', '\\\\', '\\\'', '\v') as $s)
 			{
 				$ptr = $pos = 0;
 
-				while(($pos = strpos($src, $s, $pos + $ptr)) !== false)
+				while(($pos = \strpos($src, $s, $pos + $ptr)) !== false)
 				{
 					if($s == '\x' || $s == '\0')
 					{
-						if(!is_numeric($src{$pos + 1}))
+						if(!\is_numeric($src{$pos + 1}))
 						{
-							$src = str_replace($s, '" . (\'' . $s . '\') . "', $src);
+							$src = \str_replace($s, '" . (\'' . $s . '\') . "', $src);
 							$ptr += 14;
 						}
 						else
@@ -373,15 +373,15 @@
 								$s .= $src{$pos + $x};
 								++$x;
 							}
-							while(isset($src{$pos + $x}) && is_numeric($src{$pos + $x}));
+							while(isset($src{$pos + $x}) && \is_numeric($src{$pos + $x}));
 
-							$src = str_replace($s, '" . (\'' . $s . '\') . "', $src);
-							$ptr += (12 + strlen($s));
+							$src = \str_replace($s, '" . (\'' . $s . '\') . "', $src);
+							$ptr += (12 + \strlen($s));
 						}
 					}
 					else
 					{
-						$src = str_replace($s, '" . (\'' . $s . '\') . "', $src);
+						$src = \str_replace($s, '" . (\'' . $s . '\') . "', $src);
 						$ptr += 14;
 					}
 				}
@@ -403,9 +403,9 @@
 				return;
 			}
 
-			$er = error_reporting(error_reporting() & ~E_NOTICE);
+			$er = \error_reporting(\error_reporting() & ~E_NOTICE);
 
-			if(sizeof($this->classes))
+			if(\sizeof($this->classes))
 			{
 				foreach($this->classes as $name)
 				{
@@ -416,12 +416,12 @@
 				}
 			}
 
-			ob_start();
+			\ob_start();
 			eval('$test = "' . $this->compiled_source . '";');
 
-			error_reporting($er);
+			\error_reporting($er);
 
-			return(stripos(ob_get_clean(), 'Parse error') === false);
+			return(\stripos(\ob_get_clean(), 'Parse error') === false);
 		}
 	}
 ?>

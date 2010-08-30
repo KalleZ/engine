@@ -50,14 +50,14 @@
 		 *
 		 * @var		array
 		 */
-		protected $queries			= array();
+		protected $queries			= Array();
 
 		/**
 		 * Database specific configuration array
 		 *
 		 * @var		array
 		 */
-		protected $configuration		= array();
+		protected $configuration		= Array();
 
 		/**
 		 * List of shutdown queries that will be executed 
@@ -65,7 +65,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $shutdown_queries		= array();
+		protected $shutdown_queries		= Array();
 
 		/**
 		 * List of loaded drivers used for caching in the 
@@ -74,7 +74,7 @@
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_drivers 	= array();
+		protected static $loaded_drivers 	= Array();
 
 
 		/**
@@ -84,9 +84,9 @@
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	If the database connection fails, a basic exception will be thrown
 		 */
-		public function __construct(array $configuration)
+		public function __construct(Array $configuration)
 		{
-			if(get_class($this) == __CLASS__)
+			if(\get_class($this) == __CLASS__)
 			{
 				throw new Exception\Basic('Cannot call base constructor directly from a non-initalized instance');
 			}
@@ -112,7 +112,7 @@
 		 */
 		public function __destruct()
 		{
-			if(!$this->isConnected() || !sizeof($this->shutdown_queries))
+			if(!$this->isConnected() || !\sizeof($this->shutdown_queries))
 			{
 				return;
 			}
@@ -125,7 +125,7 @@
 				}
 				catch(Exception\SQL $e)
 				{
-					tuxxedo_doc_error($e);
+					\tuxxedo_doc_error($e);
 				}
 			}
 		}
@@ -159,7 +159,7 @@
 		 *
 		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if loading of a driver should fail for some reason
 		 */
-		final public static function factory($driver, array $configuration)
+		final public static function factory($driver, Array $configuration)
 		{
 			if(in_array($driver, self::$loaded_drivers))
 			{
@@ -169,7 +169,7 @@
 			$class 		= '\Tuxxedo\Database\Driver\\' . $driver;
 			$instance 	= new $class($configuration);
 
-			if(!is_subclass_of($class, __CLASS__))
+			if(!\is_subclass_of($class, __CLASS__))
 			{
 				throw new Exception\Basic('Corrupt database driver, driver class does not follow the driver specification');
 			}
@@ -187,11 +187,11 @@
 		 */
 		public function setShutdownQuery($sql)
 		{
-			if(func_num_args() > 1)
+			if(\func_num_args() > 1)
 			{
-				$args 		= func_get_args();
+				$args 		= \func_get_args();
 				$args[0]	= $sql;
-				$sql 		= call_user_func_array('sprintf', $args);
+				$sql 		= \call_user_func_array('\sprintf', $args);
 			}
 
 			$this->shutdown_queries[] = (string) $sql;
@@ -204,7 +204,7 @@
 		 */
 		final public function getNumQueries()
 		{
-			return(sizeof($this->queries));
+			return(\sizeof($this->queries));
 		}
 
 		/**

@@ -211,7 +211,7 @@
 				}
 			}
 
-			if(in_array($datamanager, self::$loaded_datamanagers))
+			if(\in_array($datamanager, self::$loaded_datamanagers))
 			{
 				return(new $class($registry, $identifier));
 			}
@@ -219,7 +219,7 @@
 			$class	= '\Tuxxedo\Datamanager\Adapter\\' . $datamanager;
 			$dm 	= new $class($registry, $identifier);
 
-			if(!is_subclass_of($class, __CLASS__))
+			if(!\is_subclass_of($class, __CLASS__))
 			{
 				throw new Exception\Basic('Corrupt datamanager driver, driver class does not follow the driver specification');
 			}
@@ -271,7 +271,7 @@
 		{
 			$this->invalid_fields = Array();
 
-			if(!sizeof($this->userdata))
+			if(!\sizeof($this->userdata))
 			{
 				$this->revalidate = false;
 
@@ -310,15 +310,15 @@
 						{
 							$this->data[$field] = $properties['default'];
 						}
-						elseif(isset($properties['callback']) && is_callable($properties['callback']))
+						elseif(isset($properties['callback']) && \is_callable($properties['callback']))
 						{
 							if(isset($properties['parameters']))
 							{
-								$this->data[$field] = call_user_func_array($properties['callback'], array_merge(Array($this->registry), $properties['parameters']));
+								$this->data[$field] = \call_user_func_array($properties['callback'], array_merge(Array($this->registry), $properties['parameters']));
 							}
 							else
 							{
-								$this->data[$field] = call_user_func($properties['callback'], $this->registry);
+								$this->data[$field] = \call_user_func($properties['callback'], $this->registry);
 							}
 						}
 
@@ -346,6 +346,7 @@
 					if(($filtered = $filter->user($this->userdata[$field], $properties['validation'])) === NULL)
 					{
 						$this->invalid_fields[] = $field;
+
 						unset($this->userdata[$field]);
 
 						continue;
@@ -355,7 +356,7 @@
 				}
 			}
 
-			if(!sizeof($this->invalid_fields))
+			if(!\sizeof($this->invalid_fields))
 			{
 				$this->revalidate = false;
 
@@ -414,16 +415,16 @@
 
 			$values			= '';
 			$sql 			= 'REPLACE INTO `' . $this->tablename . '` (';
-			$virtual		= array_merge($this->data, $this->userdata);
-			$virtual		= ($this->identifier !== NULL ? array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
-			$n 			= sizeof($virtual);
+			$virtual		= \array_merge($this->data, $this->userdata);
+			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
+			$n 			= \sizeof($virtual);
 			$this->revalidate 	= true;
 
 			foreach($virtual as $field => $data)
 			{
 				if(isset($this->fields[$field]['validation']) && $this->fields[$field]['validation'] & self::VALIDATE_OPT_ESCAPEHTML)
 				{
-					$data = htmlspecialchars($data, ENT_QUOTES);
+					$data = \htmlspecialchars($data, ENT_QUOTES);
 				}
 
 				$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');

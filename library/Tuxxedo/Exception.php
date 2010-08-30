@@ -33,14 +33,14 @@
 		 */
 		public function __construct()
 		{
-			$args = func_get_args();
+			$args = \func_get_args();
 
-			if(!sizeof($args))
+			if(!\sizeof($args))
 			{
 				$args[0] = 'Unknown error';
 			}
 
-			parent::__construct(call_user_func_array('sprintf', $args));
+			parent::__construct(\call_user_func_array('\sprintf', $args));
 		}
 	}
 ?>

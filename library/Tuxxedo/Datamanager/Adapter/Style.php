@@ -67,10 +67,10 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 		= $registry;
+			$this->registry 	= $registry;
 
 			$this->dmname		= 'style';
-			$this->tablename	= TUXXEDO_PREFIX . 'styles';
+			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
 			$this->idname		= 'id';
 			$this->information	= &$this->userdata;
 
@@ -80,7 +80,7 @@
 								SELECT 
 									* 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'styles` 
+									`' . \TUXXEDO_PREFIX . 'styles` 
 								WHERE 
 									`id` = %d
 								LIMIT 1', $identifier);

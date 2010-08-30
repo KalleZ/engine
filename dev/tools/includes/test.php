@@ -111,11 +111,11 @@
         {
             if($this->options & self::OPT_EXTENSION)
             {
-                    return(extension_loaded($this->argv[0]));
+                    return(\extension_loaded($this->argv[0]));
             }
             elseif($this->options & self::OPT_VERSION)
             {
-                    return(version_compare($this->argv[0], $this->argv[1], '>='));
+                    return(\version_compare($this->argv[0], $this->argv[1], '>='));
             }
 
             return(false);

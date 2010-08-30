@@ -103,26 +103,26 @@
 		{
 			if($data === NULL)
 			{
-				$sql = sprintf('
-						DELETE FROM 
-							`' . TUXXEDO_PREFIX . 'datastore` 
-						WHERE 
-							`name` = \'%s\';', $this->registry->db->escape($name));
+				$sql = \sprintf('
+							DELETE FROM 
+								`' . \TUXXEDO_PREFIX . 'datastore` 
+							WHERE 
+								`name` = \'%s\';', $this->registry->db->escape($name));
 			}
 			else
 			{
-				$sql = sprintf('
-						REPLACE INTO 
-							`' . TUXXEDO_PREFIX . 'datastore` 
-							(
-								`name`, 
-								`data`
-							) 
-						VALUES 
-							(
+				$sql = \sprintf('
+							REPLACE INTO 
+								`' . \TUXXEDO_PREFIX . 'datastore` 
+								(
+									`name`, 
+									`data`
+								) 
+							VALUES 
+								(
 								\'%s\', 
-								\'%s\'
-							);', $this->registry->db->escape($name), $this->registry->db->escape(serialize($data)));
+									\'%s\'
+								);', $this->registry->db->escape($name), $this->registry->db->escape(\serialize($data)));
 			}
 
 			if($delay)
@@ -161,7 +161,7 @@
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
-			if(!sizeof($elements))
+			if(!\sizeof($elements))
 			{
 				return(false);
 			}
@@ -171,13 +171,13 @@
 									`name`, 
 									`data` 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'datastore` 
+									`' . \TUXXEDO_PREFIX . 'datastore` 
 								WHERE 
 									`name` 
 									IN
 									(
 										\'%s\'
-									);', join('\', \'', array_map(Array($this->registry->db, 'escape'), $elements)));
+									);', join('\', \'', \array_map(Array($this->registry->db, 'escape'), $elements)));
 
 			if($result === false)
 			{
@@ -193,7 +193,7 @@
 
 			while($row = $result->fetchAssoc())
 			{
-				$row['data'] = @unserialize($row['data']);
+				$row['data'] = @\unserialize($row['data']);
 
 				if($row['data'] !== false)
 				{
@@ -204,9 +204,9 @@
 
 			if($error_buffer !== NULL)
 			{
-				$diff = array_diff($elements, $loaded);
+				$diff = \array_diff($elements, $loaded);
 
-				if(sizeof($diff))
+				if(\sizeof($diff))
 				{
 					$error_buffer = $diff;
 				}

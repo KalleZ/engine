@@ -69,7 +69,7 @@
 		 */
 		public function free()
 		{
-			if(is_object($this->result))
+			if(\is_object($this->result))
 			{
 				$this->result = NULL;
 
@@ -96,7 +96,7 @@
 		 */
 		public function getNumRows()
 		{
-			if(!is_object($this->result))
+			if(!\is_object($this->result))
 			{
 				return($this->cached_num_rows);
 			}
@@ -121,7 +121,7 @@
 		 */
 		public function fetchAssoc()
 		{
-			return($this->result->fetch(PDO::FETCH_ASSOC));
+			return($this->result->fetch(\PDO::FETCH_ASSOC));
 		}
 
 		/**
@@ -131,7 +131,7 @@
 		 */
 		public function fetchRow()
 		{
-			return($this->result->fetch(PDO::FETCH_NUM));
+			return($this->result->fetch(\PDO::FETCH_NUM));
 		}
 
 		/**

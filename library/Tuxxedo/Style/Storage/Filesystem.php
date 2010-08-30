@@ -44,9 +44,9 @@
 		 */
 		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
-			$this->registry 		= $registry;
+			$this->registry 	= $registry;
 			$this->templates	= $templates;
-			$this->path		= TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/';
+			$this->path		= \TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/';
 		}
 
 		/**
@@ -62,14 +62,14 @@
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
-			if(!sizeof($templates))
+			if(!\sizeof($templates))
 			{
 				return(false);
 			}
 
 			foreach($templates as $title)
 			{
-				if(($contents = @file_get_contents($this->path . $title . '.tuxx')) !== false)
+				if(($contents = @\file_get_contents($this->path . $title . '.tuxx')) !== false)
 				{
 					$this->templates->{$title} = $contents;
 				}

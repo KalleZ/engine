@@ -53,7 +53,7 @@
 		 */
 		public function exists($template)
 		{
-			return(is_file($this->path . $template . '.tuxx'));
+			return(\is_file($this->path . $template . '.tuxx'));
 		}
 	}
 ?>

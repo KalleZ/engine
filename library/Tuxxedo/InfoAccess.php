@@ -55,7 +55,7 @@
 		 */
 		public function offsetExists($offset)
 		{
-			if(is_object($this->information))
+			if(\is_object($this->information))
 			{
 				return(isset($this->information->{$offset}));
 			}
@@ -71,7 +71,7 @@
 		 */
 		public function offsetGet($offset)
 		{
-			if(is_object($this->information))
+			if(\is_object($this->information))
 			{
 				return($this->information->{$offset});
 			}
@@ -90,7 +90,7 @@
 		 */
 		public function offsetSet($offset, $value)
 		{
-			if(is_object($this->information))
+			if(\is_object($this->information))
 			{
 				$this->information->{$offset} = $value;
 			}
@@ -108,7 +108,7 @@
 		 */
 		public function offsetUnset($offset)
 		{
-			if(is_object($this->information))
+			if(\is_object($this->information))
 			{
 				unset($this->information->{$offset});
 			}

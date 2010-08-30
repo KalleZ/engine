@@ -62,7 +62,7 @@
 	     * @return  string  HTTP request
 	     */
 	    public function __toString() {
-	        $this->method = strtoupper($this->method);
+	        $this->method = \strtoupper($this->method);
 	        $output = $this->method . " " . $this->resource . 
 	                  " HTTP/1.1\r\n";
 	        
@@ -71,11 +71,11 @@
 	            // array, so we need to format the value part.
 	            // For example: Content-type: text/html; charset=utf-8 would be
 	            // array("text/html", "charset" => "utf-8")
-	            if (is_array($value)) {
+	            if (\is_array($value)) {
 	                $valStr = "";
 	                
 	                foreach ($value as $key => $val) {
-	                    if (is_int($key)) {
+	                    if (\is_int($key)) {
     	                    $valStr .= "$val";
     	                } else {
     	                    $valStr .= "$key=$val";
@@ -84,7 +84,7 @@
         	            $valStr .= "; ";
 	                }
 	                
-	                $value = trim($valStr, "; ");
+	                $value = \trim($valStr, "; ");
 	            }
 	            
 	            $output .= "$name: $value\r\n";

@@ -43,9 +43,9 @@
 		 */
 		public function free()
 		{
-			if(is_resource($this->result))
+			if(\is_resource($this->result))
 			{
-				mysql_free_result($this->result);
+				\mysql_free_result($this->result);
 				$this->result = NULL;
 
 				return(true);
@@ -71,12 +71,12 @@
 		 */
 		public function getNumRows()
 		{
-			if(!is_resource($this->result))
+			if(!\is_resource($this->result))
 			{
 				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
 			}
 
-			return((integer) mysql_num_rows($this->result));
+			return((integer) \mysql_num_rows($this->result));
 		}
 
 		/**
@@ -128,7 +128,7 @@
 		 */
 		private function fetch($mode)
 		{
-			if(!is_resource($this->result) || !mysql_num_rows($this->result))
+			if(!\is_resource($this->result) || !\mysql_num_rows($this->result))
 			{
 				return(false);
 			}
@@ -137,19 +137,19 @@
 			{
 				case(1):
 				{
-					return(mysql_fetch_array($this->result));
+					return(\mysql_fetch_array($this->result));
 				}
 				case(2):
 				{
-					return(mysql_fetch_assoc($this->result));
+					return(\mysql_fetch_assoc($this->result));
 				}
 				case(3):
 				{
-					return(mysql_fetch_row($this->result));
+					return(\mysql_fetch_row($this->result));
 				}
 				case(4):
 				{
-					return(mysql_fetch_object($this->result));
+					return(\mysql_fetch_object($this->result));
 				}
 			}
 
