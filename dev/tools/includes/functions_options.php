@@ -53,9 +53,9 @@
 
 		if(!$options)
 		{
-			global $tuxxedo;
+			global $registry;
 
-			$query = $tuxxedo->db->query('
+			$query = $registry->db->query('
 							SELECT 
 								*
 							FROM 
@@ -108,17 +108,17 @@
 			return(true);
 		}
 
-		global $tuxxedo;
+		global $registry;
 
-		$result = $tuxxedo->db->query('
+		$result = $registry->db->query('
 						UPDATE 
 							`' . TUXXEDO_PREFIX . 'options` 
 						SET 
 							`value` = \'%s\' 
 						WHERE 
-							`option` = \'%s\'', $tuxxedo->db->escape($option['defaultvalue']), $tuxxedo->db->escape($option['option']));
+							`option` = \'%s\'', $registry->db->escape($option['defaultvalue']), $registry->db->escape($option['option']));
 
-		return($result && $tuxxedo->db->getAffectedRows($result));
+		return($result && $registry->db->getAffectedRows($result));
 	}
 
 	/**
@@ -129,15 +129,15 @@
 	 */
 	function options_delete($option)
 	{
-		global $tuxxedo;
+		global $registry;
 
-		$result = $tuxxedo->db->query('
+		$result = $registry->db->query('
 						DELETE FROM 
 							`' . TUXXEDO_PREFIX . 'options`
 						WHERE 
-							`option` = \'%s\'', $tuxxedo->db->escape($option));
+							`option` = \'%s\'', $registry->db->escape($option));
 
-		return($result && $tuxxedo->db->getAffectedRows($result));
+		return($result && $registry->db->getAffectedRows($result));
 	}
 
 	/**
