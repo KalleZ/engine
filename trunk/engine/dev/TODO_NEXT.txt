@@ -1,0 +1,42 @@
+
+
+	Tuxxedo Engine Future
+	----------------------
+	
+
+	Add new datamanagers
+	 - Language
+	 - Options
+	 - Permission
+	 - Phrase
+	 - Phrasegroup
+	 - Template
+    
+	Improve development tools
+	 - Add internationalization support
+	 - Add user support
+	 - Add documenetation generator (eliminate /dev/api/ stuff)
+	 - Integrate api_analyze.php
+	 - Implement installation generators
+
+	Add a generic pagination class with a default Engine database pagination driver
+
+	Implement a temporary memory storage, with backends for APC etc.
+	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
+	Implement session adapters with backends for APC etc.
+	Implement validators
+	Implement API accessors
+	
+	Improve internationalization
+	 - Add the possibility to have different backends for phrases
+	 - Add language auto detection based on the request headers and iso codes for non logged in users
+	 - Add translation for /dev/tools
+
+	Look at implementing playground projects
+	 - Query builder
+	 - Configuration parser (Xml, Ini, JSON)
+	 - Generic Datamanager
+
+	Change SQL queries to be non-mysql compatible
+	Change the API generators to be generic and with more output formats
+	Change the structure of the /dev/tools utilities structure to be autoloadable
