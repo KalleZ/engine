@@ -13,7 +13,6 @@
 	Namespaces (Kalle)
 	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Redesign bootstrap.php from the ground and up to make it easier to work on
-	 - Remove TUXXEDO constant check
 	 - Fix docblocks
 	 - Fix global constants to be prefixed with \
 	 - Rewrite the autoloader for better error handling, or atleast refactor it internally
