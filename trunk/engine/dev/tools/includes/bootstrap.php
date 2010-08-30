@@ -24,7 +24,6 @@
 	 */
 
 	define('CWD', 		'../..');
-	define('TUXXEDO', 	1337);
 
 	use Tuxxedo\Development;
 	use Tuxxedo\Exception;

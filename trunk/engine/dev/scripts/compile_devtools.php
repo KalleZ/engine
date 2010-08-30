@@ -14,7 +14,6 @@
 	 */
 
 
-	define('TUXXEDO', 1337);
 	define('TEMPLATE_DIR', '../tools/style/templates/');
 
 	require('../../library/Tuxxedo/Exception.php');
