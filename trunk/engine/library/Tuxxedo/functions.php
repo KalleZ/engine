@@ -164,33 +164,19 @@
 		$called	 = true;
 		$buffer	 = ob_get_clean();
 		$exception	  = ($e instanceof \Exception);
+		$exception_sql	=  $exception && $registry->db && $e instanceof Exception\SQL;
 		$utf8	   = function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors	= ($registry ? Registry::globals('errors') : false);
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
-		if($exception && $registry->db && $e instanceof Exception\SQL)
-		{
-			$message = 'An error occured while querying the database';
-
-			if(TUXXEDO_DEBUG)
-			{
-				$message .=	 ':' . PHP_EOL . 
-						PHP_EOL . 
-						'<strong>Database driver:</strong> ' . constant(get_class($registry->db) . '::DRIVER_NAME') . PHP_EOL . 
-						(($sqlstate = $e->getSQLState()) !== false ? '<strong>SQL State:</strong> ' . $sqlstate . PHP_EOL : '') . 
-						'<strong>Error code:</strong> ' . $e->getCode() . PHP_EOL . 
-						PHP_EOL . 
-						'<strong>Error message:</strong>' . PHP_EOL . 
-						str_replace(Array("\r", "\n"), '', $e->getMessage()) . PHP_EOL . 
-						PHP_EOL . 
-						'<strong>SQL:</strong>' . PHP_EOL . 
-						str_replace(Array("\r", "\n"), '', $e->getSQL());
-			}
-		}
-		elseif(empty($message))
+		if(empty($message))
 		{
 			$message = 'Unknown error occured!';
+		}
+		elseif($exception_sql)
+		{
+			$message = (TUXXEDO_DEBUG ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -220,17 +206,17 @@
 			'<head>' . PHP_EOL . 
 			'<title>Tuxxedo Software Engine Error</title>' . PHP_EOL . 
 			'<style type="text/css">' . PHP_EOL . 
-			'<!--' . PHP_EOL . 
 			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
 			'h1 { color: #FFFFFF; }' . PHP_EOL . 
-			'table td { padding: 5px; }' . PHP_EOL . 
-			'table td div.hr { border-top: 2px solid #3B7286; height: 1px; }' . PHP_EOL . 
-			'table tr.head { background-color: #D2D2D2; }' . PHP_EOL . 
+			'table tr.head td { background-color: #D2D2D2; padding: 5px; }' . PHP_EOL . 
+			'table tr.row, table tr.row * { margin: 0px; padding: 5px; }' . PHP_EOL . 
 			'table tr.strong * { font-weight: bold; }' . PHP_EOL . 
 			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
 			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
-			'// -->' . PHP_EOL .
+			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; float: left; width: 400px; }' . PHP_EOL . 
+			'.infobox td { padding-right: 5px; }' . PHP_EOL . 
+			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
@@ -242,32 +228,90 @@
 		{
 			echo(
 				'<div class="box">' . PHP_EOL . 
-				'<div class="outer">' . PHP_EOL
+				'<div class="inner">' . PHP_EOL . 
+				'<div class="infobox">' . PHP_EOL . 
+				'<table cellspacing="2" cellpadding="0">' . PHP_EOL
 				);
 
 			if($application)
 			{
 				echo(
-					'<strong>Application:</strong> ' . $application . ' - '
+					'<tr>' . PHP_EOL . 
+					'<td>Application:</td>' . PHP_EOL . 
+					'<td class="value" width="100%">' . $application . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
 					);
 			}
 
 			echo(
-				'<strong>Engine Version:</strong> ' . Version::SIMPLE . ' - ' . 
-				'<strong>Script:</strong> ' . realpath($_SERVER['SCRIPT_FILENAME']) . ' - '
+				'<tr>' . PHP_EOL . 
+				'<td nowrap="nowrap">Engine Version:</td>' . PHP_EOL . 
+				'<td class="value" width="100%">' . Version::SIMPLE . '</td>' . PHP_EOL . 
+				'</tr>' . PHP_EOL .  
+				'<tr>' . PHP_EOL . 
+				'<td>Script:</td>' . PHP_EOL . 
+				'<td class="value">' . realpath($_SERVER['SCRIPT_FILENAME']) . '</td>' . PHP_EOL . 
+				'</tr>' . PHP_EOL
 				);
 
 			if(($date = tuxxedo_date(NULL, 'H:i:s j/n - Y (e)')))
 			{
 				echo(
-					'<strong>Timestamp:</strong> ' . $date . PHP_EOL
+					'<tr>' . PHP_EOL . 
+					'<td>Timestamp:</td>' . PHP_EOL . 
+					'<td class="value">' . $date . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
+			}
+
+			if($exception_sql)
+			{
+				echo(
+					'<tr>' . PHP_EOL . 
+					'<td colspan="2">&nbsp;</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL . 
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Database Driver:</td>' . PHP_EOL . 
+					'<td class="value" width="100%">' . constant(get_class($registry->db) . '::DRIVER_NAME') . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL . 
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
+					'<td class="value" width="100%">' . $e->getCode() . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
+
+				if(($sqlstate = $e->getSQLState()) !== false)
+				{
+					echo(
+						'<tr>' . PHP_EOL . 
+						'<td nowrap="nowrap">SQL State:</td>' . PHP_EOL . 
+						'<td class="value" width="100%">' . $sqlstate . '</td>' . PHP_EOL . 
+						'</tr>' . PHP_EOL
+						);
+				}
+			}
+
+			echo(
+				'</table>' . PHP_EOL . 
+				'</div>' . PHP_EOL . 
+				'<div style="margin: 10px 10px 10px 430px;">' . PHP_EOL . 
+				nl2br($message) . PHP_EOL
+				);
+
+			if($exception_sql)
+			{
+				echo(
+					'<br /> <br />' . PHP_EOL . 
+					'<strong>SQL Query:</strong>' . PHP_EOL . 
+					'<div class="box">' . PHP_EOL . 
+					'<em>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</em>' . PHP_EOL . 
+					'</div>' . PHP_EOL
 					);
 			}
 
 			echo(
 				'</div>' . PHP_EOL . 
-				'<div class="inner">' . PHP_EOL . 
-				nl2br($message) . PHP_EOL . 
+				'<div style="clear: left;"></div>' . PHP_EOL . 
 				'</div>' . PHP_EOL . 
 				'</div>' . PHP_EOL
 				);
@@ -283,49 +327,24 @@
 					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td>&nbsp;</td>' . PHP_EOL . 
-					'<td class="head strong">Call</td>' . PHP_EOL . 
-					'<td class="head strong">File</td>' . PHP_EOL . 
-					'<td class="head strong">Line</td>' . PHP_EOL . 
-					'<td class="head strong">Notes</td>' . PHP_EOL . 
+					'<td class="strong">Call</td>' . PHP_EOL . 
+					'<td class="strong">File</td>' . PHP_EOL . 
+					'<td class="strong">Line</td>' . PHP_EOL . 
+					'<td class="strong">Notes</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 
 				foreach($bt as $n => $trace)
 				{
 					echo(
-						'<tr' . ($trace->current ? ' class="strong"' : '') . '>' . PHP_EOL . 
-						'<td rowspan="2"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
+						'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
+						'<td><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->call . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap" width="100%">' . $trace->file . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->line . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->notes . '</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
-
-					if(!empty($trace->callargs))
-					{
-						echo(
-							'<tr>' . PHP_EOL . 
-							'<td colspan="5">' . PHP_EOL . 
-							'<div class="head">' . PHP_EOL . 
-							'<em>' . $trace->callargs . '</em>' . PHP_EOL . 
-							'</div>' . PHP_EOL . 
-							'</rd>' . PHP_EOL . 
-							'</tr>' . PHP_EOL
-							);
-					}
-
-					if($n != $bts)
-					{
-						echo(
-							'<tr>' . PHP_EOL . 
-							'<td colspan="5">' . PHP_EOL . 
-							'<div class="hr">' . PHP_EOL . 
-							'</div>' . PHP_EOL . 
-							'</rd>' . PHP_EOL . 
-							'</tr>' . PHP_EOL
-							);
-					}
 				}
 
 				echo(
@@ -344,7 +363,7 @@
 					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td width="100">&nbsp;</td>' . PHP_EOL . 
-					'<td class="head strong" width="100%">SQL</td>' . PHP_EOL . 
+					'<td class="strong" width="100%">SQL</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 

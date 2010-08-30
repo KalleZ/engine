@@ -25,7 +25,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class SQL extends \Tuxxedo\Exception
+	class SQL extends Basic
 	{
 		/**
 		 * Current SQL state
