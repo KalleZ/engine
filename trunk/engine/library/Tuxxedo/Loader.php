@@ -40,7 +40,7 @@ class Loader
         $separator = is_null($separator) ? self::$separator : $separator;
         
         if (is_array($match)) {
-            $match = implode($separator, $match);
+            $match = \implode($separator, $match);
         }
         
         self::$customPaths[$match] = array(
@@ -65,12 +65,12 @@ class Loader
          * If a match is found that exactly matches the name then that is used.
          */
         $matched = false;
-        foreach (array_keys(self::$customPaths) as $match) {
-            if (substr($name, 0, strlen($match)) == $match) {
+        foreach (\array_keys(self::$customPaths) as $match) {
+            if (\substr($name, 0, \strlen($match)) == $match) {
                 // Use this path if we don't already have a match, the name is
                 // the same as the match, or if this match is "stronger" than 
                 // the current
-                if (!$matched || $match == $name || strlen($match) < strlen($matched)) {
+                if (!$matched || $match == $name || \strlen($match) < \strlen($matched)) {
                     $matched = $match;
                     
                     // If the match is exactly the same as the name, stop 
@@ -90,11 +90,11 @@ class Loader
         }
 
 	/* @TODO this is seriously bad */
-	if (!is_file($path)) { tuxxedo_doc_errorf('Unable to locate class or interface file, for \'%s\'', $name); } else { require $path; }
+	if (!\is_file($path)) { \tuxxedo_doc_errorf('Unable to locate class or interface file, for \'%s\'', $name); } else { require $path; }
         
         // Check class/interface actually declared
-        if (!class_exists($name) && !interface_exists($name)) {
-		tuxxedo_doc_errorf('Class or interface \'%s\' must be declared in \'%s\'', $name, tuxxedo_trim_path(realpath($path)));
+        if (!\class_exists($name) && !\interface_exists($name)) {
+		\tuxxedo_doc_errorf('Class or interface \'%s\' must be declared in \'%s\'', $name, \tuxxedo_trim_path(realpath($path)));
         }
     }
     
@@ -108,9 +108,9 @@ class Loader
         }
         
         // Get the unmatched part of the class name
-        $unmatched = substr($name, strlen($match));
+        $unmatched = \substr($name, strlen($match));
         // Compile the path
-        $path = $matchInfo["path"] . str_replace($matchInfo["separator"], "/", $unmatched) . ".php";
+        $path = $matchInfo["path"] . \str_replace($matchInfo["separator"], "/", $unmatched) . ".php";
         
         $fullPath = self::getFullPath($path);
     
@@ -128,7 +128,7 @@ class Loader
         $fullPath = self::getFullPath($name);
         
         if ($fullPath === false) {
-		tuxxedo_doc_errorf('Unable to resolve \'%s\'', $name);
+		\tuxxedo_doc_errorf('Unable to resolve \'%s\'', $name);
         }
         
         return $fullPath;

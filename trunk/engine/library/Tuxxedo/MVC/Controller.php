@@ -125,7 +125,7 @@
 
 			$action = $this->router->getAction() . 'Action';
 
-			if(!method_exists($this, $method))
+			if(!\method_exists($this, $method))
 			{
 				/**
 				 * @TODO		use Exception\Intl here

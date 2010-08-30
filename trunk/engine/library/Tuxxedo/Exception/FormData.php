@@ -43,20 +43,20 @@
 		 */
 		public function __construct(array $formdata, $message = NULL)
 		{
-			if(!sizeof($formdata))
+			if(!\sizeof($formdata))
 			{
 				throw new Basic('A form data exception must contain atleast one element');
 			}
 
 			if($message)
 			{
-				if(func_num_args() > 2)
+				if(\func_num_args() > 2)
 				{
-					$args = func_get_args();
+					$args = \func_get_args();
 
 					unset($args[0]);
 
-					parent::__construct(call_user_func_array('sprintf', $args));
+					parent::__construct(\call_user_func_array('\sprintf', $args));
 				}
 				else
 				{

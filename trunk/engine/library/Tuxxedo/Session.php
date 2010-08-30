@@ -152,11 +152,11 @@
 
 			if(ini_get('session.use_cookies'))
 			{
-				setcookie(session_name(), '', TIMENOW_UTC - 3600, self::$options['path'], self::$options['domain'], false, true);
+				\setcookie(session_name(), '', \TIMENOW_UTC - 86400, self::$options['path'], self::$options['domain'], false, true);
 			}
 
-			session_unset();
-			session_destroy();
+			\session_unset();
+			\session_destroy();
 
 			self::$started 	= false;
 			self::$id	= '';

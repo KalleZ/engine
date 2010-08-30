@@ -66,7 +66,7 @@
 		 */
 		public function isDriverSupported()
 		{
-			return(extension_loaded('pdo') && extension_loaded('pdo_' . strtolower($this->configuration['subdriver'])));
+			return(\extension_loaded('pdo') && \extension_loaded('pdo_' . \strtolower($this->configuration['subdriver'])));
 		}
 
 		/**
@@ -85,20 +85,20 @@
 				$this->configuration = $configuration;
 			}
 
-			if(is_object($this->link))
+			if(\is_object($this->link))
 			{
 				return(true);
 			}
 
 			$unix_socket = '';
 
-			switch(strtolower($this->configuration['subdriver']))
+			switch(\strtolower($this->configuration['subdriver']))
 			{
 				case('mysql'):
 				{
 					if($unix_socket = $this->configuration['socket'])
 					{
-						$unix_socket = sprintf('unix_socket=%s;', $unix_socket);
+						$unix_socket = \sprintf('unix_socket=%s;', $unix_socket);
 					}
 				}
 				break;
@@ -106,24 +106,24 @@
 
 			if($port = $this->configuration['port'])
 			{
-				$port = sprintf('port=%d;', $port);
+				$port = \sprintf('port=%d;', $port);
 			}
 
-			$dsn = sprintf('%s:host=%s;dbname=%s;%s%s%s', ($prefix = $this->configuration['dsnprefix'] ? $prefix : $this->configuration['subdriver']), $this->configuration['hostname'], $this->configuration['database'], $port, $unix_socket, $configuration['dsnsuffix']);
+			$dsn = \sprintf('%s:host=%s;dbname=%s;%s%s%s', ($prefix = $this->configuration['dsnprefix'] ? $prefix : $this->configuration['subdriver']), $this->configuration['hostname'], $this->configuration['database'], $port, $unix_socket, $configuration['dsnsuffix']);
 
 			try
 			{
-				$link = new PDO($dsn, $this->configuration['username'], $this->configuration['password'], Array(
-																PDO::ATTR_ERRMODE	=> PDO::ERRMODE_EXCEPTION, 
-																PDO::ATTR_PERSISTENT 	=> $this->configuration['persistent'], 
-																PDO::ATTR_TIMEOUT	=> $this->configuration['timeout']
+				$link = new \PDO($dsn, $this->configuration['username'], $this->configuration['password'], Array(
+																	\PDO::ATTR_ERRMODE	=> \PDO::ERRMODE_EXCEPTION, 
+																	\PDO::ATTR_PERSISTENT 	=> $this->configuration['persistent'], 
+																	\PDO::ATTR_TIMEOUT	=> $this->configuration['timeout']
 																));
 			}
-			catch(PDOException $e)
+			catch(\PDOException $e)
 			{
 				$format = 'Database error: failed to connect database';
 
-				if(TUXXEDO_DEBUG)
+				if(\TUXXEDO_DEBUG)
 				{
 					$format = 'Database error: [%d] %s';
 				}
@@ -131,7 +131,7 @@
 				throw new Exception\Basic($format, $e->getCode(), $e->getMessage());
 			}
 
-			$this->persistent 	= $link->getAttribute(PDO::ATTR_PERSISTENT);
+			$this->persistent 	= $link->getAttribute(\PDO::ATTR_PERSISTENT);
 			$this->link 		= $link;
 		}
 
@@ -142,7 +142,7 @@
 		 */
 		public function close()
 		{
-			if(is_object($this->link))
+			if(\is_object($this->link))
 			{
 				$this->link = NULL;
 
@@ -159,7 +159,7 @@
 		 */
 		public function isConnected()
 		{
-			return(is_object($this->link));
+			return(\is_object($this->link));
 		}
 
 		/**
@@ -171,7 +171,7 @@
 		 */
 		public function isLink($link)
 		{
-			return(is_object($link) && $link instanceof PDO);
+			return(\is_object($link) && $link instanceof \PDO);
 		}
 
 		/**
@@ -193,7 +193,7 @@
 		 */
 		public function isResult($result)
 		{
-			return(is_object($result) && $result instanceof PDOStatement);
+			return(\is_object($result) && $result instanceof \PDOStatement);
 		}
 
 		/**
@@ -204,7 +204,7 @@
 		 */
 		public function getError()
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -221,7 +221,7 @@
 		 */
 		public function getErrno()
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -239,7 +239,7 @@
 		 */
 		public function getInsertId()
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -273,12 +273,12 @@
 		 */
 		public function escape($data)
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
 
-			return(addslashes($data));
+			return(\addslashes($data));
 		}
 
 		/**
@@ -302,15 +302,15 @@
 				$this->connect();
 			}
 
-			if(empty($sql) || !is_object($this->link))
+			if(empty($sql) || !\is_object($this->link))
 			{
 				return(false);
 			}
-			elseif(func_num_args() > 1)
+			elseif(\func_num_args() > 1)
 			{
-				$args 		= func_get_args();
+				$args 		= \func_get_args();
 				$args[0]	= $sql;
-				$sql 		= call_user_func_array('sprintf', $args);
+				$sql 		= \call_user_func_array('\sprintf', $args);
 			}
 
 			try

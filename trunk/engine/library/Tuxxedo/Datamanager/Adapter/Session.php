@@ -42,16 +42,17 @@
 							'location'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_STRING, 
-											'default'	=> TUXXEDO_SELF
+											'default'	=> \TUXXEDO_SELF
 											), 
 							'useragent' 	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING
+											'validation'	=> self::VALIDATE_STRING, 
+											'default'	=> \TUXXEDO_USERAGENT
 											), 
 							'lastactivity'	=> Array(
 											'type'		=> self::FIELD_PROTECTED, 
 											'validation'	=> self::VALIDATE_NUMERIC, 
-											'default'	=> TIMENOW_UTC
+											'default'	=> \TIMENOW_UTC
 											)
 							);
 
@@ -64,10 +65,10 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 		= $registry;
+			$this->registry 	= $registry;
 
 			$this->dmname		= 'session';
-			$this->tablename	= TUXXEDO_PREFIX . 'sessions';
+			$this->tablename	= \TUXXEDO_PREFIX . 'sessions';
 			$this->idname		= 'sessionid';
 			$this->information	= &$this->userdata;
 			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;

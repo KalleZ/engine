@@ -50,7 +50,7 @@
                 $mapper = $this->getMapper();
                 
                 // Get the public methods of the mapper
-                $this->methods = get_class_methods($mapper);
+                $this->methods = \get_class_methods($mapper);
             }
         }
         
@@ -93,17 +93,17 @@
          */
         public function __call($method, $arguments) {
             // Mapper methods
-            if (count($this->methods) != 0) {
-                if (in_array($method, $this->methods)) {
+            if (\count($this->methods) != 0) {
+                if (\in_array($method, $this->methods)) {
                     $mapper = $this->getMapper();
                     
-                    return call_user_func_array(array($mapper, $method), $arguments);
+                    return \call_user_func_array(array($mapper, $method), $arguments);
                 }
             }
         
             // Getter/setter methods
-            $prefix = substr($method, 0, 3);
-            $property = substr($method, 3);
+            $prefix = \substr($method, 0, 3);
+            $property = \substr($method, 3);
             
             if ($prefix == "set") {
                 $this->set($property, $arguments[0]);
@@ -119,11 +119,11 @@
          * @throws  Tuxxedo_Exception_Basic If no method or property is found
          */
         private function set($property, $value) {
-            $method = "set" . ucfirst($property);
+            $method = "set" . \ucfirst($property);
             
-            if (method_exists($this, $method)) {
+            if (\method_exists($this, $method)) {
                 $this->$method($value);
-            } elseif (property_exists($this, $property)) {
+            } elseif (\property_exists($this, $property)) {
                 $this->$property = $value;
             } else {
                 echo ": exception\n";
@@ -137,11 +137,11 @@
          * @throws  Tuxxedo_Exception_Basic If no method or property is found
          */
         private function get($property) {
-            $method = "get" . ucfirst($property);
+            $method = "get" . \ucfirst($property);
             
-            if (method_exists($this, $method)) {
+            if (\method_exists($this, $method)) {
                 return $this->$method();
-            } elseif (property_exists($this, $property)) {
+            } elseif (\property_exists($this, $property)) {
                 return $this->$property;
             } else {
                 throw new Exception\Basic("Invalid property given.");

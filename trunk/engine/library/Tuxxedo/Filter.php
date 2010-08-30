@@ -106,8 +106,8 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration)
 		{
-			self::$have_filter_ext 		= extension_loaded('filter');
-			self::$have_magic_quotes	= get_magic_quotes_gpc();
+			self::$have_filter_ext 		= \extension_loaded('filter');
+			self::$have_magic_quotes	= \get_magic_quotes_gpc();
 		}
 
 		/**
@@ -119,9 +119,9 @@
 		 */
 		public function validate($data, $callback)
 		{
-			if(is_callable($callback))
+			if(\is_callable($callback))
 			{
-				return(call_user_func($callback, $data));
+				return(\call_user_func($callback, $data));
 			}
 
 			return(false);
@@ -194,17 +194,17 @@
 			{
 				case(1):
 				{
-					$data = (self::$have_filter_ext ? INPUT_GET : $_GET);
+					$data = (self::$have_filter_ext ? \INPUT_GET : $_GET);
 				}
 				break;
 				case(2):
 				{
-					$data = (self::$have_filter_ext ? INPUT_POST : $_POST);
+					$data = (self::$have_filter_ext ? \INPUT_POST : $_POST);
 				}
 				break;
 				case(3):
 				{
-					$data = (self::$have_filter_ext ? INPUT_COOKIE : $_COOKIE);
+					$data = (self::$have_filter_ext ? \INPUT_COOKIE : $_COOKIE);
 				}
 				break;
 				case(4):
@@ -228,47 +228,47 @@
 
 			if(self::$have_filter_ext)
 			{
-				if($source != 4 && !filter_has_var($data, $field))
+				if($source != 4 && !\filter_has_var($data, $field))
 				{
 					return;
 				}
 
 				if($options & self::INPUT_OPT_RAW)
 				{
-					return(filter_input($data, $field, FILTER_UNSAFE_RAW));
+					return(\filter_input($data, $field, \FILTER_UNSAFE_RAW));
 				}
 
 				switch($type)
 				{
 					case(self::TYPE_NUMERIC):
 					{
-						$flags = FILTER_VALIDATE_INT;
+						$flags = \FILTER_VALIDATE_INT;
 					}
 					break;
 					case(self::TYPE_EMAIL):
 					{
-						$flags = FILTER_VALIDATE_EMAIL;
+						$flags = \FILTER_VALIDATE_EMAIL;
 					}
 					break;
 					case(self::TYPE_BOOLEAN):
 					{
-						$flags = FILTER_VALIDATE_BOOLEAN;
+						$flags = \FILTER_VALIDATE_BOOLEAN;
 					}
 					break;
 					default:
 					{
-						$flags = FILTER_DEFAULT;
+						$flags = \FILTER_DEFAULT;
 					}
 					break;
 				}
 
 				if($source == 4)
 				{
-					$input = filter_var($data, $flags, 0);
+					$input = \filter_var($data, $flags, 0);
 				}
 				else
 				{
-					$input = filter_input($data, $field, $flags, ($options & self::INPUT_OPT_ARRAY ? FILTER_REQUIRE_ARRAY | FILTER_FORCE_ARRAY : 0));
+					$input = \filter_input($data, $field, $flags, ($options & self::INPUT_OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
 				}
 
 				return($input);
@@ -291,10 +291,10 @@
 
 					if(self::$have_magic_quotes)
 					{
-						$data[$field] = array_map('stripslashes', $data[$field]);
+						$data[$field] = \array_map('\stripslashes', $data[$field]);
 					}
 
-					if(sizeof($data[$field]))
+					if(\sizeof($data[$field]))
 					{
 						foreach($data[$field] as $var => $tmp)
 						{
@@ -307,7 +307,7 @@
 								break;
 								case(self::TYPE_EMAIL):
 								{
-									$data[$field][$var] = (is_valid_email($data[$field]) ? $data[$field] : false);
+									$data[$field][$var] = (\is_valid_email($data[$field]) ? $data[$field] : false);
 								}
 								break;
 								case(self::TYPE_BOOLEAN):
@@ -328,7 +328,7 @@
 				{
 					if($source != 4 && self::$have_magic_quotes)
 					{
-						$data[$field] = stripslashes($data[$field]);
+						$data[$field] = \stripslashes($data[$field]);
 					}
 
 					switch($type)
@@ -340,7 +340,7 @@
 						break;
 						case(self::TYPE_EMAIL):
 						{
-							$data[$field] = (is_valid_email($data[$field]) ? $data[$field] : false);
+							$data[$field] = (\is_valid_email($data[$field]) ? $data[$field] : false);
 						}
 						break;
 						case(self::TYPE_BOOLEAN):

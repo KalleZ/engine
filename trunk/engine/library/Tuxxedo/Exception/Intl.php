@@ -33,13 +33,13 @@
 
 			if(!$registry->intl)
 			{
-				if(func_num_args() > 2)
+				if(\func_num_args() > 2)
 				{
-					$args = func_get_args();
+					$args = \func_get_args();
 
 					unset($args[0]);
 
-					parent::__construct(call_user_func_array('sprintf', $args));
+					parent::__construct(\call_user_func_array('\sprintf', $args));
 				}
 				else
 				{
@@ -58,11 +58,11 @@
 					throw new Exception($translation);
 				}
 
-				$args = func_get_args();
+				$args = \func_get_args();
 
 				unset($args[1]);
 
-				parent::__construct(call_user_func_array(Array($registry->intl, 'format'), $args));
+				parent::__construct(\call_user_func_array(Array($registry->intl, 'format'), $args));
 			}
 		}
 	}

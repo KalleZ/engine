@@ -27,6 +27,8 @@
 	 */
 	namespace Tuxxedo;
 
+	use Tuxxedo\Exception;
+
 	/**
 	 * Registry class, this acts as a mixed singleton/registry 
 	 * object.
@@ -149,18 +151,18 @@
 			{
 				return;
 			}
-			elseif(!class_exists($class))
+			elseif(!\class_exists($class))
 			{
-				throw new Tuxxedo_Basic_Exception('Passed object class (%s) does not exists', $class);
+				throw new Exception\Basic('Passed object class (%s) does not exists', $class);
 			}
-			elseif(($ifaces = class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Invokable']))
+			elseif(($ifaces = \class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Invokable']))
 			{
 				global $configuration;
 
-				$instance = call_user_func(Array($class, 'invoke'), $this, $configuration);
+				$instance = \call_user_func(Array($class, 'invoke'), $this, $configuration);
 			}
 
-			if(!isset($instance) || !is_object($instance))
+			if(!isset($instance) || !\is_object($instance))
 			{
 				$instance = new $class;
 			}

@@ -103,10 +103,10 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 		= $registry;
+			$this->registry 	= $registry;
 
 			$this->dmname		= 'user';
-			$this->tablename	= TUXXEDO_PREFIX . 'users';
+			$this->tablename	= \TUXXEDO_PREFIX . 'users';
 			$this->idname		= 'id';
 			$this->information	= &$this->userdata;
 
@@ -116,7 +116,7 @@
 								SELECT 
 									* 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'users` 
+									`' . \TUXXEDO_PREFIX . 'users` 
 								WHERE 
 									`id` = %d', $identifier);
 
@@ -141,7 +141,7 @@
 		 */
 		public function set($field, $value)
 		{
-			$field = strtolower($field);
+			$field = \strtolower($field);
 
 			if($field == 'timezone_offset')
 			{
@@ -205,7 +205,7 @@
 							SELECT 
 								* 
 							FROM 
-								`' . TUXXEDO_PREFIX . 'users` 
+								`' . \TUXXEDO_PREFIX . 'users` 
 							WHERE 
 								`username` = \'%s\' 
 							LIMIT 1', $registry->db->escape($username))

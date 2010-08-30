@@ -64,10 +64,10 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 		= $registry;
+			$this->registry 	= $registry;
 
 			$this->dmname		= 'usergroup';
-			$this->tablename	= TUXXEDO_PREFIX . 'usergroups';
+			$this->tablename	= \TUXXEDO_PREFIX . 'usergroups';
 			$this->idname		= 'id';
 			$this->information	= &$this->userdata;
 
@@ -77,7 +77,7 @@
 									SELECT 
 										* 
 									FROM 
-										`' . TUXXEDO_PREFIX . 'usergroups` 
+										`' . \TUXXEDO_PREFIX . 'usergroups` 
 									WHERE 
 										`id` = %d', $identifier);
 

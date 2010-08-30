@@ -28,9 +28,8 @@
 		public function parse($uri) {
 			// Explode the array into parts and clean it (remove empty values 
 			// "//")
-			$uri = ltrim($uri, "/");
-			$uri = rtrim($uri, "/");
-			$parts = explode("/", $uri);
+			$uri = \trim($uri, "/");
+			$parts = \explode("/", $uri);
 			foreach ($parts as $key => $value) {
 				if (empty($value)) {
 					unset($parts[$key]);
@@ -68,20 +67,20 @@
 					break;
 				default:	
 					// Use defaults if we have no parts
-					if (count($parts) == 0) {
+					if (\count($parts) == 0) {
 						break;
 					}
 				
 					// If the number of parts is even, use rule #5 otherwise rule #4
-					if (count($parts) % 2 == 0) {
-						$controller = array_shift($parts);
-						$action = array_shift($parts);
+					if (\count($parts) % 2 == 0) {
+						$controller = \array_shift($parts);
+						$action = \array_shift($parts);
 					} else {
-						$controller = array_shift($parts);
+						$controller = \array_shift($parts);
 					}
 				
 					// Loop through the rest of the parts to collect parameters
-					for ($i = 0; $i < count($parts); $i += 2) {
+					for ($i = 0; $i < \count($parts); $i += 2) {
 						$params[$parts[$i]] = $parts[$i+1]; 
 					}
 					break;

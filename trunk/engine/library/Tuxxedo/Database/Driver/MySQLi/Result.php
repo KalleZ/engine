@@ -43,7 +43,7 @@
 		 */
 		public function free()
 		{
-			if(is_object($this->result))
+			if(\is_object($this->result))
 			{
 				$this->result->free();
 				$this->result = NULL;
@@ -71,7 +71,7 @@
 		 */
 		public function getNumRows()
 		{
-			if(!is_object($this->result))
+			if(!\is_object($this->result))
 			{
 				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
 			}

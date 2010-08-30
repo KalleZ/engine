@@ -65,7 +65,7 @@
 		 */
 		public function isDriverSupported()
 		{
-			return(extension_loaded('mysqli'));
+			return(\extension_loaded('mysqli'));
 		}
 
 		/**
@@ -100,9 +100,9 @@
 
 			Registry::globals('error_reporting', false);
 
-			$link = mysqli_init();
-			$link->options(MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
-			$link->real_connect($hostname, $this->configuration['username'], $this->configuration['password'], $this->configuration['database'], (($port = $this->configuration['port']) ? $port : 3306), (($unix_socket = $this->configuration['socket']) ? $unix_socket : ''), ($this->configuration['ssl'] ? MYSQLI_CLIENT_SSL : 0));
+			$link = \mysqli_init();
+			$link->options(\MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
+			$link->real_connect($hostname, $this->configuration['username'], $this->configuration['password'], $this->configuration['database'], (($port = $this->configuration['port']) ? $port : 3306), (($unix_socket = $this->configuration['socket']) ? $unix_socket : ''), ($this->configuration['ssl'] ? \MYSQLI_CLIENT_SSL : 0));
 
 			Registry::globals('error_reporting', true);
 
@@ -110,7 +110,7 @@
 			{
 				$format = 'Database error: failed to connect database';
 
-				if(TUXXEDO_DEBUG)
+				if(\TUXXEDO_DEBUG)
 				{
 					$format = 'Database error: [%d] %s';
 				}
@@ -128,7 +128,7 @@
 		 */
 		public function close()
 		{
-			if(is_object($this->link))
+			if(\is_object($this->link))
 			{
 				$retval 	= (boolean) $this->link->close();
 				$this->link 	= NULL;
@@ -146,7 +146,7 @@
 		 */
 		public function isConnected()
 		{
-			return(is_object($this->link));
+			return(\is_object($this->link));
 		}
 
 		/**
@@ -158,7 +158,7 @@
 		 */
 		public function isLink($link)
 		{
-			return(is_object($link) && $link instanceof \MySQLi);
+			return(\is_object($link) && $link instanceof \MySQLi);
 		}
 
 		/**
@@ -180,7 +180,7 @@
 		 */
 		public function isResult($result)
 		{
-			return(is_object($result) && $result instanceof \MySQLi_Result);
+			return(\is_object($result) && $result instanceof \MySQLi_Result);
 		}
 
 		/**
@@ -191,7 +191,7 @@
 		 */
 		public function getError()
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -206,7 +206,7 @@
 		 */
 		public function getErrno()
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -221,7 +221,7 @@
 		 */
 		public function getInsertId()
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -241,7 +241,7 @@
 		 */
 		public function getAffectedRows($result)
 		{
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(0);
 			}
@@ -265,7 +265,7 @@
 				$this->connect();
 			}
 
-			if(!is_object($this->link))
+			if(!\is_object($this->link))
 			{
 				return(false);
 			}
@@ -294,15 +294,15 @@
 				$this->connect();
 			}
 
-			if(empty($sql) || !is_object($this->link))
+			if(empty($sql) || !\is_object($this->link))
 			{
 				return(false);
 			}
-			elseif(func_num_args() > 1)
+			elseif(\func_num_args() > 1)
 			{
-				$args 		= func_get_args();
+				$args 		= \func_get_args();
 				$args[0]	= $sql;
-				$sql 		= call_user_func_array('sprintf', $args);
+				$sql 		= \call_user_func_array('\sprintf', $args);
 			}
 
 			Registry::globals('error_reporting', false);
@@ -315,11 +315,11 @@
 
 				return(true);
 			}
-			elseif(is_object($query))
+			elseif(\is_object($query))
 			{
 				$this->queries[] = $sql;
 
-				return(new \Tuxxedo\Database\Driver\MySQLi\Result($this, $query));
+				return(new MySQLi\Result($this, $query));
 			}
 			elseif($this->link->errno)
 			{

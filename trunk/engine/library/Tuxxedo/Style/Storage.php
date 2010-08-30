@@ -79,11 +79,11 @@
 		{
 			$class = '\Tuxxedo\Style\Storage\\' . $engine;
 
-			if(!class_exists($class))
+			if(!\class_exists($class))
 			{
 				throw new Exception\Basic('Invalid style storage engine specified');
 			}
-			elseif(!is_subclass_of($class, __CLASS__))
+			elseif(!\is_subclass_of($class, __CLASS__))
 			{
 				throw new Exception\Basic('Corrupt style storage engine');
 			}
