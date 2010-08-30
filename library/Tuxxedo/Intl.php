@@ -214,6 +214,36 @@
 		}
 
 		/**
+		 * Format a translation string
+		 *
+		 * @param	   string		  The phrase to perform replacements on
+		 * @param	   scalar		  Replacement string #1
+		 * @param	   scalar		  Replacement string #n
+		 * @return	  string		  Returns the formatted translation string
+		 */
+		public function format()
+		{
+			$args = func_get_args();
+			$size = sizeof($args);
+
+			if(!$size)
+			{
+				return('');
+			}
+			elseif($size == 1)
+			{
+				return($args[0]);
+			}
+
+			for($i = 0; $i < $size; ++$i)
+			{
+				$args[0] = str_replace('{' . ($i + 1) . '}', $args[$i], $args[0]);
+			}
+
+			return($args[0]);
+		}
+
+		/**
 		 * Gets all phrases, note that phrases may be overridden by 
 		 * another if there is more with the same name. To overcome this 
 		 * limitation you must fetch the phrasegroup in which the phrase 

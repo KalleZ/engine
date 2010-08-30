@@ -672,34 +672,4 @@
 
 		return(true);
 	}
-
-	/**
-	 * Format a translation string
-	 *
-	 * @param	   string		  The phrase to perform replacements on
-	 * @param	   scalar		  Replacement string #1
-	 * @param	   scalar		  Replacement string #n
-	 * @return	  string		  Returns the formatted translation string
-	 */
-	function format_phrase()
-	{
-		$args = func_get_args();
-		$size = sizeof($args);
-
-		if(!$size)
-		{
-			return('');
-		}
-		elseif($size == 1)
-		{
-			return($args[0]);
-		}
-
-		for($i = 0; $i < $size; ++$i)
-		{
-			$args[0] = str_replace('{' . ($i + 1) . '}', $args[$i], $args[0]);
-		}
-
-		return($args[0]);
-	}
 ?>

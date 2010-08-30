@@ -8,8 +8,6 @@
 	 - Re-implement old tools
 	   - Options
 
-	Fix std exception error messages not respecting the $intl setting when an identifier is not found when loading (Kalle)
-
 	Namespaces (Kalle)
 	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Redesign bootstrap.php from the ground and up to make it easier to work on
