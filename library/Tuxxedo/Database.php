@@ -161,7 +161,7 @@
 		 */
 		final public static function factory($driver, Array $configuration)
 		{
-			if(in_array($driver, self::$loaded_drivers))
+			if(\in_array($driver, self::$loaded_drivers))
 			{
 				return(new $class($configuration));
 			}
@@ -189,9 +189,7 @@
 		{
 			if(\func_num_args() > 1)
 			{
-				$args 		= \func_get_args();
-				$args[0]	= $sql;
-				$sql 		= \call_user_func_array('\sprintf', $args);
+				$sql = \call_user_func_array('\sprintf', \func_get_args());
 			}
 
 			$this->shutdown_queries[] = (string) $sql;
