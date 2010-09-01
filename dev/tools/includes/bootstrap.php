@@ -8,7 +8,8 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -63,7 +64,7 @@
 	require('./includes/template.php');
 	require('./includes/template_storage.php');
 
-	$registry = Tuxxedo\Registry::init($configuration);
+	$registry = Registry::init($configuration);
 
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('cache', '\Tuxxedo\Datastore');

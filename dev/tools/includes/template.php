@@ -14,8 +14,22 @@
 	 */
 
 
+	/**
+	 * Development namespace. This contains all the various additional 
+	 * that the development tools uses to hack into Engine and alter 
+	 * components for bypassing certain design limits to hook in various 
+	 * places
+	 *
+	 * @author              Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version             1.0
+	 * @package             Engine
+	 * @subpackage          DevTools
+	 */
 	namespace Tuxxedo\Development;
 
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Registry;
 
 	/**
@@ -48,7 +62,7 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	\Tuxxedo\Registry	The Registry reference
 		 * @param	array			The configuration array
 		 * @param	array			The options array
 		 * @return	void			No value is returned
