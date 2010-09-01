@@ -8,11 +8,15 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		Dev
+	 * @package		Engine
+	 * @subpackage		Dev
 	 *
 	 * =============================================================================
 	 */
 
+
+	use Tuxxedo\Exception;
+	use Tuxxedo\Template;
 
 	define('TEMPLATE_DIR', '../tools/style/templates/');
 
@@ -39,7 +43,7 @@
 <h2>Compiling ...</h2>
 <ul>
 <?php
-		$compiler = new Tuxxedo\Template\Compiler;
+		$compiler = new Template\Compiler;
 
 		$compiler->allowFunction('strlen');
 
@@ -58,7 +62,7 @@
 
 				$result = 'Success';
 			}
-			catch(Template_Compiler_Exception $e)
+			catch(Exception\TemplateCompiler $e)
 			{
 			}
 ?>
