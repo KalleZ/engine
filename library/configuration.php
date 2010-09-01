@@ -54,7 +54,7 @@
 	 * and some error messages will become more verbose. Fatal errors 
 	 * will display a backtrace
 	 */
-	'debug'		=> true, 
+	'debug'		=> false, 
 
 	/**
 	 * End application configuration
