@@ -169,7 +169,7 @@
 				return;
 			}
 
-			if(ini_get('session.use_cookies'))
+			if(\ini_get('session.use_cookies'))
 			{
 				\setcookie(\session_name(), '', \TIMENOW_UTC - 86400, self::$options['path'], self::$options['domain'], false, true);
 			}
