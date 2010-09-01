@@ -9,11 +9,26 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo;
+
 
 	/**
 	 * Session interface, this class is designed to be attached to 
@@ -22,6 +37,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	class Session extends InfoAccess implements Invokable
 	{
@@ -56,13 +72,16 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	array			The configuration array
 		 * @return	object			Object instance
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			$options = $registry->cache->options;
+			if(!($options = $registry->cache->options))
+			{
+				return;
+			}
 
 			self::$options = Array(
 						'expires'	=> $options['cookie_expires'], 
@@ -128,14 +147,14 @@
 
 			if($regenerate_id)
 			{
-				session_regenerate_id(true);
+				\session_regenerate_id(true);
 			}
 
-			session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
-			session_start();
+			\session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
+			\session_start();
 
 			self::$started 	= true;
-			self::$id	= session_id();
+			self::$id	= \session_id();
 		}
 
 		/**
@@ -152,7 +171,7 @@
 
 			if(ini_get('session.use_cookies'))
 			{
-				\setcookie(session_name(), '', \TIMENOW_UTC - 86400, self::$options['path'], self::$options['domain'], false, true);
+				\setcookie(\session_name(), '', \TIMENOW_UTC - 86400, self::$options['path'], self::$options['domain'], false, true);
 			}
 
 			\session_unset();

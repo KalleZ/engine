@@ -9,10 +9,24 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo;
 
 
@@ -25,13 +39,14 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	class Datastore
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Registry
+		 * @var		\Tuxxedo\Registry
 		 */
 		protected $registry;
 
@@ -97,7 +112,7 @@
 		 * @param	boolean			Should this action be delayed until shutdown? (Defaults to true)
 		 * @return	boolean			True on success, otherwise false on error
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail (only if the delay parameter is set to false)
+		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail (only if the delay parameter is set to false)
 		 */
 		public function rebuild($name, Array $data = NULL, $delay = true)
 		{
@@ -157,7 +172,7 @@
 		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
 		 * @return	boolean			True on success, otherwise false
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception	Throws an exception if the query should fail
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
@@ -177,7 +192,7 @@
 									IN
 									(
 										\'%s\'
-									);', join('\', \'', \array_map(Array($this->registry->db, 'escape'), $elements)));
+									);', \join('\', \'', \array_map(Array($this->registry->db, 'escape'), $elements)));
 
 			if($result === false)
 			{
