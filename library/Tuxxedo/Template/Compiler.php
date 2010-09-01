@@ -15,6 +15,8 @@
 
 	namespace Tuxxedo\Template;
 
+	use Tuxxedo\Exception;
+
 	/**
 	 * Template compiler, this compiles raw template source 
 	 * code into php executable code with support for 
@@ -252,7 +254,7 @@
 
 				$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
 
-				if(empty($expr_value) && $expr_value != 0)
+				if(empty($expr_value) || \is_numeric($expr_value) && $expr_value != 0)
 				{
 					throw new Exception\TemplateCompiler('Expressions may not be empty', $this->conditions);
 				}
