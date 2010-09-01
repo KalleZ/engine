@@ -9,9 +9,11 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpckage		Library
 	 *
 	 * =============================================================================
 	 */
+
 
 	/**
 	 * Disable html errors, so error messages dont link to the 
