@@ -97,6 +97,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.0 Alpha 2';
+		const FULL			= '1.0.0 Beta 1 (development preview)';
 	}
 ?>
