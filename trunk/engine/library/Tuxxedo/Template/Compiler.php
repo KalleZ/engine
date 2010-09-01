@@ -339,7 +339,7 @@
 					$true = $template->get();
 				}
 
-				if(stripos($false, $tokens['if_start']))
+				if(\stripos($false, $tokens['if_start']))
 				{
 					$template->set(\str_replace('\\"', '"', $false));
 					$template->compile();
