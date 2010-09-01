@@ -1,12 +1,5 @@
 
 
-	Tuxxedo Engine 1.0.0 Alpha 2
-	----------------------------
-
-	Namespaces (Kalle)
-	 - Rewrite the autoloader for better error handling, or atleast refactor it internally
-
-
 
 	Tuxxedo Engine 1.0.0 Beta 1
 	---------------------------
@@ -16,8 +9,9 @@
 	 - Re-implement old tools
 	   - Options
 
-	Namespaces (Kalle)
+	Namespaces (Kalle, Ross)
 	 - Redesign bootstrap.php from the ground and up to make it easier to work on
+	 - Fix the autoloader to possibly support include_path again and such
 	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Fix docblocks
 
