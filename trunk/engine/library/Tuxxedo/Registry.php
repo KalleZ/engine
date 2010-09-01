@@ -9,25 +9,32 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
 
 	/**
-	 * Core engine namespace, standard exceptions are integrated within this 
-	 * part of the namespace, functions that previously were procedural is 
-	 * defined as static classes.
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
-	 * @subpackage		Core
+	 * @subpackage		Library
 	 */
 	namespace Tuxxedo;
 
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+
 
 	/**
 	 * Registry class, this acts as a mixed singleton/registry 
@@ -36,14 +43,14 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
-	 * @subpackage		Core
+	 * @subpackage		Library
 	 */
 	class Registry
 	{
 		/**
 		 * Holds the main instance
 		 *
-		 * @var		\Tuxxedo\Core\Registry
+		 * @var		\Tuxxedo\Registry
 		 */
 		private static $instance;
 
@@ -134,16 +141,20 @@
 		 * use Tuxxedo\Registry;
 		 *
 		 * $registry = Registry::init();
-		 * $registry->register('test', 'Classname');
+		 * $registry->register('test', '\Full\Class\Path');
  		 *
 		 * $test->Methodname(); // or $registry->test->Methodname();
 		 * </code>
+		 *
+		 * Note that the class must be a full path, and not an alias as 
+		 * the class is instanciated inside the registry, not the scope 
+		 * where custom aliasing rules may be defined.
 		 *
 		 * @param	string					The name of this instance
 		 * @param	string					The class to register, this must implement a 'magic' method called invoke to work
 		 * @return	object					Returns a reference to the created instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception			This a basic exception if the class doesn't exists or implements the magic invoke method
+		 * @throws	Tuxxedo\Exception\Basic			This a basic exception if the class doesn't exists or implements the magic invoke method
 		 */
 		public function register($refname, $class)
 		{
@@ -181,7 +192,7 @@
 		 */
 		public function set($refname, $reference)
 		{
-			$refname 		= strtolower($refname);
+			$refname 		= \strtolower($refname);
 			$GLOBALS[$refname]	= $this->instances[$refname] = $reference;
 		}	
 

@@ -13,9 +13,26 @@
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo;
-	use Tuxxedo\Session;
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Session;
 	
 	/**
 	 * User session class, this class manages the current user 
@@ -57,7 +74,7 @@
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Registry
+		 * @var		\Tuxxedo\Registry
 		 */
 		protected $registry;
 
@@ -78,7 +95,7 @@
 		/**
 		 * User session
 		 *
-		 * @var		Tuxxedo_Session
+		 * @var		\Tuxxedo\Session
 		 */
 		protected $session;
 
@@ -238,7 +255,7 @@
 		 */
 		public function getUserInfo($identifier = NULL, $identifier_field = 'id', $options = 0)
 		{
-			$identifier_field = strtolower($identifier_field);
+			$identifier_field = \strtolower($identifier_field);
 
 			if(isset($this->userinfo->id))
 			{
