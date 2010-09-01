@@ -14,9 +14,23 @@
 	 */
 
 
+	/**
+	 * Style storage namespace, this allows the templates to be loaded from 
+	 * different backends, like .tuxx files on the system or via a database
+	 * all in a pre-compiled stage.
+	 *
+	 * @author              Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version             1.0
+	 * @package             Engine
+	 * @subpackage          DevTools
+	 */
 	namespace Tuxxedo\Style\Storage;
 
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Registry;
+	use Tuxxedo\Style;
 	use Tuxxedo\Style\Storage;
 
 	/**
@@ -34,11 +48,11 @@
 		/**
 		 * Constructs a new storage engine
 		 *
-	 	 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	Tuxxedo_Style		Reference to the style object
+		 * @param	\Tuxxedo\Registry	The Registry reference
+		 * @param	\Tuxxedo\Style		Reference to the style object
 		 * @param	object			Object reference to the templates data table
 		 */
-		protected function __construct(Registry $registry, \Tuxxedo\Style $style, \stdClass $templates)
+		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
 			$this->tuxxedo 		= $registry;
 			$this->templates	= $templates;

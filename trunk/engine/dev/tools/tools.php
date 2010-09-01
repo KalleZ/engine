@@ -8,7 +8,8 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -51,8 +52,6 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
-
-	use Tuxxedo\Development;
 
 	switch(strtolower($filter->get('do')))
 	{
@@ -208,7 +207,7 @@
 			if(isset($_POST['submit']) && ($src = $filter->post('sourcecode')) !== false && !empty($src))
 			{
 				$source 	= htmlspecialchars($src);
-				$compiler	= new Tuxxedo_Template_Compiler;
+				$compiler	= new Tuxxedo\Template\Compiler;
 
 				try
 				{
@@ -218,7 +217,7 @@
 					$test 	= $compiler->test();
 					$result = $compiler->get();
 				}
-				catch(Tuxxedo_Template_Compiler_Exception $e)
+				catch(Exception\TemplateCompiler $e)
 				{
 					$error = $e->getMessage();
 				}

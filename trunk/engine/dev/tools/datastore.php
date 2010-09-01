@@ -8,7 +8,8 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -153,7 +154,13 @@
 									break;
 									case('phrasegroups'):
 									{
-										$query			= $db->query('SELECT COUNT(`id`) as \'phrases\' FROM `' . TUXXEDO_PREFIX . 'phrases` WHERE `phrasegroup` = \'' . $db->escape($s['title']) . '\'');
+										$query			= $db->query('
+															SELECT 
+																COUNT(`id`) as \'phrases\' 
+															FROM 
+																`' . TUXXEDO_PREFIX . 'phrases` 
+															WHERE 
+																`phrasegroup` = \'%s\'', $db->escape($s['title']));
 										$current[$s['title']] 	= Array(
 														'id'		=> $s['id'], 
 														'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)
