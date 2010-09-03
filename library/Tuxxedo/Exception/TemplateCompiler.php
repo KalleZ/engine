@@ -12,7 +12,21 @@
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Exception;
+
 
 	/**
 	 * Template compiler exception, any compilation error will be 
@@ -22,7 +36,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class TemplateCompiler extends \Tuxxedo\Exception
+	class TemplateCompiler extends Exception
 	{
 		/**
 		 * Constructs a template compiler excepton

@@ -13,8 +13,26 @@
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Intl;
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+
 
 	/**
 	 * Internationalization phrasegroup class
@@ -39,12 +57,12 @@
 		/**
 		 * Constructs a new phrasegroup object
 		 *
-		 * @param	Tuxxedo_Internationalization	Reference to the internationalization object to use for this phrasegroup
+		 * @param	\Tuxxedo\Intl			Reference to the internationalization object to use for this phrasegroup
 		 * @param	string				Name of the phrasegroup to instanciate
 		 *
-		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the phrasegroup isnt cached in the internationalization object
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the phrasegroup isnt cached in the internationalization object
 		 */
-		public function __construct(\Tuxxedo\Intl $intl, $phrasegroup)
+		public function __construct(Intl $intl, $phrasegroup)
 		{
 			$phrases = $intl->getPhrasegroup($phrasegroup, false);
 

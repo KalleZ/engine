@@ -12,9 +12,23 @@
 	 *
 	 * =============================================================================
 	 */
-	 
-    namespace Tuxxedo\Exception;
-    
+
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
+	namespace Tuxxedo\Exception;
+
+
 	/**
 	 * Form data exception, this exception is used to carry form data 
 	 * so it can be displayed in a form if an error should occur while 
@@ -24,7 +38,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class FormData extends \Tuxxedo\Exception
+	class FormData extends Exception
 	{
 		/**
 		 * Holds the current stored form data
@@ -41,7 +55,7 @@
 		 * @param	string			The error message, in a printf-alike formatted string or just a normal string
 		 * @param	mixed			Optional argument #n for formatting
 		 */
-		public function __construct(array $formdata, $message = NULL)
+		public function __construct(Array $formdata, $message = NULL)
 		{
 			if(!\sizeof($formdata))
 			{
