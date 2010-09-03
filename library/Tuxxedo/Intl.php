@@ -224,7 +224,7 @@
 		public function format()
 		{
 			$args = \func_get_args();
-			$size = \sizeof($args);
+			$size = \func_num_args($args);
 
 			$args[0] = $this->find($args[0]);
 
@@ -239,7 +239,7 @@
 
 			for($i = 0; $i < $size; ++$i)
 			{
-				$args[0] = \str_replace('{' . ($i + 1) . '}', $args[$i], $args[0]);
+				$args[0] = \str_replace('{' . ($i + 1) . '}', $args[$i + 1], $args[0]);
 			}
 
 			return($args[0]);

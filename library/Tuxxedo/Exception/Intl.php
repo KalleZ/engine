@@ -33,18 +33,17 @@
 
 			if(!$registry->intl)
 			{
-				if(\func_num_args() > 2)
+				if(($size = \func_num_args()) > 2)
 				{
 					$args = \func_get_args();
 
-					unset($args[0]);
+					for($i = 0; $i < $size; ++$i)
+					{
+						$message = \str_replace('{' . ($i + 1) . '}', $args[$i + 1], $message);
+					}
+				}
 
-					parent::__construct(\call_user_func_array('\sprintf', $args));
-				}
-				else
-				{
-					parent::__construct($message);
-				}
+				parent::__construct($message);
 			}
 			else
 			{
