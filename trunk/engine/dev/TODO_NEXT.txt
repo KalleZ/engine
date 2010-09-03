@@ -25,6 +25,10 @@
 	Implement session adapters with backends for APC etc.
 	Implement validators
 	Implement API accessors
+	Implement permission constants for cached permission fields
+
+	MVC
+	 - Implement ACL mappings for controllers
 	
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases
