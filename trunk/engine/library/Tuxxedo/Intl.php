@@ -13,8 +13,27 @@
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+
 
 	/**
 	 * Internationalization Interface
@@ -31,7 +50,7 @@
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Registry
+		 * @var		\Tuxxedo\Registry
 		 */
 		protected $registry;
 
@@ -60,11 +79,11 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	array			The configuration array
-		 * @return	object			Object instance
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	array				The configuration array
+		 * @return	object				Object instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if an invalid (or not cached) language id was used
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if an invalid (or not cached) language id was used
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
@@ -88,7 +107,7 @@
 		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
 		 * @return	boolean			Returns true on success otherwise false
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception	Throws an exception if the query should fail
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{

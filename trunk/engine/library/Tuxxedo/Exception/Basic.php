@@ -13,7 +13,21 @@
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo\Exception;
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
+	namespace Tuxxedo\Exception;
+
     
 	/**
 	 * Basic exception type, this is used for errors that 
@@ -25,7 +39,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Basic extends \Tuxxedo\Exception
+	class Basic extends Exception
 	{
 	}    
 ?>

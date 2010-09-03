@@ -13,7 +13,21 @@
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Exception;
+
     
 	/**
 	 * Basic exception type, this is used for errors that 
@@ -27,23 +41,58 @@
 	 */
 	class Intl extends Exception
 	{
+		/**
+		 * Constructs a new internalizationized exception, meaning that the 
+		 * contents of this exception may be formatted for internationalized 
+		 * usage.
+		 *
+		 * If the internationalization object is not instanciated, then the 
+	 	 * message is used as a raw translation, if the translation parameter 
+		 * is specified then its formatted using a sprintf-alike syntax, 
+		 * example:
+		 *
+		 * <code>
+		 * try
+		 * {
+		 * 	throw new Exception\Intl('You are not old enough to view this content, you must be %d years old', 'age_limit_x', 18);
+		 * }
+		 * catch(Exception\Intl $e)
+		 * {
+		 * 	echo $e->getMessage();
+		 * }
+		 * </code>
+		 *
+		 * If the translation method is specified and the component is not loaded, then 
+		 * formatting will be applied internally.
+		 *
+		 * Now if the internationalization component is loaded, then the above 
+		 * would have outputted the same, however internally it would lookup the 
+		 * phrase name 'age_limit_x' within the internationalization object, and 
+		 * find its translation phrase and format it like regular phrases are 
+		 * formatted with the {1}, {2}, {N} syntax.
+		 *
+		 * @param	string			The untranslated message, in case of the internationalization library was not loaded
+		 * @param	string			The translation phrase
+		 * @param	mixed			Optionally translation phrase replacement or parameter 1, 2, N
+		 */
 		public function __construct($message, $translation = NULL)
 		{
 			global $registry;
 
 			if(!$registry->intl)
 			{
-				if(($size = \func_num_args()) > 2)
+				if(\func_num_args() > 2)
 				{
 					$args = \func_get_args();
 
-					for($i = 0; $i < $size; ++$i)
-					{
-						$message = \str_replace('{' . ($i + 1) . '}', $args[$i + 1], $message);
-					}
-				}
+					unset($args[0]);
 
-				parent::__construct($message);
+					parent::__construct(\call_user_func_array('\sprintf', $args));
+				}
+				else
+				{
+					parent::__construct($message);
+				}
 			}
 			else
 			{
