@@ -27,10 +27,12 @@
 	 */
 	namespace Tuxxedo\Development;
 
+
 	/**
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Registry;
+
 
 	/**
 	 * Development Tools styling class, this class overrides the 

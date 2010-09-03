@@ -28,12 +28,14 @@
 	 */
 	namespace Tuxxedo;
 
+
 	/**
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Session;
-	
+
+
 	/**
 	 * User session class, this class manages the current user 
 	 * session information and permission bitfields.

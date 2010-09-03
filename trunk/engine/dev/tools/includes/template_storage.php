@@ -26,12 +26,14 @@
 	 */
 	namespace Tuxxedo\Style\Storage;
 
+
 	/**
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Style;
 	use Tuxxedo\Style\Storage;
+
 
 	/**
 	 * Development Tools style storage, this class overrides the 

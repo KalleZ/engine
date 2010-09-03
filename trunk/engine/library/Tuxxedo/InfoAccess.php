@@ -29,6 +29,7 @@
 	 */
 	namespace Tuxxedo;
 
+
 	/**
 	 * Information access, enables the ability for classes 
 	 * to access their loaded information through the array-alike 
