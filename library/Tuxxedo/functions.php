@@ -49,6 +49,7 @@
 
 			if(!is_array($errors))
 			{
+
 				Registry::globals('errors', Array($e->getMessage()));
 			}
 			else
@@ -126,18 +127,11 @@
 
 		if($registry)
 		{
-			$errors = Registry::globals('errors');
+			$errors = (array) Registry::globals('errors');
 
-			if(!is_array($errors))
-			{
-				Registry::globals('errors', Array($message));
-			}
-			else
-			{
-				array_push($errors, $message);
+			array_push($errors, $message);
 
-				Registry::globals('errors', $errors);
-			}
+			Registry::globals('errors', $errors);
 		}
 		else
 		{
@@ -183,7 +177,7 @@
 			$message = utf8_encode($message);
 		}
 
-		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && !$registry->style)
+		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && $registry && !$registry->style)
 		{
 			$message .=	 PHP_EOL . 
 					'The following errors were logged while executing:' . PHP_EOL . 
