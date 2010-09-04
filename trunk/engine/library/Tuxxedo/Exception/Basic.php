@@ -39,7 +39,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Basic extends Exception
+	class Basic extends \Tuxxedo\Exception
 	{
 	}    
 ?>
