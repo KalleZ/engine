@@ -38,7 +38,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class FormData extends Exception
+	class FormData extends \Tuxxedo\Exception
 	{
 		/**
 		 * Holds the current stored form data

@@ -36,7 +36,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class TemplateCompiler extends Exception
+	class TemplateCompiler extends \Tuxxedo\Exception
 	{
 		/**
 		 * Constructs a template compiler excepton

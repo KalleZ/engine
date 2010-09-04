@@ -39,7 +39,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Intl extends Exception
+	class Intl extends \Tuxxedo\Exception
 	{
 		/**
 		 * Constructs a new internalizationized exception, meaning that the 
