@@ -250,7 +250,7 @@
 				'</tr>' . PHP_EOL .  
 				'<tr>' . PHP_EOL . 
 				'<td>Script:</td>' . PHP_EOL . 
-				'<td class="value">' . realpath($_SERVER['SCRIPT_FILENAME']) . '</td>' . PHP_EOL . 
+				'<td class="value" nowrap="nowrap">' . realpath($_SERVER['SCRIPT_FILENAME']) . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL
 				);
 
