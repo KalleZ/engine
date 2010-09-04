@@ -48,15 +48,15 @@
 		throw new Exception\Basic('A script name must be defined prior to use');
 	}
 
-	set_error_handler('tuxxedo_error_handler');
-	set_exception_handler('tuxxedo_exception_handler');
-	register_shutdown_function('tuxxedo_shutdown_handler');
-	spl_autoload_register('\Tuxxedo\Loader::load');
-
 	define('TUXXEDO_DEBUG', 	true);
 	define('TUXXEDO_DIR', 		CWD);
 	define('TUXXEDO_LIBRARY', 	CWD . '/library');
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
+
+	set_error_handler('tuxxedo_error_handler');
+	set_exception_handler('tuxxedo_exception_handler');
+	register_shutdown_function('tuxxedo_shutdown_handler');
+	spl_autoload_register('\Tuxxedo\Loader::load');
 
 	Registry::globals('error_reporting', 	true);
 	Registry::globals('errors', 		Array());
