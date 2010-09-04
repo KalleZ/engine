@@ -110,13 +110,13 @@
 
 		global $registry;
 
-		$result = $registry->db->query('
-						UPDATE 
-							`' . TUXXEDO_PREFIX . 'options` 
-						SET 
-							`value` = \'%s\' 
-						WHERE 
-							`option` = \'%s\'', $registry->db->escape($option['defaultvalue']), $registry->db->escape($option['option']));
+		$result = $registry->db->equery('
+							UPDATE 
+								`' . TUXXEDO_PREFIX . 'options` 
+							SET 
+								`value` = \'%s\' 
+							WHERE 
+								`option` = \'%s\'', $option['defaultvalue'], $option['option']);
 
 		return($result && $registry->db->getAffectedRows($result));
 	}
@@ -131,11 +131,11 @@
 	{
 		global $registry;
 
-		$result = $registry->db->query('
-						DELETE FROM 
-							`' . TUXXEDO_PREFIX . 'options`
-						WHERE 
-							`option` = \'%s\'', $registry->db->escape($option));
+		$result = $registry->db->equery('
+							DELETE FROM 
+								`' . TUXXEDO_PREFIX . 'options`
+							WHERE 
+								`option` = \'%s\'', $option);
 
 		return($result && $registry->db->getAffectedRows($result));
 	}

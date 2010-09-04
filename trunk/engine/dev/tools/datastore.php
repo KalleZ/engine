@@ -131,7 +131,7 @@
 						case('styleinfo'):
 						case('usergroups'):
 						{
-							$p = $db->query('
+							$p = $db->equery('
 										SELECT 
 											* 
 										FROM `' . TUXXEDO_PREFIX . $tables[$element] . '` 
@@ -154,13 +154,13 @@
 									break;
 									case('phrasegroups'):
 									{
-										$query			= $db->query('
+										$query			= $db->equery('
 															SELECT 
 																COUNT(`id`) as \'phrases\' 
 															FROM 
 																`' . TUXXEDO_PREFIX . 'phrases` 
 															WHERE 
-																`phrasegroup` = \'%s\'', $db->escape($s['title']));
+																`phrasegroup` = \'%s\'', $s['title']);
 										$current[$s['title']] 	= Array(
 														'id'		=> $s['id'], 
 														'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)

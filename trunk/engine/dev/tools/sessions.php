@@ -63,11 +63,11 @@
 			{
 				case('single'):
 				{
-					if(($result = $db->query('
+					if(($result = $db->equery('
 									DELETE FROM 
 										`' . TUXXEDO_PREFIX . 'sessions` 
 									WHERE 
-										`sessionid` = \'%s\'', $db->escape($filter->get('id')))) !== false && $db->getAffectedRows($result))
+										`sessionid` = \'%s\'', $filter->get('id'))) !== false && $db->getAffectedRows($result))
 					{
 						tuxxedo_redirect('Killed session with success', './sessions.php');
 					}

@@ -461,11 +461,11 @@
 				return(true);
 			}
 
-			return($this->tuxxedo->db->query('
+			return($this->tuxxedo->db->equery('
 								DELETE FROM 
 									`' . $this->tablename . '`
 								WHERE 
-									`' . $this->idname .'` = \'%s\'', $this->tuxxedo->db->escape($this->identifier)));
+									`' . $this->idname .'` = \'%s\'', $this->identifier));
 		}
 	}
 ?>

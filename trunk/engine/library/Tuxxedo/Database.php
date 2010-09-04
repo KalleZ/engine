@@ -180,6 +180,25 @@
 		}
 
 		/**
+		 * Escape all arguments set to the query, prior to formatting
+		 *
+		 * @param	string			SQL to execute
+		 * @param	mixed			Genetic parameter for formatting, if two or more parameters are passed to the method, the sql will be formatted using sprintf
+		 * @return	boolean|object		Returns a result object on SELECT statements, and boolean true otherwise if the statement was executed
+		 *
+		 * @throws	\Tuxxedo\Exception\SQL	If the SQL should fail for whatever reason, an exception is thrown
+		 */
+		public function equery($sql)
+		{
+			if(\func_num_args() > 1)
+			{
+				$sql = \call_user_func_array('\sprintf', \array_map(Array($this, 'escape'), \func_get_args()));
+			}
+
+			return($this->query($sql));
+		}
+
+		/**
 		 * Sets a new query to execute at shutdown
 		 *
 		 * @param	string			The SQL string to execute
