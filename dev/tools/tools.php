@@ -159,8 +159,8 @@
 		{
 			if(isset($_POST['submit']) && ($password = $filter->post('keyword')) !== false && !empty($password) && ($chars = $filter->post('characters')) % 8 === 0)
 			{
-				$salt 		= htmlspecialchars(Tuxxedo_User::getPasswordSalt($chars));
-				$hash 		= Tuxxedo_User::getPasswordHash($password, $salt);
+				$salt 		= htmlspecialchars(\Tuxxedo\User::getPasswordSalt($chars));
+				$hash 		= \Tuxxedo\User::getPasswordHash($password, $salt);
 				$password	= htmlspecialchars($password);
 
 				eval('$results = "' . $style->fetch('tools_password_result') . '";');
