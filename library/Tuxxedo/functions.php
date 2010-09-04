@@ -45,19 +45,11 @@
 
 		if($registry && Registry::globals('error_reporting'))
 		{
-			$errors = Registry::globals('errors');
+			$errors = (array) Registry::globals('errors');
 
-			if(!is_array($errors))
-			{
+			array_push($errors, $e->getMessage());
 
-				Registry::globals('errors', Array($e->getMessage()));
-			}
-			else
-			{
-				array_push($errors, $e->getMessage());
-
-				Registry::globals('errors', $errors);
-			}
+			Registry::globals('errors', $errors);
 		}
 		else
 		{
