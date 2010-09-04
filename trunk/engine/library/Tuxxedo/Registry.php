@@ -158,9 +158,9 @@
 		 */
 		public function register($refname, $class)
 		{
-			if(isset($this->instances[$refname]))
+			if(isset($this->instances[$refname]) && $this->instances[$refname] instanceof $class)
 			{
-				return;
+				return($this->instances[$refname]);
 			}
 			elseif(!\class_exists($class))
 			{
