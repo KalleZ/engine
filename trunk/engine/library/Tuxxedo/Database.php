@@ -185,7 +185,7 @@
 		 * @param	string			The SQL string to execute
 		 * @return	void			No value is returned
 		 */
-		public function setShutdownQuery($sql)
+		final public function setShutdownQuery($sql)
 		{
 			if(\func_num_args() > 1)
 			{
