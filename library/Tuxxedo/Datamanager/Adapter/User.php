@@ -201,14 +201,14 @@
 		 */
 		public static function isValidUsername(Registry $registry, $username)
 		{
-			$query = $registry->db->query('
+			$query = $registry->db->equery('
 							SELECT 
 								* 
 							FROM 
 								`' . \TUXXEDO_PREFIX . 'users` 
 							WHERE 
 								`username` = \'%s\' 
-							LIMIT 1', $registry->db->escape($username))
+							LIMIT 1', $username);
 
 			return($query && $query->getNumRows() == 0);
 		}

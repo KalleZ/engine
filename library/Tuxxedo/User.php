@@ -152,8 +152,8 @@
 			if($session)
 			{
 				$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
-				$this->sessiondm['location']		= $registry->db->escape(\TUXXEDO_SELF);
-				$this->sessiondm['useragent']		= $registry->db->escape(\TUXXEDO_USERAGENT);
+				$this->sessiondm['location']		= \TUXXEDO_SELF;
+				$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
 			}
 		}
 
@@ -290,7 +290,7 @@
 
 			if($options & self::OPT_SESSION)
 			{
-				$query = $this->registry->db->query('
+				$query = $this->registry->db->equery('
 									SELECT
 										' . \TUXXEDO_PREFIX . 'sessions.*, 
 										' . \TUXXEDO_PREFIX . 'users.*
@@ -302,18 +302,18 @@
 											' . \TUXXEDO_PREFIX . 'sessions.userid = ' . \TUXXEDO_PREFIX . 'users.id 
 										WHERE 
 											' . \TUXXEDO_PREFIX . 'users.%s = \'%s\' 
-									LIMIT 1', $this->registry->db->escape($identifier_field), $this->registry->db->escape($identifier));
+									LIMIT 1', $identifier_field, $identifier);
 			}
 			else
 			{
-				$query = $this->registry->db->query('
+				$query = $this->registry->db->equery('
 									SELECT 
 										* 
 									FROM 
 										`' . \TUXXEDO_PREFIX . 'users` 
 									WHERE 
 										`%s` = \'%s\'
-									LIMIT 1', $this->registry->db->escape($identifier_field), $this->registry->db->escape($identifier));
+									LIMIT 1', $identifier_field, $identifier);
 			}
 
 			if($query && $query->getNumRows())
