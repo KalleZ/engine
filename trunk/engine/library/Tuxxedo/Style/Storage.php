@@ -9,14 +9,31 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Style namespace, this contains all style related routines such as storage
+	 * of templates within handlers and all loading functions. Extended template 
+	 * routines are in the \Tuxxedo\Template namespace.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Style;
-	use Tuxxedo\Registry;
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
-	use Tuxxedo\Style;
+	use Tuxxedo\Registry;
+
 	
 	/**
 	 * Interface for template storage engines
@@ -24,6 +41,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	abstract class Storage
 	{
