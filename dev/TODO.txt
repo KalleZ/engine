@@ -16,9 +16,6 @@
 	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Fix docblocks
 
-	Other (Kalle)
-	 - Write a small tutorial to templating with Engine in the wiki
-
 
 
 	Tuxxedo Engine 1.0.0 Release Candidate 1
