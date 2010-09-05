@@ -15,10 +15,8 @@
 
 
 	/**
-	 * Core Tuxxedo library namespace. This namespace contains all the main 
-	 * foundation components of Tuxxedo Engine, plus additional utilities 
-	 * thats provided by default. Some of these default components have 
-	 * sub namespaces if they provide child objects.
+	 * Exception namespace, this contains all the core exceptions defined within 
+	 * the library.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>

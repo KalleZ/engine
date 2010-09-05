@@ -13,9 +13,14 @@
 	 * =============================================================================
 	 */
 
-	use Tuxxedo\Registry;
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
+
 
 	/**
 	 * Exception handler, this terminates the script execution 
@@ -147,13 +152,13 @@
 			return;
 		}
 
-		$called	 = true;
-		$buffer	 = ob_get_clean();
-		$exception	  = ($e instanceof \Exception);
+		$called		= true;
+		$buffer		= ob_get_clean();
+		$exception	= ($e instanceof \Exception);
 		$exception_sql	=  $exception && $registry->db && $e instanceof Exception\SQL;
-		$utf8	   = function_exists('utf8_encode');
+		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
-		$errors	= ($registry ? Registry::globals('errors') : false);
+		$errors		= ($registry ? Registry::globals('errors') : false);
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if(empty($message))
