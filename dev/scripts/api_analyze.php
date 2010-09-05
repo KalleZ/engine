@@ -80,10 +80,18 @@
 					$datamap[$file][$type_multiple][$name]	= Array(
 											'constants'	=> Array(), 
 											'properties'	=> Array(), 
-											'methods'	=> Array()
+											'methods'	=> Array(), 
+											'namespace'	=> end($datamap[$file]['namespaces']), 
+											'implements'	=> Array(),  
+											'metadata'	=> Array(
+															'final'		=> lexical_scan_backwards($tokens_copy, $index, T_FINAL, T_OPEN_TAG), 
+															'abstract'	=> lexical_scan_backwards($tokens_copy, $index, T_ABSTRACT, T_OPEN_TAG)
+															)
 											);
 
-					printf('%s (%s)<br />', strtoupper($type), $name);
+					var_dump($datamap[$file][$type_multiple][$name]['implements']);
+
+					printf('%s (%s) %s<br />', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata']));
 				}
 				break;
 				case(T_FUNCTION):
@@ -95,13 +103,31 @@
 
 					if($context->current == T_CLASS || $context->current == T_INTERFACE)
 					{
-						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] = $function;
+						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] = Array(
+																		'method'	=> $function, 
+																		'namespace'	=> end($datamap[$file]['namespaces']), 
+																		'metadata'	=> Array(
+																						'final'		=> lexical_scan_backwards($tokens_copy, $index, T_FINAL, '{}'), 
+																						'abstract'	=> lexical_scan_backwards($tokens_copy, $index, T_ABSTRACT, '{}'), 
+																						'public'	=> lexical_scan_backwards($tokens_copy, $index, T_PUBLIC, '{}'), 
+																						'protected'	=> lexical_scan_backwards($tokens_copy, $index, T_PROTECTED, '{}'), 
+																						'private'	=> lexical_scan_backwards($tokens_copy, $index, T_PRIVATE, '{}'), 
+																						'static'	=> lexical_scan_backwards($tokens_copy, $index, T_STATIC, '{}')
+																						)
+																		);
 
-						printf('- METHOD (%s)<br />', $function);
+						$metadata = end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
+
+						printf('- METHOD (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
+
+						unset($metadata);
 					}
 					else
 					{
-						$datamap[$file]['functions'][] = $function;
+						$datamap[$file]['functions'][] = Array(
+											'function'	=> $function, 
+											'namespace'	=> end($datamap[$file]['namespaces'])
+											);
 
 						printf('FUNCTION (%s)<br />', $function);
 					}
@@ -136,7 +162,10 @@
 
 					if($context->current !== false)
 					{
-						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] = $const;
+						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] = Array(
+																		'constant'	=> $const, 
+																		'namespace'	=> end($datamap[$file]['namespaces'])
+																		);
 
 						printf('- CONSTANT (%s)<br />', $const);
 					}
@@ -197,6 +226,39 @@
 		return($files);
 	}
 
+	function dump_metadata(Array $data)
+	{
+		$dump = '';
+
+		foreach($data as $parameter => $exists)
+		{
+			if($exists)
+			{
+				$dump .= $parameter . ', ';
+			}
+		}
+
+		return((empty($dump) ? '' : 'meta=' . rtrim($dump, ', ')));
+	}
+
+	function lexical_next_index(Array $tokens, $start_index, $token)
+	{
+		$inc = 0;
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data = $tokens[$start_index + $inc - 1];
+			$token_data = (is_array($token_data) ? $token_data[0] : $token_data);
+
+			if($token_data == $token)
+			{
+				return($start_index + $inc - 1);
+			}
+		}
+
+		return(false);
+	}
+
 	function lexical_scan(Array $tokens, $start_index, $token)
 	{
 		$inc			= 0;
@@ -245,5 +307,76 @@
 		}
 
 		return($scanned);
+	}
+
+	function lexical_scan_implements(Array $tokens, $start_index)
+	{
+		/* This code sucks and should be terminated */
+
+		$inc 			= $matched_index = 0;
+		$matched_tokens		= Array();
+		$start_index		= lexical_next_index($tokens, $start_index, T_IMPLEMENTS);
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data 		= $tokens[$start_index + $inc - 1];
+			$token_data 		= (is_array($token_data) ? $token_data[0] : $token_data);
+			$namespace_interface	= $token_data == T_NS_SEPARATOR;
+
+			if(!$namespace_interface && $token_data == '{')
+			{
+				break;
+			}
+			elseif($token_data == T_STRING || $namespace_interface)
+			{
+				if($namespace_interface)
+				{
+					$matched_tokens[key($matched_tokens)] .= '\\';
+				}
+				else
+				{
+					$matched_tokens[] = (is_array($tokens[$start_index + $inc - 1]) ? $tokens[$start_index + $inc - 1][1] : $token_data);
+				}
+			}
+		}
+
+		return(array_map('stripslashes', $matched_tokens));
+	}
+
+	function lexical_scan_backwards(Array $tokens, $start_index, $token, $stop_token)
+	{
+		/* This code is pretty broken aswell and needs fine tuning to work correctly in all cases */
+
+		return(false);
+
+		$inc = 0;
+
+		$tokens = array_reverse($tokens);
+
+		if(strlen($stop_token) > 1)
+		{
+			$stop_token = str_split($stop_token);
+		}
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data = $tokens[$start_index + $inc - 1];
+			$token_data = (is_array($token_data) ? $token_data[0] : $token_data);
+
+			if(is_array($stop_token) && in_array($token_data, $stop_token) || $token_data == $stop_token)
+			{
+				break;
+			}
+			elseif($token_data == $token)
+			{
+				$tokens = array_reverse($tokens);
+
+				return(true);
+			}
+		}
+
+		$tokens = array_reverse($tokens);
+
+		return(false);
 	}
 ?>
