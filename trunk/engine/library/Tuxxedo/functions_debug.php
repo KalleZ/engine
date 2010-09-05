@@ -153,6 +153,12 @@
 		return($stack);
 	}
 
+	/**
+	 * Dumps type data for argument call lists within the debug backtraces
+	 *
+	 * @param	mixed			Any type of variable to dump
+	 * @return	string			Returns a formatted string with the variable data
+	 */
 	function tuxxedo_debug_typedata($variable)
 	{
 		switch(gettype($variable))

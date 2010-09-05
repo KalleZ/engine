@@ -9,13 +9,30 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Template namespace. This contains special routines for template handling 
+	 * and such. It is also the home of the template compiler.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Template;
 
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+
 
 	/**
 	 * Template compiler, this compiles raw template source 
@@ -29,6 +46,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	class Compiler
 	{
