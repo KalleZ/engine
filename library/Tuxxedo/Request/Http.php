@@ -18,7 +18,7 @@
 	/**
 	 * Generates a HTTP request
 	 */
-	class Tuxxedo_Request_Http extends Tuxxedo_Request
+	class Http extends Request
 	{
 	    protected static $validMethods = array("GET", "POST", "PUT", 
 	                                               "DELETE", "HEAD", "OPTIONS",
