@@ -9,14 +9,33 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Style storage namespace, this is for handlers that can load templates via 
+	 * different backends such as file system or database. All must extend the 
+	 * \Tuxxedo\Style\Storage class.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Style\Storage;
-	use Tuxxedo\Registry;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Style;
+
 
 	/**
 	 * Style storage engine for database based templates
@@ -24,6 +43,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	class Database extends Style\Storage
 	{
