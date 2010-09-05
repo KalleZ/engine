@@ -86,6 +86,14 @@
 							'usergroup'
 							);
 
+		/**
+		 * The default closures to allow in expressions
+		 *
+		 * @var		array
+		 */
+		protected $closures		= Array(
+							);
+
 
 		/**
 		 * Template compiler constructor
@@ -132,6 +140,24 @@
 			}
 
 			$this->classes[] = $class;
+
+			return(true);
+		}
+
+		/**
+		 * Allows a closure within expressions
+		 *
+		 * @param	string			The closure expression name (to allow $closure, supply 'closure')
+		 * @return	boolean			Returns true if success, and false if already is loaded
+		 */
+		public function allowClosure($closure)
+		{
+			if(\in_array($closure, $this->closures))
+			{
+				return(false);
+			}
+
+			$this->closures[] = $closure;
 
 			return(true);
 		}
@@ -272,6 +298,11 @@
 						{
 							continue;
 						}
+						elseif($function{0} == '$' && \strpos($function, '->') === false && \in_array(substr($function, 1), $this->closures))
+						{
+							continue;
+						}
+var_dump($function{0} == '$', \strpos($function, '->') === false, substr($function, 1), \in_array(substr($function, 1), $this->closures));
 
 						throw new Exception\TemplateCompiler('Use of unsafe function: ' . $function . '()', $this->conditions);
 					}
@@ -407,15 +438,19 @@
 
 			$er = \error_reporting(\error_reporting() & ~E_NOTICE);
 
-			if(\sizeof($this->classes))
+			if(\sizeof($this->classes) || \sizeof($this->closures))
 			{
-				foreach($this->classes as $name)
+				$elements = \array_merge($this->classes, $this->closures);
+
+				foreach($elements as $name)
 				{
 					if(!isset(${$name}))
 					{
 						${$name} = new Compiler\Dummy;
 					}
 				}
+
+				unset($elements, $name);
 			}
 
 			\ob_start();

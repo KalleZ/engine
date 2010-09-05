@@ -37,5 +37,17 @@
 		{
 			return(true);
 		}
+
+		/**
+		 * Dummy method to emulate method overloading 
+		 * to make testing pass
+		 *
+		 * @param	array		The arguments to pass to the method
+		 * @return	boolean		Always returns true
+		 */
+		public function __invoke(Array $arguments = NULL)
+		{
+			return(true);
+		}
 	}
 ?>
