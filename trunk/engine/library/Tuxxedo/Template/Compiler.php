@@ -294,15 +294,10 @@
 					{
 						$function = \strtolower(\stripslashes($function));
 
-						if(\in_array($function, $this->functions) || $function{0} == '$' && ($pos = \strpos($function, '->')) !== false && \in_array(\substr($function, 1, $pos - 1), $this->classes))
+						if(\in_array($function, $this->functions) || $function{0} == '$' && ($pos = \strpos($function, '->')) !== false && \in_array(\substr($function, 1, $pos - 1), $this->classes) || $function{0} == '$' && \strpos($function, '->') === false && \in_array(substr($function, 1), $this->closures))
 						{
 							continue;
 						}
-						elseif($function{0} == '$' && \strpos($function, '->') === false && \in_array(substr($function, 1), $this->closures))
-						{
-							continue;
-						}
-var_dump($function{0} == '$', \strpos($function, '->') === false, substr($function, 1), \in_array(substr($function, 1), $this->closures));
 
 						throw new Exception\TemplateCompiler('Use of unsafe function: ' . $function . '()', $this->conditions);
 					}
