@@ -9,13 +9,33 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	
+
+
+	/**
+	 * Database Access Layer implementation. This namespace controls 
+	 * all access to the database, multiple drivers for the database 
+	 * can be loaded at the same time, along with multiple database 
+	 * connection, even to the same database.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Database;
 
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Database;
+
 
 	/**
 	 * Abstract database result class
@@ -26,13 +46,14 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	abstract class Result implements Result\Specification
 	{
 		/**
 		 * The database instance from where the result was created
 		 *
-		 * @var		Tuxxedo_Database
+		 * @var		\Tuxxedo\Database
 		 */
 		protected $instance;
 
@@ -54,12 +75,12 @@
 		/**
 		 * Constructs a new result object
 		 *
-		 * @param	Tuxxedo_Database	A database instance
-		 * @param	mixed			A database result, this must be delivered from the driver it was created from
+		 * @param	\Tuxxedo\Database		A database instance
+		 * @param	mixed				A database result, this must be delivered from the driver it was created from
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	If the result passed is from a different driver type, or if the result does not contain any results
+		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
 		 */
-		public function __construct(\Tuxxedo\Database $instance, $result)
+		public function __construct(Database $instance, $result)
 		{
 			if(!$instance->isResult($result))
 			{
