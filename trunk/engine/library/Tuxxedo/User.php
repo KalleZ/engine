@@ -448,7 +448,7 @@
 		 */
 		public static function getPasswordHash($password, $salt)
 		{
-			return(sha1(sha1($password) . $salt));
+			return(\sha1(\sha1($password) . $salt));
 		}
 
 		/**
