@@ -104,7 +104,7 @@
 		/**
 		 * User session datamanager
 		 *
-		 * @var		Tuxxedo_Datamanager_API_Session
+		 * @var		\Tuxxedo\Datamanager\Adapter\Session
 		 */
 		protected $sessiondm;
 

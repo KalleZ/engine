@@ -54,7 +54,7 @@
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Tuxxedo
+		 * @var		\Tuxxedo\Registry
 		 */
 		protected $registry;
 
@@ -69,7 +69,7 @@
 		/**
 		 * Constructs a new style object
 		 *
-		 * @param	array			The style data to use
+		 * @param	array				The style data to use
 		 */
 		public function __construct(Array $styleinfo)
 		{
@@ -85,11 +85,11 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	array			The configuration array
-		 * @return	object			Object instance
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	array				The configuration array
+		 * @return	object				Object instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if an invalid (or not cached) style id was used
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if an invalid (or not cached) style id was used
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
@@ -109,11 +109,11 @@
 		 * Caches a template, trying to cache an already loaded 
 		 * template will recache it
 		 *
-		 * @param	array			A list of templates to load
-		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
-		 * @return	boolean			Returns true on success otherwise false
+		 * @param	array				A list of templates to load
+		 * @param	array				An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @return	boolean				Returns true on success otherwise false
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception		Throws an exception if the query should fail
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
@@ -123,8 +123,8 @@
 		/**
 		 * Fetches a cached template
 		 *
-		 * @param	string			The name of the template to fetch
-		 * @return	string			Returns the compiled template code for execution, and boolean false on error
+		 * @param	string				The name of the template to fetch
+		 * @return	string				Returns the compiled template code for execution, and boolean false on error
 		 */
 		public function fetch($template)
 		{
