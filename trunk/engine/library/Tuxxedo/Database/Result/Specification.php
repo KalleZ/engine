@@ -9,13 +9,26 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	
+
+
+	/**
+	 * Database result namespace, this contains the driver specification 
+	 * interface for database drivers to handle a result set.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Database\Result;
-	
-		/**
+
+
+	/**
 	 * Base database driver result interface
 	 *
 	 * This defines the driver structure of which functions a driver 
@@ -24,6 +37,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	interface Specification
 	{
@@ -77,3 +91,4 @@
 		 */
 		public function fetchObject();
 	}
+?>

@@ -9,12 +9,32 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+
 
 	/**
 	 * Abstract database class
@@ -26,6 +46,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	abstract class Database implements Database\Driver, Invokable
 	{
@@ -80,9 +101,9 @@
 		/**
 		 * Default constructor for a new database instance
 		 *
-		 * @param	array			Database specific configuration array
+		 * @param	array				Database specific configuration array
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	If the database connection fails, a basic exception will be thrown
+		 * @throws	\Tuxxedo\Exception\Basic	If the database connection fails, a basic exception will be thrown
 		 */
 		public function __construct(Array $configuration)
 		{
@@ -107,8 +128,7 @@
 
 		/**
 		 * Default destructor, this simply closes a database connection 
-		 * without anything else. A driver may extend the destructor 
-		 * to shutdown other required services.
+		 * and executes any registered shutdown queries there might be
 		 */
 		public function __destruct()
 		{
@@ -134,11 +154,11 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	array			The configuration array
-		 * @return	object			Object instance
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	array				The configuration array
+		 * @return	object				Object instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	Only thrown on poorly a configured database section in the configuration file
+		 * @throws	\Tuxxedo\Exception\Basic	Only thrown on poorly a configured database section in the configuration file
 		 */
 		final public static function invoke(Registry $registry, Array $configuration)
 		{
@@ -153,11 +173,11 @@
 		/**
 		 * Constructs a new database instance
 		 *
-		 * @param	string			Driver name
-		 * @param	array			Database specific configuration array
-		 * @return	Tuxxedo_Database		Returns a new database instance
+		 * @param	string				Driver name
+		 * @param	array				Database specific configuration array
+		 * @return	\Tuxxedo\Database		Returns a new database instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if loading of a driver should fail for some reason
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a driver should fail for some reason
 		 */
 		final public static function factory($driver, Array $configuration)
 		{
