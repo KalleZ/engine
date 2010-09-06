@@ -14,6 +14,7 @@
 	 */
 
 	namespace Tuxxedo\Datamanager;
+	use Tuxxedo\Filter;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
 
@@ -56,35 +57,35 @@
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_NUMERIC			= \Tuxxedo\Filter::TYPE_NUMERIC;
+		const VALIDATE_NUMERIC			= Filter::TYPE_NUMERIC;
 
 		/**
 		 * Validation constant, string value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_STRING			= \Tuxxedo\Filter::TYPE_STRING;
+		const VALIDATE_STRING			= Filter::TYPE_STRING;
 
 		/**
 		 * Validation constant, email value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_EMAIL			= \Tuxxedo\Filter::TYPE_EMAIL;
+		const VALIDATE_EMAIL			= Filter::TYPE_EMAIL;
 
 		/**
 		 * Validation constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_BOOLEAN			= \Tuxxedo\Filter::TYPE_BOOLEAN;
+		const VALIDATE_BOOLEAN			= Filter::TYPE_BOOLEAN;
 
 		/**
 		 * Validation constant, callback
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_CALLBACK			= \Tuxxedo\Filter::TYPE_CALLBACK;
+		const VALIDATE_CALLBACK			= Filter::TYPE_CALLBACK;
 
 		/**
 		 * Validation option constant, escape HTML
@@ -314,7 +315,7 @@
 						{
 							if(isset($properties['parameters']))
 							{
-								$this->data[$field] = \call_user_func_array($properties['callback'], array_merge(Array($this->registry), $properties['parameters']));
+								$this->data[$field] = \call_user_func_array($properties['callback'], \array_merge(Array($this->registry), $properties['parameters']));
 							}
 							else
 							{
