@@ -9,14 +9,35 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Datamanager namespace, this contains all base adapter class that 
+	 * datamanagers must extend in order to become loadable. The root 
+	 * namespace also hosts interfaces that datamanagers can implement 
+	 * to extend the magic within.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Datamanager;
-	use Tuxxedo\Filter;
-	use Tuxxedo\Registry;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Filter;
+	use Tuxxedo\InfoAccess;
+	use Tuxxedo\Registry;
+
 
 	/**
 	 * Abstract datamanager class
@@ -28,8 +49,9 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	abstract class Adapter extends \Tuxxedo\InfoAccess
+	abstract class Adapter extends InfoAccess
 	{
 		/**
 		 * Indicates that a field is required
@@ -142,14 +164,14 @@
 		 *
 		 * @var		array
 		 */
-		protected $data				= array();
+		protected $data				= Array();
 
 		/**
 		 * Current data thats been set via the set method
 		 *
 		 * @var		array
 		 */
-		protected $userdata			= array();
+		protected $userdata			= Array();
 
 		/**
 		 * List of loaded datamanagers used for caching in the 
@@ -158,7 +180,7 @@
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_datamanagers 	= array();
+		protected static $loaded_datamanagers 	= Array();
 
 		/**
 		 * List of fields that had one or more errors and therefore 
@@ -166,7 +188,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $invalid_fields		= array();
+		protected $invalid_fields		= Array();
 
 
 		/**
@@ -175,10 +197,10 @@
 		 * on a certain record determined by the passed identifier 
 		 * or as a clean datamanager to insert a new record.
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	mixed			The unique identifier to send to the datamanager
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	mixed				The unique identifier to send to the datamanager
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the unique identifier sent to the datamanager was invalid
+		 * @throws	\Tuxxedo\Exception		Throws an exception if the unique identifier sent to the datamanager was invalid
 		 */
 		abstract public function __construct(Registry $registry, $identifier = NULL);
 
@@ -188,12 +210,9 @@
 		 * @param	string				Datamanger name
 		 * @param	mixed				An identifier to send to the datamanager to load default data upon instanciating it
 		 * @param	boolean				Whether to use internationalization for formdata exceptions
-		 * @return	Tuxxedo_Datamanager		Returns a new database instance
+		 * @return	\Tuxxedo\Datamanager\Adapter	Returns a new database instance
 		 *
-		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if loading of a datamanger should fail for some reason
-		 *
-		 * @note	If loading from the datastore, then only the data in the cache will be loaded, meaning 
-		 * 		that not all the data that exists in the database may be available.
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $intl = true)
 		{
@@ -394,8 +413,8 @@
 		 *
 		 * @return	boolean				Returns true if the data is saved with success, otherwise boolean false
 		 *
-		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the query should fail
-		 * @throws	Tuxxedo_FormData_Exception	Throws a formdata exception if validation fails
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\FormData	Throws a formdata exception if validation fails
 		 */
 		public function save()
 		{
@@ -451,7 +470,7 @@
 		 *
 		 * @return	boolean				Returns true if the deletion was a success otherwise boolean false
 		 *
-		 * @throws	Tuxxedo_Basic_Exception		Throws a basic exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the query should fail
 		 */
 		public function delete()
 		{
