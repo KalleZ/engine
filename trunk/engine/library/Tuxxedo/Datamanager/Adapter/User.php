@@ -9,23 +9,43 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	
+
+
+	/**
+	 * Datamanagers adapter namespace, this contains all the different 
+	 * datamanager handler implementations to comply with the standard 
+	 * adapter interface, and with the plugins for hooks.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Datamanager\Adapter;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Datamanager;
-	
+	use Tuxxedo\Datamanager\Adapter;
+
+
 	/**
 	 * Datamanager for users
 	 *
-	 * @author	Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version	1.0
-	 * @package	Engine
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	class User extends \Tuxxedo\Datamanager\Adapter implements APICache
+	class User extends Adapter implements APICache
 	{
 		/**
 		 * Fields for validation of users
@@ -95,11 +115,11 @@
 		/**
 		 * Constructor, fetches a new user based on its id if set
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	integer			The user id
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The user id
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the user id is set and it failed to load for some reason
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
+		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the user id is set and it failed to load for some reason
+		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
@@ -120,7 +140,7 @@
 								WHERE 
 									`id` = %d', $identifier);
 
-				if(!$user)
+				if(!$user || !$user->getNumRows())
 				{
 					throw new Exception\Basic('Invalid user id');
 				}
@@ -135,9 +155,9 @@
 		 * Overloads the set method, so we can catch timezones 
 		 * if updated so the validator passes
 		 *
-		 * @param	string			The field to update
-		 * @param	mixed			The field value
-		 * @return	void			No value is returned
+		 * @param	string				The field to update
+		 * @param	mixed				The field value
+		 * @return	void				No value is returned
 		 */
 		public function set($field, $value)
 		{
@@ -154,9 +174,9 @@
 		/**
 		 * Checks whether a usergroup is valid
 		 *
-		 * @param	Tuxxedo			Instance to the Tuxxedo registry
-		 * @param	integer			The usergroup id to check for validity
-		 * @return	boolean			Returns true if the usergroup is loaded and exists in the datastore cache, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The usergroup id to check for validity
+		 * @return	boolean				Returns true if the usergroup is loaded and exists in the datastore cache, otherwise false
 		 */
 		public static function isValidUsergroup(Registry $registry, $id)
 		{
@@ -166,9 +186,9 @@
 		/**
 		 * Checks whether a timezone based by its name is valid
 		 *
-		 * @param	Tuxxedo			Instance to the Tuxxedo registry
-		 * @param	string			The timezone name to check for validity
-		 * @return	boolean			Returns true if the timezone is loaded and exists in the datastore cache, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The timezone name to check for validity
+		 * @return	boolean				Returns true if the timezone is loaded and exists in the datastore cache, otherwise false
 		 */
 		public static function isValidTimezone(Registry $registry, $timezone)
 		{
@@ -178,9 +198,9 @@
 		/**
 		 * Gets a timezone offset based on its timezone name
 		 *
-		 * @param	Tuxxedo			Instance to the Tuxxedo registry
-		 * @param	string			The timezone name
-		 * @return	string			Returns the timezone offset, or 0 if the timezone name was invalid
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The timezone name
+		 * @return	string				Returns the timezone offset, or 0 if the timezone name was invalid
 		 */
 		public static function getTimezoneOffset(Registry $registry, $timezone)
 		{
@@ -195,9 +215,9 @@
 		/**
 		 * Checks whether a user name is taken or not
 		 *
-		 * @param	Tuxxedo			Instance to the Tuxxedo registry
-		 * @param	string			The username to check
-		 * @return	boolean			Returns true if the username is free to be taken, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The username to check
+		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
 		 */
 		public static function isValidUsername(Registry $registry, $username)
 		{
@@ -216,8 +236,9 @@
 		/**
 		 * Checks whether a style id is valid or not
 		 *
-		 * @param	integer			The style id
-		 * @return	boolean			True if the style exists, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The style id
+		 * @return	boolean				True if the style exists, otherwise false
 		 */
 		public static function isValidStyleId(Registry $registry, $styleid)
 		{
@@ -227,8 +248,9 @@
 		/**
 		 * Checks whether a language id is valid or not
 		 *
-		 * @param	integer			The language id
-		 * @return	boolean			True if the language exists, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The language id
+		 * @return	boolean				True if the language exists, otherwise false
 		 */
 		public static function isValidLanguageId(Registry $registry, $languageid)
 		{

@@ -9,25 +9,45 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	
+
+
+	/**
+	 * Datamanagers adapter namespace, this contains all the different 
+	 * datamanager handler implementations to comply with the standard 
+	 * adapter interface, and with the plugins for hooks.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Datamanager\Adapter;
+
+
+	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Datamanager\Adapter;
 	use Tuxxedo\Registry;
-	use Tuxxedo\Exception;
+
 	
-		/**
+	/**
 	 * Datamanager for sessions
 	 *
-	 * @author	Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version	1.0
-	 * @package	Engine
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	class Session extends \Tuxxedo\Datamanager\Adapter
+	class Session extends Adapter
 	{
 		/**
-		 * Fields for validation of styles
+		 * Fields for validation of session
 		 *
 		 * @var		array
 		 */
@@ -60,8 +80,8 @@
 		/**
 		 * Constructor for the sessions datamanager
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	integer			Session identifier
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				Session identifier
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
