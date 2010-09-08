@@ -213,6 +213,7 @@
 		 * @return	\Tuxxedo\Datamanager\Adapter	Returns a new database instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
+		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails when loading the datamanager
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $intl = true)
 		{

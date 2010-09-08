@@ -9,23 +9,43 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	 
+
+
+	/**
+	 * Datamanagers adapter namespace, this contains all the different 
+	 * datamanager handler implementations to comply with the standard 
+	 * adapter interface, and with the plugins for hooks.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Datamanager\Adapter;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Datamanager;
-	
+	use Tuxxedo\Datamanager\Adapter;
+
+
 	/**
 	 * Datamanager for usergroups
 	 *
-	 * @author	Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version	1.0
-	 * @package	Engine
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	class Usergroup extends \Tuxxedo\Datamanager\Adapter implements APICache
+	class Usergroup extends Adapter implements APICache
 	{
 		/**
 		 * Fields for validation of usergroups
@@ -56,11 +76,11 @@
 		/**
 		 * Constructor, fetches a new usergroup based on its id if set
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	integer			The usergroup id
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The usergroup id
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the usergroup id is set and it failed to load for some reason
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
+		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the usergroup id is set and it failed to load for some reason
+		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
@@ -73,7 +93,7 @@
 
 			if($identifier !== NULL)
 			{
-				$usergroups = $registry->db->query('
+				$usergroup = $registry->db->query('
 									SELECT 
 										* 
 									FROM 
@@ -81,7 +101,7 @@
 									WHERE 
 										`id` = %d', $identifier);
 
-				if(!$usergroups)
+				if(!$usergroup || !$usergroup->getNumRows())
 				{
 					throw new Exception\Basic('Invalid usergroup id passed to datamanager');
 				}
@@ -95,9 +115,9 @@
 		 * Save the usergroup in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	array			A virtually populated array from the datamanager abstraction
-		 * @return	boolean			Returns true if the datastore was updated with success, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	array				A virtually populated array from the datamanager abstraction
+		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
 		public function rebuild(Registry $registry, Array $virtual)
 		{
@@ -116,9 +136,9 @@
 		 * used as a callback for the validation filter, hence 
 		 * its staticlly defined
 		 *
-		 * @param	Tuxxedo			Instance to the Tuxxedo registry
-		 * @param	integer			The type to check
-		 * @return	boolean			Returns true if the type is valid, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The type to check
+		 * @return	boolean				Returns true if the type is valid, otherwise false
 		 */
 		public static function isValidType(Registry $registry, $type)
 		{

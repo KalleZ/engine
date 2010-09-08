@@ -9,23 +9,43 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	
+
+
+	/**
+	 * Datamanagers adapter namespace, this contains all the different 
+	 * datamanager handler implementations to comply with the standard 
+	 * adapter interface, and with the plugins for hooks.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Datamanager\Adapter;
+
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Datamanager;
-	
-		/**
+	use Tuxxedo\Datamanager\Adapter;
+
+
+	/**
 	 * Datamanager for styles
 	 *
-	 * @author	Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version	1.0
-	 * @package	Engine
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	class Style extends \Tuxxedo\Datamanager\Adapter implements APICache
+	class Style extends Adapter implements APICache
 	{
 		/**
 		 * Fields for validation of styles
@@ -59,11 +79,11 @@
 		/**
 		 * Constructor, fetches a new style based on its id if set
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	integer			The style id
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The style id
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the style id is set and it failed to load for some reason
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception if a database call fails
+		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the style id is set and it failed to load for some reason
+		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
@@ -76,7 +96,7 @@
 
 			if($identifier !== NULL)
 			{
-				$styles = $registry->db->query('
+				$style = $registry->db->query('
 								SELECT 
 									* 
 								FROM 
@@ -85,12 +105,12 @@
 									`id` = %d
 								LIMIT 1', $identifier);
 
-				if(!$styles || !$styles->getNumRows())
+				if(!$style || !$style->getNumRows())
 				{
 					throw new Exception\Basic('Invalid style id passed to datamanager');
 				}
 
-				$this->data 		= $styles->fetchAssoc();
+				$this->data 		= $style->fetchAssoc();
 				$this->identifier 	= $identifier;
 			}
 		}
@@ -99,9 +119,9 @@
 		 * Save the style in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	array			A virtually populated array from the datamanager abstraction
-		 * @return	boolean			Returns true if the datastore was updated with success, otherwise false
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	array				A virtually populated array from the datamanager abstraction
+		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
 		public function rebuild(Registry $registry, Array $virtual)
 		{
