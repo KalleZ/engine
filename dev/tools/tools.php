@@ -16,6 +16,11 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Development;
+
+	/**
 	 * Global templates
 	 */
 	$templates 		= Array(
