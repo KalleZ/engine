@@ -9,24 +9,44 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo\Database\Driver\MySQL;
-    
-    /**
+
+	/**
+	 * MySQL driver namespace, for driver components such as result statements 
+	 * and the like.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
+	namespace Tuxxedo\Database\Driver\MySQL;
+
+
+	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Database;
+
+
+	/**
 	 * MySQL result class for Tuxxedo
 	 *
 	 * This implements the result class for MySQL for Tuxxedo, 
 	 * this contains methods to fetch, count result rows and 
 	 * such for working with a resultset
 	 *
-	 * @author	Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version	1.0
-	 * @package	Engine
+	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	final class Result extends \Tuxxedo\Database\Result
+	class Result extends Database\Result
 	{
 		/**
 		 * The result resource
@@ -39,7 +59,7 @@
 		/**
 		 * Frees the result from memory, and makes it unusable
 		 *
-		 * @return	boolean			Returns true if the result was freed, otherwise false
+		 * @return	boolean				Returns true if the result was freed, otherwise false
 		 */
 		public function free()
 		{
@@ -57,7 +77,7 @@
 		/**
 		 * Checks whenever the result is freed or not
 		 *
-		 * @return	boolean			Returns true if the result is freed from memory, otherwise false
+		 * @return	boolean				Returns true if the result is freed from memory, otherwise false
 		 */
 		public function isFreed()
 		{
@@ -67,7 +87,7 @@
 		/**
 		 * Get the number of rows in the result
 		 *
-		 * @return	integer			Returns the number of rows in the result, and boolean false on error
+		 * @return	integer				Returns the number of rows in the result, and boolean false on error
 		 */
 		public function getNumRows()
 		{
@@ -82,7 +102,7 @@
 		/**
 		 * Fetch result with both associative and indexed indexes array
 		 *
-		 * @return	array			Returns an array with the result
+		 * @return	array				Returns an array with the result
 		 */
 		public function fetchArray()
 		{
@@ -92,7 +112,7 @@
 		/**
 		 * Fetches the result and returns an associative array
 		 *
-		 * @return	array			Returns an associative array with the result
+		 * @return	array				Returns an associative array with the result
 		 */
 		public function fetchAssoc()
 		{
@@ -102,7 +122,7 @@
 		/**
 		 * Fetches the result and returns an indexed array
 		 *
-		 * @return	array			Returns an indexed array with the result
+		 * @return	array				Returns an indexed array with the result
 		 */
 		public function fetchRow()
 		{
@@ -113,7 +133,7 @@
 		 * Fetches the result and returns an object, with overloaded 
 		 * properties for rows names
 		 *
-		 * @return	object			Returns an object with the result
+		 * @return	object				Returns an object with the result
 		 */
 		public function fetchObject()
 		{
@@ -123,8 +143,8 @@
 		/**
 		 * Quick reference for not repeating code when fetching a different type
 		 *
-		 * @param	integer			Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
-		 * @return	array|object		Result type is based on result mode, boolean false is returned on errors
+		 * @param	integer				Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
+		 * @return	array|object			Result type is based on result mode, boolean false is returned on errors
 		 */
 		private function fetch($mode)
 		{

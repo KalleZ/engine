@@ -9,13 +9,32 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
-	
+
+
+	/**
+	 * PDO driver namespace, for driver components such as result statements 
+	 * and the like.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Database\Driver\PDO;
+
+
+	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Database;
 	use Tuxxedo\Exception;
-	
+
+
 	/**
 	 * PDO abstraction result driver for Tuxxedo
 	 *
@@ -26,13 +45,14 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	final class Result extends Tuxxedo\Database\Result
+	class Result extends Database\Result
 	{
 		/**
 		 * The result resource
 		 *
-		 * @var		PDOStatement
+		 * @var		\PDOStatement
 		 */
 		protected $result;
 
@@ -40,10 +60,10 @@
 		/**
 		 * Constructs a new result object
 		 *
-		 * @param	Tuxxedo_Database	A database instance
-		 * @param	mixed			A database result, this must be delivered from the driver it was created from
+		 * @param	\Tuxxedo\Database		A database instance
+		 * @param	mixed				A database result, this must be delivered from the driver it was created from
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	If the result passed is from a different driver type, or if the result does not contain any results
+		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
 		 */
 		public function __construct(Tuxxedo\Database $instance, $result)
 		{
@@ -65,7 +85,7 @@
 		/**
 		 * Frees the result from memory, and makes it unusable
 		 *
-		 * @return	boolean			Returns true if the result was freed, otherwise false
+		 * @return	boolean				Returns true if the result was freed, otherwise false
 		 */
 		public function free()
 		{
@@ -82,7 +102,7 @@
 		/**
 		 * Checks whenever the result is freed or not
 		 *
-		 * @return	boolean			Returns true if the result is freed from memory, otherwise false
+		 * @return	boolean				Returns true if the result is freed from memory, otherwise false
 		 */
 		public function isFreed()
 		{
@@ -92,7 +112,7 @@
 		/**
 		 * Get the number of rows in the result
 		 *
-		 * @return	integer			Returns the number of rows in the result, and boolean false on error
+		 * @return	integer				Returns the number of rows in the result, and boolean false on error
 		 */
 		public function getNumRows()
 		{
@@ -107,7 +127,7 @@
 		/**
 		 * Fetch result with both associative and indexed indexes array
 		 *
-		 * @return	array			Returns an array with the result
+		 * @return	array				Returns an array with the result
 		 */
 		public function fetchArray()
 		{
@@ -117,7 +137,7 @@
 		/**
 		 * Fetches the result and returns an associative array
 		 *
-		 * @return	array			Returns an associative array with the result
+		 * @return	array				Returns an associative array with the result
 		 */
 		public function fetchAssoc()
 		{
@@ -127,7 +147,7 @@
 		/**
 		 * Fetches the result and returns an indexed array
 		 *
-		 * @return	array			Returns an indexed array with the result
+		 * @return	array				Returns an indexed array with the result
 		 */
 		public function fetchRow()
 		{
@@ -138,7 +158,7 @@
 		 * Fetches the result and returns an object, with overloaded 
 		 * properties for rows names
 		 *
-		 * @return	object			Returns an object with the result
+		 * @return	object				Returns an object with the result
 		 */
 		public function fetchObject()
 		{
