@@ -9,12 +9,34 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo\MVC;
-    use Tuxxedo\Exception;
+
+	/**
+	 * MVC (Model-View-Controller) namespace, this contains all the base 
+	 * implementation of each of the building bricks and extensions for 
+	 * extending them even further.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		MVC
+	 */
+	namespace Tuxxedo\MVC;
+
+
+	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Exception;
+	use Tuxxedo\MVC\View;
+	use Tuxxedo\Request;
+	use Tuxxedo\Router;
+
 
 	/**
 	 * The base controller class for the MVC components
@@ -37,28 +59,28 @@
 		/**
 		 * HTTP request object
 		 *
-		 * @var		Tuxxedo_Request_HTTP
+		 * @var		\Tuxxedo\Request\Http
 		 */
 		protected $request;
 
 		/**
 		 * Router object
 		 *
-		 * @var		Tuxxedo_Router
+		 * @var		\Tuxxedo\Router
 		 */
 		protected $router;
 
 		/**
 		 * Layout template object
 		 *
-		 * @var		Tuxxedo_Template
+		 * @var		\Tuxxedo\MVC\View
 		 */
 		protected $layout;
 
 		/**
 		 * Current view template
 		 *
-		 * @var		Tuxxedo_Template
+		 * @var		\Tuxxedo\MVC\View
 		 */
 		protected $view;
 
@@ -66,7 +88,7 @@
 		/**
 		 * Constructor
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
+		 * @param	\Tuxxedo\Registry		The Registry reference
 		 */
 		public function __construct(Registry $registry)
 		{
@@ -75,36 +97,44 @@
 
 		/**
 		 * Set the request object
-		 * @param	Tuxxedo_Request		Request object
+		 *
+		 * @param	\Tuxxedo\Request		Request object
+		 * @return	void				No value is returned
 		 */
-		final public function setRequest(Tuxxedo_Request $request) 
+		final public function setRequest(Request $request) 
 		{
 			$this->request = $request;
 		}
 
 		/**
 		 * Set the router object
-		 * @param	Tuxxedo_Router		Router object used
+		 *
+		 * @param	\Tuxxedo\Router\Http		Router object used
+		 * @return	void				No value is returned
 		 */
-		final public function setRouter(Tuxxedo_Router $router)
+		final public function setRouter(Router\Http $router)
 		{
 			$this->router = $router;
 		}
 
 		/**
 		 * Set the template object used for the layout
-		 * @param		Tuxxedo_Template	Layout template
+		 *
+		 * @param	\Tuxxedo\MVC\View		Layout template
+		 * @return	void				No value is returned
 		 */
-		final public function setLayout(Tuxxedo_View $layout)
+		final public function setLayout(MVC\View $layout)
 		{
 			$this->layout = $layout;
 		}
 
 		/**
 		 * Set the view object
-		 * @param		Tuxxedo_Template	View template for the current action
+		 *
+		 * @param	\Tuxxedo\MVC\View		View template for the current action
+		 * @return	void				No value is returned
 		 */
-		final public function setView(Tuxxedo_View $view)
+		final public function setView(MVC\View $view)
 		{
 			$this->view = $view;
 		}
@@ -112,9 +142,9 @@
 		/**
 		 * Dispatches the controller and renders the page content
 		 *
-		 * @return		string			Rendered view
+		 * @return	string				Rendered view
 		 *
-		 * @throws		Tuxxedo_Basic_Exception	If the controller does not
+		 * @throws	\Tuxxedo\Exception		If the controller does not exists
 		 */
 		final public function dispatch()
 		{
@@ -127,24 +157,17 @@
 
 			if(!\method_exists($this, $method))
 			{
-				/**
-				 * @TODO		use Exception\Intl here
-				 */
-				throw new Exception('Unknown action called');
+				throw new Exception\Core('[MVC] Use Exception\Intl or define some MVC exceptions');
 			}
 
-			$this->$method();
+			$this->{$method}();
 
 			if($this instanceof Controller\Dispatchable)
 			{
 				$this->dispatcher(self::DISPATCH_POST);
 			}
 
-			/**
-		 	 * @TODO	This will change once the Tuxxedo_View class is implemented
-			 */
-			eval('$view = "' . $this->registry->style->fetch($this->view) . '";');
-			eval('return("' . $this->layout . '");');
+			throw new Exception\Core('[MVC] Need to have implemented View classes after executing the dispatcher');
 		}
 	}
 ?>

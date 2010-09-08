@@ -155,7 +155,7 @@
 		$called		= true;
 		$buffer		= ob_get_clean();
 		$exception	= ($e instanceof \Exception);
-		$exception_sql	=  $exception && $registry->db && $e instanceof Exception\SQL;
+		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
@@ -205,9 +205,10 @@
 			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
 			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
-			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; float: left; width: 400px; }' . PHP_EOL . 
+			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; width: 400px; }' . PHP_EOL . 
 			'.infobox td { padding-right: 5px; }' . PHP_EOL . 
 			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.spacer { margin-bottom: 10px; width: 100%; }' . PHP_EOL . 
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
@@ -219,8 +220,20 @@
 		{
 			echo(
 				'<div class="box">' . PHP_EOL . 
-				'<div class="inner">' . PHP_EOL . 
-				'<div class="infobox">' . PHP_EOL . 
+				'<div class="inner">' . PHP_EOL
+				);
+
+			if($exception && $e instanceof Exception\Core)
+			{
+				echo(
+					'<div class="infobox spacer">' . PHP_EOL . 
+					'<strong>This is a critical error and should only occur in development releases!</strong>' . PHP_EOL . 
+					'</div>' . PHP_EOL
+					);
+			}
+
+			echo(
+				'<div class="infobox" style="float: left;">' . PHP_EOL . 
 				'<table cellspacing="2" cellpadding="0">' . PHP_EOL
 				);
 
@@ -251,6 +264,23 @@
 					'<tr>' . PHP_EOL . 
 					'<td>Timestamp:</td>' . PHP_EOL . 
 					'<td class="value">' . $date . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
+			}
+
+			if($exception)
+			{
+				$class = get_class($e);
+
+				if($class{0} != '\\')
+				{
+					$class = '\\' . $class;
+				}
+
+				echo(
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Exception Type:</td>' . PHP_EOL . 
+					'<td class="value">' . $class . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 			}
