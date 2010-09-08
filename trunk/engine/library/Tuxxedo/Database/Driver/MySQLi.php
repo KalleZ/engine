@@ -9,14 +9,34 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Database driver namespace, this contains all the main driver files. All 
+	 * sub classes are stored in their relevant sub namespace named after the 
+	 * database driver.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
 	namespace Tuxxedo\Database\Driver;
+
+
+	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Database;
+	use Tuxxedo\Database\Driver\MySQLi;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
-	use Tuxxedo\Database\Driver\MySQLi;
+
 
 	/**
 	 * MySQL Improved driver for Tuxxedo Engine
@@ -27,8 +47,9 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
-	final class MySQLi extends \Tuxxedo\Database
+	class MySQLi extends Database
 	{
 		/**
 		 * Driver name
@@ -61,7 +82,7 @@
 		 * method isn't called, a driver may start shutting down or 
 		 * throwing random exceptions unexpectedly
 		 *
-		 * @return	boolean			True if dirver is supported, otherwise false
+		 * @return	boolean				True if dirver is supported, otherwise false
 		 */
 		public function isDriverSupported()
 		{
@@ -72,10 +93,10 @@
 		 * Connect to a database, if no connection isn't already 
 		 * active
 		 *
-		 * @param	array			Change the configuration and use this new configuration to connect with
-		 * @return	boolean			True if a successful connection was made
+		 * @param	array				Change the configuration and use this new configuration to connect with
+		 * @return	boolean				True if a successful connection was made
 	 	 *
-		 * @throws	Tuxxedo_Basic_Exception	If a database connection fails
+		 * @throws	\Tuxxedo\Exception\Basic	If a database connection fails
 		 */
 		public function connect(Array $configuration = NULL)
 		{
@@ -124,7 +145,7 @@
 		/**
 		 * Close a database connection
 		 *
-		 * @return	boolean			True if the connection was closed, otherwise false
+		 * @return	boolean				True if the connection was closed, otherwise false
 		 */
 		public function close()
 		{
@@ -142,7 +163,7 @@
 		/**
 		 * Checks if a connection is active
 		 *
-		 * @return	boolean			True if a connection is currently active, otherwise false
+		 * @return	boolean				True if a connection is currently active, otherwise false
 		 */
 		public function isConnected()
 		{
@@ -153,8 +174,8 @@
 		 * Checks if a variable is a connection of the same type 
 		 * as the one used by the driver
 		 *
-		 * @param	mixed			The variable to check
-		 * @return	boolean			True if the variable type matches, otherwise false
+		 * @param	mixed				The variable to check
+		 * @return	boolean				True if the variable type matches, otherwise false
 		 */
 		public function isLink($link)
 		{
@@ -164,7 +185,7 @@
 		/**
 		 * Checks if the current connection is persistent
 		 *
-		 * @return	boolean			True if the connection is persistent, otherwise false
+		 * @return	boolean				True if the connection is persistent, otherwise false
 		 */
 		public function isPersistent()
 		{
@@ -175,8 +196,8 @@
 		 * Checks if a variable is a result of the same type as 
 		 * the one used by the driver
 		 *
-		 * @param	mixed			The variable to check
-		 * @return	boolean			True if the variable type matches, otherwise false
+		 * @param	mixed				The variable to check
+		 * @return	boolean				True if the variable type matches, otherwise false
 		 */
 		public function isResult($result)
 		{
@@ -187,7 +208,7 @@
 		 * Get the error message from the last occured error
 		 * error
 		 *
-		 * @return	string			The error message
+		 * @return	string				The error message
 		 */
 		public function getError()
 		{
@@ -202,7 +223,7 @@
 		/**
 		 * Get the error number from the last occured error
 		 *
-		 * @return	integer			The error number
+		 * @return	integer				The error number
 		 */
 		public function getErrno()
 		{
@@ -217,7 +238,7 @@
 		/**
 		 * Get the last insert id from last executed SELECT statement
 		 *
-		 * @return	integer			Returns the last insert id, and boolean false on error
+		 * @return	integer				Returns the last insert id, and boolean false on error
 		 */
 		public function getInsertId()
 		{
@@ -232,12 +253,12 @@
 		/**
 		 * Get the number of affected rows from last INSERT INTO/UPDATE/DELETE 
 		 * operation. Due to internal reasons this driver also counts number of 
-		 * rows like the {@link Tuxxedo_Database_Driver_MySQLi_Result::getNumRows()} 
+		 * rows like the {@link \Tuxxedo\Database\Driver\MySQLi\Result::getNumRows()} 
 		 * on SELECT statements, this is only for this driver and should NOT be 
 		 * relied on.
 		 *
-		 * @param	Tuxxedo_Database_Result	The result used to determine how many affected rows there were
-		 * @return	integer			Returns the number of affected rows, and 0 on error
+		 * @param	\Tuxxedo\Database\Result	The result used to determine how many affected rows there were
+		 * @return	integer				Returns the number of affected rows, and 0 on error
 		 */
 		public function getAffectedRows($result)
 		{
@@ -253,8 +274,8 @@
 		 * Escape a piece of data using the database specific 
 		 * escape method
 		 *
-		 * @param	mixed			The data to escape
-		 * @return	string			Escaped data
+		 * @param	mixed				The data to escape
+		 * @return	string				Escaped data
 		 */
 		public function escape($data)
 		{
@@ -277,11 +298,11 @@
 		 * Executes a query and returns the result on SELECT 
 		 * statements
 		 *
-		 * @param	string			SQL to execute
-		 * @param	mixed			Genetic parameter for formatting, if two or more parameters are passed to the method, the sql will be formatted using sprintf
-		 * @return	boolean|object		Returns a result object on SELECT statements, and boolean true otherwise if the statement was executed
+		 * @param	string				SQL to execute
+		 * @param	mixed				Genetic parameter for formatting, if two or more parameters are passed to the method, the sql will be formatted using sprintf
+		 * @return	boolean|object			Returns a result object on SELECT statements, and boolean true otherwise if the statement was executed
 		 *
-		 * @throws	Tuxxedo_SQL_Exception	If the SQL should fail for whatever reason, an exception is thrown
+		 * @throws	\Tuxxedo\Exception\SQL		If the SQL should fail for whatever reason, an exception is thrown
 		 */
 		public function query($sql)
 		{
@@ -300,9 +321,7 @@
 			}
 			elseif(\func_num_args() > 1)
 			{
-				$args 		= \func_get_args();
-				$args[0]	= $sql;
-				$sql 		= \call_user_func_array('\sprintf', $args);
+				$sql = \call_user_func_array('\sprintf', \func_get_args());
 			}
 
 			Registry::globals('error_reporting', false);

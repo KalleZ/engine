@@ -43,4 +43,5 @@
 
 	Change SQL queries to be non-mysql compatible (perhaps switch to use the query builder internally?)
 	Change the API generators to be generic and with more output formats
+	Change the API lexer to parse meta data
 	Change the structure of the /dev/tools utilities structure to be autoloadable
