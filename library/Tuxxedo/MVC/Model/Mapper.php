@@ -16,8 +16,8 @@
 
 
 	/**
-	 * Controller extensions namespace. In here all extensions are stored 
-	 * for MV-Controllers.
+	 * Model extensions namespace. In here all extensions are stored 
+	 * for Models-VC.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
@@ -25,7 +25,7 @@
 	 * @package		Engine
 	 * @subpackage		MVC
 	 */
-	namespace Tuxxedo\MVC\Controller;
+	namespace Tuxxedo\MVC\Model;
 
 
 	/**
@@ -37,32 +37,15 @@
 	 * @package		Engine
 	 * @subpackage		MVC
 	 */
-	interface Dispatchable
+	interface Mapper
 	{
 		/**
-		 * Dispatch hook constant - Pre dispatching
+		 * Model mapper hook, this returns a list of the methods to 
+		 * map properties for. To reindex the mapper, call the remap() 
+		 * member method.
 		 *
-		 * @var		integer
+		 * @return	array				Returns an array of the methods to map
 		 */
-		const DISPATCH_PRE		= 1;
-
-		/**
-		 * Dispatch hook constant - Post dispatching
-		 *
-		 * @var		integer
-		 */
-		const DISPATCH_POST		= 2;
-
-
-		/**
-		 * Controller dispatch hook, this hook is called for 
-		 * both pre and post dispatching and uses its only 
-		 * parameter to determine which state we currently are 
-		 * in
-		 *
-		 * @param	integer				The current dispatching state
-		 * @return	void				No value is returned
-		 */
-		public function dispatcher($mode);
+		public function getMapper();
 	}
 ?>
