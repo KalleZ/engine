@@ -28,6 +28,5 @@
 	 - Add styles & Templates support
 
 	Other (Kalle)
-	 - Move /dev/Model.txt into the google wiki
 	 - Fix remaining Exception\Core exceptions if any
 	 - Fix non fatal errors not showing up on tuxxedo_doc_error() calls
