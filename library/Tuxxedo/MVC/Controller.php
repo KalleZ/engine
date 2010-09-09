@@ -157,7 +157,7 @@
 
 			if(!\method_exists($this, $method))
 			{
-				throw new Exception\Core('[MVC] Use Exception\Intl or define some MVC exceptions');
+				throw new Exception\MVC\InvalidAction;
 			}
 
 			$this->{$method}();
