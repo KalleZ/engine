@@ -9,141 +9,141 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
-namespace Tuxxedo;
-use Tuxxedo\Exception;
 
-/**
- * The class autoloader
- */
-class Loader
-{
-    /**
-     * Class separator - to use non-namespaced classes, named like 
-     * Tuxxedo_Loader change this to "_".
-     */
-    public static $separator = "\\";
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
+	namespace Tuxxedo;
 
-    /**
-     * An array of custom paths to use if a match is found when loading a class
-     * Format: match => {"path" => path, "separator" => name_separator}
-     */
-    protected static $customPaths = array();
 
-    /**
-     * Add a path to the custom path matching
-     */
-    public static function addPath($match, $path, $separator = null) {
-        $separator = is_null($separator) ? self::$separator : $separator;
-        
-        if (is_array($match)) {
-            $match = \implode($separator, $match);
-        }
-        
-        self::$customPaths[$match] = array(
-            "path" => $path,
-            "separator" => $separator
-        );
-    }
+	/**
+	 * Autoloader handler
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
+	class Loader
+	{
+		/**
+		 * Default separator for classes, this is mainly is '_'
+		 * for non namespaced code.
+		 *
+		 * @var		string
+		 */
+		public static $separator	= '\\';
 
-    /**
-     * Load a class
-     * @param   string  Name of the class/interface to load
-     * @throws  Tuxxedo_Loader_Exception
-     */
-    public static function load($name) {
-        /**
-         * Check for a match in the custom paths array
-         * Essentially, if the class/interface starts with the match text, then
-         * the loader will use the path to find it (as far as the matched part 
-         * of the name, if there are other parts then the default loader will
-         * kick in for those parts). If a second match is found and it is
-         * longer than the previous match it will replace the previous match.
-         * If a match is found that exactly matches the name then that is used.
-         */
-        $matched = false;
-        foreach (\array_keys(self::$customPaths) as $match) {
-            if (\substr($name, 0, \strlen($match)) == $match) {
-                // Use this path if we don't already have a match, the name is
-                // the same as the match, or if this match is "stronger" than 
-                // the current
-                if (!$matched || $match == $name || \strlen($match) < \strlen($matched)) {
-                    $matched = $match;
-                    
-                    // If the match is exactly the same as the name, stop 
-                    // looking and use this match
-                    if ($match == $name) {
-                        break;
-                    }
-                }
-            }
-        }
+		/**
+		 * Default root to load from, defaults to the library 
+		 * path
+		 *
+		 * @var		string
+		 */
+		public static $root		= \TUXXEDO_LIBRARY;
 
-        // Get the path for the class
-        if ($matched) {
-            $path = self::getPathMatched($name, $matched, self::$customPaths[$matched]);
-        } else {
-            $path = self::getPathDefault($name);
-        }
+		/**
+		 * Custom paths for third party libraries
+		 *
+		 * @var		array
+		 */
+		public static $paths		= Array();
 
-	/* @TODO this is seriously bad */
-	if (!\is_file($path)) { \tuxxedo_doc_errorf('Unable to locate class or interface file, for \'%s\'', $name); } else { require $path; }
-        
-        // Check class/interface actually declared
-        if (!\class_exists($name) && !\interface_exists($name)) {
-		\tuxxedo_doc_errorf('Class or interface \'%s\' must be declared in \'%s\'', $name, \tuxxedo_trim_path(realpath($path)));
-        }
-    }
-    
-    /**
-     * Get the final full path of a matched class
-     */
-    protected static function getPathMatched($name, $match, $matchInfo) {
-        // If the match is the same as the name use the path
-        if ($name == $match) {
-            return $matchPath;
-        }
-        
-        // Get the unmatched part of the class name
-        $unmatched = \substr($name, strlen($match));
-        // Compile the path
-        $path = $matchInfo["path"] . \str_replace($matchInfo["separator"], "/", $unmatched) . ".php";
-        
-        $fullPath = self::getFullPath($path);
-    
-        return $fullPath;
-    }
-    
-    
-    /**
-     * Attempt to load a class by converting the name into a path, and then
-     * checking in the PHP include path.
-     */
-    protected static function getPathDefault($name) {
-	$name = TUXXEDO_LIBRARY . '/' . $name . '.php';
 
-        $fullPath = self::getFullPath($name);
-        
-        if ($fullPath === false) {
-		\tuxxedo_doc_errorf('Unable to resolve \'%s\'', $name);
-        }
-        
-        return $fullPath;
-    }
-    
-    /**
-     * Check if the given path exists in the current include_path
-     */
-    protected static function getFullPath($path) {
-        // Check if the path is already a full path
-        if (is_file($path)) {
-            return $path;
-        }
-        
-        return false;
-    }
-}
+		/**
+		 * Defines one or more rewrite rules for autoloading 
+		 * paths
+		 *
+		 * @param	string|array			The class or an array of classes to define custom rules for
+		 * @param	string				The class separator, defaults to a backslash
+		 * @param	string				The root path to load from
+		 * @return	void				No value is returned
+		 */
+		public static function add($path, $separator = NULL, $root = NULL)
+		{
+			$separator 	= ($separator !== NULL ?: self::$separator);
+			$root 		= ($root !== NULL ?: self::$root);
+
+			if(\is_array($path))
+			{
+				if(!\sizeof($path))
+				{
+					return;
+				}
+
+				foreach($path as $p)
+				{
+					self::$paths[$p] = Array(
+									'separator'	=> $separator, 
+									'root'		=> $root
+									);
+				}
+			}
+			else
+			{
+				self::$paths[$path] = Array(
+								'separator'	=> $separator, 
+								'root'		=> $root
+								);
+			}
+		}
+
+		/**
+		 * Normalizes a class name into a path
+		 *
+		 * @var		string				The class to convert
+		 * @return	string				Returns the matching path
+		 */
+		public static function getNormalizedPath($class)
+		{
+			if(isset(self::$paths[$class]))
+			{
+				return(self::$paths[$class]['root'] . '/' . \str_replace(self::$paths[$class]['separator'], '/', $class) . '.php');
+			}
+
+			return(\TUXXEDO_LIBRARY . '/' . \str_replace('\\', '/', $class) . '.php');
+		}
+
+		/**
+		 * Autoloads a class, if a class fails to load, the error handler is called 
+		 * directly and the error is shown. Technically this cannot throw any exceptions 
+		 * due it may result in a recursive loop. This however can be bypassed by 
+		 * calling this function manually with the silent error handler set to true.
+		 *
+		 * @param	string				The class to autoloader
+		 * @param	boolean				Whether to return true or false in case of loading instead of calling the error handler
+		 * @return	void				No value is returned
+		 */
+		public static function load($class, $silent = false)
+		{
+			$path = self::getNormalizedPath($class);
+
+			if(!is_file($path))
+			{
+				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $class, $path);
+			}
+
+			@require($path);
+
+			if(!\class_exists($class) && !\interface_exists($class))
+			{
+				\tuxxedo_doc_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $class, $path);
+			}
+		}
+	}
 ?>

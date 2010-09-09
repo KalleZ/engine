@@ -21,9 +21,6 @@
 	Tuxxedo Engine 1.0.0 Release Candidate 1
 	----------------------------------------
 
-	Autoloader (Kalle, Ross)
-	 - Fix the autoloader to possibly support include_path again and such
-
 	Improve development tools (Kalle)
 	 - Add styles & Templates support
 
