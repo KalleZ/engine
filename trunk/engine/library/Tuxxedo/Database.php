@@ -212,7 +212,13 @@
 		{
 			if(\func_num_args() > 1)
 			{
-				$sql = \call_user_func_array('\sprintf', \array_map(Array($this, 'escape'), \func_get_args()));
+				$args = \func_get_args();
+				\array_shift($args);
+
+				$args = \array_map(Array($this, 'escape'), $args);
+				\array_unshift($args, $sql);
+
+				$sql = \call_user_func_array('\sprintf', $args);
 			}
 
 			return($this->query($sql));
