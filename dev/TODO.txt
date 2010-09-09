@@ -8,13 +8,6 @@
 	 - Re-implement old tools
 	   - Options (Add & Edit modules)
 
-	MVC improvements (Kalle, Ross)
-	 - Implement the View classes
-
-	Namespaces (Kalle)
-	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
-	 - Fix docblocks
-
 
 
 	Tuxxedo Engine 1.0.0 Release Candidate 1
@@ -22,6 +15,10 @@
 
 	Improve development tools (Kalle)
 	 - Add styles & Templates support
+
+	MVC improvements (Kalle)
+	 - Implement the View classes
+	 - Add a simple bootstraper for MVC
 
 	Other (Kalle)
 	 - Fix remaining Exception\Core exceptions if any
