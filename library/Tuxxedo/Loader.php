@@ -138,7 +138,7 @@
 				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $class, $path);
 			}
 
-			@require($path);
+			require($path);
 
 			if(!\class_exists($class) && !\interface_exists($class))
 			{
