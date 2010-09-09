@@ -12,7 +12,6 @@
 	 - Implement the View classes
 
 	Namespaces (Kalle)
-	 - Redesign bootstrap.php from the ground and up to make it easier to work on
 	 - Fix tabs vs spaces and all that happens to be very inconsistent in the engine
 	 - Fix docblocks
 
