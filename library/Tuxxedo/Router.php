@@ -9,103 +9,151 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
 
-    namespace Tuxxedo;
+
+	/**
+	 * Core Tuxxedo library namespace. This namespace contains all the main 
+	 * foundation components of Tuxxedo Engine, plus additional utilities 
+	 * thats provided by default. Some of these default components have 
+	 * sub namespaces if they provide child objects.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
+	 * @package		Engine
+	 * @subpackage		Library
+	 */
+	namespace Tuxxedo;
 
 	/**
 	 * The router can detect from a range of sources the required controller and
 	 * action to execute.
+	 *
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
+	 * @author		Ross Masters 		<ross@tuxxedo.net>
+	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 */
 	class Router
 	{
 		/**
-		 * @var		string	Controller name
-		 * Private, set using {@see setController}
+		 * Current controller
+		 *
+		 * @var		string
 		 */
 		protected $controller;
-		
+
 		/**
-		 * @var		string	Action name
-		 * Private, set using {@see setAction}
+		 * Current action
+		 *
+		 * @var		string
 		 */
 		protected $action;
-		
-		/**
-		 * @var		array	Any parameters encoded in the input
-		 */
-		protected $params = array();
 
 		/**
-		 * @var		string	The default controller name
+		 * Additional parameters
+		 *
+		 * @var		array
 		 */
-		protected static $defaultController = "Index";
-		
-		/**
-		 * @var		string	The default action name
-		 */
-		protected static $defaultAction = "index";
+		protected $parameters			= Array();
 
 		/**
-		 * Constructor, set the controller and action to their default names
+		 * Default controller
+		 *
+		 * @var		string
 		 */
-		public function __construct() {
-			// Set default names
-			$this->controller = self::$defaultController;
-			$this->action = self::$defaultAction;
+		protected static $default_controller	= 'index';
+
+		/**
+		 * Default action
+		 *
+		 * @var		string
+		 */
+		protected static $default_action	= 'index';
+
+
+		/**
+		 * Constructor, set the controller and action to their 
+		 * default names
+		 */
+		public function __construct()
+		{
+			$this->controller 	= self::$default_controller;
+			$this->action 		= self::$default_action;
 		}
 
 		/**
 		 * Set the normalised controller name
-		 * @param	string	Controller name
+		 *
+		 * @param	string				The controller name
+		 * @return	void				No value is returned
 		 */
-		public function setController($controller) {
+		public function setController($controller)
+		{
 			$this->controller = $controller;
 		}
 		
 		/**
 		 * Get the routed controller name
-		 * @return	string	Controller name
+		 *
+		 * @return	string				The Controller name
 		 */
-		public function getController() {
-			return $this->controller;
+		public function getController()
+		{
+			return($this->controller);
 		}
 		
 		/**
 		 * Set the normalised action name
-		 * @param	string	Action name
+		 *
+		 * @param	string				The action name
+		 * @return	void				No value is returned
 		 */
-		public function setAction($action) {
+		public function setAction($action)
+		{
 			$this->action = $action;
 		}
 		
 		/**
 		 * Get the routed action name
-		 * @return	string	Action name
+		 *
+		 * @return	string				The action name
 		 */
-		public function getAction() {
-			return $this->action;
+		public function getAction()
+		{
+			return($this->action);
 		}
 
 		/**
 		 * Get a parameter value
-		 * @param	string	Index of the parameter
-		 * @return	string	Parameter value
+		 *
+		 * @param	string				Index of the parameter
+		 * @return	string				The Parameter value, and NULL on undefined parameters
 		 */
-		public function __get($paramName) {
-			return $this->params[$paramName];
+		public function __get($parameter)
+		{
+			if(!isset($this->parameters[$parameter]))
+			{
+				return;
+			}
+
+			return($this->parameters[$parameter]);
 		}
 
 		/**
 		 * Check if a parameter is set
-		 * @param	string	Index of the parameter to check
-		 * @return	bool
+		 *
+		 * @param	string				Index of the parameter to check
+		 * @return	bool				Returns true if the parameter exists, otherwise false
 		 */
-		public function __isset($paramName) {
-			return isset($this->params[$paramName]);
+		public function __isset($parameter)
+		{
+			return(isset($this->params[$parameter]));
 		}
 	}
 ?>
