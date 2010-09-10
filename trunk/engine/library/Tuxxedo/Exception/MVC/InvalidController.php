@@ -24,7 +24,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	namespace Tuxxedo\Exception;
+	namespace Tuxxedo\Exception\MVC;
 
 
 	/**
@@ -34,7 +34,7 @@
 
     
 	/**
-	 * Invalid controller method
+	 * Invalid controller
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0

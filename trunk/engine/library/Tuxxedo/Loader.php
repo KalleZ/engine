@@ -135,6 +135,11 @@
 
 			if(!is_file($path))
 			{
+				if($silent)
+				{
+					return(false);
+				}
+
 				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $class, $path);
 			}
 
@@ -142,8 +147,15 @@
 
 			if(!\class_exists($class) && !\interface_exists($class))
 			{
+				if($silent)
+				{
+					return(false);
+				}
+
 				\tuxxedo_doc_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $class, $path);
 			}
+
+			return(true);
 		}
 	}
 ?>

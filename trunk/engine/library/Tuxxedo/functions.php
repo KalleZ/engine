@@ -378,7 +378,7 @@
 			if($registry->db && $registry->db->getNumQueries())
 			{
 				echo(
-					'<h1>Executed SQL Queries</h1>' . PHP_EOL . 
+					'<h1>Executed SQL queries</h1>' . PHP_EOL . 
 					'<div class="box">' . PHP_EOL . 
 					'<div class="inner">' . PHP_EOL . 
 					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
