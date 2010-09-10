@@ -117,7 +117,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
 	/**
@@ -135,6 +134,7 @@
 	 * Set the UTC timestamp, we need this for things such as 
 	 * session handling
 	 */
+	date_default_timezone_set('UTC');
 	define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time());
 
 	/**
