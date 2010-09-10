@@ -39,6 +39,21 @@
 	class Uri extends \Tuxxedo\Router
 	{
 		/**
+		 * Rule type constant - Controller
+		 *
+		 * @var		integer
+		 */
+		const TYPE_CONTROLLER		= 1;
+
+		/**
+		 * Rule type constant - Action
+		 *
+		 * @var		integer
+		 */
+		const TYPE_ACTION		= 2;
+
+
+		/**
 		 * Parses a uri and dispatches them all into controller, action and 
 		 * parameters.
 		 *
@@ -62,7 +77,7 @@
 		{
 			$parts = \explode('/', \trim($uri, '/'));
 
-			foreach(parts as $key => $value)
+			foreach($parts as $key => $value)
 			{
 				if(empty($value))
 				{
@@ -110,9 +125,37 @@
 				break;
 			}
 
-			$this->controller 	= (isset($controller) ? $controller : self::$default_controller);
-			$this->action		= (isset($action) ? $action : self::$default_action);
+			$this->controller 	= (isset($controller) && ($controller = self::canonical($controller, self::TYPE_CONTROLLER)) ? $controller : self::$default_controller);
+			$this->action		= (isset($action) && ($action = self::canonical($action, self::TYPE_ACTION)) ? $action : self::$default_action);
 			$this->parameters	= (isset($parameters) ? $parameters : Array());
+		}
+
+		/**
+		 * Generates a canonical name for various components
+		 *
+		 * @param	string 				The path or component to convert
+		 * @param	integer				A rule type, this is used to make sure things are callable
+		 * @return	string				Returns the canonical name
+		 */
+		public static function canonical($name, $type)
+		{
+			switch($type)
+			{
+				case(self::TYPE_CONTROLLER):
+				{
+					if(($pos = strpos($name, '.')) !== false)
+					{
+						return(substr($name, 0, $pos - 1));
+					}
+				}
+				break;
+				case(self::TYPE_ACTION):
+				{
+					return((is_callable($name, true) && !is_numeric($name{0}) ? $name : false));
+				}
+			}
+
+			return($name);
 		}
 	}
 ?>

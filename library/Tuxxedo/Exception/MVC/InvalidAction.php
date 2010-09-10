@@ -24,7 +24,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	namespace Tuxxedo\Exception;
+	namespace Tuxxedo\Exception\MVC;
 
 
 	/**

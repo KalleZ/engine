@@ -34,6 +34,7 @@
 	 */
 	use Tuxxedo\Exception;
 	use Tuxxedo\MVC\View;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Request;
 	use Tuxxedo\Router;
 
@@ -52,7 +53,7 @@
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Registry
+		 * @var		\Tuxxedo\Registry
 		 */
 		protected $registry;
 
@@ -153,7 +154,7 @@
 				$this->dispatcher(self::DISPATCH_PRE);
 			}
 
-			$action = $this->router->getAction() . 'Action';
+			$action = $this->router->getAction();
 
 			if(!\method_exists($this, $method))
 			{

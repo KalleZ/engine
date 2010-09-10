@@ -17,7 +17,6 @@
 	 - Add styles & Templates support
 
 	MVC improvements (Kalle)
-	 - Implement the View classes
 	 - Add a simple bootstraper for MVC
 
 	Other (Kalle)
