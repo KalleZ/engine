@@ -27,7 +27,6 @@
 	define('CWD', 		'../..');
 
 	use Tuxxedo\Development;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
@@ -52,6 +51,8 @@
 	define('TUXXEDO_DIR', 		CWD);
 	define('TUXXEDO_LIBRARY', 	CWD . '/library');
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
+
+	date_default_timezone_set('UTC');
 
 	set_error_handler('tuxxedo_error_handler');
 	set_exception_handler('tuxxedo_exception_handler');
