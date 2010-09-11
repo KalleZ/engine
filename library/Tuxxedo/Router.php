@@ -50,6 +50,13 @@
 	class Router
 	{
 		/**
+		 * Private instance to the Tuxxedo registry
+		 *
+		 * @var		\Tuxxedo\Registry
+		 */
+		protected $registry;
+
+		/**
 		 * Application namespace
 		 *
 		 * @var		string
@@ -100,6 +107,9 @@
 		 */
 		public function __construct($prefix = NULL)
 		{
+			global $registry;
+
+			$this->registry		= $registry;
 			$this->controller 	= self::$default_controller;
 			$this->action 		= self::$default_action;
 
@@ -119,7 +129,7 @@
 		{
 			$this->controller = $controller;
 		}
-		
+
 		/**
 		 * Get the routed controller name
 		 *
@@ -129,7 +139,7 @@
 		{
 			return($this->controller);
 		}
-		
+
 		/**
 		 * Set the normalised action name
 		 *
@@ -140,7 +150,7 @@
 		{
 			$this->action = $action;
 		}
-		
+
 		/**
 		 * Get the routed action name
 		 *
@@ -149,6 +159,16 @@
 		public function getAction()
 		{
 			return($this->action);
+		}
+
+		/**
+		 * Get the routed action method name
+		 *
+		 * @return	string						The action name
+		 */
+		public function getActionMethod()
+		{
+			return('Action' . $this->action);
 		}
 
 		/**
@@ -194,7 +214,10 @@
 				throw new Exception\MVC\InvalidController;
 			}
 
-			return(new $controller);
+			$controller = new $controller($this->registry);
+			$controller->setRouter($this);
+
+			return($controller);
 		}
 	}
 ?>

@@ -58,13 +58,6 @@
 		protected $registry;
 
 		/**
-		 * HTTP request object
-		 *
-		 * @var		\Tuxxedo\Request\Http
-		 */
-		protected $request;
-
-		/**
 		 * Router object
 		 *
 		 * @var		\Tuxxedo\Router
@@ -97,23 +90,12 @@
 		}
 
 		/**
-		 * Set the request object
-		 *
-		 * @param	\Tuxxedo\Request		Request object
-		 * @return	void				No value is returned
-		 */
-		final public function setRequest(Request $request) 
-		{
-			$this->request = $request;
-		}
-
-		/**
 		 * Set the router object
 		 *
-		 * @param	\Tuxxedo\Router\Http		Router object used
+		 * @param	\Tuxxedo\Router\Uri		Router object used
 		 * @return	void				No value is returned
 		 */
-		final public function setRouter(Router\Http $router)
+		final public function setRouter(Router\Uri $router)
 		{
 			$this->router = $router;
 		}
@@ -154,21 +136,24 @@
 				$this->dispatcher(self::DISPATCH_PRE);
 			}
 
-			$action = $this->router->getAction();
+			$action = $this->router->getActionMethod();
 
-			if(!\method_exists($this, $method))
+			if(!\method_exists($this, $action))
 			{
 				throw new Exception\MVC\InvalidAction;
 			}
 
-			$this->{$method}();
+			$this->{$action}();
 
 			if($this instanceof Controller\Dispatchable)
 			{
 				$this->dispatcher(self::DISPATCH_POST);
 			}
 
-			throw new Exception\Core('[MVC] Need to have implemented View classes after executing the dispatcher');
+			if($this->layout || $this->view)
+			{
+				throw new Exception\Core('[MVC] Need to have implemented View classes after executing the dispatcher');
+			}
 		}
 	}
 ?>
