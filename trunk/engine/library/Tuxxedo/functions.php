@@ -205,10 +205,10 @@
 			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
 			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
-			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; width: 400px; }' . PHP_EOL . 
+			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.infobox td { padding-right: 5px; }' . PHP_EOL . 
 			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
-			'.spacer { margin-bottom: 10px; width: 100%; }' . PHP_EOL . 
+			'.spacer { margin-bottom: 10px; }' . PHP_EOL . 
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
@@ -233,7 +233,7 @@
 			}
 
 			echo(
-				'<div class="infobox" style="float: left;">' . PHP_EOL . 
+				'<div class="infobox" style="float: left; width: 400px;">' . PHP_EOL . 
 				'<table cellspacing="2" cellpadding="0">' . PHP_EOL
 				);
 

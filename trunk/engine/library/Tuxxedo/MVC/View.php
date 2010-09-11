@@ -115,7 +115,7 @@
 		 */
 		public function parse()
 		{
-			if(sizeof($this->variables))
+			if(\sizeof($this->variables))
 			{
 				foreach($this->variables as $variable => $value)
 				{
