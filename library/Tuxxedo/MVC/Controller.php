@@ -151,10 +151,10 @@
 				throw new Exception\MVC\InvalidAction;
 			}
 
-			ob_start();
+			\ob_start();
 			$this->{$action}();
 
-			$content = ob_get_clean();
+			$content = \ob_get_clean();
 
 			if($this instanceof Controller\Dispatchable)
 			{
