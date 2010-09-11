@@ -16,9 +16,5 @@
 	Improve development tools (Kalle)
 	 - Add styles & Templates support
 
-	MVC improvements (Kalle)
-	 - Add a simple bootstraper for MVC
-
 	Other (Kalle)
-	 - Fix remaining Exception\Core exceptions if any
 	 - Fix non fatal errors not showing up on tuxxedo_doc_error() calls
