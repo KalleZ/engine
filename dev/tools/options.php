@@ -24,6 +24,18 @@
 					);
 
 	/**
+	 * Action templates
+	 */
+	$action_templates	= Array(
+					'add'	=> Array(
+								'options_add_edit_form'
+								), 
+					'edit'	=> Array(
+								'options_add_edit_form'
+								)
+					);
+
+	/**
 	 * Precache datastore elements
 	 */
 	$precache 		= Array(
@@ -41,8 +53,38 @@
 	require('./includes/bootstrap.php');
 	require('./includes/functions_options.php');
 
-	switch(strtolower($filter->get('do')))
+	switch($do = strtolower($filter->get('do')))
 	{
+		case('add'):
+		{
+			if($filter->post('submit'))
+			{
+				echo 'PROCESSING';
+			}
+			else
+			{
+				eval(page('options_add_edit_form'));
+			}
+		}
+		break;
+		case('edit'):
+		{
+			$option = $filter->get('option');
+
+			if(!options_is_valid($option))
+			{
+				tuxxedo_gui_error('Invalid option');
+			}
+			elseif($filter->post('submit'))
+			{
+				echo 'PROCESSING';
+			}
+			else
+			{
+				eval(page('options_add_edit_form'));
+			}
+		}
+		break;
 		case('delete'):
 		{
 			$option = $filter->get('option');

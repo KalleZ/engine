@@ -15,6 +15,7 @@
 	Improve development tools
 	 - Add internationalization support
 	 - Add user support
+	 - Add styles & Templates support
 	 - Add documenetation generator (eliminate /dev/api/ stuff)
 	 - Integrate api_analyze.php
 	 - Implement installation generators
