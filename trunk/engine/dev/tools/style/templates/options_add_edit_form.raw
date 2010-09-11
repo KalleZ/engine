@@ -1,0 +1,38 @@
+{$header}
+
+<form action="./options.php?do=add" method="post">
+<div class="box">
+	<h4><if expression="$do == 'edit'">Edit<else />Add</if> option</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td style="width: 20%;">
+				Name</td>
+			<td>
+				<input type="text" name="name" /></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap">
+				Type</td>
+			<td>
+				<select name="characters" onchange="engine_options_change_handler(this, 'option_edit_area');">
+					<option value="string">String</option>
+					<option value="integer">Integer</option>
+					<option value="boolean">Boolean</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Value</td>
+			<td id="option_edit_area">
+				<textarea name="value" id="optvalue" rows="5" cols="30"></textarea></td>
+		</tr>
+	</table>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="<if expression="$do == 'edit'">Edit<else />Add</if>" />
+</div>
+</form>
+
+{$footer}

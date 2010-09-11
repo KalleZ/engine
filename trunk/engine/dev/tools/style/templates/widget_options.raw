@@ -8,6 +8,7 @@
 	</p>
 
 	<ul>
+		<li><a href="./options.php">Display all options</a></li>
 		<li><a href="./options.php?do=add">Add new option</a></li>
 		<li><a href="./options.php?do=reset">Reset all options</a></li>
 	</ul>

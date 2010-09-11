@@ -31,6 +31,28 @@
 				}
 			}
 		}
+
+		function engine_options_change_handler(select, canvas)
+		{
+			switch(select.options[select.selectedIndex].value)
+			{
+				case('string'):
+				{
+					document.getElementById(canvas).innerHTML = '<textarea name="value" id="optvalue" rows="5" cols="30"></textarea>';
+				}
+				break;
+				case('integer'):
+				{
+					document.getElementById(canvas).innerHTML = '<input type="text" id="optvalue" name="value" />';
+				}
+				break;
+				case('boolean'):
+				{
+					document.getElementById(canvas).innerHTML = '<label><input type="radio" id="optvalue1" name="value" value="1" checked="checked" /> True</label> <label><input type="radio" id="optvalue2" name="value" value="0" /> False</label>';
+				}
+				break;
+			}
+		}
 		</script>
 
 		<style type="text/css">
@@ -53,7 +75,7 @@
 			color:				#3B7286;
 			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
 			font-size:			82%;
-            margin-top:			30px;
+			margin-top:			30px;
 		}
 		code
 		{
@@ -61,14 +83,21 @@
 		}
 		input, select, textarea
 		{
-			background:			#044968 url('./style/images/top-background.png') repeat-x center left;
-			border:				0px;
+			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
+			border:				1px solid #21A7CD;
 			border-radius:			4px;
-			color:				#FFFFFF;
+			color:				#000000;
 			padding:			5px;
 
 			-moz-border-radius:		4px;
 		}
+			input[type=submit]
+			{
+				background:			#044968 url('./style/images/top-background.png') repeat-x center left;
+				border:				0px;
+				border-radius:			4px;
+				color:				#FFFFFF;
+			}
 		p.spacer
 		{
 			margin-bottom:			10px;
@@ -112,9 +141,6 @@
 			}
 		textarea
 		{
-			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
-			border:				1px solid #21A7CD;
-			color:				#000000;
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
 		.box
