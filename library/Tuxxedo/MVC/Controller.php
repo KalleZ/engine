@@ -144,15 +144,21 @@
 				$this->dispatcher(self::DISPATCH_PRE);
 			}
 
-			$action = $this->router->getActionMethod();
+			$action		= strtolower($this->router->getAction());
+			$action_method 	= $this->router->getActionMethod();
 
-			if(!\method_exists($this, $action))
+			if(!\method_exists($this, $action_method))
 			{
 				throw new Exception\MVC\InvalidAction;
 			}
 
+			if(isset($this->acl) && (isset($this->acl['*']) && !$this->registry->user->isGranted($this->acl['*']) || isset($this->acl[$action]) && !$this->registry->user->isGranted($this->acl[$action])))
+			{
+				throw new Exception\MVC\InvalidPermission;
+			}
+
 			\ob_start();
-			$this->{$action}();
+			$this->{$action_method}();
 
 			$content = \ob_get_clean();
 
