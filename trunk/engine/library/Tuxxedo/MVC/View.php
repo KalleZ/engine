@@ -148,7 +148,7 @@
 			}
 
 			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');
-			return($this->buffer);
+			return(\str_replace('"', '\"', $this->buffer));
 		}
 
 		/**
@@ -158,7 +158,7 @@
 		 */
 		public function __toString()
 		{
-			return(str_replace('"', '\"', $this->parse()));
+			return($this->parse());
 		}
 	}
 ?>
