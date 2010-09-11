@@ -64,6 +64,20 @@
 		protected $name;
 
 		/**
+		 * The layout mode
+		 *
+		 * @var		boolean
+		 */
+		protected $layout		= false;
+
+		/**
+		 * Template buffer
+		 *
+		 * @var		string
+		 */
+		protected $buffer		= '';
+
+		/**
 		 * The variables used within the view
 		 *
 		 * @var		array
@@ -75,37 +89,38 @@
 		 *
 		 * @var		array
 		 */
-		protected $globals		= Array(
-							'user', 
-							'usergroup', 
-							'userinfo', 
-							'usergroupinfo'
-							);
+		protected $globals		= Array();
 
 
 		/**
 		 * Constructor, constructs a new View
 		 *
-		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The name of the view to load
 		 * @param	array				Array of special globals to define as variables from the registry
 		 */
-		public function __construct(Registry $registry, $name, Array $globals = NULL)
+		public function __construct($name, Array $globals = NULL)
 		{
+			global $registry;
+
+			$this->registry		= $registry;
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
 
 			if($globals !== NULL)
 			{
-				if(\sizeof($globals))
-				{
-					$this->globals = \array_unique(\array_merge($this->globals, $globals));
-				}
-				else
-				{
-					$this->globals = Array();
-				}
+				$this->globals = $globals;
 			}
+		}
+
+		/**
+		 * Whether to set this as a layout or not
+		 *
+		 * @param	boolean				Set to true to activate layout mode, and false to not
+		 * @return	void				No value is returned
+		 */
+		public function setLayout($mode)
+		{
+			$this->layout = (boolean) $mode;
 		}
 
 		/**
@@ -115,18 +130,25 @@
 		 */
 		public function parse()
 		{
+			if($this->layout)
+			{
+				eval('$header = "' . $this->registry->style->fetch('header') . '";');
+				eval('$footer = "' . $this->registry->style->fetch('footer') . '";');
+			}
+
 			if(\sizeof($this->variables))
 			{
 				foreach($this->variables as $variable => $value)
 				{
 					if(!isset(${$variable}))
 					{
-						${$variaable} = $value;
+						${$variable} = $value;
 					}
 				}
 			}
 
-			eval('return("' . $this->registry->style->fetch($this->name) . '");');
+			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');
+			return($this->buffer);
 		}
 
 		/**
@@ -136,7 +158,7 @@
 		 */
 		public function __toString()
 		{
-			return($this->parse());
+			return(str_replace('"', '\"', $this->parse()));
 		}
 	}
 ?>

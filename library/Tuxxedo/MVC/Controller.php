@@ -35,7 +35,6 @@
 	use Tuxxedo\Exception;
 	use Tuxxedo\MVC\View;
 	use Tuxxedo\Registry;
-	use Tuxxedo\Request;
 	use Tuxxedo\Router;
 
 
@@ -78,6 +77,13 @@
 		 */
 		protected $view;
 
+		/**
+		 * Template buffer
+		 *
+		 * @var		string
+		 */
+		protected $buffer		= '';
+
 
 		/**
 		 * Constructor
@@ -106,8 +112,10 @@
 		 * @param	\Tuxxedo\MVC\View		Layout template
 		 * @return	void				No value is returned
 		 */
-		final public function setLayout(MVC\View $layout)
+		final public function setLayout(View $layout)
 		{
+			$layout->setLayout(true);
+
 			$this->layout = $layout;
 		}
 
@@ -117,7 +125,7 @@
 		 * @param	\Tuxxedo\MVC\View		View template for the current action
 		 * @return	void				No value is returned
 		 */
-		final public function setView(MVC\View $view)
+		final public function setView(View $view)
 		{
 			$this->view = $view;
 		}
@@ -143,7 +151,10 @@
 				throw new Exception\MVC\InvalidAction;
 			}
 
+			ob_start();
 			$this->{$action}();
+
+			$content = ob_get_clean();
 
 			if($this instanceof Controller\Dispatchable)
 			{
@@ -152,8 +163,26 @@
 
 			if($this->layout || $this->view)
 			{
-				throw new Exception\Core('[MVC] Need to have implemented View classes after executing the dispatcher');
+				if(!empty($content))
+				{
+					echo($content);
+
+					$content = '';
+				}
+
+				if($this->view)
+				{
+					eval('$content = "' . (string) $this->view . '";');
+				}
+
+				if($this->layout)
+				{
+					eval('$this->buffer = "' . (string) $this->layout . '";');
+					return($this->buffer);
+				}
 			}
+
+			return($content);
 		}
 	}
 ?>
