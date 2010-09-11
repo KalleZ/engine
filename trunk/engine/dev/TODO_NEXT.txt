@@ -28,9 +28,6 @@
 	Implement API accessors
 	Implement permission constants for cached permission fields
 	Implement some handler registry so we dont have to re-invent the wheel everytime a component may have handlers
-
-	MVC
-	 - Implement ACL mappings for controllers
 	
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases
