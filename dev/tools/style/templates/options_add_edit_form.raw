@@ -1,6 +1,6 @@
 {$header}
 
-<form action="./options.php?do=add" method="post">
+<form action="./options.php?do=<if expression="$do == 'edit'">edit&option={$options['option']}<else />add</if>" method="post">
 <div class="box">
 	<h4><if expression="$do == 'edit'">Edit<else />Add</if> option</h4>
 
@@ -9,23 +9,23 @@
 			<td style="width: 20%;">
 				Name</td>
 			<td>
-				<input type="text" name="name" /></td>
+				<input type="text" name="name" value="<if expression="$do == 'edit'">{$options['option']}</if>" /></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap">
 				Type</td>
 			<td>
 				<select name="characters" onchange="engine_options_change_handler(this, 'option_edit_area');">
-					<option value="string">String</option>
-					<option value="integer">Integer</option>
-					<option value="boolean">Boolean</option>
+					<option value="string"<if expression="$do == 'edit' && $options['type'] == 's'"> selected="selected"</if>>String</option>
+					<option value="integer"<if expression="$do == 'edit' && $options['type'] == 'i'"> selected="selected"</if>>Integer</option>
+					<option value="boolean"<if expression="$do == 'edit' && $options['type'] == 'b'"> selected="selected"</if>>Boolean</option>
 				</select></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap" valign="top">
 				Value</td>
 			<td id="option_edit_area">
-				<textarea name="value" id="optvalue" rows="5" cols="30"></textarea></td>
+				<textarea name="value" id="optvalue" rows="5" cols="30"><if expression="$do == 'edit' && !empty($options['value']) && !empty($options['defaultvalue'])">{$options['value']}<else /><if expression="$do == 'edit' && !empty($options['defaultvalue'])">{$options['defaultvalue']}</if></if></textarea></td>
 		</tr>
 	</table>
 </div>

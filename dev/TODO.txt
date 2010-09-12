@@ -2,18 +2,10 @@
 
 
 
-	Tuxxedo Engine 1.0.0 Release Candidate 1
-	----------------------------------------
-
-	Improve development tools (Kalle)
-	 - Re-implement old tools
-	   - Options (Add & Edit modules)
-
-
-
 	Tuxxedo Engine 1.0.0 Release Candidate 2
 	----------------------------------------
 
 	Other (Kalle)
+	 - Fix issues when changing an option type and the value is not kept in the devtools
 	 - Fix non fatal errors not showing up on tuxxedo_doc_error() calls
 	 - Fix fatal errors on direct view of class files, we seriously need the include ticket (sorry!)

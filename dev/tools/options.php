@@ -76,13 +76,18 @@
 		{
 			$option = $filter->get('option');
 
-			if(!options_is_valid($option))
+			if(($options = options_get_single($option)) == false)
 			{
 				tuxxedo_gui_error('Invalid option');
 			}
 			elseif($filter->post('submit'))
 			{
-				echo 'PROCESSING';
+				if(!options_edit($option, $filter->post('name'), $filter->post('characters'), $filter->post('value')))
+				{
+					tuxxedo_gui_error('Failed to edit option, possible naming conflict');
+				}
+
+				tuxxedo_redirect('Edited option', './options.php');
 			}
 			else
 			{

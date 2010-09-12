@@ -81,7 +81,7 @@
 			return($options);
 		}
 
-		return(false);
+		return($options);
 	}
 
 	/**
@@ -95,6 +95,19 @@
 	function options_is_valid($option)
 	{
 		return((($options = options_get_all()) !== false ? isset($options[$option]) : false));
+	}
+
+	/**
+	 * Gets a single option
+	 *
+	 * @param	string			The option name
+	 * @returns	array			Returns the option value if the option was valid, and false on error
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
+	 */
+	function options_get_single($option)
+	{
+		return((($options = options_get_all()) !== false && isset($options[$option]) ? $options[$option] : false));
 	}
 
 	/**
@@ -114,7 +127,7 @@
 
 		$option = $options[$option];
 
-		if($option['value'] == $option['defaultvalue']);
+		if($option['value'] === $option['defaultvalue'])
 		{
 			return(true);
 		}
@@ -241,5 +254,42 @@
 								)', $name, options_convert_type($type, $value), options_shorthand_type($type));
 
 		return($result);
+	}
+
+	/**
+	 * Edits an option
+	 *
+	 *
+	 * @param	string			The old option name
+	 * @param	string			The new option name
+	 * @param	string			The new option data type
+	 * @param	string			The new option value
+	 * @return	boolean			Returns true if the option were edited, otherwise false
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
+	 */
+	function options_edit($original, $name, $type, $value)
+	{
+		if(!options_is_valid($original) || empty($original) || ($original !== $name && (options_is_valid($name) || empty($name))))
+		{
+			return(false);
+		}
+
+		global $registry;
+
+		$default = options_get_single($original);
+		$default = $default['defaultvalue'];
+
+		$result = $registry->db->equery('
+							UPDATE 
+								`' . TUXXEDO_PREFIX . 'options` 
+							SET
+								`option` = \'%2$s\', 
+								`value` = \'%3$s\', 
+								`type` = \'%4$s\'
+							WHERE 
+								`option` = \'%1$s\'', $original, $name, options_convert_type($type, $value), options_shorthand_type($type));
+
+		return($result && $registry->db->getAffectedRows($result));
 	}
 ?>
