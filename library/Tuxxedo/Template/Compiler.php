@@ -462,17 +462,17 @@
 
 				$compiler = new self($this->options, $this->conditions);
 
-				if(\stripos($true, $tokens['if_start']))
+				if(\stripos($true, $tokens['if_start']) !== false)
 				{
-					$compiler->set(\str_replace('\\"', '"', $true));
+					$compiler->set(\str_replace('\"', '"', $true));
 					$compiler->compile();
 
 					$true = $compiler->get();
 				}
 
-				if(\stripos($false, $tokens['if_start']))
+				if(\stripos($false, $tokens['if_start']) !== false)
 				{
-					$compiler->set(\str_replace('\\"', '"', $false));
+					$compiler->set(\str_replace('\"', '"', $false));
 					$compiler->compile();
 
 					$false = $compiler->get();
