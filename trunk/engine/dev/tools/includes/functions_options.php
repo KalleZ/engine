@@ -23,6 +23,11 @@
 	 */
 	function options_value_dump($type, $value)
 	{
+		if(empty($type))
+		{
+			return('unknown');
+		}
+
 		switch(strtolower($type{0}))
 		{
 			case('s'):
@@ -46,6 +51,8 @@
 	 * Gets all available options from the database
 	 *
 	 * @return	array			Returns an array with all the option names as values, and false on error
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
 	 */
 	function options_get_all()
 	{
@@ -82,6 +89,8 @@
 	 *
 	 * @param	string			The option name
 	 * @returns	boolean			Returns true if the option was valid, and false on error
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
 	 */
 	function options_is_valid($option)
 	{
@@ -93,6 +102,8 @@
 	 *
 	 * @param	string			The option name
 	 * @return	boolean			True if the value was reset, and false on error
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
 	 */
 	function options_reset($option)
 	{
@@ -126,6 +137,8 @@
 	 *
 	 * @param	string			The option name
 	 * @return	boolean			Returns true if the option was deleted, and false on error
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
 	 */
 	function options_delete($option)
 	{
@@ -164,5 +177,69 @@
 		}
 
 		return((string) $value);
+	}
+
+	/**
+	 * Converts an option type to a shorthand name
+	 *
+	 * @param	string			The long option type
+	 * @return	string			Returns the shorthand option type
+	 */
+	function options_shorthand_type($type)
+	{
+		switch($type)
+		{
+			case('boolean'):
+			{
+				return('b');
+			}
+			break;
+			case('integer'):
+			{
+				return('i');
+			}
+			break;
+		}
+
+		return('s');
+	}
+
+	/**
+	 * Adds a new option
+	 *
+	 * @param	string			The option name
+	 * @param	string			The option data type
+	 * @param	string			The option value
+	 * @return	boolean			Returns true if the option were added, otherwise false
+	 *
+	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
+	 */
+	function options_add($name, $type, $value)
+	{
+		if(options_is_valid($name) || empty($name))
+		{
+			return(false);
+		}
+
+		global $registry;
+
+		$result = $registry->db->equery('
+							INSERT INTO 
+								`' . TUXXEDO_PREFIX . 'options` 
+								(
+									`option`, 
+									`value`, 
+									`defaultvalue`, 
+									`type`
+								)
+							VALUES
+								(
+									\'%1$s\', 
+									\'%2$s\', 
+									\'%2$s\', 
+									\'%3$s\'
+								)', $name, options_convert_type($type, $value), options_shorthand_type($type));
+
+		return($result);
 	}
 ?>

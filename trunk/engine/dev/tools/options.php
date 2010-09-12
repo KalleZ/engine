@@ -59,7 +59,12 @@
 		{
 			if($filter->post('submit'))
 			{
-				echo 'PROCESSING';
+				if(!options_add($filter->post('name'), $filter->post('characters'), $filter->post('value')))
+				{
+					tuxxedo_gui_error('Failed to add new option, possible naming conflict');
+				}
+
+				tuxxedo_redirect('Added option', './options.php');
 			}
 			else
 			{
