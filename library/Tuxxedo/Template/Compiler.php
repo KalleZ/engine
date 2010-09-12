@@ -51,6 +51,35 @@
 	class Compiler
 	{
 		/**
+		 * Compiler option - Disable call check
+		 *
+		 * @var		integer
+		 */
+		const OPT_NO_CALL_LIMITS		= -1;
+
+		/**
+		 * Compiler option - Disable function call check
+		 *
+		 * @var		integer
+		 */
+		const OPT_NO_FUNCTION_CALL_LIMIT	= 1;
+
+		/**
+		 * Compiler option - Disable class call check
+		 *
+		 * @var		integer
+		 */
+		const OPT_NO_CLASS_CALL_LIMIT		= 2;
+
+		/**
+		 * Compiler option - Disable closure call check
+		 *
+		 * @var		integer
+		 */
+		const OPT_NO_CLOSURE_CALL_LIMIT		= 4;
+
+
+		/**
 		 * The uncompiled raw source code
 		 *
 		 * @var		string
@@ -65,13 +94,20 @@
 		protected $compiled_source;
 
 		/**
+		 * Compiler options bitmask
+		 *
+		 * @var		integer
+		 */
+		protected $options			= 0;
+
+		/**
 		 * The current number of parsed conditions, this is used for 
 		 * making error messages more expressive so its easier to locate 
 		 * an error
 		 *
 		 * @var		integer
 		 */
-		protected $conditions		= 0;
+		protected $conditions			= 0;
 
 		/**
 		 * The default functions to allow in expressions, note 
@@ -81,49 +117,89 @@
 		 *
 		 * @var		array
 		 */
-		protected $functions		= Array(
-							'and', 
-							'or', 
-							'xor', 
+		protected $functions			= Array(
+								'and', 
+								'or', 
+								'xor', 
 
-							'array', 
-							'defined', 
-							'empty', 
-							'isset', 
-							'sizeof', 
-							'count'
-							);
+								'array', 
+								'defined', 
+								'empty', 
+								'isset', 
+								'sizeof', 
+								'count'
+								);
 
 		/**
 		 * The default class instances to allow in expressions
 		 *
 		 * @var		array
 		 */
-		protected $classes		= Array(
-							'user', 
-							'usergroup'
-							);
+		protected $classes			= Array(
+								'user', 
+								'usergroup'
+								);
 
 		/**
 		 * The default closures to allow in expressions
 		 *
 		 * @var		array
 		 */
-		protected $closures		= Array(
-							);
+		protected $closures			= Array(
+								);
 
 
 		/**
 		 * Template compiler constructor
 		 *
+		 * @param	integer			The compiler options, this is used for recursive code by the compiler, or by setting the default
 		 * @param	integer			The current conditions, this is used for recursive code by the compile method and should not be touched
 		 */
-		public function __construct($conditions = NULL)
+		public function __construct($options = 0, $conditions = NULL)
 		{
+			if($options !== 0)
+			{
+				$this->options = (integer) $options;
+			}
+
 			if($conditions !== NULL)
 			{
 				$this->conditions = $conditions;
 			}
+		}
+
+		/**
+		 * Set a new compiler option
+		 *
+		 * @param	integer			The new compiler bitmask
+		 * @param	boolean			Whether to add it the bitmask to the current bitmask or reset it before
+		 * @return	void			No value is returned
+		 */
+		public function setOption($bitmask, $reset = false)
+		{
+			if($reset)
+			{
+				$this->options = (integer) $bitmask;
+			}
+			else
+			{
+				$this->options |= (integer) $bitmask;
+			}
+
+			if($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT && $this->options & self::OPT_NO_FUNCTION_CALL_LIMIT && $this->options & self::OPT_NO_FUNCTION_CALL_LIMIT)
+			{
+				$this->options = -1;
+			}
+		}
+
+		/**
+		 * Gets the current compiler options
+		 *
+		 * @return	integer			The current compiler options
+		 */
+		public function getOptions()
+		{
+			return($this->options);
 		}
 
 		/**
@@ -306,15 +382,26 @@
 				{
 					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->conditions);
 				}
-				elseif(\preg_match_all('#([a-z0-9_{}$>-]+)(\s|/\*.*\*/|(\#|//)[^\r\n]*(\r|\n))*\(#si', $expr_value, $matches))
+				elseif(!($this->options & self::OPT_NO_CALL_LIMITS) && \preg_match_all('#([a-z0-9_{}$>-]+)(\s|/\*.*\*/|(\#|//)[^\r\n]*(\r|\n))*\(#si', $expr_value, $matches))
 				{
 					foreach($matches[1] as $function)
 					{
 						$function = \strtolower(\stripslashes($function));
 
-						if(\in_array($function, $this->functions) || $function{0} == '$' && ($pos = \strpos($function, '->')) !== false && \in_array(\substr($function, 1, $pos - 1), $this->classes) || $function{0} == '$' && \strpos($function, '->') === false && \in_array(substr($function, 1), $this->closures))
+						if(!($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) && \in_array($function, $this->functions))
 						{
 							continue;
+						}
+						elseif($function{0} == '$')
+						{
+							if(!($this->options & self::OPT_NO_CLASS_CALL_LIMIT) && ($pos = \strpos($function, '->')) !== false && \in_array(\substr($function, 1, $pos - 1), $this->classes))
+							{
+								continue;
+							}
+							elseif(!($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) && \strpos($function, '->') === false && \in_array(substr($function, 1), $this->closures))
+							{
+								continue;
+							}
 						}
 
 						throw new Exception\TemplateCompiler('Use of unsafe function: ' . $function . '()', $this->conditions);
@@ -373,25 +460,25 @@
 					$false	= \substr($src, $ptr['else'] + \strlen($tokens['else']), $ptr['if_close'] - \strlen($tokens['if_end']) - $ptr['else'] - $ptr['else_bytes']);
 				}
 
-				$template = new self($this->conditions);
+				$compiler = new self($this->options, $this->conditions);
 
 				if(\stripos($true, $tokens['if_start']))
 				{
-					$template->set(\str_replace('\\"', '"', $true));
-					$template->compile();
+					$compiler->set(\str_replace('\\"', '"', $true));
+					$compiler->compile();
 
-					$true = $template->get();
+					$true = $compiler->get();
 				}
 
 				if(\stripos($false, $tokens['if_start']))
 				{
-					$template->set(\str_replace('\\"', '"', $false));
-					$template->compile();
+					$compiler->set(\str_replace('\\"', '"', $false));
+					$compiler->compile();
 
-					$false = $template->get();
+					$false = $compiler->get();
 				}
 
-				$template 		= NULL;
+				$compiler 		= NULL;
 				$expression 		= '" . ((' . $expr_value . ') ? ("' . $true . '") : ' . ($false ? '("' . $false . '")' : '\'\'') . ') . "';
 				$src 			= \substr_replace($src, $expression, $ptr['if_open'], $ptr['if_close'] + \strlen($tokens['if_end']) - $ptr['if_open']);
 				$ptr['if_close'] 	= $ptr['if_open'] + \strlen($expression) - 1;
