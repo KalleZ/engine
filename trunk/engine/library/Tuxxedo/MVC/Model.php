@@ -92,7 +92,7 @@
 			$prefix 	= \substr($method, 0, 3);
 			$property	= \substr($method, 3);
 
-			if(empty($property) || !isset($this->{$property})
+			if(empty($property) || !isset($this->{$property}))
 			{
 				return;
 			}
