@@ -158,7 +158,7 @@
 			}
 
 			\ob_start();
-			$this->{$action_method}();
+			$this->{$action_method}($this->router->getParameters());
 
 			$content = \ob_get_clean();
 
