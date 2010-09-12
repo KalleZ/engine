@@ -152,7 +152,7 @@
 				throw new Exception\MVC\InvalidAction;
 			}
 
-			if(isset($this->acl) && (isset($this->acl['*']) && !$this->registry->user->isGranted($this->acl['*']) || isset($this->acl[$action]) && !$this->registry->user->isGranted($this->acl[$action])))
+			if(isset($this->acl) && (!\is_array($this->acl) && !$this->registry->user->isGranted((integer) $this->acl) || \is_array($this->acl) && isset($this->acl[$action]) && !$this->registry->user->isGranted($this->acl[$action])))
 			{
 				throw new Exception\MVC\InvalidPermission;
 			}
