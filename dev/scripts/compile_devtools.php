@@ -66,8 +66,9 @@
 			{
 			}
 ?>
-	<li><?php echo($template . '... ' . $result); ?></li>
+	<li><?php if(isset($e)) { echo('<strong>'); } echo($template . '... ' . $result); if(isset($e)) { echo('</strong>'); }  ?></li>
 <?php
+			unset($e);
 		}
 ?>
 </ul>

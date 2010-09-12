@@ -336,7 +336,7 @@
 				$delimiter 		= $src{$expr_start - 1};
 				$ptr['else_bytes']	= 2;
 
-				if($delimiter == '\\')
+				if($delimiter == '\\' && isset($src{$expr_start}))
 				{
 					$delimiter 		= $src{$expr_start};
 					$ptr['else_bytes'] 	= 3;
