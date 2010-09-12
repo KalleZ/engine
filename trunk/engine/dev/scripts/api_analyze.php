@@ -89,7 +89,7 @@
 															)
 											);
 
-					var_dump($datamap[$file][$type_multiple][$name]['implements']);
+					/* var_dump($datamap[$file][$type_multiple][$name]['implements']); */
 
 					printf('%s (%s) %s<br />', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata']));
 				}
