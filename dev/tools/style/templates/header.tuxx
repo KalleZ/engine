@@ -91,7 +91,7 @@
 
 			-moz-border-radius:		4px;
 		}
-			input[type=submit]
+			input[type=button], input[type=submit]
 			{
 				background:			#044968 url('./style/images/top-background.png') repeat-x center left;
 				border:				0px;
