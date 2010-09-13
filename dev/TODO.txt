@@ -7,5 +7,4 @@
 
 	Other (Kalle)
 	 - Fix issues when changing an option type and the value is not kept in the devtools
-	 - Fix non fatal errors not showing up on tuxxedo_doc_error() calls
 	 - Fix fatal errors on direct view of class files, we seriously need the include ticket (sorry!)
