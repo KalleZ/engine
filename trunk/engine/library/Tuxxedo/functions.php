@@ -174,11 +174,9 @@
 			$message = utf8_encode($message);
 		}
 
-		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && $registry && !$registry->style)
+		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && $registry)
 		{
-			$message .=	 PHP_EOL . 
-					'The following errors were logged while executing:' . PHP_EOL . 
-					'<ul>' . PHP_EOL;
+			$message .= '<ul>' . PHP_EOL;
 
 			foreach($errors as $error)
 			{
@@ -186,6 +184,8 @@
 			}
 
 			$message .= '</ul>' . PHP_EOL;
+
+			Registry::globals('errors', Array());
 		}
 
 		header('Content-Type: text/html');
