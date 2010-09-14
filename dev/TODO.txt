@@ -7,4 +7,3 @@
 
 	Other (Kalle)
 	 - Fix fatal errors on direct view of class files, we seriously need the include ticket (sorry!)
-	 - Fix the SQL and remove the 'login' template
