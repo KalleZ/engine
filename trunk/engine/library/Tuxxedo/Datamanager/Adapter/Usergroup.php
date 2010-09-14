@@ -63,7 +63,8 @@
 							'type'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidType')
+											'callback'	=> Array(__CLASS__, 'isValidType'), 
+											'default'	=> 2
 											), 
 							'permissions'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
@@ -142,7 +143,7 @@
 		 */
 		public static function isValidType(Registry $registry, $type)
 		{
-			return($type > 0 && $type < 4);
+			return($type > 0 && $type < 3);
 		}
 	}
 ?>
