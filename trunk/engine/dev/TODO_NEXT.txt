@@ -20,7 +20,7 @@
 	 - Integrate api_analyze.php
 	 - Implement installation generators
 	 - Other
-	   - Add the ability to define default values for options
+	   - Add the ability to re-define default values for options
 
 	Implement a generic pagination class with handlers for database and other generic ones based on an interface
 	Implement a temporary memory storage, with backends for APC etc.
@@ -28,6 +28,8 @@
 	Implement session adapters with backends for APC etc.
 	Implement validators
 	Implement API accessors
+	Implement API helpers
+         - Uploading API
 	Implement permission constants for cached permission fields
 	Implement some handler registry so we dont have to re-invent the wheel everytime a component may have handlers
 	
