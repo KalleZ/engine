@@ -482,7 +482,7 @@
 				return(true);
 			}
 
-			return($this->tuxxedo->db->equery('
+			return($this->registry->db->equery('
 								DELETE FROM 
 									`' . $this->tablename . '`
 								WHERE 

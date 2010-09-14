@@ -50,13 +50,14 @@
 		/**
 		 * Constructs a new storage engine
 		 *
-	 	 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	Tuxxedo_Style		Reference to the style object
+	 	 * @param	\Tuxxedo\Registry	The Tuxxedo object reference
+		 * @param	\Tuxxedo\Style		Reference to the style object
 		 * @param	object			Object reference to the templates data table
 		 */
 		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
 			$this->registry 	= $registry;
+			$this->style		= $style;
 			$this->templates	= $templates;
 		}
 
@@ -69,7 +70,7 @@
 		 * @param	array			An array passed by reference, this contains all the elements that where loaded if referenced
 		 * @return	boolean			Returns true on success otherwise false
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
@@ -90,7 +91,7 @@
 										`title` IN (
 											\'%s\'
 										);', 
-								$this->tuxxedo->style['id'], \join('\', \'', \array_map(Array($this->tuxxedo->db, 'escape'), $templates)));
+								$this->style['id'], \join('\', \'', \array_map(Array($this->registry->db, 'escape'), $templates)));
 
 			if($result === false || !$result->getNumRows())
 			{

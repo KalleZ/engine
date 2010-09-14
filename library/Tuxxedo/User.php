@@ -216,8 +216,8 @@
 			$this->usergroupinfo		= $this->registry->cache->usergroups[$userinfo->usergroupid];
 			$this->sessiondm['userid'] 	= $userinfo->id;
 
-			$this->tuxxedo->set('userinfo', $userinfo);
-			$this->tuxxedo->set('usergroup', $this->usergroupinfo);
+			$this->registry->set('userinfo', $userinfo);
+			$this->registry->set('usergroup', $this->usergroupinfo);
 
 			return(true);
 		}

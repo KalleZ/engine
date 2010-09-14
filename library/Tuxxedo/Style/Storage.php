@@ -49,9 +49,16 @@
 		/**
 		 * Private instance to the Tuxxedo registry
 		 *
-		 * @var		Registry
+		 * @var		\Tuxxedo\Registry
 		 */
 		protected $registry;
+
+		/**
+		 * The style that this handler is assigned to
+		 *
+		 * @var		\Tuxxedo\Style
+		 */
+		protected $style;
 
 		/**
 		 * Reference to the template storage
@@ -64,9 +71,9 @@
 		/**
 		 * Constructs a new storage engine
 		 *
-	 	 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	Tuxxedo_Style		Reference to the style object
-		 * @param	object			Object reference to the templates data table
+	 	 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
+		 * @param	\Tuxxedo\Style			Reference to the style object
+		 * @param	object				Object reference to the templates data table
 		 */
 		abstract protected function __construct(Registry $registry, Style $style, \stdClass $templates);
 
@@ -74,11 +81,11 @@
 		 * Caches a template, trying to cache an already loaded 
 		 * template will recache it
 		 *
-		 * @param	array			A list of templates to load
-		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
-		 * @return	boolean			Returns true on success otherwise false
+		 * @param	array				A list of templates to load
+		 * @param	array				An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @return	boolean				Returns true on success otherwise false
 		 *
-		 * @throws	Tuxxedo_Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\SQL		Throws an exception if the query should fail
 		 */
 		abstract public function cache(Array $templates, Array &$error_buffer = NULL);
 
@@ -86,13 +93,13 @@
 		/**
 		 * Factory method for creating a new storage engine instance
 		 *
-		 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	Tuxxedo_Style		Reference to the style object
-		 * @param	string			The storage engine to instanciate
-		 * @param	object			Reference to the template storage object
-		 * @return	object			Returns a style storage engine object reference
+		 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
+		 * @param	\Tuxxedo\Style			Reference to the style object
+		 * @param	string				The storage engine to instanciate
+		 * @param	object				Reference to the template storage object
+		 * @return	object				Returns a style storage engine object reference
 		 *
-		 * @throws	Tuxxedo_Basic_Exception	Throws a basic exception on invalid style storage engines
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid style storage engines
 		 */ 
 		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates)
 		{
