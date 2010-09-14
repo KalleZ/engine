@@ -56,7 +56,7 @@
 		 */
 		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
-			$this->tuxxedo 		= $registry;
+			$this->registry		= $registry;
 			$this->templates	= $templates;
 			$this->path		= './style/templates/';
 		}
