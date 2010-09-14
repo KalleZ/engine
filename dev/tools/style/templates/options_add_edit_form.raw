@@ -1,6 +1,6 @@
 {$header}
 
-<form action="./options.php?do=<if expression="$do == 'edit'">edit&option={$options['option']}<else />add</if>" method="post">
+<form action="./options.php?do=<if expression="$do == 'edit'">edit&option={$options['option']}<else />add</if>" method="post"<if expression="$do == 'edit'"> onsubmit="engine_options_editcheck();"</if>>
 <div class="box">
 	<h4><if expression="$do == 'edit'">Edit<else />Add</if> option</h4>
 
@@ -15,7 +15,7 @@
 			<td nowrap="nowrap">
 				Type</td>
 			<td>
-				<select name="characters" onchange="engine_options_change_handler(this, 'option_edit_area');">
+				<select name="characters" id="option_selector" onchange="engine_options_change_handler(this, 'option_edit_area');">
 					<option value="string"<if expression="$do == 'edit' && $options['type'] == 's'"> selected="selected"</if>>String</option>
 					<option value="integer"<if expression="$do == 'edit' && $options['type'] == 'i'"> selected="selected"</if>>Integer</option>
 					<option value="boolean"<if expression="$do == 'edit' && $options['type'] == 'b'"> selected="selected"</if>>Boolean</option>
@@ -31,8 +31,17 @@
 </div>
 
 <div class="box">
+	<input type="hidden" id="option_current_value" value="" />
+
 	<input type="submit" name="submit" value="<if expression="$do == 'edit'">Edit<else />Add</if>" />
 </div>
+
+<if expression="$do == 'edit' && $options['type'] != 's'">
+<script type="text/javascript">
+engine_options_change_handler(document.getElementById('option_selector'), 'option_edit_area');
+</script>
+</if>
+
 </form>
 
 {$footer}

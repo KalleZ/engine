@@ -1,6 +1,6 @@
 {$header}
 
-<form action=\"./options.php?do=" . (($do == 'edit') ? ("edit&option={$options['option']}") : ("add")) . "\" method=\"post\">
+<form action=\"./options.php?do=" . (($do == 'edit') ? ("edit&option={$options['option']}") : ("add")) . "\" method=\"post\"" . (($do == 'edit') ? (" onsubmit=\"engine_options_editcheck();\"") : '') . ">
 <div class=\"box\">
 	<h4>" . (($do == 'edit') ? ("Edit") : ("Add")) . " option</h4>
 
@@ -15,7 +15,7 @@
 			<td nowrap=\"nowrap\">
 				Type</td>
 			<td>
-				<select name=\"characters\" onchange=\"engine_options_change_handler(this, 'option_edit_area');\">
+				<select name=\"characters\" id=\"option_selector\" onchange=\"engine_options_change_handler(this, 'option_edit_area');\">
 					<option value=\"string\"" . (($do == 'edit' && $options['type'] == 's') ? (" selected=\"selected\"") : '') . ">String</option>
 					<option value=\"integer\"" . (($do == 'edit' && $options['type'] == 'i') ? (" selected=\"selected\"") : '') . ">Integer</option>
 					<option value=\"boolean\"" . (($do == 'edit' && $options['type'] == 'b') ? (" selected=\"selected\"") : '') . ">Boolean</option>
@@ -31,8 +31,17 @@
 </div>
 
 <div class=\"box\">
+	<input type=\"hidden\" id=\"option_current_value\" value=\"\" />
+
 	<input type=\"submit\" name=\"submit\" value=\"" . (($do == 'edit') ? ("Edit") : ("Add")) . "\" />
 </div>
+
+" . (($do == 'edit' && $options['type'] != 's') ? ("
+<script type=\"text/javascript\">
+engine_options_change_handler(document.getElementById('option_selector'), 'option_edit_area');
+</script>
+") : '') . "
+
 </form>
 
 {$footer}

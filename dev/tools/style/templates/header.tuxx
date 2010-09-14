@@ -34,6 +34,8 @@
 
 		function engine_options_change_handler(select, canvas)
 		{
+			engine_options_save_current();
+
 			switch(select.options[select.selectedIndex].value)
 			{
 				case('string'):
@@ -51,6 +53,53 @@
 					document.getElementById(canvas).innerHTML = '<label><input type=\"radio\" id=\"optvalue1\" name=\"value\" value=\"1\" checked=\"checked\" /> True</label> <label><input type=\"radio\" id=\"optvalue2\" name=\"value\" value=\"0\" /> False</label>';
 				}
 				break;
+			}
+
+			engine_options_editcheck();
+		}
+
+		function engine_options_current_canvas()
+		{
+			if(document.getElementById('optvalue1'))
+			{
+				return('optvalue1');
+			}
+
+			return('optvalue');
+		}
+
+		function engine_options_editcheck()
+		{
+			var option_canvas = engine_options_current_canvas();
+
+			if(option_canvas == 'optvalue')
+			{
+				document.getElementById(option_canvas).value = document.getElementById('option_current_value').value;
+			}
+			else
+			{
+				document.getElementById(option_canvas).checked = false;
+
+				if(!document.getElementById('option_current_value').value || document.getElementById('option_current_value').value == 0)
+				{
+					option_canvas = 'optvalue2';
+				}
+
+				document.getElementById(option_canvas).checked = true;
+			}
+		}
+
+		function engine_options_save_current()
+		{
+			var option_canvas = engine_options_current_canvas();
+
+			if(option_canvas != 'optvalue')
+			{
+				document.getElementById('option_current_value').value = (document.getElementById(option_canvas).checked ? 1 : 0);
+			}
+			else
+			{
+				document.getElementById('option_current_value').value = document.getElementById(option_canvas).value;
 			}
 		}
 		</script>
@@ -294,7 +343,7 @@
 			<div class=\"box\">
 				Warning, your configuration had debug mode set to false. This was automaticlly 
 				changed to true while executing the development tools. To remove this warning, then 
-				set debug to true in your configuration file.
+				simply set 'debug' to true in your configuration file.
 			</div>
 ") : '') . "
 
