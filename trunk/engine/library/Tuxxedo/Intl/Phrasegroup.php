@@ -15,10 +15,8 @@
 
 
 	/**
-	 * Core Tuxxedo library namespace. This namespace contains all the main 
-	 * foundation components of Tuxxedo Engine, plus additional utilities 
-	 * thats provided by default. Some of these default components have 
-	 * sub namespaces if they provide child objects.
+	 * Internationalization namespace, this contains components for 
+	 * internationalization manipulation, like phrases and phrasegroups.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
@@ -28,10 +26,12 @@
 	 */
 	namespace Tuxxedo\Intl;
 
+
 	/**
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Intl;
 
 
 	/**
