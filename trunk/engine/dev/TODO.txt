@@ -2,8 +2,5 @@
 
 
 
-	Tuxxedo Engine 1.0.0 Release Candidate 2
+	Tuxxedo Engine 1.0.0 Release Candidate 3
 	----------------------------------------
-
-	Other (Kalle)
-	 - Fix fatal errors on direct view of class files, we seriously need the include ticket (sorry!)
