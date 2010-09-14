@@ -33,6 +33,8 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Intl;
+	use Tuxxedo\Registry;
 
 
 	/**
@@ -103,11 +105,11 @@
 		 * Caches a phrase group, trying to cache an already loaded 
 		 * phrase group will recache it
 		 *
-		 * @param	array			A list of phrase groups to load
-		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
-		 * @return	boolean			Returns true on success otherwise false
+		 * @param	array				A list of phrase groups to load
+		 * @param	array				An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
+		 * @return	boolean				Returns true on success otherwise false
 		 *
-		 * @throws	\Tuxxedo\Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\SQL		Throws an exception if the query should fail
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{
