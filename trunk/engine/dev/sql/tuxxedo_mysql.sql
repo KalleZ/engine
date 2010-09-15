@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Vært: localhost
--- Genereringstid: 14. 09 2010 kl. 17:01:03
+-- Genereringstid: 15. 09 2010 kl. 17:58:06
 -- Serverversion: 5.1.36
 -- PHP-version: 5.3.0
 
@@ -88,7 +88,7 @@ INSERT INTO `options` (`option`, `value`, `defaultvalue`, `type`) VALUES
 ('style_id', '1', '1', 'i'),
 ('cookie_domain', '', '', 's'),
 ('cookie_path', '', '', 's'),
-('cookie_expires', '', '1800', 'i'),
+('cookie_expires', '1800', '1800', 'i'),
 ('cookie_prefix', 'tuxxedo_', 'tuxxedo_', 's'),
 ('date_format', 'H:i:s, j/n - Y', 'H:i:s, j/n - Y', 's'),
 ('date_timezone', 'UTC', 'UTC', 's'),
@@ -178,8 +178,6 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- Data dump for tabellen `sessions`
 --
 
-INSERT INTO `sessions` (`sessionid`, `userid`, `location`, `useragent`, `lastactivity`) VALUES
-('dmnv90v9vlap7d8ffphvrhtkc2', 0, '/engine/index.php', 'Opera/9.80 (Windows NT 6.0; U; da) Presto/2.6.30 Version/10.62', 1284476163);
 
 -- --------------------------------------------------------
 
