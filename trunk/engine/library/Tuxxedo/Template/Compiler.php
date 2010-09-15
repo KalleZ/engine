@@ -210,12 +210,12 @@
 		 */
 		public function allowFunction($function)
 		{
-			if(!\function_exists($function) || \in_array($function, $this->functions))
+			if(!\function_exists($function) || isset($this->functions[$function]))
 			{
 				return(false);
 			}
 
-			$this->functions[] = $function;
+			$this->functions[$function] = true;
 
 			return(true);
 		}
@@ -228,12 +228,12 @@
 		 */
 		public function allowClass($class)
 		{
-			if(\in_array($class, $this->classes))
+			if(isset($this->classes[$class]))
 			{
 				return(false);
 			}
 
-			$this->classes[] = $class;
+			$this->classes[$class] = true;
 
 			return(true);
 		}
@@ -246,12 +246,12 @@
 		 */
 		public function allowClosure($closure)
 		{
-			if(\in_array($closure, $this->closures))
+			if(isset($this->closures[$closure]))
 			{
 				return(false);
 			}
 
-			$this->closures[] = $closure;
+			$this->closures[$closure] = true;
 
 			return(true);
 		}
@@ -287,7 +287,7 @@
 		 *
 		 * @return	void			No value is returned
 		 *
-		 * @throws	Tuxxedo\Exception\TemplateCompiler
+		 * @throws	\Tuxxedo\Exception\TemplateCompiler
 		 */
 		public function compile()
 		{
@@ -382,29 +382,29 @@
 				{
 					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->conditions);
 				}
-				elseif(!($this->options & self::OPT_NO_CALL_LIMITS) && \preg_match_all('#([a-z0-9_{}$>-]+)(\s|/\*.*\*/|(\#|//)[^\r\n]*(\r|\n))*\(#si', $expr_value, $matches))
+				elseif(!($this->options & self::OPT_NO_CALL_LIMITS) && \preg_match_all('#([a-z0-9_{}$>-]+)(?:\s|/\*.*\*/|(?:\#|//)[^\r\n]*(?:\r|\n))*\(#si', $expr_value, $matches))
 				{
 					foreach($matches[1] as $function)
 					{
 						$function = \strtolower(\stripslashes($function));
 
-						if(!($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) && \in_array($function, $this->functions))
+						if(!($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) && isset($this->functions[$function]))
 						{
 							continue;
 						}
 						elseif($function{0} == '$')
 						{
-							if(!($this->options & self::OPT_NO_CLASS_CALL_LIMIT) && ($pos = \strpos($function, '->')) !== false && \in_array(\substr($function, 1, $pos - 1), $this->classes))
+							if(!($this->options & self::OPT_NO_CLASS_CALL_LIMIT) && ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
 							{
 								continue;
 							}
-							elseif(!($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) && \strpos($function, '->') === false && \in_array(substr($function, 1), $this->closures))
+							elseif(!($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) && \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
 							{
 								continue;
 							}
 						}
 
-						throw new Exception\TemplateCompiler('Use of unsafe function: ' . $function . '()', $this->conditions);
+						throw new Exception\TemplateCompiler('Use of unsafe call expression: ' . $function . '()', $this->conditions);
 					}
 				}
 
@@ -492,7 +492,7 @@
 				{
 					if($s == '\x' || $s == '\0')
 					{
-						if(!\is_numeric($src{$pos + 1}))
+						if((string)(integer) $src{$pos + 1} === $src{$pos + 1})
 						{
 							$src = \str_replace($s, '" . (\'' . $s . '\') . "', $src);
 							$ptr += 14;
@@ -506,7 +506,7 @@
 								$s .= $src{$pos + $x};
 								++$x;
 							}
-							while(isset($src{$pos + $x}) && \is_numeric($src{$pos + $x}));
+							while(isset($src{$pos + $x}) && (string)(integer) $src{$pos + $x} !== $src{$pos + $x});
 
 							$src = \str_replace($s, '" . (\'' . $s . '\') . "', $src);
 							$ptr += (12 + \strlen($s));
@@ -538,11 +538,9 @@
 
 			$er = \error_reporting(\error_reporting() & ~E_NOTICE);
 
-			if(\sizeof($this->classes) || \sizeof($this->closures))
+			if($this->classes || $this->closures)
 			{
-				$elements = \array_merge($this->classes, $this->closures);
-
-				foreach($elements as $name)
+				foreach(\array_merge(\array_keys($this->classes), \array_keys($this->closures)) as $name)
 				{
 					if(!isset(${$name}))
 					{
@@ -550,15 +548,10 @@
 					}
 				}
 
-				unset($elements, $name);
+				unset($name);
 			}
 
-			\ob_start();
-			eval('$test = "' . $this->compiled_source . '";');
-
-			\error_reporting($er);
-
-			return(\stripos(\ob_get_clean(), 'Parse error') === false);
+			return(@eval('$test = "' . $this->compiled_source . '"; return(true);') === true);
 		}
 	}
 ?>
