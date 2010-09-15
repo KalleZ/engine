@@ -6,4 +6,4 @@
 	----------------------------------------
 
 
-	Fix the SQL file, as it have a reference to an old void session (Kalle)
+	
