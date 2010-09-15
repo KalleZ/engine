@@ -295,12 +295,23 @@
 		 */
 		public function escape($data)
 		{
+			if($this->delayed)
+			{
+				$this->delayed = false;
+
+				$this->connect();
+			}
+
 			if(!\is_object($this->link))
 			{
 				return(false);
 			}
+			elseif(!\method_exists($this->link, 'quote'))
+			{
+				throw new Exception\Basic('PDO driver does not implement an safe escaping method');
+			}
 
-			return(\addslashes($data));
+			return(\substr($this->link->quote($data), 1, -1));
 		}
 
 		/**
