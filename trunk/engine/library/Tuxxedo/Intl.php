@@ -223,7 +223,7 @@
 				return($this->phrases[$phrasegroup][$search]);
 			}
 
-			foreach($this->phrases as $phrasegroup => $phrases)
+			foreach($this->phrases as $phrases)
 			{
 				if(($search = \array_search($phrases, $phrase)) !== false)
 				{
