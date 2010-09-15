@@ -180,7 +180,7 @@
 
 			foreach($errors as $error)
 			{
-				$message .= '<li>' . (!$utf8 ?: utf8_encode($error)) . '</li>';
+				$message .= '<li>' . htmlentities(!$utf8 ?: utf8_encode($error)) . '</li>';
 			}
 
 			$message .= '</ul>' . PHP_EOL;
@@ -212,7 +212,7 @@
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
-			(!stristr($buffer, '<?xml') ? $buffer . PHP_EOL : '') . 
+			($buffer ? htmlentities($buffer) . PHP_EOL : '') . 
 			'<h1>Tuxxedo Engine Error</h1>' . PHP_EOL
 			);
 
@@ -492,12 +492,7 @@
 
 		global $registry;
 
-		$buffer = '<br />';
-
-		foreach($errors as $error)
-		{
-			$buffer .= $error . '<br />';
-		}
+		$buffer = '<br />' . implode($errors, '<br />');
 
 		Registry::globals('errors', Array());
 
