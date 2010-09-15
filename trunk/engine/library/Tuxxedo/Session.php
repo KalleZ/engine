@@ -138,20 +138,29 @@
 		 *
 		 * @return	void			No value is returned
 		 */
-		public static function start($regenerate_id = false)
+		public static function start()
 		{
 			if(self::$started)
 			{
 				return;
 			}
 
-			if($regenerate_id)
+			$name = \session_name();
+
+			if(isset($_COOKIE[$name]) && !empty($_COOKIE[$name]) && preg_match('![^A-Za-z0-9_,-]!', $_COOKIE[$name]))
 			{
-				\session_regenerate_id(true);
+				throw new Exception\Basic('Possible session hijacking detected');
 			}
 
 			\session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
 			\session_start();
+
+			if(isset($this['__engine_csrf_ticket']) && !empty($this['__engine_csrf_ticket']))
+			{
+				\session_regenerate_id(true);
+
+				$this['__engine_csrf_ticket'] = true;
+			}
 
 			self::$started 	= true;
 			self::$id	= \session_id();
