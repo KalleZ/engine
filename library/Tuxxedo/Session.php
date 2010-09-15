@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\User;
+
+
+	/**
 	 * Session interface, this class is designed to be attached to 
 	 * classes that implements an interface based on sessions.
 	 *
@@ -147,7 +153,7 @@
 
 			$name = \session_name();
 
-			if(isset($_COOKIE[$name]) && !empty($_COOKIE[$name]) && preg_match('![^A-Za-z0-9_,-]!', $_COOKIE[$name]))
+			if(isset($_COOKIE[$name]) && !empty($_COOKIE[$name]) && \preg_match('![^A-Za-z0-9_,-]!', $_COOKIE[$name]))
 			{
 				throw new Exception\Basic('Possible session hijacking detected');
 			}
@@ -155,11 +161,11 @@
 			\session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
 			\session_start();
 
-			if(isset($this['__engine_csrf_ticket']) && !empty($this['__engine_csrf_ticket']))
+			if(isset($_SESSION[self::$options['prefix'] . '__engine_csrf_token']))
 			{
 				\session_regenerate_id(true);
 
-				$this['__engine_csrf_ticket'] = true;
+				$_SESSION[self::$options['prefix'] . '__engine_csrf_token'] = \md5(User::GetPasswordSalt(32));
 			}
 
 			self::$started 	= true;
@@ -188,6 +194,21 @@
 
 			self::$started 	= false;
 			self::$id	= '';
+		}
+
+		/**
+		 * Get the specified CSRF token
+		 *
+		 * @return	string			Returns a token string thats hexadecimal, and boolean false if its undefined
+		 */
+		public function getSecurityToken()
+		{
+			if(!isset($this['__engine_csrf_token']))
+			{
+				return(false);
+			}
+
+			return($this['__engine_csrf_token']);
 		}
 
 		/**
