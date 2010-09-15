@@ -48,14 +48,14 @@
 		 */
 		public function __construct()
 		{
-			$args = \func_get_args();
-
-			if(!\sizeof($args))
+			if(!\func_num_args())
 			{
-				$args[0] = 'Unknown error';
+				parent::__construct('Unknown error');
 			}
-
-			parent::__construct(\call_user_func_array('\sprintf', $args));
+			else
+			{
+				parent::__construct(\call_user_func_array('\sprintf', \func_get_args()));
+			}
 		}
 	}
 ?>

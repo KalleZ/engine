@@ -132,7 +132,7 @@
 		 */
 		public function __destruct()
 		{
-			if(!$this->isConnected() || !\sizeof($this->shutdown_queries))
+			if(!$this->isConnected() || !$this->shutdown_queries)
 			{
 				return;
 			}

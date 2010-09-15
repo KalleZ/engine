@@ -55,7 +55,7 @@
 		 */
 		public function __construct(Array $formdata, $message = NULL)
 		{
-			if(!\sizeof($formdata))
+			if(!$formdata)
 			{
 				throw new Basic('A form data exception must contain atleast one element');
 			}

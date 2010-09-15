@@ -177,7 +177,7 @@
 				}
 			}
 
-			if(sizeof(array_diff(array_keys($cache->options), $found)))
+			if(array_diff(array_keys($cache->options), $found))
 			{
 				$reminder = true;
 			}

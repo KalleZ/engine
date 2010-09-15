@@ -174,7 +174,7 @@
 			$message = utf8_encode($message);
 		}
 
-		if(TUXXEDO_DEBUG && $errors && sizeof($errors) && $registry)
+		if(TUXXEDO_DEBUG && $errors && $registry)
 		{
 			$message .= '<ul>' . PHP_EOL;
 
@@ -436,14 +436,12 @@
 	 */
 	function tuxxedo_doc_errorf()
 	{
-		$args = func_get_args();
-
-		if(!sizeof($args))
+		if(!func_num_args())
 		{
-			$args[0] = 'Unknown error';
+			tuxxedo_doc_error('Unknown error');
 		}
 
-		tuxxedo_doc_error(call_user_func_array('sprintf', $args));
+		tuxxedo_doc_error(call_user_func_array('sprintf', func_get_args()));
 	}
 
 	/**
@@ -485,7 +483,7 @@
 
 		$errors = ($registry ? Registry::globals('errors') : false);
 
-		if(!$registry || !TUXXEDO_DEBUG || (!$errors || !sizeof($errors)))
+		if(!$registry || !TUXXEDO_DEBUG || !$errors)
 		{
 			return;
 		}
@@ -528,7 +526,7 @@
 	 */
 	function tuxxedo_multi_error($format, Array $elements)
 	{
-		if(!sizeof($elements))
+		if(!$elements)
 		{
 			return;
 		}

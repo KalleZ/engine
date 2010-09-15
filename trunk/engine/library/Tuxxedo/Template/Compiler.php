@@ -374,7 +374,7 @@
 
 				$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
 
-				if(empty($expr_value) || \is_numeric($expr_value) && $expr_value != 0)
+				if(empty($expr_value) || ((string)(integer) $expr_value !== $expr_value) && $expr_value != 0)
 				{
 					throw new Exception\TemplateCompiler('Expressions may not be empty', $this->conditions);
 				}

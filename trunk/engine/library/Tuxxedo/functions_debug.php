@@ -107,7 +107,7 @@
 
 				if($argument_list)
 				{
-					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && sizeof($t['args']) ? join(', ', array_map('tuxxedo_debug_typedata', $t['args'])) : '') . ')';
+					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && $t['args'] ? join(', ', array_map('tuxxedo_debug_typedata', $t['args'])) : '') . ')';
 					$trace->call 		.= '()';
 				}
 			}

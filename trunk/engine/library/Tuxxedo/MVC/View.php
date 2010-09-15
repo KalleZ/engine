@@ -136,7 +136,7 @@
 				eval('$footer = "' . $this->registry->style->fetch('footer') . '";');
 			}
 
-			if(\sizeof($this->variables))
+			if($this->variables)
 			{
 				foreach($this->variables as $variable => $value)
 				{

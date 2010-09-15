@@ -84,7 +84,7 @@
 		{
 			$method = \strtolower($method);
 
-			if(\sizeof($this->methods) && \in_array($method, $this->methods))
+			if($this->methods && \in_array($method, $this->methods))
 			{
 				return(\call_user_func_array(Array($this, $this->methods[$method]), $arguments));
 			}
@@ -98,7 +98,7 @@
 			}
 			elseif($prefix == 'set')
 			{
-				$this->{$property} = (\sizeof($arguments) ? $arguments[0] : NULL);
+				$this->{$property} = ($arguments ? $arguments[0] : NULL);
 			}
 			else
 			{

@@ -64,7 +64,7 @@
 		{
 			$files = recursive_glob('../..');
 
-			if(!$files || !sizeof($files))
+			if(!$files)
 			{
 				tuxxedo_gui_error('No source files found in the root directory');
 			}

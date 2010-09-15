@@ -292,7 +292,7 @@
 		{
 			$this->invalid_fields = Array();
 
-			if(!\sizeof($this->userdata))
+			if(!$this->userdata)
 			{
 				$this->revalidate = false;
 
@@ -377,7 +377,7 @@
 				}
 			}
 
-			if(!\sizeof($this->invalid_fields))
+			if(!$this->invalid_fields)
 			{
 				$this->revalidate = false;
 

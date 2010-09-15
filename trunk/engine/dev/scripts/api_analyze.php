@@ -179,7 +179,7 @@
 				break;
 				case(T_VARIABLE):
 				{
-					if($context->current === false || sizeof($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']))
+					if($context->current === false || $datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'])
 					{
 						continue;
 					}
@@ -262,7 +262,7 @@
 	function lexical_scan(Array $tokens, $start_index, $token)
 	{
 		$inc			= 0;
-		$searching_for_token 	= is_numeric($token);
+		$searching_for_token 	= ((string)(integer) $token !== $token);
 
 		while(isset($tokens[$start_index + $inc++]))
 		{
@@ -285,7 +285,7 @@
 	{
 		$scanned 		= '';
 		$inc			= 0;
-		$searching_for_token 	= is_numeric($token);
+		$searching_for_token 	= ((string)(integer) $token !== $token);
 
 		++$start_index;
 

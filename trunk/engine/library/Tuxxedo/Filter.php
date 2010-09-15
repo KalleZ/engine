@@ -316,7 +316,7 @@
 						$data[$field] = \array_map('\stripslashes', $data[$field]);
 					}
 
-					if(\sizeof($data[$field]))
+					if($data[$field])
 					{
 						foreach($data[$field] as $var => $tmp)
 						{
