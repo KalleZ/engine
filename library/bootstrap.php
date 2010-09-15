@@ -213,9 +213,9 @@
 					'redirect'
 					);
 
-	if(isset($action_templates) && isset($_REQUEST['do']) && isset($action_templates[(string) $_REQUEST['do']]))
+	if(isset($action_templates) && isset($_GET['do']) && isset($action_templates[(string) $_GET['do']]))
 	{
-		$default_templates = array_merge($default_templates, (array) $action_templates[(string) $_REQUEST['do']]);
+		$default_templates = array_merge($default_templates, (array) $action_templates[(string) $_GET['do']]);
 	}
 
 	$style->cache((!isset($templates) ? $default_templates : array_merge($default_templates, (array) $templates)), $cache_buffer) or tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);

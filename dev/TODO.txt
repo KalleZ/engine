@@ -4,3 +4,7 @@
 
 	Tuxxedo Engine 1.0.0 Release Candidate 3
 	----------------------------------------
+
+
+	Fix the SQL file, as it have a reference to an old void session (Kalle)
+	Fix sizeof() calls (see grep.log) (Kalle)
