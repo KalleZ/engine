@@ -65,7 +65,7 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
 		 */
-		public function __construct(Tuxxedo\Database $instance, $result)
+		public function __construct(Database $instance, $result)
 		{
 			if(!$instance->isResult($result))
 			{
