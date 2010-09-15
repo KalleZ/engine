@@ -464,7 +464,12 @@
 			return('');
 		}
 
-		return(ltrim(str_replace(Array('/', '\\', TUXXEDO_DIR), DIRECTORY_SEPARATOR, $path), DIRECTORY_SEPARATOR));
+		if(strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, TUXXEDO_DIR) !== false)
+		{
+			$path = str_replace(Array('/', '\\', TUXXEDO_DIR), DIRECTORY_SEPARATOR, $path);
+		}
+
+		return(ltrim($path, DIRECTORY_SEPARATOR));
 	}
 
 	/**
