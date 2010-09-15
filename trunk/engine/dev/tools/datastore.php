@@ -191,7 +191,12 @@
 							{
 								$tz = new DateTimeZone($tzname);
 
-								$current[str_replace('_', ' ', $tzname)] = (string) ($tz->getOffset($utc) / 3600);
+								if(strpos($tzname, '_') !== false)
+								{
+									$tzname = str_replace('_', ' ', $tzname);
+								}
+
+								$current[$tzname] = (string) ($tz->getOffset($utc) / 3600);
 							}
 
 							asort($current);

@@ -319,7 +319,10 @@
 					'else_bytes'		=> -1
 					);
 
-			$src = \str_replace('"', '\\"', $src);
+			if(\strpos($src, '"') !== false)
+			{
+				$src = \str_replace('"', '\\"', $src);
+			}
 
 			while(1)
 			{
@@ -464,7 +467,12 @@
 
 				if(\stripos($true, $tokens['if_start']) !== false)
 				{
-					$compiler->set(\str_replace('\"', '"', $true));
+					if(\strpos($true, '\"') !== false)
+					{
+						$true = \str_replace('\"', '"', $true);
+					}
+
+					$compiler->set($true);
 					$compiler->compile();
 
 					$true = $compiler->get();
@@ -472,7 +480,12 @@
 
 				if(\stripos($false, $tokens['if_start']) !== false)
 				{
-					$compiler->set(\str_replace('\"', '"', $false));
+					if(\strpos($false, '\"') !== false)
+					{
+						$false = \str_replace('\"', '"', $false);
+					}
+
+					$compiler->set($false);
 					$compiler->compile();
 
 					$false = $compiler->get();

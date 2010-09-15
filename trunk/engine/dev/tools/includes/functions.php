@@ -52,7 +52,14 @@
 				continue;
 			}
 
-			$return_value[] = str_replace('\\', '/', substr_replace($entry, '', 0, $expression_prefix));
+			$entry = substr_replace($entry, '', 0, $expression_prefix);
+
+			if(strpos($entry, '\\') !== false)
+			{
+				$entry = str_replace('\\', '/', $entry);
+			}
+
+			$return_value[] = $entry;
 		}
 
 		return($return_value);

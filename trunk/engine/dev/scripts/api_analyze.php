@@ -25,7 +25,12 @@
 	{
 		$file = substr(str_replace($engine_path, '', $real_file), 1);
 
-		printf('<h3>/%s</h3>', str_replace('\\', '/', $file));
+		if(strpos($file, '\\') !== false)
+		{
+			$file = str_replace('\\', '/', $file);
+		}
+
+		printf('<h3>/%s</h3>', $file);
 
 		$context 		= new stdClass;
 		$context->current 	= false;

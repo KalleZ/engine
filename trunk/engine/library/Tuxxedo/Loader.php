@@ -113,10 +113,20 @@
 		{
 			if(isset(self::$paths[$class]))
 			{
-				return(self::$paths[$class]['root'] . '/' . \str_replace(self::$paths[$class]['separator'], '/', $class) . '.php');
+				if(\strpos($class, self::$paths[$class]['separator']) !== false)
+				{
+					$class = \str_replace(self::$paths[$class]['separator'], '/', $class);
+				}
+
+				return(self::$paths[$class]['root'] . '/' . $class . '.php');
 			}
 
-			return(\TUXXEDO_LIBRARY . '/' . \str_replace('\\', '/', $class) . '.php');
+			if(\strpos($class, '\\') !== false)
+			{
+				$class = \str_replace('\\', '/', $class);
+			}
+
+			return(\TUXXEDO_LIBRARY . '/' . $class . '.php');
 		}
 
 		/**

@@ -260,7 +260,7 @@
 
 			for($i = 0; $i < $size; ++$i)
 			{
-				if(strpos($args[0], '{' . ($i + 1) . '}') !== false)
+				if(\strpos($args[0], '{' . ($i + 1) . '}') !== false)
 				{
 					$args[0] = \str_replace('{' . ($i + 1) . '}', $args[$i + 1], $args[0]);
 				}

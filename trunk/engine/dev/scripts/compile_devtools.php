@@ -50,8 +50,7 @@
 		foreach($templates as $template)
 		{
 			$result 	= 'Failed';
-			$template	= explode('/', str_replace('.raw', '', $template));
-			$template	= $template[sizeof($template) - 1];
+			$template	= pathinfo($template, PATHINFO_FILENAME);
 
 			try
 			{
