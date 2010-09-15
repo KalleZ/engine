@@ -278,9 +278,9 @@
 		{
 			$phrases = Array();
 
-			if(\sizeof($this->phrases))
+			if($this->phrases)
 			{
-				foreach($this->phrases as $group => $group_phrases)
+				foreach($this->phrases as $group_phrases)
 				{
 					$phrases = \array_merge($phrases, $group_phrases);
 				}
