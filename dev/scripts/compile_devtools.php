@@ -30,7 +30,7 @@
 	{
 		$templates = glob(TEMPLATE_DIR . '*.raw');
 
-		if(!sizeof($templates))
+		if(!$templates)
 		{
 ?>
 <p>

@@ -113,7 +113,7 @@
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{
-			if(!\sizeof($phrasegroups) || !\sizeof($phrasegroups = \array_filter($phrasegroups, Array($this, 'filter'))))
+			if(!$phrasegroups || !($phrasegroups = \array_filter($phrasegroups, Array($this, 'filter'))))
 			{
 				return(false);
 			}
@@ -189,7 +189,7 @@
 		 */
 		public function getPhrasegroups()
 		{
-			if(!\sizeof($this->phrases))
+			if(!$this->phrases)
 			{
 				return(false);
 			}

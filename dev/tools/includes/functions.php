@@ -30,7 +30,7 @@
 
 		$glob = glob($expression . '/*');
 
-		if(!sizeof($glob))
+		if(!$glob)
 		{
 			return(false);
 		}

@@ -176,7 +176,7 @@
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
-			if(!\sizeof($elements))
+			if(!$elements)
 			{
 				return(false);
 			}
@@ -219,9 +219,7 @@
 
 			if($error_buffer !== NULL)
 			{
-				$diff = \array_diff($elements, $loaded);
-
-				if(\sizeof($diff))
+				if(($diff = \array_diff($elements, $loaded)))
 				{
 					$error_buffer = $diff;
 				}

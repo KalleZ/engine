@@ -81,7 +81,7 @@
 
 			if(\is_array($path))
 			{
-				if(!\sizeof($path))
+				if(!$path)
 				{
 					return;
 				}

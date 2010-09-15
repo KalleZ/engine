@@ -276,7 +276,7 @@
 				{
 					return($this->cache[$identifier]);
 				}
-				elseif(sizeof($this->cache))
+				elseif($this->cache)
 				{
 					foreach($this->cache as $userinfo)
 					{

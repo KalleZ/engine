@@ -74,7 +74,7 @@
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
-			if(!\sizeof($templates))
+			if(!$templates)
 			{
 				return(false);
 			}

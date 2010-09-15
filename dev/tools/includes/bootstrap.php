@@ -78,7 +78,7 @@
 	define('TIMENOW', $datetime->getTimestamp());
 	define('TIMENOW_UTC', TIMENOW);
 
-	if(isset($precache) && sizeof($precache))
+	if(isset($precache) && $precache)
 	{
 		$cache_buffer = Array();
 
