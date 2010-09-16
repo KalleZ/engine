@@ -156,7 +156,6 @@
 					{
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] = Array(
 																		'method'	=> $function, 
-																		'namespace'	=> end($datamap[$file]['namespaces']), 
 																		'metadata'	=> Array(
 																						'final'		=> lexical_scan_backwards($tokens_copy, $index, T_FINAL, '{}'), 
 																						'abstract'	=> lexical_scan_backwards($tokens_copy, $index, T_ABSTRACT, '{}'), 
