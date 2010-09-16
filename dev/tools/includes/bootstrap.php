@@ -24,11 +24,11 @@
 	 * the development tools to interfere with the main site.
 	 */
 
-	define('CWD', 		'../..');
-
 	use Tuxxedo\Development;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
+
+	define('CWD', 		'../..');
 
 	require(CWD . '/library/configuration.php');
 	require(CWD . '/library/Tuxxedo/Loader.php');

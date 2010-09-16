@@ -16,6 +16,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Registry;
+	use Tuxxedo\User;
+
+	/**
 	 * Disable html errors, so error messages dont link to the 
 	 * manual
 	 */
@@ -113,12 +119,6 @@
 	 * Set error reporting level
 	 */
 	error_reporting(-1);
-
-	/**
-	 * Aliasing rules
-	 */
-	use Tuxxedo\Registry;
-	use Tuxxedo\User;
 
 	/**
 	 * Construct the main registry
