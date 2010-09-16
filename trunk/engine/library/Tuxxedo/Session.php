@@ -161,11 +161,9 @@
 			\session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
 			\session_start();
 
-			if(isset($_SESSION[self::$options['prefix'] . '__engine_csrf_token']))
+			if(!isset($_SESSION[self::$options['prefix'] . '__engine_csrf_token']))
 			{
-				\session_regenerate_id(true);
-
-				$_SESSION[self::$options['prefix'] . '__engine_csrf_token'] = \md5(User::GetPasswordSalt(32));
+				self::getNewSecurityToken();
 			}
 
 			self::$started 	= true;
@@ -203,12 +201,35 @@
 		 */
 		public function getSecurityToken()
 		{
+			if(!$this::$started)
+			{
+				return;
+			}
+
 			if(!isset($this['__engine_csrf_token']))
 			{
 				return(false);
 			}
 
 			return($this['__engine_csrf_token']);
+		}
+
+		/**
+		 * Creates a new security token, note that this regenerates the session id and therefore 
+		 * the relevant APIs must update the session id if its kept in storage.
+		 *
+		 * @return	string			Returns the new token value
+		 */
+		public function getNewSecurityToken()
+		{
+			if(!$this::$started)
+			{
+				return;
+			}
+
+			\session_regenerate_id(true);
+
+			return($this['__engine_csrf_token'] = \md5(User::GetPasswordSalt(32)));
 		}
 
 		/**
