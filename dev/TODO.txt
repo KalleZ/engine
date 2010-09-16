@@ -6,4 +6,4 @@
 	----------------------------------------
 
 
-	
+	Fix the backwards lexical scanner for the api_analyze.php script (to fix meta data) (Kalle)
