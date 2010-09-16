@@ -14,14 +14,6 @@
 	 * =============================================================================
 	 */
 
-	/**
-	 * Things that doesn't get exported
-	 *
-	 *  - Meta data (due to the broken backwards lexical scanner)
-	 *  - Namespace alias resolution on implemented interfaces/classes
-	 */
-	use Tuxxedo\Test as DevTest;
-
 
 	$engine_path	= realpath(__DIR__ . '/../../');
 	$files 		= analyze(new DirectoryIterator($engine_path));
@@ -92,7 +84,7 @@
 						$alias[0] = '\\' . $alias[0];
 					}
 
-					$datamap[$file]['aliases'][] = $alias;
+					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], $alias);
 
 					printf('ALIAS (%s%s)<br />', $alias[0], (isset($alias[1]) ? ' AS ' . $alias[1] : ''));
 				}
@@ -107,12 +99,12 @@
 
 					$type					= ($token[0] == T_CLASS ? 'class' : 'interface');
 					$type_multiple				= ($token[0] == T_CLASS ? 'classes' : 'interfaces');
+					$name 					= resolve_namespace_alias(end($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $name);
 
 					$context->current 			= $token[0];
 					$context->type				= $type;
 					$context->type_multiple			= $type_multiple;
-					$context->{$type}			= $name;
-
+					$context->{$type} 			= $name;
 					$extends				= lexical_scan_extends_implements($tokens_copy, $index, T_EXTENDS, Array(T_IMPLEMENTS, '{'));
 					$extends 				= ($extends ? $extends[0] : '');
 
@@ -133,14 +125,14 @@
 
 					if($extends)
 					{
-						printf('- EXTENDS (%s)<br />', resolve_namespace_alias(Array(), $extends));
+						printf('- EXTENDS (%s)<br />', resolve_namespace_alias($datamap[$file][$type_multiple][$name]['namespace'], $datamap[$file]['aliases'], $extends));
 					}
 
 					if($datamap[$file][$type_multiple][$name]['implements'])
 					{
 						foreach($datamap[$file][$type_multiple][$name]['implements'] as $interface)
 						{
-							printf('- IMPLEMENTS (%s)<br />', resolve_namespace_alias(Array(), $interface));
+							printf('- IMPLEMENTS (%s)<br />', resolve_namespace_alias($datamap[$file][$type_multiple][$name]['namespace'], $datamap[$file]['aliases'], $interface));
 						}
 					}
 				}
@@ -229,7 +221,7 @@
 				break;
 				case(T_VARIABLE):
 				{
-					if($context->current === false || $datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'])
+					if($context->current === false || isset($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']))
 					{
 						continue;
 					}
@@ -291,8 +283,33 @@
 		return((empty($dump) ? '' : 'meta=' . rtrim($dump, ', ')));
 	}
 
-	function resolve_namespace_alias(Array $aliases, $object)
+	function resolve_namespace_alias($root_ns, Array $aliases, $object)
 	{
+		if($aliases && $object{0} != '\\')
+		{
+			$ns = $object;
+
+			if(($pos = strrpos($object, '\\')) !== false)
+			{
+				$ns = substr($object, 0, $pos);
+			}
+
+			foreach($aliases as $alias)
+			{
+				if(($pos = strrpos($alias, $ns)) !== false)
+				{
+					return(substr_replace($alias, $ns, $pos));
+				}
+			}
+
+			if($root_ns{strlen($root_ns) - 1} != '\\')
+			{
+				return($root_ns . '\\' . $object);
+			}
+
+			return($root_ns . $object);
+		}
+
 		return($object);
 	}
 
