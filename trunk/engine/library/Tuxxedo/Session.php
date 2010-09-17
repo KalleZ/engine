@@ -163,7 +163,9 @@
 
 			if(!isset($_SESSION[self::$options['prefix'] . '__engine_csrf_token']))
 			{
-				self::getNewSecurityToken();
+				\session_regenerate_id(true);
+
+				$_SESSION[self::$options['prefix'] . '__engine_csrf_token'] = \md5(User::GetPasswordSalt(32));
 			}
 
 			self::$started 	= true;
