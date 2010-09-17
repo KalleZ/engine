@@ -15,9 +15,16 @@
 	 */
 
 
-	$engine_path	= realpath(__DIR__ . '/../../');
-	$files 		= analyze(new DirectoryIterator($engine_path));
-	$datamap	= Array();
+	$engine_path		= realpath(__DIR__ . '/../../');
+	$files 			= analyze(new DirectoryIterator($engine_path));
+	$datamap		= Array();
+
+	const ACC_PUBLIC	= 1;
+	const ACC_PROTECTED	= 2;
+	const ACC_PRIVATE	= 4;
+	const ACC_ABSTRACT	= 8;
+	const ACC_FINAL		= 16;
+	const ACC_STATIC	= 32;
 
 	echo('<h1>Lexical analyze of engine API</h1>');
 
@@ -34,6 +41,7 @@
 
 		$context 		= new stdClass;
 		$context->current 	= false;
+		$context->modifiers	= 0;
 
 		$datamap[$file]		= Array(
 						'namespaces'	=> Array(), 
@@ -50,7 +58,7 @@
 		{
 			if(!is_array($token))
 			{
-				$token = Array(0, $token);
+				continue;
 			}
 
 			switch($token[0])
@@ -116,10 +124,12 @@
 											'extends'	=> $extends, 
 											'implements'	=> lexical_scan_extends_implements($tokens_copy, $index, T_IMPLEMENTS),  
 											'metadata'	=> Array(
-															'final'		=> lexical_scan_backwards($tokens_copy, $index, T_FINAL, T_OPEN_TAG), 
-															'abstract'	=> lexical_scan_backwards($tokens_copy, $index, T_ABSTRACT, T_OPEN_TAG)
+															'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
+															'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT)
 															)
 											);
+
+					$context->modifiers			= 0;
 
 					printf('%s (%s) %s<br />', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata']));
 
@@ -146,19 +156,20 @@
 
 					if($context->current == T_CLASS || $context->current == T_INTERFACE)
 					{
-						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] = Array(
+						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] 	= Array(
 																		'method'	=> $function, 
 																		'metadata'	=> Array(
-																						'final'		=> lexical_scan_backwards($tokens_copy, $index, T_FINAL, '{}'), 
-																						'abstract'	=> lexical_scan_backwards($tokens_copy, $index, T_ABSTRACT, '{}'), 
-																						'public'	=> lexical_scan_backwards($tokens_copy, $index, T_PUBLIC, '{}'), 
-																						'protected'	=> lexical_scan_backwards($tokens_copy, $index, T_PROTECTED, '{}'), 
-																						'private'	=> lexical_scan_backwards($tokens_copy, $index, T_PRIVATE, '{}'), 
-																						'static'	=> lexical_scan_backwards($tokens_copy, $index, T_STATIC, '{}')
+																						'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
+																						'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
+																						'public'	=> (boolean) ($context->modifiers & ACC_PUBLIC), 
+																						'protected'	=> (boolean) ($context->modifiers & ACC_PROTECTED), 
+																						'private'	=> (boolean) ($context->modifiers & ACC_PRIVATE), 
+																						'static'	=> (boolean) ($context->modifiers & ACC_STATIC)
 																						)
 																		);
 
-						$metadata = end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
+						$context->modifiers									= 0;
+						$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
 
 						printf('- METHOD (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
 
@@ -221,15 +232,58 @@
 				break;
 				case(T_VARIABLE):
 				{
-					if($context->current === false || isset($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']))
+					if($context->current === false || $datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'])
 					{
 						continue;
 					}
 
 					$property 										= substr($token[1], 1);
-					$datamap[$file][$context->type_multiple][$context->{$context->type}]['properties'][]	= $property;
+					$datamap[$file][$context->type_multiple][$context->{$context->type}]['properties'][]	= Array(
+																	'property'	=> $property, 
+																	'metadata'	=> Array(
+																					'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
+																					'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
+																					'public'	=> (boolean) ($context->modifiers & ACC_PUBLIC), 
+																					'protected'	=> (boolean) ($context->modifiers & ACC_PROTECTED), 
+																					'private'	=> (boolean) ($context->modifiers & ACC_PRIVATE), 
+																					'static'	=> (boolean) ($context->modifiers & ACC_STATIC)
+																					)
+																	);
 
-					printf('- PROPERTY (%s)<br />', $property);
+					$context->modifiers									= 0;
+					$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
+
+					printf('- PROPERTY (%s) %s<br />', $property, dump_metadata($metadata['metadata']));
+				}
+				break;
+				case(T_PUBLIC):
+				{
+					$context->modifiers |= ACC_PUBLIC;
+				}
+				break;
+				case(T_PROTECTED):
+				{
+					$context->modifiers |= ACC_PROTECTED;
+				}
+				break;
+				case(T_PRIVATE):
+				{
+					$context->modifiers |= ACC_PRIVATE;
+				}
+				break;
+				case(T_ABSTRACT):
+				{
+					$context->modifiers |= ACC_ABSTRACT;
+				}
+				break;
+				case(T_FINAL):
+				{
+					$context->modifiers |= ACC_FINAL;
+				}
+				break;
+				case(T_STATIC):
+				{
+					$context->modifiers |= ACC_STATIC;
 				}
 				break;
 			}
@@ -464,42 +518,5 @@
 		}
 
 		return($matched_tokens);
-	}
-
-	function lexical_scan_backwards(Array $tokens, $start_index, $token, $stop_token)
-	{
-		/* This code is pretty broken aswell and needs fine tuning to work correctly in all cases */
-
-		return(false);
-
-		$inc = 0;
-
-		$tokens = array_reverse($tokens);
-
-		if(strlen($stop_token) > 1)
-		{
-			$stop_token = str_split($stop_token);
-		}
-
-		while(isset($tokens[$start_index + $inc++]))
-		{
-			$token_data = $tokens[$start_index + $inc - 1];
-			$token_data = (is_array($token_data) ? $token_data[0] : $token_data);
-
-			if(is_array($stop_token) && in_array($token_data, $stop_token) || $token_data == $stop_token)
-			{
-				break;
-			}
-			elseif($token_data == $token)
-			{
-				$tokens = array_reverse($tokens);
-
-				return(true);
-			}
-		}
-
-		$tokens = array_reverse($tokens);
-
-		return(false);
 	}
 ?>

@@ -43,7 +43,10 @@
 	 - Configuration parser (Xml, Ini, JSON)
 	 - Generic Datamanager
 
+	Extend the API generator
+	 - Parse docblocks
+	 - Parse parameter prototypes
+	 - Be more generic and being able to output to DocBook XML format
+
 	Change SQL queries to be non-mysql compatible (perhaps switch to use the query builder internally?)
-	Change the API generators to be generic and with more output formats
-	Change the API lexer to parse meta data
 	Change the structure of the /dev/tools utilities structure to be autoloadable
