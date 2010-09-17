@@ -5,5 +5,3 @@
 	Tuxxedo Engine 1.0.0 Release Candidate 3
 	----------------------------------------
 
-
-	Fix the backwards lexical scanner for the api_analyze.php script (to fix meta data) (Kalle)
