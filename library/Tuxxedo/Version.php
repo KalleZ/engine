@@ -100,6 +100,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.0 Release Candidate 3 (development preview)';
+		const FULL			= '1.0.0 Release Candidate 3';
 	}
 ?>
