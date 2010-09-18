@@ -14,9 +14,18 @@
 	 * =============================================================================
 	 */
 
+
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Version;
 
+
+	/**
+	 * Bootstraper
+	 */
 	require('./library/bootstrap.php');
+
 
 	/**
 	 * Just print the engine version to show that
