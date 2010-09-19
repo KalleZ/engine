@@ -111,7 +111,7 @@
 		/**
 		 * Include the debugging functions
 		 */
-		require('Tuxxedo/functions_debug.php');
+		require(TUXXEDO_LIBRARY . '/functions_debug.php');
 	}
 
 	/**
