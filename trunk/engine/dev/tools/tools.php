@@ -18,7 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Development;
+	use Tuxxedo\Development\Test;
 
 	/**
 	 * Global templates
@@ -180,11 +180,12 @@
 
 			$results 	= '';
 			$tests 		= Array(
-						'PHP 5.3.0'	=> new Development\Test(Development\Test::OPT_VERSION | Development\Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
-						'SPL'		=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_REQUIRED, Array('spl')), 
-						'mysql'		=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_OPTIONAL, Array('mysql')), 
-						'mysqli'	=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_OPTIONAL, Array('mysqli')), 
-						'pdo'		=> new Development\Test(Development\Test::OPT_EXTENSION | Development\Test::OPT_OPTIONAL, Array('pdo'))
+						'PHP 5.3.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
+						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('spl')), 
+						'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysql')), 
+						'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysqli')), 
+						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo')), 
+						'realpath'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath'))
 						);
 
 			$failed = false;
