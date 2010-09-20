@@ -32,6 +32,6 @@
 	 * the bootstraper was a success
 	 */
 	echo($header);
-	echo('Tuxxedo Engine version: ' . Version::FULL . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
+	echo('Tuxxedo Engine version: ' . Version::FULL . (Version::PREVIEW ? ' (development preview)' : '') . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
 	echo($footer);
 ?>
