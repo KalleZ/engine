@@ -126,7 +126,7 @@
 				$class = \str_replace('\\', '/', $class);
 			}
 
-			return(\TUXXEDO_LIBRARY . '/' . $class . '.php');
+			return(self::$root . '/' . $class . '.php');
 		}
 
 		/**
