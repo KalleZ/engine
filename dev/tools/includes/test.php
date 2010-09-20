@@ -68,6 +68,13 @@
 		 */
 		const OPT_VERSION       = 8;
 
+		/**
+		 * Option constant - tests function existance
+		 *
+		 * @var		integer
+		 */
+		const OPT_FUNCTION	= 16;
+
 
 		/**
 		 * Option bitfield
@@ -130,6 +137,10 @@
 			elseif($this->options & self::OPT_VERSION)
 			{
 				return(\version_compare($this->argv[0], $this->argv[1], '>='));
+			}
+			elseif($this->options & self::OPT_FUNCTION)
+			{
+				return(\function_exists($this->argv[0]));
 			}
 
 			return(false);
