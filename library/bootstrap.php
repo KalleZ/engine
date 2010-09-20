@@ -112,7 +112,7 @@
 		/**
 		 * Include the debugging functions
 		 */
-		require(TUXXEDO_LIBRARY . '/functions_debug.php');
+		require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
 	}
 
 	/**
