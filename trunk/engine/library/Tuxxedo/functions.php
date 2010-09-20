@@ -212,7 +212,7 @@
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
-			($buffer ? htmlentities($buffer) . PHP_EOL : '') . 
+			(TUXXEDO_DEBUG && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
 			'<h1>Tuxxedo Engine Error</h1>' . PHP_EOL
 			);
 
@@ -375,7 +375,7 @@
 					);
 			}
 
-			if($registry->db && $registry->db->getNumQueries())
+			if($registry && $registry->db && $registry->db->getNumQueries())
 			{
 				echo(
 					'<h1>Executed SQL queries</h1>' . PHP_EOL . 
@@ -600,7 +600,7 @@
 			$format = $registry->cache->options['date_format'];
 		}
 
-		if(!$registry->datetime)
+		if(!$registry || !$registry->datetime)
 		{
 			return(date($format, $timestamp));
 		}
