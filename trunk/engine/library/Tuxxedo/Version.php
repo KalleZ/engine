@@ -90,6 +90,30 @@
 		const ID			= 10000;
 
 		/**
+		 * Development preview mode, this is set to true if this is a development 
+		 * release, like a Alpha, Beta or Release Candidate
+		 *
+		 * @var		boolean
+		 */
+		const PREVIEW			= true;
+
+		/**
+		 * Development preview type, this is set to the preview type, like 'Alpha', 
+		 * 'Beta' or 'Release Candidate' if this is a preview release
+		 *
+		 * @var		string
+		 */
+		const PREVIEW_TYPE		= 'Release Candidate';
+
+		/**
+		 * Development preview number, this is set to the preview number for the 
+		 * current preview type. This is only set if this is a preview release
+		 *
+		 * @var		integer
+		 */
+		const PREVIEW_NUMBER		= 4;
+
+		/**
 		 * Engine version string, this is the full version string, which 
 		 * includes the pre-release name, version and the version number 
 		 * of the upcoming version if pre-release. For example:
@@ -100,6 +124,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.0 Release Candidate 4 (development preview)';
+		const FULL			= '1.0.0 Release Candidate 4';
 	}
 ?>
