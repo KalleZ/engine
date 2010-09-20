@@ -254,7 +254,7 @@
 				'</tr>' . PHP_EOL .  
 				'<tr>' . PHP_EOL . 
 				'<td>Script:</td>' . PHP_EOL . 
-				'<td class="value" nowrap="nowrap">' . realpath($_SERVER['SCRIPT_FILENAME']) . '</td>' . PHP_EOL . 
+				'<td class="value" nowrap="nowrap">' . tuxxedo_trim_path(realpath($_SERVER['SCRIPT_FILENAME'])) . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL
 				);
 
@@ -454,6 +454,8 @@
 	 */
 	function tuxxedo_trim_path($path, $debug_trim = true)
 	{
+		static $dir;
+
 		if(!$debug_trim && TUXXEDO_DEBUG)
 		{
 			return($path);
@@ -464,12 +466,17 @@
 			return('');
 		}
 
-		if(strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, TUXXEDO_DIR) !== false)
+		if(!$dir)
 		{
-			$path = str_replace(Array('/', '\\', TUXXEDO_DIR), DIRECTORY_SEPARATOR, $path);
+			$dir = realpath(TUXXEDO_DIR);
 		}
 
-		return(ltrim($path, DIRECTORY_SEPARATOR));
+		if(strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, $dir) !== false)
+		{
+			$path = str_replace(Array('/', '\\', $dir), DIRECTORY_SEPARATOR, $path);
+		}
+
+		return(DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR));
 	}
 
 	/**
