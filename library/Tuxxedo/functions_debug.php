@@ -20,17 +20,25 @@
 	 * less to parse from the regular debug_backtrace() function 
 	 * in PHP
 	 *
-	 * @param	Exception		If the current trace is combined with an exception, then pass the exception to get a better trace
+	 * @param	\Exception		If the current trace is combined with an exception, then pass the exception to get a better trace
+	 * @param	boolean			Set to true to prevent skipping special call handler methods
 	 * @return	array			Returns an array with object as keys carrying information about each trace bit
 	 */
-	function tuxxedo_debug_backtrace(Exception $e = NULL)
+	function tuxxedo_debug_backtrace(Exception $e = NULL, $full_trace = false)
 	{
-		static $includes, $callbacks;
+		static $includes, $callbacks, $fulltrace, $descriptions;
 
 		if(!$includes)
 		{
 			$includes	= Array('require', 'require_once', 'include', 'include_once');
 			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
+			$fulltrace	= Array('tuxxedo_shutdown_handler');
+
+			$descriptions	= Array(
+						'tuxxedo_shutdown_handler'	=> 'Shutdown handler', 
+						'tuxxedo_exception_handler'	=> 'Exception handler', 
+						'tuxxedo_error_handler'		=> 'Error handler'
+						);
 		}
 
 		$stack 	= Array();
@@ -41,31 +49,38 @@
 			$bt = array_merge($bt, $e->getTrace());
 		}
 
-		$bts = sizeof($bt);
+		$bts 	= sizeof($bt);
+		$skip	= $full_trace;
 
 		foreach($bt as $n => $t)
 		{
-			if($n < 3)
+			if($n == 0 && isset($t['function']) && isset($fulltrace[strtolower($t['function'])]))
+			{
+				$skip = true;
+			}
+
+			if($skip && $n < 3)
 			{
 				continue;
 			}
 
 			$trace = new stdClass;
 
-			$trace->current		= ($n == 3);
+			$trace->current		= (!$skip && $n == 3);
 			$trace->callargs	= '';
 			$trace->notes		= (isset($t['type']) && $t['type'] == '::' ? 'Static call' : '');
 			$trace->line		= $trace->file = '';
 
 			if(isset($t['function']))
 			{
-				$argument_list = true;
+				$argument_list 	= true;
+				$function 	= strtolower($t['function']);
 
 				if(isset($t['class']))
 				{
 					if($t['type'] == '->')
 					{
-						switch(strtolower($t['function']))
+						switch($function)
 						{
 							case('__construct'):
 							{
@@ -92,7 +107,7 @@
 						$trace->call = $t['class'] . '::' . $t['function'];
 					}
 				}
-				elseif(in_array(strtolower($t['function']), $includes))
+				elseif(in_array($function, $includes))
 				{
 					$trace->call		= $t['function'];
 					$trace->callargs	= $t['function'] . ' \'' . tuxxedo_trim_path($t['args'][0]) . '\'';
@@ -140,6 +155,11 @@
 			if(!isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
 			{
 				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Callback';
+			}
+
+			if(isset($t['function']) && isset($descriptions[$function]))
+			{
+				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . $descriptions[$function];
 			}
 
 			if($trace->file !== 'Unknown')
