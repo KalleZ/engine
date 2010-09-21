@@ -506,8 +506,12 @@
 
 		if(!$registry || !TUXXEDO_DEBUG || !$errors)
 		{
+			echo($output);
+
 			return;
 		}
+
+		$buffer = '<br />' . implode('<br />', $errors);
 
 		if($pos = stripos($output, '</body>'))
 		{
@@ -515,7 +519,7 @@
 		}
 		else
 		{
-			$output .= '<br />' . $buffer;
+			$output .= $buffer;
 		}
 
 		echo($output);
