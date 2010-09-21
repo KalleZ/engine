@@ -71,9 +71,7 @@
 		 */
 		public function __construct(Array $languageinfo)
 		{
-			global $registry;
-
-			$this->registry		= $registry;
+			$this->registry		= Registry::init();
 			$this->information 	= $languageinfo;
 		}
 

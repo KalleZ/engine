@@ -33,6 +33,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Session;
 
 
@@ -125,19 +126,17 @@
 		 */
 		public function __construct($autodetect = true, $session = true)
 		{
-			global $registry;
-
-			$this->registry = $registry;
+			$this->registry = Registry::init();
 
 			if($session && $autodetect)
 			{
-				$this->session 		= $registry->register('session', '\Tuxxedo\Session');
+				$this->session 		= $this->registry->register('session', '\Tuxxedo\Session');
 				$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id, false);
 
 				if(($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 				{
 					$this->userinfo		= $userinfo;
-					$this->usergroupinfo	= $registry->cache->usergroups[$userinfo->usergroupid];
+					$this->usergroupinfo	= $this->registry->cache->usergroups[$userinfo->usergroupid];
 				}
 			}
 

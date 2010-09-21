@@ -154,7 +154,7 @@
 		 * @param	string					The class to register, this must implement a 'magic' method called invoke to work
 		 * @return	object					Returns a reference to the created instance
 		 *
-		 * @throws	Tuxxedo\Exception\Basic			This a basic exception if the class doesn't exists or implements the magic invoke method
+		 * @throws	\Tuxxedo\Exception\Basic		This a basic exception if the class doesn't exists or implements the magic invoke method
 		 */
 		public function register($refname, $class)
 		{
@@ -249,6 +249,11 @@
 		 */
 		protected static function symtable($symtable, $name, $value = NULL)
 		{
+			if(!self::$instance)
+			{
+				return;
+			}
+
 			if($value !== NULL)
 			{
 				self::$instance->{$symtable}[$name] = $value;

@@ -35,6 +35,7 @@
 	 */
 	use Tuxxedo\Exception;
 	use Tuxxedo\Loader;
+	use Tuxxedo\Registry;
 
 
 	/**
@@ -107,9 +108,7 @@
 		 */
 		public function __construct($prefix = NULL)
 		{
-			global $registry;
-
-			$this->registry		= $registry;
+			$this->registry		= Registry::init();
 			$this->controller 	= self::$default_controller;
 			$this->action 		= self::$default_action;
 

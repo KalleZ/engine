@@ -217,7 +217,7 @@
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $intl = true)
 		{
-			global $registry;
+			$registry = Registry::init();
 
 			if($intl)
 			{

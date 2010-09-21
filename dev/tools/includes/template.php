@@ -51,12 +51,10 @@
 		 */
 		public function __construct()
 		{
-			global $registry;
-
-			$this->registry		= $registry;
+			$this->registry		= Registry::init();
 			$this->information 	= Array();
 			$this->templates	= new \stdClass;
-			$this->storage		= \Tuxxedo\Style\Storage::factory($registry, $this, 'DevTools', $this->templates);
+			$this->storage		= \Tuxxedo\Style\Storage::factory($this->registry, $this, 'DevTools', $this->templates);
 		}
 
 

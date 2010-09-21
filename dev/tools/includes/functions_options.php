@@ -132,15 +132,14 @@
 			return(true);
 		}
 
-		global $registry;
-
-		$result = $registry->db->equery('
-							UPDATE 
-								`' . TUXXEDO_PREFIX . 'options` 
-							SET 
-								`value` = \'%s\' 
-							WHERE 
-								`option` = \'%s\'', $option['defaultvalue'], $option['option']);
+		$registry	= Registry::init();
+		$result 	= $registry->db->equery('
+								UPDATE 
+									`' . TUXXEDO_PREFIX . 'options` 
+								SET 
+									`value` = \'%s\' 
+								WHERE 
+									`option` = \'%s\'', $option['defaultvalue'], $option['option']);
 
 		return($result && $registry->db->getAffectedRows($result));
 	}
@@ -155,13 +154,12 @@
 	 */
 	function options_delete($option)
 	{
-		global $registry;
-
-		$result = $registry->db->equery('
-							DELETE FROM 
-								`' . TUXXEDO_PREFIX . 'options`
-							WHERE 
-								`option` = \'%s\'', $option);
+		$registry	= Registry::init();
+		$result 	= $registry->db->equery('
+								DELETE FROM 
+									`' . TUXXEDO_PREFIX . 'options`
+								WHERE 
+									`option` = \'%s\'', $option);
 
 		return($result && $registry->db->getAffectedRows($result));
 	}
@@ -234,9 +232,7 @@
 			return(false);
 		}
 
-		global $registry;
-
-		$result = $registry->db->equery('
+		$result = Registry::init()->db->equery('
 							INSERT INTO 
 								`' . TUXXEDO_PREFIX . 'options` 
 								(
@@ -275,20 +271,18 @@
 			return(false);
 		}
 
-		global $registry;
-
-		$default = options_get_single($original);
-		$default = $default['defaultvalue'];
-
-		$result = $registry->db->equery('
-							UPDATE 
-								`' . TUXXEDO_PREFIX . 'options` 
-							SET
-								`option` = \'%2$s\', 
-								`value` = \'%3$s\', 
-								`type` = \'%4$s\'
-							WHERE 
-								`option` = \'%1$s\'', $original, $name, options_convert_type($type, $value), options_shorthand_type($type));
+		$default 	= options_get_single($original);
+		$default 	= $default['defaultvalue'];
+		$registry	= Registry::init();
+		$result 	= $registry->db->equery('
+								UPDATE 
+									`' . TUXXEDO_PREFIX . 'options` 
+								SET
+									`option` = \'%2$s\', 
+									`value` = \'%3$s\', 
+									`type` = \'%4$s\'
+								WHERE 
+									`option` = \'%1$s\'', $original, $name, options_convert_type($type, $value), options_shorthand_type($type));
 
 		return($result && $registry->db->getAffectedRows($result));
 	}

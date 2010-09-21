@@ -34,6 +34,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
 
 
 	/**
@@ -73,12 +74,10 @@
 		 */
 		public function __construct(Array $styleinfo)
 		{
-			global $registry;
-
-			$this->registry		= $registry;
+			$this->registry		= Registry::init();
 			$this->information 	= $styleinfo;
 			$this->templates	= new \stdClass;
-			$this->storage		= Style\Storage::factory($registry, $this, $registry->options->style_storage, $this->templates);
+			$this->storage		= Style\Storage::factory($this->registry, $this, $this->registry->options->style_storage, $this->templates);
 		}
 
 		/**
