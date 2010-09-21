@@ -533,6 +533,11 @@
 				}
 			}
 
+			if(strpos($src, '{${') !== false)
+			{
+				throw new Exception\TemplateCompiler('Interpolated function calls are not allowed');
+			}
+
 			$this->compiled_source 	= $src;
 			$this->conditions	= 0;
 		}
