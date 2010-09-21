@@ -45,20 +45,20 @@
 		}
 		elseif($e instanceof Exception)
 		{
-			tuxxedo_gui_error($e->getMessage());
+			tuxxedo_gui_error(htmlentities($e->getMessage()));
 		}
 
 		if($registry && Registry::globals('error_reporting'))
 		{
 			$errors = (array) Registry::globals('errors');
 
-			array_push($errors, $e->getMessage());
+			array_push($errors, htmlentities($e->getMessage()));
 
 			Registry::globals('errors', $errors);
 		}
 		else
 		{
-			echo('<strong>Exception:</strong> ' . $e->getMessage() . '<br /> <br />');
+			echo('<strong>Exception:</strong> ' . htmlentities($e->getMessage()) . '<br /> <br />');
 		}
 	}
 
@@ -91,6 +91,8 @@
 		{
 			return;
 		}
+
+		$message = htmlentities($message);
 
 		if($level & E_RECOVERABLE_ERROR)
 		{
@@ -157,7 +159,7 @@
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
 		$utf8		= function_exists('utf8_encode');
-		$message	= ($exception ? $e->getMessage() : (string) $e);
+		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
@@ -180,7 +182,7 @@
 
 			foreach($errors as $error)
 			{
-				$message .= '<li>' . htmlentities(!$utf8 ?: utf8_encode($error)) . '</li>';
+				$message .= '<li>' . (!$utf8 ?: utf8_encode($error)) . '</li>';
 			}
 
 			$message .= '</ul>' . PHP_EOL;
@@ -493,6 +495,13 @@
 			$registry = class_exists('\Tuxxedo\Registry', false);
 		}
 
+		$output = ob_get_clean();
+
+		if(substr(ltrim($output), 0, 11) == 'Fatal error')
+		{
+			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 11)));
+		}
+
 		$errors = ($registry ? Registry::globals('errors') : false);
 
 		if(!$registry || !TUXXEDO_DEBUG || !$errors)
@@ -500,31 +509,16 @@
 			return;
 		}
 
-		global $registry;
-
-		$buffer = '<br />' . implode($errors, '<br />');
-
-		Registry::globals('errors', Array());
-
-		if(!$registry->style)
+		if($pos = stripos($output, '</body>'))
 		{
-			tuxxedo_doc_error($buffer);
+			$output = substr_replace($output, $buffer . '</body>', $pos, 7);
 		}
 		else
 		{
-			$output = ob_get_clean();
-
-			if($pos = stripos($output, '</body>'))
-			{
-				$output = substr_replace($output, $buffer . '</body>', $pos, 7);
-			}
-			else
-			{
-				$output .= '<br />' . $buffer;
-			}
-
-			echo($output);
+			$output .= '<br />' . $buffer;
 		}
+
+		echo($output);
 	}
 
 	/**
