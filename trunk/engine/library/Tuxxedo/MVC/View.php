@@ -100,9 +100,7 @@
 		 */
 		public function __construct($name, Array $globals = NULL)
 		{
-			global $registry;
-
-			$this->registry		= $registry;
+			$this->registry		= Registry::init();
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
 

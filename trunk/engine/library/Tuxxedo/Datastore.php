@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Registry;
+
+
+	/**
 	 * Datastore cache, this enables datastore caching for 
 	 * databases. This assumes the datastore table and 
 	 * everything else required for a database based 
@@ -63,9 +69,7 @@
 		 */
 		public function __construct()
 		{
-			global $registry;
-
-			$this->registry = $registry;
+			$this->registry = Registry::init();
 		}
 
 		/**

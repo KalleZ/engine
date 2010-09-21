@@ -5,4 +5,4 @@
 	Tuxxedo Engine 1.0.0 Release Candidate 4 / Final
 	------------------------------------------------
 
-	Add docblocks for api_analyze.php
+	Decouple the documentor parts into /trunk/documentor

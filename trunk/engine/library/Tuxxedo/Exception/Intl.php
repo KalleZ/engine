@@ -26,6 +26,12 @@
 	 */
 	namespace Tuxxedo\Exception;
 
+
+	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Registry;
+
     
 	/**
 	 * Basic exception type, this is used for errors that 
@@ -75,7 +81,7 @@
 		 */
 		public function __construct($message, $translation = NULL)
 		{
-			global $registry;
+			$registry = Registry::init();
 
 			if(!$registry->intl)
 			{

@@ -9,6 +9,7 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Library
 	 *
 	 * =============================================================================
 	 */
@@ -32,13 +33,6 @@
 	 */
 	function tuxxedo_exception_handler(\Exception $e)
 	{
-		static $registry;
-
-		if(!$registry)
-		{
-			$registry = class_exists('\Tuxxedo\Registry', false);
-		}
-
 		if($e instanceof Exception\Basic)
 		{
 			tuxxedo_doc_error($e);
@@ -48,7 +42,7 @@
 			tuxxedo_gui_error(htmlentities($e->getMessage()));
 		}
 
-		if($registry && Registry::globals('error_reporting'))
+		if(Registry::globals('error_reporting'))
 		{
 			$errors = (array) Registry::globals('errors');
 
@@ -80,14 +74,7 @@
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
-		static $registry;
-
-		if(!$registry)
-		{
-			$registry = class_exists('\Tuxxedo\Registry', false);
-		}
-
-		if($registry && !Registry::globals('error_reporting') || !(error_reporting() & $level))
+		if(!Registry::globals('error_reporting') || !(error_reporting() & $level))
 		{
 			return;
 		}
@@ -124,18 +111,11 @@
 			$message .= ' in ' . tuxxedo_trim_path($file) . ' on line ' . $line;
 		}
 
-		if($registry)
-		{
-			$errors = (array) Registry::globals('errors');
+		$errors = (array) Registry::globals('errors');
 
-			array_push($errors, $message);
+		array_push($errors, $message);
 
-			Registry::globals('errors', $errors);
-		}
-		else
-		{
-			echo($message . '<br /> <br />');
-		}
+		Registry::globals('errors', $errors);
 	}
 
 	/**
@@ -147,12 +127,14 @@
 	function tuxxedo_doc_error($e)
 	{
 		static $called;
-		global $registry, $configuration;
 
 		if($called !== NULL)
 		{
 			return;
 		}
+
+		$registry 	= Registry::init();
+		$configuration	= Registry::getConfiguration();
 
 		$called		= true;
 		$buffer		= ob_get_clean();
@@ -488,13 +470,6 @@
 	 */
 	function tuxxedo_shutdown_handler()
 	{
-		static $registry;
-
-		if(!$registry)
-		{
-			$registry = class_exists('\Tuxxedo\Registry', false);
-		}
-
 		$output = ob_get_clean();
 
 		if(substr(ltrim($output), 0, 11) == 'Fatal error')
@@ -502,9 +477,9 @@
 			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 11)));
 		}
 
-		$errors = ($registry ? Registry::globals('errors') : false);
+		$errors = Registry::globals('errors');
 
-		if(!$registry || !TUXXEDO_DEBUG || !$errors)
+		if(!TUXXEDO_DEBUG || !$errors)
 		{
 			echo($output);
 
@@ -593,7 +568,7 @@
 	 */
 	function tuxxedo_date($timestamp = NULL, $format = NULL)
 	{
-		global $registry;
+		$registry = Registry::init();
 
 		if($timestamp === NULL)
 		{
@@ -605,7 +580,7 @@
 			$format = $registry->cache->options['date_format'];
 		}
 
-		if(!$registry || !$registry->datetime)
+		if(!$registry->datetime)
 		{
 			return(date($format, $timestamp));
 		}
@@ -627,11 +602,9 @@
 	 */
 	function page($template)
 	{
-		global $registry;
-
 		return(
 			'global $header, $footer;' . 
-			'echo("' . $registry->style->fetch($template) . '");'
+			'echo("' . Registry::init()->style->fetch($template) . '");'
 			);
 	}
 
