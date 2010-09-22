@@ -474,7 +474,7 @@
 
 			for($char = 0; $char < $length; ++$char)
 			{
-				$salt .= $salt_range{\mt_rand(0, 50)};
+				$salt .= $salt_range{\mt_rand(0, 49)};
 			}
 
 			return($salt);
