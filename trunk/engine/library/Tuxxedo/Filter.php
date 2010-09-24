@@ -37,6 +37,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Data filter class, this class cleans data 
 	 * with magic quotes in mind. It will use the filter 
 	 * extension if its available or use its own filtering 

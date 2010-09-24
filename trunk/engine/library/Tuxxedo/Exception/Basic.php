@@ -26,6 +26,12 @@
 	 */
 	namespace Tuxxedo\Exception;
 
+
+	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
     
 	/**
 	 * Basic exception type, this is used for errors that 

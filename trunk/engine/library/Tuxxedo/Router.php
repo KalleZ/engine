@@ -39,6 +39,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * The router can detect from a range of sources the required controller and
 	 * action to execute.
 	 *

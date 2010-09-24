@@ -28,6 +28,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Form data exception, this exception is used to carry form data 
 	 * so it can be displayed in a form if an error should occur while 
 	 * processing the request

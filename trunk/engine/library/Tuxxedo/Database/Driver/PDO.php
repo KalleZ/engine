@@ -40,6 +40,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * PDO abstraction driver for Tuxxedo Engine
 	 *
 	 * This driver lets you use PDO as backend instead of the vendor 

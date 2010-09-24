@@ -38,6 +38,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * The View class for MVC based components, this wraps around the 
 	 * existing style API.
 	 *

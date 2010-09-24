@@ -37,6 +37,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Abstract database class
 	 *
 	 * Every main driver class must extend this class in order to be loadable 

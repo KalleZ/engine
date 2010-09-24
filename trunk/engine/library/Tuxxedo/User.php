@@ -38,6 +38,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * User session class, this class manages the current user 
 	 * session information and permission bitfields.
 	 *

@@ -32,6 +32,12 @@
 	 */
 	use Tuxxedo\Exception;
 
+
+	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
     
 	/**
 	 * Invalid permission

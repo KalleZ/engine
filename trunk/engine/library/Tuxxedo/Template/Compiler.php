@@ -35,6 +35,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Template compiler, this compiles raw template source 
 	 * code into php executable code with support for 
 	 * expressions. It supports recursive expressions with 

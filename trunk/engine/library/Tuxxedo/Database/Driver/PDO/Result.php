@@ -36,6 +36,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * PDO abstraction result driver for Tuxxedo
 	 *
 	 * This implements the result class for PDO based subdrivers for 

@@ -30,6 +30,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Dummy compiler class, this is used for emulation within the 
 	 * test method to make sure object oriented features may be compiled.
 	 *

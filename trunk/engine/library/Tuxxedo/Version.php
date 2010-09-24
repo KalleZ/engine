@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Versioning class, contains all of the Core versioning
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>

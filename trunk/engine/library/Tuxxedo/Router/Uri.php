@@ -28,6 +28,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Uri based router interface.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>

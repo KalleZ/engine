@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Base database driver interface
 	 *
 	 * This defines the driver structure of which functions a driver 

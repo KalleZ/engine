@@ -29,6 +29,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Interface for dispatchable controller hooks
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>

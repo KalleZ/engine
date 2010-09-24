@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Autoloader handler
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>

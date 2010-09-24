@@ -40,6 +40,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Abstract datamanager class
 	 *
 	 * Every datamanager class must extend this class in order to be loadable and to 

@@ -38,6 +38,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Styling API, this enables basic styling frontend for 
 	 * caching templates and fetching them for execution.
 	 *

@@ -39,6 +39,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * The base controller class for the MVC components
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>

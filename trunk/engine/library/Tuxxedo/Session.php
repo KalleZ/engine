@@ -37,6 +37,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Session interface, this class is designed to be attached to 
 	 * classes that implements an interface based on sessions.
 	 *

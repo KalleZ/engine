@@ -38,6 +38,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Datamanager for users
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
