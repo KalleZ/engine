@@ -4,5 +4,3 @@
 
 	Tuxxedo Engine 1.0.0 Release Candidate 4 / Final
 	------------------------------------------------
-
-	Decouple the documentor parts into /trunk/documentor
