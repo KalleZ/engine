@@ -98,7 +98,7 @@
 		 *
 		 * @var		integer
 		 */
-		protected $options			= 0;
+		protected $options			= -1;
 
 		/**
 		 * The current number of parsed conditions, this is used for 
