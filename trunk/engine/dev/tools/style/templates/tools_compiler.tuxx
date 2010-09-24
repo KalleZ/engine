@@ -15,6 +15,35 @@
 </div>
 
 <div class=\"box\">
+	<h4>Compiler options</h4>
+
+	<p>
+		Compiler options are special overrides to allow bypassing certain 
+		restrictions in conditionals. Note that non standard calls, like 
+		application specific routines <em>will not</em> execute here in 
+		this basic sandbox test.
+	</p>
+	<br />
+
+	<p>
+		<label>
+			<input type=\"checkbox\" name=\"opt_function_limit\"" . ((isset($_POST['opt_function_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any procedural function call
+		</label>
+	</p>
+	<p>
+		<label>
+			<input type=\"checkbox\" name=\"opt_class_limit\"" . ((isset($_POST['opt_class_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any class to execute
+		</label>
+	</p>
+
+	<p>
+		<label>
+			<input type=\"checkbox\" name=\"opt_closure_limit\"" . ((isset($_POST['opt_closure_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any closure calls
+		</label>
+	</p>
+</div>
+
+<div class=\"box\">
 	<input type=\"submit\" name=\"submit\" value=\"Compile\" />
 </div>
 </form>
