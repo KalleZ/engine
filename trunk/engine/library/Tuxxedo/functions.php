@@ -46,7 +46,7 @@
 		{
 			$errors = (array) Registry::globals('errors');
 
-			array_push($errors, htmlentities($e->getMessage()));
+			array_push($errors, $e->getMessage());
 
 			Registry::globals('errors', $errors);
 		}
