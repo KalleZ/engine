@@ -27,6 +27,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Template compiler exception, any compilation error will be 
 	 * of this exception type.
 	 *

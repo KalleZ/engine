@@ -37,6 +37,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Datastore cache, this enables datastore caching for 
 	 * databases. This assumes the datastore table and 
 	 * everything else required for a database based 

@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Default exception, mainly used for general errors. All 
 	 * Tuxxedo specific exceptions extend this exception.
 	 *

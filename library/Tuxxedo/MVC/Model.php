@@ -36,6 +36,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Model class
 	 *
 	 * In a MVC application this would be extended to create logical models,

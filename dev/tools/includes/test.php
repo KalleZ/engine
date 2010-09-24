@@ -30,6 +30,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Minor testing class, used for testing availability for 
 	 * various requirement checks
 	 *

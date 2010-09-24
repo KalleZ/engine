@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Information access, enables the ability for classes 
 	 * to access their loaded information through the array-alike 
 	 * syntax.

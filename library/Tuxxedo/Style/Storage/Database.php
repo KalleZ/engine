@@ -38,6 +38,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Style storage engine for database based templates
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>

@@ -36,6 +36,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Development Tools style storage, this class overrides the 
 	 * default filesystem storage engine so we can define our own 
 	 * template location.

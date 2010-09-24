@@ -26,6 +26,12 @@
 	 */
 	namespace Tuxxedo\Exception;
 
+
+	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
     
 	/**
 	 * Core exceptions indicates a critical fault in the Engine, these 

@@ -35,6 +35,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * MySQL Improved result class for Tuxxedo
 	 *
 	 * This implements the result class for MySQL Improved for 

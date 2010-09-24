@@ -35,6 +35,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Development Tools styling class, this class overrides the 
 	 * default styling class so we can overload the default style 
 	 * storage engines and use our own.

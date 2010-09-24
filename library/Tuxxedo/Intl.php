@@ -38,6 +38,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Internationalization Interface
 	 *
 	 * This class deals with basic routines for internationalization 

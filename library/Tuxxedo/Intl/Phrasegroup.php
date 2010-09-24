@@ -35,6 +35,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Internationalization phrasegroup class
 	 *
 	 * Contains basic routines for working with single phrasegroups.

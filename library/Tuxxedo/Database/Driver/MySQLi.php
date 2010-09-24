@@ -39,6 +39,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * MySQL Improved driver for Tuxxedo Engine
 	 *
 	 * This driver enables access to a MySQL 4.1+ based database using 

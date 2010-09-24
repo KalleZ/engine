@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Datastore requirement for using the datamanager
 	 *
 	 * This interface is for datamanagers that interacts with the datastore 

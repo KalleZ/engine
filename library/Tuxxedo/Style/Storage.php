@@ -35,6 +35,12 @@
 	use Tuxxedo\Registry;
 	use Tuxxedo\Style;
 
+
+	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
 	
 	/**
 	 * Interface for template storage engines

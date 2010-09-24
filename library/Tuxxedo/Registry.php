@@ -37,6 +37,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Registry class, this acts as a mixed singleton/registry 
 	 * object.
 	 *

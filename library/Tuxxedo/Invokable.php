@@ -37,6 +37,12 @@
 
 
 	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
+
+	/**
 	 * Interface for requring the registry to pass certain information 
 	 * before the constructor is called.
 	 *

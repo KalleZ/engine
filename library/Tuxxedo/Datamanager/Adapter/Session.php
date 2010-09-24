@@ -35,6 +35,12 @@
 	use Tuxxedo\Datamanager\Adapter;
 	use Tuxxedo\Registry;
 
+
+	/**
+	 * Include check
+	 */
+	defined('TUXXEDO_LIBRARY') or exit;
+
 	
 	/**
 	 * Datamanager for sessions
