@@ -51,13 +51,6 @@
 	class Compiler
 	{
 		/**
-		 * Compiler option - Disable call check
-		 *
-		 * @var		integer
-		 */
-		const OPT_NO_CALL_LIMITS		= -1;
-
-		/**
 		 * Compiler option - Disable function call check
 		 *
 		 * @var		integer
@@ -155,9 +148,9 @@
 		 * @param	integer			The compiler options, this is used for recursive code by the compiler, or by setting the default
 		 * @param	integer			The current conditions, this is used for recursive code by the compile method and should not be touched
 		 */
-		public function __construct($options = 0, $conditions = NULL)
+		public function __construct($options = -1, $conditions = NULL)
 		{
-			if($options !== 0)
+			if($options !== -1)
 			{
 				$this->options = (integer) $options;
 			}
@@ -175,20 +168,15 @@
 		 * @param	boolean			Whether to add it the bitmask to the current bitmask or reset it before
 		 * @return	void			No value is returned
 		 */
-		public function setOption($bitmask, $reset = false)
+		public function setOptions($bitmask, $reset = false)
 		{
-			if($reset)
+			if($reset || $this->options === -1)
 			{
 				$this->options = (integer) $bitmask;
 			}
 			else
 			{
 				$this->options |= (integer) $bitmask;
-			}
-
-			if($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT && $this->options & self::OPT_NO_FUNCTION_CALL_LIMIT && $this->options & self::OPT_NO_FUNCTION_CALL_LIMIT)
-			{
-				$this->options = -1;
 			}
 		}
 
@@ -385,23 +373,23 @@
 				{
 					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->conditions);
 				}
-				elseif(!($this->options & self::OPT_NO_CALL_LIMITS) && \preg_match_all('#([a-z0-9_{}$>-]+)(?:\s|/\*.*\*/|(?:\#|//)[^\r\n]*(?:\r|\n))*\(#si', $expr_value, $matches))
+				elseif(\preg_match_all('#([a-z0-9_{}$>-]+)(?:\s|/\*.*\*/|(?:\#|//)[^\r\n]*(?:\r|\n))*\(#si', $expr_value, $matches))
 				{
 					foreach($matches[1] as $function)
 					{
 						$function = \strtolower(\stripslashes($function));
 
-						if(!($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) && isset($this->functions[$function]))
+						if($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT || isset($this->functions[$function]))
 						{
 							continue;
 						}
 						elseif($function{0} == '$')
 						{
-							if(!($this->options & self::OPT_NO_CLASS_CALL_LIMIT) && ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
+							if($this->options & self::OPT_NO_CLASS_CALL_LIMIT || ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
 							{
 								continue;
 							}
-							elseif(!($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) && \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
+							elseif($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT || \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
 							{
 								continue;
 							}
