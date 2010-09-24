@@ -65,7 +65,7 @@
 			{
 			}
 ?>
-	<li><?php if(isset($e)) { echo('<strong>'); } echo($template . '... ' . $result); if(isset($e)) { echo('</strong>'); }  ?></li>
+	<li><?php if(isset($e)) { echo('<strong>'); } echo($template . '... ' . $result); if(isset($e)) { echo(' (' . $e->getMessage() . ')</strong>'); }  ?></li>
 <?php
 			unset($e);
 		}
