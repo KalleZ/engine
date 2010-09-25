@@ -103,13 +103,14 @@
 		 * @param	\Tuxxedo\Style			Reference to the style object
 		 * @param	string				The storage engine to instanciate
 		 * @param	object				Reference to the template storage object
+		 * @param	boolean				Whether this is a custom storage engine
 		 * @return	object				Returns a style storage engine object reference
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid style storage engines
 		 */ 
-		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates)
+		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates, $custom = false)
 		{
-			$class = '\Tuxxedo\Style\Storage\\' . $engine;
+			$class = (!$custom ? '\Tuxxedo\Style\Storage\\' : '') . $engine;
 
 			if(!\class_exists($class))
 			{
