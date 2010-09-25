@@ -18,13 +18,14 @@
 	use Tuxxedo\Exception;
 	use Tuxxedo\Template;
 
-	define('TEMPLATE_DIR', '../tools/style/templates/');
+	define('TEMPLATE_DIR', 		'../tools/style/templates/');
+	define('TUXXEDO_LIBRARY', 	'../../library');
 
-	require('../../library/Tuxxedo/Exception.php');
-	require('../../library/Tuxxedo/Exception/TemplateCompiler.php');
-	require('../../library/Tuxxedo/Template/Compiler.php');
-	require('../../library/Tuxxedo/Template/Compiler/Dummy.php');
-	require('../../library/Tuxxedo/functions.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception/TemplateCompiler.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Template/Compiler.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Template/Compiler/Dummy.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 
 	if(isset($_POST['compile']))
 	{

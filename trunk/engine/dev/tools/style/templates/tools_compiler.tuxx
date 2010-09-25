@@ -35,10 +35,14 @@
 			<input type=\"checkbox\" name=\"opt_class_limit\"" . ((isset($_POST['opt_class_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any class to execute
 		</label>
 	</p>
-
 	<p>
 		<label>
 			<input type=\"checkbox\" name=\"opt_closure_limit\"" . ((isset($_POST['opt_closure_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any closure calls
+		</label>
+	</p>
+	<p>
+		<label>
+			<input type=\"checkbox\" name=\"opt_interpolated_limit\"" . ((isset($_POST['opt_interpolated_limit'])) ? (" checked=\"checked\"") : '') . "> Allow inline interpolated calls
 		</label>
 	</p>
 </div>

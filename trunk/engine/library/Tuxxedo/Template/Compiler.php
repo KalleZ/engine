@@ -32,6 +32,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Exception;
+	use Tuxxedo\Template\Compiler\Dummy;
 
 
 	/**
@@ -76,6 +77,13 @@
 		 * @var		integer
 		 */
 		const OPT_NO_CLOSURE_CALL_LIMIT		= 4;
+
+		/**
+		 * Compiler option - Disable interpolated call protection
+		 *
+		 * @var		integer
+		 */
+		const OPT_NO_INTERPOLATED_CALLS		= 8;
 
 
 		/**
@@ -527,7 +535,7 @@
 				}
 			}
 
-			if(strpos($src, '{${') !== false)
+			if($this->options & self::OPT_NO_INTERPOLATED_CALLS && strpos($src, '{${') !== false)
 			{
 				throw new Exception\TemplateCompiler('Interpolated function calls are not allowed');
 			}
@@ -556,7 +564,7 @@
 				{
 					if(!isset(${$name}))
 					{
-						${$name} = new Compiler\Dummy;
+						${$name} = new Dummy;
 					}
 				}
 
