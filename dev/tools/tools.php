@@ -217,9 +217,10 @@
 				$source 	= htmlspecialchars($src);
 				$compiler	= new Compiler;
 				$compiler_opts	= Array(
-							'opt_function_limit'	=> Compiler::OPT_NO_FUNCTION_CALL_LIMIT, 
-							'opt_class_limit'	=> Compiler::OPT_NO_CLASS_CALL_LIMIT, 
-							'opt_closure_limit'	=> Compiler::OPT_NO_CLOSURE_CALL_LIMIT
+							'opt_function_limit'		=> Compiler::OPT_NO_FUNCTION_CALL_LIMIT, 
+							'opt_class_limit'		=> Compiler::OPT_NO_CLASS_CALL_LIMIT, 
+							'opt_closure_limit'		=> Compiler::OPT_NO_CLOSURE_CALL_LIMIT, 
+							'opt_interpolated_limit'	=> Compiler::OPT_NO_INTERPOLATED_CALLS
 							);
 
 				foreach($compiler_opts as $field => $bitfield)
