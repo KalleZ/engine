@@ -114,7 +114,7 @@
 		 *
 		 * @var		boolean
 		 */
-		public static $have_filter_ext	= false;
+		public static $have_filter_ext		= false;
 
 		/**
 		 * Whether magic_quotes_gpc is enabled or not
