@@ -28,12 +28,14 @@
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
-	define('CWD', 		'../..');
+	define('TUXXEDO_DEBUG', 	true);
+	define('TUXXEDO_DIR', 		'../..');
+	define('TUXXEDO_LIBRARY', 	'../../library');
 
-	require(CWD . '/library/configuration.php');
-	require(CWD . '/library/Tuxxedo/Loader.php');
-	require(CWD . '/library/Tuxxedo/functions.php');
-	require(CWD . '/library/Tuxxedo/functions_debug.php');
+	require(TUXXEDO_LIBRARY . '/configuration.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
+	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
 
 	require('./includes/functions.php');
 
@@ -47,9 +49,6 @@
 		throw new Exception\Basic('A script name must be defined prior to use');
 	}
 
-	define('TUXXEDO_DEBUG', 	true);
-	define('TUXXEDO_DIR', 		CWD);
-	define('TUXXEDO_LIBRARY', 	CWD . '/library');
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
 
 	date_default_timezone_set('UTC');
