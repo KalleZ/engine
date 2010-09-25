@@ -20,7 +20,9 @@
 	 */
 	$templates 		= Array(
 					'datastore_index', 
-					'datastore_index_itembit'
+					'datastore_index_itembit', 
+					'datastore_rebuild', 
+					'datastore_rebuild_itembit'
 					);
 
 	/**
@@ -30,10 +32,6 @@
 					'dump'		=> Array(
 									'datastore_dump', 
 									'datastore_dump_itembit'
-									), 
-					'rebuild' 	=> Array(
-									'datastore_rebuild', 
-									'datastore_rebuild_itembit'
 									)
 					);
 
