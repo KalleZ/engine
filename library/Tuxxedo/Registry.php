@@ -174,9 +174,7 @@
 			}
 			elseif(($ifaces = \class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Invokable']))
 			{
-				global $configuration;
-
-				$instance = \call_user_func(Array($class, 'invoke'), $this, $configuration);
+				$instance = \call_user_func(Array($class, 'invoke'), $this, $this->configuration);
 			}
 
 			if(!isset($instance) || !\is_object($instance))
