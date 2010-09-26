@@ -503,29 +503,30 @@
 	/**
 	 * Handles multiple errors repeatingly
 	 *
-	 * @param	   string		  A sprintf-like format
-	 * @param	   array		   An array with elements to loop through
-	 * @return	  void			No value is returned
+	 * @param	string			A sprintf-like format
+	 * @param	array			An array with elements to loop through
+	 * @param	string			A fully quanified exception name to throw
+	 * @return	void			No value is returned
 	 *
-	 * @throws	  Tuxxedo_Basic_Exception Throws a basic exception until the errors have been cleared
+	 * @throws	mixed			Throws an exception until the errors have been cleared
 	 */
-	function tuxxedo_multi_error($format, Array $elements)
+	function tuxxedo_multi_error($format, Array $elements, $exception = 'Exception\Basic')
 	{
 		if(!$elements)
 		{
 			return;
 		}
 
-		throw new Exception\Basic($format, reset($elements));
+		throw new $exception($format, reset($elements));
 	}
 
 	/**
 	 * Issues a redirect and terminates the script
 	 *
-	 * @param	   string		  The message to show to the user while redirecting
-	 * @param	   string		  The redirect location
-	 * @param	   string		  Redirect timeout in seconds
-	 * @return	  void			No value is returned
+	 * @param	string			The message to show to the user while redirecting
+	 * @param	string			The redirect location
+	 * @param	string			Redirect timeout in seconds
+	 * @return	void			No value is returned
 	 */
 	function tuxxedo_redirect($message, $location, $timeout = 3)
 	{

@@ -61,13 +61,11 @@
 
 		if(!$options)
 		{
-			global $registry;
-
-			$query = $registry->db->query('
-							SELECT 
-								*
-							FROM 
-								`' . TUXXEDO_PREFIX . 'options`');
+			$query = Registry::init()->db->query('
+								SELECT 
+									*
+								FROM 
+									`' . TUXXEDO_PREFIX . 'options`');
 
 			if(!$query || !$query->getNumRows())
 			{

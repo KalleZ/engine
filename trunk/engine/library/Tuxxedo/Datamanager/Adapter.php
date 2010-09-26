@@ -428,14 +428,12 @@
 		{
 			if($this->revalidate && !$this->validate())
 			{
-				global $phrase;
-
 				$intl		= isset($this->registry->intl);
 				$formdata 	= Array();
 
 				foreach($this->invalid_fields as $field)
 				{
-					$formdata[$field] = ($intl && isset($phrase['dm_' . $this->dmname . '_' . $field]) ? $phrase['dm_' . $this->dmname . '_' . $field] : $field);
+					$formdata[$field] = ($intl && isset($this->registry->phrase['dm_' . $this->dmname . '_' . $field]) ? $this->registry->phrase['dm_' . $this->dmname . '_' . $field] : $field);
 				}
 
 				throw new Exception\Formdata($formdata);
