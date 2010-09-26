@@ -67,7 +67,7 @@
 
 			if(!$files)
 			{
-				tuxxedo_gui_error('No source files found in the root directory');
+				tuxxedo_error('No source files found in the root directory');
 			}
 
 			$statistics = Array(

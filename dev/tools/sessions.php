@@ -52,7 +52,7 @@
 
 	if(!$sessions || !$sessions->getNumRows())
 	{
-		tuxxedo_gui_error('There is currently no users logged in.', false);
+		tuxxedo_error('There is currently no users logged in.');
 	}
 
 	switch(strtolower($filter->get('do')))
@@ -72,7 +72,7 @@
 						tuxxedo_redirect('Killed session with success', './sessions.php');
 					}
 
-					tuxxedo_gui_error('Invalid session');
+					tuxxedo_error('Invalid session');
 				}
 				break;
 				default:

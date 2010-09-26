@@ -76,7 +76,7 @@
 
 			if(!$ds || !$ds->getNumRows())
 			{
-				tuxxedo_gui_error('No datastore elements to show');
+				tuxxedo_error('No datastore elements to show');
 			}
 
 			$rows = '';
