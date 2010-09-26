@@ -28,8 +28,8 @@
 	 * if an exception is fatal and buffer non fatal exceptions 
 	 * so they can be displayed on the template
 	 *
-	 * @param	   Exception		   The exception to handle
-	 * @return	  void			No value is returned
+	 * @param	\Exception			The exception to handle
+	 * @return	void				No value is returned
 	 */
 	function tuxxedo_exception_handler(\Exception $e)
 	{
@@ -64,13 +64,13 @@
 	 * not designed to be called directly and should be called by 
 	 * php itself
 	 *
-	 * @param	   integer		 Error level
-	 * @param	   string		  Error message
-	 * @param	   string		  File
-	 * @param	   integer		 Line number
-	 * @return	void			No value is returned
+	 * @param	integer				Error level
+	 * @param	string				Error message
+	 * @param	string				File path
+	 * @param	integer				Line number
+	 * @return	void				No value is returned
 	 *
-	 * @throws	  Tuxxedo_Basic_Exception Throws a basic exception on fatal error types
+	 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on fatal error types
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
@@ -121,8 +121,8 @@
 	/**
 	 * Print a document error (startup) and halts script execution
 	 *
-	 * @param	   string		  The message to show
-	 * @return	  void			No value is returned
+	 * @param	mixed				The message to show, this can also be an exception
+	 * @return	void				No value is returned
 	 */
 	function tuxxedo_doc_error($e)
 	{
@@ -414,9 +414,9 @@
 	/**
 	 * Formattable doc error
 	 *
-	 * @param	string			The error message, in a printf-alike formatted string or just a normal string
-	 * @param	mixed			Optional argument #n for formatting
-	 * @return	Void			No value is returned
+	 * @param	string				The error message, in a printf-alike formatted string or just a normal string
+	 * @param	mixed				Optional argument #n for formatting
+	 * @return	Void				No value is returned
 	 */
 	function tuxxedo_doc_errorf()
 	{
@@ -432,9 +432,9 @@
 	 * Trims a file path to hide its path prior to the root 
 	 * of the application
 	 *
-	 * @param	   string		  The path to trim
-	 * @param	   boolean		 Should the path also be trimmed if debug mode is on? Defaults to true
-	 * @return	  string		  The trimmed path
+	 * @param	string				The path to trim
+	 * @param	boolean				Should the path also be trimmed if debug mode is on? Defaults to true
+	 * @return	string				The trimmed path
 	 */
 	function tuxxedo_trim_path($path, $debug_trim = true)
 	{
@@ -466,7 +466,7 @@
 	/**
 	 * Shutdown handler
 	 *
-	 * @return	  void			No value is returned
+	 * @return	void				No value is returned
 	 */
 	function tuxxedo_shutdown_handler()
 	{
@@ -503,12 +503,12 @@
 	/**
 	 * Handles multiple errors repeatingly
 	 *
-	 * @param	string			A sprintf-like format
-	 * @param	array			An array with elements to loop through
-	 * @param	string			A fully quanified exception name to throw
-	 * @return	void			No value is returned
+	 * @param	string				A sprintf-like format
+	 * @param	array				An array with elements to loop through
+	 * @param	string				A fully quanified exception name to throw
+	 * @return	void				No value is returned
 	 *
-	 * @throws	mixed			Throws an exception until the errors have been cleared
+	 * @throws	mixed				Throws an exception until the errors have been cleared
 	 */
 	function tuxxedo_multi_error($format, Array $elements, $exception = 'Exception\Basic')
 	{
@@ -523,10 +523,10 @@
 	/**
 	 * Issues a redirect and terminates the script
 	 *
-	 * @param	string			The message to show to the user while redirecting
-	 * @param	string			The redirect location
-	 * @param	string			Redirect timeout in seconds
-	 * @return	void			No value is returned
+	 * @param	string				The message to show to the user while redirecting
+	 * @param	string				The redirect location
+	 * @param	string				Redirect timeout in seconds
+	 * @return	void				No value is returned
 	 */
 	function tuxxedo_redirect($message, $location, $timeout = 3)
 	{
@@ -537,8 +537,8 @@
 	/**
 	 * Issues a redirect using headers and then terminates the script
 	 *
-	 * @param	   string		  The redirect location
-	 * @return	  void			No value is returned
+	 * @param	string				The redirect location
+	 * @return	void				No value is returned
 	 */
 	function tuxxedo_header_redirect($location)
 	{
@@ -550,9 +550,9 @@
 	 * Prints an error message using the current loaded 
 	 * theme and then terminates the script
 	 *
-	 * @param	   string		  The error message
-	 * @param	   boolean		 Whether to show the 'Go back' button or not
-	 * @return	  void			No value is returned
+	 * @param	string				The error message
+	 * @param	boolean				Whether to show the 'Go back' button or not
+	 * @return	void				No value is returned
 	 */
 	function tuxxedo_error($message, $goback = true)
 	{
@@ -563,9 +563,9 @@
 	/**
 	 * Date format function
 	 *
-	 * @param	   integer		 The timestamp to format
-	 * @param	   string		  Optional format to use, defaults to the format defined within the options
-	 * @return	  string		  Returns the formatted date
+	 * @param	integer				The timestamp to format
+	 * @param	string				Optional format to use, defaults to the format defined within the options
+	 * @return	string				Returns the formatted date
 	 */
 	function tuxxedo_date($timestamp = NULL, $format = NULL)
 	{
@@ -598,8 +598,8 @@
 	/**
 	 * Generates code to print a page
 	 *
-	 * @param	   string		  The template name to print
-	 * @return	  void			No value is returned
+	 * @param	string				The template name to print
+	 * @return	void				No value is returned
 	 */
 	function page($template)
 	{
@@ -616,8 +616,8 @@
 	 * This function is based on code by:
 	 * Alexander Meesters <admin@budgetwebhosting.nl>
 	 *
-	 * @param	   string		  The email address to validate
-	 * @return	  boolean		 Returns true if the email is valid, otherwise false
+	 * @param	string				The email address to validate
+	 * @return	boolean				Returns true if the email is valid, otherwise false
 	 */
 	function is_valid_email($email)
 	{
