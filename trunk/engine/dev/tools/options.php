@@ -61,7 +61,7 @@
 			{
 				if(!options_add($filter->post('name'), $filter->post('characters'), $filter->post('value')))
 				{
-					tuxxedo_gui_error('Failed to add new option, possible naming conflict');
+					tuxxedo_error('Failed to add new option, possible naming conflict');
 				}
 
 				tuxxedo_redirect('Added option', './options.php');
@@ -78,13 +78,13 @@
 
 			if(($options = options_get_single($option)) == false)
 			{
-				tuxxedo_gui_error('Invalid option');
+				tuxxedo_error('Invalid option');
 			}
 			elseif($filter->post('submit'))
 			{
 				if(!options_edit($option, $filter->post('name'), $filter->post('characters'), $filter->post('value')))
 				{
-					tuxxedo_gui_error('Failed to edit option, possible naming conflict');
+					tuxxedo_error('Failed to edit option, possible naming conflict');
 				}
 
 				tuxxedo_redirect('Edited option', './options.php');
@@ -101,10 +101,10 @@
 
 			if(!options_is_valid($option))
 			{
-				tuxxedo_gui_error('Invalid option');
+				tuxxedo_error('Invalid option');
 			}
 
-			options_delete($option) or tuxxedo_gui_error('Unable to delete option');
+			options_delete($option) or tuxxedo_error('Unable to delete option');
 
 			tuxxedo_redirect('Deleted option', './options.php');
 		}
@@ -117,7 +117,7 @@
 			{
 				if(!options_is_valid($option))
 				{
-					tuxxedo_gui_error('Invalid option');
+					tuxxedo_error('Invalid option');
 				}
 
 				options_reset($option);
@@ -130,7 +130,7 @@
 
 				if(!$options)
 				{
-					tuxxedo_gui_error('No options found');
+					tuxxedo_error('No options found');
 				}
 
 				foreach($options as $name => $data)
@@ -154,7 +154,7 @@
 
 			if(!$query || !$query->getNumRows())
 			{
-				tuxxedo_gui_error('No options to display. Add one from the sidebar');
+				tuxxedo_error('No options to display. Add one from the sidebar');
 			}
 
 			$table 		= '';

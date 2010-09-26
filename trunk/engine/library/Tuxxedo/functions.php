@@ -39,7 +39,7 @@
 		}
 		elseif($e instanceof Exception)
 		{
-			tuxxedo_gui_error(htmlentities($e->getMessage()));
+			tuxxedo_error(htmlentities($e->getMessage()));
 		}
 
 		if(Registry::globals('error_reporting'))
@@ -554,7 +554,7 @@
 	 * @param	   boolean		 Whether to show the 'Go back' button or not
 	 * @return	  void			No value is returned
 	 */
-	function tuxxedo_gui_error($message, $goback = true)
+	function tuxxedo_error($message, $goback = true)
 	{
 		eval(page('error'));
 		exit;
