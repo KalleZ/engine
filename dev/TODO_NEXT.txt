@@ -25,7 +25,6 @@
 	Implement a generic pagination class with handlers for database and other generic ones based on an interface
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
-	Implement session adapters with backends for APC etc.
 	Implement validators
 	Implement API accessors
 	Implement API helpers
@@ -42,6 +41,7 @@
 	 - Query builder
 	 - Configuration parser (Xml, Ini, JSON)
 	 - Generic Datamanager
+	 - MVC Request
 
 	Extend the API generator
 	 - Parse docblocks
