@@ -4,3 +4,16 @@
 
 	Tuxxedo Engine 1.0.0 Release Candidate 4 / Final
 	------------------------------------------------
+
+	The following function have docblocks with weird WS:
+	 * is_valid_email
+	 * page
+	 * tuxxedo_date
+	 * tuxxedo_gui_error
+	 * tuxxedo_shutdown_handler
+	 * tuxxedo_trim_path
+	 * tuxxedo_doc_error
+	 * tuxxedo_error_handler
+	 * tuxxedo_exception_handler
+
+	Rename tuxxedo_gui_error() to tuxxedo_error()
