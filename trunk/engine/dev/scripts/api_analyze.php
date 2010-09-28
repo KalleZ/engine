@@ -288,6 +288,33 @@
 				break;
 			}
 		}
+/*
+
+		$datamap[$file]		= Array(
+						'namespaces'	=> Array(), 
+						'aliases'	=> Array(), 
+						'classes'	=> Array(), 
+						'interfaces'	=> Array(), 
+						'constants'	=> Array(), 
+						'functions'	=> Array()
+						);
+*/
+		$display_note = true;
+
+		foreach(array_keys($datamap[$file]) as $element)
+		{
+			if(sizeof($datamap[$file][$element]))
+			{
+				$display_note = false;
+
+				break;
+			}
+		}
+
+		if($display_note)
+		{
+			print('<em>No functional code found within this file</em>');
+		}
 	}
 
 	file_put_contents(__DIR__ . '/../api/dumps/serialized.dump', serialize($datamap));
