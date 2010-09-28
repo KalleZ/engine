@@ -4,3 +4,10 @@
 
 	Tuxxedo Engine 1.0.0 Release Candidate 4 / Final
 	------------------------------------------------
+
+
+
+	Tuxxedo Engine 1.0.1
+	------------------------------------------------
+
+	* Fix api_analyze.php setting some methods and functions to static if the previous method had static variables
