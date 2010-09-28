@@ -181,18 +181,19 @@
 		 *
 		 * @param	string				Driver name
 		 * @param	array				Database specific configuration array
+		 * @param	boolean				Whether this is a custom driver or not
 		 * @return	\Tuxxedo\Database		Returns a new database instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a driver should fail for some reason
 		 */
-		final public static function factory($driver, Array $configuration)
+		final public static function factory($driver, Array $configuration, $custom = false)
 		{
 			if(\in_array($driver, self::$loaded_drivers))
 			{
 				return(new $class($configuration));
 			}
 
-			$class 		= '\Tuxxedo\Database\Driver\\' . $driver;
+			$class 		= (!$custom ? '\Tuxxedo\Database\Driver\\' : '') . $driver;
 			$instance 	= new $class($configuration);
 
 			if(!\is_subclass_of($class, __CLASS__))
