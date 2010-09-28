@@ -49,4 +49,3 @@
 	 - Be more generic and being able to output to DocBook XML format
 
 	Change SQL queries to be non-mysql compatible (perhaps switch to use the query builder internally?)
-	Change the structure of the /dev/tools utilities structure to be autoloadable

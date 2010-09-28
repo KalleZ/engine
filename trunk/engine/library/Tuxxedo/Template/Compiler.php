@@ -453,11 +453,10 @@
 					$ptr['else'] = \stripos($src, $tokens['else'], $ptr['else'] + 1);
 				}
 
-				$true = $false = '';
-
 				if($ptr['else'] == -1)
 				{
-					$true = \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - \strlen($tokens['if_end']) - $expr_end + 2);
+					$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - \strlen($tokens['if_end']) - $expr_end + 2);
+					$false 	= '';
 				}
 				else
 				{

@@ -103,7 +103,7 @@
 		{
 			if($filter->post('progress'))
 			{
-				require('./includes/functions_options.php');
+				require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
 				$result_list 	= '';
 				$corrupt_warn	= false;
