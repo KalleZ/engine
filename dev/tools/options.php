@@ -51,7 +51,7 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
-	require('./includes/functions_options.php');
+	require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
 	switch($do = strtolower($filter->get('do')))
 	{

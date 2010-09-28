@@ -18,7 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Development\Test;
+	use DevTools\Test;
 	use Tuxxedo\Template\Compiler;
 
 	/**
@@ -177,8 +177,6 @@
 		break;
 		case('requirements'):
 		{
-			require('./includes/test.php');
-
 			$results 	= '';
 			$tests 		= Array(
 						'PHP 5.3.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
@@ -186,7 +184,7 @@
 						'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysql')), 
 						'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysqli')), 
 						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo')), 
-						'realpath'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath'))
+						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath'))
 						);
 
 			$failed = false;

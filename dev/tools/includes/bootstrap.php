@@ -24,7 +24,7 @@
 	 * the development tools to interfere with the main site.
 	 */
 
-	use Tuxxedo\Development;
+	use DevTools\Style;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
@@ -33,11 +33,10 @@
 	define('TUXXEDO_LIBRARY', 	'../../library');
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
+	require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
-
-	require('./includes/functions.php');
 
 	if(!$configuration['application']['debug'])
 	{
@@ -61,9 +60,6 @@
 	Registry::globals('error_reporting', 	true);
 	Registry::globals('errors', 		Array());
 
-	require('./includes/template.php');
-	require('./includes/template_storage.php');
-
 	$registry = Registry::init($configuration);
 
 	$registry->register('db', '\Tuxxedo\Database');
@@ -72,7 +68,7 @@
 
 	$registry->set('timezone', new DateTimeZone('UTC'));
 	$registry->set('datetime', new DateTime('now', $timezone));
-	$registry->set('style', new Development\Style);
+	$registry->set('style', new Style);
 
 	define('TIMENOW', $datetime->getTimestamp());
 	define('TIMENOW_UTC', TIMENOW);
