@@ -182,11 +182,12 @@
 		/**
 		 * Checks whether a usergroup is valid
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The usergroup id to check for validity
 		 * @return	boolean				Returns true if the usergroup is loaded and exists in the datastore cache, otherwise false
 		 */
-		public static function isValidUsergroup(Registry $registry, $id)
+		public static function isValidUsergroup(Adapter $dm, Registry $registry, $id)
 		{
 			return(isset($registry->cache->usergroups[$id]));
 		}
@@ -194,11 +195,12 @@
 		/**
 		 * Checks whether a timezone based by its name is valid
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The timezone name to check for validity
 		 * @return	boolean				Returns true if the timezone is loaded and exists in the datastore cache, otherwise false
 		 */
-		public static function isValidTimezone(Registry $registry, $timezone)
+		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone)
 		{
 			return(isset($registry->cache->timezones[$timezone]));
 		}
@@ -206,11 +208,12 @@
 		/**
 		 * Gets a timezone offset based on its timezone name
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The timezone name
 		 * @return	string				Returns the timezone offset, or 0 if the timezone name was invalid
 		 */
-		public static function getTimezoneOffset(Registry $registry, $timezone)
+		public static function getTimezoneOffset(Adapter $dm, Registry $registry, $timezone)
 		{
 			if(!self::isValidTimezone($registry, $timezone))
 			{
@@ -223,11 +226,12 @@
 		/**
 		 * Checks whether a user name is taken or not
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The username to check
 		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
 		 */
-		public static function isValidUsername(Registry $registry, $username)
+		public static function isValidUsername(Adapter $dm, Registry $registry, $username)
 		{
 			$query = $registry->db->equery('
 							SELECT 
@@ -244,11 +248,12 @@
 		/**
 		 * Checks whether a style id is valid or not
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The style id
 		 * @return	boolean				True if the style exists, otherwise false
 		 */
-		public static function isValidStyleId(Registry $registry, $styleid)
+		public static function isValidStyleId(Adapter $dm, Registry $registry, $styleid)
 		{
 			return($registry->cache->styleinfo && isset($registry->cache->styleinfo[$styleid]));
 		}
@@ -256,11 +261,12 @@
 		/**
 		 * Checks whether a language id is valid or not
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The language id
 		 * @return	boolean				True if the language exists, otherwise false
 		 */
-		public static function isValidLanguageId(Registry $registry, $languageid)
+		public static function isValidLanguageId(Adapter $dm, Registry $registry, $languageid)
 		{
 			return($registry->cache->languages && isset($registry->cache->languages[$languageid]));
 		}

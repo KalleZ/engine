@@ -121,6 +121,21 @@
 		}
 
 		/**
+		 * Checks whether a usergroup type is valid, this is 
+		 * used as a callback for the validation filter, hence 
+		 * its staticlly defined
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				The type to check
+		 * @return	boolean				Returns true if the type is valid, otherwise false
+		 */
+		public static function isValidType(Adapter $dm, Registry $registry, $type)
+		{
+			return($type > 0 && $type < 3);
+		}
+
+		/**
 		 * Save the usergroup in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
@@ -138,20 +153,6 @@
 			$datastore[(integer) $this->identifier] = $virtual;
 
 			return($registry->cache->rebuild('usergroups', $datastore));
-		}
-
-		/**
-		 * Checks whether a usergroup type is valid, this is 
-		 * used as a callback for the validation filter, hence 
-		 * its staticlly defined
-		 *
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	integer				The type to check
-		 * @return	boolean				Returns true if the type is valid, otherwise false
-		 */
-		public static function isValidType(Registry $registry, $type)
-		{
-			return($type > 0 && $type < 3);
 		}
 	}
 ?>
