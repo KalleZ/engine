@@ -288,32 +288,22 @@
 				break;
 			}
 		}
-/*
-
-		$datamap[$file]		= Array(
-						'namespaces'	=> Array(), 
-						'aliases'	=> Array(), 
-						'classes'	=> Array(), 
-						'interfaces'	=> Array(), 
-						'constants'	=> Array(), 
-						'functions'	=> Array()
-						);
-*/
-		$display_note = true;
 
 		foreach(array_keys($datamap[$file]) as $element)
 		{
 			if(sizeof($datamap[$file][$element]))
 			{
-				$display_note = false;
+				$note = true;
 
 				break;
 			}
 		}
 
-		if($display_note)
+		if($note)
 		{
 			print('<em>No functional code found within this file</em>');
+
+			unset($note);
 		}
 	}
 
