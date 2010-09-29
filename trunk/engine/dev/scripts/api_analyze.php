@@ -299,7 +299,7 @@
 			}
 		}
 
-		if($note)
+		if(isset($note))
 		{
 			print('<em>No functional code found within this file</em>');
 
