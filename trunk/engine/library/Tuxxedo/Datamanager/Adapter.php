@@ -342,7 +342,7 @@
 						{
 							if(isset($properties['parameters']))
 							{
-								$this->data[$field] = \call_user_func_array($properties['callback'], \array_merge(Array($this->registry), $properties['parameters']));
+								$this->data[$field] = \call_user_func_array($properties['callback'], \array_merge(Array($this, $this->registry), $properties['parameters']));
 							}
 							else
 							{
