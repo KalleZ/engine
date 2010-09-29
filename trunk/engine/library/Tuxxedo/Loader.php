@@ -115,24 +115,24 @@
 		 * @var		string				The class to convert
 		 * @return	string				Returns the matching path
 		 */
-		public static function getNormalizedPath($class)
+		public static function getNormalizedPath($name)
 		{
-			if(isset(self::$paths[$class]))
+			if(isset(self::$paths[$name]))
 			{
-				if(\strpos($class, self::$paths[$class]['separator']) !== false)
+				if(\strpos($name, self::$paths[$name]['separator']) !== false)
 				{
-					$class = \str_replace(self::$paths[$class]['separator'], '/', $class);
+					$name = \str_replace(self::$paths[$name]['separator'], '/', $name);
 				}
 
-				return(self::$paths[$class]['root'] . '/' . $class . '.php');
+				return(self::$paths[$name]['root'] . '/' . $name . '.php');
 			}
 
-			if(\strpos($class, '\\') !== false)
+			if(\strpos($name, self::$separator) !== false)
 			{
-				$class = \str_replace('\\', '/', $class);
+				$name = \str_replace(self::$separator, '/', $name);
 			}
 
-			return(self::$root . '/' . $class . '.php');
+			return(self::$root . '/' . $name . '.php');
 		}
 
 		/**
@@ -145,9 +145,9 @@
 		 * @param	boolean				Whether to return true or false in case of loading instead of calling the error handler
 		 * @return	void				No value is returned
 		 */
-		public static function load($class, $silent = false)
+		public static function load($name, $silent = false)
 		{
-			$path = self::getNormalizedPath($class);
+			$path = self::getNormalizedPath($name);
 
 			if(!is_file($path))
 			{
@@ -156,19 +156,19 @@
 					return(false);
 				}
 
-				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $class, $path);
+				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, $path);
 			}
 
 			require($path);
 
-			if(!\class_exists($class) && !\interface_exists($class))
+			if(!\class_exists($name) && !\interface_exists($name))
 			{
 				if($silent)
 				{
 					return(false);
 				}
 
-				\tuxxedo_doc_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $class, $path);
+				\tuxxedo_doc_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
 			}
 
 			return(true);
