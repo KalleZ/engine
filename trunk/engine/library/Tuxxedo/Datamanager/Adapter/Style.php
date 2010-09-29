@@ -118,6 +118,8 @@
 
 				$this->data 		= $style->fetchAssoc();
 				$this->identifier 	= $identifier;
+
+				$style->free();
 			}
 		}
 

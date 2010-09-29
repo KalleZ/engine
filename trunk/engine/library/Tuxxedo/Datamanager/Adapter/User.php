@@ -154,6 +154,8 @@
 				$this->data 					= $user->fetchAssoc();
 				$this->identifier 				= $identifier;
 				$this->fields['timezone_offset']['parameters']	= Array($this->data['timezone']);
+
+				$user->free();
 			}
 		}
 
