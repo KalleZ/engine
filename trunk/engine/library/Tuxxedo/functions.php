@@ -17,8 +17,7 @@
 
 	/**
 	 * Aliasing rules
-	 */
-	use Tuxxedo\Exception;
+	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
@@ -510,7 +509,7 @@
 	 *
 	 * @throws	mixed				Throws an exception until the errors have been cleared
 	 */
-	function tuxxedo_multi_error($format, Array $elements, $exception = 'Exception\Basic')
+	function tuxxedo_multi_error($format, Array $elements, $exception = '\Tuxxedo\Exception\Basic')
 	{
 		if(!$elements)
 		{
