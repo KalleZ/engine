@@ -113,8 +113,10 @@
 					throw new Exception\Basic('Invalid usergroup id passed to datamanager');
 				}
 
-				$this->data 		= $usergroups->fetchAssoc();
+				$this->data 		= $usergroup->fetchAssoc();
 				$this->identifier 	= $identifier;
+
+				$usergroup->free();
 			}
 		}
 
