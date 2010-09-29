@@ -10,4 +10,17 @@
 	Tuxxedo Engine 1.0.1
 	------------------------------------------------
 
-	* Fix api_analyze.php setting some methods and functions to static if the previous method had static variables
+	Options
+	 - Implement the options datamanager
+	 - Change some of the datamanager validation checks to be at save time
+	 - Change the options dev tool to work with the options datamanager
+
+	Datamanagers
+	 - Change the internal userdata in datamanagers to be an object to save the references
+
+	User API
+	 - Implement the permission datamanager
+	 - Implement permission constants for cached permission fields
+
+	Development utilities
+	 - Fix api_analyze.php setting some methods and functions to static if the previous method had static variables
