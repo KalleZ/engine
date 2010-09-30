@@ -17,7 +17,7 @@
 
 	/**
 	 * Aliasing rules
-	 */
+	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
@@ -459,7 +459,7 @@
 			$path = str_replace(Array('/', '\\', $dir), DIRECTORY_SEPARATOR, $path);
 		}
 
-		return(DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR));
+		return(($path{1} != ':' && $path{2} != '\\' ? DIRECTORY_SEPARATOR : '') . ltrim($path, DIRECTORY_SEPARATOR));
 	}
 
 	/**
