@@ -120,6 +120,13 @@
 		const PREVIEW_NUMBER		= 4;
 
 		/**
+		 * Current version control system revision number
+		 *
+		 * @var		string
+		 */
+		const VCS_REVISION		= '$Rev$';
+
+		/**
 		 * Engine version string, this is the full version string, which 
 		 * includes the pre-release name, version and the version number 
 		 * of the upcoming version if pre-release. For example:
