@@ -101,7 +101,7 @@
 		 *
 		 * @var		boolean
 		 */
-		const PREVIEW			= true;
+		const PREVIEW			= false;
 
 		/**
 		 * Development preview type, this is set to the preview type, like 'Alpha', 
@@ -109,7 +109,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Release Candidate';
+		const PREVIEW_TYPE		= '';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 4;
+		const PREVIEW_NUMBER		= 0;
 
 		/**
 		 * Current version control system revision number
@@ -137,6 +137,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.0 Release Candidate 4';
+		const FULL			= '1.0.0';
 	}
 ?>
