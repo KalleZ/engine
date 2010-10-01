@@ -77,7 +77,7 @@
 		 *
 		 * @var		integer
 		 */
-		const RELEASE			= 0;
+		const RELEASE			= 1;
 
 		/**
 		 * Engine version ID, this contains the version id in the form 
@@ -101,7 +101,7 @@
 		 *
 		 * @var		boolean
 		 */
-		const PREVIEW			= false;
+		const PREVIEW			= true;
 
 		/**
 		 * Development preview type, this is set to the preview type, like 'Alpha', 
@@ -109,7 +109,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= '';
+		const PREVIEW_TYPE		= 'Alpha';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 0;
+		const PREVIEW_NUMBER		= 1;
 
 		/**
 		 * Current version control system revision number
@@ -137,6 +137,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.0';
+		const FULL			= '1.0.1 Alpha 1';
 	}
 ?>
