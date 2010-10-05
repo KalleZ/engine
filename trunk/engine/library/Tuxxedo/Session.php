@@ -237,7 +237,7 @@
 
 			\session_regenerate_id(true);
 
-			return($this['__engine_csrf_token'] = \md5(User::GetPasswordSalt(32)));
+			return($this['__engine_csrf_token'] = \sha1(User::GetPasswordSalt(32)));
 		}
 
 		/**
