@@ -51,24 +51,18 @@
 			$bt = array_merge($bt, $e->getTrace());
 		}
 
-		$bts 	= sizeof($bt);
-		$skip	= $full_trace;
+		$bts = sizeof($bt);
 
 		foreach($bt as $n => $t)
 		{
-			if($n == 0 && isset($t['function']) && isset($fulltrace[strtolower($t['function'])]))
-			{
-				$skip = true;
-			}
-
-			if($skip && $n < 3)
+			if($n < 1)
 			{
 				continue;
 			}
 
 			$trace = new stdClass;
 
-			$trace->current		= (!$skip && $n == 3);
+			$trace->current		= ($n == 3);
 			$trace->callargs	= '';
 			$trace->notes		= (isset($t['type']) && $t['type'] == '::' ? 'Static call' : '');
 			$trace->line		= $trace->file = '';
