@@ -177,7 +177,7 @@
 		echo(
 			'<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL . 
 			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . PHP_EOL . 
-			'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . PHP_EOL . 
+			'<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . PHP_EOL . 
 			'<head>' . PHP_EOL . 
 			'<title>Tuxxedo Software Engine Error</title>' . PHP_EOL . 
 			'<style type="text/css">' . PHP_EOL . 
