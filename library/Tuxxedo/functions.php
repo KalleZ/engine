@@ -18,6 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
