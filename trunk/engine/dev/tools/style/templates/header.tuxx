@@ -102,6 +102,11 @@
 				document.getElementById('option_current_value').value = document.getElementById(option_canvas).value;
 			}
 		}
+
+		function engine_styles_change(select)
+		{
+			this.location = './styles.php?style=' + select.options[select.selectedIndex].value;
+		}
 		</script>
 
 		<style type=\"text/css\">
@@ -325,8 +330,8 @@
 				<ul>
 					<li><a href=\"./\">Index</a></li>
 					<li><a href=\"./datastore.php\">Datastore cache</a></li>
+					<li><a href=\"./styles.php\">Styles &amp; Templates</a></li>
 <!--
-					<li><a href=\"./#\">Styles &amp; Templates</a></li>
 					<li><a href=\"./#\">Internationalization</a></li>
 -->
 					<li><a href=\"./options.php\">Options</a></li>
