@@ -473,14 +473,23 @@
 
 			if(!$salt_range)
 			{
-				$salt_range = 'AbcdEfghIjklmnOpqrstUvwxYz0123456789|()[]{}!?=%&-_';
+				$salt_range = 'abcdefghijklmnopqrstuvwxyz0123456789|()[]{}!?=%&-_';
 			}
 
 			$salt = '';
 
 			for($char = 0; $char < $length; ++$char)
 			{
-				$salt .= $salt_range{\mt_rand(0, 49)};
+				$char = \mt_rand(0, 49);
+
+				if($char < 26 && \mt_rand(0, 100) % 2 !== 0)
+				{
+					$salt .= $sant_range{\strtoupper($char)};
+				}
+				else
+				{
+					$salt .= $salt_range{$char};
+				}
 			}
 
 			return($salt);
