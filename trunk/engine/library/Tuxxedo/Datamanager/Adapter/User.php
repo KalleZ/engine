@@ -129,12 +129,9 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 	= $registry;
-
 			$this->dmname		= 'user';
 			$this->tablename	= \TUXXEDO_PREFIX . 'users';
 			$this->idname		= 'id';
-			$this->information	= &$this->userdata;
 
 			if($identifier !== NULL)
 			{
@@ -157,6 +154,8 @@
 
 				$user->free();
 			}
+
+			parent::init($registry);
 		}
 
 		/**
@@ -176,7 +175,7 @@
 				$this->fields['timezone']['parameters'] = Array($value);
 			}
 
-			$this->userdata[$field] = $value;
+			$this->userdata->{$field} = $value;
 		}
 
 		/**

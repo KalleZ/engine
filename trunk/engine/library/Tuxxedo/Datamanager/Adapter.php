@@ -159,6 +159,13 @@
 		protected $identifier;
 
 		/**
+		 * Current data thats been set via the set method
+		 *
+		 * @var		\stdClass
+		 */
+		protected $userdata;
+
+		/**
 		 * Whether the datamanager needs to re-validate
 		 *
 		 * @var		boolean
@@ -171,13 +178,6 @@
 		 * @var		array
 		 */
 		protected $data				= Array();
-
-		/**
-		 * Current data thats been set via the set method
-		 *
-		 * @var		array
-		 */
-		protected $userdata			= Array();
 
 		/**
 		 * List of loaded datamanagers used for caching in the 
@@ -201,7 +201,7 @@
 		 * Constructor for the current datamanager, this 
 		 * can be used to either create a datamanager based 
 		 * on a certain record determined by the passed identifier 
-		 * or as a clean datamanager to insert a new record.
+		 * or as a clean datamanager to insert a new record
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	mixed				The unique identifier to send to the datamanager
@@ -209,6 +209,19 @@
 		 * @throws	\Tuxxedo\Exception		Throws an exception if the unique identifier sent to the datamanager was invalid
 		 */
 		abstract public function __construct(Registry $registry, $identifier = NULL);
+
+		/**
+		 * Datamanager initializer, this method initializes the default logic 
+		 * used across all datamanager adapters
+		 *
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @return	void				No value is returned
+		 */
+		final protected function init(Registry $registry)
+		{
+			$this->registry	= $registry;
+			$this->userdata	= new \stdClass;
+		}
 
 		/**
 		 * Constructs a new datamanger instance
@@ -280,9 +293,9 @@
 			{
 				return($this->data);
 			}
-			elseif(isset($this->userdata[$field]))
+			elseif(isset($this->userdata->{$field}))
 			{
-				return($this->userdata[$field]);
+				return($this->userdata->{$field});
 			}
 			elseif(isset($this->data[$field]))
 			{
@@ -299,7 +312,7 @@
 		{
 			$this->invalid_fields = Array();
 
-			if(!$this->userdata)
+			if(!\get_object_vars($this->userdata))
 			{
 				$this->revalidate = false;
 
@@ -314,7 +327,7 @@
 				{
 					case(self::FIELD_REQUIRED):
 					{
-						if(!isset($this->userdata[$field]))
+						if(!isset($this->userdata->{$field}))
 						{
 							if(!isset($this->data[$field]))
 							{
@@ -327,7 +340,7 @@
 					break;
 					case(self::FIELD_PROTECTED):
 					{
-						if(isset($this->userdata[$field]))
+						if(isset($this->userdata->{$field}))
 						{
 							$this->invalid_fields[] = $field;
 
@@ -362,7 +375,7 @@
 
 				if($properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
 				{
-					if(!$filter->validate($this->userdata[$field], $properties['callback']))
+					if(!$filter->validate($this->userdata->{$field}, $properties['callback']))
 					{
 						$this->invalid_fields[] = $field;
 
@@ -371,16 +384,16 @@
 				}
 				else
 				{
-					if(($filtered = $filter->user($this->userdata[$field], $properties['validation'])) === NULL)
+					if(($filtered = $filter->user($this->userdata->{$field}, $properties['validation'])) === NULL)
 					{
 						$this->invalid_fields[] = $field;
 
-						unset($this->userdata[$field]);
+						unset($this->userdata->{$field});
 
 						continue;
 					}
 
-					$this->userdata[$field] = $filtered;
+					$this->userdata->{$field} = $filtered;
 				}
 			}
 
@@ -441,7 +454,7 @@
 
 			$values			= '';
 			$sql 			= 'REPLACE INTO `' . $this->tablename . '` (';
-			$virtual		= \array_merge($this->data, $this->userdata);
+			$virtual		= \array_merge($this->data, \get_object_vars($this->userdata));
 			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
 			$n 			= \sizeof($virtual);
 			$this->revalidate 	= true;
@@ -480,7 +493,8 @@
 		 */
 		public function delete()
 		{
-			$this->invalid_fields = $this->userdata = Array();
+			$this->invalid_fields 	= Array();
+			$this->userdata		= new \stdClass;
 
 			if($this->identifier === NULL)
 			{
