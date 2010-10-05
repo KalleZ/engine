@@ -34,6 +34,7 @@
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
+	require(TUXXEDO_LIBRARY . '/DevTools/functions_widget.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
@@ -95,11 +96,21 @@
 	$registry->set('options', (object) $cache->options);
 
 	$engine_version = Version::FULL;
+	$widget_hook	= false;
 
-	if(($widget_panel = $style->getSidebarWidget()) !== false)
+	if(($widget_panel = $style->getSidebarWidget($widget_hook)) !== false)
 	{
-		eval('$widget = "' . $widget_panel . '";');
+		if($widget_hook)
+		{
+			$widget = $widget_panel;
+		}
+		else
+		{
+			eval('$widget = "' . $widget_panel . '";');
+		}
 	}
+
+	unset($widget_hook);
 
 	eval('$header = "' . $style->fetch('header') . '";');
 	eval('$footer = "' . $style->fetch('footer') . '";');
