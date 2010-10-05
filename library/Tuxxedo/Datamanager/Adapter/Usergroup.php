@@ -32,9 +32,10 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Registry;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Datamanager\Hooks;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
 
 
 	/**
@@ -51,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Usergroup extends Adapter implements APICache
+	class Usergroup extends Adapter implements Hooks\Cache
 	{
 		/**
 		 * Fields for validation of usergroups

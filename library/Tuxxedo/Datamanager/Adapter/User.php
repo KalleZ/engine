@@ -32,9 +32,9 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Registry;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
 
 
 	/**
@@ -51,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class User extends Adapter implements APICache
+	class User extends Adapter
 	{
 		/**
 		 * Fields for validation of users

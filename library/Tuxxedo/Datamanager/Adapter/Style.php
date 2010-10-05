@@ -32,10 +32,10 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Registry;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Datamanager\Adapter;
-
+	use Tuxxedo\Datamanager\Hooks;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
 
 	/**
 	 * Include check
@@ -51,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Style extends Adapter implements APICache
+	class Style extends Adapter implements Hooks\Cache
 	{
 		/**
 		 * Fields for validation of styles

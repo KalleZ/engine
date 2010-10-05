@@ -5,7 +5,9 @@
 	Tuxxedo Engine 1.0.1
 	------------------------------------------------
 
-	Changed datamanager adapters to internally use the new initializer method (Kalle)
+	Changed the datamanager adapters to internally use the new initializer method (Kalle)
+	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
+
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 
 

@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Filter;
 	use Tuxxedo\InfoAccess;
@@ -475,7 +476,7 @@
 				return(false);
 			}
 
-			if($this instanceof Datamanager\APICache)
+			if($this instanceof Hooks\Cache)
 			{
 				return($this->rebuild($this->registry, $virtual));
 			}
