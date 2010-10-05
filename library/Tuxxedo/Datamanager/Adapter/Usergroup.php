@@ -91,12 +91,9 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 	= $registry;
-
 			$this->dmname		= 'usergroup';
 			$this->tablename	= \TUXXEDO_PREFIX . 'usergroups';
 			$this->idname		= 'id';
-			$this->information	= &$this->userdata;
 
 			if($identifier !== NULL)
 			{
@@ -118,6 +115,8 @@
 
 				$usergroup->free();
 			}
+
+			parent::init($registry);
 		}
 
 		/**

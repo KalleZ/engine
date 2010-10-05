@@ -5,6 +5,7 @@
 	Tuxxedo Engine 1.0.1
 	------------------------------------------------
 
+	Changed datamanager adapters to internally use the new initializer method (Kalle)
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 
 

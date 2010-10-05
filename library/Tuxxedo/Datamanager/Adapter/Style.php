@@ -93,12 +93,9 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 	= $registry;
-
 			$this->dmname		= 'style';
 			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
-			$this->idname		= 'id';
-			$this->information	= &$this->userdata;
+			$this->idname		= 'id';'
 
 			if($identifier !== NULL)
 			{
@@ -121,6 +118,8 @@
 
 				$style->free();
 			}
+
+			parent::init($registry);
 		}
 
 		/**

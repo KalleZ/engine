@@ -91,13 +91,12 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL)
 		{
-			$this->registry 	= $registry;
-
 			$this->dmname		= 'session';
 			$this->tablename	= \TUXXEDO_PREFIX . 'sessions';
 			$this->idname		= 'sessionid';
-			$this->information	= &$this->userdata;
 			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;
+
+			parent::init($registry);
 		}
 	}
 ?>
