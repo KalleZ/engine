@@ -602,9 +602,16 @@
 	 */
 	function page($template)
 	{
+		$registry = Registry::init();
+
+		if(!$registry->style)
+		{
+			return('');
+		}
+
 		return(
 			'global $header, $footer;' . 
-			'echo("' . Registry::init()->style->fetch($template) . '");'
+			'echo("' . $registry->style->fetch($template) . '");'
 			);
 	}
 
