@@ -56,7 +56,7 @@
 	 	 *
 		 * @var		string
 		 */
-		const SIMPLE			= '1.0.0';
+		const SIMPLE			= '1.0.1';
 
 		/**
 		 * Major version number
@@ -93,7 +93,7 @@
 		 *
 		 * @var		integer
 		 */
-		const ID			= 10000;
+		const ID			= 10001;
 
 		/**
 		 * Development preview mode, this is set to true if this is a development 
