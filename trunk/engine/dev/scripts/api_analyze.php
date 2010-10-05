@@ -42,6 +42,8 @@
 		$context 		= new stdClass;
 		$context->current 	= false;
 		$context->modifiers	= 0;
+		$context->depth_check	= false;
+		$context->depth		= 0;
 
 		$datamap[$file]		= Array(
 						'namespaces'	=> Array(), 
@@ -56,10 +58,7 @@
 
 		foreach($tokens as $index => $token)
 		{
-			if(!is_array($token))
-			{
-				continue;
-			}
+			$token = (is_array($token) ? $token : Array($token));
 
 			switch($token[0])
 			{
@@ -129,6 +128,7 @@
 															)
 											);
 
+					$context->depth_check			= true;
 					$context->modifiers			= 0;
 
 					printf('%s (%s) %s<br />', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata']));
@@ -168,6 +168,7 @@
 																						)
 																		);
 
+						$context->depth_check									= !($context->modifiers & ACC_ABSTRACT);
 						$context->modifiers									= 0;
 						$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
 
@@ -258,52 +259,69 @@
 				break;
 				case(T_PUBLIC):
 				{
-					$context->modifiers |= ACC_PUBLIC;
+					if(!$context->depth_check)
+					{
+						$context->modifiers |= ACC_PUBLIC;
+					}
 				}
 				break;
 				case(T_PROTECTED):
 				{
-					$context->modifiers |= ACC_PROTECTED;
+					if(!$context->depth_check)
+					{
+						$context->modifiers |= ACC_PROTECTED;
+					}
 				}
 				break;
 				case(T_PRIVATE):
 				{
-					$context->modifiers |= ACC_PRIVATE;
+					if(!$context->depth_check)
+					{
+						$context->modifiers |= ACC_PRIVATE;
+					}
 				}
 				break;
 				case(T_ABSTRACT):
 				{
-					$context->modifiers |= ACC_ABSTRACT;
+					if(!$context->depth_check)
+					{
+						$context->modifiers |= ACC_ABSTRACT;
+					}
 				}
 				break;
 				case(T_FINAL):
 				{
-					$context->modifiers |= ACC_FINAL;
+					if(!$context->depth_check)
+					{
+						$context->modifiers |= ACC_FINAL;
+					}
 				}
 				break;
 				case(T_STATIC):
 				{
-					$context->modifiers |= ACC_STATIC;
+					if(!$context->depth_check)
+					{
+						$context->modifiers |= ACC_STATIC;
+					}
+				}
+				break;
+				case('{'):
+				{
+					if($context->depth_check)
+					{
+						++$context->depth_check;
+					}
+				}
+				break;
+				case('}'):
+				{
+					if($context->depth_check && --$context->depth)
+					{
+						$context->depth_check = false;
+					}
 				}
 				break;
 			}
-		}
-
-		foreach(array_keys($datamap[$file]) as $element)
-		{
-			if(sizeof($datamap[$file][$element]))
-			{
-				$note = true;
-
-				break;
-			}
-		}
-
-		if(isset($note))
-		{
-			print('<em>No functional code found within this file</em>');
-
-			unset($note);
 		}
 	}
 

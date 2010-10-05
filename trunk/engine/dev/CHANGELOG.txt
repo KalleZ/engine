@@ -1,0 +1,15 @@
+
+
+
+
+	Tuxxedo Engine 1.0.1
+	------------------------------------------------
+
+	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
+
+
+
+	Tuxxedo Engine 1.0.0
+	------------------------------------------------
+
+	Initial release

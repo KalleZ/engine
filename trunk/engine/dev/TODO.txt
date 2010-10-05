@@ -16,6 +16,3 @@
 	User API
 	 - Implement the permission datamanager
 	 - Implement permission constants for cached permission fields
-
-	Development utilities
-	 - Fix api_analyze.php setting some methods and functions to static if the previous method had static variables
