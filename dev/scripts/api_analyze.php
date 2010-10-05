@@ -259,42 +259,27 @@
 				break;
 				case(T_PUBLIC):
 				{
-					if(!$context->depth_check)
-					{
-						$context->modifiers |= ACC_PUBLIC;
-					}
+					$context->modifiers |= ACC_PUBLIC;
 				}
 				break;
 				case(T_PROTECTED):
 				{
-					if(!$context->depth_check)
-					{
-						$context->modifiers |= ACC_PROTECTED;
-					}
+					$context->modifiers |= ACC_PROTECTED;
 				}
 				break;
 				case(T_PRIVATE):
 				{
-					if(!$context->depth_check)
-					{
-						$context->modifiers |= ACC_PRIVATE;
-					}
+					$context->modifiers |= ACC_PRIVATE;
 				}
 				break;
 				case(T_ABSTRACT):
 				{
-					if(!$context->depth_check)
-					{
-						$context->modifiers |= ACC_ABSTRACT;
-					}
+					$context->modifiers |= ACC_ABSTRACT;
 				}
 				break;
 				case(T_FINAL):
 				{
-					if(!$context->depth_check)
-					{
-						$context->modifiers |= ACC_FINAL;
-					}
+					$context->modifiers |= ACC_FINAL;
 				}
 				break;
 				case(T_STATIC):
