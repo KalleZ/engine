@@ -484,7 +484,7 @@
 
 				if($char < 26 && \mt_rand(0, 100) % 2 !== 0)
 				{
-					$salt .= $sant_range{\strtoupper($char)};
+					$salt .= $salt_range{\strtoupper($char)};
 				}
 				else
 				{
