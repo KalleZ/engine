@@ -480,15 +480,15 @@
 
 			for($char = 0; $char < $length; ++$char)
 			{
-				$char = \mt_rand(0, 49);
+				$c = \mt_rand(0, 49);
 
-				if($char < 26 && \mt_rand(0, 100) % 2 !== 0)
+				if($c < 26 && \mt_rand(0, 1))
 				{
-					$salt .= $salt_range{\strtoupper($char)};
+					$salt .= \strtoupper($salt_range{$c});
 				}
 				else
 				{
-					$salt .= $salt_range{$char};
+					$salt .= $salt_range{$c};
 				}
 			}
 
