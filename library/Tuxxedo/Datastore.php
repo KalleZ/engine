@@ -250,7 +250,7 @@
 		 */
 		protected function filter($element)
 		{
-			return(isset($this->cache[$element]));
+			return(!isset($this->cache[$element]));
 		}
 	}
 ?>
