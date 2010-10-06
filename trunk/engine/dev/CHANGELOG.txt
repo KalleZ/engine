@@ -10,6 +10,7 @@
 	Changed CSRF tokens to be SHA1 hashed rather than MD5 hashed (Kalle)
 	Changed the random string generator to be more variable (Kalle)
 	Changed the debugging backtraces to not Engine backtrace caller (Kalle)
+	Changed the datastore to skip attempting to reload elements if cache is called twice (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)

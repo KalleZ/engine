@@ -186,6 +186,8 @@
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
+			$elements = \array_filter($elements, Array($this, 'filter'));
+
 			if(!$elements)
 			{
 				return(false);
@@ -238,6 +240,17 @@
 			}
 
 			return(true);
+		}
+
+		/**
+		 * Filters out already loaded elements in the datastore
+		 *
+		 * @param	string				The datastore element to check
+		 * @return	boolean				Returns true if the element not is loaded, otherwise false
+		 */
+		protected function filter($element)
+		{
+			return(isset($this->cache[$element]));
 		}
 	}
 ?>
