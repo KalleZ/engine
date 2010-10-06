@@ -179,7 +179,7 @@
 			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . PHP_EOL . 
 			'<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . PHP_EOL . 
 			'<head>' . PHP_EOL . 
-			'<title>Tuxxedo Software Engine Error</title>' . PHP_EOL . 
+			'<title>Tuxxedo Engine Error</title>' . PHP_EOL . 
 			'<style type="text/css">' . PHP_EOL . 
 			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
 			'h1 { color: #FFFFFF; }' . PHP_EOL . 
