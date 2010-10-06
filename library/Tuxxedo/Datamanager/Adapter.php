@@ -221,7 +221,7 @@
 		final protected function init(Registry $registry)
 		{
 			$this->registry	= $registry;
-			$this->userdata	= new \stdClass;
+			$this->userdata	= $this->information = new \stdClass;
 		}
 
 		/**
