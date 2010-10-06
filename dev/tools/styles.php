@@ -16,6 +16,13 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Filter;
+	use Tuxxedo\Datamanager;
+
+
+	/**
 	 * Global templates
 	 */
 	$templates 		= Array(
@@ -33,6 +40,13 @@
 					);
 
 	/**
+	 * Precache datastore elements
+	 */
+	$precache 		= Array(
+					'styleinfo'
+					);
+
+	/**
 	 * Set script name
 	 */
 	define('SCRIPT_NAME', 'styles');
@@ -41,6 +55,17 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
+
+
+	if(($styleid = $filter->get('style', Filter::TYPE_NUMERIC)))
+	{
+		if(!isset($cache->styleinfo[$styleid]))
+		{
+			tuxxedo_error('Invalid style id');
+		}
+
+		$styledm = Datamanager\Adapter::factory('style', $styleid, false);
+	}
 
 	switch(strtolower($filter->get('do')))
 	{

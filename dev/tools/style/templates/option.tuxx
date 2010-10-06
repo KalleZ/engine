@@ -1,1 +1,1 @@
-<option value=\"{$value}\">{$name}</option>
+<option value=\"{$value}\"" . ((isset($selected) && $selected) ? (" selected=\"selected\"") : '') . ">{$name}</option>
