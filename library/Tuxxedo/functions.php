@@ -367,7 +367,7 @@
 					'<div class="inner">' . PHP_EOL . 
 					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
-					'<td>&nbsp;</td>' . PHP_EOL . 
+					'<td width="10">&nbsp;</td>' . PHP_EOL . 
 					'<td class="strong">SQL</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
