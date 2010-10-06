@@ -234,7 +234,7 @@
 			echo(
 				'<tr>' . PHP_EOL . 
 				'<td nowrap="nowrap">Engine Version:</td>' . PHP_EOL . 
-				'<td class="value" width="100%">' . Version::SIMPLE . '</td>' . PHP_EOL . 
+				'<td class="value" width="100%">' . Version::FULL . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL .  
 				'<tr>' . PHP_EOL . 
 				'<td>Script:</td>' . PHP_EOL . 

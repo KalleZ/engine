@@ -109,7 +109,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Alpha';
+		const PREVIEW_TYPE		= 'Experimental';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -137,6 +137,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.1 Alpha 1';
+		const FULL			= '1.0.1 Experimental';
 	}
 ?>
