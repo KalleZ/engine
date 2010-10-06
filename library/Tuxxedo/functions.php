@@ -186,12 +186,12 @@
 			'table tr.head td { background-color: #D2D2D2; padding: 5px; }' . PHP_EOL . 
 			'table tr.row, table tr.row * { margin: 0px; padding: 5px; }' . PHP_EOL . 
 			'table tr.strong * { font-weight: bold; }' . PHP_EOL . 
-			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
-			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; -moz-border-radius: 4px; }' . PHP_EOL . 
+			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; -moz-border-radius: 4px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
-			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; -moz-border-radius: 4px; }' . PHP_EOL . 
 			'.infobox td { padding-right: 5px; }' . PHP_EOL . 
-			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; -moz-border-radius: 4px; }' . PHP_EOL . 
 			'.spacer { margin-bottom: 10px; }' . PHP_EOL . 
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
