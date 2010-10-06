@@ -95,7 +95,7 @@
 		{
 			$this->dmname		= 'style';
 			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
-			$this->idname		= 'id';'
+			$this->idname		= 'id';
 
 			if($identifier !== NULL)
 			{
