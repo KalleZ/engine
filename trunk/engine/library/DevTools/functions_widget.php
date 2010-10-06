@@ -18,6 +18,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Style;
+	use Tuxxedo\Filter;
 	use Tuxxedo\Registry;
 
 
@@ -31,17 +32,23 @@
 	 */
 	function widget_hook_styles(Style $style, Registry $registry, $widget)
 	{
-		$registry->cache->cache(Array('styleinfo'));
+		$registry->cache->cache(Array('options', 'styleinfo'));
+		$registry->set('options', (object) $registry->cache->options);
+
 		$style->cache(Array('option', $widget));
 
-		$buffer = '';
+		$buffer 	= '';
+		$styleid	= $registry->filter->get('style', Filter::TYPE_NUMERIC);
 
 		foreach($registry->cache->styleinfo as $value => $info)
 		{
-			$name = $info['name'];
+			$name 		= $info['name'];
+			$selected	= ($styleid == $value);
 
 			eval('$buffer .= "' . $style->fetch('option') . '";');
 		}
+
+		$default = ($styleid == $registry->options->style_id);
 
 		eval('$buffer = "' . $style->fetch($widget) . '";');
 		return($buffer);

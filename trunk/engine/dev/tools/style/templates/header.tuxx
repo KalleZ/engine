@@ -105,7 +105,7 @@
 
 		function engine_styles_change(select)
 		{
-			this.location = './styles.php?style=' + select.options[select.selectedIndex].value;
+			this.location = './styles.php?style=' + select.options[select.selectedIndex].value + '&do=style&action=edit';
 		}
 		</script>
 
@@ -123,6 +123,18 @@
 			{
 				text-decoration:		underline;
 			}
+			a.redlink
+			{
+				color:				#CC0000;
+			}
+				a.redlink:hover
+				{
+					background-color:		#CC0000;
+					border-radius:			4px;
+					color:				#FFFFFF;
+
+					-moz-border-radius:		4px;
+				}
 		body
 		{
 			background-color:		#021420;

@@ -7,3 +7,39 @@
 
 	<input type=\"button\" onclick=\"engine_styles_change(document.getElementById('style_list'));\" value=\"Select\" />
 </div>
+
+<div class=\"box\">
+	<h4>Tasks</h4>
+" . ((isset($styleid)) ? ("
+	<p>
+		Pick a task below to alter this style and 
+		its templates.
+	</p>
+
+	<ul>
+		<li><a href=\"./styles.php?style={$styleid}&do=style&action=delete\">Edit style info</a></li>
+		<li><a href=\"./styles.php?style={$styleid}&do=templates&action=add\">Add template</a></li>
+		<li><a href=\"./styles.php?style={$styleid}&do=templates&action=list\">Manage templates</a></li>
+		<li><a href=\"./styles.php?style={$styleid}&do=templates&action=search\">Search in templates</a></li>
+	</ul>
+
+" . ((!$default) ? ("
+	<br />
+
+	<ul>
+		<li><a href=\"./styles.php?style={$styleid}&do=style&action=delete\" class=\"redlink\">Delete this style</a></li>
+	</ul>
+") : '') . "
+") : ("
+	<p>
+		Styles are one of the core and most central piece of Engine. Styles 
+		are used everywhere, whether its an error message sent to the user 
+		or the actual application. Use this tool to manage styles and their 
+		templates.
+	</p>
+
+	<ul>
+		<li><a href=\"./styles.php?do=style&action=add\">Add new style</a></li>
+	</ul>
+")) . "
+</div>
