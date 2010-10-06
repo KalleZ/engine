@@ -32,9 +32,6 @@
 	 */
 	function widget_hook_styles(Style $style, Registry $registry, $widget)
 	{
-		$registry->cache->cache(Array('options', 'styleinfo'));
-		$registry->set('options', (object) $registry->cache->options);
-
 		$style->cache(Array('option', $widget));
 
 		$buffer 	= '';

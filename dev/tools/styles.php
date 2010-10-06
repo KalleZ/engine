@@ -18,8 +18,9 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Filter;
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Exception;
+	use Tuxxedo\Filter;
 
 
 	/**
@@ -33,16 +34,13 @@
 	 * Action templates
 	 */
 	$action_templates	= Array(
-					'statistics'	=> Array(
-									'tools_statistics', 
-									'tools_statistics_itembit'
-									)
 					);
 
 	/**
 	 * Precache datastore elements
 	 */
 	$precache 		= Array(
+					'options', 
 					'styleinfo'
 					);
 
@@ -69,18 +67,40 @@
 
 	switch(strtolower($filter->get('do')))
 	{
-		case('password'):
+		case('style'):
 		{
-			if(isset($_POST['submit']) && ($password = $filter->post('keyword')) !== false && !empty($password) && ($chars = $filter->post('characters')) % 8 === 0)
+			switch(strtolower($filter->get('action')))
 			{
-				$salt 		= htmlspecialchars(\Tuxxedo\User::getPasswordSalt($chars));
-				$hash 		= \Tuxxedo\User::getPasswordHash($password, $salt);
-				$password	= htmlspecialchars($password);
-
-				eval('$results = "' . $style->fetch('tools_password_result') . '";');
+				case('add'):
+				case('edit'):
+				case('delete'):
+				{
+					throw new Exception\Core('Style handlers not implemented');
+				}
+				break;
+				default:
+				{
+					tuxxedo_error('Invalid style action');
+				}
 			}
-
-			eval(page('tools_password'));
+		}
+		break;
+		case('templates'):
+		{
+			switch(strtolower($filter->get('action')))
+			{
+				case('add'):
+				case('edit'):
+				case('delete'):
+				{
+					throw new Exception\Core('Template handlers not implemented');
+				}
+				break;
+				default:
+				{
+					tuxxedo_error('Invalid template action');
+				}
+			}
 		}
 		break;
 		default:
