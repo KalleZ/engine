@@ -56,7 +56,7 @@
 	 	 *
 		 * @var		string
 		 */
-		const SIMPLE			= '1.0.1';
+		const SIMPLE			= '1.1.0';
 
 		/**
 		 * Major version number
@@ -70,14 +70,14 @@
 		 *
 		 * @var		integer
 		 */
-		const MINOR			= 0;
+		const MINOR			= 1;
 
 		/**
 		 * Release version number
 		 *
 		 * @var		integer
 		 */
-		const RELEASE			= 1;
+		const RELEASE			= 0;
 
 		/**
 		 * Engine version ID, this contains the version id in the form 
@@ -93,7 +93,7 @@
 		 *
 		 * @var		integer
 		 */
-		const ID			= 10001;
+		const ID			= 10100;
 
 		/**
 		 * Development preview mode, this is set to true if this is a development 
@@ -137,6 +137,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.0.1 Experimental';
+		const FULL			= '1.1.0 Experimental';
 	}
 ?>
