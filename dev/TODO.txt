@@ -22,3 +22,4 @@
 
 	Branch tags/engine/1_0_0 to branches/engine/1_0
 	Backport non API breaking bug fixes to the 1_0 branch
+	Fix the .sql file missing in non dev releases

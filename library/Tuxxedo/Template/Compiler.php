@@ -101,6 +101,13 @@
 		protected $compiled_source;
 
 		/**
+		 * Error reporting buffer
+		 *
+		 * @var		integer
+		 */
+		protected $error_reporting;
+
+		/**
 		 * Compiler options bitmask
 		 *
 		 * @var		integer
@@ -555,7 +562,7 @@
 				return;
 			}
 
-			$er = \error_reporting(\error_reporting() & ~E_NOTICE);
+			$this->error_reporting = \error_reporting(\error_reporting() & ~E_NOTICE);
 
 			if($this->classes || $this->closures)
 			{
@@ -570,7 +577,7 @@
 				unset($name);
 			}
 
-			return(@eval('$test = "' . $this->compiled_source . '"; return(true);') === true);
+			return(@eval('$test = "' . $this->compiled_source . '"; \error_reporting($this->error_reporting); return(true);') === true);
 		}
 	}
 ?>

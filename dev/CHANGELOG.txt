@@ -16,6 +16,7 @@
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
 	Fixed namespace alias rules in functions.php and functions_options.php to inherit the 'Exception' namespace (Kalle)
 	Fixed rounded corners on tuxxedo_doc_error()'s using Gecko based browsers (Kalle)
+	Fixed error_reporting not being reset when testing compiled templates (Kalle)
 
 
 
