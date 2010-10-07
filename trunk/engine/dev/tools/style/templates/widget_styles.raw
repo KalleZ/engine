@@ -1,11 +1,13 @@
 <div class="box">
 	<h4>Styles</h4>
 
-	<select onchange="engine_styles_change(this);" id="style_list">
-		{$buffer}
-	</select>
+	<div class="center">
+		<select onchange="engine_styles_change(this);" id="style_list">
+			{$buffer}
+		</select>
 
-	<input type="button" onclick="engine_styles_change(document.getElementById('style_list'));" value="Select" />
+		<input type="button" onclick="engine_styles_change(document.getElementById('style_list'));" value="Select" />
+	</div>
 </div>
 
 <div class="box">

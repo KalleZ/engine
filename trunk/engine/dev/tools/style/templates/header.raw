@@ -45,7 +45,7 @@
 				break;
 				case('integer'):
 				{
-					document.getElementById(canvas).innerHTML = '<input type="text" id="optvalue" name="value" />';
+					document.getElementById(canvas).innerHTML = '<input type="text" id="optvalue" name="value" size="32" />';
 				}
 				break;
 				case('boolean'):
@@ -164,6 +164,10 @@
 				border-radius:			4px;
 				color:				#FFFFFF;
 			}
+		label
+		{
+			cursor:				pointer;
+		}
 		p.spacer
 		{
 			margin-bottom:			10px;
@@ -274,6 +278,11 @@
 			.panel a
 			{
 				text-decoration:		underline;
+			}
+			.panel div.center
+			{
+				margin:				15px auto;
+				width:				140px;
 			}
 			.panel h4
 			{

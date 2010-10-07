@@ -1,0 +1,40 @@
+{$header}
+
+<form action="./styles.php?<if expression="isset($styleid)">&style={$styleid}&do=style&action=edit<else />&do=style&action=add</if>" method="post">
+<div class="box">
+	<h4><if expression="$action == 'edit'">Edit<else />Add</if> style</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td style="width: 20%;">
+				Name</td>
+			<td>
+				<input type="text" name="name" size="32" value="<if expression="$action == 'edit'">{$styledata['name']}</if>" /></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Developer</td>
+			<td>
+				<input type="text" name="developer" size="32" value="<if expression="$action == 'edit'">{$styledata['developer']}</if>" /></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Style directory</td>
+			<td>
+				<input type="text" name="styledir" size="32" value="<if expression="$action == 'edit'">{$styledata['styledir']}</if>" /></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Set this style as default?</td>
+			<td>
+				<label><input type="checkbox" name="default" value="1"<if expression="$action == 'edit' && $styledata['default']"> checked="checked"</if> /> Yes</label></td>
+		</tr>
+	</table>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="<if expression="$action == 'edit'">Edit<else />Add</if>" />
+</div>
+</form>
+
+{$footer}
