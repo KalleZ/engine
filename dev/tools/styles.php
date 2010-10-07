@@ -34,6 +34,9 @@
 	 * Action templates
 	 */
 	$action_templates	= Array(
+					'style'		=> Array(
+									'styles_add_edit_form'
+									)
 					);
 
 	/**
@@ -62,17 +65,27 @@
 			tuxxedo_error('Invalid style id');
 		}
 
-		$styledm = Datamanager\Adapter::factory('style', $styleid, false);
+		$styledm 	= Datamanager\Adapter::factory('style', $styleid, false);
+		$styledata	= $styledm->get();
 	}
 
-	switch(strtolower($filter->get('do')))
+	switch($do = strtolower($filter->get('do')))
 	{
 		case('style'):
 		{
-			switch(strtolower($filter->get('action')))
+			switch($action = strtolower($filter->get('action')))
 			{
 				case('add'):
 				case('edit'):
+				{
+					if($action == 'add' && isset($styledm))
+					{
+						tuxxedo_header_redirect('./styles.php?do=style&action=add');
+					}
+
+					eval(page('styles_add_edit_form'));
+				}
+				break;
 				case('delete'):
 				{
 					throw new Exception\Core('Style handlers not implemented');
@@ -87,7 +100,7 @@
 		break;
 		case('templates'):
 		{
-			switch(strtolower($filter->get('action')))
+			switch($action = strtolower($filter->get('action')))
 			{
 				case('add'):
 				case('edit'):

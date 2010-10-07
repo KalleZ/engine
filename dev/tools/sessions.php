@@ -16,6 +16,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\User;
+
+
+	/**
 	 * Global templates
 	 */
 	$templates 		= Array(
@@ -102,13 +108,13 @@
 		{
 			$userlist = '';
 
-			$registry->set('user', new \Tuxxedo\User(false, false));
+			$registry->set('user', new User(false, false));
 
 			while($session = $sessions->fetchObject())
 			{
 				if($session->userid)
 				{
-					$userinfo 	= $user->getUserInfo($session->userid, 'id', Tuxxedo_User::OPT_CACHE);
+					$userinfo 	= $user->getUserInfo($session->userid, 'id', User::OPT_CACHE);
 					$usergroup	= $user->getUserGroupInfo($userinfo->usergroupid);
 					$usergroup	= $usergroup['title'];
 				}

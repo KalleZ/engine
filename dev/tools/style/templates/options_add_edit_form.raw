@@ -9,7 +9,7 @@
 			<td style="width: 20%;">
 				Name</td>
 			<td>
-				<input type="text" name="name" value="<if expression="$do == 'edit'">{$options['option']}</if>" /></td>
+				<input type="text" name="name" size="32" value="<if expression="$do == 'edit'">{$options['option']}</if>" /></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap">

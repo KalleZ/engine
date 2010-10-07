@@ -5,6 +5,9 @@
 	Tuxxedo Engine 1.0.1
 	------------------------------------------------
 
+	DevTools
+	 - Add styles & Templates support
+
 	Options
 	 - Implement the options datamanager
 	 - Change the options dev tool to work with the options datamanager
