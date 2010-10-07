@@ -34,12 +34,12 @@
 		{
 			$includes	= Array('require', 'require_once', 'include', 'include_once');
 			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
-			$fulltrace	= Array('tuxxedo_shutdown_handler');
 
 			$descriptions	= Array(
 						'tuxxedo_shutdown_handler'	=> 'Shutdown handler', 
 						'tuxxedo_exception_handler'	=> 'Exception handler', 
-						'tuxxedo_error_handler'		=> 'Error handler'
+						'tuxxedo_error_handler'		=> 'Error handler', 
+						'tuxxedo_multi_error'		=> 'Multi error, caused by left operand call'
 						);
 		}
 
