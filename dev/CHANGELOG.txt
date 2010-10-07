@@ -2,7 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.0.1
+	Tuxxedo Engine 1.1.0
 	------------------------------------------------
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)

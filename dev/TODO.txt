@@ -2,7 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.0.1
+	Tuxxedo Engine 1.1.0
 	------------------------------------------------
 
 	DevTools
@@ -15,3 +15,10 @@
 	User API
 	 - Implement the permission datamanager
 	 - Implement permission constants for cached permission fields
+
+
+	Tuxxedo Engine 1.0.1
+	------------------------------------------------
+
+	Branch tags/engine/1_0_0 to branches/engine/1_0
+	Backport non API breaking bug fixes to the 1_0 branch
