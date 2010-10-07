@@ -15,15 +15,6 @@
 	 */
 
 
-	/**
-	 * Emulation layer of the bootstrap.php in the includes 
-	 * root, this is to prevent corrupt datastores from 
-	 * stopping the execution.
-	 *
-	 * We must not use any sessions here, as it would cause 
-	 * the development tools to interfere with the main site.
-	 */
-
 	use DevTools\Style;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;

@@ -16,8 +16,9 @@
 
 
 	$engine_path		= realpath(__DIR__ . '/../../');
-	$files 			= analyze(new DirectoryIterator($engine_path));
+	$files 			= analyze($engine_path);
 	$datamap		= Array();
+	$missing_docblocks	= 0;
 
 	const ACC_PUBLIC	= 1;
 	const ACC_PROTECTED	= 2;
@@ -25,6 +26,7 @@
 	const ACC_ABSTRACT	= 8;
 	const ACC_FINAL		= 16;
 	const ACC_STATIC	= 32;
+	const ACC_DOCBLOCK	= 64;
 
 	echo('<h1>Lexical analyze of engine API</h1>');
 
@@ -44,6 +46,7 @@
 		$context->modifiers	= 0;
 		$context->depth_check	= false;
 		$context->depth		= 0;
+		$context->docblocks	= 0;
 
 		$datamap[$file]		= Array(
 						'namespaces'	=> Array(), 
@@ -59,7 +62,6 @@
 		foreach($tokens as $index => $token)
 		{
 			$token = (is_array($token) ? $token : Array($token));
-
 			switch($token[0])
 			{
 				case(T_NAMESPACE):
@@ -74,9 +76,20 @@
 						$name = '\\' . $name;
 					}
 
-					$datamap[$file]['namespaces'][] = $name;
+					$datamap[$file]['namespaces'][$name] 	= Array(
+											'metadata'	=> Array(
+															'docblock' => (boolean) ($context->modifiers & ACC_DOCBLOCK)
+															)
+											);
 
-					printf('NAMESPACE (%s)<br />', $name);
+					if(!($context->modifiers & ACC_DOCBLOCK))
+					{
+						++$missing_docblocks;
+					}
+
+					$context->modifiers			= 0;
+
+					printf('NAMESPACE (%s) %s<br />', $name, dump_metadata($datamap[$file]['namespaces'][$name]['metadata']));
 				}
 				break;
 				case(T_USE):
@@ -104,9 +117,11 @@
 						continue;
 					}
 
+					end($datamap[$file]['namespaces']);
+
 					$type					= ($token[0] == T_CLASS ? 'class' : 'interface');
 					$type_multiple				= ($token[0] == T_CLASS ? 'classes' : 'interfaces');
-					$name 					= resolve_namespace_alias(end($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $name);
+					$name 					= resolve_namespace_alias(key($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $name);
 
 					$context->current 			= $token[0];
 					$context->type				= $type;
@@ -119,14 +134,20 @@
 											'constants'	=> Array(), 
 											'properties'	=> Array(), 
 											'methods'	=> Array(), 
-											'namespace'	=> end($datamap[$file]['namespaces']), 
+											'namespace'	=> key($datamap[$file]['namespaces']), 
 											'extends'	=> $extends, 
 											'implements'	=> lexical_scan_extends_implements($tokens_copy, $index, T_IMPLEMENTS),  
 											'metadata'	=> Array(
 															'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
-															'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT)
+															'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
+															'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 															)
 											);
+
+					if(!($context->modifiers & ACC_DOCBLOCK))
+					{
+						++$missing_docblocks;
+					}
 
 					$context->depth_check			= true;
 					$context->modifiers			= 0;
@@ -164,9 +185,15 @@
 																						'public'	=> (boolean) ($context->modifiers & ACC_PUBLIC), 
 																						'protected'	=> (boolean) ($context->modifiers & ACC_PROTECTED), 
 																						'private'	=> (boolean) ($context->modifiers & ACC_PRIVATE), 
-																						'static'	=> (boolean) ($context->modifiers & ACC_STATIC)
+																						'static'	=> (boolean) ($context->modifiers & ACC_STATIC), 
+																						'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																						)
 																		);
+
+						if(!($context->modifiers & ACC_DOCBLOCK))
+						{
+							++$missing_docblocks;
+						}
 
 						$context->depth_check									= !($context->modifiers & ACC_ABSTRACT);
 						$context->modifiers									= 0;
@@ -180,10 +207,21 @@
 					{
 						$datamap[$file]['functions'][] = Array(
 											'function'	=> $function, 
-											'namespace'	=> end($datamap[$file]['namespaces'])
+											'namespace'	=> end($datamap[$file]['namespaces']), 
+											'metadata'	=> Array(
+															'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
+															)
 											);
 
-						printf('FUNCTION (%s)<br />', $function);
+						if(!($context->modifiers & ACC_DOCBLOCK))
+						{
+							++$missing_docblocks;
+						}
+
+						$context->modifiers		= 0;
+						$metadata			= end($datamap[$file]['functions']);
+
+						printf('FUNCTION (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
 					}
 				}
 				break;
@@ -201,9 +239,21 @@
 							continue;
 						}
 
-						$datamap[$file]['constants'][] = $const = substr($const, 1, strlen($const) - 2);
+						$const 					= substr($const, 1, strlen($const) - 2);
+						$datamap[$file]['constants'][$const]	= Array(
+												'metadata'	=> Array(
+																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
+																)
+												);
 
-						printf('GLOBAL CONSTANT (%s)<br />', $const);
+						if(!($context->modifiers & ACC_DOCBLOCK))
+						{
+							++$missing_docblocks;
+						}
+
+						$context->modifiers			= 0;
+
+						printf('GLOBAL CONSTANT (%s) %s<br />', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata']));
 					}
 				}
 				break;
@@ -216,18 +266,40 @@
 
 					if($context->current !== false)
 					{
-						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] = Array(
+						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] 	= Array(
 																		'constant'	=> $const, 
-																		'namespace'	=> end($datamap[$file]['namespaces'])
+																		'namespace'	=> end($datamap[$file]['namespaces']), 
+																		'metadata'	=> Array(
+																						'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
+																						)
 																		);
 
-						printf('- CONSTANT (%s)<br />', $const);
+						if(!($context->modifiers & ACC_DOCBLOCK))
+						{
+							++$missing_docblocks;
+						}
+
+						$context->modifiers									= 0;
+						$metadata										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['constants']);
+
+						printf('- CONSTANT (%s) %s<br />', $const, dump_metadata($metadata['metadata']));
 					}
 					else
 					{
-						$datamap[$file]['constants'][] = $const;
+						$datamap[$file]['constants'][$const] 	= Array(
+												'metadata'	=> Array(
+																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
+																)
+												);
 
-						printf('GLOBAL CONSTANT (%s)<br />', $const);
+						if(!($context->modifiers & ACC_DOCBLOCK))
+						{
+							++$missing_docblocks;
+						}
+
+						$context->modifiers			= 0;
+
+						printf('GLOBAL CONSTANT (%s) %s<br />', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata']));
 					}
 				}
 				break;
@@ -247,9 +319,15 @@
 																					'public'	=> (boolean) ($context->modifiers & ACC_PUBLIC), 
 																					'protected'	=> (boolean) ($context->modifiers & ACC_PROTECTED), 
 																					'private'	=> (boolean) ($context->modifiers & ACC_PRIVATE), 
-																					'static'	=> (boolean) ($context->modifiers & ACC_STATIC)
+																					'static'	=> (boolean) ($context->modifiers & ACC_STATIC), 
+																					'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																					)
 																	);
+
+					if(!($context->modifiers & ACC_DOCBLOCK))
+					{
+						++$missing_docblocks;
+					}
 
 					$context->modifiers									= 0;
 					$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
@@ -280,6 +358,14 @@
 				case(T_FINAL):
 				{
 					$context->modifiers |= ACC_FINAL;
+				}
+				break;
+				case(T_DOC_COMMENT):
+				{
+					if(++$context->docblocks >= 2)
+					{
+						$context->modifiers |= ACC_DOCBLOCK;
+					}
 				}
 				break;
 				case(T_STATIC):
@@ -313,12 +399,17 @@
 	file_put_contents(__DIR__ . '/../api/dumps/serialized.dump', serialize($datamap));
 	file_put_contents(__DIR__ . '/../api/dumps/json.dump', json_encode($datamap));
 
+	echo('<h1>Status</h1>');
+	echo('<ul>');
+	echo('<li><strong>Elements WITHOUT a docblock:</strong> ' . $missing_docblocks . '</li>');
+	echo('</ul>');
 
-	function analyze(DirectoryIterator $iterator)
+
+	function analyze($path)
 	{
 		$files = $extra = Array();
 
-		$iterator->rewind();
+		$iterator = new DirectoryIterator($path);
 
 		foreach($iterator as $entry)
 		{
@@ -329,7 +420,7 @@
 
 			if($entry->isDir())
 			{
-				$extra = array_merge($extra, analyze(new DirectoryIterator($entry->getPathName())));
+				$extra = array_merge($extra, analyze($entry->getPathName()));
 			}
 			elseif(strtolower(pathinfo($path = $entry->getPathName(), PATHINFO_EXTENSION)) == 'php')
 			{
