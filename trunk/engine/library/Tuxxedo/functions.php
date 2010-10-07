@@ -525,7 +525,7 @@
 	 *
 	 * @param	string				The message to show to the user while redirecting
 	 * @param	string				The redirect location
-	 * @param	string				Redirect timeout in seconds
+	 * @param	integer				Redirect timeout in seconds
 	 * @return	void				No value is returned
 	 */
 	function tuxxedo_redirect($message, $location, $timeout = 3)
