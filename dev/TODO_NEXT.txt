@@ -8,11 +8,10 @@
 	 - Language
 	 - Phrase
 	 - Phrasegroup
-	 - Template
     
 	Improve development tools
 	 - Add internationalization support
-	 - Add user support
+	 - Add user and usergroups support
 	 - Add documenetation generator (eliminate /dev/api/ stuff)
 	 - Integrate api_analyze.php
 	 - Implement installation generators
