@@ -162,7 +162,7 @@
 	 * user session, note that the invoke method sets the 
 	 * cookie parameters and starts session itself here
 	 */
-	$registry->register('user', 'Tuxxedo\User');
+	$registry->register('user', '\Tuxxedo\User');
 
 	/**
 	 * Options and configuration references

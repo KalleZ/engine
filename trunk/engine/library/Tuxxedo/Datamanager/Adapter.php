@@ -476,6 +476,11 @@
 				return(false);
 			}
 
+			if(($new_id = $this->registry->db->getInsertId()) !== false && ($this->fields[$this->idname]['type'] & self::TYPE_PROTECTED) && empty($this->data[$this->idname]))
+			{
+				$this->data[$this->idname] = $new_id;
+			}
+
 			if($this instanceof Hooks\Cache)
 			{
 				return($this->rebuild($this->registry, $virtual));
