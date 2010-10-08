@@ -86,8 +86,41 @@
 					{
 						tuxxedo_error('Invalid style id');
 					}
+					elseif(isset($_POST['submit']))
+					{
+						if($action == 'edit' && !isset($_POST['default']) && sizeof($cache->styledata) < 2)
+						{
+							tuxxedo_error('Cannot disable default style when there only is one');
+						}
+						elseif($action == 'add')
+						{
+							$styledm = Datamanager\Adapter::factory('style', NULL, false);
+						}
 
-					eval(page('styles_add_edit_form'));
+						$styledm['name'] 	= $filter->post('name');
+						$styledm['developer']	= $filter->post('developer');
+						$styledm['styledir']	= $filter->post('styledir');
+						$styledm['default']	= $filter->post('default', Filter::TYPE_BOOLEAN);
+
+						$styledm->save();
+
+						if($styledm['default'])
+						{
+							$cached_options 		= (array) $options;
+							$cached_options['style_id']	= $styledm->get('id');
+
+							if($cache->rebuild('options', $cached_options, false) === false)
+							{
+								tuxxedo_error('Unable to rebuild the datastore');
+							}
+						}
+
+						tuxxedo_redirect('Saved style with success', './styles.php?style=' . $styledm->get('id') . '&do=style&action=edit');
+					}
+					else
+					{
+						eval(page('styles_add_edit_form'));
+					}
 				}
 				break;
 				case('delete'):
@@ -105,7 +138,6 @@
 
 					tuxxedo_redirect('Deleted style with success', './styles.php');
 				}
-				break;
 				default:
 				{
 					tuxxedo_error('Invalid style action');
@@ -120,6 +152,8 @@
 				case('add'):
 				case('edit'):
 				case('delete'):
+				case('list'):
+				case('search'):
 				{
 					throw new Exception\Core('Template handlers not implemented');
 				}

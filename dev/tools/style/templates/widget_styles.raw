@@ -19,7 +19,7 @@
 	</p>
 
 	<ul>
-		<li><a href="./styles.php?style={$styleid}&do=style&action=delete">Edit style info</a></li>
+		<li><a href="./styles.php?style={$styleid}&do=style&action=edit">Edit style info</a></li>
 		<li><a href="./styles.php?style={$styleid}&do=templates&action=add">Add template</a></li>
 		<li><a href="./styles.php?style={$styleid}&do=templates&action=list">Manage templates</a></li>
 		<li><a href="./styles.php?style={$styleid}&do=templates&action=search">Search in templates</a></li>
