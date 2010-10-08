@@ -108,7 +108,7 @@
 
 				if(!$usergroup || !$usergroup->getNumRows())
 				{
-					throw new Exception\Basic('Invalid usergroup id passed to datamanager');
+					throw new Exception\Exception('Invalid usergroup id passed to datamanager');
 				}
 
 				$this->data 		= $usergroup->fetchAssoc();

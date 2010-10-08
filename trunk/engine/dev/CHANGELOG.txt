@@ -15,6 +15,7 @@
 	Changed the datastore to skip attempting to reload elements if cache is called twice (Kalle)
 	Changed the datamanager adapters to fetch the new identifer when inserting a new id record (Kalle)
 	Changed the datamanager adapters to invalidate empty fields unless specified by the adapter (Kalle)
+	Changed datamanager adapters to throw standard exceptions instead of basic ones in case of an error (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)

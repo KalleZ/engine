@@ -45,7 +45,8 @@
 			eval('$buffer .= "' . $style->fetch('option') . '";');
 		}
 
-		$default = ($styleid == $registry->options->style_id);
+		$default 	= ($styleid == $registry->options->style_id);
+		$valid		= isset($registry->cache->styleinfo[$styleid]);
 
 		eval('$buffer = "' . $style->fetch($widget) . '";');
 		return($buffer);

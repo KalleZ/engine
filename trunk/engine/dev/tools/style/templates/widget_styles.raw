@@ -12,7 +12,7 @@
 
 <div class="box">
 	<h4>Tasks</h4>
-<if expression="isset($styleid)">
+<if expression="isset($styleid) && isset($valid) && $valid">
 	<p>
 		Pick a task below to alter this style and 
 		its templates.
