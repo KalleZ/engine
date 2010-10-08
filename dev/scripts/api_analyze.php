@@ -15,10 +15,260 @@
 	 */
 
 
-	$engine_path		= realpath(__DIR__ . '/../../');
-	$files 			= analyze($engine_path);
-	$datamap		= Array();
-	$missing_docblocks	= 0;
+	/**
+	 * Fetches all analyzable files into one huge array
+	 *
+	 * @param	string				The path to analyze from
+	 * @return	array				Returns an array with all the files that can be analyzed from the root directory
+	 */
+	function analyze($path)
+	{
+		$files = $extra = Array();
+
+		$iterator = new DirectoryIterator($path);
+
+		foreach($iterator as $entry)
+		{
+			if($entry->isDot())
+			{
+				continue;
+			}
+
+			if($entry->isDir())
+			{
+				$extra = array_merge($extra, analyze($entry->getPathName()));
+			}
+			elseif(strtolower(pathinfo($path = $entry->getPathName(), PATHINFO_EXTENSION)) == 'php')
+			{
+				$files[] = realpath($path);
+			}
+		}
+
+		$files = array_merge($files, $extra);
+
+		return($files);
+	}
+
+	/**
+	 * Dumps metadata for printf arguments
+	 *
+	 * @param	array				The meta data to dump
+	 * @return	string				Returns a string for printf
+	 */
+	function dump_metadata(Array $data)
+	{
+		$dump = '';
+
+		foreach($data as $parameter => $exists)
+		{
+			if($exists)
+			{
+				$dump .= $parameter . ', ';
+			}
+		}
+
+		return((empty($dump) ? '' : 'meta=' . rtrim($dump, ', ')));
+	}
+
+	/**
+	 * Resolves a class object to its full namespaced path
+	 *
+	 * @param	string				The root namespace, from the namespace declaration in the top of each file
+	 * @param	array				Array of aliases to use for the class object when attempting to resolve
+	 * @param	string				The class object
+	 * @return	string				Returns the resolved namespaced path to the class object
+	 */
+	function resolve_namespace_alias($root_ns, Array $aliases, $object)
+	{
+		if($aliases && $object{0} != '\\')
+		{
+			$ns = $object;
+
+			if(($pos = strrpos($object, '\\')) !== false)
+			{
+				$ns = substr($object, 0, $pos);
+			}
+
+			foreach($aliases as $alias)
+			{
+				if(($pos = strrpos($alias, $ns)) !== false)
+				{
+					return(substr_replace($alias, $ns, $pos));
+				}
+			}
+
+			if(isset($root_ns{strlen($root_ns) - 1}) && $root_ns{strlen($root_ns) - 1} != '\\')
+			{
+				return($root_ns . '\\' . $object);
+			}
+
+			return($root_ns . $object);
+		}
+
+		return($object);
+	}
+
+	/**
+	 * Finds the next lexical token index
+	 *
+	 * @param	array				The tokens copy array
+	 * @param	integer				The token start index
+	 * @param	integer|string			The token to find
+	 * @return	integer				Returns the token index found token, and false on failure
+	 */
+	function lexical_next_index(Array $tokens, $start_index, $token)
+	{
+		$inc = 0;
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data = $tokens[$start_index + $inc - 1];
+			$token_data = (is_array($token_data) ? $token_data[0] : $token_data);
+
+			if($token_data == $token)
+			{
+				return($start_index + $inc);
+			}
+		}
+
+		return(false);
+	}
+
+	function lexical_scan(Array $tokens, $start_index, $token)
+	{
+		$inc			= 0;
+		$searching_for_token 	= ((string)(integer) $token !== $token);
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$t = $tokens[$start_index + $inc - 1];
+
+			if(is_array($t) && $searching_for_token && $t[0] === $token)
+			{
+				return($t[1]);
+			}
+			elseif($t == $token)
+			{
+				return($start_index + $inc);
+			}
+		}
+
+		return(false);
+	}
+
+	function lexical_scan_concat(Array $tokens, $start_index, $token, $skip_whitespace = true)
+	{
+		$scanned 		= '';
+		$inc			= 0;
+		$searching_for_token 	= ((string)(integer) $token !== $token);
+
+		++$start_index;
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data 	= $tokens[$start_index + $inc - 1];
+			$token_array 	= isset($token_data[1]);
+
+			if($skip_whitespace && $token_array && $token_data[0] == T_WHITESPACE)
+			{
+				continue;
+			}
+			elseif($token_array && $searching_for_token && $token_data[0] === $token || $token_data == $token)
+			{
+				break;
+			}
+
+			$scanned .= (isset($token_data[1]) ? $token_data[1] : $token_data);
+		}
+
+		return($scanned);
+	}
+
+	function lexical_scan_separator(Array $tokens, $start_index, $separator, $token, $skip_whitespace = true)
+	{
+		$buffer			= '';
+		$scanned 		= Array();
+		$inc			= 0;
+		$searching_for_token 	= ((string)(integer) $token !== $token);
+
+		++$start_index;
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token_data 	= $tokens[$start_index + $inc - 1];
+			$token_array 	= isset($token_data[1]);
+
+			if($skip_whitespace && $token_array && $token_data[0] == T_WHITESPACE)
+			{
+				continue;
+			}
+			elseif($token_array && $searching_for_token && $token_data[0] === $token || $token_data == $token)
+			{
+				break;
+			}
+			elseif($token_array && $token_data[0] == $separator && !empty($buffer))
+			{
+				$scanned[] 	= $buffer;
+				$buffer		= '';
+
+				continue;
+			}
+
+			$buffer .= (isset($token_data[1]) ? $token_data[1] : $token_data);
+		}
+
+		if(!empty($buffer))
+		{
+			$scanned[] = $buffer;
+		}
+
+		return($scanned);
+	}
+
+	function lexical_scan_extends_implements(Array $tokens, $start_index, $start_token, Array $stop_tokens = Array('{'))
+	{
+		$inc 			= 0;
+		$buffer			= '';
+		$matched_tokens		= Array();
+		$start_index		= lexical_next_index($tokens, $start_index, $start_token);
+
+		if($start_index === false)
+		{
+			return(Array());
+		}
+
+		while(isset($tokens[$start_index + $inc++]))
+		{
+			$token 		= (is_array($tokens[$start_index + $inc - 1]) ? $tokens[$start_index + $inc - 1][0] : $tokens[$start_index + $inc - 1]);
+			$token_data	= (is_array($tokens[$start_index + $inc - 1]) ? $tokens[$start_index + $inc - 1][1] : $token);
+
+			if(in_array($token, $stop_tokens))
+			{
+				break;
+			}
+			elseif($token === T_WHITESPACE)
+			{
+				continue;
+			}
+			elseif($token == ',' && !empty($buffer))
+			{
+				$matched_tokens[] 	= $buffer;
+				$buffer			= '';
+			}
+			elseif($token == T_STRING || $token == T_NS_SEPARATOR)
+			{
+				$buffer .= $token_data;
+			}
+		}
+
+		if(!empty($buffer))
+		{
+			$matched_tokens[] = $buffer;
+		}
+
+		return($matched_tokens);
+	}
+
 
 	const ACC_PUBLIC	= 1;
 	const ACC_PROTECTED	= 2;
@@ -27,6 +277,13 @@
 	const ACC_FINAL		= 16;
 	const ACC_STATIC	= 32;
 	const ACC_DOCBLOCK	= 64;
+
+
+	$engine_path		= realpath(__DIR__ . '/../../');
+	$files 			= analyze($engine_path);
+	$datamap		= Array();
+	$missing_docblocks	= 0;
+
 
 	echo('<h1>Lexical analyze of engine API</h1>');
 
@@ -403,231 +660,4 @@
 	echo('<ul>');
 	echo('<li><strong>Elements WITHOUT a docblock:</strong> ' . $missing_docblocks . '</li>');
 	echo('</ul>');
-
-
-	function analyze($path)
-	{
-		$files = $extra = Array();
-
-		$iterator = new DirectoryIterator($path);
-
-		foreach($iterator as $entry)
-		{
-			if($entry->isDot())
-			{
-				continue;
-			}
-
-			if($entry->isDir())
-			{
-				$extra = array_merge($extra, analyze($entry->getPathName()));
-			}
-			elseif(strtolower(pathinfo($path = $entry->getPathName(), PATHINFO_EXTENSION)) == 'php')
-			{
-				$files[] = realpath($path);
-			}
-		}
-
-		$files = array_merge($files, $extra);
-
-		return($files);
-	}
-
-	function dump_metadata(Array $data)
-	{
-		$dump = '';
-
-		foreach($data as $parameter => $exists)
-		{
-			if($exists)
-			{
-				$dump .= $parameter . ', ';
-			}
-		}
-
-		return((empty($dump) ? '' : 'meta=' . rtrim($dump, ', ')));
-	}
-
-	function resolve_namespace_alias($root_ns, Array $aliases, $object)
-	{
-		if($aliases && $object{0} != '\\')
-		{
-			$ns = $object;
-
-			if(($pos = strrpos($object, '\\')) !== false)
-			{
-				$ns = substr($object, 0, $pos);
-			}
-
-			foreach($aliases as $alias)
-			{
-				if(($pos = strrpos($alias, $ns)) !== false)
-				{
-					return(substr_replace($alias, $ns, $pos));
-				}
-			}
-
-			if($root_ns{strlen($root_ns) - 1} != '\\')
-			{
-				return($root_ns . '\\' . $object);
-			}
-
-			return($root_ns . $object);
-		}
-
-		return($object);
-	}
-
-	function lexical_next_index(Array $tokens, $start_index, $token)
-	{
-		$inc = 0;
-
-		while(isset($tokens[$start_index + $inc++]))
-		{
-			$token_data = $tokens[$start_index + $inc - 1];
-			$token_data = (is_array($token_data) ? $token_data[0] : $token_data);
-
-			if($token_data == $token)
-			{
-				return($start_index + $inc);
-			}
-		}
-
-		return(false);
-	}
-
-	function lexical_scan(Array $tokens, $start_index, $token)
-	{
-		$inc			= 0;
-		$searching_for_token 	= ((string)(integer) $token !== $token);
-
-		while(isset($tokens[$start_index + $inc++]))
-		{
-			$t = $tokens[$start_index + $inc - 1];
-
-			if(is_array($t) && $searching_for_token && $t[0] === $token)
-			{
-				return($t[1]);
-			}
-			elseif($t == $token)
-			{
-				return($start_index + $inc);
-			}
-		}
-
-		return(false);
-	}
-
-	function lexical_scan_concat(Array $tokens, $start_index, $token, $skip_whitespace = true)
-	{
-		$scanned 		= '';
-		$inc			= 0;
-		$searching_for_token 	= ((string)(integer) $token !== $token);
-
-		++$start_index;
-
-		while(isset($tokens[$start_index + $inc++]))
-		{
-			$token_data 	= $tokens[$start_index + $inc - 1];
-			$token_array 	= isset($token_data[1]);
-
-			if($skip_whitespace && $token_array && $token_data[0] == T_WHITESPACE)
-			{
-				continue;
-			}
-			elseif($token_array && $searching_for_token && $token_data[0] === $token || $token_data == $token)
-			{
-				break;
-			}
-
-			$scanned .= (isset($token_data[1]) ? $token_data[1] : $token_data);
-		}
-
-		return($scanned);
-	}
-
-	function lexical_scan_separator(Array $tokens, $start_index, $separator, $token, $skip_whitespace = true)
-	{
-		$buffer			= '';
-		$scanned 		= Array();
-		$inc			= 0;
-		$searching_for_token 	= ((string)(integer) $token !== $token);
-
-		++$start_index;
-
-		while(isset($tokens[$start_index + $inc++]))
-		{
-			$token_data 	= $tokens[$start_index + $inc - 1];
-			$token_array 	= isset($token_data[1]);
-
-			if($skip_whitespace && $token_array && $token_data[0] == T_WHITESPACE)
-			{
-				continue;
-			}
-			elseif($token_array && $searching_for_token && $token_data[0] === $token || $token_data == $token)
-			{
-				break;
-			}
-			elseif($token_array && $token_data[0] == $separator && !empty($buffer))
-			{
-				$scanned[] 	= $buffer;
-				$buffer		= '';
-
-				continue;
-			}
-
-			$buffer .= (isset($token_data[1]) ? $token_data[1] : $token_data);
-		}
-
-		if(!empty($buffer))
-		{
-			$scanned[] = $buffer;
-		}
-
-		return($scanned);
-	}
-
-	function lexical_scan_extends_implements(Array $tokens, $start_index, $start_token, Array $stop_tokens = Array('{'))
-	{
-		$inc 			= 0;
-		$buffer			= '';
-		$matched_tokens		= Array();
-		$start_index		= lexical_next_index($tokens, $start_index, $start_token);
-
-		if($start_index === false)
-		{
-			return(Array());
-		}
-
-		while(isset($tokens[$start_index + $inc++]))
-		{
-			$token 		= (is_array($tokens[$start_index + $inc - 1]) ? $tokens[$start_index + $inc - 1][0] : $tokens[$start_index + $inc - 1]);
-			$token_data	= (is_array($tokens[$start_index + $inc - 1]) ? $tokens[$start_index + $inc - 1][1] : $token);
-
-			if(in_array($token, $stop_tokens))
-			{
-				break;
-			}
-			elseif($token === T_WHITESPACE)
-			{
-				continue;
-			}
-			elseif($token == ',' && !empty($buffer))
-			{
-				$matched_tokens[] 	= $buffer;
-				$buffer			= '';
-			}
-			elseif($token == T_STRING || $token == T_NS_SEPARATOR)
-			{
-				$buffer .= $token_data;
-			}
-		}
-
-		if(!empty($buffer))
-		{
-			$matched_tokens[] = $buffer;
-		}
-
-		return($matched_tokens);
-	}
 ?>
