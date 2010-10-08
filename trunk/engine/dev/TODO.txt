@@ -8,6 +8,8 @@
 	DevTools
 	 - Add styles & Templates support
 	   - Implement the template datamanager
+	   - Style handlers
+	     - When adding a new style, all the templates from the default style should be inherited
 	   - Template handlers
 	     - Add
 	     - Edit

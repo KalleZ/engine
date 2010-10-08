@@ -29,7 +29,7 @@
 	<br />
 
 	<ul>
-		<li><a href="./styles.php?style={$styleid}&do=style&action=delete" class="redlink">Delete this style</a></li>
+		<li><a href="./styles.php?style={$styleid}&do=style&action=delete" class="redlink" onclick="return(confirm('Are you sure you wish to delete this style? It cannot be undone'));">Delete this style</a></li>
 	</ul>
 </if>
 <else />
