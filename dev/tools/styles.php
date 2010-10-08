@@ -82,13 +82,28 @@
 					{
 						tuxxedo_header_redirect('./styles.php?do=style&action=add');
 					}
+					elseif($action == 'edit' && !isset($styledm))
+					{
+						tuxxedo_error('Invalid style id');
+					}
 
 					eval(page('styles_add_edit_form'));
 				}
 				break;
 				case('delete'):
 				{
-					throw new Exception\Core('Style handlers not implemented');
+					if(!isset($styledm))
+					{
+						tuxxedo_error('Invalid style id');
+					}
+					elseif($styledata['default'] || $styledata['id'] == $options->style_id)
+					{
+						tuxxedo_error('Cannot delete the default style');
+					}
+
+					$styledm->delete();
+
+					tuxxedo_redirect('Deleted style with success', './styles.php');
 				}
 				break;
 				default:
