@@ -15,12 +15,35 @@
 	 */
 
 
+	/**
+	 * Aliasing rules
+	 */
 	use DevTools\Style;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
+
+	/**
+	 * Set the debug mode constant
+	 *
+	 * @var		boolean
+	 */
 	define('TUXXEDO_DEBUG', 	true);
+
+	/**
+	 * Sets the path to where the root script is, if the 
+	 * constant CWD is defined before including this file, 
+	 * then it will be used as root dir
+	 *
+	 * @var		string
+	 */
 	define('TUXXEDO_DIR', 		'../..');
+
+	/**
+	 * Sets the library path
+	 *
+	 * @var		string
+	 */
 	define('TUXXEDO_LIBRARY', 	'../../library');
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
@@ -40,6 +63,11 @@
 		throw new Exception\Basic('A script name must be defined prior to use');
 	}
 
+	/**
+	 * Set database table prefix constant
+	 *
+	 * @var		string
+	 */
 	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
 
 	date_default_timezone_set('UTC');
@@ -62,7 +90,18 @@
 	$registry->set('datetime', new DateTime('now', $timezone));
 	$registry->set('style', new Style);
 
+	/**
+	 * Current time constant
+	 *
+	 * @var		integer
+	 */
 	define('TIMENOW', $datetime->getTimestamp());
+
+	/**
+	 * Set the UTC time constant
+	 *
+	 * @var		integer
+	 */
 	define('TIMENOW_UTC', TIMENOW);
 
 	if(isset($precache) && $precache)
