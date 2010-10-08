@@ -136,8 +136,15 @@
 			{
 				$datastore = Array();
 			}
-			
-			$datastore[(integer) $this->identifier] = $virtual;
+
+			if(!$virtual)
+			{
+				unset($datastore[(integer) $this->identifier]);
+			}
+			else
+			{
+				$datastore[(integer) $this->identifier] = $virtual;
+			}
 
 			return($this->registry->cache->rebuild('styleinfo', $datastore));
 		}
