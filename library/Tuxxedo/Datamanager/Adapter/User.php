@@ -145,7 +145,7 @@
 
 				if(!$user || !$user->getNumRows())
 				{
-					throw new Exception\Basic('Invalid user id');
+					throw new Exception\Exception('Invalid user id');
 				}
 
 				$this->data 					= $user->fetchAssoc();

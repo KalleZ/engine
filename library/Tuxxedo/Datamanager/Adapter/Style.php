@@ -110,7 +110,7 @@
 
 				if(!$style || !$style->getNumRows())
 				{
-					throw new Exception\Basic('Invalid style id passed to datamanager');
+					throw new Exception\Exception('Invalid style id passed to datamanager');
 				}
 
 				$this->data 		= $style->fetchAssoc();
