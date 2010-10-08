@@ -282,7 +282,7 @@
 			.panel div.center
 			{
 				margin:				15px auto;
-				width:				140px;
+				width:				150px;
 			}
 			.panel h4
 			{
