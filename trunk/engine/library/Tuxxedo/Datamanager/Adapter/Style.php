@@ -139,11 +139,11 @@
 
 			if(!$virtual)
 			{
-				unset($datastore[(integer) $this->identifier]);
+				unset($datastore[(integer) ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier)]);
 			}
 			else
 			{
-				$datastore[(integer) $this->identifier] = $virtual;
+				$datastore[(integer) $this->data[$this->idname]] = $virtual;
 			}
 
 			return($this->registry->cache->rebuild('styleinfo', $datastore));
