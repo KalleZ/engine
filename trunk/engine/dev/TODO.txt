@@ -7,7 +7,7 @@
 
 	DevTools
 	 - Add styles & Templates support
-	   - Fix caching of style data when adding and deleting styles
+	   - Fix caching of style data when adding styles
 
 	Options
 	 - Implement the options datamanager

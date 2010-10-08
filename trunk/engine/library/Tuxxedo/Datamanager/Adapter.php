@@ -390,7 +390,7 @@
 						continue;
 					}
 				}
-				elseif(($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}))
+				elseif($properties['type'] == self::FIELD_REQUIRED && ($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}))
 				{
 					$this->invalid_fields[] = $field;
 
@@ -518,6 +518,11 @@
 			if($this->identifier === NULL)
 			{
 				return(true);
+			}
+
+			if($this instanceof Hooks\Cache && !$this->rebuild($this->registry, Array()))
+			{
+				return(false);
 			}
 
 			return($this->registry->db->equery('

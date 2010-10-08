@@ -16,6 +16,7 @@
 	Changed the datamanager adapters to fetch the new identifer when inserting a new id record (Kalle)
 	Changed the datamanager adapters to invalidate empty fields unless specified by the adapter (Kalle)
 	Changed datamanager adapters to throw standard exceptions instead of basic ones in case of an error (Kalle)
+	Changed the datamanager deletion method to signal adapters with cache hooks to rebuild the datastore (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)

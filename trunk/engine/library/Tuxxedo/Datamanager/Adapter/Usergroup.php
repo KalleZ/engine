@@ -149,8 +149,15 @@
 			{
 				$datastore = Array();
 			}
-			
-			$datastore[(integer) $this->identifier] = $virtual;
+
+			if(!$virtual)
+			{
+				unset($datastore[(integer) $this->identifier]);
+			}
+			else
+			{
+				$datastore[(integer) $this->identifier] = $virtual;
+			}
 
 			return($registry->cache->rebuild('usergroups', $datastore));
 		}
