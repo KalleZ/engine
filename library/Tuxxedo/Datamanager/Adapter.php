@@ -476,7 +476,7 @@
 				return(false);
 			}
 
-			if(($new_id = $this->registry->db->getInsertId()) !== false && ($this->fields[$this->idname]['type'] & self::TYPE_PROTECTED) && empty($this->data[$this->idname]))
+			if(($new_id = $this->registry->db->getInsertId()) !== false && ($this->fields[$this->idname]['type'] & self::FIELD_PROTECTED) && empty($this->data[$this->idname]))
 			{
 				$this->data[$this->idname] = $new_id;
 			}
