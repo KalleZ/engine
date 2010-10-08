@@ -102,7 +102,14 @@
 						$styledm['styledir']	= $filter->post('styledir');
 						$styledm['default']	= $filter->post('default', Filter::TYPE_BOOLEAN);
 
-						$styledm->save();
+						try
+						{
+							$styledm->save();
+						}
+						catch(Exception\Formdata $e)
+						{
+							tuxxedo_error('One or more fields did not pass the validation, please go back and fix them (' . implode(', ', $e->getFields()) . ')');
+						}
 
 						if($styledm['default'])
 						{

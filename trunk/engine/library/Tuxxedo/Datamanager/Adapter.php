@@ -123,6 +123,13 @@
 		 */
 		const VALIDATE_OPT_ESCAPEHTML		= 0x001F;
 
+		/**
+	 	 * Validation option constant, allow empty fields
+		 *
+		 * @var		integer
+		 */
+		const VALIDATE_OPT_ALLOWEMPTY		= 0x002F;
+
 
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -382,6 +389,12 @@
 
 						continue;
 					}
+				}
+				elseif(($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}))
+				{
+					$this->invalid_fields[] = $field;
+
+					continue;
 				}
 				else
 				{
