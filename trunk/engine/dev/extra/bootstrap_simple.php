@@ -135,7 +135,13 @@
 	 * session handling
 	 */
 	date_default_timezone_set('UTC');
-	define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time());
+
+	/**
+	 * Set the UTC time constant
+	 *
+	 * @var		integer
+	 */
+	define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? (integer) $_SERVER['REQUEST_TIME'] : time());
 
 	/**
 	 * Set the configuration
@@ -150,6 +156,8 @@
 
 	/**
 	 * Current time constant
+	 *
+	 * @var		integer
 	 */
 	define('TIMENOW', $datetime->getTimestamp());
 ?>

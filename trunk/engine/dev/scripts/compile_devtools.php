@@ -15,11 +15,27 @@
 	 */
 
 
+	/**
+	 * Aliasing rules
+	 */
 	use Tuxxedo\Exception;
 	use Tuxxedo\Template;
 
+
+	/**
+	 * Template directory path
+	 *
+	 * @var		string
+	 */
 	define('TEMPLATE_DIR', 		'../tools/style/templates/');
+
+	/**
+	 * Sets the library path
+	 *
+	 * @var		string
+	 */
 	define('TUXXEDO_LIBRARY', 	'../../library');
+
 
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception/TemplateCompiler.php');

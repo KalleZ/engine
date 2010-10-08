@@ -134,6 +134,14 @@
 		return(false);
 	}
 
+	/**
+	 * Scans from the current pointer until the first match token match
+	 *
+	 * @param	array				The tokens copy array
+	 * @param	integer				The token start index
+	 * @param	integer|string			The token to find
+	 * @return	string				Returns the token content if found, otherwise false
+	 */
 	function lexical_scan(Array $tokens, $start_index, $token)
 	{
 		$inc			= 0;
@@ -156,6 +164,16 @@
 		return(false);
 	}
 
+
+	/**
+	 * Scans and concates the matched tokens into a string
+	 *
+	 * @param	array				The tokens copy array
+	 * @param	integer				The token start index
+	 * @param	integer|string			The stop token, when this is hit the scanner returns
+	 * @param	boolean				Whether to skip whitespace tokens or not
+	 * @return	string				Returns the concated string with the tokens between the current pointer and the stop token
+	 */
 	function lexical_scan_concat(Array $tokens, $start_index, $token, $skip_whitespace = true)
 	{
 		$scanned 		= '';
@@ -184,6 +202,16 @@
 		return($scanned);
 	}
 
+	/**
+	 * Scans a statement and breaks it into an array based on a separator token
+	 *
+	 * @param	array				The tokens copy array
+	 * @param	integer				The token start index
+	 * @param	integer|string			The separator token
+	 * @param	integer|string			The stop token, end of statement
+	 * @param	boolean				Whether to skip whitespace tokens or not
+	 * @return	array				Returns an array with each part as a new value, like explode() and empty array on failure
+	 */
 	function lexical_scan_separator(Array $tokens, $start_index, $separator, $token, $skip_whitespace = true)
 	{
 		$buffer			= '';
@@ -225,6 +253,15 @@
 		return($scanned);
 	}
 
+	/**
+	 * Lexical scan extend and implements tokens to find their childs
+	 *
+	 * @param	array				The tokens copy array
+	 * @param	integer				The token start index
+	 * @param	integer|string			The start token
+	 * @param	array				Stop tokens, if any of the tokens in this array is hit, the scanner will return
+	 * @return	array				Returns an array with the matched child parts
+	 */
 	function lexical_scan_extends_implements(Array $tokens, $start_index, $start_token, Array $stop_tokens = Array('{'))
 	{
 		$inc 			= 0;
@@ -270,12 +307,53 @@
 	}
 
 
+	/**
+	 * Access modifier constant - Public
+	 *
+	 * @var		integer
+	 */
 	const ACC_PUBLIC	= 1;
+
+	/**
+	 * Access modifier constant - Protected
+	 *
+	 * @var		integer
+	 */
 	const ACC_PROTECTED	= 2;
+
+	/**
+	 * Access modifier constant - Private
+	 *
+	 * @var		integer
+	 */
 	const ACC_PRIVATE	= 4;
+
+	/**
+	 * Access modifier constant - Abstract
+	 *
+	 * @var		integer
+	 */
 	const ACC_ABSTRACT	= 8;
+
+	/**
+	 * Access modifier constant - Final
+	 *
+	 * @var		integer
+	 */
 	const ACC_FINAL		= 16;
+
+	/**
+	 * Access modifier constant - Static
+	 *
+	 * @var		integer
+	 */
 	const ACC_STATIC	= 32;
+
+	/**
+	 * Access modifier constant - Docblock
+	 *
+	 * @var		integer
+	 */
 	const ACC_DOCBLOCK	= 64;
 
 
