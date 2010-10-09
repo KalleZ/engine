@@ -82,6 +82,13 @@
 		const FIELD_PROTECTED			= 3;
 
 		/**
+		 * Indicates that a field is virtual
+		 *
+		 * @var		integer
+		 */
+		const FIELD_VIRTUAL			= 4;
+
+		/**
 		 * Validation constant, numeric value
 		 *
 		 * @var		integer
@@ -290,6 +297,31 @@
 		}
 
 		/**
+		 * Gets a list of virtual fields from the datamanager adapter 
+		 *
+		 * @return	array				Returns an array with field => value pairs, and false on none
+		 */
+		public function getVirtualFields()
+		{
+			if(!$this->fields)
+			{
+				return(false);
+			}
+
+			$fields = Array();
+
+			foreach($this->fields as $name => $props)
+			{
+				if(isset($props['type']) && $props['type'] == self::FIELD_VIRTUAL && isset($this->userdata->{$name}))
+				{
+					$fields[$name] = $this->userdata->{$name};
+				}
+			}
+
+			return(($fields ? $fields : false));
+		}
+
+		/**
 		 * Gets a field
 		 *
 		 * @param	string				The field to get, if this value is NULL then all the backend data will be returned
@@ -333,6 +365,15 @@
 			{
 				switch($properties['type'])
 				{
+					case(self::FIELD_VIRTUAL):
+					{
+						if(!$this->identifier && !isset($this->userdata->{$field}))
+						{
+							$this->invalid_fields[] = $field;
+						}
+
+						continue 2;
+					}
 					case(self::FIELD_REQUIRED):
 					{
 						if(!isset($this->userdata->{$field}))
@@ -381,7 +422,7 @@
 					$this->data[$field] = $properties['default'];
 				}
 
-				if($properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
+				if(isset($properties['validation']) && $properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
 				{
 					if(!$filter->validate($this->userdata->{$field}, $properties['callback']))
 					{
@@ -390,7 +431,7 @@
 						continue;
 					}
 				}
-				elseif($properties['type'] == self::FIELD_REQUIRED && ($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}))
+				elseif($properties['type'] == self::FIELD_REQUIRED && ($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}) && $this->userdata->{$field} !== 0)
 				{
 					$this->invalid_fields[] = $field;
 
@@ -398,7 +439,7 @@
 				}
 				else
 				{
-					if(($filtered = $filter->user($this->userdata->{$field}, $properties['validation'])) === NULL)
+					if(isset($properties['validation']) && ($filtered = $filter->user($this->userdata->{$field}, $properties['validation'])) === NULL)
 					{
 						$this->invalid_fields[] = $field;
 
@@ -470,12 +511,22 @@
 			$sql 			= 'REPLACE INTO `' . $this->tablename . '` (';
 			$virtual		= \array_merge($this->data, \get_object_vars($this->userdata));
 			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
+			$virtual_fields		= $this->getVirtualFields();
 			$n 			= \sizeof($virtual);
 			$this->revalidate 	= true;
 
+			if($virtual_fields)
+			{
+				$n -= \sizeof($virtual_fields);
+			}
+
 			foreach($virtual as $field => $data)
 			{
-				if(isset($this->fields[$field]['validation']) && $this->fields[$field]['validation'] & self::VALIDATE_OPT_ESCAPEHTML)
+				if(isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
+				{
+					continue;
+				}
+				elseif(isset($this->fields[$field]['validation']) && $this->fields[$field]['validation'] & self::VALIDATE_OPT_ESCAPEHTML)
 				{
 					$data = \htmlspecialchars($data, ENT_QUOTES);
 				}
@@ -494,9 +545,20 @@
 				$this->data[$this->idname] = $new_id;
 			}
 
-			if($this instanceof Hooks\Cache)
+			if($this instanceof Hooks\Cache && !$this->rebuild($virtual))
 			{
-				return($this->rebuild($this->registry, $virtual));
+				return(false);
+			}
+
+			if($this instanceof Hooks\Virtual && $virtual_fields)
+			{
+				foreach($virtual_fields as $field => $value)
+				{
+					if(!$this->virtual($field, $value))
+					{
+						return(false);
+					}
+				}
 			}
 
 			return(true);
@@ -520,7 +582,7 @@
 				return(true);
 			}
 
-			if($this instanceof Hooks\Cache && !$this->rebuild($this->registry, Array()))
+			if($this instanceof Hooks\Cache && !$this->rebuild(Array()))
 			{
 				return(false);
 			}

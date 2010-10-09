@@ -139,11 +139,10 @@
 		 * Save the usergroup in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Registry $registry, Array $virtual)
+		public function rebuild(Array $virtual)
 		{
 			if(($datastore = $registry->cache->usergroups) === false)
 			{
