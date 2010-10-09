@@ -94,7 +94,8 @@
 						}
 						elseif($action == 'add')
 						{
-							$styledm = Datamanager\Adapter::factory('style', NULL, false);
+							$styledm 		= Datamanager\Adapter::factory('style', NULL, false);
+							$styledm['inherit']	= $options->style_id;
 						}
 
 						$styledm['name'] 	= $filter->post('name');

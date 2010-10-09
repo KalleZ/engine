@@ -41,25 +41,26 @@
 
 
 	/**
-	 * Datastore requirement for using the datamanager
+	 * Virtual field handler for using the datamanager
 	 *
-	 * This interface is for datamanagers that interacts with the datastore 
-	 * cache to rebuild it to prevent manual update of it.
+	 * This interface is for allowing virtual fields to 
+	 * be populated at runtime by datamanager adapters.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	interface Cache
+	interface Virtual
 	{
 		/**
 		 * This event method is called if the query to store the 
 		 * data was success, to rebuild the datastore cache
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
+		 * @param	string				The virtual field to handle
+		 * @param	mixed				The virtual field's value
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual);
+		public function virtual($field, $value);
 	}
 ?>

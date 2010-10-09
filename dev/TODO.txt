@@ -7,7 +7,6 @@
 
 	DevTools
 	 - Add styles & Templates support
-	   - Implement the template datamanager
 	   - Style handlers
 	     - When adding a new style, all the templates from the default style should be inherited
 	   - Template handlers
@@ -17,12 +16,18 @@
 	     - Search
 	     - List
 
+	Datamanagers
+	 - Factory init options
+	 - New datamanagers
+	   - Option
+	   - Permission
+	   - Template
+	     - Integrate into the Style DM virtual field handler
+
 	Options
-	 - Implement the options datamanager
 	 - Change the options dev tool to work with the options datamanager
 
 	User API
-	 - Implement the permission datamanager
 	 - Implement permission constants for cached permission fields
 
 
