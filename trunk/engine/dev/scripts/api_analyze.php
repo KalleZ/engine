@@ -361,6 +361,7 @@
 	$files 			= analyze($engine_path);
 	$datamap		= Array();
 	$missing_docblocks	= 0;
+	$elements		= 0;
 
 
 	echo('<h1>Lexical analyze of engine API</h1>');
@@ -423,6 +424,7 @@
 					}
 
 					$context->modifiers			= 0;
+					++$elements;
 
 					printf('NAMESPACE (%s) %s<br />', $name, dump_metadata($datamap[$file]['namespaces'][$name]['metadata']));
 				}
@@ -440,6 +442,8 @@
 					}
 
 					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], $alias);
+
+					++$elements;
 
 					printf('ALIAS (%s%s)<br />', $alias[0], (isset($alias[1]) ? ' AS ' . $alias[1] : ''));
 				}
@@ -486,6 +490,7 @@
 
 					$context->depth_check			= true;
 					$context->modifiers			= 0;
+					++$elements;
 
 					printf('%s (%s) %s<br />', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata']));
 
@@ -533,6 +538,7 @@
 						$context->depth_check									= !($context->modifiers & ACC_ABSTRACT);
 						$context->modifiers									= 0;
 						$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
+						++$elements;
 
 						printf('- METHOD (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
 
@@ -555,6 +561,7 @@
 
 						$context->modifiers		= 0;
 						$metadata			= end($datamap[$file]['functions']);
+						++$elements;
 
 						printf('FUNCTION (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
 					}
@@ -587,6 +594,7 @@
 						}
 
 						$context->modifiers			= 0;
+						++$elements;
 
 						printf('GLOBAL CONSTANT (%s) %s<br />', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata']));
 					}
@@ -616,6 +624,7 @@
 
 						$context->modifiers									= 0;
 						$metadata										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['constants']);
+						++$elements;
 
 						printf('- CONSTANT (%s) %s<br />', $const, dump_metadata($metadata['metadata']));
 					}
@@ -633,6 +642,7 @@
 						}
 
 						$context->modifiers			= 0;
+						++$elements;
 
 						printf('GLOBAL CONSTANT (%s) %s<br />', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata']));
 					}
@@ -666,6 +676,7 @@
 
 					$context->modifiers									= 0;
 					$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
+					++$elements;
 
 					printf('- PROPERTY (%s) %s<br />', $property, dump_metadata($metadata['metadata']));
 				}
@@ -736,6 +747,7 @@
 
 	echo('<h1>Status</h1>');
 	echo('<ul>');
+	echo('<li><strong>Total number of elements:</strong> ' . $elements . '</li>');
 	echo('<li><strong>Elements WITHOUT a docblock:</strong> ' . $missing_docblocks . '</li>');
 	echo('</ul>');
 ?>
