@@ -743,7 +743,11 @@
 	}
 
 	file_put_contents(__DIR__ . '/../api/dumps/serialized.dump', serialize($datamap));
-	file_put_contents(__DIR__ . '/../api/dumps/json.dump', json_encode($datamap));
+
+	if(extension_loaded('json'))
+	{
+		file_put_contents(__DIR__ . '/../api/dumps/json.dump', json_encode($datamap));
+	}
 
 	echo('<h1>Status</h1>');
 	echo('<ul>');
