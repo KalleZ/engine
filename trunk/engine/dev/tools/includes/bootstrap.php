@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Style;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
