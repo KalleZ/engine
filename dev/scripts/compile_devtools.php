@@ -18,8 +18,15 @@
 	/**
 	 * Aliasing rules
 	 */
+	use DevTools\Utilities\IO;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Template;
+	use Tuxxedo\Template\Compiler;
+
+
+	/**
+	 * Bootstraper
+	 */
+	require('./includes/bootstrap.php');
 
 
 	/**
@@ -27,41 +34,25 @@
 	 *
 	 * @var		string
 	 */
-	define('TEMPLATE_DIR', 		'../tools/style/templates/');
-
-	/**
-	 * Sets the library path
-	 *
-	 * @var		string
-	 */
-	define('TUXXEDO_LIBRARY', 	'../../library');
+	const TEMPLATE_DIR		= '../tools/style/templates/';
 
 
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/Exception/TemplateCompiler.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/Template/Compiler.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/Template/Compiler/Dummy.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
+	$cli = IO::isCLI();
 
-	if(isset($_POST['compile']))
+	if($cli || isset($_POST['compile']))
 	{
 		$templates = glob(TEMPLATE_DIR . '*.raw');
 
 		if(!$templates)
 		{
-?>
-<p>
-	There is no templates to compile.
-</p>
-<?php
+			IO::text('There is no templates to compile');
 			exit;
 		}
-?>
-<h2>Compiling ...</h2>
-<ul>
-<?php
-		$compiler = new Template\Compiler;
 
+		IO::headline('Compiling...');
+		IO::ul(IO::TAG_START);
+
+		$compiler = new Compiler;
 		$compiler->allowFunction('strlen');
 
 		foreach($templates as $template)
@@ -81,17 +72,22 @@
 			catch(Exception\TemplateCompiler $e)
 			{
 			}
-?>
-	<li><?php if(isset($e)) { echo('<strong>'); } echo($template . '... ' . $result); if(isset($e)) { echo(' (' . $e->getMessage() . ')</strong>'); }  ?></li>
-<?php
+
+			IO::li($template . '...' . (isset($e) ? 'Failed (' . $e->getMessage() . ')' : (!$cli ? 'Success' : '')), (isset($e) ? IO::STYLE_BOLD : 0));
+
 			unset($e);
 		}
+
+		IO::ul(IO::TAG_END);
+
+		if(!$cli)
+		{
 ?>
-</ul>
 <form action="./compile_devtools.php" method="post">
 	<input type="submit" name="compile" value="Re-Compile" />
 </form>
 <?php
+		}
 	}
 	else
 	{
