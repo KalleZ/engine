@@ -78,18 +78,8 @@
 
 	$registry = Registry::init($configuration);
 
-	if(!defined('SCRIPT_NAME'))
-	{
-		throw new Exception\Basic('A script name must be defined prior to use');
-	}
-
-	$registry->register('db', '\Tuxxedo\Database');
-	$registry->register('cache', '\Tuxxedo\Datastore');
-	$registry->register('filter', '\Tuxxedo\Filter');
-
 	$registry->set('timezone', new DateTimeZone('UTC'));
 	$registry->set('datetime', new DateTime('now', $timezone));
-	$registry->set('style', new Style);
 
 	/**
 	 * Current time constant
@@ -104,6 +94,17 @@
 	 * @var		integer
 	 */
 	define('TIMENOW_UTC', TIMENOW);
+
+	if(!defined('SCRIPT_NAME'))
+	{
+		throw new Exception\Basic('A script name must be defined prior to use');
+	}
+
+	$registry->register('db', '\Tuxxedo\Database');
+	$registry->register('cache', '\Tuxxedo\Datastore');
+	$registry->register('filter', '\Tuxxedo\Filter');
+
+	$registry->set('style', new Style);
 
 	if(isset($precache) && $precache)
 	{
