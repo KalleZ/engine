@@ -59,11 +59,6 @@
 		$configuration['application']['debug'] = $debug_notice = true;
 	}
 
-	if(!defined('SCRIPT_NAME'))
-	{
-		throw new Exception\Basic('A script name must be defined prior to use');
-	}
-
 	/**
 	 * Set database table prefix constant
 	 *
@@ -82,6 +77,11 @@
 	Registry::globals('errors', 		Array());
 
 	$registry = Registry::init($configuration);
+
+	if(!defined('SCRIPT_NAME'))
+	{
+		throw new Exception\Basic('A script name must be defined prior to use');
+	}
 
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('cache', '\Tuxxedo\Datastore');
