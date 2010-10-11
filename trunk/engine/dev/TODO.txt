@@ -16,6 +16,11 @@
 	     - Search
 	     - List
 
+	Scripts
+	 - Docblock the IO class
+	 - Convert api_analyze.php internally, so it uses the IO API
+	 - Fix api_analyze.php to respect top level docblocks and some static methods not reported as static
+
 	Datamanagers
 	 - Factory init options
 	 - New datamanagers
