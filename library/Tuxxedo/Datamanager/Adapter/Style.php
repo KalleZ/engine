@@ -90,11 +90,12 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The style id
+		 * @param	integer				Additional options to apply on the datamanager
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the style id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
 		{
 			$this->dmname		= 'style';
 			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
@@ -122,7 +123,7 @@
 				$style->free();
 			}
 
-			parent::init($registry);
+			parent::init($registry, $options);
 		}
 
 		/**
@@ -165,39 +166,19 @@
 				return(false);
 			}
 
-			$sql	= 'INSERT INTO `' . TUXXEDO_PREFIX . 'templates` VALUES ';
-			$rsrc 	= $this->registry->db->query('
-								SELECT 
-									* 
-								FROM 
-									`' . TUXXEDO_PREFIX . 'templates` 
-								WHERE 
-									`styleid` = %d', $value);
-
-			if(!$rsrc || !$rsrc->getNumRows())
+			foreach(explode(',', $this->data['templateids']) as $id)
 			{
-				return(false);
-			}
-
-			while($template = $rsrc->fetchAssoc())
-			{
+				$template 		= Adapter::factory('template', $template['id'], self::OPT_DEFAULT | self::OPT_LOAD_ONLY);
 				$template['id']		= NULL;
 				$template['styleid'] 	= $this->data['id'];
 				$template['changed']	= 0;
 				$template['revision']	= 1;
 
-				$sql			.= '(';
-
-				foreach($template as $new_value)
+				if(!$template->save())
 				{
-					$sql .= '\'' . $this->registry->db->escape($new_value) . '\', ';
+					return(false);
 				}
-
-				$sql			= rtrim($sql, ', ') . '), ';
 			}
-var_dump(htmlspecialchars(rtrim($sql, ', ')));
-exit;
-			$this->registry->query(rtrim($sql, ', '));
 
 			return(false);
 		}

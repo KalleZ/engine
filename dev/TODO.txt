@@ -23,6 +23,7 @@
 
 	Datamanagers
 	 - Factory init options
+	 - Store the template ids associated with a style in the style table, comma separated
 	 - New datamanagers
 	   - Option
 	   - Permission

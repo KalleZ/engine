@@ -88,15 +88,16 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				Session identifier
+		 * @param	integer				Additional options to apply on the datamanager
 		 */
-		public function __construct(Registry $registry, $identifier = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
 		{
 			$this->dmname		= 'session';
 			$this->tablename	= \TUXXEDO_PREFIX . 'sessions';
 			$this->idname		= 'sessionid';
 			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;
 
-			parent::init($registry);
+			parent::init($registry, $options);
 		}
 	}
 ?>
