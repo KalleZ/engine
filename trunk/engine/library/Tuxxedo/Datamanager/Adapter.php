@@ -550,11 +550,22 @@
 				return(false);
 			}
 
-			if($this instanceof Hooks\Virtual && $virtual_fields)
+			$dispatch = ($this instanceof Hooks\VirtualDispatcher);
+
+			if(($this instanceof Hooks\Virtual || $dispatch) && $virtual_fields)
 			{
 				foreach($virtual_fields as $field => $value)
 				{
-					if(!$this->virtual($field, $value))
+					if($dispatch)
+					{
+						$method = 'Virtual' . $field;
+
+						if(method_exists($this, $method) && !$this->{$method}($value))
+						{
+							return(false);
+						}
+					}
+					elseif(!$this->virtual($field, $value))
 					{
 						return(false);
 					}

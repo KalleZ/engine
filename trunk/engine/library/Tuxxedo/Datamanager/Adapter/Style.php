@@ -51,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Style extends Adapter implements Hooks\Cache, Hooks\Virtual
+	class Style extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
 		 * Fields for validation of styles
@@ -155,57 +155,49 @@
 		 * This event method is called if the query to store the 
 		 * data was success, to rebuild the datastore cache
 		 *
-		 * @param	string				The virtual field name
 		 * @param	mixed				The value to handle
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function virtual($field, $value)
+		public function virtualInherit($value)
 		{
-			switch($field)
+			if(!isset($this->registry->cache->styleinfo[$value]))
 			{
-				case('inherit'):
+				return(false);
+			}
+
+			$sql	= 'INSERT INTO `' . TUXXEDO_PREFIX . 'templates` VALUES ';
+			$rsrc 	= $this->registry->db->query('
+								SELECT 
+									* 
+								FROM 
+									`' . TUXXEDO_PREFIX . 'templates` 
+								WHERE 
+									`styleid` = %d', $value);
+
+			if(!$rsrc || !$rsrc->getNumRows())
+			{
+				return(false);
+			}
+
+			while($template = $rsrc->fetchAssoc())
+			{
+				$template['id']		= NULL;
+				$template['styleid'] 	= $this->data['id'];
+				$template['changed']	= 0;
+				$template['revision']	= 1;
+
+				$sql			.= '(';
+
+				foreach($template as $new_value)
 				{
-					if(!isset($this->registry->cache->styleinfo[$value]))
-					{
-						return(false);
-					}
+					$sql .= '\'' . $this->registry->db->escape($new_value) . '\', ';
+				}
 
-					$sql	= 'INSERT INTO `' . TUXXEDO_PREFIX . 'templates` VALUES ';
-					$rsrc 	= $this->registry->db->query('
-										SELECT 
-											* 
-										FROM 
-											`' . TUXXEDO_PREFIX . 'templates` 
-										WHERE 
-											`styleid` = %d', $value);
-
-					if(!$rsrc || !$rsrc->getNumRows())
-					{
-						return(false);
-					}
-
-					while($template = $rsrc->fetchAssoc())
-					{
-						$template['id']		= NULL;
-						$template['styleid'] 	= $this->data['id'];
-						$template['changed']	= 0;
-						$template['revision']	= 1;
-
-						$sql			.= '(';
-
-						foreach($template as $new_value)
-						{
-							$sql .= '\'' . $this->registry->db->escape($new_value) . '\', ';
-						}
-
-						$sql			= rtrim($sql, ', ') . '), ';
-					}
+				$sql			= rtrim($sql, ', ') . '), ';
+			}
 var_dump(htmlspecialchars(rtrim($sql, ', ')));
 exit;
-					$this->registry->query(rtrim($sql, ', '));
-				}
-				break;
-			}
+			$this->registry->query(rtrim($sql, ', '));
 
 			return(false);
 		}
