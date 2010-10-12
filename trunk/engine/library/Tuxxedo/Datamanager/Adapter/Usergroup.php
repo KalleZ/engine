@@ -86,11 +86,12 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The usergroup id
+		 * @param	integer				Additional options to apply on the datamanager
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the usergroup id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
 		{
 			$this->dmname		= 'usergroup';
 			$this->tablename	= \TUXXEDO_PREFIX . 'usergroups';
@@ -117,7 +118,7 @@
 				$usergroup->free();
 			}
 
-			parent::init($registry);
+			parent::init($registry, $options);
 		}
 
 		/**

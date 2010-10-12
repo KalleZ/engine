@@ -137,6 +137,27 @@
 		 */
 		const VALIDATE_OPT_ALLOWEMPTY		= 0x002F;
 
+		/**
+		 * Factory option constant - internationalization (default enabled)
+		 *
+		 * @var		integer
+		 */
+		const OPT_INTL				= 1;
+
+		/**
+		 * Factory option constant - insert as new record
+		 *
+		 * @var		integer
+		 */
+		const OPT_LOAD_ONLY			= 2;
+
+		/**
+		 * Factory option constant - default options
+		 *
+		 * @var		integer
+		 */
+		const OPT_DEFAULT			= self::OPT_INTL;
+
 
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -230,11 +251,13 @@
 		 * used across all datamanager adapters
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	integer				Additional options to apply on the datamanager
 		 * @return	void				No value is returned
 		 */
-		final protected function init(Registry $registry)
+		final protected function init(Registry $registry, $options = self::OPT_DEFAULT)
 		{
 			$this->registry	= $registry;
+			$this->options	= $options;
 			$this->userdata	= $this->information = new \stdClass;
 		}
 
@@ -243,18 +266,18 @@
 		 *
 		 * @param	string				Datamanger name
 		 * @param	mixed				An identifier to send to the datamanager to load default data upon instanciating it
-		 * @param	boolean				Whether to use internationalization for formdata exceptions
+		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	boolean				Whether this is a custom adapter
 		 * @return	\Tuxxedo\Datamanager\Adapter	Returns a new database instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails when loading the datamanager
 		 */
-		final public static function factory($datamanager, $identifier = NULL, $intl = true, $custom = false)
+		final public static function factory($datamanager, $identifier = NULL, $options = self::OPT_DEFAULT, $custom = false)
 		{
 			$registry = Registry::init();
 
-			if($intl)
+			if($options & self::OPT_INTL)
 			{
 				if(!$registry->intl)
 				{
@@ -269,11 +292,11 @@
 
 			if(\in_array($datamanager, self::$loaded_datamanagers))
 			{
-				return(new $class($registry, $identifier));
+				return(new $class($registry, $identifier, $options));
 			}
 
 			$class	= (!$custom ? '\Tuxxedo\Datamanager\Adapter\\' : '') . $datamanager;
-			$dm 	= new $class($registry, $identifier);
+			$dm 	= new $class($registry, $identifier, $options);
 
 			if(!\is_subclass_of($class, __CLASS__))
 			{
@@ -496,7 +519,7 @@
 		{
 			if($this->revalidate && !$this->validate())
 			{
-				$intl		= isset($this->registry->intl);
+				$intl		= isset($this->registry->intl) && ($this->options & self::OPT_INTL);
 				$formdata 	= Array();
 
 				foreach($this->invalid_fields as $field)
@@ -508,7 +531,7 @@
 			}
 
 			$values			= '';
-			$sql 			= 'REPLACE INTO `' . $this->tablename . '` (';
+			$sql 			= ($this->options & self::OPT_LOAD_ONLY ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (';
 			$virtual		= \array_merge($this->data, \get_object_vars($this->userdata));
 			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
 			$virtual_fields		= $this->getVirtualFields();

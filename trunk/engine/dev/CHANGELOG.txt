@@ -10,6 +10,7 @@
 	Added developmental IO utilities class (Kalle)
 	Added CLI support for the following scripts: (Kalle)
 	 - compile_devtools.php
+	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
