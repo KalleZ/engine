@@ -35,6 +35,9 @@
 	User API
 	 - Implement permission constants for cached permission fields
 
+	Other
+	 - Change the default screen to be themed like the DevTools
+
 
 	Tuxxedo Engine 1.0.1
 	------------------------------------------------

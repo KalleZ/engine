@@ -6,7 +6,7 @@
 	------------------------------------------------
 
 	Added new datamanager validation constant to allow fields to be empty (Kalle)
-	Added virtual fields in datamanager adapters (Kalle)
+	Added virtual fields and virtual field hooks in datamanager adapters (Kalle)
 	Added developmental IO utilities class (Kalle)
 	Added CLI support for the following scripts: (Kalle)
 	 - compile_devtools.php
