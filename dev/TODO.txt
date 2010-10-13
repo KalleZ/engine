@@ -9,6 +9,7 @@
 	 - Add styles & Templates support
 	   - Style handlers
 	     - When adding a new style, all the templates from the default style should be inherited
+	     - The style datamanager should be in charge of updating the options, not the otherway around
 	   - Template handlers
 	     - Add
 	     - Edit

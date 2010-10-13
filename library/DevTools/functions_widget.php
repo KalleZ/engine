@@ -32,7 +32,7 @@
 	 */
 	function widget_hook_styles(Style $style, Registry $registry, $widget)
 	{
-		$style->cache(Array('option', $widget));
+		$style->cache(Array($widget));
 
 		$buffer 	= '';
 		$styleid	= $registry->filter->get('style', Filter::TYPE_NUMERIC);
