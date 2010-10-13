@@ -29,6 +29,16 @@
 			<td>
 				<label><input type=\"checkbox\" name=\"default\" value=\"1\"" . (($action == 'edit' && $styledata['default']) ? (" checked=\"checked\"") : '') . " /> Yes</label></td>
 		</tr>
+" . (($action == 'add') ? ("
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Inherit templates from</td>
+			<td>
+				<select name=\"inherit\">
+					{$styles_dropdown}
+				</select></td>
+		</tr>
+") : '') . "
 	</table>
 </div>
 

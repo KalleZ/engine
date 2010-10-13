@@ -27,6 +27,7 @@
 	 * Global templates
 	 */
 	$templates 		= Array(
+					'option', 
 					'styles_index'
 					);
 
@@ -65,7 +66,7 @@
 			tuxxedo_error('Invalid style id');
 		}
 
-		$styledm 	= Datamanager\Adapter::factory('style', $styleid, false);
+		$styledm 	= Datamanager\Adapter::factory('style', $styleid, 0);
 		$styledata	= $styledm->get();
 	}
 
@@ -94,8 +95,8 @@
 						}
 						elseif($action == 'add')
 						{
-							$styledm 		= Datamanager\Adapter::factory('style', NULL, false);
-							$styledm['inherit']	= $options->style_id;
+							$styledm 		= Datamanager\Adapter::factory('style', NULL, 0);
+							$styledm['inherit']	= $filter->post('inherit');
 						}
 
 						$styledm['name'] 	= $filter->post('name');
@@ -127,6 +128,19 @@
 					}
 					else
 					{
+						if($action == 'add')
+						{
+							$styles_dropdown = '';
+
+							foreach($cache->styleinfo as $value => $data)
+							{
+								$name 		= $data['name'];
+								$selected	= ($options->style_id == $value);
+
+								eval('$styles_dropdown .= "' . $style->fetch('option') . '";');
+							}
+						}
+
 						eval(page('styles_add_edit_form'));
 					}
 				}
