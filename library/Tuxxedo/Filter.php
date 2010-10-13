@@ -263,7 +263,7 @@
 
 				if($options & self::INPUT_OPT_RAW)
 				{
-					return(\filter_input($data, $field, \FILTER_UNSAFE_RAW));
+					return(\filter_input($data, $field, \FILTER_UNSAFE_RAW, ($options & self::INPUT_OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0)));
 				}
 
 				switch($type)
