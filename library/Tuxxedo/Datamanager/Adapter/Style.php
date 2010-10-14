@@ -77,7 +77,10 @@
 							'default'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_BOOLEAN, 
-											'default'	=> 0
+											'default'	=> false
+											), 
+							'templateids'	=> Array(
+											'type'		=> self::FIELD_PROTECTED
 											), 
 							'inherit'	=> Array(
 											'type'		=> self::FIELD_VIRTUAL
