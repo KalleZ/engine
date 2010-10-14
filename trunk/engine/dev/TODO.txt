@@ -24,12 +24,10 @@
 
 	Datamanagers
 	 - Factory init options
-	 - Store the template ids associated with a style in the style table, comma separated
+	 - Update the phrases for the datamanagers to match new ones
 	 - New datamanagers
 	   - Option
 	   - Permission
-	   - Template
-	     - Integrate into the Style DM virtual field handler
 
 	Options
 	 - Change the options dev tool to work with the options datamanager

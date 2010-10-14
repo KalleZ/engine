@@ -11,6 +11,8 @@
 	Added CLI support for the following scripts: (Kalle)
 	 - compile_devtools.php
 	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
+	Added new datamanagers: (Kalle)
+	 - Template
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -22,6 +24,7 @@
 	Changed the datamanager adapters to invalidate empty fields unless specified by the adapter (Kalle)
 	Changed datamanager adapters to throw standard exceptions instead of basic ones in case of an error (Kalle)
 	Changed the datamanager deletion method to signal adapters with cache hooks to rebuild the datastore (Kalle)
+	Changed the styles to contain the ids of which templates they contain
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
