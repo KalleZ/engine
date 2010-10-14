@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `styles` (
 --
 
 INSERT INTO `styles` (`id`, `name`, `developer`, `styledir`, `default`, `templateids`) VALUES
-(1, 'Default', 'Tuxxedo Software Development', 'default', 1, '1,2,3,4');
+(1, 'Default', 'Tuxxedo Software Development', 'default', 1);
 
 -- --------------------------------------------------------
 

@@ -22,3 +22,4 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 ALTER TABLE `styles` ADD `templateids` mediumtext NOT NULL;
+UPDATE TABLE `styles` SET `templateids` = '1,2,3,4' WHERE `id` = 1;
