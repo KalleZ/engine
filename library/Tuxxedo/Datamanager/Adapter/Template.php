@@ -152,10 +152,10 @@
 			}
 			elseif($virtual && !isset($ids[$this->data['id']]))
 			{
-				$ids[] = $this->data[$ids];
+				$ids[$this->data[$ids]] = true;
 			}
 
-			$dm['templateids'] = $ids;
+			$dm['templateids'] = \implode(',', \array_keys($ids));
 
 			return($dm->save());
 		}
