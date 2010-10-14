@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 3.2.0.1
 -- http://www.phpmyadmin.net
 --
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `styles` (
   `default` tinyint(1) NOT NULL DEFAULT '0',
   `templateids` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Data dump for tabellen `styles`
