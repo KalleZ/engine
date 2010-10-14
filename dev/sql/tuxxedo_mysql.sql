@@ -190,7 +190,6 @@ CREATE TABLE IF NOT EXISTS `styles` (
   `developer` varchar(128) NOT NULL,
   `styledir` varchar(128) NOT NULL,
   `default` tinyint(1) NOT NULL DEFAULT '0',
-  `templateids` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
