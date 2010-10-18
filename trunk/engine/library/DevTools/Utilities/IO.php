@@ -14,6 +14,15 @@
 	 */
 
 
+	/**
+	 * Development utilities namespace. This namespace contains various 
+	 * random classes for the code in /dev/.
+	 *
+	 * @author              Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version             1.0
+	 * @package             Engine
+	 * @subpackage          DevTools
+	 */
 	namespace DevTools\Utilities;
 
 
@@ -23,6 +32,16 @@
 	defined('TUXXEDO_LIBRARY') or exit;
 
 
+	/**
+	 * Input/Output writer. This class is designed to make basic scripts 
+	 * work in CLI and in a browser without having to make alot of if/else 
+	 * constructs.
+	 *
+	 * @author              Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @version             1.0
+	 * @package             Engine
+	 * @subpackage          DevTools
+	 */
 	class IO
 	{
 		const TAG_START = 1;

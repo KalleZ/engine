@@ -124,11 +124,12 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The user id
 		 * @param	integer				Additional options to apply on the datamanager
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the user id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'user';
 			$this->tablename	= \TUXXEDO_PREFIX . 'users';
@@ -146,7 +147,7 @@
 
 				if(!$user || !$user->getNumRows())
 				{
-					throw new Exception\Exception('Invalid user id');
+					throw new Exception('Invalid user id');
 				}
 
 				$this->data 					= $user->fetchAssoc();
@@ -156,7 +157,7 @@
 				$user->free();
 			}
 
-			parent::init($registry, $options);
+			parent::init($registry, $options, $parent);
 		}
 
 		/**

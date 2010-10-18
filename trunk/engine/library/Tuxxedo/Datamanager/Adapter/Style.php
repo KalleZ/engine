@@ -80,7 +80,8 @@
 											'default'	=> false
 											), 
 							'templateids'	=> Array(
-											'type'		=> self::FIELD_PROTECTED
+											'type'		=> self::FIELD_REQUIRED, 
+											'validation'	=> self::VALIDATE_STRING
 											), 
 							'inherit'	=> Array(
 											'type'		=> self::FIELD_VIRTUAL
@@ -94,11 +95,12 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The style id
 		 * @param	integer				Additional options to apply on the datamanager
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the style id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'style';
 			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
@@ -117,7 +119,7 @@
 
 				if(!$style || !$style->getNumRows())
 				{
-					throw new Exception\Exception('Invalid style id passed to datamanager');
+					throw new Exception('Invalid style id passed to datamanager');
 				}
 
 				$this->data 		= $style->fetchAssoc();
@@ -126,7 +128,9 @@
 				$style->free();
 			}
 
-			parent::init($registry, $options);
+			$this->fields['templateids']['validation'] |= self::VALIDATE_OPT_ALLOWEMPTY;
+
+			parent::init($registry, $options, $parent);
 		}
 
 		/**
@@ -152,7 +156,25 @@
 				$datastore[(integer) $this->data[$this->idname]] = $virtual;
 			}
 
-			return($this->registry->cache->rebuild('styleinfo', $datastore));
+			if(!$this->registry->cache->rebuild('styleinfo', $datastore))
+			{
+				return(false);
+			}
+
+			if(isset($virtual['default']) && $this->registry->options->style_id != $this->data[$this->idname])
+			{
+				$dm 			= Adapter::factory('style', $this->registry->options->style_id, 0, $this);
+				$dm['default']		= false;
+
+				$dm->save();
+
+				$options		= (array) $this->registry->options;
+				$options['style_id']	= $this->data['id'];
+
+				return($this->registry->cache->rebuild('options', $options));
+			}
+
+			return(true);
 		}
 
 		/**
@@ -169,10 +191,11 @@
 				return(false);
 			}
 
-			foreach(explode(',', $this->data['templateids']) as $id)
+			$ids = Array();
+
+			foreach(explode(',', $this->registry->cache->styleinfo[$value]['templateids']) as $id)
 			{
-				$template 		= Adapter::factory('template', $template['id'], self::OPT_DEFAULT | self::OPT_LOAD_ONLY);
-				$template['id']		= NULL;
+				$template 		= Adapter::factory('template', $id, self::OPT_LOAD_ONLY, $this);
 				$template['styleid'] 	= $this->data['id'];
 				$template['changed']	= 0;
 				$template['revision']	= 1;
@@ -181,7 +204,12 @@
 				{
 					return(false);
 				}
+
+				$ids[] = $template->get('id');
 			}
+
+			$this->userdata->templateids = \implode(',', $ids);
+			$this->save(false);
 
 			return(false);
 		}

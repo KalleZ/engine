@@ -9,22 +9,23 @@
 	 - Add styles & Templates support
 	   - Style handlers
 	     - When adding a new style, all the templates from the default style should be inherited
-	     - The style datamanager should be in charge of updating the options, not the otherway around
 	   - Template handlers
 	     - Add
 	     - Edit
 	     - Delete
 	     - Search
 	     - List
+	 - Other
+	   - Fix editing options, and possible adding new ones (naming conflict)
 
 	Scripts
 	 - Docblock the IO class
 	 - Convert api_analyze.php internally, so it uses the IO API
-	 - Fix api_analyze.php to respect top level docblocks and some static methods not reported as static
+	 - Fix api_analyze.php, methods declared static with static variables will not be shown as static
 
 	Datamanagers
-	 - Factory init options
 	 - Update the phrases for the datamanagers to match new ones
+	 - Fix recursive loop in datamanager hooks (namely style <-> template), the best way to fix this is to declare a parent datamanager
 	 - New datamanagers
 	   - Option
 	   - Permission
