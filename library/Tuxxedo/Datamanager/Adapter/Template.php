@@ -100,11 +100,12 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The template id
 		 * @param	integer				Additional options to apply on the datamanager
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the template id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'template';
 			$this->tablename	= \TUXXEDO_PREFIX . 'templates';
@@ -123,7 +124,7 @@
 
 				if(!$template || !$template->getNumRows())
 				{
-					throw new Exception\Exception('Invalid template id passed to datamanager');
+					throw new Exception('Invalid template id passed to datamanager');
 				}
 
 				$this->data 		= $template->fetchAssoc();
@@ -132,7 +133,7 @@
 				$template->free();
 			}
 
-			parent::init($registry, $options);
+			parent::init($registry, $options, $parent);
 		}
 
 		/**
@@ -143,7 +144,7 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
-			$dm 	= Adapter::factory('style', $this->get('styleid'), 0);
+			$dm 	= Adapter::factory('style', $this->data['styleid'], 0, $this);
 			$ids	= \array_flip(\explode(',', $dm->get('templateids')));
 
 			if(!$virtual && isset($ids[$this->data['id']]))
@@ -156,7 +157,8 @@
 			}
 
 			$dm['templateids'] = \implode(',', \array_keys($ids));
-
+var_dump($dm);
+echo 'FINISHING TEMPLATE DM SAVE<br>';
 			return($dm->save());
 		}
 	}

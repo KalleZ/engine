@@ -87,11 +87,12 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The usergroup id
 		 * @param	integer				Additional options to apply on the datamanager
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the usergroup id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'usergroup';
 			$this->tablename	= \TUXXEDO_PREFIX . 'usergroups';
@@ -109,7 +110,7 @@
 
 				if(!$usergroup || !$usergroup->getNumRows())
 				{
-					throw new Exception\Exception('Invalid usergroup id passed to datamanager');
+					throw new Exception('Invalid usergroup id passed to datamanager');
 				}
 
 				$this->data 		= $usergroup->fetchAssoc();
@@ -118,7 +119,7 @@
 				$usergroup->free();
 			}
 
-			parent::init($registry, $options);
+			parent::init($registry, $options, $parent);
 		}
 
 		/**

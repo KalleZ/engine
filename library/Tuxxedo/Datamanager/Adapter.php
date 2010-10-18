@@ -124,18 +124,11 @@
 		const VALIDATE_CALLBACK			= Filter::TYPE_CALLBACK;
 
 		/**
-		 * Validation option constant, escape HTML
-		 *
-		 * @var		integer
-		 */
-		const VALIDATE_OPT_ESCAPEHTML		= 0x001F;
-
-		/**
 	 	 * Validation option constant, allow empty fields
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_OPT_ALLOWEMPTY		= 0x002F;
+		const VALIDATE_OPT_ALLOWEMPTY		= 0x001F;
 
 		/**
 		 * Factory option constant - internationalization (default enabled)
@@ -202,6 +195,13 @@
 		protected $userdata;
 
 		/**
+		 * Whether this datamanager are called from another datamanager
+		 *
+		 * @var		\Tuxxedo\Datamanager\Adapter
+		 */
+		protected $parent;
+
+		/**
 		 * Whether the datamanager needs to re-validate
 		 *
 		 * @var		boolean
@@ -215,14 +215,13 @@
 		 */
 		protected $data				= Array();
 
+
 		/**
-		 * List of loaded datamanagers used for caching in the 
-		 * special required cases where more than one driver 
-		 * have to be loaded
+		 * List of shutdown handlers to execute
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_datamanagers 	= Array();
+		protected $shutdown_handlers		= Array();
 
 		/**
 		 * List of fields that had one or more errors and therefore 
@@ -231,6 +230,22 @@
 		 * @var		array
 		 */
 		protected $invalid_fields		= Array();
+
+		/**
+		 * Hooks executor callback
+		 *
+		 * @var		closure
+		 */
+		protected static $hooks_executor;
+
+		/**
+		 * List of loaded datamanagers used for caching in the 
+		 * special required cases where more than one driver 
+		 * have to be loaded
+		 *
+		 * @var		array
+		 */
+		protected static $loaded_datamanagers 	= Array();
 
 
 		/**
@@ -241,10 +256,27 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	mixed				The unique identifier to send to the datamanager
+		 * @param	integer				The datamanager options
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
 		 * @throws	\Tuxxedo\Exception		Throws an exception if the unique identifier sent to the datamanager was invalid
 		 */
-		abstract public function __construct(Registry $registry, $identifier = NULL);
+		abstract public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL);
+
+		/**
+		 * Destructor for the current datamanager, this is 
+		 * reserved for shutdown handlers in parent datamanagers.
+		 */
+		final public function __destruct()
+		{
+			if($this->shutdown_handlers)
+			{
+				foreach($this->shutdown_handlers as $c)
+				{
+					call_user_func_array($c['handler'], $c['arguments']);
+				}
+			}
+		}
 
 		/**
 		 * Datamanager initializer, this method initializes the default logic 
@@ -252,13 +284,20 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				Additional options to apply on the datamanager
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 * @return	void				No value is returned
 		 */
-		final protected function init(Registry $registry, $options = self::OPT_DEFAULT)
+		final protected function init(Registry $registry, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->registry	= $registry;
 			$this->options	= $options;
 			$this->userdata	= $this->information = new \stdClass;
+			$this->parent	= $parent;
+
+			if($options & self::OPT_LOAD_ONLY)
+			{
+				$this->identifier = $this->fields[$this->idname]['value'] = NULL;
+			}
 		}
 
 		/**
@@ -273,7 +312,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails when loading the datamanager
 		 */
-		final public static function factory($datamanager, $identifier = NULL, $options = self::OPT_DEFAULT, $custom = false)
+		final public static function factory($datamanager, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL, $custom = false)
 		{
 			$registry = Registry::init();
 
@@ -290,13 +329,13 @@
 				}
 			}
 
+			$class	= (!$custom ? '\Tuxxedo\Datamanager\Adapter\\' : '') . $datamanager;
+			$dm 	= new $class($registry, $identifier, $options, $parent);
+
 			if(\in_array($datamanager, self::$loaded_datamanagers))
 			{
-				return(new $class($registry, $identifier, $options));
+				return($dm);
 			}
-
-			$class	= (!$custom ? '\Tuxxedo\Datamanager\Adapter\\' : '') . $datamanager;
-			$dm 	= new $class($registry, $identifier, $options);
 
 			if(!\is_subclass_of($class, __CLASS__))
 			{
@@ -304,6 +343,39 @@
 			}
 
 			self::$loaded_datamanagers[] = $datamanager;
+
+			if(!self::$hooks_executor)
+			{
+				self::$hooks_executor = function(Adapter $self, Array $virtual, Array $virtual_fields)
+				{
+					if($self instanceof Hooks\Cache && !$self->rebuild($virtual))
+					{
+						return(false);
+					}
+
+					$dispatch = ($self instanceof Hooks\VirtualDispatcher);
+
+					if($virtual_fields && ($dispatch || $self instanceof Hooks\Virtual))
+					{
+						foreach($virtual_fields as $field => $value)
+						{
+							if($dispatch)
+							{
+								$method = 'Virtual' . $field;
+
+								if(method_exists($self, $method) && !$self->{$method}($value))
+								{
+									return(false);
+								}
+							}
+							elseif(!$this->virtual($field, $value))
+							{
+								return(false);
+							}
+						}
+					}
+				};
+			}
 
 			return($dm);
 		}
@@ -322,13 +394,13 @@
 		/**
 		 * Gets a list of virtual fields from the datamanager adapter 
 		 *
-		 * @return	array				Returns an array with field => value pairs, and false on none
+		 * @return	array				Returns an array with field => value pairs, and empty array on none
 		 */
 		public function getVirtualFields()
 		{
 			if(!$this->fields)
 			{
-				return(false);
+				return(Array());
 			}
 
 			$fields = Array();
@@ -341,7 +413,7 @@
 				}
 			}
 
-			return(($fields ? $fields : false));
+			return(($fields ? $fields : Array()));
 		}
 
 		/**
@@ -364,6 +436,26 @@
 			{
 				return($this->data[$field]);
 			}
+		}
+
+		/**
+		 * Sets a shutdown handler
+		 *
+		 * @param	callback			A callback to execute
+		 * @param	array				Any additonal arguments the callback needs to execute properly
+		 * @return	void				No value is returned
+		 */
+		public function setShutdownHandler($handler, Array $arguments)
+		{
+			if(!is_callable($handler))
+			{
+				return;
+			}
+
+			$this->shutdown_handlers[] = Array(
+								'handler'	=> $handler, 
+								'arguments'	=> $arguments
+								);
 		}
 
 		/**
@@ -401,11 +493,6 @@
 					{
 						if(!isset($this->userdata->{$field}))
 						{
-							if(!isset($this->data[$field]))
-							{
-								$this->invalid_fields[] = $field;
-							}
-
 							continue 2;
 						}
 					}
@@ -510,12 +597,13 @@
 		 * Save method, attempts to validate and save the data 
 		 * into the database
 		 *
+		 * @param	boolean				Whether to execute hooks or not. This parameter is mainly designed for datamanager internals
 		 * @return	boolean				Returns true if the data is saved with success, otherwise boolean false
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the query should fail
 		 * @throws	\Tuxxedo\Exception\FormData	Throws a formdata exception if validation fails
 		 */
-		public function save()
+		public function save($execute_hooks = true)
 		{
 			if($this->revalidate && !$this->validate())
 			{
@@ -545,17 +633,18 @@
 
 			foreach($virtual as $field => $data)
 			{
-				if(isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
+				if(($field == $this->idname && $this->options & self::OPT_LOAD_ONLY) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
 				{
+					if($field == $this->idname && ($this->options & self::OPT_LOAD_ONLY))
+					{
+						--$n;
+					}
+
 					continue;
-				}
-				elseif(isset($this->fields[$field]['validation']) && $this->fields[$field]['validation'] & self::VALIDATE_OPT_ESCAPEHTML)
-				{
-					$data = \htmlspecialchars($data, ENT_QUOTES);
 				}
 
 				$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
-				$values .= '\'' . $this->registry->db->escape($data) . '\'' . ($n ? ', ' : '');
+				$values .= (is_null($data) ? 'NULL' : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
 			}
 
 			if(!$this->registry->db->query($sql . ') VALUES (' . $values . ')'))
@@ -568,31 +657,16 @@
 				$this->data[$this->idname] = $new_id;
 			}
 
-			if($this instanceof Hooks\Cache && !$this->rebuild($virtual))
+			if($execute_hooks)
 			{
-				return(false);
-			}
+				$hooks = self::$hooks_executor;
 
-			$dispatch = ($this instanceof Hooks\VirtualDispatcher);
-
-			if(($this instanceof Hooks\Virtual || $dispatch) && $virtual_fields)
-			{
-				foreach($virtual_fields as $field => $value)
+				if(!$this->parent)
 				{
-					if($dispatch)
-					{
-						$method = 'Virtual' . $field;
-
-						if(method_exists($this, $method) && !$this->{$method}($value))
-						{
-							return(false);
-						}
-					}
-					elseif(!$this->virtual($field, $value))
-					{
-						return(false);
-					}
+					return($hooks($this, $virtual, $virtual_fields));
 				}
+
+				$this->parent->setShutdownHandler($hooks, Array($this, $virtual, $virtual_fields));
 			}
 
 			return(true);

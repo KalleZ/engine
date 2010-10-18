@@ -110,18 +110,9 @@
 						}
 						catch(Exception\Formdata $e)
 						{
+							var_dump($styledm->get('templateids'));
+							exit;
 							tuxxedo_error('One or more fields did not pass the validation, please go back and fix them (' . implode(', ', $e->getFields()) . ')');
-						}
-
-						if($styledm['default'])
-						{
-							$cached_options 		= (array) $options;
-							$cached_options['style_id']	= $styledm->get('id');
-
-							if($cache->rebuild('options', $cached_options, false) === false)
-							{
-								tuxxedo_error('Unable to rebuild the datastore');
-							}
 						}
 
 						tuxxedo_redirect('Saved style with success', './styles.php?style=' . $styledm->get('id') . '&do=style&action=edit');
@@ -151,7 +142,7 @@
 					{
 						tuxxedo_error('Invalid style id');
 					}
-					elseif($styledata['default'] || $styledata['id'] == $options->style_id)
+					elseif($styledata['id'] == $options->style_id)
 					{
 						tuxxedo_error('Cannot delete the default style');
 					}
