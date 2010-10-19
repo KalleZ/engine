@@ -15,6 +15,13 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Exception;
+	use Tuxxedo\Registry;
+
+
+	/**
 	 * A recursive glob function
 	 *
 	 * @param	string			The glob expression to execute
@@ -64,5 +71,32 @@
 		}
 
 		return($return_value);
+	}
+
+	/**
+	 * Extended exception handler
+	 *
+	 * @param	\Exception		The exception to handle
+	 * @return	void			No value is returned
+	 */
+	function devtools_exception_handler(\Exception $e)
+	{
+		if($e instanceof Exception\FormData)
+		{
+			$list 		= '';
+			$style		= Registry::init()->style;
+			$message	= $e->getMessage();
+
+			foreach($e->getFields() as $field)
+			{
+				eval('$list .= "' . $style->fetch('multierror_itembit') . '";');
+			}
+
+			eval(page('multierror'));
+		}
+		else
+		{
+			tuxxedo_exception_handler($e);
+		}
 	}
 ?>

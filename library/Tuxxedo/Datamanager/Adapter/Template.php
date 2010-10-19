@@ -33,6 +33,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
@@ -50,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Template extends Adapter
+	class Template extends Adapter implements Hooks\Cache
 	{
 		/**
 		 * Fields for validation of styles
@@ -157,8 +158,7 @@
 			}
 
 			$dm['templateids'] = \implode(',', \array_keys($ids));
-var_dump($dm);
-echo 'FINISHING TEMPLATE DM SAVE<br>';
+
 			return($dm->save());
 		}
 	}

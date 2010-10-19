@@ -80,7 +80,7 @@
 											'default'	=> false
 											), 
 							'templateids'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
+											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_STRING
 											), 
 							'inherit'	=> Array(
@@ -150,6 +150,14 @@
 			if(!$virtual)
 			{
 				unset($datastore[(integer) ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier)]);
+
+				if(($ids = \explode(',', $this->data['templateids'])) && !empty($ids[0]))
+				{
+					foreach($ids as $id)
+					{
+						Adapter::factory('template', $id, 0, $this)->delete();
+					}
+				}
 			}
 			else
 			{
@@ -192,7 +200,7 @@
 			}
 
 			$ids = Array();
-
+var_dump($this->registry->cache->styleinfo[$value]);
 			foreach(explode(',', $this->registry->cache->styleinfo[$value]['templateids']) as $id)
 			{
 				$template 		= Adapter::factory('template', $id, self::OPT_LOAD_ONLY, $this);
