@@ -69,9 +69,10 @@
 	date_default_timezone_set('UTC');
 
 	set_error_handler('tuxxedo_error_handler');
-	set_exception_handler('tuxxedo_exception_handler');
 	register_shutdown_function('tuxxedo_shutdown_handler');
 	spl_autoload_register('\Tuxxedo\Loader::load');
+
+	set_exception_handler('devtools_exception_handler');
 
 	Registry::globals('error_reporting', 	true);
 	Registry::globals('errors', 		Array());
@@ -114,7 +115,7 @@
 	}
 
 	$cache_buffer		= Array();
-	$default_templates 	= Array('header', 'footer', 'error', 'redirect');
+	$default_templates 	= Array('header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit');
 
 	if(isset($action_templates) && isset($_GET['do']) && isset($action_templates[(string) $_GET['do']]))
 	{

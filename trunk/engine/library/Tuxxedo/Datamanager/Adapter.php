@@ -549,7 +549,7 @@
 				}
 				else
 				{
-					if(isset($properties['validation']) && ($filtered = $filter->user($this->userdata->{$field}, $properties['validation'])) === NULL)
+					if(!isset($properties['validation']) || !isset($this->userdata->{$field}) || ($filtered = $filter->user($this->userdata->{$field}, $properties['validation'])) === NULL)
 					{
 						$this->invalid_fields[] = $field;
 
@@ -652,7 +652,7 @@
 				return(false);
 			}
 
-			if(($new_id = $this->registry->db->getInsertId()) !== false && ($this->fields[$this->idname]['type'] & self::FIELD_PROTECTED) && empty($this->data[$this->idname]))
+			if(($new_id = $this->registry->db->getInsertId()) !== false)
 			{
 				$this->data[$this->idname] = $new_id;
 			}

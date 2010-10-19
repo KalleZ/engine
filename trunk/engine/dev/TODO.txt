@@ -6,6 +6,7 @@
 	------------------------------------------------
 
 	DevTools
+	 - Improve error messages to include a trace
 	 - Add styles & Templates support
 	   - Style handlers
 	     - When adding a new style, all the templates from the default style should be inherited
@@ -25,7 +26,7 @@
 
 	Datamanagers
 	 - Update the phrases for the datamanagers to match new ones
-	 - Fix recursive loop in datamanager hooks (namely style <-> template), the best way to fix this is to declare a parent datamanager
+	 - Fix empty error messages
 	 - New datamanagers
 	   - Option
 	   - Permission
