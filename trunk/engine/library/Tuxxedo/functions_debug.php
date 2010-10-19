@@ -127,8 +127,6 @@
 				$trace->notes 	= 'Called from main scope';
 			}
 
-			var_dump($t);
-
 			if(isset($t['line']))
 			{
 				$trace->line = $t['line'];
