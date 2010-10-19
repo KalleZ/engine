@@ -23,10 +23,9 @@
 	 * in PHP
 	 *
 	 * @param	\Exception		If the current trace is combined with an exception, then pass the exception to get a better trace
-	 * @param	boolean			Set to true to prevent skipping special call handler methods
 	 * @return	array			Returns an array with object as keys carrying information about each trace bit
 	 */
-	function tuxxedo_debug_backtrace(Exception $e = NULL, $full_trace = false)
+	function tuxxedo_debug_backtrace(Exception $e = NULL)
 	{
 		static $includes, $callbacks, $fulltrace, $descriptions;
 
@@ -128,15 +127,7 @@
 				$trace->notes 	= 'Called from main scope';
 			}
 
-			if($bts == 4)
-			{
-				if(empty($trace->call))
-				{
-					$trace->call = 'Main()';
-				}
-
-				$trace->notes 	= 'Called from main scope';
-			}
+			var_dump($t);
 
 			if(isset($t['line']))
 			{
