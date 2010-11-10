@@ -90,30 +90,17 @@
 		 */
 		protected $variables		= Array();
 
-		/**
-		 * Global variables from the registry to extract
-		 *
-		 * @var		array
-		 */
-		protected $globals		= Array();
-
 
 		/**
 		 * Constructor, constructs a new View
 		 *
 		 * @param	string				The name of the view to load
-		 * @param	array				Array of special globals to define as variables from the registry
 		 */
-		public function __construct($name, Array $globals = NULL)
+		public function __construct($name)
 		{
 			$this->registry		= Registry::init();
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
-
-			if($globals !== NULL)
-			{
-				$this->globals = $globals;
-			}
 		}
 
 		/**
