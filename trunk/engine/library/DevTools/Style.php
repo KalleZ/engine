@@ -30,7 +30,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Registry;
-	use Tuxxedo\style\Storage;
+	use Tuxxedo\Style\Storage;
 
 
 	/**

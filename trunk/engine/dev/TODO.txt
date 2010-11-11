@@ -39,6 +39,7 @@
 
 	Other
 	 - Change the default screen to be themed like the DevTools
+	 - Fix database drivers, possible others that doesn't flow well on case sensitive file systems
 
 
 	Tuxxedo Engine 1.0.1

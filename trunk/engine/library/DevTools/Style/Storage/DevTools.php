@@ -31,7 +31,7 @@
 	 */
 	use Tuxxedo\Registry;
 	use Tuxxedo\Style;
-	use Tuxxedo\Style\Storage\FileSystem;
+	use Tuxxedo\Style\Storage\Filesystem;
 
 
 	/**
