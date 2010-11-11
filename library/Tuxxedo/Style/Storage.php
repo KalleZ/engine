@@ -110,7 +110,7 @@
 		 */ 
 		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates, $custom = false)
 		{
-			$class = (!$custom ? '\Tuxxedo\Style\Storage\\' : '') . lcfirst($engine);
+			$class = (!$custom ? '\Tuxxedo\Style\Storage\\' : '') . ucfirst($engine);
 
 			if(!\class_exists($class))
 			{

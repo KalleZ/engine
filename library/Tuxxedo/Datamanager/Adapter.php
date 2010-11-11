@@ -303,7 +303,7 @@
 		/**
 		 * Constructs a new datamanger instance
 		 *
-		 * @param	string				Datamanger name, default adapters should be in lowercase
+		 * @param	string				Datamanger name
 		 * @param	mixed				An identifier to send to the datamanager to load default data upon instanciating it
 		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	boolean				Whether this is a custom adapter
@@ -329,7 +329,7 @@
 				}
 			}
 
-			$class	= (!$custom ? '\Tuxxedo\Datamanager\Adapter\\' : '') . lcfirst($datamanger);
+			$class	= (!$custom ? '\Tuxxedo\Datamanager\Adapter\\' : '') . ucfirst($datamanager);
 			$dm 	= new $class($registry, $identifier, $options, $parent);
 
 			if(\in_array($datamanager, self::$loaded_datamanagers))
