@@ -193,7 +193,7 @@
 				return(new $class($configuration));
 			}
 
-			$class 		= (!$custom ? '\Tuxxedo\Database\Driver\\' : '') . $driver;
+			$class 		= (!$custom ? '\Tuxxedo\Database\Driver\\' : '') . ucfirst($driver);
 			$instance 	= new $class($configuration);
 
 			if(!\is_subclass_of($class, __CLASS__))
