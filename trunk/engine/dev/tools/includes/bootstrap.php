@@ -103,7 +103,7 @@
 
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('cache', '\Tuxxedo\Datastore');
-	$registry->register('filter', '\Tuxxedo\Filter');
+	$registry->register('input', '\Tuxxedo\Input');
 
 	$registry->set('style', new Style);
 

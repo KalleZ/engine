@@ -53,13 +53,13 @@
 	require('./includes/bootstrap.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
-	switch($do = strtolower($filter->get('do')))
+	switch($do = strtolower($input->get('do')))
 	{
 		case('add'):
 		{
-			if($filter->post('submit'))
+			if($input->post('submit'))
 			{
-				if(!options_add($filter->post('name'), $filter->post('characters'), $filter->post('value')))
+				if(!options_add($input->post('name'), $input->post('characters'), $input->post('value')))
 				{
 					tuxxedo_error('Failed to add new option, possible naming conflict');
 				}
@@ -74,15 +74,15 @@
 		break;
 		case('edit'):
 		{
-			$option = $filter->get('option');
+			$option = $input->get('option');
 
 			if(($options = options_get_single($option)) == false)
 			{
 				tuxxedo_error('Invalid option');
 			}
-			elseif($filter->post('submit'))
+			elseif($input->post('submit'))
 			{
-				if(!options_edit($option, $filter->post('name'), $filter->post('characters'), $filter->post('value')))
+				if(!options_edit($option, $input->post('name'), $input->post('characters'), $input->post('value')))
 				{
 					tuxxedo_error('Failed to edit option, possible naming conflict');
 				}
@@ -97,7 +97,7 @@
 		break;
 		case('delete'):
 		{
-			$option = $filter->get('option');
+			$option = $input->get('option');
 
 			if(!options_is_valid($option))
 			{
@@ -111,7 +111,7 @@
 		break;
 		case('reset'):
 		{
-			$option = $filter->get('option');
+			$option = $input->get('option');
 
 			if($option !== NULL)
 			{

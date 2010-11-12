@@ -59,7 +59,7 @@
 	require('./includes/bootstrap.php');
 
 
-	if(($styleid = $filter->get('style', Filter::TYPE_NUMERIC)))
+	if(($styleid = $input->get('style', Filter::TYPE_NUMERIC)))
 	{
 		if(!isset($cache->styleinfo[$styleid]))
 		{
@@ -70,11 +70,11 @@
 		$styledata	= $styledm->get();
 	}
 
-	switch($do = strtolower($filter->get('do')))
+	switch($do = strtolower($input->get('do')))
 	{
 		case('style'):
 		{
-			switch($action = strtolower($filter->get('action')))
+			switch($action = strtolower($input->get('action')))
 			{
 				case('add'):
 				case('edit'):
@@ -96,13 +96,13 @@
 						elseif($action == 'add')
 						{
 							$styledm 		= Datamanager\Adapter::factory('style', NULL, 0);
-							$styledm['inherit']	= $filter->post('inherit');
+							$styledm['inherit']	= $input->post('inherit');
 						}
 
-						$styledm['name'] 	= $filter->post('name');
-						$styledm['developer']	= $filter->post('developer');
-						$styledm['styledir']	= $filter->post('styledir');
-						$styledm['default']	= $filter->post('default', Filter::TYPE_BOOLEAN);
+						$styledm['name'] 	= $input->post('name');
+						$styledm['developer']	= $input->post('developer');
+						$styledm['styledir']	= $input->post('styledir');
+						$styledm['default']	= $input->post('default', Filter::TYPE_BOOLEAN);
 
 						$styledm->save();
 
@@ -151,7 +151,7 @@
 		break;
 		case('templates'):
 		{
-			switch($action = strtolower($filter->get('action')))
+			switch($action = strtolower($input->get('action')))
 			{
 				case('add'):
 				case('edit'):

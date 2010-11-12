@@ -59,7 +59,7 @@
 	 */
 	require('./includes/bootstrap.php');
 
-	switch(strtolower($filter->get('do')))
+	switch(strtolower($input->get('do')))
 	{
 		case('statistics'):
 		{
@@ -163,7 +163,7 @@
 		break;
 		case('password'):
 		{
-			if(isset($_POST['submit']) && ($password = $filter->post('keyword')) !== false && !empty($password) && ($chars = $filter->post('characters')) % 8 === 0)
+			if(isset($_POST['submit']) && ($password = $input->post('keyword')) !== false && !empty($password) && ($chars = $input->post('characters')) % 8 === 0)
 			{
 				$salt 		= htmlspecialchars(\Tuxxedo\User::getPasswordSalt($chars));
 				$hash 		= \Tuxxedo\User::getPasswordHash($password, $salt);
@@ -212,7 +212,7 @@
 
 			$source = '';
 
-			if(isset($_POST['submit']) && ($src = $filter->post('sourcecode')) !== false && !empty($src))
+			if(isset($_POST['submit']) && ($src = $input->post('sourcecode')) !== false && !empty($src))
 			{
 				$opts		= 0;
 				$source 	= htmlspecialchars($src);

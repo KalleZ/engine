@@ -18,7 +18,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Style;
-	use Tuxxedo\Filter;
+	use Tuxxedo\Input;
 	use Tuxxedo\Registry;
 
 
@@ -35,7 +35,7 @@
 		$style->cache(Array($widget));
 
 		$buffer 	= '';
-		$styleid	= $registry->filter->get('style', Filter::TYPE_NUMERIC);
+		$styleid	= $registry->input->get('style', Input::TYPE_NUMERIC);
 
 		foreach($registry->cache->styleinfo as $value => $info)
 		{

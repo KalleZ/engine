@@ -31,6 +31,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Exception\Basic;
+
+
+	/**
 	 * Include check
 	 */
 	defined('TUXXEDO_LIBRARY') or exit;
@@ -48,7 +54,7 @@
 	class Loader
 	{
 		/**
-		 * Default separator for classes, this is mainly is '_'
+		 * Default separator for classes, this is commonly '_'
 		 * for non namespaced code.
 		 *
 		 * @var		string
@@ -137,13 +143,13 @@
 
 		/**
 		 * Autoloads a class, if a class fails to load, the error handler is called 
-		 * directly and the error is shown. Technically this cannot throw any exceptions 
-		 * due it may result in a recursive loop. This however can be bypassed by 
-		 * calling this function manually with the silent error handler set to true.
+		 * directly and the error is shown.
 		 *
-		 * @param	string				The class to autoloader
+		 * @param	string				The class or interface to autoload
 		 * @param	boolean				Whether to return true or false in case of loading instead of calling the error handler
-		 * @return	void				No value is returned
+		 * @return	boolean				Returns true if loaded, false otherwise if loading failed (latter is only true, if the $silent parameter is set to true)
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if its loaded into runtime, else falls back to a standard error call
 		 */
 		public static function load($name, $silent = false)
 		{
@@ -156,22 +162,43 @@
 					return(false);
 				}
 
+				if(self::exists('\Tuxxedo\Exception\Basic'))
+				{
+					throw new Exception\Basic('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, $path);
+				}
+
 				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, $path);
 			}
 
 			require($path);
 
-			if(!\class_exists($name) && !\interface_exists($name))
+			if(!self::exists($name))
 			{
 				if($silent)
 				{
 					return(false);
 				}
 
+				if(self::exists('\Tuxxedo\Exception\Basic'))
+				{
+					throw new Exception\Basic('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
+				}
+
 				\tuxxedo_doc_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
 			}
 
 			return(true);
+		}
+
+		/**
+		 * Check whether a class or interface exists without attempting to autoload them
+		 *
+		 * @param	string				The class or interface to check
+		 * @return	boolean				True if exists and false otherwise
+		 */
+		public static function exists($name)
+		{
+			return(\class_exists($name, false) || \interface_exists($name, false));
 		}
 	}
 ?>

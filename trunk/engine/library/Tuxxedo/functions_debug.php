@@ -147,7 +147,7 @@
 				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . $descriptions[$function];
 			}
 
-			if($trace->file !== 'Unknown')
+			if($trace->file != 'Unknown')
 			{
 				$trace->file = tuxxedo_trim_path($trace->file);
 			}
