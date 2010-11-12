@@ -35,7 +35,7 @@
 	 */
 	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Filter;
+	use Tuxxedo\Input;
 	use Tuxxedo\InfoAccess;
 	use Tuxxedo\Registry;
 
@@ -93,35 +93,35 @@
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_NUMERIC			= Filter::TYPE_NUMERIC;
+		const VALIDATE_NUMERIC			= Input::TYPE_NUMERIC;
 
 		/**
 		 * Validation constant, string value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_STRING			= Filter::TYPE_STRING;
+		const VALIDATE_STRING			= Input::TYPE_STRING;
 
 		/**
 		 * Validation constant, email value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_EMAIL			= Filter::TYPE_EMAIL;
+		const VALIDATE_EMAIL			= Input::TYPE_EMAIL;
 
 		/**
 		 * Validation constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_BOOLEAN			= Filter::TYPE_BOOLEAN;
+		const VALIDATE_BOOLEAN			= Input::TYPE_BOOLEAN;
 
 		/**
 		 * Validation constant, callback
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_CALLBACK			= Filter::TYPE_CALLBACK;
+		const VALIDATE_CALLBACK			= Input::TYPE_CALLBACK;
 
 		/**
 	 	 * Validation option constant, allow empty fields
@@ -474,7 +474,7 @@
 				return(true);
 			}
 
-			$filter = $this->registry->register('filter', '\Tuxxedo\Filter');
+			$input = $this->registry->register('input', '\Tuxxedo\Input');
 
 			foreach($this->fields as $field => $properties)
 			{
@@ -534,7 +534,7 @@
 
 				if(isset($properties['validation']) && $properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
 				{
-					if(!$filter->validate($this->userdata->{$field}, $properties['callback']))
+					if(!$input->validate($this->userdata->{$field}, $properties['callback']))
 					{
 						$this->invalid_fields[] = $field;
 
@@ -549,7 +549,7 @@
 				}
 				else
 				{
-					if(!isset($properties['validation']) || !isset($this->userdata->{$field}) || ($filtered = $filter->user($this->userdata->{$field}, $properties['validation'])) === NULL)
+					if(!isset($properties['validation']) || !isset($this->userdata->{$field}) || ($filtered = $input->user($this->userdata->{$field}, $properties['validation'])) === NULL)
 					{
 						$this->invalid_fields[] = $field;
 

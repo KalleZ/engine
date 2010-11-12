@@ -43,17 +43,17 @@
 
 
 	/**
-	 * Data filter class, this class cleans data 
+	 * Input filtering class, this class cleans data 
 	 * with magic quotes in mind. It will use the filter 
 	 * extension if its available or use its own filtering 
-	 * functions otherwise.
+	 * functions to emulate it.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Filter implements Invokable
+	class Input implements Invokable
 	{
 		/**
 		 * Data filter constant, numeric value

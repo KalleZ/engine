@@ -61,11 +61,11 @@
 		tuxxedo_error('There is currently no users logged in.');
 	}
 
-	switch(strtolower($filter->get('do')))
+	switch(strtolower($input->get('do')))
 	{
 		case('kill'):
 		{
-			switch(strtolower($filter->get('action')))
+			switch(strtolower($input->get('action')))
 			{
 				case('single'):
 				{
@@ -73,7 +73,7 @@
 									DELETE FROM 
 										`' . TUXXEDO_PREFIX . 'sessions` 
 									WHERE 
-										`sessionid` = \'%s\'', $filter->get('id'))) !== false && $db->getAffectedRows($result))
+										`sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows($result))
 					{
 						tuxxedo_redirect('Killed session with success', './sessions.php');
 					}

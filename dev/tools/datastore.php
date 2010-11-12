@@ -54,7 +54,7 @@
 				'timezones'	=> NULL
 				);
 
-	switch(strtolower($filter->get('do')))
+	switch(strtolower($input->get('do')))
 	{
 		case('truncate'):
 		{
@@ -101,7 +101,7 @@
 		break;
 		default:
 		{
-			if($filter->post('progress'))
+			if($input->post('progress'))
 			{
 				require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
