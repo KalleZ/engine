@@ -140,7 +140,7 @@
 			}
 			elseif($this->options & self::OPT_VERSION)
 			{
-				return(\version_compare($this->argv[0], $this->argv[1], '>='));
+				return(\version_compare($this->argv[1], $this->argv[0], '>='));
 			}
 			elseif($this->options & self::OPT_FUNCTION)
 			{
