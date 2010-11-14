@@ -73,6 +73,13 @@
 		 */
 		protected $templates;
 
+		/**
+		 * List of loaded style engines
+		 *
+		 * @var		array
+		 */
+		protected static $loaded_engines	= Array();
+
 
 		/**
 		 * Constructs a new storage engine
@@ -112,7 +119,11 @@
 		{
 			$class = (!$custom ? '\Tuxxedo\Style\Storage\\' : '') . ucfirst($engine);
 
-			if(!\class_exists($class))
+			if(isset(self::$loaded_engines[$engine]))
+			{
+				return(new $class($registry, $style, $templates));
+			}
+			elseif(!\class_exists($class))
 			{
 				throw new Exception\Basic('Invalid style storage engine specified');
 			}
@@ -120,6 +131,8 @@
 			{
 				throw new Exception\Basic('Corrupt style storage engine');
 			}
+
+			self::$loaded_engines[$engine] = true;
 
 			return(new $class($registry, $style, $templates));
 		}
