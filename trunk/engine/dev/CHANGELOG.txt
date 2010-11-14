@@ -16,6 +16,7 @@
 	Added the concept of parent datamanagers, shutdown handlers and improved way to execute hooks (Kalle)
 	Added a new optional parameter to the datamanager save method to prohibit execution of hooks (Kalle)
 	Added support for throw exceptions if the autoloader fails to load with fallback to old behaviour (Kalle)
+	Added support for loading helper classes into the runtime (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -29,6 +30,7 @@
 	Changed the datamanager deletion method to signal adapters with cache hooks to rebuild the datastore (Kalle)
 	Changed the styles to contain the ids of which templates thats assigned to the style (Kalle)
 	Changed the name of the 'Filter' class to be 'Input' (Kalle)
+	Changed style engines to load faster if multiple instances of the same handle have been loaded (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
