@@ -41,6 +41,7 @@
 	Fixed possible error while attempting to display an error due to wrong initialization order in the developmen tools (Kalle)
 	Fixed array handling of raw data when using the filter component using the ext/filter backend from PHP (Kalle)
 	Fixed exception calls in datamanager adapters to resolve correctly (Kalle)
+	Fixed version comparison logic in the requirements test (Kalle)
 
 
 	Tuxxedo Engine 1.0.0
