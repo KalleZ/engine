@@ -312,7 +312,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails when loading the datamanager
 		 */
-		final public static function factory($datamanager, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL, $custom = false)
+		final public static function factory($datamanager, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$registry = Registry::init();
 
@@ -329,7 +329,7 @@
 				}
 			}
 
-			$class	= (!$custom ? '\Tuxxedo\Datamanager\Adapter\\' : '') . ucfirst($datamanager);
+			$class	= (strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . ucfirst($datamanager);
 			$dm 	= new $class($registry, $identifier, $options, $parent);
 
 			if(\in_array($datamanager, self::$loaded_datamanagers))
