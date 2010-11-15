@@ -77,15 +77,14 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
 		 * @param	string				The helper handle to instanciate
-		 * @param	string				Whether to register this helper in the registry
-		 * @param	boolean				Whether this is a custom storage engine
+		 * @param	boolean				Whether to register this helper in the registry
 		 * @return	object				Returns a helper handle object reference
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid helpers
 		 */ 
-		final public static function factory(Registry $registry, $helper, $register = true, $custom = false)
+		final public static function factory(Registry $registry, $helper, $register = true)
 		{
-			$class = (!$custom ? '\Tuxxedo\Helper\\' : '') . ucfirst($helper);
+			$class = (strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . ucfirst($helper);
 
 			if(isset(self::$loaded_helpers[$helper]))
 			{

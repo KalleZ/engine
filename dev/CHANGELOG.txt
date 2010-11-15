@@ -31,6 +31,7 @@
 	Changed the styles to contain the ids of which templates thats assigned to the style (Kalle)
 	Changed the name of the 'Filter' class to be 'Input' (Kalle)
 	Changed style engines to load faster if multiple instances of the same handle have been loaded (Kalle)
+	Changed the custom loading logic in datamanagers and style storage engines to autodetect custom classes (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
