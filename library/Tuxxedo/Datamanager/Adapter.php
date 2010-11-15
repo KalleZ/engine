@@ -306,7 +306,6 @@
 		 * @param	string				Datamanger name
 		 * @param	mixed				An identifier to send to the datamanager to load default data upon instanciating it
 		 * @param	integer				Additional options to apply on the datamanager
-		 * @param	boolean				Whether this is a custom adapter
 		 * @return	\Tuxxedo\Datamanager\Adapter	Returns a new database instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
