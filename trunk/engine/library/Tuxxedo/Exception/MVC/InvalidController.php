@@ -50,9 +50,13 @@
 	{
 		/**
 		 * Constructor, sets the standardized exception message
+		 *
+		 * @param	\Exception				The previous exception if any
 		 */
-		public function __construct()
+		public function __construct(\Exception $previous = NULL)
 		{
+			$this->previous = $previous;
+
 			parent::__construct('Invalid controller');
 		}
 	}    
