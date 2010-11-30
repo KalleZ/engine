@@ -206,21 +206,22 @@
 		/**
 		 * Route (start the controller)
 		 *
-		 * @return	\Tuxxedo\Controller				Returns a new controller instance
+		 * @return	\Tuxxedo\MVC\Controller				Returns a new controller instance
 		 *
 		 * @throws	\Tuxxedo\Exception\MVC\InvalidController	Throws an invalid controller exception if the controller could not be loaded
 		 */
 		public function route()
 		{
-			$controller = $this->prefix . $this->controller;
-
-			if(!Loader::load($controller, false))
+			try
 			{
-				throw new Exception\MVC\InvalidController;
+				$controller = $this->prefix . $this->controller;
+				$controller = new $controller($this->registry);
+				$controller->setRouter($this);
 			}
-
-			$controller = new $controller($this->registry);
-			$controller->setRouter($this);
+			catch(Exception\Basic $e)
+			{
+				throw new Exception\MVC\InvalidController($e);
+			}
 
 			return($controller);
 		}
