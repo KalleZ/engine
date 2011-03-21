@@ -20,7 +20,7 @@
 	 */
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Filter;
+	use Tuxxedo\Input;
 
 
 	/**
@@ -59,7 +59,7 @@
 	require('./includes/bootstrap.php');
 
 
-	if(($styleid = $input->get('style', Filter::TYPE_NUMERIC)))
+	if(($styleid = $input->get('style', Input::TYPE_NUMERIC)))
 	{
 		if(!isset($cache->styleinfo[$styleid]))
 		{
