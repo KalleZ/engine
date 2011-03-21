@@ -167,7 +167,7 @@
 			{
 				$salt 		= htmlspecialchars(\Tuxxedo\User::getPasswordSalt($chars));
 				$hash 		= \Tuxxedo\User::getPasswordHash($password, $salt);
-				$password	= htmlspecialchars($password);
+				$password	= ($input->post('hide_password') ? '********' : htmlspecialchars($password));
 
 				eval('$results = "' . $style->fetch('tools_password_result') . '";');
 			}

@@ -253,7 +253,6 @@
 				break;
 			}
 
-
 			if(self::$have_filter_ext)
 			{
 				if($source != 4 && !\filter_has_var($data, $field))

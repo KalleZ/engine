@@ -39,7 +39,7 @@
 
 	Other
 	 - Change the default screen to be themed like the DevTools
-	 - Fix some old references to \Tuxxedo\Filter, mainly in the DevTools codebase
+	 - Change the IO class to be a set of procedural functions instead
 
 
 	Tuxxedo Engine 1.0.1
