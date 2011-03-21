@@ -189,7 +189,8 @@ CREATE TABLE IF NOT EXISTS `styles` (
   `name` varchar(128) NOT NULL,
   `developer` varchar(128) NOT NULL,
   `styledir` varchar(128) NOT NULL,
-  `default` tinyint(1) NOT NULL DEFAULT '0',
+  `default` tinyint(1) NOT NULL DEFAULT '0', 
+  `templateids` mediumtext NOT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -198,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `styles` (
 --
 
 INSERT INTO `styles` (`id`, `name`, `developer`, `styledir`, `default`, `templateids`) VALUES
-(1, 'Default', 'Tuxxedo Software Development', 'default', 1);
+(1, 'Default', 'Tuxxedo Software Development', 'default', 1, '1,2,3,4');
 
 -- --------------------------------------------------------
 

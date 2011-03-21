@@ -102,7 +102,7 @@
 						$styledm['name'] 	= $input->post('name');
 						$styledm['developer']	= $input->post('developer');
 						$styledm['styledir']	= $input->post('styledir');
-						$styledm['default']	= $input->post('default', Filter::TYPE_BOOLEAN);
+						$styledm['default']	= $input->post('default', Input::TYPE_BOOLEAN);
 
 						$styledm->save();
 
@@ -159,7 +159,7 @@
 				case('list'):
 				case('search'):
 				{
-					throw new Exception\Core('Template handlers not implemented');
+					throw new Exception\Core('Template handlers are yet to be implemented');
 				}
 				break;
 				default:
