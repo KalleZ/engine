@@ -34,7 +34,7 @@
 	 *
 	 * @var		string
 	 */
-	const TEMPLATE_DIR		= '../tools/style/templates';
+	define('TEMPLATE_DIR', realpath(__DIR__ . '/..') . '/tools/style/templates/');
 
 
 	$cli = IO::isCLI();

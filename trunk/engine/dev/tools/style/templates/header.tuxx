@@ -161,7 +161,6 @@
 			{
 				background:			#044968 url('./style/images/top-background.png') repeat-x center left;
 				border:				0px;
-				border-radius:			4px;
 				color:				#FFFFFF;
 			}
 		label

@@ -1,16 +1,19 @@
 {$header}
 
-<h2>Redirecting ...</h2>
-<p>
-	{$message}
-</p>
-<p>
-	<em>
-	If you are not redirected within a few seconds, then 
-	click <a href=\"{$location}\">here</a> to be redirected 
-	manually.
-	</em>
-</p>
+<h1>Redirecting ...</h1>
+<div class=\"box\">
+	<div class=\"inner\">
+		{$message}
+
+		<p>
+			<em>
+				If you are not redirected within a few seconds, then 
+				click <a href=\"{$location}\">here</a> to be redirected 
+				manually.
+			</em>
+		</p>
+	</div>
+</div>
 
 <script type=\"text/javascript\">
 <!--
