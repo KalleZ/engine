@@ -33,7 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Exception\Basic;
+	use Tuxxedo\Exception;
 
 
 	/**
