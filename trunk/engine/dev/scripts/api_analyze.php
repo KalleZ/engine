@@ -398,6 +398,7 @@
 		foreach($tokens as $index => $token)
 		{
 			$token = (is_array($token) ? $token : Array($token));
+
 			switch($token[0])
 			{
 				case(T_NAMESPACE):
@@ -488,7 +489,7 @@
 						++$missing_docblocks;
 					}
 
-					$context->depth_check			= true;
+					$context->depth_check			= 1;
 					$context->modifiers			= 0;
 					++$elements;
 
@@ -535,7 +536,7 @@
 							++$missing_docblocks;
 						}
 
-						$context->depth_check									= !($context->modifiers & ACC_ABSTRACT);
+						$context->depth_check									= (!($context->modifiers & ACC_ABSTRACT) ? 1 : false);
 						$context->modifiers									= 0;
 						$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
 						++$elements;
@@ -724,7 +725,7 @@
 				break;
 				case('{'):
 				{
-					if($context->depth_check)
+					if($context->depth_check && $context->depth_check !== 1)
 					{
 						++$context->depth_check;
 					}
