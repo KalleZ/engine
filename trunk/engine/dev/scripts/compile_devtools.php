@@ -26,7 +26,7 @@
 	/**
 	 * Bootstraper
 	 */
-	require('./includes/bootstrap.php');
+	require(__DIR__ . '/includes/bootstrap.php');
 
 
 	/**
@@ -34,7 +34,7 @@
 	 *
 	 * @var		string
 	 */
-	const TEMPLATE_DIR		= '../tools/style/templates/';
+	const TEMPLATE_DIR		= '../tools/style/templates';
 
 
 	$cli = IO::isCLI();

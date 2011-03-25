@@ -38,14 +38,14 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_DIR', 		'../..');
+	define('TUXXEDO_DIR', '../..');
 
 	/**
 	 * Sets the library path
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_LIBRARY', 	'../../library');
+	define('TUXXEDO_LIBRARY', '../../library');
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
@@ -64,7 +64,7 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_PREFIX', 	$configuration['database']['prefix']);
+	define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 
 	date_default_timezone_set('UTC');
 

@@ -35,14 +35,14 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_DIR', 		'../..');
+	define('TUXXEDO_DIR', 		realpath(__DIR__ . '/../../..'));
 
 	/**
 	 * Sets the library path
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_LIBRARY', 	'../../library');
+	define('TUXXEDO_LIBRARY', 	realpath(__DIR__ . '/../../..') . '/library');
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
@@ -77,4 +77,11 @@
 	 * @var		integer
 	 */
 	define('TIMENOW_UTC', TIMENOW);
+
+	/**
+	 * Set database table prefix constant
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 ?>

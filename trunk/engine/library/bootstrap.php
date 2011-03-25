@@ -149,6 +149,7 @@
 	 */
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('cache', '\Tuxxedo\Datastore');
+
 	/**
 	 * Precache elements from datastore
 	 */
