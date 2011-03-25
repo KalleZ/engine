@@ -38,7 +38,7 @@
 						'tuxxedo_shutdown_handler'	=> 'Shutdown handler', 
 						'tuxxedo_exception_handler'	=> 'Exception handler', 
 						'tuxxedo_error_handler'		=> 'Error handler', 
-						'tuxxedo_multi_error'		=> 'Multi error, caused by left operand call'
+						'tuxxedo_multi_error'		=> 'Multi error, possibly caused by left operand call'
 						);
 		}
 
