@@ -22,7 +22,6 @@
 	Scripts
 	 - Docblock the IO class
 	 - Convert api_analyze.php internally, so it uses the IO API
-	 - Fix api_analyze.php, methods declared static with static variables will not be shown as static
 
 	Datamanagers
 	 - Update the phrases for the datamanagers to match new ones
@@ -38,7 +37,6 @@
 	 - Implement permission constants for cached permission fields
 
 	Other
-	 - Change the default screen to be themed like the DevTools
 	 - Change the IO class to be a set of procedural functions instead
 
 
