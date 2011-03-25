@@ -25,10 +25,11 @@
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement validators
-	Implement API accessors
-	Implement API helpers
-         - Uploading API
+        Implement a form of uploading API
 	Implement some handler registry so we dont have to re-invent the wheel everytime a component may have handlers
+	Implement a form of Webservices handler backend that can be used to pull and push
+	 - Authentication support using Engine's authentication system
+	 - Map pull's in an object oriented way so they kinda work like SOAP objects, <error><code>123</code></error>: $api->getError()->getCode() or similar
 	
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases

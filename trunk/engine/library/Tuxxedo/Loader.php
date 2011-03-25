@@ -76,6 +76,13 @@
 		 */
 		public static $paths		= Array();
 
+		/**
+		 * Custom match points using regular expressions
+		 *
+		 * @var		array
+		 */
+		public static $routes		= Array();
+
 
 		/**
 		 * Defines one or more rewrite rules for autoloading 
@@ -116,14 +123,44 @@
 		}
 
 		/**
+		 * Defines one or more rewrite rules for autoloading 
+		 * paths using PCRE
+		 *
+		 * @param	string				The regular expression to match (without delimiters and modifiers)
+		 * @param	string				The matching formatting, including separators if any
+		 * @return	void				No value is returned
+		 */
+		public static function route($regex, $replacement)
+		{
+			if(\is_array($regex) && \is_array($replacement))
+			{
+				if(!$regex || !$replacements || ($length = \sizeof($regex)) != \sizeof($replacement))
+				{
+					return;
+				}
+
+				for($n = 0; $n < $length; ++$n)
+				{
+					self::$routes[$regex[$n]] = $replacement[$n];
+				}
+			}
+			else
+			{
+				self::$routes[$regex] = $replacement;
+			}
+		}
+
+		/**
 		 * Normalizes a class name into a path
 		 *
-		 * @var		string				The class to convert
+		 * @param	string				The class to convert
 		 * @return	string				Returns the matching path
 		 */
-		public static function getNormalizedPath($name)
+		public static function getNormalizedPath($name, &$regex_match = NULL)
 		{
-			if(isset(self::$paths[$name]))
+			$regex_match = false;
+
+			if(self::$paths && isset(self::$paths[$name]))
 			{
 				if(\strpos($name, self::$paths[$name]['separator']) !== false)
 				{
@@ -131,6 +168,21 @@
 				}
 
 				return(self::$paths[$name]['root'] . '/' . $name . '.php');
+			}
+			elseif(self::$routes)
+			{
+				foreach(self::$routes as $regex => $replacement)
+				{
+					$match = \preg_replace('#' . $regex . '#Ui', $replacement, $name);
+
+					if($match && $match !== $name)
+					{
+						$name 		= $match;
+						$regex_match 	= $match;
+
+						break;
+					}
+				}
 			}
 
 			if(\strpos($name, self::$separator) !== false)
@@ -153,9 +205,19 @@
 		 */
 		public static function load($name, $silent = false)
 		{
-			$path = self::getNormalizedPath($name);
+			$regex_match 	= false;
+			$path 		= self::getNormalizedPath($name, $regex_match);
 
-			if(!is_file($path))
+			if($regex_match)
+			{
+				class_alias($regex_match, $name);
+			}
+
+			if(self::exists($name))
+			{
+				return(true);
+			}
+			elseif(!is_file($path))
 			{
 				if($silent)
 				{
