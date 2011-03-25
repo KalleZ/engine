@@ -18,7 +18,14 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\MVC\View as Template;
 	use Tuxxedo\Version;
+
+
+	/**
+	 * Precache templates
+	 */
+	$templates = Array('index');
 
 
 	/**
@@ -31,7 +38,8 @@
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
-	echo($header);
-	echo('Tuxxedo Engine version: ' . Version::FULL . (Version::PREVIEW ? ' (development preview)' : '') . (TUXXEDO_DEBUG ? ' (DEBUG)' : ''));
-	echo($footer);
+	$index 			= new Template('index', true);
+	$index['version'] 	= Version::FULL . (Version::PREVIEW ? ' (development preview)' : '') . (TUXXEDO_DEBUG ? ' (DEBUG)' : '');
+
+	eval(page_print($index));
 ?>

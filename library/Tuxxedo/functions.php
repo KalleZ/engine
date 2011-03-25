@@ -554,7 +554,7 @@
 	 * @param	boolean				Whether to show the 'Go back' button or not
 	 * @return	void				No value is returned
 	 */
-	function tuxxedo_error($message, $goback = true)
+	function tuxxedo_error($message, $go_back = true)
 	{
 		eval(page('error'));
 		exit;
@@ -614,6 +614,19 @@
 			'global $header, $footer;' . 
 			'echo("' . $registry->style->fetch($template) . '");'
 			);
+	}
+
+	/**
+	 * Wrapper function for printing a page content 
+	 * from a variable. This function is mainly for 
+	 * views that have layout mode activated.
+	 *
+	 * @param	string				The template contents to print
+	 * @return	string				Returns a string for eval()'ing the content
+	 */
+	function page_print($content)
+	{
+		return('echo("' . $content . '");');
 	}
 
 	/**
