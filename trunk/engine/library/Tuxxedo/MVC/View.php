@@ -95,12 +95,14 @@
 		 * Constructor, constructs a new View
 		 *
 		 * @param	string				The name of the view to load
+		 * @param	boolean				Set to true to activate layout mode, and false to not
 		 */
-		public function __construct($name)
+		public function __construct($name, $layout = false)
 		{
 			$this->registry		= Registry::init();
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
+			$this->layout		= (boolean) $layout;
 		}
 
 		/**
