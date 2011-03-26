@@ -141,7 +141,7 @@
 
 			if($style & self::STYLE_UNDERLINE)
 			{
-				$buffer = sprintf('<span style="text: underline;">%s</span>', $buffer);
+				$buffer = sprintf('<span style="text-decoration: underline;">%s</span>', $buffer);
 			}
 
 			return($buffer);
