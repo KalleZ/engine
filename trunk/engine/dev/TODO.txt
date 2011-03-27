@@ -20,7 +20,6 @@
 	   - Fix editing options, and possible adding new ones (naming conflict)
 
 	Scripts
-	 - Docblock the IO class
 	 - Convert api_analyze.php internally, so it uses the IO API
 
 	Datamanagers
@@ -35,9 +34,6 @@
 
 	User API
 	 - Implement permission constants for cached permission fields
-
-	Other
-	 - Change the IO class to be a set of procedural functions instead
 
 
 	Tuxxedo Engine 1.0.1

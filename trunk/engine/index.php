@@ -25,7 +25,10 @@
 	/**
 	 * Precache templates
 	 */
-	$templates = Array('index');
+	$templates = Array(
+				/* Index page */
+				'index'
+				);
 
 
 	/**

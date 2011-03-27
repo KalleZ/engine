@@ -44,19 +44,60 @@
 	 */
 	class IO
 	{
-		const TAG_START = 1;
-		const TAG_END = 2;
+		/**
+		 * Tag mode constant - indicates start of a tag
+		 *
+		 * @var		integer
+		 */
+		const TAG_START 	= 0;
 
-		const STYLE_BOLD = 1;
-		const STYLE_ITALIC = 2;
-		const STYLE_UNDERLINE = 4;
+		/**
+		 * Tag mode constant - indicates end of a tag
+		 *
+		 * @var		integer
+		 */
+		const TAG_END 		= 1;
+
+		/**
+		 * Style mode constant - indicates bold text
+		 *
+		 * @var		integer
+		 */
+		const STYLE_BOLD 	= 1;
+
+		/**
+		 * Style mode constant - indicates italic text
+		 *
+		 * @var		integer
+		 */
+		const STYLE_ITALIC 	= 2;
+
+		/**
+		 * Style mode constant - indicates underlined text
+		 *
+		 * @var		integer
+		 */
+		const STYLE_UNDERLINE 	= 4;
 
 
+		/**
+		 * Nesting level of block elements
+		 *
+		 * @var		integer
+		 */
+		public static $depth	= 0;
+
+
+		/**
+		 * Checks if the script is running using a console
+		 *
+		 * @return	boolean				Returns true if the client is a console, otherwise false for webservers
+		 */
 		public static function isCli()
 		{
 			static $cli;
 
-			if(!$cli)
+			if($cli === NULL)
 			{
 				$cli = (PHP_SAPI == 'cli');
 			}
@@ -64,6 +105,12 @@
 			return($cli);
 		}
 
+		/**
+		 * Writes a headline
+		 *
+		 * @param	string				The headline text
+		 * @return	void				No value is returned
+		 */
 		public static function headline($text)
 		{
 			if(self::isCli())
@@ -76,7 +123,13 @@
 			printf('<h2>%s</h2>', $text);
 		}
 
-		public static function ul($mode)
+		/**
+		 * Starts or end writing an unordered list
+		 *
+		 * @param	integer				Either TAG_START or TAG_END class constants as a boolean
+		 * @return	void				No value is returned
+		 */
+		public static function ul($mode = self::TAG_START)
 		{
 			if(self::isCli())
 			{
@@ -85,19 +138,30 @@
 
 			if($mode == self::TAG_END)
 			{
+				--self::$depth;
+
 				echo('</ul>');
 			}
 			else
 			{
+				++self::$depth;
+
 				echo('<ul>');
 			}
 		}
 
+		/**
+		 * Writes a list item, optionally using a style
+		 *
+		 * @param	string				The list item text
+		 * @param	integer				The style bitfield, consisting of the STYLE_XXX constants
+		 * @return	void				No value is returned
+		 */
 		public static function li($text, $style = 0)
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, ' * %s%s', $text, self::eol(1));
+				fprintf(STDOUT, '%s* %s%s', $text, str_repeat(' ', self::$depth), self::eol(1));
 
 				return;
 			}
@@ -105,19 +169,33 @@
 			printf('<li>%s</li>', self::style($text, $style));
 		}
 
+		/**
+		 * Writes a text string, optionally using a style
+		 *
+		 * @param	string				The text
+		 * @param	integer				The style bitfield, consisting of the STYLE_XXX constants
+		 * @return	void				No value is returned
+		 */
+
 		public static function text($text, $style = 0)
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s', $text, self::eol(1));
+				fprintf(STDOUT, '%s%s', $text, self::eol(1));
 
 				return;
 			}
 
-			printf('%s', self::style($text, $style));
+			printf('%s%s', self::style($text, $style), self::eol(1));
 		}
 
-		public static function eol($times)
+		/**
+		 * Repeats an end of line character
+		 *
+		 * @param	integer				The times to repeat an EOL
+		 * @return	string				Returns the EOLs as a string
+		 */
+		public static function eol($times = 1)
 		{
 			if(self::isCli())
 			{
@@ -127,7 +205,14 @@
 			return(str_repeat('<br />', $times));
 		}
 
-		protected static function style($buffer, $style)
+		/**
+		 * Styles a text string
+		 *
+		 * @param	string				The text buffer
+		 * @param	integer				The style bitfield, consisting of the STYLE_XXX constants
+		 * @return	string				Returns the style string
+		 */
+		public static function style($buffer, $style)
 		{
 			if($style & self::STYLE_BOLD)
 			{
