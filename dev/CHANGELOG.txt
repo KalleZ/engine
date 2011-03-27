@@ -15,7 +15,7 @@
 	 - Template
 	Added the concept of parent datamanagers, shutdown handlers and improved way to execute hooks (Kalle)
 	Added a new optional parameter to the datamanager save method to prohibit execution of hooks (Kalle)
-	Added support for throw exceptions if the autoloader fails to load with fallback to old behaviour (Kalle)
+	Added support for throwing exceptions if the autoloader fails to load with fallback to the old behaviour (Kalle)
 	Added support for loading helper classes into the runtime (Kalle)
 	Added support for regular expressions within autoloading matches (Kalle)
 	Added new functions: (Kalle)
