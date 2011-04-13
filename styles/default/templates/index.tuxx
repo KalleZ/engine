@@ -1,0 +1,10 @@
+{$header}
+
+<h1>Tuxxedo Engine</h1>
+<div class=\"box\">
+	<div class=\"inner\">
+		Congratulations, Tuxxedo Engine version {$version} is installed and ready to use!
+	</div>
+</div>
+
+{$footer}
