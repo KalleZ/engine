@@ -16,6 +16,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use DevTools\Utilities\IO;
+
+
+	/**
 	 * Fetches all analyzable files into one huge array
 	 *
 	 * @param	string				The path to analyze from
@@ -357,14 +363,21 @@
 	const ACC_DOCBLOCK	= 64;
 
 
-	$engine_path		= realpath(__DIR__ . '/../../');
-	$files 			= analyze($engine_path);
-	$datamap		= Array();
-	$missing_docblocks	= 0;
-	$elements		= 0;
+	/**
+	 * Bootstraper
+	 */
+	require(__DIR__ . '/includes/bootstrap.php');
 
 
-	echo('<h1>Lexical analyze of engine API</h1>');
+	$engine_path			= realpath(__DIR__ . '/../../');
+	$files 				= analyze($engine_path);
+	$datamap			= Array();
+
+	$statistics			= new stdClass;
+	$statistics->no_docblock	= 0;
+	$statistics->elements		= 0;
+
+	IO::headline('Lexical analyze of the Tuxxedo Engine API', 1);
 
 	foreach($files as $real_file)
 	{
@@ -375,7 +388,12 @@
 			$file = str_replace('\\', '/', $file);
 		}
 
-		printf('<h3>/%s</h3>', $file);
+		if(IO::$depth)
+		{
+			IO::ul(IO::TAG_END);
+		}
+
+		IO::headline('/' . $file, 3);
 
 		$context 		= new stdClass;
 		$context->current 	= false;
@@ -421,13 +439,15 @@
 
 					if(!($context->modifiers & ACC_DOCBLOCK))
 					{
-						++$missing_docblocks;
+						$statistics->no_docblock_list[] = dump_docblockdata($file, $name, DOCBLOCK_NAMESPACE);
+
+						++$statistics->no_docblock;
 					}
 
 					$context->modifiers			= 0;
-					++$elements;
+					++$statistics->elements;
 
-					printf('NAMESPACE (%s) %s<br />', $name, dump_metadata($datamap[$file]['namespaces'][$name]['metadata']));
+					IO::text(sprintf('NAMESPACE (%s) %s', $name, dump_metadata($datamap[$file]['namespaces'][$name]['metadata'])));
 				}
 				break;
 				case(T_USE):
@@ -444,9 +464,9 @@
 
 					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], $alias);
 
-					++$elements;
+					++$statistics->elements;
 
-					printf('ALIAS (%s%s)<br />', $alias[0], (isset($alias[1]) ? ' AS ' . $alias[1] : ''));
+					IO::text(sprintf('ALIAS (%s)%s', $alias[0], (isset($alias[1]) ? ' AS (' . $alias[1] . ')' : '')));
 				}
 				break;
 				case(T_INTERFACE):
@@ -455,6 +475,11 @@
 					if(($name = lexical_scan($tokens_copy, $index, T_STRING)) == false)
 					{
 						continue;
+					}
+
+					if(IO::$depth)
+					{
+						IO::ul(IO::TAG_END);
 					}
 
 					end($datamap[$file]['namespaces']);
@@ -486,25 +511,29 @@
 
 					if(!($context->modifiers & ACC_DOCBLOCK))
 					{
-						++$missing_docblocks;
+						$statistics->no_docblock_list[] = dump_docblockdata(($token[0] == T_CLASS ? DOCBLOCK_CLASS : DOCBLOCK_INTERFACE), $file, key($datamap[$file]['namespaces']), $name);
+
+						++$statistics->no_docblock;
 					}
 
 					$context->depth_check			= 1;
 					$context->modifiers			= 0;
-					++$elements;
 
-					printf('%s (%s) %s<br />', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata']));
+					++$statistics->elements;
+
+					IO::text(sprintf('%s (%s) %s', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata'])));
+					IO::ul();
 
 					if($extends)
 					{
-						printf('- EXTENDS (%s)<br />', resolve_namespace_alias($datamap[$file][$type_multiple][$name]['namespace'], $datamap[$file]['aliases'], $extends));
+						IO::li(sprintf('EXTENDS (%s)', resolve_namespace_alias($datamap[$file][$type_multiple][$name]['namespace'], $datamap[$file]['aliases'], $extends)));
 					}
 
 					if($datamap[$file][$type_multiple][$name]['implements'])
 					{
 						foreach($datamap[$file][$type_multiple][$name]['implements'] as $interface)
 						{
-							printf('- IMPLEMENTS (%s)<br />', resolve_namespace_alias($datamap[$file][$type_multiple][$name]['namespace'], $datamap[$file]['aliases'], $interface));
+							IO::li(sprintf('IMPLEMENTS (%s)', resolve_namespace_alias($datamap[$file][$type_multiple][$name]['namespace'], $datamap[$file]['aliases'], $interface)));
 						}
 					}
 				}
@@ -533,15 +562,18 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
-							++$missing_docblocks;
+							$statistics->no_docblock_list[] = dump_docblockdata(DOCBLOCK_METHOD, $file, $datamap[$file][$context->type_multiple][$context->{$context->type}]['namespace'], $context->{$context->type}, $function, $context->modifiers);
+
+							++$statistics->no_docblock;
 						}
 
 						$context->depth_check									= (!($context->modifiers & ACC_ABSTRACT) ? 1 : false);
 						$context->modifiers									= 0;
 						$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
-						++$elements;
 
-						printf('- METHOD (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
+						++$statistics->elements;
+
+						IO::li(sprintf('METHOD (%s) %s', $function, dump_metadata($metadata['metadata'])));
 
 						unset($metadata);
 					}
@@ -557,14 +589,14 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
-							++$missing_docblocks;
+							++$statistics->no_docblock;
 						}
 
 						$context->modifiers		= 0;
 						$metadata			= end($datamap[$file]['functions']);
-						++$elements;
+						++$statistics->elements;
 
-						printf('FUNCTION (%s) %s<br />', $function, dump_metadata($metadata['metadata']));
+						IO::text(sprintf('FUNCTION (%s) %s', $function, dump_metadata($metadata['metadata'])));
 					}
 				}
 				break;
@@ -591,13 +623,13 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
-							++$missing_docblocks;
+							++$statistics->no_docblock;
 						}
 
 						$context->modifiers			= 0;
-						++$elements;
+						++$statistics->elements;
 
-						printf('GLOBAL CONSTANT (%s) %s<br />', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata']));
+						IO::text(sprintf('GLOBAL CONSTANT (%s) %s', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata'])));
 					}
 				}
 				break;
@@ -620,14 +652,15 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
-							++$missing_docblocks;
+							++$statistics->no_docblock;
 						}
 
 						$context->modifiers									= 0;
 						$metadata										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['constants']);
-						++$elements;
 
-						printf('- CONSTANT (%s) %s<br />', $const, dump_metadata($metadata['metadata']));
+						++$statistics->elements;
+
+						IO::li(sprintf('CONSTANT (%s) %s', $const, dump_metadata($metadata['metadata'])));
 					}
 					else
 					{
@@ -639,13 +672,13 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
-							++$missing_docblocks;
+							++$statistics->no_docblock;
 						}
 
 						$context->modifiers			= 0;
-						++$elements;
+						++$statistics->elements;
 
-						printf('GLOBAL CONSTANT (%s) %s<br />', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata']));
+						IO::text(sprintf('GLOBAL CONSTANT (%s) %s', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata'])));
 					}
 				}
 				break;
@@ -672,14 +705,14 @@
 
 					if(!($context->modifiers & ACC_DOCBLOCK))
 					{
-						++$missing_docblocks;
+						++$statistics->no_docblock;
 					}
 
 					$context->modifiers									= 0;
 					$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
-					++$elements;
+					++$statistics->elements;
 
-					printf('- PROPERTY (%s) %s<br />', $property, dump_metadata($metadata['metadata']));
+					IO::li(sprintf('PROPERTY (%s) %s', $property, dump_metadata($metadata['metadata'])));
 				}
 				break;
 				case(T_PUBLIC):
@@ -743,6 +776,11 @@
 		}
 	}
 
+	if(IO::$depth)
+	{
+		IO::ul(IO::TAG_END);
+	}
+
 	file_put_contents(__DIR__ . '/../api/dumps/serialized.dump', serialize($datamap));
 
 	if(extension_loaded('json'))
@@ -750,9 +788,9 @@
 		file_put_contents(__DIR__ . '/../api/dumps/json.dump', json_encode($datamap));
 	}
 
-	echo('<h1>Status</h1>');
-	echo('<ul>');
-	echo('<li><strong>Total number of elements:</strong> ' . $elements . '</li>');
-	echo('<li><strong>Elements WITHOUT a docblock:</strong> ' . $missing_docblocks . '</li>');
-	echo('</ul>');
+	IO::headline('Status', 1);
+	IO::ul();
+	IO::li('Total number of elements: ' . $statistics->elements, IO::STYLE_BOLD);
+	IO::li('Elements WITHOUT a docblock comment: ' . $statistics->no_docblock, IO::STYLE_BOLD);
+	IO::ul(IO::TAG_END);
 ?>

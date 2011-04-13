@@ -96,13 +96,19 @@
 		 *
 		 * @param	string				The name of the view to load
 		 * @param	boolean				Set to true to activate layout mode, and false to not
+		 * @param	array				Default variables to set
 		 */
-		public function __construct($name, $layout = false)
+		public function __construct($name, $layout = false, Array $variables = NULL)
 		{
 			$this->registry		= Registry::init();
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
 			$this->layout		= (boolean) $layout;
+
+			if($variables)
+			{
+				$this->variables = $variables;
+			}
 		}
 
 		/**
@@ -141,6 +147,12 @@
 			}
 
 			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');
+
+			if($this->layout)
+			{
+				return($this->buffer);
+			}
+
 			return(\str_replace('"', '\"', $this->buffer));
 		}
 

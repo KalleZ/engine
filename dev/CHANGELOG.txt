@@ -8,8 +8,9 @@
 	Added new datamanager validation constant to allow fields to be empty (Kalle)
 	Added virtual fields and virtual field hooks in datamanager adapters (Kalle)
 	Added developmental IO utilities class (Kalle)
-	Added CLI support for the following scripts: (Kalle)
-	 - compile_devtools.php
+	Added new scripts to /dev/scripts: (Kalle)
+	 - sync_templates.php
+	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
 	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
 	Added new datamanagers: (Kalle)
 	 - Template
@@ -21,6 +22,7 @@
 	Added new functions: (Kalle)
 	 - page_print()
 	Added the development tools theme to all default templates, including a new index page (Kalle)
+	Added a new parameter on the view constructor to allow setting variables at construction time (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -38,6 +40,7 @@
 	Changed the custom loading logic in datamanagers and style storage engines to autodetect custom classes (Kalle)
 	Changed the MVC specific exceptions to use the concept of previous exceptions both internally and in the API (Kalle)
 	Changed the view constructor, so that it supports setting the layout mode at instanciation (Kalle)
+	Changed the views to not escape double quotes if the view has layout mode active (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)

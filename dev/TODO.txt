@@ -20,7 +20,7 @@
 	   - Fix editing options, and possible adding new ones (naming conflict)
 
 	Scripts
-	 - Convert api_analyze.php internally, so it uses the IO API
+	 - Add a list of the elements that wasn't covered by docblock tags
 
 	Datamanagers
 	 - Update the phrases for the datamanagers to match new ones
