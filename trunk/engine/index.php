@@ -41,8 +41,7 @@
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
-	$index 			= new Template('index', true);
-	$index['version'] 	= Version::FULL . (Version::PREVIEW ? ' (development preview)' : '') . (TUXXEDO_DEBUG ? ' (DEBUG)' : '');
-
-	eval(page_print($index));
+	echo new Template('index', true, Array(
+						'version' => Version::FULL . (Version::PREVIEW ? ' (development preview)' : '') . (TUXXEDO_DEBUG ? ' (DEBUG)' : '')
+						));
 ?>

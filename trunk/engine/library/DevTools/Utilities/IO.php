@@ -109,18 +109,19 @@
 		 * Writes a headline
 		 *
 		 * @param	string				The headline text
+		 * @param	integer				The headline size (web only)
 		 * @return	void				No value is returned
 		 */
-		public static function headline($text)
+		public static function headline($text, $size = 2)
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s%s', $text, self::eol(2));
+				fprintf(STDOUT, '%s%s%s', self::eol(), $text, self::eol(2));
 
 				return;
 			}
 
-			printf('<h2>%s</h2>', $text);
+			printf('<h%1$d>%2$s</h%1$d>', $size, $text);
 		}
 
 		/**
@@ -161,7 +162,7 @@
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s* %s%s', $text, str_repeat(' ', self::$depth), self::eol(1));
+				fprintf(STDOUT, '%s* %s%s', str_repeat(' ', self::$depth), $text, self::eol());
 
 				return;
 			}
@@ -181,12 +182,12 @@
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s%s', $text, self::eol(1));
+				fprintf(STDOUT, '%s%s', $text, self::eol());
 
 				return;
 			}
 
-			printf('%s%s', self::style($text, $style), self::eol(1));
+			printf('%s%s', self::style($text, $style), self::eol());
 		}
 
 		/**
@@ -212,7 +213,7 @@
 		 * @param	integer				The style bitfield, consisting of the STYLE_XXX constants
 		 * @return	string				Returns the style string
 		 */
-		public static function style($buffer, $style)
+		public static function style($buffer, $style = 0)
 		{
 			if($style & self::STYLE_BOLD)
 			{

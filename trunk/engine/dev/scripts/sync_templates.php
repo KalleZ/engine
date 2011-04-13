@@ -62,7 +62,7 @@
 		}
 
 		IO::headline('Synchronize...');
-		IO::ul(IO::TAG_START);
+		IO::ul();
 
 		while($template = $templates->fetchAssoc())
 		{
