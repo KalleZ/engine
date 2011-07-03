@@ -74,7 +74,11 @@
 
 			if(option_canvas == 'optvalue')
 			{
-				document.getElementById(option_canvas).value = document.getElementById('option_current_value').value;
+				if(document.getElementById('option_current_value').value != '')
+				{
+					document.getElementById(option_canvas).value 		= document.getElementById('option_current_value').value;
+					document.getElementById('option_current_value').value 	= '';
+				}
 			}
 			else
 			{

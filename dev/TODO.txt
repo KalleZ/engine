@@ -16,8 +16,6 @@
 	     - Delete
 	     - Search
 	     - List
-	 - Other
-	   - Fix editing options, and possible adding new ones (naming conflict)
 
 	Scripts
 	 - Add a list of the elements that wasn't covered by docblock tags
@@ -34,6 +32,11 @@
 
 	User API
 	 - Implement permission constants for cached permission fields
+	 - Implement getCurrentUsergroup stuff if needed
+	 - Fix getUsergroup stuff as identified in emil.rar
+
+	Others
+	 - Fix that bloody compiler test() method causing fatal errors in the DevTools
 
 
 	Tuxxedo Engine 1.0.1
