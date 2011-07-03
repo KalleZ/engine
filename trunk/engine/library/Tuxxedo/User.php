@@ -202,7 +202,7 @@
 			{
 				return(false);
 			}
-			elseif(isset($this->userinfo->id))
+			elseif(isset($this->userinfo->id) || $this->userinfo->id)
 			{
 				$this->logout(true);
 			}
@@ -235,7 +235,7 @@
 		 */
 		public function logout($restart = false)
 		{
-			if(!isset($this->userinfo->id))
+			if(!isset($this->userinfo->id) || !$this->userinfo->id)
 			{
 				return;
 			}
@@ -372,7 +372,7 @@
 		 */
 		public function isMemberOf($groupid)
 		{
-			return(isset($this->userinfo->id) && $this->userinfo->usergroupid == $groupid);
+			return(isset($this->userinfo->id) && $this->userinfo->id && $this->userinfo->usergroupid == $groupid);
 		}
 
 		/**
@@ -382,7 +382,7 @@
 		 */
 		public function isLoggedIn()
 		{
-			return(isset($this->userinfo->id));
+			return(isset($this->userinfo->id) && $this->userinfo->id);
 		}
 
 		/**
@@ -396,7 +396,7 @@
 		 */
 		public function isGranted($permission, $checkgroup = true)
 		{
-			if(!isset($this->userinfo->id))
+			if(!isset($this->userinfo->id) || !$this->userinfo->id)
 			{
 				return(false);
 			}
@@ -423,7 +423,7 @@
 		 */
 		public function isGroupGranted($permission)
 		{
-			if(!isset($this->userinfo->id))
+			if(!isset($this->userinfo->id) || !$this->userinfo->id)
 			{
 				return(false);
 			}
