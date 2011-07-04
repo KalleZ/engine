@@ -142,5 +142,40 @@
 
 			return($this->templates->{$template});
 		}
+
+		/**
+		 * Unloads a template from current memory
+		 *
+		 * @param	string|array			The name of the template(s) to remove from the cache
+		 * @return	boolean				Returns true on success and false on error
+		 */
+		public function unload($list)
+		{
+			if(!$list)
+			{
+				return(false);
+			}
+
+			if(is_array($list))
+			{
+				foreach($list as $template)
+				{
+					if(isset($this->templates->{$template}))
+					{
+						unset($this->templates->{$template});
+					}
+				}
+
+				return(true);
+			}
+			elseif(!isset($this->templates->{$list}))
+			{
+				return(false);
+			}
+
+			unset($this->templates->{$list});
+
+			return(true);
+		}
 	}
 ?>

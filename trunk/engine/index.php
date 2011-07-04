@@ -36,7 +36,6 @@
 	 */
 	require('./library/bootstrap.php');
 
-
 	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
