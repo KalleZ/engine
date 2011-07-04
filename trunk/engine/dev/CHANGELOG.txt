@@ -44,8 +44,10 @@
 	Changed the MVC specific exceptions to use the concept of previous exceptions both internally and in the API (Kalle)
 	Changed the view constructor, so that it supports setting the layout mode at instanciation (Kalle)
 	Changed the views to not escape double quotes if the view has layout mode active (Kalle)
+	Changed the undocumented docblocks while parsing the source in api_analyze.php to be more verbose (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
+	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
 	Fixed namespace alias rules in functions.php and functions_options.php to inherit the 'Exception' namespace (Kalle)
 	Fixed rounded corners on tuxxedo_doc_error()'s using Gecko based browsers (Kalle)
