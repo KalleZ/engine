@@ -150,8 +150,8 @@
 		 * @var		array
 		 */
 		protected $classes			= Array(
-								'user', 
-								'usergroup'
+								'user'		=> true, 
+								'usergroup'	=> true
 								);
 
 		/**
