@@ -24,6 +24,8 @@
 	Added the development tools theme to all default templates, including a new index page (Kalle)
 	Added a new parameter on the view constructor to allow setting variables at construction time (Kalle)
 	Added a new Template class thats not encapsulated within the MVC component (Kalle)
+	Added more configurative options to the template compiler DevTool to allow more generic compilations (Kalle)
+	Added the possibility to unload templates at runtime (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
