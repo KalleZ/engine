@@ -23,27 +23,55 @@
 		application specific routines <em>will not</em> execute here in 
 		this basic sandbox test.
 	</p>
+	<p>
+		If calls are allowed then the relevant names should be inserted into 
+		the text fields in a comma separated manner.
+	</p>
 	<br />
 
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr>
+			<td>
+				<input type=\"checkbox\" name=\"opt_function_limit\"" . ((isset($_POST['opt_function_limit'])) ? (" checked=\"checked\"") : '') . "> Allow procedural function calls
+			</td>
+			<td>
+				<input type=\"text\" name=\"opt_data_function\"" . ((isset($predefined_function)) ? (" value=\"{$predefined_function}\"") : '') . " />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type=\"checkbox\" name=\"opt_class_limit\"" . ((isset($_POST['opt_class_limit'])) ? (" checked=\"checked\"") : '') . "> Allow class method calls
+			</td>
+			<td>
+				<input type=\"text\" name=\"opt_data_class\"" . ((isset($predefined_class)) ? (" value=\"{$predefined_class}\"") : '') . " />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type=\"checkbox\" name=\"opt_closure_limit\"" . ((isset($_POST['opt_closure_limit'])) ? (" checked=\"checked\"") : '') . "> Allow closure calls
+			</td>
+			<td>
+				<input type=\"text\" name=\"opt_data_closure\"" . ((isset($predefined_closure)) ? (" value=\"{$predefined_closure}\"") : '') . " />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type=\"checkbox\" name=\"opt_interpolated_limit\"" . ((isset($_POST['opt_interpolated_limit'])) ? (" checked=\"checked\"") : '') . "> Allow inline interpolated calls
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class=\"warning\">
+	<h3>Warning</h3>
+
 	<p>
-		<label>
-			<input type=\"checkbox\" name=\"opt_function_limit\"" . ((isset($_POST['opt_function_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any procedural function call
-		</label>
-	</p>
-	<p>
-		<label>
-			<input type=\"checkbox\" name=\"opt_class_limit\"" . ((isset($_POST['opt_class_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any class to execute
-		</label>
-	</p>
-	<p>
-		<label>
-			<input type=\"checkbox\" name=\"opt_closure_limit\"" . ((isset($_POST['opt_closure_limit'])) ? (" checked=\"checked\"") : '') . "> Allow any closure calls
-		</label>
-	</p>
-	<p>
-		<label>
-			<input type=\"checkbox\" name=\"opt_interpolated_limit\"" . ((isset($_POST['opt_interpolated_limit'])) ? (" checked=\"checked\"") : '') . "> Allow inline interpolated calls
-		</label>
+		Use of incorrect or disallowed class WILL result in a blank page, so if you keep getting such then 
+		you should go over your code and make sure that all you're calls within the template expressions 
+		are allowed.
 	</p>
 </div>
 

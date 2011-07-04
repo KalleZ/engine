@@ -232,10 +232,20 @@
 					}
 				}
 
-				if($opts)
+				foreach(Array('function', 'class', 'closure') as $data)
 				{
-					$compiler->setOptions($opts);
+					if(!isset($_POST['opt_data_' . $data]) || empty($_POST['opt_data_' . $data]))
+					{
+						continue;
+					}
+
+					$raw 				= array_map('trim', explode(',', $_POST['opt_data_' . $data]));
+					${'predefined_' . $data} 	= htmlspecialchars(implode(',', $raw), ENT_QUOTES);
+
+					array_map(Array($compiler, 'allow' . $data), $raw);
 				}
+
+				$compiler->setOptions($opts);
 
 				try
 				{
