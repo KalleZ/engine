@@ -35,6 +35,7 @@
 	 - Add the possibility to have different backends for phrases
 	 - Add language auto detection based on the request headers and iso codes for non logged in users
 	 - Add translation for /dev/tools
+	 - Add an unload method to make it possible to unload phrasegroups, make sure to account for rebuilding the phrase index to avoid inconsistencies
 
 	Look at implementing playground projects
 	 - Query builder
