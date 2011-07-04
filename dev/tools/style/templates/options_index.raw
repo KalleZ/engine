@@ -29,8 +29,8 @@
 </div>
 
 <if expression="$reminder">
-<div class="box">
-	<h3>Notice</h3>
+<div class="warning">
+	<h3>Warning</h3>
 
 	<p>
 		Not all elements are cached in the datastore or some may be 

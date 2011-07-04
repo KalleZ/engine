@@ -216,7 +216,7 @@
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
-		.box
+		.box, .warning
 		{
 			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
 			border-radius:			4px;
@@ -225,13 +225,13 @@
 
 			-moz-border-radius:		4px;
 		}
-			.box h3, .box h4
+			.box h3, .box h4, .warning h3, .warning h4
 			{
 				font-size:			18px;
 				margin:				0px;
 				padding:			0px;
 			}
-			.box h4
+			.box h4, .warning h4
 			{
 				background:			#044968 url('./style/images/top-background.png') repeat-x top left;
 				border-radius:			4px;
@@ -339,6 +339,16 @@
 						{
 							text-decoration:		underline;
 						}
+		.warning
+		{
+			background:			none;
+			background-color:		#FFFFFF;
+			border:				2px solid #A9272C;
+		}
+			.warning *
+			{
+				color:				#A9272C;
+			}
 		.wrapper
 		{
 			color:				#3B7286;
