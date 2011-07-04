@@ -547,10 +547,12 @@
 				break;
 				case(T_FUNCTION):
 				{
-					if(($function = lexical_scan_separator($tokens_copy, $index, T_STRING, '(')) == false)
+					if(($function = lexical_scan_separator($tokens_copy, $index, T_STRING, '(')) == false || !$function)
 					{
 						continue;
 					}
+
+					$function = $function[0];
 
 					if($context->current == T_CLASS || $context->current == T_INTERFACE)
 					{
