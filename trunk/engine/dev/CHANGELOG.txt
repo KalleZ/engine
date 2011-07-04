@@ -23,6 +23,7 @@
 	 - page_print()
 	Added the development tools theme to all default templates, including a new index page (Kalle)
 	Added a new parameter on the view constructor to allow setting variables at construction time (Kalle)
+	Added a new Template class thats not encapsulated within the MVC component (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -53,6 +54,7 @@
 	Fixed exception calls in datamanager adapters to resolve correctly (Kalle)
 	Fixed version comparison logic in the requirements test (Kalle)
 	Fixed the $goback parameter naming on page(), so that the go back button will work correct (Kalle)
+	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
 
 
 	Tuxxedo Engine 1.0.0
