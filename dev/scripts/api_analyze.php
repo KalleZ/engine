@@ -375,6 +375,7 @@
 
 	$statistics			= new stdClass;
 	$statistics->no_docblock	= 0;
+	$statistics->no_docblock_list	= Array();
 	$statistics->elements		= 0;
 
 	IO::headline('Lexical analyze of the Tuxxedo Engine API', 1);
@@ -439,7 +440,10 @@
 
 					if(!($context->modifiers & ACC_DOCBLOCK))
 					{
-						$statistics->no_docblock_list[] = dump_docblockdata($file, $name, DOCBLOCK_NAMESPACE);
+						$statistics->no_docblock_list[] = Array(
+											'file'	=> $file, 
+											'name'	=> $name
+											);
 
 						++$statistics->no_docblock;
 					}
@@ -511,7 +515,10 @@
 
 					if(!($context->modifiers & ACC_DOCBLOCK))
 					{
-						$statistics->no_docblock_list[] = dump_docblockdata(($token[0] == T_CLASS ? DOCBLOCK_CLASS : DOCBLOCK_INTERFACE), $file, key($datamap[$file]['namespaces']), $name);
+						$statistics->no_docblock_list[] = Array(
+											'file'	=> $file, 
+											'name'	=> $name
+											);
 
 						++$statistics->no_docblock;
 					}
@@ -540,7 +547,7 @@
 				break;
 				case(T_FUNCTION):
 				{
-					if(($function = lexical_scan($tokens_copy, $index, T_STRING)) == false)
+					if(($function = lexical_scan_separator($tokens_copy, $index, T_STRING, '(')) == false)
 					{
 						continue;
 					}
@@ -562,7 +569,10 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
-							$statistics->no_docblock_list[] = dump_docblockdata(DOCBLOCK_METHOD, $file, $datamap[$file][$context->type_multiple][$context->{$context->type}]['namespace'], $context->{$context->type}, $function, $context->modifiers);
+							$statistics->no_docblock_list[] = Array(
+												'file'	=> $file, 
+												'name'	=> $context->{$context->type} . '::' . $function . '()'
+												);
 
 							++$statistics->no_docblock;
 						}
@@ -589,6 +599,11 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
+							$statistics->no_docblock_list[] = Array(
+												'file'	=> $file, 
+												'name'	=> $function
+												);
+
 							++$statistics->no_docblock;
 						}
 
@@ -623,6 +638,11 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
+							$statistics->no_docblock_list[] = Array(
+												'file'	=> $file, 
+												'name'	=> '\\' . $const
+												);
+
 							++$statistics->no_docblock;
 						}
 
@@ -652,6 +672,10 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
+							$statistics->no_docblock_list[] = Array(
+												'file'	=> $file, 
+												'name'	=> $context->{$context->type} . '::' . $const
+												);
 							++$statistics->no_docblock;
 						}
 
@@ -672,6 +696,11 @@
 
 						if(!($context->modifiers & ACC_DOCBLOCK))
 						{
+							$statistics->no_docblock_list[] = Array(
+												'file'	=> $file, 
+												'name'	=> '\\' . $const
+												);
+
 							++$statistics->no_docblock;
 						}
 
@@ -705,6 +734,11 @@
 
 					if(!($context->modifiers & ACC_DOCBLOCK))
 					{
+						$statistics->no_docblock_list[] = Array(
+											'file'	=> $file, 
+											'name'	=> $context->{$context->type} . '::$' . $property
+											);
+
 						++$statistics->no_docblock;
 					}
 
@@ -792,5 +826,18 @@
 	IO::ul();
 	IO::li('Total number of elements: ' . $statistics->elements, IO::STYLE_BOLD);
 	IO::li('Elements WITHOUT a docblock comment: ' . $statistics->no_docblock, IO::STYLE_BOLD);
+
+	if($statistics->no_docblock_list)
+	{
+		IO::ul();
+
+		foreach($statistics->no_docblock_list as $undocumented)
+		{
+			IO::li('[' . $undocumented['file'] . '] ' . $undocumented['name']);
+		}
+
+		IO::ul(IO::TAG_END);
+	}
+
 	IO::ul(IO::TAG_END);
 ?>
