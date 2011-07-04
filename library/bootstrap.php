@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Registry;
+	use Tuxxedo\Template;
 	use Tuxxedo\User;
 
 	/**
@@ -252,6 +253,6 @@
 	/**
 	 * Header and footer templates for the main site
 	 */
-	eval('$header = "' . $style->fetch('header') . '";');
-	eval('$footer = "' . $style->fetch('footer') . '";');
+	$header = new Template('header', true);
+	$footer = new Template('footer', true);
 ?>
