@@ -132,22 +132,23 @@
 		 */
 		public static function ul($mode = self::TAG_START)
 		{
-			if(self::isCli())
-			{
-				return;
-			}
-
 			if($mode == self::TAG_END)
 			{
 				--self::$depth;
 
-				echo('</ul>');
+				if(!self::isCli())
+				{
+					echo('</ul>');
+				}
 			}
 			else
 			{
 				++self::$depth;
 
-				echo('<ul>');
+				if(!self::isCli())
+				{
+					echo('<ul>');
+				}
 			}
 		}
 
