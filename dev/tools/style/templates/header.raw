@@ -258,7 +258,7 @@
 		{
 			margin-left:			270px;
 		}
-			.content .box p
+			.content .box p, .content .warning p
 			{
 				margin:				0px;
 			}
@@ -399,4 +399,5 @@
 				{$widget}
 			</div>
 </if>
+
 			<div class="content">
