@@ -111,6 +111,14 @@
 		{
 			this.location = './styles.php?style=' + select.options[select.selectedIndex].value + '&do=style&action=edit';
 		}
+
+		function engine_swap_password_to_text(id)
+		{
+			var password_value = document.getElementById(id).value;
+
+			document.getElementById(id).type 	= (document.getElementById(id).type == 'password' ? 'text' : 'password');
+			document.getElementById(id).value 	= password_value;
+		}
 		</script>
 
 		<style type=\"text/css\">
@@ -271,7 +279,7 @@
 			}
 		.error
 		{
-			color:				#A50000;
+			color:				#A9272C;
 		}
 		.panel
 		{
