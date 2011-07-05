@@ -48,6 +48,7 @@
 	$indices = Array(
 				'languages'	=> 'id', 
 				'options'	=> 'option', 
+				'permissions'	=> 'name', 
 				'phrasegroups'	=> 'id', 
 				'styleinfo'	=> 'id', 
 				'usergroups'	=> 'id', 
@@ -79,11 +80,13 @@
 				tuxxedo_error('No datastore elements to show');
 			}
 
-			$rows = '';
+			$rows 		= '';
+			$total_size 	= 0;
 
 			while($row = $ds->fetchObject())
 			{
-				$row->length = strlen($row->data);
+				$row->length 	= strlen($row->data);
+				$total_size	+= $row->length;
 
 				if(($data = @unserialize($row->data)) !== false)
 				{
@@ -110,6 +113,7 @@
 				$tables 	= Array(
 							'languages'	=> 'languages', 
 							'options'	=> 'options', 
+							'permissions'	=> 'permissions', 
 							'phrasegroups'	=> 'phrasegroups', 
 							'styleinfo'	=> 'styles', 
 							'usergroups'	=> 'usergroups', 
@@ -125,6 +129,7 @@
 					{
 						case('languages'):
 						case('options'):
+						case('permissions'):
 						case('phrasegroups'):
 						case('styleinfo'):
 						case('usergroups'):
@@ -172,6 +177,11 @@
 									case('usergroups'):
 									{
 										$current[$s['id']] = $s;
+									}
+									break;
+									case('permissions'):
+									{
+										$current[$s['name']] = $s['bits'];
 									}
 									break;
 								}

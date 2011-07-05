@@ -1,24 +1,30 @@
 {$header}
 
-<form action="./datastore.php" method="post">
-	<div class="box">
-		<h4>Datastore dump</h4>
+<div class="box">
+	<h4>Datastore dump</h4>
 
-		<table cellspacing="0" cellpadding="0">
-			<tr class="heading">
-				<td class="start" style="width: 20%;">
-					Name
-				</td>
-				<td style="width: 10%;">
-					Size
-				</td>
-				<td class="end">
-					Data
-				</td>
-			</tr>
-			{$rows}
-		</table>
-	</div>
-</form>
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td class="start" style="width: 20%;">
+				Name
+			</td>
+			<td style="width: 10%;">
+				Size
+			</td>
+			<td class="end">
+				Data
+			</td>
+		</tr>
+		{$rows}
+	</table>
+</div>
+
+<div class="box">
+	<h4>Consumption</h4>
+
+	<p>
+		The datastore current consumes <strong>{$total_size}</strong> bytes of database storage
+	</p>
+</div>
 
 {$footer}

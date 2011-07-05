@@ -160,6 +160,8 @@
 				$this->sessiondm['location']		= \TUXXEDO_SELF;
 				$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
 			}
+
+			$this->setPermissionConstants();
 		}
 
 		/**
@@ -202,7 +204,7 @@
 			{
 				return(false);
 			}
-			elseif(isset($this->userinfo->id) || $this->userinfo->id)
+			elseif(isset($this->userinfo->id) && $this->userinfo->id)
 			{
 				$this->logout(true);
 			}
@@ -217,12 +219,16 @@
 			Session::set('userid', $userinfo->id);
 			Session::set('password', $userinfo->password);
 
-			$this->userinfo			= $userinfo;
-			$this->usergroupinfo		= $this->registry->cache->usergroups[$userinfo->usergroupid];
-			$this->sessiondm['userid'] 	= $userinfo->id;
+			$this->userinfo				= $userinfo;
+			$this->usergroupinfo			= $this->registry->cache->usergroups[$userinfo->usergroupid];
+			$this->sessiondm['userid'] 		= $userinfo->id;
+			$this->userinfo->permissions		= (integer) $this->userinfo->permissions;
+			$this->usergroupinfo['permissions'] 	= (integer) $this->usergroupinfo['permissions'];
 
 			$this->registry->set('userinfo', $userinfo);
 			$this->registry->set('usergroup', $this->usergroupinfo);
+
+			$this->setPermissionConstants();
 
 			return(true);
 		}
@@ -401,14 +407,12 @@
 				return(false);
 			}
 
-			$granted = ($this->userinfo->permissions & $permission) !== 0;
-
-			if(!$granted && $checkgroup)
+			if($checkgroup)
 			{
 				return($this->isGroupGranted($permission));
 			}
 
-			return($granted);
+			return(($this->userinfo->permissions & $permission) !== 0);
 		}
 
 
@@ -428,7 +432,7 @@
 				return(false);
 			}
 
-			return(($this->usergroupinfo->permissions & $permission) !== 0);
+			return(($this->usergroupinfo['permissions'] & $permission) !== 0);
 		}
 
 		/**
@@ -493,6 +497,29 @@
 			}
 
 			return($salt);
+		}
+
+		/**
+		 * Defines global constant values of datastore permissions
+		 *
+		 * @return	void			No value is returned
+		 */
+		protected function setPermissionConstants()
+		{
+			if(!$this->registry->cache->permissions)
+			{
+				return;
+			}
+
+			foreach($this->registry->cache->permissions as $name => $bits)
+			{
+				$name = 'PERMISSION_' . strtoupper($name);
+
+				if(!defined($name))
+				{
+					define($name, (integer) $bits);
+				}
+			}
 		}
 	}
 ?>

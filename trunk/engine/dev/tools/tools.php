@@ -32,21 +32,32 @@
 	 * Action templates
 	 */
 	$action_templates	= Array(
-					'statistics'	=> Array(
-									'tools_statistics', 
-									'tools_statistics_itembit'
-									), 
-					'password'	=> Array(
-									'tools_password', 
-									'tools_password_result'
-									), 
-					'requirements'	=> Array(
-									'tools_requirements', 
-									'tools_requirements_itembit'
-									), 
-					'compiler'	=> Array(
-									'tools_compiler'
-									)
+					'statistics'		=> Array(
+										'tools_statistics', 
+										'tools_statistics_itembit'
+										), 
+					'password'		=> Array(
+										'tools_password', 
+										'tools_password_result'
+										), 
+					'requirements'		=> Array(
+										'tools_requirements', 
+										'tools_requirements_itembit'
+										), 
+					'compiler'		=> Array(
+										'tools_compiler'
+										), 
+					'authentication'	=> Array(
+										'tools_authentication'
+										)
+					);
+
+	/**
+	 * Precache datastore elements
+	 */
+	$precache 		= Array(
+					'options', 
+					'permissions'
 					);
 
 	/**
@@ -262,6 +273,28 @@
 			}
 
 			eval(page('tools_compiler'));
+		}
+		break;
+		case('authentication'):
+		{
+			$identifier_fields = Array(
+							'username', 
+							'email'
+							);
+
+			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), $identifier_fields))
+			{
+				$registry->register('user', '\Tuxxedo\User');
+
+				$logged_in = $user->login($input->post('identifier'), $input->post('password'), $input->post('identifier_field'));
+
+				if($logged_in)
+				{
+					$user->logout();
+				}
+			}
+
+			eval(page('tools_authentication'));
 		}
 		break;
 		default:

@@ -12,5 +12,6 @@
 		<li><a href="./tools.php?do=password">Password generator</a></li>
 		<li><a href="./tools.php?do=requirements">Requirements check</a></li>
 		<li><a href="./tools.php?do=compiler">Template compiler</a></li>
+		<li><a href="./tools.php?do=authentication">User authentication</a></li>
 	</ul>
 </div>

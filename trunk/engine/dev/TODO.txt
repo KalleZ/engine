@@ -16,9 +16,9 @@
 	     - Delete
 	     - Search
 	     - List
-
-	Scripts
-	 - Add a list of the elements that wasn't covered by docblock tags
+	 - Add permission tester tool
+	   - User
+	   - Group
 
 	Datamanagers
 	 - Update the phrases for the datamanagers to match new ones
@@ -30,16 +30,9 @@
 	Options
 	 - Change the options dev tool to work with the options datamanager
 
-	User API
-	 - Implement permission constants for cached permission fields
 
-	Others
-	 - Fix that bloody compiler test() method causing fatal errors in the DevTools
-
-
-	Tuxxedo Engine 1.0.1
+	Tuxxedo Engine 1.0.x
 	------------------------------------------------
 
 	Branch tags/engine/1_0_0 to branches/engine/1_0
-	Backport non API breaking bug fixes to the 1_0 branch
 	Fix the .sql file missing in non dev releases

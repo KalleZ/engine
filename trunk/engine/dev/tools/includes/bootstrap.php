@@ -47,6 +47,26 @@
 	 */
 	define('TUXXEDO_LIBRARY', '../../library');
 
+	/**
+	 * URL of the current page being executed, including its 
+	 * query string, note that this constant is using the 
+	 * raw data. It is up to the user of this constant to 
+	 * proper filter it
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_SELF', $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+
+	/**
+	 * User agent string if any for the browsing user, note that 
+	 * like the TUXXEDO_SELF constant, this have to be escaped if 
+	 * used in database context
+	 *
+	 * @var		string
+	 */
+	define('TUXXEDO_USERAGENT', (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
+
+
 	require(TUXXEDO_LIBRARY . '/configuration.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/functions_widget.php');
