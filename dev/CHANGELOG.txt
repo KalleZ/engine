@@ -28,6 +28,7 @@
 	Added the possibility to unload templates at runtime (Kalle)
 	Added the permission database table and runtime defined constants (Kalle)
 	Added a new DevTool to test user authentication (Kalle)
+	Added support for exporting Docblock tags when running api_analyze.php (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)

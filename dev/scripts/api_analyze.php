@@ -352,6 +352,19 @@
 	 */
 	function lexical_docblock_parse($dump)
 	{
+		static $special_tags;
+
+		if(!$special_tags)
+		{
+			$special_tags = Array(
+						'copyright'	=> 0, 
+						'license'	=> 1, 
+						'author'	=> 0, 
+						'param'		=> 1, 
+						'return'	=> 1
+						);
+		}
+
 		$docblock 	= Array(
 					'description'	=> '', 
 					'tags'		=> Array()
@@ -390,20 +403,80 @@
 
 			if($line{0} == '@')
 			{
-				$tag	= $value = '';
-				$line 	= str_split(substr($line, 1));
+				$next		= true;
+				$current	= -1;
+				$split		= Array();
+				$line 		= str_split(substr($line, 1));
 
-				for($x = 0; isset($line[$x]) && $line[$x] != "\t" && $line[$x] != ' '; ++$x)
+				for($x = 0, $size = sizeof($line); $x < $size; ++$x)
 				{
-					$tag .= $line[$x];
+					if($line[$x] == ' ' || $line[$x] == "\t")
+					{
+						$next = true;
+
+						continue;
+					}
+					elseif($next)
+					{
+						++$current;
+
+						$next = false;
+					}
+
+					if(!isset($split[$current]))
+					{
+						$split[$current] = '';
+					}
+
+					$split[$current] .= $line[$x];
 				}
+
+				$tag = strtolower($split[0]);
+
+				unset($split[0]);
 
 				if(!isset($docblock['tags'][$tag]))
 				{
 					$docblock['tags'][$tag] = Array();
 				}
 
-				$docblock['tags'][$tag][] = ltrim(substr(implode(NULL, $line), $x));
+				if(isset($special_tags[$tag]))
+				{
+					if(($times = $special_tags[$tag]) !== 0)
+					{
+						$shifted = Array();
+						$current = 0;
+
+						do
+						{
+							$shifted[] = $split[$current + 1];
+
+							unset($split[$current + 1]);
+
+							--$times;
+						}
+						while($times);
+					}
+
+					$parsed_split = Array(implode(' ', $split));
+
+					if(isset($shifted))
+					{
+						foreach($shifted as $temp)
+						{
+							array_unshift($parsed_split, $temp);
+						}
+
+						unset($shifted);
+					}
+				}
+
+				$docblock['tags'][$tag][] = (isset($parsed_split) ? $parsed_split : $split);
+
+				if(isset($parsed_split))
+				{
+					unset($parsed_split);
+				}
 			}
 			else
 			{
