@@ -312,6 +312,117 @@
 		return($matched_tokens);
 	}
 
+	/**
+	 * Lexical docblock scanner
+	 *
+	 * @param	array				The tokens copy array
+	 * @param	integer				The token start index
+	 * @param	array				The stop tokens
+	 * @return	array				Returns an array with structured docblock information on success and false on error
+	 */
+	function lexical_docblock(Array $tokens, $index, Array $stop_tokens)
+	{
+		$tokens = array_reverse($tokens);
+		$index 	= sizeof($tokens) - $index;
+
+		for(; isset($tokens[$index]); ++$index)
+		{
+			$token = (is_array($tokens[$index]) ? $tokens[$index][0] : $tokens[$index]);
+
+			if(in_array($token, $stop_tokens))
+			{
+				return(false);
+			}
+			elseif($token != T_DOC_COMMENT)
+			{
+				continue;
+			}
+
+			return(lexical_docblock_parse($tokens[$index][1]));
+		}
+
+		return(false);
+	}
+
+	/**
+	 * Lexical docblock parser
+	 * 
+	 * @param	string				The docblock tag value to parse
+	 * @return	array				Returns a structured array with the docblock variables and false on error
+	 */
+	function lexical_docblock_parse($dump)
+	{
+		$docblock 	= Array(
+					'description'	=> '', 
+					'tags'		=> Array()
+					);
+
+		$dump 		= explode("\n", str_replace("\n\n", "\n", str_replace("\r", "\n", $dump)));
+		$lines		= sizeof($dump) - 1;
+
+		foreach($dump as $n => $line)
+		{
+			if(!$n)
+			{
+				$line = substr($line, -2);
+			}
+			elseif($n === $lines)
+			{
+				$line = substr($line, 0, -2);
+			}
+
+			$line = trim($line);
+
+			if($line{0} == '*')
+			{
+				$line = ltrim(substr($line, 1));
+			}
+
+			if(empty($line) || !preg_match('#[a-zA-Z@]#Ui', $line{0}))
+			{
+				if(empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
+				{
+					$docblock['description'] .= PHP_EOL;
+				}
+
+				continue;
+			}
+
+			if($line{0} == '@')
+			{
+				$tag	= $value = '';
+				$line 	= str_split(substr($line, 1));
+
+				for($x = 0; isset($line[$x]) && $line[$x] != "\t" && $line[$x] != ' '; ++$x)
+				{
+					$tag .= $line[$x];
+				}
+
+				if(!isset($docblock['tags'][$tag]))
+				{
+					$docblock['tags'][$tag] = Array();
+				}
+
+				$docblock['tags'][$tag][] = ltrim(substr(implode(NULL, $line), $x));
+			}
+			else
+			{
+				$docblock['description'] .= $line . PHP_EOL;
+			}
+		}
+
+		if(!empty($docblock['description']))
+		{
+			$docblock['description'] = rtrim($docblock['description']);
+		}
+		elseif(empty($docblock['description']) && !sizeof($docblock['tags']))
+		{
+			return(false);
+		}
+
+		return($docblock);
+	}
+
 
 	/**
 	 * Access modifier constant - Public
@@ -433,6 +544,7 @@
 					}
 
 					$datamap[$file]['namespaces'][$name] 	= Array(
+											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}')), 
 											'metadata'	=> Array(
 															'docblock' => (boolean) ($context->modifiers & ACC_DOCBLOCK)
 															)
@@ -506,6 +618,7 @@
 											'namespace'	=> key($datamap[$file]['namespaces']), 
 											'extends'	=> $extends, 
 											'implements'	=> lexical_scan_extends_implements($tokens_copy, $index, T_IMPLEMENTS),  
+											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 											'metadata'	=> Array(
 															'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
 															'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
@@ -558,6 +671,7 @@
 					{
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] 	= Array(
 																		'method'	=> $function, 
+																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 																		'metadata'	=> Array(
 																						'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
 																						'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
@@ -594,6 +708,7 @@
 						$datamap[$file]['functions'][] = Array(
 											'function'	=> $function, 
 											'namespace'	=> end($datamap[$file]['namespaces']), 
+											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 											'metadata'	=> Array(
 															'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 															)
@@ -633,6 +748,7 @@
 
 						$const 					= substr($const, 1, strlen($const) - 2);
 						$datamap[$file]['constants'][$const]	= Array(
+												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 												'metadata'	=> Array(
 																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																)
@@ -667,6 +783,7 @@
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] 	= Array(
 																		'constant'	=> $const, 
 																		'namespace'	=> end($datamap[$file]['namespaces']), 
+																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 																		'metadata'	=> Array(
 																						'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																						)
@@ -691,6 +808,7 @@
 					else
 					{
 						$datamap[$file]['constants'][$const] 	= Array(
+												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 												'metadata'	=> Array(
 																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																)
@@ -723,6 +841,7 @@
 					$property 										= substr($token[1], 1);
 					$datamap[$file][$context->type_multiple][$context->{$context->type}]['properties'][]	= Array(
 																	'property'	=> $property, 
+																	'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 																	'metadata'	=> Array(
 																					'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
 																					'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
