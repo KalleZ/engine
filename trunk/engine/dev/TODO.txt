@@ -30,6 +30,9 @@
 	Options
 	 - Change the options dev tool to work with the options datamanager
 
+	Scripts
+	 - Fix special parsing cases for @param and @return to properly split it into an array
+
 
 	Tuxxedo Engine 1.0.x
 	------------------------------------------------
