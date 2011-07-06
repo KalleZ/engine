@@ -64,7 +64,7 @@
 		protected $registry;
 
 		/**
-		 * The name of the view to load
+		 * The name of the template to load
 		 *
 		 * @var		string
 		 */
@@ -85,7 +85,7 @@
 		protected $buffer		= '';
 
 		/**
-		 * The variables used within the view
+		 * The variables used within the template
 		 *
 		 * @var		array
 		 */
@@ -93,9 +93,9 @@
 
 
 		/**
-		 * Constructor, constructs a new View
+		 * Constructor, constructs a new template
 		 *
-		 * @param	string				The name of the view to load
+		 * @param	string				The name of the template to load
 		 * @param	boolean				Set to true to activate layout mode, and false to not
 		 * @param	array				Default variables to set
 		 */
@@ -124,9 +124,9 @@
 		}
 
 		/**
-		 * Parses a view
+		 * Parses a template
 		 *
-		 * @return	string				Returns the parsed view
+		 * @return	string				Returns the parsed template
 		 */
 		public function parse()
 		{
@@ -160,9 +160,9 @@
 		}
 
 		/**
-		 * Outputs a view
+		 * Outputs a template
 		 *
-		 * @return	string				Returns the parsed view for outputting
+		 * @return	string				Returns the parsed template for outputting
 		 */
 		public function __toString()
 		{
