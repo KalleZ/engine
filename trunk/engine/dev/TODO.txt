@@ -34,7 +34,6 @@
 	   - Driver
 	   - Result
 	 - Implement the database structure
-	   - options
 	   - permissions
 	   - phrasegroups
 	   - phrases
