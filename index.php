@@ -18,6 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Template;
 	use Tuxxedo\Version;
 
 
@@ -34,7 +35,8 @@
 	 * Bootstraper
 	 */
 	require('./library/bootstrap.php');
-
+var_dump($db);
+exit;
 	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
