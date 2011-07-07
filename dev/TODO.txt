@@ -46,9 +46,3 @@
 	   - users
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
 	 - Change the usage of ` to ' in the engine codebase
-
-
-	Tuxxedo Engine 1.0.x
-	------------------------------------------------
-
-	Fix the .sql file missing in non dev releases
