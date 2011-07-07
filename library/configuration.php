@@ -83,7 +83,7 @@
 	 *
 	 * Drivers marked with (*) requires a sub driver to be defined
 	 */
-	'driver' 	=> 'sqlite', 
+	'driver' 	=> 'pdo', 
 
 	/**
 	 * Sub driver
@@ -94,13 +94,15 @@
 	 * If you for example are using PDO and want to use MySQL as 
 	 * your backend, then this value have to be 'mysql'.
 	 */
-	'subdriver'	=> '', 
+	'subdriver'	=> 'sqlite', 
 
 	/**
 	 * DSN prefix
 	 *
 	 * Some drivers that uses DSN strings, like PDO. May need a 
 	 * DSN prefix if the prefix differs from the driver name.
+	 *
+	 * This parameter is ignored in PDO_SQLite.
 	 */
 	'dsnprefix'	=> '', 
 
@@ -112,10 +114,12 @@
 	 * here in the format of:
 	 *
 	 * parameter1=value1; parameter2=value2;
+	 *
+	 * This parameter is ignored in PDO_SQLite.
 	 */
 	'dsnsuffix'	=> '', 
 
-	/**
+	/** 
 	 * Database host
 	 *
 	 * This is the hostname for where the database system 
@@ -214,6 +218,8 @@
 	 * as a path to where the database is located, like:
 	 *
 	 * 'database' => '/path/to/tuxxedo.sqlite3'
+	 *
+	 * SQLite may use :memory: aswell.
 	 */
 	'database'	=> './dev/sql/bin/tuxxedo.sqlite3', 
 
@@ -238,7 +244,8 @@
 	 *
 	 * If the SQLite driver is used and the password is set
  	 * then it will act as an encryption key for opening the 
-	 * database.
+	 * database. Note that this does not work for SQLite when 
+	 * used inconjuction with PDO.
 	 */
 	'password'	=> '', 
 
