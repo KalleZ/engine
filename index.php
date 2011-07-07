@@ -18,7 +18,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\MVC\View as Template;
 	use Tuxxedo\Version;
 
 
