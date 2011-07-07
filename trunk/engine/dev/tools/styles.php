@@ -89,7 +89,7 @@
 					}
 					elseif(isset($_POST['submit']))
 					{
-						if($action == 'edit' && !isset($_POST['default']) && sizeof($cache->styledata) < 2)
+						if($action == 'edit' && !isset($_POST['defaultstyle']) && sizeof($cache->styledata) < 2)
 						{
 							tuxxedo_error('Cannot disable default style when there only is one');
 						}
@@ -99,10 +99,10 @@
 							$styledm['inherit']	= $input->post('inherit');
 						}
 
-						$styledm['name'] 	= $input->post('name');
-						$styledm['developer']	= $input->post('developer');
-						$styledm['styledir']	= $input->post('styledir');
-						$styledm['default']	= $input->post('default', Input::TYPE_BOOLEAN);
+						$styledm['name'] 		= $input->post('name');
+						$styledm['developer']		= $input->post('developer');
+						$styledm['styledir']		= $input->post('styledir');
+						$styledm['defaultstyle']	= $input->post('defaultstyle', Input::TYPE_BOOLEAN);
 
 						$styledm->save();
 
