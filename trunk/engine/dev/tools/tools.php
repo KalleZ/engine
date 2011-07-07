@@ -116,20 +116,24 @@
 					$statistics['files'][$extension] = 0;
 				}
 
-				if(stripos($extension, 'php') !== false)
-				{
-					$statistics['extensions']['php']['tokens'] += sizeof(token_get_all(file_get_contents($path)));
-				}
-				elseif(stripos($extension, 'png') !== false)
-				{
-					continue;
-				}
-
 				if(!isset($statistics['extensions'][$extension]))
 				{
 					$statistics['extensions'][$extension] 	= Array(
 											'blanks'	=> 0
 											);
+				}
+				elseif(!isset($statistics['extensions'][$extension]['blanks']))
+				{
+					$statistics['extensions'][$extension]['blanks'] = 0;
+				}
+
+				if(stripos($extension, 'php') !== false)
+				{
+					$statistics['extensions'][$extension]['tokens'] += sizeof(token_get_all(file_get_contents($path)));
+				}
+				elseif(stripos($extension, 'png') !== false)
+				{
+					continue;
 				}
 
 				foreach($l = file($path) as $line)

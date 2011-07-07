@@ -15,7 +15,7 @@
 		{$statistics['extensions'][$ext]['blanks']}
 	</td>
 	<td>
-<if expression="$statistics['extensions'][$ext]['tokens']">
+<if expression="isset($statistics['extensions'][$ext]['tokens'])">
 		Tokens: {$statistics['extensions'][$ext]['tokens']}
 </if>
 	</td>
