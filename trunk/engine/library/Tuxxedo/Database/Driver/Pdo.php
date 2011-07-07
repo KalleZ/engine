@@ -120,7 +120,7 @@
 
 			$unix_socket = '';
 
-			switch(\strtolower($this->configuration['subdriver']))
+			switch($this->configuration['subdriver'] = \strtolower($this->configuration['subdriver']))
 			{
 				case('mysql'):
 				{
@@ -137,7 +137,14 @@
 				$port = \sprintf('port=%d;', $port);
 			}
 
-			$dsn = \sprintf('%s:host=%s;dbname=%s;%s%s%s', ($prefix = $this->configuration['dsnprefix'] ? $prefix : $this->configuration['subdriver']), $this->configuration['hostname'], $this->configuration['database'], $port, $unix_socket, $configuration['dsnsuffix']);
+			if($this->configuration['subdriver'] == 'sqlite')
+			{
+				$dsn = \sprintf('sqlite:%s', $this->configuration['database']);
+			}
+			else
+			{
+				$dsn = \sprintf('%s:host=%s;dbname=%s;%s%s%s', ($prefix = $this->configuration['dsnprefix'] ? $prefix : $this->configuration['subdriver']), $this->configuration['hostname'], $this->configuration['database'], $port, $unix_socket, $configuration['dsnsuffix']);
+			}
 
 			try
 			{

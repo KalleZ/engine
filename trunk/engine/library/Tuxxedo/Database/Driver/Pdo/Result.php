@@ -127,7 +127,7 @@
 				return($this->cached_num_rows);
 			}
 
-			return((integer) $this->result->rowCount());
+			return((integer) $this->result->columnCount());
 		}
 
 		/**
