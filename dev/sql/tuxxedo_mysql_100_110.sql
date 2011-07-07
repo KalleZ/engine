@@ -23,7 +23,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 UPDATE `styles` SET `templateids` = '1,2,3,4' WHERE `id` = 1;
 UPDATE `usergroups` SET `permissions` = '1' WHERE `id` = 1;
+
 ALTER TABLE `usergroups` DROP `type`;
+ALTER TABLE `languages` CHANGE `charset` `charset` VARCHAR( 12 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'UTF-8'
 
 REPLACE INTO `datastore` (`name`, `data`) VALUES
 ('languages', 'a:1:{i:1;a:6:{s:2:"id";s:1:"1";s:5:"title";s:7:"English";s:9:"developer";s:28:"Tuxxedo Software Development";s:8:"isotitle";s:2:"en";s:7:"default";s:1:"1";s:7:"charset";s:5:"UTF-8";}}'),
