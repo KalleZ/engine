@@ -86,6 +86,14 @@
 	 */
 	define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 
+	/**
+	 * SQLite uses relative paths
+	 */
+	if($configuration['database']['driver'] == 'sqlite')
+	{
+		$configuration['database']['database'] = '../sql/bin/tuxxedo.sqlite3';
+	}
+
 	date_default_timezone_set('UTC');
 
 	set_error_handler('tuxxedo_error_handler');

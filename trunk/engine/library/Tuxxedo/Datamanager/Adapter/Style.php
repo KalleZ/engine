@@ -74,7 +74,7 @@
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_STRING
 											), 
-							'default'	=> Array(
+							'defaultstyle'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_BOOLEAN, 
 											'default'	=> false
@@ -169,10 +169,10 @@
 				return(false);
 			}
 
-			if(isset($virtual['default']) && $this->registry->options->style_id != $this->data[$this->idname])
+			if(isset($virtual['defaultstyle']) && $this->registry->options->style_id != $this->data[$this->idname])
 			{
 				$dm 			= Adapter::factory('style', $this->registry->options->style_id, 0, $this);
-				$dm['default']		= false;
+				$dm['defaultstyle']	= false;
 
 				$dm->save();
 

@@ -79,10 +79,11 @@
 	 * mysql 	MySQL 3.23+
 	 * mysqli	MySQL 4.1+
 	 * pdo		Any PDO extension (*)
+	 * sqlite	SQLite 3+
 	 *
 	 * Drivers marked with (*) requires a sub driver to be defined
 	 */
-	'driver' 	=> 'mysqli', 
+	'driver' 	=> 'sqlite', 
 
 	/**
 	 * Sub driver
@@ -120,6 +121,9 @@
 	 * This is the hostname for where the database system 
 	 * can be accessed. In most cases this will simply be 
 	 * 'localhost'.
+	 *
+	 * Some databases, like SQLite, thats file based does 
+	 * not use a hostname.
 	 */
 	'hostname' 	=> 'localhost', 
 
@@ -143,6 +147,9 @@
 	 * If your database server is located on a non default 
 	 * port, then set this to the port number or leave it 
 	 * empty if none.
+	 *
+	 * Some databases, like SQLite, thats file based does 
+	 * not use a port.
 	 */
 	'port'		=> '', 
 
@@ -152,6 +159,10 @@
 	 * The timeout limit for the connection before the 
 	 * timeout occurs. If non set then it fallbacks on 
 	 * the internal timeout from php or the server.
+	 *
+	 *
+	 * Some databases, like SQLite, thats file based does 
+	 * not use a timeout.
 	 */
 	'timeout'	=> 3, 
 
@@ -161,6 +172,9 @@
 	 * If your connecting to a database through a socket, 
 	 * then specify the path here or leave it empty for 
 	 * none.
+	 *
+	 * Some databases, like SQLite, thats file based does 
+	 * not use a socket.
 	 */
 	'socket'	=> '', 
 
@@ -184,15 +198,24 @@
 	 * To use persistent connections with mysqli, you must 
 	 * use PHP 5.3 or greater, else Tuxxedo Engine will 
 	 * fallback on regular connections.
+	 *
+	 *
+	 * Some databases, like SQLite, thats file based cannot 
+	 * benefit from persistent connections.
 	 */
 	'persistent'	=> false, 
 
 	/**
 	 * Database name
 	 *
-	 * Name of the database in which Tuxxedo Engine is installed
+	 * Name of the database in which Tuxxedo Engine is installed.
+	 *
+	 * File based databases, like SQLite, will uses this value 
+	 * as a path to where the database is located, like:
+	 *
+	 * 'database' => '/path/to/tuxxedo.sqlite3'
 	 */
-	'database'	=> 'tuxxedo', 
+	'database'	=> './dev/sql/bin/tuxxedo.sqlite3', 
 
 	/**
 	 * Database user
@@ -200,6 +223,9 @@
 	 * Username used for accessing the database, the user 
 	 * set here must have permissions to access the database 
 	 * set above.
+	 *
+	 * Some databases, like SQLite, thats file based does 
+	 * not use a username.
 	 */
 	'username' 	=> 'tuxxedo', 
 
@@ -209,6 +235,10 @@
 	 * This is the password accosiated with the user set 
 	 * above. If the user doesn't require a password then 
 	 * leave this empty.
+	 *
+	 * If the SQLite driver is used and the password is set
+ 	 * then it will act as an encryption key for opening the 
+	 * database.
 	 */
 	'password'	=> '', 
 
