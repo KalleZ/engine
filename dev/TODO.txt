@@ -6,7 +6,6 @@
 	------------------------------------------------
 
 	DevTools
-	 - Improve error messages to include a trace
 	 - Add styles & Templates support
 	   - Style handlers
 	     - When adding a new style, all the templates from the default style should be inherited
