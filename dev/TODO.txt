@@ -31,3 +31,4 @@
 
 	SQLite3 driver
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
+	 - Fix places where multiple INSERT's and UPDATE's are generated so SQLite will pass, namely datamanagers are affected here
