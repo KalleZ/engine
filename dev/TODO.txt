@@ -32,15 +32,28 @@
 	SQLite3 driver
 	 - Implement the SQLite3 database driver depending on ext/sqlite3
 	   - Driver
+	     - connect()
+	     - close()
+	     - isConnected()
+	     - isLink()
+	     - isPersistent()
+	     - isResult()
+	     - getError()
+	     - getErrno()
+	     - getLastInsertId()
+	     - getAffectedRows()
+	     - escape()
+	     - query
 	   - Result
-	 - Implement the database structure
-	   - permissions
-	   - phrasegroups
-	   - phrases
-	   - sessions
-	   - styles
-	   - templates
-	   - usergroups
-	   - users
+	     - $result
+	     - free()
+	     - isFreed()
+	     - getNumRows()
+	     - fetchArray()
+	     - fetchAssoc()
+	     - fetchRow()
+	     - fetchObject()
+	     - fetch()
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
+	 - Update configuration.php to tell about sqlite3 support
 	 - Change the usage of ` to ' in the engine codebase

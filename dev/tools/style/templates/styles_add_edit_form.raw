@@ -27,7 +27,7 @@
 			<td nowrap="nowrap" valign="top">
 				Set this style as default?</td>
 			<td>
-				<label><input type="checkbox" name="default" value="1"<if expression="$action == 'edit' && $styledata['default']"> checked="checked"</if> /> Yes</label></td>
+				<label><input type="checkbox" name="defaultstyle" value="1"<if expression="$action == 'edit' && $styledata['defaultstyle']"> checked="checked"</if> /> Yes</label></td>
 		</tr>
 <if expression="$action == 'add'">
 		<tr>
