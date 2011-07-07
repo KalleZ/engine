@@ -30,9 +30,25 @@
 	Options
 	 - Change the options dev tool to work with the options datamanager
 
+	SQLite3 driver
+	 - Implement the SQLite3 database driver depending on ext/sqlite3
+	   - Driver
+	   - Result
+	 - Implement the database structure
+	   - options
+	   - permissions
+	   - phrasegroups
+	   - phrases
+	   - sessions
+	   - styles
+	   - templates
+	   - usergroups
+	   - users
+	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
+	 - Change the usage of ` to ' in the engine codebase
+
 
 	Tuxxedo Engine 1.0.x
 	------------------------------------------------
 
-	Branch tags/engine/1_0_0 to branches/engine/1_0
 	Fix the .sql file missing in non dev releases
