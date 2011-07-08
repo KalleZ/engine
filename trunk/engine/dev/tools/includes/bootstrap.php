@@ -89,7 +89,7 @@
 	/**
 	 * SQLite uses relative paths
 	 */
-	if($configuration['database']['driver'] == 'sqlite')
+	if($configuration['database']['driver'] == 'sqlite' || ($configuration['database']['driver'] == 'pdo' && $configuration['database']['subdriver'] == 'sqlite'))
 	{
 		$configuration['database']['database'] = '../sql/bin/tuxxedo.sqlite3';
 	}
