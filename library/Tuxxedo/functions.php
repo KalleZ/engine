@@ -183,6 +183,7 @@
 			'<style type="text/css">' . PHP_EOL . 
 			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
 			'h1 { color: #FFFFFF; }' . PHP_EOL . 
+			'h1 sup { color: #3B7286; font-size: 35%; border-bottom: 1px solid #3B7286; }' . PHP_EOL . 
 			'table tr.head td { background-color: #D2D2D2; padding: 5px; }' . PHP_EOL . 
 			'table tr.row, table tr.row * { margin: 0px; padding: 5px; }' . PHP_EOL . 
 			'table tr.strong * { font-weight: bold; }' . PHP_EOL . 
@@ -197,7 +198,7 @@
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
 			(TUXXEDO_DEBUG && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
-			'<h1>Tuxxedo Engine Error</h1>' . PHP_EOL
+			'<h1>Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup></h1>' . PHP_EOL
 			);
 
 		if(TUXXEDO_DEBUG)
