@@ -33,3 +33,4 @@
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
 	 - Change the parser to fetch docblocks of files
 	 - Fix places where multiple INSERT's and UPDATE's are generated so SQLite will pass, namely datamanagers are affected here
+	 - Fix usage of TRUNCATE TABLE, as sqlite doesn't support that exact syntax
