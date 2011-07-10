@@ -12,11 +12,7 @@
 	Improve development tools
 	 - Add internationalization support
 	 - Add user and usergroups support
-	 - Add documenetation generator (eliminate /dev/api/ stuff)
-	 - Integrate api_analyze.php
 	 - Implement installation generators
-	 - Tools
-	   - Add a new tool to authenticate the DevTool session as a user login
 	 - Other
 	   - Add the ability to re-define default values for options
 	   - Add the ability to export/import styles
@@ -44,8 +40,5 @@
 	 - MVC Request
 
 	Extend the API generator
-	 - Parse docblocks
 	 - Parse parameter prototypes
-	 - Be more generic and being able to output to DocBook XML format
-
-	Change SQL queries to be non-mysql compatible (perhaps switch to use the query builder internally?)
+	 - Change the parser to fetch docblocks of files

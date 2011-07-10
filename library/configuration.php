@@ -83,7 +83,7 @@
 	 *
 	 * Drivers marked with (*) requires a sub driver to be defined
 	 */
-	'driver' 	=> 'pdo', 
+	'driver' 	=> 'sqlite', 
 
 	/**
 	 * Sub driver
@@ -94,7 +94,7 @@
 	 * If you for example are using PDO and want to use MySQL as 
 	 * your backend, then this value have to be 'mysql'.
 	 */
-	'subdriver'	=> 'sqlite', 
+	'subdriver'	=> '', 
 
 	/**
 	 * DSN prefix
@@ -259,6 +259,22 @@
 
 	/**
 	 * End database configuration
+	 */
+	), 
+
+	/**
+	 * Development Tools configuration
+	 */
+	'devtools' => Array(
+
+	/**
+	 * Database path for file based databases if above 
+	 * path is relative.
+	 */
+	'database'	=> '../sql/bin/tuxxedo.sqlite3'
+
+	/**
+	 * End Development Tools configuration
 	 */
 	)
 

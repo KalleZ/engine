@@ -25,6 +25,11 @@
 
 
 	/**
+	 * Ini configuration overrides
+	 */
+	ini_set('html_errors', 'Off');
+
+	/**
 	 * Set the debug mode constant
 	 *
 	 * @var		boolean
@@ -89,9 +94,9 @@
 	/**
 	 * SQLite uses relative paths
 	 */
-	if($configuration['database']['driver'] == 'sqlite' || ($configuration['database']['driver'] == 'pdo' && $configuration['database']['subdriver'] == 'sqlite'))
+	if(!is_file($configuration['database']['database']))
 	{
-		$configuration['database']['database'] = '../sql/bin/tuxxedo.sqlite3';
+		$configuration['database']['database'] = $configuration['devtools']['database'];
 	}
 
 	date_default_timezone_set('UTC');

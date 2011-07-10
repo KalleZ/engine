@@ -190,6 +190,11 @@
 				$name = \str_replace(self::$separator, '/', $name);
 			}
 
+			if($name{0} == '/')
+			{
+				return(self::$root . $name . '.php');
+			}
+
 			return(self::$root . '/' . $name . '.php');
 		}
 
