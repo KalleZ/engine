@@ -59,11 +59,11 @@
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_helpers	= Array()
+		protected static $loaded_helpers	= Array();
 
 
 		/**
-		 * Constructs a new storage engine
+		 * Constructs a new helper
 		 *
 	 	 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
 		 */

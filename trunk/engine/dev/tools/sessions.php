@@ -83,9 +83,7 @@
 				break;
 				default:
 				{
-					$db->query('
-							TRUNCATE TABLE 
-								`' . TUXXEDO_PREFIX . 'sessions`');
+					$db->helper->truncate('sessions');
 
 					tuxxedo_redirect('Deleted all active and expired sessions', './sessions.php');
 				}

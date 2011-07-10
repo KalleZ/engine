@@ -19,6 +19,8 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Test;
+	use DevTools\User;
+	use Tuxxedo\Input;
 	use Tuxxedo\Template\Compiler;
 
 	/**
@@ -49,6 +51,11 @@
 										), 
 					'authentication'	=> Array(
 										'tools_authentication'
+										), 
+					'permissions'		=> Array(
+										'option', 
+										'tools_permissions', 
+										'tools_permissions_itembit'
 										)
 					);
 
@@ -281,12 +288,7 @@
 		break;
 		case('authentication'):
 		{
-			$identifier_fields = Array(
-							'username', 
-							'email'
-							);
-
-			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), $identifier_fields))
+			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), Array('username', 'email')))
 			{
 				$registry->register('user', '\Tuxxedo\User');
 
@@ -299,6 +301,105 @@
 			}
 
 			eval(page('tools_authentication'));
+		}
+		break;
+		case('permissions'):
+		{
+			$cache_buffer = Array();
+
+			$registry->register('db', '\Tuxxedo\Database');
+			$cache->cache(Array('usergroups', 'permissions'), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+			unset($cache_buffer);
+
+			$permissions = $users = $usergroups = '';
+
+			foreach(Array('permissions', 'users', 'usergroups') as $element)
+			{
+				switch($element)
+				{
+					case('users'):
+					{
+						$allusers = $db->query('
+									SELECT 
+										`id`, 
+										`username`
+									FROM
+										`' . TUXXEDO_PREFIX . 'users` 
+									ORDER BY 
+										`id` 
+									ASC');
+
+						if(!$allusers->getNumRows())
+						{
+							tuxxedo_error('Unable to fetch users');
+						}
+
+						while($user = $allusers->fetchRow())
+						{
+							$value 		= $user[0];
+							$name		= $user[1];
+							$selected	= (isset($_POST['user']) && $input->post('user', Input::TYPE_NUMERIC) == $user[0]);
+
+							eval('$users .= "' . $style->fetch('option') . '";');
+						}
+					}
+					break;
+					case('permissions'):
+					{
+						foreach($cache->permissions as $name => $bits)
+						{
+							$selected = (isset($_POST['permission_' . $name]) && $_POST['permission_' . $name]);
+
+							eval('$permissions .= "' . $style->fetch('tools_permissions_itembit') . '";');
+						}
+					}
+					break;
+					case('usergroups'):
+					{
+						foreach($cache->usergroups as $value => $group)
+						{
+							$name 		= $group['title'];
+							$selected	= (isset($_POST['usergroup']) && $input->post('usergroup', Input::TYPE_NUMERIC) == $value);
+
+							eval('$usergroups .= "' . $style->fetch('option') . '";');
+						}
+					}
+					break;
+				}
+			}
+
+			if(isset($_POST['progress']))
+			{
+				$user = new User;
+
+				if(isset($_POST['user']) && !empty($_POST['user']) && !$user->impersonateAsUser($input->post('user')))
+				{
+					tuxxedo_error('Unable to impersonate user');
+				}
+				elseif(!$user->isImpersonatingUser() && isset($_POST['usergroup']) && !$user->impersonateAsUsergroup($input->post('usergroup'), $input->post('user')))
+				{
+					tuxxedo_error('Unable to impersonate usergroup');
+				}
+
+				$test_permissions = '';
+
+				foreach($cache->permissions as $name => $bits)
+				{
+					if(!isset($_POST['permission_' . $name]))
+					{
+						continue;
+					}
+
+					eval('$test_permissions .= "' . $style->fetch('tools_permissions_itembit') . '";');
+				}
+
+				if(empty($test_permissions))
+				{
+					unset($test_permissions);
+				}
+			}
+
+			eval(page('tools_permissions'));
 		}
 		break;
 		default:

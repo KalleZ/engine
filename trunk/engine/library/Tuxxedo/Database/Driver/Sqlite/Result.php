@@ -101,6 +101,11 @@
 			{
 				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
 			}
+static $a;
+if(!$a){ $a = 0; }
+
+echo end($this->instance->queries);
+if(++$a == 3){ echo 'last, expects 0, got ' . $this->result->numColumns(); var_dump($this->result->fetchArray()); }
 
 			return((integer) $this->result->numColumns());
 		}
@@ -177,6 +182,12 @@
 				{
 					$retval = new \stdClass;
 					$result = $this->result->fetchArray(\SQLITE3_ASSOC);
+
+					if(!$result)
+					{
+throw new \Tuxxedo\Exception\Basic('I need a backtrace');
+						return(false);
+					}
 
 					foreach($result as $field => $value)
 					{

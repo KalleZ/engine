@@ -1,4 +1,4 @@
-<?xml version=\"1.0\" encoding=\"1.0\"?>
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
 <html xmlns=\"http://www.w3.org/1999/xhtml\">
 	<head>
@@ -194,6 +194,12 @@
 				border-right:			0px;
 				font-weight:			bold;
 			}
+				table tr.heading h5
+				{
+					font-size:			14px;
+					margin:				0px;
+					padding:			0px;
+				}
 				table tr.heading td.end
 				{
 					border-right:			1px solid #21A7CD;

@@ -1,0 +1,12 @@
+<tr>
+	<td>
+		{$name}
+	</td>
+" . ((isset($test_permissions)) ? ("
+	<td nowrap=\"nowrap\">
+		" . (($user->isGranted($bits)) ? ("PASSED") : ("<span class=\"error\">FAILED</span>")) . "</td>
+") : ("
+	<td>
+		<input type=\"checkbox\" name=\"permission_{$name}\"" . (($selected) ? (" checked=\"checked\"") : '') . " /></td>
+")) . "
+</tr>
