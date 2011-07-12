@@ -94,10 +94,15 @@
 	/**
 	 * SQLite uses relative paths
 	 */
-	if(!is_file($configuration['database']['database']))
+	$db_driver	= strtolower($configuration['database']['driver']);
+	$db_subdriver	= strtolower($configuration['database']['subdriver']);
+
+	if(($db_driver == 'sqlite' || ($db_driver == 'pdo' && $db_subdriver == 'sqlite')) && !empty($configuration['devtools']['database']))
 	{
 		$configuration['database']['database'] = $configuration['devtools']['database'];
 	}
+
+	unset($db_driver, $db_subdriver);
 
 	date_default_timezone_set('UTC');
 

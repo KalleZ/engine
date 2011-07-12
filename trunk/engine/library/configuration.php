@@ -83,7 +83,7 @@
 	 *
 	 * Drivers marked with (*) requires a sub driver to be defined
 	 */
-	'driver' 	=> 'sqlite', 
+	'driver' 	=> 'mysql', 
 
 	/**
 	 * Sub driver
@@ -221,7 +221,7 @@
 	 *
 	 * SQLite may use :memory: aswell.
 	 */
-	'database'	=> './dev/sql/bin/tuxxedo.sqlite3', 
+	'database'	=> 'tuxxedo', 
 
 	/**
 	 * Database user
