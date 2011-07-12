@@ -37,6 +37,10 @@
 	$action_templates	= Array(
 					'style'		=> Array(
 									'styles_add_edit_form'
+									), 
+					'templates'	=> Array(
+									'templates_list', 
+									'templates_list_itembit'
 									)
 					);
 
@@ -153,13 +157,33 @@
 		{
 			switch($action = strtolower($input->get('action')))
 			{
+				case('list'):
+				{
+					$templateids = explode(',', $styledm->get('templateids'));
+
+					if(!$templateids || empty($templateids[0]))
+					{
+						tuxxedo_error('This style have no templates');
+					}
+
+					$table = '';
+
+					foreach($templateids as $id)
+					{
+						$template = Datamanager\Adapter::factory('template', $id, Datamanager\Adapter::OPT_LOAD_ONLY);
+
+						eval('$table .= "'. $style->fetch('templates_list_itembit') . '";');
+					}
+
+					eval(page('templates_list'));
+				}
+				break;
 				case('add'):
 				case('edit'):
 				case('delete'):
-				case('list'):
 				case('search'):
 				{
-					throw new Exception\Core('Template handlers are yet to be implemented');
+					throw new Exception\Core('Template handler are yet to be implemented');
 				}
 				break;
 				default:

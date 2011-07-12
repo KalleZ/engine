@@ -54,6 +54,7 @@
 
 		$compiler = new Compiler;
 		$compiler->allowFunction('strlen');
+		$compiler->allowClass('template');
 
 		foreach($templates as $template)
 		{
