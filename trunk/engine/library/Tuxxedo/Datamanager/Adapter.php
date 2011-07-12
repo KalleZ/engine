@@ -199,7 +199,7 @@
 		 *
 		 * @var		\Tuxxedo\Datamanager\Adapter
 		 */
-		protected $parent;
+		protected $parent			= false;
 
 		/**
 		 * Whether the datamanager needs to re-validate
@@ -546,6 +546,10 @@
 
 					continue;
 				}
+				elseif(($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}))
+				{
+					continue;
+				}
 				else
 				{
 					if(!isset($properties['validation']) || !isset($this->userdata->{$field}) || ($filtered = $input->user($this->userdata->{$field}, $properties['validation'])) === NULL)
@@ -643,7 +647,7 @@
 				}
 
 				$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
-				$values .= (is_null($data) ? 'NULL' : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
+				$values .= (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : 'NULL') : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
 			}
 
 			if(!$this->registry->db->query($sql . ') VALUES (' . $values . ')'))
@@ -699,6 +703,16 @@
 									`' . $this->tablename . '`
 								WHERE 
 									`' . $this->idname .'` = \'%s\'', $this->identifier));
+		}
+
+		/**
+		 * Gets the parent datamanager pointer
+		 *
+		 * @return	\Tuxxedo\Datamanager\Adapter	Returns a datamanager pointer to the parent object if any, false on root or error
+		 */
+		public function getParent()
+		{
+			return($this->parent);
 		}
 	}
 ?>

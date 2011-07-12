@@ -14,7 +14,6 @@
 	 - Add user and usergroups support
 	 - Implement installation generators
 	 - Other
-	   - Add the ability to re-define default values for options
 	   - Add the ability to export/import styles
 
 	Implement a generic pagination class with handlers for database and other generic ones based on an interface

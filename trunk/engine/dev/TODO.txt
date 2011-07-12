@@ -6,9 +6,9 @@
 	------------------------------------------------
 
 	DevTools
+	 - Options
+	   - Add the ability to re-define default values for options
 	 - Add styles & Templates support
-	   - Style handlers
-	     - When adding a new style, all the templates from the default style should be inherited
 	   - Template handlers
 	     - Add
 	     - Edit
@@ -18,7 +18,6 @@
 
 	Datamanagers
 	 - Update the phrases for the datamanagers to match new ones
-	 - Fix empty error messages
 	 - New datamanagers
 	   - Option
 	   - Permission
