@@ -2,7 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.1.0
+	Tuxxedo Engine 1.1.0 Alpha 1
 	------------------------------------------------
 
 	DevTools
@@ -15,14 +15,28 @@
 	     - Delete
 
 	Datamanagers
-	 - Update the phrases for the datamanagers to match new ones
 	 - Fix delete default style does not specify a new default style
+
+	Database Layer
+	 - Remove the helper dependency
+
+
+
+	Tuxxedo Engine 1.1.0 Alpha 2
+	------------------------------------------------
+
+	Helpers
+	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
+
+	Datamanagers
+	 - Add a script to check if all datamanager fields have phrases
+	 - Update the phrases for the datamanagers to match new ones
 	 - New datamanagers
 	   - Option
 	   - Permission
 
-	Options
+	DevTools
 	 - Change the options dev tool to work with the options datamanager
 
-	SQLite3 driver
+	Scripts
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
