@@ -119,6 +119,16 @@
 			document.getElementById(id).type 	= (document.getElementById(id).type == 'password' ? 'text' : 'password');
 			document.getElementById(id).value 	= password_value;
 		}
+
+		function engine_templates_handler(select, styleid, templateid)
+		{
+			if(select.options[select.selectedIndex].value == 'delete' && !confirm('Are you sure you wish to delete this template?'))
+			{
+				return;
+			}
+
+			this.location = './styles.php?style=' + styleid + '&do=templates&action=' + select.options[select.selectedIndex].value + '&id=' + templateid;
+		}
 		</script>
 
 		<style type=\"text/css\">
@@ -161,7 +171,7 @@
 		}
 		input, select, textarea
 		{
-			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
+			background-color:		#FFFFFF;
 			border:				1px solid #21A7CD;
 			border-radius:			4px;
 			color:				#000000;
