@@ -296,7 +296,8 @@
 
 			if($options & self::OPT_LOAD_ONLY)
 			{
-				$this->identifier = $this->fields[$this->idname]['value'] = NULL;
+				$this->identifier 	= $this->fields[$this->idname]['value'] = NULL;
+				$this->information 	= &$this->data;
 			}
 		}
 
