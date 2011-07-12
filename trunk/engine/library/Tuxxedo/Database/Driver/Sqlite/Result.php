@@ -32,6 +32,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Database;
+	use Tuxxedo\Exception;
 
 
 	/**
@@ -61,6 +62,37 @@
 		 */
 		protected $result;
 
+
+		/**
+		 * Constructs a new result object
+		 *
+		 * @param	\Tuxxedo\Database		A database instance
+		 * @param	mixed				A database result, this must be delivered from the driver it was created from
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
+		 */
+		public function __construct(Database $instance, $result)
+		{
+			if(!$instance->isResult($result))
+			{
+				throw new Exception\Basic('Passed result resource is not a valid result');
+			}
+
+			$this->instance		= $instance;
+			$this->result		= $result;
+			$this->cached_num_rows 	= $result->numColumns();
+
+			if($this->cached_num_rows && !$result->fetchArray(\SQLITE3_NUM))
+			{
+				$this->result 		= NULL;
+				$this->cached_num_rows	= 0;
+			}
+
+			if($this->result)
+			{
+				$this->result->reset();
+			}
+		}
 
 		/**
 		 * Frees the result from memory, and makes it unusable
@@ -101,11 +133,6 @@
 			{
 				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
 			}
-static $a;
-if(!$a){ $a = 0; }
-
-echo end($this->instance->queries);
-if(++$a == 3){ echo 'last, expects 0, got ' . $this->result->numColumns(); var_dump($this->result->fetchArray()); }
 
 			return((integer) $this->result->numColumns());
 		}
@@ -185,7 +212,6 @@ if(++$a == 3){ echo 'last, expects 0, got ' . $this->result->numColumns(); var_d
 
 					if(!$result)
 					{
-throw new \Tuxxedo\Exception\Basic('I need a backtrace');
 						return(false);
 					}
 

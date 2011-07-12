@@ -86,7 +86,7 @@
 		 *
 		 * @var		array
 		 */
-		public $queries			= Array();
+		protected $queries			= Array();
 
 		/**
 		 * Database specific configuration array
