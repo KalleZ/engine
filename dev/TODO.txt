@@ -13,11 +13,10 @@
 	     - Add
 	     - Edit
 	     - Delete
-	     - Search
-	     - List
 
 	Datamanagers
 	 - Update the phrases for the datamanagers to match new ones
+	 - Fix delete default style does not specify a new default style
 	 - New datamanagers
 	   - Option
 	   - Permission

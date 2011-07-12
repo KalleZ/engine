@@ -40,7 +40,9 @@
 									), 
 					'templates'	=> Array(
 									'templates_list', 
-									'templates_list_itembit'
+									'templates_list_itembit', 
+									'templates_search', 
+									'templates_search_itembit'
 									)
 					);
 
@@ -178,10 +180,93 @@
 					eval(page('templates_list'));
 				}
 				break;
+				case('search'):
+				{
+					if(isset($_POST['query']) && !empty($_POST['query']))
+					{
+						$safe_query	= htmlspecialchars($input->post('query'), ENT_QUOTES);
+						$query 		= str_replace(Array('*', '%'), Array('%', '\%'), $input->post('query'));
+						$stripped_query	= str_replace('*', '', $query);
+
+						if($query{0} != '*')
+						{
+							$query = '%' . $query;
+						}
+
+						if(($length = strlen($query)) !== false && $query{$length - 1} != '*')
+						{
+							$query .= '%';
+						}
+
+						if(isset($_POST['search_changed']) && $_POST['search_changed'])
+						{
+							$query = $db->equery('
+										SELECT 
+											`id`, 
+											`title`, 
+											`revision`, 
+											`changed`, 
+											`source`
+										FROM 
+											`' . TUXXEDO_PREFIX . 'templates` 
+										WHERE 
+											`source` 
+										LIKE 
+											\'%s\'
+										AND 
+											`changed` = \'1\'
+										AND 
+											`styleid` = %d', $query, $styleid);
+						}
+						else
+						{
+							$query = $db->equery('
+										SELECT 
+											`id`, 
+											`title`, 
+											`revision`, 
+											`changed`, 
+											`source` 
+										FROM 
+											`' . TUXXEDO_PREFIX . 'templates` 
+										WHERE 
+											`source` 
+										LIKE 
+											\'%s\'
+										AND 
+											`styleid` = %d', $query, $styleid);
+						}
+
+						if(!$query || !$query->getNumRows())
+						{
+							tuxxedo_error('Search return zero results');
+						}
+
+						$table = '';
+
+						while($template = $query->fetchArray())
+						{
+							$matches 	= 0;
+							$pos		= 0;
+
+							while($pos = strpos($template['source'], $stripped_query, $pos))
+							{
+								++$matches;
+								++$pos;
+							}
+
+							eval('$table .= "' . $style->fetch('templates_search_itembit') . '";');
+						}
+
+						$matches = $query->getNumRows();
+					}
+
+					eval(page('templates_search'));
+				}
+				break;
 				case('add'):
 				case('edit'):
 				case('delete'):
-				case('search'):
 				{
 					throw new Exception\Core('Template handler are yet to be implemented');
 				}
