@@ -59,9 +59,7 @@
 	{
 		case('truncate'):
 		{
-			$db->query('
-					TRUNCATE TABLE 
-						`' . TUXXEDO_PREFIX . 'datastore`');
+			$db->helper->truncate('datastore');
 
 			tuxxedo_redirect('Datastore truncated, the datastore is now empty and must be rebuilt before it can be used again', './datastore.php');
 		}
