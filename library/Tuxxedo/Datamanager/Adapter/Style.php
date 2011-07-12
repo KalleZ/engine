@@ -198,9 +198,13 @@
 			{
 				return(false);
 			}
+			elseif(!isset($this->userdata->templateids))
+			{
+				$this->userdata->templateids = '';
+			}
 
 			$ids = Array();
-var_dump($this->registry->cache->styleinfo[$value]);
+
 			foreach(explode(',', $this->registry->cache->styleinfo[$value]['templateids']) as $id)
 			{
 				$template 		= Adapter::factory('template', $id, self::OPT_LOAD_ONLY, $this);
@@ -219,7 +223,7 @@ var_dump($this->registry->cache->styleinfo[$value]);
 			$this->userdata->templateids = \implode(',', $ids);
 			$this->save(false);
 
-			return(false);
+			return(true);
 		}
 	}
 ?>
