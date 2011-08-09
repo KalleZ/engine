@@ -1,0 +1,68 @@
+{$header}
+
+<form action="./styles.php?style={$styleid}&do=templates&action=<if expression="$action == 'edit'">edit&id={$dm['id']}<else />add</if>" method="post">
+<div class="box">
+	<h4><if expression="$action == 'edit'">Edit<else />Add</if> template</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Template information</h5></td>
+		</tr>
+		<tr>
+			<td style="width: 20%;">
+				Name</td>
+			<td>
+				<input type="text" name="title" size="32" value="<if expression="$action == 'edit'">{$dm['title']}</if>" /></td>
+		</tr>
+<if expression="$action == 'edit'">
+		<tr>
+			<td valign="top">
+				Revision</td>
+			<td>
+				{$dm['revision']}</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Customized?</td>
+			<td>
+				<if expression="$dm['changed']">Yes<else />No</if></td>
+</if>
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Source</h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<textarea name="source" style="width: 99%;" rows="20"><if expression="isset($source)">{$source}</if></textarea></td>
+		</tr>
+<if expression="$action == 'edit'">
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Options</h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				Below option should only be used if you understand the impact of 
+				overriding defaults works. Overriding default templates can only 
+				be reverted by re-importing the templates from the Engine version 
+				currently in-use.
+			</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Set this as default template code?</td>
+			<td>
+				<label><input type="checkbox" name="sourceoverride" value="1" /> Yes</label></td>
+		</tr>
+</if>
+</if>
+	</table>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="<if expression="$action == 'edit'">Edit<else />Add</if>" />
+</div>
+</form>
+
+{$footer}

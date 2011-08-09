@@ -39,6 +39,7 @@
 									'styles_add_edit_form'
 									), 
 					'templates'	=> Array(
+									'templates_add_edit_form', 
 									'templates_list', 
 									'templates_list_itembit', 
 									'templates_search', 
@@ -65,22 +66,29 @@
 	require('./includes/bootstrap.php');
 
 
+	$do 	= strtolower($input->get('do'));
+	$action = strtolower($input->get('action'));
+
 	if(($styleid = $input->get('style', Input::TYPE_NUMERIC)))
 	{
 		if(!isset($cache->styleinfo[$styleid]))
 		{
-			tuxxedo_error('Invalid style id');
+			tuxxedo_error('Invalid style');
 		}
 
 		$styledm 	= Datamanager\Adapter::factory('style', $styleid, 0);
 		$styledata	= $styledm->get();
 	}
+	elseif(!$styleid && $do != 'style' && $action != 'add')
+	{
+		tuxxedo_error('Invalid style');
+	}
 
-	switch($do = strtolower($input->get('do')))
+	switch($do)
 	{
 		case('style'):
 		{
-			switch($action = strtolower($input->get('action')))
+			switch($action)
 			{
 				case('add'):
 				case('edit'):
@@ -157,7 +165,7 @@
 		break;
 		case('templates'):
 		{
-			switch($action = strtolower($input->get('action')))
+			switch($action)
 			{
 				case('list'):
 				{
@@ -246,12 +254,12 @@
 
 						while($template = $query->fetchArray())
 						{
-							$matches 	= 0;
+							$matchd_strings	= 0;
 							$pos		= 0;
 
 							while($pos = strpos($template['source'], $stripped_query, $pos))
 							{
-								++$matches;
+								++$matched_strings;
 								++$pos;
 							}
 
@@ -264,11 +272,37 @@
 					eval(page('templates_search'));
 				}
 				break;
-				case('add'):
-				case('edit'):
 				case('delete'):
 				{
-					throw new Exception\Core('Template handler are yet to be implemented');
+					try
+					{
+						$dm = Datamanager\Adapter::factory('template', $input->get('id'), Datamanager\Adapter::OPT_LOAD_ONLY);
+					}
+					catch(Exception $e)
+					{
+						tuxxedo_error('Invalid template id');
+					}
+
+					$dm->delete();
+
+					tuxxedo_redirect('Template deleted with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
+				}
+				break;
+				case('edit'):
+				{
+					try
+					{
+						$dm 	= Datamanager\Adapter::factory('template', $input->get('id'), Datamanager\Adapter::OPT_LOAD_ONLY);
+						$source	= htmlspecialchars($dm['source'], ENT_QUOTES, 'UTF-8');
+					}
+					catch(Exception $e)
+					{
+						tuxxedo_error('Invalid template id');
+					}
+				}
+				case('add'):
+				{
+					eval(page('templates_add_edit_form'));
 				}
 				break;
 				default:

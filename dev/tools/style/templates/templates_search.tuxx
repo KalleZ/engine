@@ -29,7 +29,7 @@
 	<h4>Matched templates</h4>
 
 	<p>
-		{$matches} templates matched your search criteria
+		{$matches} template(s) matched your search criteria
 	</p>
 
 	<br />

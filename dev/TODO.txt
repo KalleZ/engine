@@ -40,3 +40,6 @@
 
 	Scripts
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
+
+	Core
+	 - Fix unloading of session handlers that can cause an SQL error due to incorrect shutdown sequence order

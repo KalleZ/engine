@@ -6,7 +6,7 @@
 		{$template['title']}
 	</td>
 	<td>
-		{$matches}
+		{$matched_strings}
 	</td>
 	<td>
 		{$template['revision']}

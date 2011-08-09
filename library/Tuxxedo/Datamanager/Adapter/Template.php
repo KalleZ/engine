@@ -145,6 +145,8 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
+echo 'rebuilding template';
+exit;
 			$dm 	= Adapter::factory('style', $this->data['styleid'], 0, $this);
 			$ids	= \array_flip(\explode(',', $dm->get('templateids')));
 
