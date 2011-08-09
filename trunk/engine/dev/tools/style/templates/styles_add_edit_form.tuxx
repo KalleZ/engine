@@ -1,6 +1,6 @@
 {$header}
 
-<form action=\"./styles.php?" . ((isset($styleid)) ? ("&style={$styleid}&do=style&action=edit") : ("&do=style&action=add")) . "\" method=\"post\">
+<form action=\"./styles.php?" . ((isset($styleid)) ? ("style={$styleid}&do=style&action=edit") : ("do=style&action=add")) . "\" method=\"post\">
 <div class=\"box\">
 	<h4>" . (($action == 'edit') ? ("Edit") : ("Add")) . " style</h4>
 

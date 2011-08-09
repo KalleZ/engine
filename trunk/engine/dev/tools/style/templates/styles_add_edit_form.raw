@@ -1,6 +1,6 @@
 {$header}
 
-<form action="./styles.php?<if expression="isset($styleid)">&style={$styleid}&do=style&action=edit<else />&do=style&action=add</if>" method="post">
+<form action="./styles.php?<if expression="isset($styleid)">style={$styleid}&do=style&action=edit<else />do=style&action=add</if>" method="post">
 <div class="box">
 	<h4><if expression="$action == 'edit'">Edit<else />Add</if> style</h4>
 
