@@ -79,7 +79,7 @@
 		$styledm 	= Datamanager\Adapter::factory('style', $styleid, 0);
 		$styledata	= $styledm->get();
 	}
-	elseif(!$styleid && $do != 'style' && $action != 'add')
+	elseif(!$styleid && !empty($do) && $do != 'style' && $action != 'add')
 	{
 		tuxxedo_error('Invalid style');
 	}
