@@ -21,6 +21,7 @@
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Input;
+	use Tuxxedo\Template\Compiler;
 
 
 	/**
@@ -254,8 +255,8 @@
 
 						while($template = $query->fetchArray())
 						{
-							$matchd_strings	= 0;
-							$pos		= 0;
+							$matched_strings	= 0;
+							$pos			= 0;
 
 							while($pos = strpos($template['source'], $stripped_query, $pos))
 							{
@@ -302,6 +303,58 @@
 				}
 				case('add'):
 				{
+					if(isset($_POST['submit']))
+					{
+						$title = strtolower($input->post('title'));
+
+						if(empty($title))
+						{
+							tuxxedo_error('Template titles may not be blank');
+						}
+
+						if(!isset($dm))
+						{
+							$dm 		= Datamanager\Adapter::factory('template', NULL, 0);
+							$dm['styleid']	= $styleid;
+						}
+
+						$dm['changed']	= 1;
+						$dm['title'] 	= $title;
+						$dm['revision']	+= 1;
+
+						if($dm['source'] != $source)
+						{
+							try
+							{
+								$compiler = new Compiler;
+
+								$compiler->set($input->post('source'));
+								$compiler->compile();
+
+								if(!$compiler->test())
+								{
+									throw new Exception\TemplateCompiler('Source code does not pass compiler test, possily syntax error');
+								}
+							}
+							catch(Exception\TemplateCompiler $e)
+							{
+								tuxxedo_error('Template compiler error: ' . $e->getMessage());
+							}
+
+							$dm['source'] 		= $input->post('source');
+							$dm['compiledsource']	= $compiler->get();
+
+							if(isset($_POST['sourceoverride']))
+							{
+								$dm['defaultsource'] = $dm['compiledsource'];
+							}
+						}
+
+						$dm->save();
+
+						tuxxedo_redirect(($action == 'edit' ? 'Template edited with success' : 'Template added with success'), './styles.php?id=' . $styleid . '&do=templates&action=list');
+					}
+
 					eval(page('templates_add_edit_form'));
 				}
 				break;

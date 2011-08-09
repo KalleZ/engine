@@ -44,7 +44,7 @@
 		<tr>
 			<td colspan="2">
 				Below option should only be used if you understand the impact of 
-				overriding defaults works. Overriding default templates can only 
+				how overriding defaults works. Overriding default templates can only 
 				be reverted by re-importing the templates from the Engine version 
 				currently in-use.
 			</td>
