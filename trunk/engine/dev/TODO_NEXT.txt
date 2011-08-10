@@ -16,7 +16,6 @@
 	 - Other
 	   - Add the ability to export/import styles
 
-	Implement a temporary memory storage, with backends for APC etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement validators
         Implement a form of uploading API
@@ -30,6 +29,10 @@
 	 - Add language auto detection based on the request headers and iso codes for non logged in users
 	 - Add translation for /dev/tools
 	 - Add an unload method to make it possible to unload phrasegroups, make sure to account for rebuilding the phrase index to avoid inconsistencies
+
+	Improve the datastore cacher
+	 - Implement a temporary memory storage, with backends for APC etc.
+	 - Split code from datastore.php into multiple sub classes so they can be executed at userland code without hacks
 
 	Look at implementing playground projects
 	 - Query builder
