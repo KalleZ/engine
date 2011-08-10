@@ -6,17 +6,22 @@
 	1) Make sure that TODO.txt for the version about to be released 
 	   have been found its way to the source.
 
-	2) Make sure to resync the datastore.
+	2) Make sure 'debug' is set to false when going stable.
 
-	3) Execute TRUNCATE TABLE sessions.
+	3) Make sure to revert development changes in the configuration 
+	   file back to their default state.
 
-	4) Make sure database .sql files is at its current, by exporting the 
+	4) Make sure to resync the datastore.
+
+	5) Execute TRUNCATE TABLE sessions.
+
+	6) Make sure database .sql files is at its current, by exporting the 
 	   current development data into them and removing the clutter.
 
-	5) Update version and make sure to do a touch on library/Tuxxedo/Version.php 
+	7) Update version and make sure to do a touch on library/Tuxxedo/Version.php 
 	   to update the $Rev$ tag in there.
 
-	6) Commit!
+	8) Commit!
 
-	7) Change the version back to its next release, make sure that preview tags, etc. 
+	9) Change the version back to its next release, make sure that preview tags, etc. 
 	   are at its current when going from stable to unstable and vice versa.
