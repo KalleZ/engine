@@ -6,8 +6,6 @@
 	------------------------------------------------
 
 	DevTools
-	 - Options
-	   - Add the ability to re-define default values for options
 	 - Add styles & Templates support
 	   - Template handlers
 	     - Add
@@ -19,6 +17,9 @@
 
 	Database Layer
 	 - Remove the helper dependency
+
+	Core
+	 - Re-implement templateids in a sane way this time
 
 
 
@@ -36,7 +37,9 @@
 	   - Permission
 
 	DevTools
-	 - Change the options dev tool to work with the options datamanager
+	 - Options
+	   - Add the ability to re-define default values for options
+	   - Change the options dev tool to work with the options datamanager
 
 	Scripts
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps

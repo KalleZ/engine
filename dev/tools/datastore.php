@@ -135,9 +135,11 @@
 							$p = $db->equery('
 										SELECT 
 											* 
-										FROM `' . TUXXEDO_PREFIX . $tables[$element] . '` 
-											ORDER BY `%s` ASC
-										', $indices[$element]);
+										FROM 
+											`' . TUXXEDO_PREFIX . $tables[$element] . '` 
+										ORDER BY 
+											`%s` 
+										ASC', $indices[$element]);
 
 							if(!$p || !$p->getNumRows())
 							{
@@ -186,6 +188,39 @@
 							}
 
 							$p->free();
+
+							if($element == 'styleinfo' && isset($s['id']) && !empty($s['id']))
+							{
+								$ids 	= Array();
+								$p 	= $db->query('
+											SELECT 
+												`id` 
+											FROM 
+												`' . TUXXEDO_PREFIX . 'templates` 
+											WHERE
+												`styleid` = %d 
+											ORDER BY 
+												`id`
+											ASC', $s['id']);
+
+								if(!$p || !$p->getNumRows())
+								{
+									$current[$s['id']]['templateids'] = '';
+
+									continue;
+								}
+
+								while($t = $p->fetchAssoc())
+								{
+									$ids[] = $t['id'];
+								}
+
+								$current[$s['id']]['templateids'] = implode(',', $ids);
+
+								unset($ids);
+
+								$p->free();
+							}
 						}
 						break;
 						case('timezones'):
