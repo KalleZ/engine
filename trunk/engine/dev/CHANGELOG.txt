@@ -70,6 +70,8 @@
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
 	Fixed usage of the 'ALLOWEMPTY' option in the datamanagers to pass validation correctly (Kalle)
 
+	Removed templateids from the styles table, datamanagers and all other usage (Kalle)
+
 
 	Tuxxedo Engine 1.0.0
 	------------------------------------------------
