@@ -318,15 +318,15 @@
 		 */
 		final protected function init(Registry $registry, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->registry	= $registry;
-			$this->options	= $options;
-			$this->userdata	= $this->information = new \stdClass;
-			$this->parent	= $parent;
+			$this->registry		= $registry;
+			$this->options		= $options;
+			$this->userdata		= $this->information = new \stdClass;
+			$this->parent		= $parent;
+			$this->information 	= &$this->data;
 
 			if($options & self::OPT_LOAD_ONLY)
 			{
-				$this->identifier 	= $this->fields[$this->idname]['value'] = NULL;
-				$this->information 	= &$this->data;
+				$this->identifier = $this->fields[$this->idname]['value'] = NULL;
 			}
 		}
 
