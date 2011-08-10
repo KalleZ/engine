@@ -295,7 +295,7 @@
 				{
 					try
 					{
-						$dm 	= Datamanager\Adapter::factory('template', $input->get('id'), Datamanager\Adapter::OPT_LOAD_ONLY);
+						$dm 	= Datamanager\Adapter::factory('template', $input->get('id'));
 						$source	= htmlspecialchars($dm['source'], ENT_QUOTES, 'UTF-8');
 					}
 					catch(Exception $e)
