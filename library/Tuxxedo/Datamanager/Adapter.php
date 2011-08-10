@@ -279,6 +279,35 @@
 		}
 
 		/**
+		 * Overloads the info access 'get' method so that default data is allocated 
+		 * when using the ArrayAccess accessor
+		 *
+		 * @param	scalar			The information row name to get
+		 * @return	void			No value is returned
+		 */
+		public function offsetGet($offset)
+		{
+			if(\is_object($this->information))
+			{
+				if(!isset($this->information->{$offset}))
+				{
+					$this->information->{$offset} = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
+				}
+
+				return($this->information->{$offset});
+			}
+			else
+			{
+				if(!isset($this->information[$offset]))
+				{
+					$this->information[$offset] = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
+				}
+
+				return($this->information[$offset]);
+			}
+		}
+
+		/**
 		 * Datamanager initializer, this method initializes the default logic 
 		 * used across all datamanager adapters
 		 *

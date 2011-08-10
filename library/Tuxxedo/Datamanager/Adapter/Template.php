@@ -51,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Template extends Adapter implements Hooks\Cache
+	class Template extends Adapter
 	{
 		/**
 		 * Fields for validation of styles
@@ -135,33 +135,6 @@
 			}
 
 			parent::init($registry, $options, $parent);
-		}
-
-		/**
-		 * Updates the template ids in the styles table
-		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
-		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
-		 */
-		public function rebuild(Array $virtual)
-		{
-echo 'rebuilding template';
-exit;
-			$dm 	= Adapter::factory('style', $this->data['styleid'], 0, $this);
-			$ids	= \array_flip(\explode(',', $dm->get('templateids')));
-
-			if(!$virtual && isset($ids[$this->data['id']]))
-			{
-				unset($ids[$this->data['id']]);
-			}
-			elseif($virtual && !isset($ids[$this->data['id']]))
-			{
-				$ids[$this->data[$ids]] = true;
-			}
-
-			$dm['templateids'] = \implode(',', \array_keys($ids));
-
-			return($dm->save());
 		}
 	}
 ?>

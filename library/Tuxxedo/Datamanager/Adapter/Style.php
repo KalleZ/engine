@@ -79,10 +79,6 @@
 											'validation'	=> self::VALIDATE_BOOLEAN, 
 											'default'	=> false
 											), 
-							'templateids'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING
-											), 
 							'inherit'	=> Array(
 											'type'		=> self::FIELD_VIRTUAL
 											)
@@ -128,8 +124,6 @@
 				$style->free();
 			}
 
-			$this->fields['templateids']['validation'] |= self::VALIDATE_OPT_ALLOWEMPTY;
-
 			parent::init($registry, $options, $parent);
 		}
 
@@ -151,13 +145,11 @@
 			{
 				unset($datastore[(integer) ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier)]);
 
-				if(($ids = \explode(',', $this->data['templateids'])) && !empty($ids[0]))
-				{
-					foreach($ids as $id)
-					{
-						Adapter::factory('template', $id, 0, $this)->delete();
-					}
-				}
+				$this->registry->db->query('
+								DELETE FROM 
+									`' . \TUXXEDO_PREFIX . 'templates` 
+								WHERE 
+									`styleid` = %d', $this->data[$this->idname]);
 			}
 			else
 			{
@@ -198,12 +190,8 @@
 			{
 				return(false);
 			}
-			elseif(!isset($this->userdata->templateids))
-			{
-				$this->userdata->templateids = '';
-			}
 
-			$ids = Array();
+			throw new Exception\Core('Style VirtualInherit method needs fixing for templateids removal');
 
 			foreach(explode(',', $this->registry->cache->styleinfo[$value]['templateids']) as $id)
 			{
@@ -220,7 +208,6 @@
 				$ids[] = $template->get('id');
 			}
 
-			$this->userdata->templateids = \implode(',', $ids);
 			$this->save(false);
 
 			return(true);
