@@ -53,6 +53,7 @@
 	Changed the views to not escape double quotes if the view has layout mode active (Kalle)
 	Changed the undocumented docblocks while parsing the source in api_analyze.php to be more verbose (Kalle)
 	Changed datamanagers that have the LOAD_ONLY option enabled data to be visiable thru the array access syntax (Kalle)
+	Changed templateids from being a database field to be a virtually populated field from datastore.php (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
@@ -69,8 +70,6 @@
 	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
 	Fixed usage of the 'ALLOWEMPTY' option in the datamanagers to pass validation correctly (Kalle)
-
-	Removed templateids from the styles table, datamanagers and all other usage (Kalle)
 
 
 	Tuxxedo Engine 1.0.0
