@@ -136,6 +136,11 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
+			if(!$this->identifier && !$this->data['id'])
+			{
+				return(false);
+			}
+
 			if(($datastore = $this->registry->cache->styleinfo) === false)
 			{
 				$datastore = Array();
@@ -145,11 +150,15 @@
 			{
 				unset($datastore[(integer) ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier)]);
 
-				$this->registry->db->query('
-								DELETE FROM 
-									`' . \TUXXEDO_PREFIX . 'templates` 
-								WHERE 
-									`styleid` = %d', $this->data[$this->idname]);
+				foreach(\explode(',', $this->registry->cache->styleinfo[$this->data[$this->idname]]['templateids']) as $id)
+				{
+					if(empty($id))
+					{
+						continue;
+					}
+
+					Datamanager\Adapter::init('template', $id, $this->options)->delete();
+				}
 			}
 			else
 			{
@@ -190,8 +199,6 @@
 			{
 				return(false);
 			}
-
-			throw new Exception\Core('Style VirtualInherit method needs fixing for templateids removal');
 
 			foreach(explode(',', $this->registry->cache->styleinfo[$value]['templateids']) as $id)
 			{

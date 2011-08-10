@@ -170,9 +170,7 @@
 			{
 				case('list'):
 				{
-					throw new \Tuxxedo\Exception\Core('Template list action needs fixing for templateids removal');
-
-					$templateids = explode(',', $styledm->get('templateids'));
+					$templateids = explode(',', $cache->styleinfo[$styleid]['templateids']);
 
 					if(!$templateids || empty($templateids[0]))
 					{
