@@ -170,6 +170,8 @@
 			{
 				case('list'):
 				{
+					throw new \Tuxxedo\Exception\Core('Template list action needs fixing for templateids removal');
+
 					$templateids = explode(',', $styledm->get('templateids'));
 
 					if(!$templateids || empty($templateids[0]))
@@ -305,7 +307,8 @@
 				{
 					if(isset($_POST['submit']))
 					{
-						$title = strtolower($input->post('title'));
+						$title 	= strtolower($input->post('title'));
+						$source	= $input->post('source');
 
 						if(empty($title))
 						{
@@ -317,8 +320,11 @@
 							$dm 		= Datamanager\Adapter::factory('template', NULL, 0);
 							$dm['styleid']	= $styleid;
 						}
+						else
+						{
+							$dm['changed']	= true;
+						}
 
-						$dm['changed']	= 1;
 						$dm['title'] 	= $title;
 						$dm['revision']	+= 1;
 
@@ -328,7 +334,7 @@
 							{
 								$compiler = new Compiler;
 
-								$compiler->set($input->post('source'));
+								$compiler->set($source);
 								$compiler->compile();
 
 								if(!$compiler->test())
@@ -341,7 +347,7 @@
 								tuxxedo_error('Template compiler error: ' . $e->getMessage());
 							}
 
-							$dm['source'] 		= $input->post('source');
+							$dm['source'] 		= $source;
 							$dm['compiledsource']	= $compiler->get();
 
 							if(isset($_POST['sourceoverride']))
@@ -350,9 +356,12 @@
 							}
 						}
 
-						$dm->save();
+						if(!$dm->save())
+						{
+							tuxxedo_error('Unable to save template data');
+						}
 
-						tuxxedo_redirect(($action == 'edit' ? 'Template edited with success' : 'Template added with success'), './styles.php?id=' . $styleid . '&do=templates&action=list');
+						tuxxedo_redirect(($action == 'edit' ? 'Template edited with success' : 'Template added with success'), './styles.php?style=' . $styleid . '&do=templates&action=list');
 					}
 
 					eval(page('templates_add_edit_form'));
