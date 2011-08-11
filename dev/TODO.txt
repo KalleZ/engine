@@ -8,8 +8,6 @@
 	DevTools
 	 - Add styles & Templates support
 	   - Template handlers
-	     - Add
-	     - Edit
 	     - Delete
 
 	Datamanagers
@@ -17,9 +15,6 @@
 
 	Database Layer
 	 - Remove the helper dependency
-
-	Core
-	 - Re-implement templateids in a sane way this time
 
 
 
@@ -30,7 +25,7 @@
 	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
 
 	Datamanagers
-	 - Add a script to check if all datamanager fields have phrases
+	 - Update style/template adapters to implement Cache and rebuild templateids
 	 - Update the phrases for the datamanagers to match new ones
 	 - New datamanagers
 	   - Option
@@ -43,6 +38,7 @@
 
 	Scripts
 	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
+	 - Implement a script to identify missing datamanager phrases
 
 	Core
 	 - Add a debug mode to make the \Tuxxedo\Template\Compiler::test() method verbose and usable from the DevTools

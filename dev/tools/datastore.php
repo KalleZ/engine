@@ -176,7 +176,8 @@
 									case('styleinfo'):
 									case('usergroups'):
 									{
-										$current[$s['id']] = $s;
+										$current[$s['id']] 	= $s;
+										$styleid		= $s['id'];
 									}
 									break;
 									case('permissions'):
@@ -189,7 +190,7 @@
 
 							$p->free();
 
-							if($element == 'styleinfo' && isset($s['id']) && !empty($s['id']))
+							if($element == 'styleinfo' && !empty($styleid))
 							{
 								$ids 	= Array();
 								$p 	= $db->query('
@@ -201,11 +202,11 @@
 												`styleid` = %d 
 											ORDER BY 
 												`id`
-											ASC', $s['id']);
+											ASC', $styleid);
 
 								if(!$p || !$p->getNumRows())
 								{
-									$current[$s['id']]['templateids'] = '';
+									$current[$styleid]['templateids'] = '';
 
 									continue;
 								}
@@ -215,7 +216,7 @@
 									$ids[] = $t['id'];
 								}
 
-								$current[$s['id']]['templateids'] = implode(',', $ids);
+								$current[$styleid]['templateids'] = implode(',', $ids);
 
 								unset($ids);
 

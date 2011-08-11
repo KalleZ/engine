@@ -46,7 +46,9 @@
 				Below option should only be used if you understand the impact of 
 				how overriding defaults works. Overriding default templates can only 
 				be reverted by re-importing the templates from the Engine version 
-				currently in-use.
+				currently in-use. Note that resetting the version number is linked 
+				to the default override and only have an effect if the override is 
+				checked.
 			</td>
 		</tr>
 		<tr>
@@ -54,6 +56,12 @@
 				Set this as default template code?</td>
 			<td>
 				<label><input type="checkbox" name="sourceoverride" value="1" /> Yes</label></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Reset revision number?</td>
+			<td>
+				<label><input type="checkbox" name="resetrevsion" value="1" /> Yes</label></td>
 		</tr>
 </if>
 </if>

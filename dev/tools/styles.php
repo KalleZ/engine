@@ -350,7 +350,13 @@
 
 							if(isset($_POST['sourceoverride']))
 							{
-								$dm['defaultsource'] = $dm['compiledsource'];
+								$dm['changed']		= false;
+								$dm['defaultsource'] 	= $dm['compiledsource'];
+
+								if(isset($_POST['resetrevision']))
+								{
+									$dm['revision'] = 1;
+								}
 							}
 						}
 
