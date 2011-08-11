@@ -43,7 +43,7 @@
 
 
 	/**
-	 * Style storage engine for file system based templates
+	 * Database utilities helper
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0

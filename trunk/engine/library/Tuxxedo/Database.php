@@ -34,7 +34,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Exception;
-	use Tuxxedo\Helper;
 
 
 	/**
@@ -57,14 +56,6 @@
 	 */
 	abstract class Database implements Database\Driver, Invokable
 	{
-		/**
-		 * Helper class, this is used to ease cross database 
-		 * operations
-		 *
-		 * @var		\Tuxxedo\Helper
-		 */
-		public $helper;
-
 		/**
 		 * Link pointer, this contains the internal link 
 		 * to the database from the driver
@@ -182,7 +173,7 @@
 				throw new Exception\Basic('No database configuration found or no driver defined');
 			}
 
-			return(self::factory($configuration['database']['driver'], $configuration['database'], false, Helper::factory($registry, 'database', false)));
+			return(self::factory($configuration['database']['driver'], $configuration['database'], false));
 		}
 
 		/**
@@ -191,36 +182,19 @@
 		 * @param	string				Driver name
 		 * @param	array				Database specific configuration array
 		 * @param	boolean				Whether this is a custom driver or not
-		 * @param	\Tuxxedo\Helper			Helper class if any to ease cross database operations
 		 * @return	\Tuxxedo\Database		Returns a new database instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a driver should fail for some reason
 		 */
-		final public static function factory($driver, Array $configuration, $custom = false, Helper $helper = NULL)
+		final public static function factory($driver, Array $configuration, $custom = false)
 		{
 			if(\in_array($driver, self::$loaded_drivers))
 			{
-				$instance = new $class($configuration);
-
-				if($helper)
-				{
-					$helper->setInstance($instance);
-
-					$instance->helper = $helper;
-				}
-
 				return(new $class($configuration));
 			}
 
 			$class 		= (!$custom ? '\Tuxxedo\Database\Driver\\' : '') . ucfirst($driver);
 			$instance 	= new $class($configuration);
-
-			if($helper)
-			{
-				$helper->setInstance($instance);
-
-				$instance->helper = $helper;
-			}
 
 			if(!\is_subclass_of($class, __CLASS__))
 			{
