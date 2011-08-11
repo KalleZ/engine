@@ -45,7 +45,7 @@
 	/**
 	 * Set script name
 	 */
-	define('SCRIPT_NAME', 'options');
+	const SCRIPT_NAME	= 'options';
 
 	/**
 	 * Require the bootstraper

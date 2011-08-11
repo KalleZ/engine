@@ -70,7 +70,7 @@
 	/**
 	 * Set script name
 	 */
-	define('SCRIPT_NAME', 'tools');
+	const SCRIPT_NAME	= 'tools';
 
 	/**
 	 * Require the bootstraper

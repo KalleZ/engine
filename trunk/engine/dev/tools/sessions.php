@@ -40,7 +40,7 @@
 	/**
 	 * Set script name
 	 */
-	define('SCRIPT_NAME', 'sessions');
+	const SCRIPT_NAME	= 'sessions';
 
 	/**
 	 * Require the bootstraper

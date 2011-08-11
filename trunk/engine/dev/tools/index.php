@@ -25,7 +25,7 @@
 	/**
 	 * Set script name
 	 */
-	define('SCRIPT_NAME', 'index');
+	const SCRIPT_NAME	= 'index';
 
 	/**
 	 * Require the bootstraper
