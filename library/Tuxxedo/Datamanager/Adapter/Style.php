@@ -146,7 +146,7 @@
 				$datastore = Array();
 			}
 
-			if(!$virtual)
+			if($this->context == self::CONTEXT_DELETE)
 			{
 				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
 
@@ -160,8 +160,32 @@
 					Datamanager\Adapter::factory('template', $id, $this->options)->delete();
 				}
 			}
-			else
+			elseif($this->context == self::CONTEXT_SAVE)
 			{
+				$virtual['templateids']	= '';
+				$templates		= $this->registry->db->query('
+											SELECT 
+												`id` 
+											FROM 
+												`' . \TUXXEDO_PREFIX . 'templates` 
+											WHERE 
+												`styleid` = %d
+ 											ORDER BY 
+												`id` 
+											ASC', $this->data['id']);
+
+				if($templates && $templates->getNumRows())
+				{
+					$ids = Array();
+
+					while($row = $templates->fetchRow())
+					{
+						$ids[] = $row[0];
+					}
+
+					$virtual['templateids'] = \implode(',', $ids);
+				}
+
 				$datastore[(integer) $this->data['id']] = $virtual;
 			}
 
