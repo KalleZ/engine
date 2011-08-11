@@ -38,7 +38,7 @@
 	/**
 	 * Set script name
 	 */
-	define('SCRIPT_NAME', 'datastore');
+	const SCRIPT_NAME	= 'datastore';
 
 	/**
 	 * Require the bootstraper

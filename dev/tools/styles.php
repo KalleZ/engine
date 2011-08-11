@@ -59,7 +59,7 @@
 	/**
 	 * Set script name
 	 */
-	define('SCRIPT_NAME', 'styles');
+	const SCRIPT_NAME 	= 'styles';
 
 	/**
 	 * Require the bootstraper
