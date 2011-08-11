@@ -82,7 +82,7 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid helpers
 		 */ 
-		final public static function factory(Registry $registry, $helper, $register = true)
+		final public static function factory(Registry $registry, $helper, $register = false)
 		{
 			$class = (strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . ucfirst($helper);
 

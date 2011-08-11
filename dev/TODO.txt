@@ -11,11 +11,8 @@
 	     - Delete
 
 	Datamanagers
+	 - Update style/template adapters to implement Cache and rebuild templateids
 	 - Fix delete default style does not specify a new default style
-
-	Database Layer
-	 - Remove the helper dependency
-
 
 
 	Tuxxedo Engine 1.1.0 Alpha 2
@@ -25,7 +22,6 @@
 	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
 
 	Datamanagers
-	 - Update style/template adapters to implement Cache and rebuild templateids
 	 - Update the phrases for the datamanagers to match new ones
 	 - New datamanagers
 	   - Option
@@ -37,9 +33,10 @@
 	   - Change the options dev tool to work with the options datamanager
 
 	Scripts
-	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps
+	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps (move to playground)
 	 - Implement a script to identify missing datamanager phrases
 
 	Core
 	 - Add a debug mode to make the \Tuxxedo\Template\Compiler::test() method verbose and usable from the DevTools
 	 - Fix unloading of session handlers that can cause an SQL error due to incorrect shutdown sequence order
+	 - Fix CWD when in shutdown handler under APR2

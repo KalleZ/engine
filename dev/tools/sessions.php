@@ -18,6 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Helper;
 	use Tuxxedo\User;
 
 
@@ -83,7 +84,7 @@
 				break;
 				default:
 				{
-					$db->helper->truncate('sessions');
+					Helper::factory($registry, 'database')->truncate('sessions');
 
 					tuxxedo_redirect('Deleted all active and expired sessions', './sessions.php');
 				}

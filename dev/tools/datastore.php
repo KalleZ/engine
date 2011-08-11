@@ -16,6 +16,12 @@
 
 
 	/**
+	 * Alasing rules
+	 */
+	use Tuxxedo\Helper;
+
+
+	/**
 	 * Global templates
 	 */
 	$templates 		= Array(
@@ -59,7 +65,7 @@
 	{
 		case('truncate'):
 		{
-			$db->helper->truncate('datastore');
+			Helper::factory($registry, 'database')->truncate('datastore');
 
 			tuxxedo_redirect('Datastore truncated, the datastore is now empty and must be rebuilt before it can be used again', './datastore.php');
 		}
