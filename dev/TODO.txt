@@ -27,7 +27,6 @@
 	   - Change the options dev tool to work with the options datamanager
 
 	Scripts
-	 - Implement efficient indexing of elemenets to a .sqlite3 database instead of dumps (move to playground)
 	 - Implement a script to identify missing datamanager phrases
 
 	Core
