@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 1;
+		const PREVIEW_NUMBER		= 2;
 
 		/**
 		 * Current version control system revision number
@@ -137,6 +137,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.1.0 Alpha 1';
+		const FULL			= '1.1.0 Alpha 2 (developmental)';
 	}
 ?>
