@@ -11,7 +11,6 @@
 	     - Delete
 
 	Datamanagers
-	 - Update style/template adapters to implement Cache and rebuild templateids
 	 - Fix delete default style does not specify a new default style
 
 
