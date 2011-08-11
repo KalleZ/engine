@@ -148,21 +148,21 @@
 
 			if(!$virtual)
 			{
-				unset($datastore[(integer) ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier)]);
+				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
 
-				foreach(\explode(',', $this->registry->cache->styleinfo[$this->data[$this->idname]]['templateids']) as $id)
+				foreach(\explode(',', $this->registry->cache->styleinfo[$this->data['id']]['templateids']) as $id)
 				{
 					if(empty($id))
 					{
 						continue;
 					}
 
-					Datamanager\Adapter::init('template', $id, $this->options)->delete();
+					Datamanager\Adapter::factory('template', $id, $this->options)->delete();
 				}
 			}
 			else
 			{
-				$datastore[(integer) $this->data[$this->idname]] = $virtual;
+				$datastore[(integer) $this->data['id']] = $virtual;
 			}
 
 			if(!$this->registry->cache->rebuild('styleinfo', $datastore))

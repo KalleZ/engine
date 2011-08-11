@@ -33,6 +33,7 @@
 	Added support for exporting Docblock tags when running api_analyze.php (Kalle)
 	Added a new DevTool class to impersonate a user (Kalle)
 	Added a new method to the datamanager class to fetch the parent datamanager (Kalle)
+	Added contexts to datamanagers so its easier for hooks to figure out what to do in a certain context (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
