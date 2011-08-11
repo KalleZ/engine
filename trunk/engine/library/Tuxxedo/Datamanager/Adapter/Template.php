@@ -51,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Template extends Adapter
+	class Template extends Adapter implements Hooks\Cache
 	{
 		/**
 		 * Fields for validation of styles
@@ -135,6 +135,70 @@
 			}
 
 			parent::init($registry, $options, $parent);
+		}
+
+		/**
+		 * Syncronizes the templateids in the style manager
+		 *
+		 * @param	array				A virtually populated array from the datamanager abstraction
+		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 */
+		public function rebuild(Array $virtual)
+		{
+			if($this->context == self::CONTEXT_DELETE)
+			{
+				$styleinfo	= $this->registry->cache->styleinfo;
+				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
+
+				foreach($ids as $index => $id)
+				{
+					if($id == $this['styleid'])
+					{
+						unset($ids[$index]);
+
+						break;
+					}
+				}
+
+				$styleinfo[$this['styleid']] = \trim(\implode(',', $ids), ',');
+
+				return($this->registry->cache->rebuild('styleinfo', $styleinfo, false));
+			}
+			elseif($this->context == self::CONTEXT_SAVE)
+			{
+				if(!$virtual || !isset($virtual['styleid']) || $virtual['styleid'] == $this['styleid'])
+				{
+					return(true);
+				}
+
+				$styleinfo	= $this->registry->cache->styleinfo;
+				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
+
+				foreach($ids as $index => $id)
+				{
+					if($id == $this['styleid'])
+					{
+						unset($ids[$index]);
+
+						break;
+					}
+				}
+
+				$styleinfo[$this['styleid']] = \trim(\implode(',', $ids), ',');
+
+				if(empty($styleinfo[$virtual['styleid']]['templateids']))
+				{
+					$styleinfo[$virtual['styleid']]['templateids'] = $this->data['id'];
+				}
+				else
+				{
+					$styleinfo[$virtual['styleid']]['templateids'] .= ',' . $this->data['id'];
+				}
+
+				return($this->registry->cache->rebuild('styleinfo', $styleinfo, false));
+			}
+
+			return(true);
 		}
 	}
 ?>

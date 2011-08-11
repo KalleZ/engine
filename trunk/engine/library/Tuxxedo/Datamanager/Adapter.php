@@ -89,6 +89,27 @@
 		const FIELD_VIRTUAL			= 4;
 
 		/**
+		 * Context constant, default context
+		 *
+		 * @var		integer
+		 */
+		const CONTEXT_NONE			= 1;
+
+		/**
+		 * Context constant, save() context
+		 *
+		 * @var		integer
+		 */
+		const CONTEXT_SAVE			= 2;
+
+		/**
+		 * Context constant, delete() context
+		 *
+		 * @var		integer
+		 */
+		const CONTEXT_DELETE			= 4;
+
+		/**
 		 * Validation constant, numeric value
 		 *
 		 * @var		integer
@@ -207,6 +228,13 @@
 		 * @var		boolean
 		 */
 		protected $revalidate			= true;
+
+		/**
+		 * Context for hooks, and adapters
+		 *
+		 * @var		integer
+		 */
+		protected $context			= self::CONTEXT_NONE;
 
 		/**
 		 * The original data if instanciated by an identifier
@@ -640,6 +668,8 @@
 		 */
 		public function save($execute_hooks = true)
 		{
+			$this->context = self::CONTEXT_SAVE;
+
 			if($this->revalidate && !$this->validate())
 			{
 				$intl		= isset($this->registry->intl) && ($this->options & self::OPT_INTL);
@@ -649,6 +679,8 @@
 				{
 					$formdata[$field] = ($intl && isset($this->registry->phrase['dm_' . $this->dmname . '_' . $field]) ? $this->registry->phrase['dm_' . $this->dmname . '_' . $field] : $field);
 				}
+
+				$this->context = self::CONTEXT_NONE;
 
 				throw new Exception\Formdata($formdata);
 			}
@@ -684,6 +716,8 @@
 
 			if(!$this->registry->db->query($sql . ') VALUES (' . $values . ')'))
 			{
+				$this->context = self::CONTEXT_NONE;
+
 				return(false);
 			}
 
@@ -698,11 +732,15 @@
 
 				if(!$this->parent)
 				{
+					$this->context = self::CONTEXT_NONE;
+
 					return($hooks($this, $virtual, $virtual_fields));
 				}
 
 				$this->parent->setShutdownHandler($hooks, Array($this, $virtual, $virtual_fields));
 			}
+
+			$this->context = self::CONTEXT_NONE;
 
 			return(true);
 		}
@@ -725,10 +763,16 @@
 				return(true);
 			}
 
+			$this->context = self::CONTEXT_DELETE;
+
 			if($this instanceof Hooks\Cache && !$this->rebuild(Array()))
 			{
+				$this->context = self::CONTEXT_NONE;
+
 				return(false);
 			}
+
+			$this->context = self::CONTEXT_NONE;
 
 			return($this->registry->db->equery('
 								DELETE FROM 
