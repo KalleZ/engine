@@ -152,7 +152,7 @@
 
 				foreach($ids as $index => $id)
 				{
-					if($id == $this['styleid'])
+					if($id == $this['id'])
 					{
 						unset($ids[$index]);
 
@@ -160,7 +160,7 @@
 					}
 				}
 
-				$styleinfo[$this['styleid']] = \trim(\implode(',', $ids), ',');
+				$styleinfo[$this['styleid']]['templateids'] = \trim(\implode(',', $ids), ',');
 
 				return($this->registry->cache->rebuild('styleinfo', $styleinfo, false));
 			}
@@ -176,7 +176,7 @@
 
 				foreach($ids as $index => $id)
 				{
-					if($id == $this['styleid'])
+					if($id == $this['id'])
 					{
 						unset($ids[$index]);
 
@@ -184,7 +184,7 @@
 					}
 				}
 
-				$styleinfo[$this['styleid']] = \trim(\implode(',', $ids), ',');
+				$styleinfo[$this['styleid']]['templateids'] = \trim(\implode(',', $ids), ',');
 
 				if(empty($styleinfo[$virtual['styleid']]['templateids']))
 				{

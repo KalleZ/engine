@@ -5,11 +5,6 @@
 	Tuxxedo Engine 1.1.0 Alpha 1
 	------------------------------------------------
 
-	DevTools
-	 - Add styles & Templates support
-	   - Template handlers
-	     - Delete
-
 	Datamanagers
 	 - Fix delete default style does not specify a new default style
 

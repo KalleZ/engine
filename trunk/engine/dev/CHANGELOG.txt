@@ -11,6 +11,7 @@
 	Added new scripts to /dev/scripts: (Kalle)
 	 - sync_templates.php
 	Added new DevTools: (Kalle)
+	 - Style & Templates manager
 	 - User authentication
 	 - User permissions
 	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
