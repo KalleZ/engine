@@ -284,7 +284,10 @@
 						tuxxedo_error('Invalid template id');
 					}
 
-					$dm->delete();
+					if(!$dm->delete())
+					{
+						tuxxedo_error('Unable to delete template');
+					}
 
 					tuxxedo_redirect('Template deleted with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}
