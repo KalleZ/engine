@@ -9,7 +9,7 @@
 				<td style=\"width: 30%;\">
 					Search phrase:</td>
 				<td>
-					<input type=\"text\" name=\"query\" /></td>
+					<input type=\"text\" name=\"query\"" . ((isset($safe_query)) ? (" value=\"{$safe_query}\"") : '') . " /></td>
 			</tr>
 			<tr>
 				<td>
