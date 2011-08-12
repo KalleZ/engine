@@ -35,12 +35,13 @@
 	 */
 	use Tuxxedo\Exception;
 	use Tuxxedo\Database;
+	use Tuxxedo\Database\Result;
 
 
 	/**
 	 * Include check
 	 */
-	defined('TUXXEDO_LIBRARY') or exit;
+	defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**

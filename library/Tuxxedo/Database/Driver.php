@@ -33,7 +33,7 @@
 	/**
 	 * Include check
 	 */
-	defined('TUXXEDO_LIBRARY') or exit;
+	defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -67,7 +67,7 @@
 	 	 *
 		 * @throws	\Tuxxedo\Exception\Basic	If a database connection fails
 		 */
-		public function connect(array $configuration = NULL);
+		public function connect(Array $configuration = NULL);
 
 		/**
 		 * Close a database connection

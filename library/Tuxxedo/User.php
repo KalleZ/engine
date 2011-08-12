@@ -40,7 +40,7 @@
 	/**
 	 * Include check
 	 */
-	defined('TUXXEDO_LIBRARY') or exit;
+	defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
