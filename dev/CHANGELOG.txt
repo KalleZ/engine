@@ -72,7 +72,6 @@
 	Fixed the $goback parameter naming on page(), so that the go back button will work correct (Kalle)
 	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
-	Fixed usage of the 'ALLOWEMPTY' option in the datamanagers to pass validation correctly (Kalle)
 	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)
 
 

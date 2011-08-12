@@ -39,6 +39,7 @@
 	 - Configuration parser (Xml, Ini, JSON)
 	 - Generic Datamanager
 	 - MVC Request
+	 - API indexer
 
 	Extend the API generator
 	 - Parse parameter prototypes
