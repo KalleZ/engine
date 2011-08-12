@@ -269,6 +269,11 @@
 					array_map(Array($compiler, 'allow' . $data), $raw);
 				}
 
+				if(isset($_POST['verbose_test']))
+				{
+					$opts |= Compiler::OPT_VERBOSE_TEST;
+				}
+
 				$compiler->setOptions($opts);
 
 				try

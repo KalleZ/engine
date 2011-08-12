@@ -85,6 +85,13 @@
 		 */
 		const OPT_NO_INTERPOLATED_CALLS		= 8;
 
+		/**
+		 * Compiler option - Disable silent operator when running test()
+		 *
+		 * @var		integer
+		 */
+		const OPT_VERBOSE_TEST			= 16;
+
 
 		/**
 		 * The uncompiled raw source code
@@ -577,7 +584,14 @@
 				unset($name);
 			}
 
-			return(@eval('$test = "' . $this->compiled_source . '"; \error_reporting($this->error_reporting); return(true);') === true);
+			$snippet = '$test = "' . $this->compiled_source . '"; \error_reporting($this->error_reporting); return(true);';
+
+			if($this->options & self::OPT_VERBOSE_TEST)
+			{
+				return(eval($snippet) === true);
+			}
+
+			return(@eval($snippet) === true);
 		}
 	}
 ?>
