@@ -258,7 +258,7 @@
 							$matched_strings	= 0;
 							$pos			= 0;
 
-							while($pos = strpos($template['source'], $stripped_query, $pos))
+							while($pos = stripos($template['source'], $stripped_query, $pos))
 							{
 								++$matched_strings;
 								++$pos;
