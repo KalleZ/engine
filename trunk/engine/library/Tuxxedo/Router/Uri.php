@@ -30,7 +30,7 @@
 	/**
 	 * Include check
 	 */
-	defined('TUXXEDO_LIBRARY') or exit;
+	defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -73,6 +73,7 @@
 		 * #3 /<1>/<2> (<1> controller, <2> action, no params)
 		 * #4 /<1>/<2>/<3> (<1> controller, default action, {<2>: <3>} params)
 		 * #5 /<1>/<2>/<3>/<4> (<1> controller, <2> action, {<3>: <4>} params)
+		 *
 		 * Follows #4 and #5 based on whether number of pieces is even or odd (
 		 * odd = #4, even = #5)
 		 *
