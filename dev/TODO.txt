@@ -23,6 +23,5 @@
 	 - Implement a script to identify missing datamanager phrases
 
 	Core
-	 - Add a debug mode to make the \Tuxxedo\Template\Compiler::test() method verbose and usable from the DevTools
 	 - Fix unloading of session handlers that can cause an SQL error due to incorrect shutdown sequence order
 	 - Fix CWD when in shutdown handler under APR2

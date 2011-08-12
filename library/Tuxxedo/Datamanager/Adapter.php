@@ -763,8 +763,7 @@
 				return(true);
 			}
 
-			$identifier	= ($this->options & self::OPT_LOAD_ONLY ? $this->data[$this->idname] : $this->identifier);
-			$this->context 	= self::CONTEXT_DELETE;
+			$this->context = self::CONTEXT_DELETE;
 
 			if($this instanceof Hooks\Cache && !$this->rebuild(Array()))
 			{
@@ -779,7 +778,7 @@
 								DELETE FROM 
 									`' . $this->tablename . '`
 								WHERE 
-									`' . $this->idname .'` = \'%s\'', $identifier));
+									`' . $this->idname .'` = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[$this->idname] : $this->identifier)));
 		}
 
 		/**

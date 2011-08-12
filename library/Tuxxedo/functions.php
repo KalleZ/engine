@@ -475,7 +475,7 @@
 
 		if(substr(ltrim($output), 0, 11) == 'Fatal error')
 		{
-			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 11)));
+			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 12)));
 		}
 
 		$errors = Registry::globals('errors');

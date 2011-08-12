@@ -11,7 +11,7 @@
 	</p>
 
 	<br />
-	<textarea name=\"sourcecode\" cols=\"100\" rows=\"15\">{$source}</textarea>
+	<textarea name=\"sourcecode\" rows=\"15\" style=\"width: 99%;\">{$source}</textarea>
 </div>
 
 <div class=\"box\">
@@ -71,7 +71,12 @@
 	<p>
 		Use of incorrect or disallowed class WILL result in a blank page, so if you keep getting such then 
 		you should go over your code and make sure that all you're calls within the template expressions 
-		are allowed.
+		are allowed. Below option is enabled by default to prevent such blank screens:
+	</p>
+	<br />
+
+	<p>
+		<label><input type=\"checkbox\" name=\"verbose_test\" value=\"1\"" . ((!(isset($_POST['submit']) && !isset($_POST['verbose_test']) && isset($result))) ? (" checked=\"checked\"") : '') . " /> Enable verbose testing</label>
 	</p>
 </div>
 
@@ -84,7 +89,7 @@
 <div class=\"box\">
 	<h4>Result</h4>
 
-	<textarea cols=\"100\" rows=\"15\">{$result}</textarea>
+	<textarea rows=\"15\" style=\"width: 99%;\">{$result}</textarea>
 </div>
 ") : '') . "
 " . ((isset($error) || isset($test) && !$test) ? ("
