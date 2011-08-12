@@ -16,7 +16,7 @@
 			<option></option>
 			<option value=\"edit\">Edit</option>
 			<option value=\"delete\">Delete</option>
-			" . (($template['changed']) ? ("<option value=\"reset\">Reset to default</option>") : '') . "
+			" . (($template['changed']) ? ("<option value=\"reset\">Reset</option>") : '') . "
 		</select>
 	</td>
 </tr>

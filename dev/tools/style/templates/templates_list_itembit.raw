@@ -16,7 +16,7 @@
 			<option></option>
 			<option value="edit">Edit</option>
 			<option value="delete">Delete</option>
-			<if expression="$template['changed']"><option value="reset">Reset to default</option></if>
+			<if expression="$template['changed']"><option value="reset">Reset</option></if>
 		</select>
 	</td>
 </tr>
