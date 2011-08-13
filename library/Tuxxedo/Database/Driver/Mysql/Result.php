@@ -147,6 +147,33 @@
 		}
 
 		/**
+		 * Iterator method - current
+		 *
+		 * @return	mixed				Returns the current result
+		 */
+		public function current()
+		{
+			if(!\mysql_data_seek($this->result, $this->position))
+			{
+				return(false);
+			}
+
+			return(\mysql_fetch_array($this->result));
+		}
+
+		/**
+		 * Iterator method - valid
+		 *
+		 * @return	boolean				Returns true if its still possible to continue iterating
+		 */
+		public function valid()
+		{
+			$num_rows = \mysql_num_rows($this->result);
+
+			return($num_rows && $this->position >= 0 && $this->position < $num_rows);
+		}
+
+		/**
 		 * Quick reference for not repeating code when fetching a different type
 		 *
 		 * @param	integer				Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
