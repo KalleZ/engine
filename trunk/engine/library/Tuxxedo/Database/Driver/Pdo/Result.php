@@ -86,6 +86,8 @@
 			{
 				$this->result = NULL;
 			}
+
+			$this->iteratorEmulator();
 		}
 
 		/**

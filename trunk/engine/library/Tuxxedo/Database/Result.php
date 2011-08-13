@@ -55,7 +55,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	abstract class Result implements Result\Specification
+	abstract class Result implements \Iterator, Result\Specification
 	{
 		/**
 		 * The database instance from where the result was created
@@ -76,7 +76,14 @@
 		 *
 		 * @var		integer
 		 */
-		private $cached_num_rows	= 0;
+		protected $cached_num_rows	= 0;
+
+		/**
+		 * Current iterator position
+		 *
+		 * @var		integer
+		 */
+		protected $position		= 0;
 
 
 		/**
@@ -111,6 +118,36 @@
 		public function __destruct()
 		{
 			$this->free();
+		}
+
+		/**
+		 * Iterator method - key
+		 *
+		 * @return	integer				Returns the numeric position of the current row in the resultset
+		 */
+		public function key()
+		{
+			return($this->position);
+		}
+
+		/**
+		 * Iterator method - next
+		 *
+		 * @return	void				No value is returned
+		 */
+		public function next()
+		{
+			++$this->position;
+		}
+
+		/**
+		 * Iterator method - rewind
+		 *
+		 * @return	void				No value is returned
+		 */
+		public function rewind()
+		{
+			$this->position = 0;
 		}
 	}
 ?>

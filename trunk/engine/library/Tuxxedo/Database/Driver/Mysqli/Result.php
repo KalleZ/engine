@@ -147,6 +147,31 @@
 		}
 
 		/**
+		 * Iterator method - current
+		 *
+		 * @return	mixed				Returns the current result
+		 */
+		public function current()
+		{
+			if(!$this->result->data_seek($this->position))
+			{
+				return(false);
+			}
+
+			return($this->result->fetch_array());
+		}
+
+		/**
+		 * Iterator method - valid
+		 *
+		 * @return	boolean				Returns true if its still possible to continue iterating
+		 */
+		public function valid()
+		{
+			return($this->result->num_rows && $this->position >= 0 && $this->position < $this->result->num_rows);
+		}
+
+		/**
 		 * Quick reference for not repeating code when fetching a different type
 		 *
 		 * @param	integer				Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
