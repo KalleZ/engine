@@ -698,6 +698,19 @@
 				$n -= \sizeof($virtual_fields);
 			}
 
+			if($diff = \array_diff(\array_keys($this->fields), \array_keys($virtual)))
+			{
+				foreach($diff as $index)
+				{
+					if(isset($this->fields[$index]['default']))
+					{
+						$virtual[$index] = $this->fields[$index]['default'];
+
+						++$n;
+					}
+				}
+			}
+
 			foreach($virtual as $field => $data)
 			{
 				if(($field == $this->idname && $this->options & self::OPT_LOAD_ONLY) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
