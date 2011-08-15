@@ -86,8 +86,6 @@
 			{
 				$this->result = NULL;
 			}
-
-			$this->iteratorEmulator();
 		}
 
 		/**
@@ -139,6 +137,8 @@
 		 */
 		public function fetchArray()
 		{
+			++$this->position;
+
 			return($this->result->fetch());
 		}
 
@@ -149,6 +149,8 @@
 		 */
 		public function fetchAssoc()
 		{
+			++$this->position;
+
 			return($this->result->fetch(\PDO::FETCH_ASSOC));
 		}
 
@@ -159,6 +161,8 @@
 		 */
 		public function fetchRow()
 		{
+			++$this->position;
+
 			return($this->result->fetch(\PDO::FETCH_NUM));
 		}
 
@@ -171,6 +175,33 @@
 		public function fetchObject()
 		{
 			return($this->result->fetchObject());
+		}
+
+		/**
+		 * Iterator method - current
+		 *
+		 * @return	mixed				Returns the current result
+		 */
+		public function current()
+		{
+			if(!isset($this->iterator_data[$this->position]))
+			{
+				return($this->iterator_data[$this->position] = $this->result->fetch());
+			}
+
+			return($this->iterator_data[$this->position]);
+		}
+
+		/**
+		 * Iterator method - valid
+		 *
+		 * @return	boolean				Returns true if its still possible to continue iterating
+		 */
+		public function valid()
+		{
+			$num_rows = $this->result->rowCount();
+
+			return($num_rows && $this->position >= 0 && $this->position < $num_rows);
 		}
 	}
 ?>
