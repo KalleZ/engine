@@ -85,6 +85,13 @@
 		 */
 		protected $position		= 0;
 
+		/**
+		 * Iterator data for drivers that need to emulate the iterator functionality
+		 *
+		 * @var		array
+		 */
+		protected $iterator_data	= Array();
+
 
 		/**
 		 * Constructs a new result object
