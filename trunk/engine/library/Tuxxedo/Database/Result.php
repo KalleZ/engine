@@ -58,6 +58,35 @@
 	abstract class Result implements \Iterator, Result\Specification
 	{
 		/**
+		 * Fetch mode constant - row
+		 *
+		 * @var		integer
+		 */
+		const FETCH_ROW			= 1;
+
+		/**
+		 * Fetch mode constant - array
+		 *
+		 * @var		integer
+		 */
+		const FETCH_ARRAY		= 2;
+
+		/**
+		 * Fetch mode constant - assoc
+		 *
+		 * @var		integer
+		 */
+		const FETCH_ASSOC		= 3;
+
+		/**
+		 * Fetch mode constant - object
+		 *
+		 * @var		integer
+		 */
+		const FETCH_OBJECT		= 4;
+
+
+		/**
 		 * The database instance from where the result was created
 		 *
 		 * @var		\Tuxxedo\Database
@@ -84,6 +113,13 @@
 		 * @var		integer
 		 */
 		protected $position		= 0;
+
+		/**
+		 * Fetch mode
+		 *
+		 * @var		integer
+		 */
+		protected $fetch_mode		= self::FETCH_ARRAY;
 
 		/**
 		 * Iterator data for drivers that need to emulate the iterator functionality
@@ -125,6 +161,20 @@
 		public function __destruct()
 		{
 			$this->free();
+		}
+
+		/**
+		 * Sets the fetch mode
+		 *
+		 * @param	integer				One of the FETCH_* constants
+		 * @return	void				No value is returned
+		 */
+		public function setFetchType($mode)
+		{
+			if($mode && $mode < 5)
+			{
+				$this->fetch_mode = (integer) $mode;
+			}
 		}
 
 		/**
@@ -180,6 +230,37 @@
 			}
 
 			return($this->iterator_data[$this->position]);
+		}
+
+		/**
+		 * General fetch method, this method uses the FETCH_* constants 
+		 * to determine in what format the returned data should be in
+		 *
+		 * @return	array|object		Returns an object or array based on the fetching mode
+		 */
+		public function fetch()
+		{
+			switch($this->fetch_mode)
+			{
+				case(1):
+				{
+					return($this->fetchArray());
+				}
+				case(2):
+				{
+					return($this->fetchAssoc());
+				}
+				case(3):
+				{
+					return($this->fetchRow());
+				}
+				case(4):
+				{
+					return($this->fetchObject());
+				}
+			}
+
+			return(false);
 		}
 	}
 ?>

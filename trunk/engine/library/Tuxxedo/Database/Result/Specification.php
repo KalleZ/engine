@@ -96,5 +96,13 @@
 		 * @return	object			Returns an object with the result
 		 */
 		public function fetchObject();
+
+		/**
+		 * General fetch method, this method uses the FETCH_* constants 
+		 * to determine in what format the returned data should be in
+		 *
+		 * @return	array|object		Returns an object or array based on the fetching mode
+		 */
+		public function fetch();
 	}
 ?>
