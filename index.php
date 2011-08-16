@@ -37,34 +37,6 @@
 	require('./library/bootstrap.php');
 
 	/**
-	 * I WANT A UNIT TESTING FRAMEWORK, I WANT A UNIT TESTING FRAMEWORK, ....
-	 */
-	$result = $db->query('
-				SELECT 
-					`id`, 
-					`title`
-				FROM 
-					`' . TUXXEDO_PREFIX . 'templates`
-				ORDER BY 
-					`id` 
-				ASC');
-
-	if(!$result || !$result->getNumRows())
-	{
-		echo 'Error: no results';
-		exit;
-	}
-
-	/* ->setFetchType() ? */
-
-	foreach($result as $row)
-	{
-		printf('[%d] %s<br />', $row['id'], $row['title']);
-	}
-
-	exit;
-
-	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */

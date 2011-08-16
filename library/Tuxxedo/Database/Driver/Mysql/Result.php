@@ -184,16 +184,6 @@
 		}
 
 		/**
-		 * Iterator method - valid
-		 *
-		 * @return	boolean				Returns true if its still possible to continue iterating
-		 */
-		public function valid()
-		{
-			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
-		}
-
-		/**
 		 * Quick reference for not repeating code when fetching a different type
 		 *
 		 * @param	integer				Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
