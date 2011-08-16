@@ -57,6 +57,7 @@
 	Changed the undocumented docblocks while parsing the source in api_analyze.php to be more verbose (Kalle)
 	Changed datamanagers that have the LOAD_ONLY option enabled data to be visiable thru the array access syntax (Kalle)
 	Changed templateids from being a database field to be a virtually populated field from datastore.php (Kalle)
+	Changed result sets' getNumRows methods to return 0 if the result is destroyed (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)

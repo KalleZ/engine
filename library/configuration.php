@@ -38,7 +38,7 @@
 	 * Name of the application, used on error screens. This is not 
 	 * required
 	 */
-	'name'		=> '', 
+	'name'		=> 'Engine Development Labs', 
 
 	/**
 	 * Version
@@ -46,7 +46,7 @@
 	 * Version of the application, if any. Used together with the name 
 	 * on error screens
 	 */
-	'version'	=> '', 
+	'version'	=> '1.1.0', 
 
 	/**
 	 * Debug mode

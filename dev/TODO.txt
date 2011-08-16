@@ -5,12 +5,9 @@
 	------------------------------------------------
 
 	Database
-	 - Implement iterator support for:
-	   - SQLite
-	 - Implement iterator emulator support for:
-	   - PDO
 	 - Implement setFetchType method and related constants for iterators and a general fetch method
-	 - Fix PDO fetch methods missing validation
+	 - Cleanup the is_object() usage vs. !== NULL
+	 - Cleanup the iterator methods thats essentially the same in PDO+SQLite
 
 	Helpers
 	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
@@ -33,3 +30,6 @@
 	Core
 	 - Fix unloading of session handlers that can cause an SQL error due to incorrect shutdown sequence order
 	 - Fix CWD when in shutdown handler under APR2
+
+	Others
+	 - Remove documentation remains
