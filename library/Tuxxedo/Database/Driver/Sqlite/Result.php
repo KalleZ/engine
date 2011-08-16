@@ -103,7 +103,7 @@
 			{
 				$this->result->finalize();
 
-				$this->result = NULL;
+				$this->result = $this->iterator_data = NULL;
 
 				return(true);
 			}

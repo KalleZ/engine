@@ -134,7 +134,12 @@
 		 */
 		public function fetchArray()
 		{
-			return($this->fetch(1));
+			if(!$this->result)
+			{
+				return(false);
+			}
+
+			return($this->result->fetch_array());
 		}
 
 		/**
@@ -144,7 +149,12 @@
 		 */
 		public function fetchAssoc()
 		{
-			return($this->fetch(2));
+			if(!$this->result)
+			{
+				return(false);
+			}
+
+			return($this->result->fetch_assoc());
 		}
 
 		/**
@@ -154,7 +164,12 @@
 		 */
 		public function fetchRow()
 		{
-			return($this->fetch(3));
+			if(!$this->result)
+			{
+				return(false);
+			}
+
+			return($this->result->fetch_row());
 		}
 
 		/**
@@ -165,7 +180,12 @@
 		 */
 		public function fetchObject()
 		{
-			return($this->fetch(4));
+			if(!$this->result)
+			{
+				return(false);
+			}
+
+			return($this->result->fetch_object());
 		}
 
 		/**
@@ -175,48 +195,12 @@
 		 */
 		public function current()
 		{
-			if(!$this->result->data_seek($this->position))
+			if(!$this->result || !$this->result->data_seek($this->position))
 			{
 				return(false);
 			}
 
-			return($this->result->fetch_array());
-		}
-
-		/**
-		 * Quick reference for not repeating code when fetching a different type
-		 *
-		 * @param	integer				Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
-		 * @return	array|object			Result type is based on result mode, boolean false is returned on errors
-		 */
-		private function fetch($mode)
-		{
-			if(!$this->result || !$this->cached_num_rows)
-			{
-				return(false);
-			}
-
-			switch($mode)
-			{
-				case(1):
-				{
-					return($this->result->fetch_array());
-				}
-				case(2):
-				{
-					return($this->result->fetch_assoc());
-				}
-				case(3):
-				{
-					return($this->result->fetch_row());
-				}
-				case(4):
-				{
-					return($this->result->fetch_object());
-				}
-			}
-
-			return(false);
+			return($this->fetch());
 		}
 	}
 ?>
