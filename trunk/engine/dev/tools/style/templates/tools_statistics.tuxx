@@ -5,19 +5,25 @@
 
 	<table cellspacing=\"0\" cellpadding=\"0\">
 		<tr class=\"heading\">
-			<td nowrap=\"nowrap\" class=\"start\">
+			<td class=\"start\" width=\"25%\">
+				Files
+			</td>
+			<td nowrap=\"nowrap\" width=\"25%\">
 				File extensions
 			</td>
-			<td nowrap=\"nowrap\">
+			<td nowrap=\"nowrap\" width=\"25%\">
 				Total lines of code
 			</td>
-			<td nowrap=\"nowrap\" class=\"end\">
+			<td nowrap=\"nowrap\" class=\"end\" width=\"25%\">
 				Total size (bytes)
 			</td>
 		</tr>
 		<tr>
 			<td>
-				{$statistics['lines']}
+				{$statistics['total']['files']}
+			</td>
+			<td>
+				{$statistics['extensions']}
 			</td>
 			<td>
 				{$statistics['total']['lines']}
@@ -51,6 +57,12 @@
 		</tr>
 		{$extensions}
 	</table>
+</div>
+
+<div class=\"box\">
+	<p>
+		Note that images are not included in any of the above statistics.
+	</p>
 </div>
 
 {$footer}
