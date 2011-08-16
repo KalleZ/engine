@@ -99,9 +99,10 @@
 		 */
 		public function free()
 		{
-			if(\is_object($this->result))
+			if($this->result)
 			{
 				$this->result->finalize();
+
 				$this->result = NULL;
 
 				return(true);
@@ -127,7 +128,7 @@
 		 */
 		public function getNumRows()
 		{
-			if(!\is_object($this->result))
+			if(!$this->result)
 			{
 				return(0);
 			}
@@ -142,7 +143,7 @@
 		 */
 		public function fetchArray()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
@@ -157,7 +158,7 @@
 		 */
 		public function fetchAssoc()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
@@ -176,7 +177,7 @@
 		 */
 		public function fetchRow()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
@@ -192,37 +193,12 @@
 		 */
 		public function fetchObject()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
 
 			return((object) $this->iterator_data[$this->position++]);
-		}
-
-		/**
-		 * Iterator method - current
-		 *
-		 * @return	mixed				Returns the current result
-		 */
-		public function current()
-		{
-			if(!isset($this->iterator_data[$this->position]))
-			{
-				return($this->iterator_data[$this->position]);
-			}
-
-			return($this->iterator_data[$this->position]);
-		}
-
-		/**
-		 * Iterator method - valid
-		 *
-		 * @return	boolean				Returns true if its still possible to continue iterating
-		 */
-		public function valid()
-		{
-			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
 		}
 	}
 ?>

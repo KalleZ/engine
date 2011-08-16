@@ -78,30 +78,17 @@
 				throw new Exception\Basic('Passed result resource is not a valid result');
 			}
 
-			$this->instance		= $instance;
-			$this->result		= $result;
-			$this->cached_num_rows 	= $result->rowCount();
+			$this->instance	= $instance;
 
-			if(!$this->cached_num_rows && $instance->cfg('subdriver') != 'sqlite')
+			while($row = $result->fetch(\PDO::FETCH_NAMED))
 			{
-				$this->result = NULL;
+				$this->iterator_data[] = $row;
 			}
-			else
-			{
-				while($row = $result->fetch(\PDO::FETCH_NAMED))
-				{
-					$this->iterator_data[] = $row;
-				}
 
-				if($num_rows = \sizeof($this->iterator_data))
-				{
-					$this->cached_num_rows = $num_rows;
-				}
-				else
-				{
-					$this->result		= NULL;
-					$this->iterator_data 	= Array();
-				}
+			if($num_rows = \sizeof($this->iterator_data))
+			{
+				$this->cached_num_rows 	= $num_rows;
+				$this->result		= $result;
 			}
 		}
 
@@ -112,7 +99,7 @@
 		 */
 		public function free()
 		{
-			if(\is_object($this->result))
+			if($this->result)
 			{
 				$this->result = NULL;
 
@@ -139,12 +126,12 @@
 		 */
 		public function getNumRows()
 		{
-			if(!\is_object($this->result))
+			if(!$this->result)
 			{
-				return($this->cached_num_rows);
+				return(0);
 			}
 
-			return((integer) $this->result->columnCount());
+			return($this->cached_num_rows);
 		}
 
 		/**
@@ -154,7 +141,7 @@
 		 */
 		public function fetchArray()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
@@ -169,7 +156,7 @@
 		 */
 		public function fetchAssoc()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
@@ -188,7 +175,7 @@
 		 */
 		public function fetchRow()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
@@ -204,37 +191,12 @@
 		 */
 		public function fetchObject()
 		{
-			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			if(!$this->result || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
 
 			return((object) $this->iterator_data[$this->position++]);
-		}
-
-		/**
-		 * Iterator method - current
-		 *
-		 * @return	mixed				Returns the current result
-		 */
-		public function current()
-		{
-			if(!isset($this->iterator_data[$this->position]))
-			{
-				return($this->iterator_data[$this->position]);
-			}
-
-			return($this->iterator_data[$this->position]);
-		}
-
-		/**
-		 * Iterator method - valid
-		 *
-		 * @return	boolean				Returns true if its still possible to continue iterating
-		 */
-		public function valid()
-		{
-			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
 		}
 	}
 ?>

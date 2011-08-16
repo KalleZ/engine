@@ -6,8 +6,6 @@
 
 	Database
 	 - Implement setFetchType method and related constants for iterators and a general fetch method
-	 - Cleanup the is_object() usage vs. !== NULL
-	 - Cleanup the iterator methods thats essentially the same in PDO+SQLite
 
 	Helpers
 	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface

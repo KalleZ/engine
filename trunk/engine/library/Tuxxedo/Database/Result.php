@@ -156,5 +156,30 @@
 		{
 			$this->position = 0;
 		}
+
+		/**
+		 * Iterator method - valid
+		 *
+		 * @return	boolean				Returns true if its still possible to continue iterating
+		 */
+		public function valid()
+		{
+			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
+		}
+
+		/**
+		 * Iterator method - current
+		 *
+		 * @return	mixed				Returns the current result
+		 */
+		public function current()
+		{
+			if(!isset($this->iterator_data[$this->position]))
+			{
+				return($this->iterator_data[$this->position]);
+			}
+
+			return($this->iterator_data[$this->position]);
+		}
 	}
 ?>
