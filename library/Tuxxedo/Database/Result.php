@@ -55,7 +55,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	abstract class Result implements \Iterator, Result\Specification
+	abstract class Result implements \Iterator, \Countable, Result\Specification
 	{
 		/**
 		 * Fetch mode constant - row
@@ -230,6 +230,21 @@
 			}
 
 			return($this->iterator_data[$this->position]);
+		}
+
+		/**
+		 * Countable method, this is essentially a wrapper for getNumRows() 
+		 * but allows usage of:
+		 *
+		 * <pre>
+		 * printf('Number of results: %d', sizeof($result));
+		 * </pre>
+		 *
+		 * @return	integer			Returns the number of rows in the result, and 0 on error
+		 */
+		public function count()
+		{
+			return($this->cached_num_rows);
 		}
 
 		/**
