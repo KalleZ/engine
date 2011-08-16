@@ -62,6 +62,27 @@
 		protected $result;
 
 
+
+		/**
+		 * Constructs a new result object
+		 *
+		 * @param	\Tuxxedo\Database		A database instance
+		 * @param	mixed				A database result, this must be delivered from the driver it was created from
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
+		 */
+		public function __construct(Database $instance, $result)
+		{
+			if(!$instance->isResult($result))
+			{
+				throw new Exception\Basic('Passed result resource is not a valid result');
+			}
+
+			$this->instance		= $instance;
+			$this->result		= $result;
+			$this->cached_num_rows 	= (integer) $this->result->num_rows;
+		}
+
 		/**
 		 * Frees the result from memory, and makes it unusable
 		 *
@@ -72,6 +93,7 @@
 			if(\is_object($this->result))
 			{
 				$this->result->free();
+
 				$this->result = NULL;
 
 				return(true);
@@ -99,10 +121,10 @@
 		{
 			if(!\is_object($this->result))
 			{
-				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
+				return(0);
 			}
 
-			return((integer) $this->result->num_rows);
+			return($this->cached_num_rows);
 		}
 
 		/**
@@ -168,7 +190,7 @@
 		 */
 		public function valid()
 		{
-			return($this->result->num_rows && $this->position >= 0 && $this->position < $this->result->num_rows);
+			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
 		}
 
 		/**
@@ -179,7 +201,7 @@
 		 */
 		private function fetch($mode)
 		{
-			if(!is_object($this->result) || !$this->result->num_rows)
+			if(!is_object($this->result) || !$this->cached_num_rows)
 			{
 				return(false);
 			}

@@ -78,19 +78,17 @@
 				throw new Exception\Basic('Passed result resource is not a valid result');
 			}
 
-			$this->instance		= $instance;
-			$this->result		= $result;
-			$this->cached_num_rows 	= $result->numColumns();
+			$this->instance	= $instance;
 
-			if($this->cached_num_rows && !$result->fetchArray(\SQLITE3_NUM))
+			while($row = $result->fetchArray())
 			{
-				$this->result 		= NULL;
-				$this->cached_num_rows	= 0;
+				$this->iterator_data[] = $row;
 			}
 
-			if($this->result)
+			if($num_rows = \sizeof($this->iterator_data))
 			{
-				$this->result->reset();
+				$this->cached_num_rows 	= $num_rows;
+				$this->result		= $result;
 			}
 		}
 
@@ -131,10 +129,10 @@
 		{
 			if(!\is_object($this->result))
 			{
-				return((isset($this->cached_num_rows) ? $this->cached_num_rows : 0));
+				return(0);
 			}
 
-			return((integer) $this->result->numColumns());
+			return($this->cached_num_rows);
 		}
 
 		/**
@@ -144,7 +142,12 @@
 		 */
 		public function fetchArray()
 		{
-			return($this->fetch(1));
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
+
+			return($this->iterator_data[$this->position++]);
 		}
 
 		/**
@@ -154,7 +157,16 @@
 		 */
 		public function fetchAssoc()
 		{
-			return($this->fetch(2));
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
+
+			$row = \array_merge($this->iterator_data[$this->position], \array_values($this->iterator_data[$this->position]));
+
+			++$this->position;
+
+			return($row);
 		}
 
 		/**
@@ -164,7 +176,12 @@
 		 */
 		public function fetchRow()
 		{
-			return($this->fetch(3));
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
+
+			return(\array_values($this->iterator_data[$this->position++]));
 		}
 
 		/**
@@ -175,56 +192,37 @@
 		 */
 		public function fetchObject()
 		{
-			return($this->fetch(4));
-		}
-
-		/**
-		 * Quick reference for not repeating code when fetching a different type
-		 *
-		 * @param	integer				Result mode, 1 = array, 2 = assoc, 3 = row & 4 = object
-		 * @return	array|object			Result type is based on result mode, boolean false is returned on errors
-		 */
-		private function fetch($mode)
-		{
-			if(!is_object($this->result) || !$this->result->numColumns())
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
 			{
 				return(false);
 			}
 
-			switch($mode)
+			return((object) $this->iterator_data[$this->position++]);
+		}
+
+		/**
+		 * Iterator method - current
+		 *
+		 * @return	mixed				Returns the current result
+		 */
+		public function current()
+		{
+			if(!isset($this->iterator_data[$this->position]))
 			{
-				case(1):
-				{
-					return($this->result->fetchArray());
-				}
-				case(2):
-				{
-					return($this->result->fetchArray(\SQLITE3_ASSOC));
-				}
-				case(3):
-				{
-					return($this->result->fetchArray(\SQLTITE3_NUM));
-				}
-				case(4):
-				{
-					$retval = new \stdClass;
-					$result = $this->result->fetchArray(\SQLITE3_ASSOC);
-
-					if(!$result)
-					{
-						return(false);
-					}
-
-					foreach($result as $field => $value)
-					{
-						$retval->{$field} = $value;
-					}
-
-					return($retval);
-				}
+				return($this->iterator_data[$this->position]);
 			}
 
-			return(false);
+			return($this->iterator_data[$this->position]);
+		}
+
+		/**
+		 * Iterator method - valid
+		 *
+		 * @return	boolean				Returns true if its still possible to continue iterating
+		 */
+		public function valid()
+		{
+			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
 		}
 	}
 ?>

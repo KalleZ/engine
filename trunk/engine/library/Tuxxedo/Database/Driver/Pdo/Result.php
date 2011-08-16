@@ -80,11 +80,28 @@
 
 			$this->instance		= $instance;
 			$this->result		= $result;
-			$this->cached_num_rows 	= $result->columnCount();
+			$this->cached_num_rows 	= $result->rowCount();
 
-			if(!$this->cached_num_rows)
+			if(!$this->cached_num_rows && $instance->cfg('subdriver') != 'sqlite')
 			{
 				$this->result = NULL;
+			}
+			else
+			{
+				while($row = $result->fetch(\PDO::FETCH_NAMED))
+				{
+					$this->iterator_data[] = $row;
+				}
+
+				if($num_rows = \sizeof($this->iterator_data))
+				{
+					$this->cached_num_rows = $num_rows;
+				}
+				else
+				{
+					$this->result		= NULL;
+					$this->iterator_data 	= Array();
+				}
 			}
 		}
 
@@ -137,9 +154,12 @@
 		 */
 		public function fetchArray()
 		{
-			++$this->position;
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
 
-			return($this->result->fetch());
+			return($this->iterator_data[$this->position++]);
 		}
 
 		/**
@@ -149,9 +169,16 @@
 		 */
 		public function fetchAssoc()
 		{
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
+
+			$row = \array_merge($this->iterator_data[$this->position], \array_values($this->iterator_data[$this->position]));
+
 			++$this->position;
 
-			return($this->result->fetch(\PDO::FETCH_ASSOC));
+			return($row);
 		}
 
 		/**
@@ -161,9 +188,12 @@
 		 */
 		public function fetchRow()
 		{
-			++$this->position;
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
 
-			return($this->result->fetch(\PDO::FETCH_NUM));
+			return(\array_values($this->iterator_data[$this->position++]));
 		}
 
 		/**
@@ -174,7 +204,12 @@
 		 */
 		public function fetchObject()
 		{
-			return($this->result->fetchObject());
+			if(!\is_object($this->result) || !isset($this->iterator_data[$this->position]))
+			{
+				return(false);
+			}
+
+			return((object) $this->iterator_data[$this->position++]);
 		}
 
 		/**
@@ -186,7 +221,7 @@
 		{
 			if(!isset($this->iterator_data[$this->position]))
 			{
-				return($this->iterator_data[$this->position] = $this->result->fetch());
+				return($this->iterator_data[$this->position]);
 			}
 
 			return($this->iterator_data[$this->position]);
@@ -199,9 +234,7 @@
 		 */
 		public function valid()
 		{
-			$num_rows = $this->result->rowCount();
-
-			return($num_rows && $this->position >= 0 && $this->position < $num_rows);
+			return($this->cached_num_rows && $this->position >= 0 && $this->position < $this->cached_num_rows);
 		}
 	}
 ?>
