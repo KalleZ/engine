@@ -93,6 +93,7 @@
 						'size'		=> Array(), 
 						'files'		=> Array(), 
 						'total'		=> Array(
+										'files'		=> 0, 
 										'lines'		=> 0, 
 										'size'		=> 0
 										), 
@@ -107,6 +108,11 @@
 			{
 				$path		= '../../' . $path;
 				$extension 	= pathinfo($path, PATHINFO_EXTENSION);
+
+				if(stripos($extension, 'png') !== false)
+				{
+					continue;
+				}
 
 				if(!isset($statistics['lines'][$extension]))
 				{
@@ -138,10 +144,6 @@
 				{
 					$statistics['extensions'][$extension]['tokens'] += sizeof(token_get_all(file_get_contents($path)));
 				}
-				elseif(stripos($extension, 'png') !== false)
-				{
-					continue;
-				}
 
 				foreach($l = file($path) as $line)
 				{
@@ -159,6 +161,7 @@
 				$statistics['total']['lines']		+= sizeof($l);
 				$statistics['total']['size']		+= $s;
 
+				++$statistics['total']['files'];
 				++$statistics['files'][$extension];
 			}
 
@@ -178,7 +181,8 @@
 				eval('$extensions .= "' . $style->fetch('tools_statistics_itembit') . '";');
 			}
 
-			$statistics['lines'] = sizeof($statistics['lines']);
+			$statistics['lines'] 		= sizeof($statistics['lines']);
+			$statistics['extensions']	= sizeof(array_keys($statistics['files']));
 
 			eval(page('tools_statistics'));
 		}
