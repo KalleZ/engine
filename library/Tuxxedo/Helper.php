@@ -101,10 +101,6 @@
 			{
 				throw new Exception\Basic('Invalid helper handle specified');
 			}
-			elseif(!\is_subclass_of($class, __CLASS__))
-			{
-				throw new Exception\Basic('Corrupt helper handle');
-			}
 
 			self::$loaded_helpers[$helper] 	= true;
 			$ref 				= new $class($registry);
