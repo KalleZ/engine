@@ -6,7 +6,7 @@
 
 	Datamanagers
 	 - New datamanagers
-[F]	   - Option (Move from Playground)
+[F]	   - Option
 
 
 	Tuxxedo Engine 1.1.0 Beta 1
