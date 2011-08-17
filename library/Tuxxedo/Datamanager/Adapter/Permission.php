@@ -75,7 +75,7 @@
 		 * Constructor, fetches a new permission based on its name if set
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	integer				The usergroup name
+		 * @param	integer				The permission name
 		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
