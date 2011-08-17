@@ -5,6 +5,9 @@
 	------------------------------------------------
 
 	Datamanagers
+	 - Add new phrases for 
+[B]	   - Option
+[B]	   - Permission
 	 - New datamanagers
 [F]	   - Option
 

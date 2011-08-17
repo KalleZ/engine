@@ -61,7 +61,8 @@
 
 <div class=\"box\">
 	<p>
-		Note that images are not included in any of the above statistics.
+		Note that images and other binary files such as SQLite databases are 
+		not included in any of the above statistics.
 	</p>
 </div>
 
