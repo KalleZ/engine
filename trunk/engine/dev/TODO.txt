@@ -16,6 +16,7 @@
 	------------------------------------------------
 
 	Datamanagers
+[F]	 - Implement iterator support for datamanager fields
 [B]	 - Fix delete default style does not specify a new default style
 
 	DevTools
@@ -25,7 +26,7 @@
 
 	Scripts
 	 - api_analyze.php
-[B]	   - Fix aliasing rules for interfaces (see \Tuxxedo\Database\Result)
+[B]	   - Fix aliasing rules for interfaces (see \Tuxxedo\Database\Result -- should correctly show the 'Specification' interface)
 
 	Helpers
 [F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
