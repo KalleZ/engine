@@ -32,15 +32,16 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Registry;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Datamanager\Adapter;
+	use Tuxxedo\Datamanager\Hooks;
+	use Tuxxedo\Registry;
 
 
 	/**
 	 * Include check
 	 */
-	defined('TUXXEDO_LIBRARY') or exit;
+	defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -51,10 +52,10 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Style extends Adapter implements APICache
+	class Option extends Adapter implements Hooks\Cache
 	{
 		/**
-		 * Fields for validation of styles
+		 * Fields for validation of options
 		 *
 		 * @var		array
 		 */
@@ -86,29 +87,27 @@
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The option name
+		 * @param	integer				Additional options to apply on the datamanager
+		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
-		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the option name is set and it failed to load for some reason
+		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the usergroup id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->registry 	= $registry;
-
 			$this->dmname		= 'option';
 			$this->tablename	= \TUXXEDO_PREFIX . 'options';
 			$this->idname		= 'id';
-			$this->information	= &$this->userdata;
 
 			if($identifier !== NULL)
 			{
-				$option = $registry->db->query('
-								SELECT 
-									* 
-								FROM 
-									`' . \TUXXEDO_PREFIX . 'options` 
-								WHERE 
-									`option` = %s
-								LIMIT 1', $identifier);
+				$option = $registry->db->equery('
+									SELECT 
+										* 
+									FROM 
+										`' . \TUXXEDO_PREFIX . 'options` 
+									WHERE 
+										`option` = \'%s\'', $identifier);
 
 				if(!$option || !$option->getNumRows())
 				{
@@ -120,31 +119,21 @@
 
 				$option->free();
 			}
+
+			parent::init($registry, $options, $parent);
 		}
 
 		/**
-		 * Save the option in the datastore, this method is called from 
-		 * the parent class in cases when the save method was success
+		 * Checks whether the default value is valid
 		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	array				A virtually populated array from the datamanager abstraction
-		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 * @param	string				The value to check
+		 * @return	boolean				Returns true if the default value is valid
 		 */
-		public function rebuild(Registry $registry, Array $virtual)
+		public static function isValidDefaultValue(Adapter $dm, Registry $registry, $defaultvalue)
 		{
-			if(($datastore = $this->registry->cache->options) === false)
-			{
-				$datastore = Array();
-			}
-			
-			$datastore[(string) $this->identifier] = $virtual;
-
-			return($this->registry->cache->rebuild('options', $datastore));
-		}
-
-		public static function isValidDefaultValue()
-		{
-			return(false);
+			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
 		}
 
 		/**
@@ -157,19 +146,19 @@
 		 */
 		public static function isValidType(Adapter $dm, Registry $registry, $type)
 		{
-			if(isset($type{1}) || !in_array($type, Array('s', 'b', 'i')))
-			{
-				return(false);
-			}
+			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
+		}
 
-			if($dm['
-
-			switch($type)
-			{
-				case('i'):
-				{
-					return((isset($dm['value']
-			}
+		/**
+		 * Save the option in the datastore, this method is called from 
+		 * the parent class in cases when the save method was success
+		 *
+		 * @param	array				A virtually populated array from the datamanager abstraction
+		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 */
+		public function rebuild(Array $virtual)
+		{
+			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
 		}
 	}
 ?>
