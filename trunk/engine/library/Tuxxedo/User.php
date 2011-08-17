@@ -407,12 +407,14 @@
 				return(false);
 			}
 
-			if($checkgroup)
+			$granted = ($this->userinfo->permissions & $permission) !== 0;
+
+			if(!$granted && $checkgroup)
 			{
 				return($this->isGroupGranted($permission));
 			}
 
-			return(($this->userinfo->permissions & $permission) !== 0);
+			return($granted);
 		}
 
 
