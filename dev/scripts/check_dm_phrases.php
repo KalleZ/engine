@@ -65,7 +65,21 @@
 
 		if(!$class_code)
 		{
-			$class_code = 'Class Temp%d extends \Tuxxedo\Datamanager\Adapter\%s { public function getFields(){ return(array_keys($this->fields)); } }';
+			$class_code = 	'Class Temp%d extends \Tuxxedo\Datamanager\Adapter\%s ' . 
+					'{' . 
+					'public function getFields()' . 
+					'{' . 
+					'$fields = Array();' . 
+					'foreach(array_keys($this->fields) as $field)' . 
+					'{' . 
+					'if($this->fields[$field][\'type\'] != self::FIELD_VIRTUAL)' . 
+					'{' . 
+					'$fields[] = $field;' . 
+					'}' . 
+					'}' . 
+					'return($fields);' . 
+					'}' . 
+					'}';
 		}
 
 		require($file);
