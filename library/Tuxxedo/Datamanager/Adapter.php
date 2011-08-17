@@ -526,14 +526,14 @@
 		{
 			$this->invalid_fields = Array();
 
-			if(!\get_object_vars($this->userdata))
+			if(!\get_object_vars($this->userdata) && ($this->options & self::OPT_LOAD_ONLY))
 			{
 				$this->revalidate = false;
 
 				return(true);
 			}
 
-			$input = $this->registry->register('input', '\Tuxxedo\Input');
+			$input = ($this->registry->input ? $this->registry->input : $this->registry->register('input', '\Tuxxedo\Input'));
 
 			foreach($this->fields as $field => $properties)
 			{
@@ -552,7 +552,7 @@
 					{
 						if(!isset($this->userdata->{$field}))
 						{
-							continue 2;
+							continue;
 						}
 					}
 					break;
@@ -577,7 +577,7 @@
 							}
 							else
 							{
-								$this->data[$field] = \call_user_func($properties['callback'], $this->registry);
+								$this->data[$field] = \call_user_func($properties['callback'], $this, $this->registry, $this->userdata);
 							}
 						}
 
@@ -593,14 +593,30 @@
 
 				if(isset($properties['validation']) && $properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
 				{
-					if(!$input->validate($this->userdata->{$field}, $properties['callback']))
+					if($properties['type'] == self::FIELD_REQUIRED && !isset($this->userdata->{$field}))
+					{
+						$this->invalid_fields[] = $field;
+
+						continue;
+					}
+
+					if(isset($properties['parameters']))
+					{
+						$callback_result = \call_user_func_array($properties['callback'], \array_merge(Array($this, $this->registry, $this->userdata->{$field}), $properties['parameters']));
+					}
+					else
+					{
+						$callback_result = \call_user_func($properties['callback'], $this, $this->registry, $this->userdata->{$field});
+					}
+
+					if(!$callback_result)
 					{
 						$this->invalid_fields[] = $field;
 
 						continue;
 					}
 				}
-				elseif($properties['type'] == self::FIELD_REQUIRED && ($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}) && $this->userdata->{$field} !== 0)
+				elseif($properties['type'] == self::FIELD_REQUIRED && ($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && isset($this->userdata->{$field}) && empty($this->userdata->{$field}) && $this->userdata->{$field} !== 0)
 				{
 					$this->invalid_fields[] = $field;
 

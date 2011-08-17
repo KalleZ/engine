@@ -188,7 +188,7 @@
 		 * @param	integer				The usergroup id to check for validity
 		 * @return	boolean				Returns true if the usergroup is loaded and exists in the datastore cache, otherwise false
 		 */
-		public static function isValidUsergroup(Adapter $dm, Registry $registry, $id)
+		public static function isValidUsergroup(Adapter $dm, Registry $registry, $id = NULL)
 		{
 			return(isset($registry->cache->usergroups[$id]));
 		}
@@ -201,7 +201,7 @@
 		 * @param	string				The timezone name to check for validity
 		 * @return	boolean				Returns true if the timezone is loaded and exists in the datastore cache, otherwise false
 		 */
-		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone)
+		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone = NULL)
 		{
 			return(isset($registry->cache->timezones[$timezone]));
 		}
@@ -232,7 +232,7 @@
 		 * @param	string				The username to check
 		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
 		 */
-		public static function isValidUsername(Adapter $dm, Registry $registry, $username)
+		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
 		{
 			$query = $registry->db->equery('
 							SELECT 
@@ -254,7 +254,7 @@
 		 * @param	integer				The style id
 		 * @return	boolean				True if the style exists, otherwise false
 		 */
-		public static function isValidStyleId(Adapter $dm, Registry $registry, $styleid)
+		public static function isValidStyleId(Adapter $dm, Registry $registry, $styleid = NULL)
 		{
 			return($registry->cache->styleinfo && isset($registry->cache->styleinfo[$styleid]));
 		}
@@ -267,7 +267,7 @@
 		 * @param	integer				The language id
 		 * @return	boolean				True if the language exists, otherwise false
 		 */
-		public static function isValidLanguageId(Adapter $dm, Registry $registry, $languageid)
+		public static function isValidLanguageId(Adapter $dm, Registry $registry, $languageid = NULL)
 		{
 			return($registry->cache->languages && isset($registry->cache->languages[$languageid]));
 		}

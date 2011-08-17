@@ -18,6 +18,7 @@
 	Datamanagers
 [F]	 - Implement iterator support for datamanager fields
 [B]	 - Fix delete default style does not specify a new default style
+[B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data
 
 	DevTools
 	 - Options
