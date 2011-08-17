@@ -262,7 +262,7 @@
 		/**
 		 * Hooks executor callback
 		 *
-		 * @var		closure
+		 * @var		\Closure
 		 */
 		protected static $hooks_executor;
 
