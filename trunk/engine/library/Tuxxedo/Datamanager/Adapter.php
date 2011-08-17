@@ -149,7 +149,7 @@
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_OPT_ALLOWEMPTY		= 0x001F;
+		const VALIDATE_STRING_EMPTY		= Input::TYPE_STRING_EMPTY;
 
 		/**
 		 * Factory option constant - internationalization (default enabled)
@@ -584,6 +584,10 @@
 						continue 2;
 					}
 					break;
+					default:
+					{
+						continue 2;
+					}
 				}
 
 				if(isset($properties['default']))
@@ -616,13 +620,13 @@
 						continue;
 					}
 				}
-				elseif($properties['type'] == self::FIELD_REQUIRED && ($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && isset($this->userdata->{$field}) && empty($this->userdata->{$field}) && $this->userdata->{$field} !== 0)
+				elseif($properties['type'] == self::FIELD_REQUIRED && $properties['validation'] == self::VALIDATE_STRING_EMPTY && isset($this->userdata->{$field}) && empty($this->userdata->{$field}) && $this->userdata->{$field} !== 0)
 				{
 					$this->invalid_fields[] = $field;
 
 					continue;
 				}
-				elseif(($properties['validation'] & self::VALIDATE_OPT_ALLOWEMPTY) && empty($this->userdata->{$field}))
+				elseif($properties['validation'] == self::VALIDATE_STRING_EMPTY && empty($this->userdata->{$field}))
 				{
 					continue;
 				}

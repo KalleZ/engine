@@ -91,6 +91,13 @@
 		const TYPE_CALLBACK	= 0x0005;
 
 		/**
+		 * Data filter constant, string value (empty allowed)
+		 *
+		 * @var		integer
+		 */
+		const TYPE_STRING_EMPTY	= 0x0006;
+
+		/**
 		 * Data filter option, gets the raw value 
 		 * of the input without any type of santizing
 		 *
@@ -298,6 +305,11 @@
 					$input = \filter_input($data, $field, $flags, ($options & self::INPUT_OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
 				}
 
+				if($type == self::TYPE_STRING && empty($input))
+				{
+					return;
+				}
+
 				return($input);
 			}
 			else
@@ -383,9 +395,9 @@
 					}
 				}
 
-				if($type == self::TYPE_NUMERIC && $data[$field] == 0)
+				if($type == self::TYPE_NUMERIC && $data[$field] == 0 || $type == self::TYPE_STRING && empty($data[$field]))
 				{
-					$data[$field] = NULL;
+					return;
 				}
 
 				return($data[$field]);

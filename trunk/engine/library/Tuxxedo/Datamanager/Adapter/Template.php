@@ -68,15 +68,15 @@
 												), 
 							'source'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING
+												'validation'	=> self::VALIDATE_STRING_EMPTY
 												), 
 							'compiledsource' 	=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING
+												'validation'	=> self::VALIDATE_STRING_EMPTY
 												), 
 							'defaultsource'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING
+												'validation'	=> self::VALIDATE_STRING_EMPTY
 												), 
 							'styleid'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 

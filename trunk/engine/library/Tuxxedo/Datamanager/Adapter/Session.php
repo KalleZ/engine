@@ -62,17 +62,17 @@
 											'type'		=> self::FIELD_PROTECTED
 											), 
 							'userid'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
+											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_NUMERIC
 											), 
 							'location'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING, 
+											'validation'	=> self::VALIDATE_STRING_EMPTY, 
 											'default'	=> \TUXXEDO_SELF
 											), 
 							'useragent' 	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING, 
+											'validation'	=> self::VALIDATE_STRING_EMPTY, 
 											'default'	=> \TUXXEDO_USERAGENT
 											), 
 							'lastactivity'	=> Array(
