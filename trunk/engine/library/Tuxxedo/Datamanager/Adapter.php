@@ -745,9 +745,10 @@
 
 				if(!$this->parent)
 				{
-					$this->context = self::CONTEXT_NONE;
+					$result 	= $hooks($this, $virtual, $virtual_fields);
+					$this->context 	= self::CONTEXT_NONE;
 
-					return($hooks($this, $virtual, $virtual_fields));
+					return($result);
 				}
 
 				$this->parent->setShutdownHandler($hooks, Array($this, $virtual, $virtual_fields));
