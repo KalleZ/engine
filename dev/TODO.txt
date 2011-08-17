@@ -5,7 +5,6 @@
 	------------------------------------------------
 
 	Datamanagers
-[W]	 - Update the phrases for the datamanagers to match new ones
 	 - New datamanagers
 [F]	   - Option (Move from Playground)
 [F]	   - Permission
