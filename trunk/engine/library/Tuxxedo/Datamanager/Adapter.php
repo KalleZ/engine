@@ -584,9 +584,12 @@
 						continue 2;
 					}
 					break;
-					default:
+					case(self::FIELD_OPTIONAL):
 					{
-						continue 2;
+						if(!isset($this->userdata->{$field}))
+						{
+							continue 2;
+						}
 					}
 				}
 
