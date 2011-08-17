@@ -18,6 +18,7 @@
 	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
 	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
 	Added new datamanagers: (Kalle)
+	 - Permission
 	 - Template
 	Added the concept of parent datamanagers, shutdown handlers and improved way to execute hooks (Kalle)
 	Added a new optional parameter to the datamanager save method to prohibit execution of hooks (Kalle)
