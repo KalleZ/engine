@@ -18,7 +18,6 @@
 
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement validators
-        Implement a form of uploading API
 	Implement some handler registry so we dont have to re-invent the wheel everytime a component may have handlers
 	Implement a form of Webservices handler backend that can be used to pull and push
 	 - Authentication support using Engine's authentication system
@@ -33,6 +32,11 @@
 	Improve the datastore cacher
 	 - Implement a temporary memory storage, with backends for APC etc.
 	 - Split code from datastore.php into multiple sub classes so they can be executed at userland code without hacks
+	   - Make use of this new API in datamanagers, maybe we can have a new dynamic hook to do this
+
+	Helpers
+	 - Mail
+	 - Upload
 
 	Look at implementing playground projects
 	 - Query builder

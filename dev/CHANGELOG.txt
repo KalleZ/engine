@@ -9,6 +9,7 @@
 	Added virtual fields and virtual field hooks in datamanager adapters (Kalle)
 	Added developmental IO utilities class (Kalle)
 	Added new scripts to /dev/scripts: (Kalle)
+	 - check_dm_phrases.php
 	 - sync_templates.php
 	Added new DevTools: (Kalle)
 	 - Style & Templates manager
@@ -68,11 +69,11 @@
 	Fixed rounded corners on tuxxedo_doc_error()'s using Gecko based browsers (Kalle)
 	Fixed error_reporting not being reset when testing compiled templates (Kalle)
 	Fixed various aliasing rules all around the Engine (Kalle)
-	Fixed possible error while attempting to display an error due to wrong initialization order in the developmen tools (Kalle)
+	Fixed possible error while attempting to display an error due to wrong initialization order in the development tools (Kalle)
 	Fixed array handling of raw data when using the filter component using the ext/filter backend from PHP (Kalle)
 	Fixed exception calls in datamanager adapters to resolve correctly (Kalle)
 	Fixed version comparison logic in the requirements test (Kalle)
-	Fixed the $goback parameter naming on page(), so that the go back button will work correct (Kalle)
+	Fixed the $goback parameter naming in page(), so that the go back button will work correct (Kalle)
 	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
 	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)

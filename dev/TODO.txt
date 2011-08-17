@@ -4,27 +4,37 @@
 	Tuxxedo Engine 1.1.0 Alpha 2
 	------------------------------------------------
 
-	Helpers
-	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
+	Datamanagers
+[W]	 - Update the phrases for the datamanagers to match new ones
+	 - New datamanagers
+[F]	   - Option (Move from Playground)
+[F]	   - Permission
+
+
+	Tuxxedo Engine 1.1.0 Beta 1
+	------------------------------------------------
 
 	Datamanagers
-	 - Update the phrases for the datamanagers to match new ones
-	 - Fix delete default style does not specify a new default style
-	 - New datamanagers
-	   - Option
-	   - Permission
+[B]	 - Fix delete default style does not specify a new default style
 
 	DevTools
 	 - Options
-	   - Add the ability to re-define default values for options
-	   - Change the options dev tool to work with the options datamanager
+[F]	   - Add the ability to re-define default values for options
+[C]	   - Change the options dev tool to work with the options datamanager
 
 	Scripts
-	 - Implement a script to identify missing datamanager phrases
+	 - api_analyze.php
+[B]	   - Fix aliasing rules for interfaces (see \Tuxxedo\Database\Result)
+
+	Helpers
+[F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
+
+
+	Tuxxedo Engine 1.1.0 Release Candidate 1
+	------------------------------------------------
 
 	Core
-	 - Fix unloading of session handlers that can cause an SQL error due to incorrect shutdown sequence order
-	 - Fix CWD when in shutdown handler under APR2
-
-	Others
-	 - Remove documentation remains
+	 - Branch 1_1_0
+	 - Make trunk 1_2_0
+	 - Update version
+	 - Update TODO
