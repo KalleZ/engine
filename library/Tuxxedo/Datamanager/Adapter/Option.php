@@ -66,7 +66,7 @@
 											), 
 							'value'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'validation'	=> self::VALIDATE_STRING_EMPTY
 											), 
 							'defaultvalue'	=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
@@ -131,7 +131,7 @@
 		 * @param	string				The value to check
 		 * @return	boolean				Returns true if the default value is valid
 		 */
-		public static function isValidDefaultValue(Adapter $dm, Registry $registry, $defaultvalue)
+		public static function isValidDefaultValue(Adapter $dm, Registry $registry, $defaultvalue = NULL)
 		{
 			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
 		}
@@ -144,7 +144,7 @@
 		 * @param	string				The type to check
 		 * @return	boolean				Returns true if the type is valid, otherwise false
 		 */
-		public static function isValidType(Adapter $dm, Registry $registry, $type)
+		public static function isValidType(Adapter $dm, Registry $registry, $type = NULL)
 		{
 			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
 		}

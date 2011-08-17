@@ -5,7 +5,7 @@
 	Tuxxedo Engine 1.1.0
 	------------------------------------------------
 
-	Added new datamanager validation constant to allow fields to be empty (Kalle)
+	Added new datamanager and validation constant to allow fields to be empty (Kalle)
 	Added virtual fields and virtual field hooks in datamanager adapters (Kalle)
 	Added developmental IO utilities class (Kalle)
 	Added new scripts to /dev/scripts: (Kalle)
