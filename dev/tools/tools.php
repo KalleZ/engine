@@ -88,7 +88,12 @@
 				tuxxedo_error('No source files found in the root directory');
 			}
 
-			$statistics = Array(
+			$ignored	= Array(
+						'png', 
+						'sqlite3'
+						);
+
+			$statistics 	= Array(
 						'lines'		=> Array(), 
 						'size'		=> Array(), 
 						'files'		=> Array(), 
@@ -109,7 +114,7 @@
 				$path		= '../../' . $path;
 				$extension 	= pathinfo($path, PATHINFO_EXTENSION);
 
-				if(stripos($extension, 'png') !== false)
+				if(in_array(strtolower($extension), $ignored))
 				{
 					continue;
 				}

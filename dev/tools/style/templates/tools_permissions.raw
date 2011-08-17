@@ -19,8 +19,7 @@
 
 		<p>
 			If both a user and usergroup is choosen, then the user is tested, to 
-			test a usergroup simply leave the user dropdown blank (default), same 
-			applies vice versa.
+			test a usergroup simply leave the user dropdown blank (default).
 		</p>
 
 		<br />
