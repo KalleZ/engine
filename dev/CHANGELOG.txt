@@ -41,7 +41,7 @@
 	Added a fetching mode and general fetch method in all database drivers (Kalle)
 	Added countable support for database result sets (Kalle)
 	Added missing datamanager phrases for a few datamanagers (Kalle)
-	Added iterator support to datamanagers, making it possible to iterate over fields the datamanager provides (Kalle)
+	Added iterator support to datamanagers, making it possible to iterate over data in the datamanager (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
