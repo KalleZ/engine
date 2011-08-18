@@ -82,6 +82,8 @@
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
 	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)
 
+	Removed the /dev/extra folder, as the bootstraper is long outdated and not maintained (Kalle)
+
 
 	Tuxxedo Engine 1.0.0
 	------------------------------------------------
