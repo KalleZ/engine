@@ -104,9 +104,7 @@
 												'callback'	=> Array(__CLASS__, 'isValidTimezone')
 												), 
 							'timezone_offset'	=> Array(
-												'type'		=> self::FIELD_PROTECTED, 
-												'callback'	=> Array(__CLASS__, 'getTimezoneOffset'), 
-												'parameters'	=> Array()
+												'type'		=> self::FIELD_PROTECTED
 												), 
 
 							'permissions'		=> Array(
@@ -203,25 +201,14 @@
 		 */
 		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone = NULL)
 		{
-			return(isset($registry->cache->timezones[$timezone]));
-		}
-
-		/**
-		 * Gets a timezone offset based on its timezone name
-		 *
-		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	string				The timezone name
-		 * @return	string				Returns the timezone offset, or 0 if the timezone name was invalid
-		 */
-		public static function getTimezoneOffset(Adapter $dm, Registry $registry, $timezone)
-		{
-			if(!self::isValidTimezone($registry, $timezone))
+			if(!isset($registry->cache->timezones[$timezone]))
 			{
-				return(0);
+				return(false);
 			}
 
-			return($registry->cache->timezones[$timezone]);
+			$this->data['timezone_offset'] = $registry->cache->timezones[$timezone];
+
+			return(true);
 		}
 
 		/**

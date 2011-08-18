@@ -5,11 +5,13 @@
 	------------------------------------------------
 
 	Datamanagers
-	 - Add new phrases for 
+	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
 [B]	   - Option
 [B]	   - Permission
-	 - New datamanagers
-[F]	   - Option
+
+	Scripts
+	 - api_analyze.php
+[B]	   - Fix aliasing rules for interfaces (see \Tuxxedo\Database\Result -- should correctly show the 'Specification' interface)
 
 
 	Tuxxedo Engine 1.1.0 Beta 1
@@ -24,10 +26,6 @@
 	 - Options
 [F]	   - Add the ability to re-define default values for options
 [C]	   - Change the options dev tool to work with the options datamanager
-
-	Scripts
-	 - api_analyze.php
-[B]	   - Fix aliasing rules for interfaces (see \Tuxxedo\Database\Result -- should correctly show the 'Specification' interface)
 
 	Helpers
 [F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface

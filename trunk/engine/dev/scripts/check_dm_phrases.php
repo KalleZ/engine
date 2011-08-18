@@ -131,7 +131,12 @@
 			{
 				if(!$intldm->getPhrase(field_phrase($last, $field)))
 				{
-					$missing[] = field_phrase($last, $field);
+					if(!isset($missing[$languagedata['title']]))
+					{
+						$missing[$languagedata['title']] = Array();
+					}
+
+					$missing[$languagedata['title']][] = field_phrase($last, $field);
 
 					IO::li($field . '... MISSING');
 				}
@@ -148,11 +153,23 @@
 		IO::text('One or more phrases are missing, this will produce less verbose errors');
 		IO::ul();
 
-		foreach($missing as $p)
+		foreach($missing as $language => $phrases)
 		{
-			IO::li($p);
+			IO::li($language);
+			IO::ul();
+
+			foreach($phrases as $phrase)
+			{
+				IO::li($phrase);
+			}
+
+			IO::ul(IO::TAG_END);
 		}
 
 		IO::ul(IO::TAG_END);
+	}
+	else
+	{
+		IO::text('Perfect! There is no missing datamanger phrases');
 	}
 ?>

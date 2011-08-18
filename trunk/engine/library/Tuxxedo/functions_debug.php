@@ -79,7 +79,7 @@
 						{
 							case('__construct'):
 							{
-								$trace->call 	= 'new ' . $t['class'];
+								$trace->call 	= 'new \\' . $t['class'];
 								$trace->notes	= 'Class constructor';
 							}
 							break;
@@ -99,12 +99,12 @@
 					}
 					elseif($t['type'] == '::')
 					{
-						$trace->call = $t['class'] . '::' . $t['function'];
+						$trace->call = '\\' . $t['class'] . '::' . $t['function'];
 					}
 				}
 				elseif(in_array($function, $includes))
 				{
-					$trace->call		= $t['function'];
+					$trace->call		= '\\' . $t['function'];
 					$trace->callargs	= $t['function'] . ' \'' . tuxxedo_trim_path($t['args'][0]) . '\'';
 					$trace->notes 		= 'Include';
 
@@ -112,7 +112,7 @@
 				}
 				else
 				{
-					$trace->call = $t['function'];
+					$trace->call = '\\' . $t['function'];
 				}
 
 				if($argument_list)
