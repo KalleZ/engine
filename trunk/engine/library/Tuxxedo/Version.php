@@ -109,7 +109,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Alpha';
+		const PREVIEW_TYPE		= 'Beta';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 2;
+		const PREVIEW_NUMBER		= 1;
 
 		/**
 		 * Current version control system revision number
@@ -137,6 +137,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.1.0 Alpha 2';
+		const FULL			= '1.1.0 Beta 1 (Experimental)';
 	}
 ?>
