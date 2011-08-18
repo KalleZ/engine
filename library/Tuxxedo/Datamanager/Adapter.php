@@ -35,7 +35,6 @@
 	 */
 	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Input;
 	use Tuxxedo\InfoAccess;
 	use Tuxxedo\Registry;
 
@@ -110,46 +109,53 @@
 		const CONTEXT_DELETE			= 4;
 
 		/**
+		 * Validation constant, no validation
+		 *
+		 * @var		integer
+		 */
+		const VALIDATE_NONE			= 1;
+
+		/**
 		 * Validation constant, numeric value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_NUMERIC			= Input::TYPE_NUMERIC;
+		const VALIDATE_NUMERIC			= 2;
 
 		/**
 		 * Validation constant, string value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_STRING			= Input::TYPE_STRING;
+		const VALIDATE_STRING			= 3;
 
 		/**
 		 * Validation constant, email value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_EMAIL			= Input::TYPE_EMAIL;
+		const VALIDATE_EMAIL			= 4;
 
 		/**
 		 * Validation constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_BOOLEAN			= Input::TYPE_BOOLEAN;
+		const VALIDATE_BOOLEAN			= 5;
 
 		/**
 		 * Validation constant, callback
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_CALLBACK			= Input::TYPE_CALLBACK;
+		const VALIDATE_CALLBACK			= 6;
 
 		/**
 	 	 * Validation option constant, allow empty fields
 		 *
 		 * @var		integer
 		 */
-		const VALIDATE_STRING_EMPTY		= Input::TYPE_STRING_EMPTY;
+		const VALIDATE_STRING_EMPTY		= 7;
 
 		/**
 		 * Factory option constant - internationalization (default enabled)
@@ -209,25 +215,11 @@
 		protected $identifier;
 
 		/**
-		 * Current data thats been set via the set method
-		 *
-		 * @var		\stdClass
-		 */
-		protected $userdata;
-
-		/**
 		 * Whether this datamanager are called from another datamanager
 		 *
 		 * @var		\Tuxxedo\Datamanager\Adapter
 		 */
 		protected $parent			= false;
-
-		/**
-		 * Whether the datamanager needs to re-validate
-		 *
-		 * @var		boolean
-		 */
-		protected $revalidate			= true;
 
 		/**
 		 * Context for hooks, and adapters
@@ -348,7 +340,6 @@
 		{
 			$this->registry		= $registry;
 			$this->options		= $options;
-			$this->userdata		= $this->information = new \stdClass;
 			$this->parent		= $parent;
 			$this->information 	= &$this->data;
 
@@ -420,7 +411,7 @@
 							{
 								$method = 'Virtual' . $field;
 
-								if(method_exists($self, $method) && !$self->{$method}($value))
+								if(\method_exists($self, $method) && !$self->{$method}($value))
 								{
 									return(false);
 								}
@@ -466,9 +457,9 @@
 
 			foreach($this->fields as $name => $props)
 			{
-				if(isset($props['type']) && $props['type'] == self::FIELD_VIRTUAL && isset($this->userdata->{$name}))
+				if(isset($props['type']) && $props['type'] == self::FIELD_VIRTUAL && isset($this->data[$name]))
 				{
-					$fields[$name] = $this->userdata->{$name};
+					$fields[$name] = $this->data[$name];
 				}
 			}
 
@@ -486,10 +477,6 @@
 			if($field === NULL)
 			{
 				return($this->data);
-			}
-			elseif(isset($this->userdata->{$field}))
-			{
-				return($this->userdata->{$field});
 			}
 			elseif(isset($this->data[$field]))
 			{
@@ -526,136 +513,90 @@
 		{
 			$this->invalid_fields = Array();
 
-			if(!\get_object_vars($this->userdata) && ($this->options & self::OPT_LOAD_ONLY))
+			foreach($this->fields as $field => $props)
 			{
-				$this->revalidate = false;
-
-				return(true);
-			}
-
-			$input = ($this->registry->input ? $this->registry->input : $this->registry->register('input', '\Tuxxedo\Input'));
-
-			foreach($this->fields as $field => $properties)
-			{
-				switch($properties['type'])
+				if($props['type'] == self::FIELD_OPTIONAL && !isset($props['default']) && !isset($this->data[$field]))
 				{
-					case(self::FIELD_VIRTUAL):
-					{
-						if(!$this->identifier && !isset($this->userdata->{$field}))
-						{
-							$this->invalid_fields[] = $field;
-						}
-
-						continue 2;
-					}
-					case(self::FIELD_REQUIRED):
-					{
-						if(!isset($this->userdata->{$field}))
-						{
-							continue;
-						}
-					}
-					break;
-					case(self::FIELD_PROTECTED):
-					{
-						if(isset($this->userdata->{$field}))
-						{
-							$this->invalid_fields[] = $field;
-
-							continue 2;
-						}
-
-						if(isset($properties['default']))
-						{
-							$this->data[$field] = $properties['default'];
-						}
-						elseif(isset($properties['callback']) && \is_callable($properties['callback']))
-						{
-							if(isset($properties['parameters']))
-							{
-								$this->data[$field] = \call_user_func_array($properties['callback'], \array_merge(Array($this, $this->registry), $properties['parameters']));
-							}
-							else
-							{
-								$this->data[$field] = \call_user_func($properties['callback'], $this, $this->registry, $this->userdata);
-							}
-						}
-
-						continue 2;
-					}
-					break;
-					case(self::FIELD_OPTIONAL):
-					{
-						if(!isset($this->userdata->{$field}))
-						{
-							continue 2;
-						}
-					}
+					continue;
 				}
 
-				if(isset($properties['default']))
+				if(isset($props['default']) && !isset($this->data[$field]))
 				{
-					$this->data[$field] = $properties['default'];
+					$this->data[$field] = $props['default'];
 				}
 
-				if(isset($properties['validation']) && $properties['validation'] == self::VALIDATE_CALLBACK && isset($properties['callback']))
-				{
-					if($properties['type'] == self::FIELD_REQUIRED && !isset($this->userdata->{$field}))
-					{
-						$this->invalid_fields[] = $field;
-
-						continue;
-					}
-
-					if(isset($properties['parameters']))
-					{
-						$callback_result = \call_user_func_array($properties['callback'], \array_merge(Array($this, $this->registry, $this->userdata->{$field}), $properties['parameters']));
-					}
-					else
-					{
-						$callback_result = \call_user_func($properties['callback'], $this, $this->registry, $this->userdata->{$field});
-					}
-
-					if(!$callback_result)
-					{
-						$this->invalid_fields[] = $field;
-
-						continue;
-					}
-				}
-				elseif($properties['type'] == self::FIELD_REQUIRED && $properties['validation'] == self::VALIDATE_STRING_EMPTY && isset($this->userdata->{$field}) && empty($this->userdata->{$field}) && $this->userdata->{$field} !== 0)
+				if(!\in_array($props['validation'], Array(self::VALIDATE_STRING, self::VALIDATE_STRING_EMPTY, self::VALIDATE_BOOLEAN, self::VALIDATE_CALLBACK)) && $props['type'] != self::FIELD_PROTECTED && !isset($this->data[$field]))
 				{
 					$this->invalid_fields[] = $field;
 
 					continue;
 				}
-				elseif($properties['validation'] == self::VALIDATE_STRING_EMPTY && empty($this->userdata->{$field}))
-				{
-					continue;
-				}
-				else
-				{
-					if(!isset($properties['validation']) || !isset($this->userdata->{$field}) || ($filtered = $input->user($this->userdata->{$field}, $properties['validation'])) === NULL)
-					{
-						$this->invalid_fields[] = $field;
 
-						unset($this->userdata->{$field});
+				switch($props['validation'])
+				{
+					case(self::VALIDATE_NUMERIC):
+					{
+						if(!\is_numeric($this->data[$field]))
+						{
+							$this->invalid_fields[] = $field;
+
+							continue;
+						}
+					}
+					break;
+					case(self::VALIDATE_STRING_EMPTY):
+					{
+						$this->data[$field] = (isset($this->data[$field]) ? (string) $this->data[$field] : '');
 
 						continue;
 					}
+					case(self::VALIDATE_STRING):
+					{
+						if($props['type'] == self::FIELD_REQUIRED && !isset($this->data[$field]) || empty($this->data[$field]))
+						{
+							$this->invalid_fields[] = $field;
 
-					$this->userdata->{$field} = $filtered;
+							continue;
+						}
+					}
+					break;
+					case(self::VALIDATE_EMAIL):
+					{
+						if(!\is_valid_email($this->data[$field]))
+						{
+							$this->invalid_fields[] = $field;
+
+							continue;
+						}
+					}
+					break;
+					case(self::VALIDATE_BOOLEAN):
+					{
+						$this->data[$field] = (isset($this->data[$field]) ? (boolean) $this->data[$field] : false);
+
+						continue;
+					}
+					case(self::VALIDATE_CALLBACK):
+					{
+						$value = (isset($this->data[$field]) ? $this->data[$field] : NULL);
+
+						if(!isset($props['callback']) || !\is_callable($props['callback']) || !\call_user_func($props['callback'], $this, $this->registry, $value))
+						{
+							$this->invalid_fields[] = $field;
+
+							continue;
+						}
+					}
+					break;
 				}
 			}
 
-			if(!$this->invalid_fields)
+			if($this->invalid_fields)
 			{
-				$this->revalidate = false;
-
-				return(true);
+				return(false);
 			}
 
-			return(false);
+			return(true);
 		}
 
 		/**
@@ -674,7 +615,6 @@
 			}
 
 			$this->fields[$field]['type'] 	= (integer) $type;
-			$this->revalidate		= true;
 
 			return(true);
 		}
@@ -693,7 +633,7 @@
 		{
 			$this->context = self::CONTEXT_SAVE;
 
-			if($this->revalidate && !$this->validate())
+			if(!$this->validate())
 			{
 				$intl		= isset($this->registry->intl) && ($this->options & self::OPT_INTL);
 				$formdata 	= Array();
@@ -710,11 +650,9 @@
 
 			$values			= '';
 			$sql 			= ($this->options & self::OPT_LOAD_ONLY ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (';
-			$virtual		= \array_merge($this->data, \get_object_vars($this->userdata));
-			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $virtual) : $virtual);
+			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $this->data) : $this->data);
 			$virtual_fields		= $this->getVirtualFields();
 			$n 			= \sizeof($virtual);
-			$this->revalidate 	= true;
 
 			if($virtual_fields)
 			{
@@ -792,8 +730,7 @@
 		 */
 		public function delete()
 		{
-			$this->invalid_fields 	= Array();
-			$this->userdata		= new \stdClass;
+			$this->invalid_fields = Array();
 
 			if($this->identifier === NULL && !($this->options & self::OPT_LOAD_ONLY))
 			{

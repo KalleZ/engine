@@ -97,7 +97,7 @@
 		{
 			$this->dmname		= 'option';
 			$this->tablename	= \TUXXEDO_PREFIX . 'options';
-			$this->idname		= 'id';
+			$this->idname		= 'option';
 
 			if($identifier !== NULL)
 			{
@@ -133,7 +133,25 @@
 		 */
 		public static function isValidDefaultValue(Adapter $dm, Registry $registry, $defaultvalue = NULL)
 		{
-			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
+			if(!$dm['type'])
+			{
+				return(false);
+			}
+
+			switch(\strtolower($dm['type']{0}))
+			{
+				case('b'):
+				case('s'):
+				{
+					return(true);
+				}
+				case('i'):
+				{
+					return($defaultvalue !== NULL && \is_numeric($defaultvalue));
+				}
+			}
+
+			return(false);
 		}
 
 		/**
@@ -146,7 +164,14 @@
 		 */
 		public static function isValidType(Adapter $dm, Registry $registry, $type = NULL)
 		{
-			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
+			static $types;
+
+			if(!$types)
+			{
+				$types = Array('b', 'i', 's');
+			}
+
+			return(\in_array(\strtolower($dm['type']{0}), $types));
 		}
 
 		/**
@@ -158,7 +183,22 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
-			throw new Exception\Core('Missing method implementation: %s', __METHOD__);
+			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->cache->options[$this['option']]))
+			{
+				return(true);
+			}
+
+			$option		= (isset($virtual['option']) ? $virtual['option'] : $this['option']);
+			$options 	= $this->registry->cache->options;
+
+			unset($options[$option]);
+
+			if($this->context == self::CONTEXT_SAVE)
+			{
+				$options[$option] = $this['value'];
+			}
+
+			return($this->registry->cache->rebuild('options', $options, false));
 		}
 	}
 ?>

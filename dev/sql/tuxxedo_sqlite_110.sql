@@ -20,7 +20,7 @@ CREATE TABLE 'datastore' (
 #
 # Dumping data for table: datastore
 #
-INSERT INTO 'datastore' ('name', 'data') VALUES ('phasegroups', 'a:2:{s:6:"global";a:2:{s:2:"id";s:1:"1";s:7:"phrases";i:0;}s:12:"datamanagers";a:2:{s:2:"id";s:1:"2";s:7:"phrases";i:36;}}');
+INSERT INTO 'datastore' ('name', 'data') VALUES ('phasegroups', 'a:2:{s:6:"global";a:2:{s:2:"id";s:1:"1";s:7:"phrases";i:0;}s:12:"datamanagers";a:2:{s:2:"id";s:1:"2";s:7:"phrases";i:42;}}');
 INSERT INTO 'datastore' ('name', 'data') VALUES ('languages', 'a:1:{i:1;a:6:{s:2:"id";i:1;s:5:"title";s:7:"English";s:9:"developer";s:28:"Tuxxedo Software Development";s:8:"isotitle";s:2:"en";s:7:"default";i:1;s:7:"charset";s:5:"UTF-8";}}');
 INSERT INTO 'datastore' ('name', 'data') VALUES ('options', 'a:10:{s:13:"cookie_domain";s:0:"";s:14:"cookie_expires";i:1800;s:11:"cookie_path";s:0:"";s:13:"cookie_prefix";s:8:"tuxxedo_";s:11:"date_format";s:14:"H:i:s, j/n - Y";s:13:"date_timezone";s:3:"UTC";s:20:"date_timezone_offset";i:0;s:11:"language_id";i:1;s:8:"style_id";i:1;s:13:"style_storage";s:8:"database";}');
 INSERT INTO 'datastore' ('name', 'data') VALUES ('permissions', 'a:1:{s:13:"administrator";i:1;}');
@@ -146,21 +146,28 @@ INSERT INTO 'phrases' VALUES ('18', 'dm_session_sessionid', 'Session identifier'
 INSERT INTO 'phrases' VALUES ('19', 'dm_session_userid', 'User identifier', '1', 'datamanagers');
 INSERT INTO 'phrases' VALUES ('20', 'dm_session_location', 'User location', '1', 'datamanagers');
 INSERT INTO 'phrases' VALUES ('21', 'dm_session_useragent', 'User agent string', '1', 'datamanagers');
-INSERT INTO 'phrases' VALUES (22, 'dm_session_lastactivity', 'Last activity', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (23, 'dm_usergroup_id', 'Usergroup identifier', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (24, 'dm_style_id', 'Style identifier', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (25, 'dm_style_defaultstyle', 'Default style setting', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (26, 'dm_user_id', 'User identifier', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (27, 'dm_user_timezone_offset', 'User timezone offset', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (28, 'dm_user_permissions', 'User permissions', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (29, 'dm_template_id', 'Template identifier', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (30, 'dm_template_title', 'Template title', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (31, 'dm_template_source', 'Template source', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (32, 'dm_template_compiledsource', 'Template compiled source', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (33, 'dm_template_defaultsource', 'Template default source', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (34, 'dm_template_styleid', 'Template style identifier', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (35, 'dm_template_revision', 'Template revision', 1, 'datamanagers');
-INSERT INTO 'phrases' VALUES (36, 'dm_template_changed', 'Template customization status', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('22', 'dm_session_lastactivity', 'Last activity', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('23', 'dm_usergroup_id', 'Usergroup identifier', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('24', 'dm_style_id', 'Style identifier', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('25', 'dm_style_defaultstyle', 'Default style setting', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('26', 'dm_user_id', 'User identifier', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('27', 'dm_user_timezone_offset', 'User timezone offset', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('28', 'dm_user_permissions', 'User permissions', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('29', 'dm_template_id', 'Template identifier', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('30', 'dm_template_title', 'Template title', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('31', 'dm_template_source', 'Template source', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('32', 'dm_template_compiledsource', 'Template compiled source', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('33', 'dm_template_defaultsource', 'Template default source', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('34', 'dm_template_styleid', 'Template style identifier', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('35', 'dm_template_revision', 'Template revision', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('36', 'dm_template_changed', 'Template customization status', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('37', 'dm_permission_name', 'Permission name', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('38', 'dm_permission_bits', 'Permission bitmask', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('39', 'dm_option_option', 'Option name', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('40', 'dm_option_value', 'Option value', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('41', 'dm_option_defaultvalue', 'Option default value', 1, 'datamanagers');
+INSERT INTO 'phrases' VALUES ('42', 'dm_option_type', 'Option data type', 1, 'datamanagers');
+
 
 # --------------------------------------------------------
 

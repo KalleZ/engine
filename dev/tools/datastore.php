@@ -25,8 +25,6 @@
 	 * Global templates
 	 */
 	$templates 		= Array(
-					'datastore_index', 
-					'datastore_index_itembit', 
 					'datastore_rebuild', 
 					'datastore_rebuild_itembit'
 					);
@@ -112,7 +110,7 @@
 			{
 				require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
-				$result_list 	= '';
+				$cache_items 	= '';
 				$corrupt_warn	= false;
 				$tables 	= Array(
 							'languages'	=> 'languages', 
@@ -257,7 +255,7 @@
 						$corrupt_warn = true;
 					}
 
-					eval('$result_list .= "' . $style->fetch('datastore_rebuild_itembit') . '";');
+					eval('$cache_items .= "' . $style->fetch('datastore_rebuild_itembit') . '";');
 				}
 
 				eval(page('datastore_rebuild'));
@@ -266,12 +264,12 @@
 			{
 				$cache_items = '';
 
-				foreach(array_keys($indices) as $index)
+				foreach(array_keys($indices) as $element)
 				{
-					eval('$cache_items .= "' . $style->fetch('datastore_index_itembit') . '";');
+					eval('$cache_items .= "' . $style->fetch('datastore_rebuild_itembit') . '";');
 				}
 
-				eval(page('datastore_index'));
+				eval(page('datastore_rebuild'));
 			}
 		}
 		break;

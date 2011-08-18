@@ -12,6 +12,7 @@
 	Improve development tools
 	 - Add internationalization support
 	 - Add user and usergroups support
+	 - Add the DevTools theme as its own style rather than its hackery it is now
 	 - Implement installation generators
 	 - Other
 	   - Add the ability to export/import styles
