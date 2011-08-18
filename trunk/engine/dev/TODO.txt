@@ -9,10 +9,6 @@
 [B]	   - Option
 [B]	   - Permission
 
-	Scripts
-	 - api_analyze.php
-[B]	   - Fix aliasing rules for interfaces (see \Tuxxedo\Database\Result -- should correctly show the 'Specification' interface)
-
 
 	Tuxxedo Engine 1.1.0 Beta 1
 	------------------------------------------------
