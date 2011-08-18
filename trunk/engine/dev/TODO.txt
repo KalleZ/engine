@@ -5,7 +5,6 @@
 	------------------------------------------------
 
 	Datamanagers
-[B]	 - Fix delete default style does not specify a new default style
 [B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data
 	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
 [B]	   - Option

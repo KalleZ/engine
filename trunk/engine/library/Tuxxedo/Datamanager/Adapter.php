@@ -773,13 +773,23 @@
 		}
 
 		/**
+		 * Gets the fields this datamanager provides
+		 *
+		 * @return	array				Returns an array with the fields
+		 */
+		public function getFields()
+		{
+			return(\array_keys($this->fields));
+		}
+
+		/**
 		 * Iterator method - current
 		 * 
 		 * @return	mixed				Returns the current field
 		 */
 		public function current()
 		{
-			return(\key($this->fields));
+			return(\key($this->data));
 		}
 
 		/**
@@ -789,7 +799,7 @@
 		 */
 		public function rewind()
 		{
-			\reset($this->fields);
+			\reset($this->data);
 
 			$this->iterator_position = 0;
 		}
@@ -811,7 +821,7 @@
 		 */
 		public function next()
 		{
-			if(\next($this->fields) !== false)
+			if(\next($this->data) !== false)
 			{
 				++$this->iterator_position;
 			}
@@ -824,7 +834,7 @@
 		 */
 		public function valid()
 		{
-			return(\sizeof($this->fields) - 1 != $this->iterator_position);
+			return(\sizeof($this->data) - 1 != $this->iterator_position);
 		}
 	}
 ?>
