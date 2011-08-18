@@ -1,22 +1,15 @@
 
 
 
-	Tuxxedo Engine 1.1.0 Alpha 2
-	------------------------------------------------
-
-	Datamanagers
-	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
-[B]	   - Option
-[B]	   - Permission
-
-
 	Tuxxedo Engine 1.1.0 Beta 1
 	------------------------------------------------
 
 	Datamanagers
-[F]	 - Implement iterator support for datamanager fields
 [B]	 - Fix delete default style does not specify a new default style
 [B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data
+	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
+[B]	   - Option
+[B]	   - Permission
 
 	DevTools
 	 - Options

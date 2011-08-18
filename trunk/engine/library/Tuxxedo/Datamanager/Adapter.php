@@ -57,7 +57,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	abstract class Adapter extends InfoAccess
+	abstract class Adapter extends InfoAccess implements \Iterator
 	{
 		/**
 		 * Indicates that a field is required
@@ -213,6 +213,13 @@
 		 * @var		array
 		 */
 		protected $identifier;
+
+		/**
+		 * Iterator position
+		 *
+		 * @var		integer
+		 */
+		protected $iterator_position		= 0;
 
 		/**
 		 * Whether this datamanager are called from another datamanager
@@ -763,6 +770,61 @@
 		public function getParent()
 		{
 			return($this->parent);
+		}
+
+		/**
+		 * Iterator method - current
+		 * 
+		 * @return	mixed				Returns the current field
+		 */
+		public function current()
+		{
+			return(\key($this->fields));
+		}
+
+		/**
+		 * Iterator method - rewind
+		 *
+		 * @return	void				No value is returned
+		 */
+		public function rewind()
+		{
+			\reset($this->fields);
+
+			$this->iterator_position = 0;
+		}
+
+		/**
+		 * Iterator method - key
+		 *
+		 * @return	integer				Returns the currrent index
+		 */
+		public function key()
+		{
+			return($this->iterator_position);
+		}
+
+		/**
+		 * Iterator method - next
+		 *
+		 * @return	void				No value is returned
+		 */
+		public function next()
+		{
+			if(\next($this->fields) !== false)
+			{
+				++$this->iterator_position;
+			}
+		}
+
+		/**
+		 * Iterator method - valid
+		 *
+		 * @return	boolean				Returns true if its possible to continue iterating, otherwise false is returned
+		 */
+		public function valid()
+		{
+			return(\sizeof($this->fields) - 1 != $this->iterator_position);
 		}
 	}
 ?>
