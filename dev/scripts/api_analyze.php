@@ -88,22 +88,27 @@
 	{
 		if($aliases && $object{0} != '\\')
 		{
-			$ns = $object;
+			$object_clone = $object;
 
-			if(($pos = strrpos($object, '\\')) !== false)
+			if(($pos = strpos($object, '\\')) !== false)
 			{
-				$ns = substr($object, 0, $pos);
+				$object_clone = substr($object, 0, $pos);
 			}
+
+			$object_clone 	= ucfirst(strtolower($object_clone));
+			$object_len	= strlen($object_clone);
 
 			foreach($aliases as $alias)
 			{
-				if(($pos = strrpos($alias, $ns)) !== false)
+				$pos = strrpos($alias, '\\');
+
+				if(substr($alias, $pos + 1) == $object_clone)
 				{
-					return(substr_replace($alias, $ns, $pos));
+					return(substr_replace($alias, '', $pos + 1) . $object);
 				}
 			}
 
-			if(isset($root_ns{strlen($root_ns) - 1}) && $root_ns{strlen($root_ns) - 1} != '\\')
+			if($root_ns{strlen($root_ns) - 1} != '\\')
 			{
 				return($root_ns . '\\' . $object);
 			}
