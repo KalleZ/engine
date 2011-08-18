@@ -389,9 +389,13 @@
 					<li><a href=\"./\">Index</a></li>
 					<li><a href=\"./datastore.php\">Datastore cache</a></li>
 					<li><a href=\"./styles.php\">Styles &amp; Templates</a></li>
+<!--
 					<li><a href=\"./#\">Internationalization</a></li>
+-->
 					<li><a href=\"./options.php\">Options</a></li>
+<!--
 					<li><a href=\"./#\">Users &amp; Usergroups</a></li>
+-->
 					<li><a href=\"./sessions.php\">Sessions</a></li>
 					<li><a href=\"./tools.php\">Tools</a></li>
 				</ul>
