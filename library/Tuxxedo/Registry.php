@@ -172,7 +172,7 @@
 			{
 				throw new Exception\Basic('Passed object class (%s) does not exists', $class);
 			}
-			elseif(($ifaces = \class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Invokable']))
+			elseif(($ifaces = \class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Design\Invokable']))
 			{
 				$instance = \call_user_func(Array($class, 'invoke'), $this, $this->configuration);
 			}

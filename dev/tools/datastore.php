@@ -176,9 +176,16 @@
 										unset($query);
 									}
 									break;
-									case('languages'):
-									case('styleinfo'):
 									case('usergroups'):
+									{
+										$s['permissions'] = (integer) $s['permissions'];
+									}
+									case('languages'):
+									{
+										$current[$s['id']] = $s;
+									}
+									break;
+									case('styleinfo'):
 									{
 										$current[$s['id']] 	= $s;
 										$styleid		= $s['id'];
@@ -186,7 +193,7 @@
 									break;
 									case('permissions'):
 									{
-										$current[$s['name']] = $s['bits'];
+										$current[$s['name']] = (integer) $s['bits'];
 									}
 									break;
 								}

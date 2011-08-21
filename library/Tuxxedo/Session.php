@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\User;
 
 
@@ -51,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Session extends InfoAccess implements Invokable
+	class Session extends InfoAccess implements Design\Invokable
 	{
 		/**
 		 * Whether a session is started or not

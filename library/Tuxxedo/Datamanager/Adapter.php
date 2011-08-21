@@ -642,7 +642,7 @@
 
 			if(!$this->validate())
 			{
-				$intl		= isset($this->registry->intl) && ($this->options & self::OPT_INTL);
+				$intl		= $this->registry->intl && ($this->options & self::OPT_INTL);
 				$formdata 	= Array();
 
 				foreach($this->invalid_fields as $field)
@@ -652,7 +652,7 @@
 
 				$this->context = self::CONTEXT_NONE;
 
-				throw new Exception\Formdata($formdata);
+				throw new Exception\Formdata($formdata, $this->registry->phrase['validation_failed']);
 			}
 
 			$values			= '';

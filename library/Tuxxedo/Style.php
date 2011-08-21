@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
@@ -56,7 +57,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Style extends InfoAccess implements Invokable
+	class Style extends InfoAccess implements Design\Invokable
 	{
 		/**
 		 * Private instance to the Tuxxedo registry

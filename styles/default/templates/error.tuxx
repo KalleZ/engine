@@ -4,6 +4,12 @@
 <div class=\"box\">
 	<div class=\"inner\">
 		{$message}
+
+		" . ((isset($error_list)) ? ("
+		<ul>
+			{$error_list}
+		</ul>
+		") : '') . "
 	</div>
 </div>
 

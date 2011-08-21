@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Registry;
 
 
@@ -53,7 +54,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Input implements Invokable
+	class Input implements Design\Invokable
 	{
 		/**
 		 * Data filter constant, numeric value

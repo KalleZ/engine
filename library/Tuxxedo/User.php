@@ -97,7 +97,7 @@
 		/**
 		 * Usergroup information
 		 *
-		 * @var		array
+		 * @var		stdClass
 		 */
 		protected $usergroupinfo;
 
@@ -141,8 +141,10 @@
 
 				if(($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 				{
-					$this->userinfo		= $userinfo;
-					$this->usergroupinfo	= $this->registry->cache->usergroups[$userinfo->usergroupid];
+					$this->userinfo				= $userinfo;
+					$this->usergroupinfo			= (object) $this->registry->cache->usergroups[$userinfo->usergroupid];
+					$this->userinfo->permissions		= (integer) $userinfo->permissions;
+					$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
 				}
 			}
 
@@ -220,12 +222,12 @@
 			Session::set('password', $userinfo->password);
 
 			$this->userinfo				= $userinfo;
-			$this->usergroupinfo			= $this->registry->cache->usergroups[$userinfo->usergroupid];
+			$this->usergroupinfo			= (object) $this->registry->cache->usergroups[$userinfo->usergroupid];
 			$this->sessiondm['userid'] 		= $userinfo->id;
 			$this->userinfo->permissions		= (integer) $this->userinfo->permissions;
-			$this->usergroupinfo['permissions'] 	= (integer) $this->usergroupinfo['permissions'];
+			$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
 
-			$this->registry->set('userinfo', $userinfo);
+			$this->registry->set('userinfo', $this->userinfo);
 			$this->registry->set('usergroup', $this->usergroupinfo);
 
 			$this->setPermissionConstants();

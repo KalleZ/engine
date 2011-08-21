@@ -18,6 +18,7 @@
 	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
 	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
 	Added new datamanagers: (Kalle)
+	 - Option
 	 - Permission
 	 - Template
 	Added the concept of parent datamanagers, shutdown handlers and improved way to execute hooks (Kalle)
@@ -25,7 +26,9 @@
 	Added support for throwing exceptions if the autoloader fails to load with fallback to the old behaviour (Kalle)
 	Added support for loading helper classes into the runtime (Kalle)
 	Added support for regular expressions within autoloading matches (Kalle)
-	Added new function page_print() to print pages (Kalle)
+	Added new functions: (Kalle)
+	 - page_print()
+	 - tuxxedo_error_list()
 	Added the development tools theme to all default templates, including a new index page (Kalle)
 	Added a new parameter on the view constructor to allow setting variables at construction time (Kalle)
 	Added a new Template class thats not encapsulated within the MVC component (Kalle)
@@ -42,6 +45,7 @@
 	Added countable support for database result sets (Kalle)
 	Added missing datamanager phrases for a few datamanagers (Kalle)
 	Added iterator support to datamanagers, making it possible to iterate over data in the datamanager (Kalle)
+	Added a new namespace for design related classes/interfaces, such as the Invokable interface (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -64,6 +68,7 @@
 	Changed datamanagers that have the LOAD_ONLY option enabled data to be visiable thru the array access syntax (Kalle)
 	Changed templateids from being a database field to be a virtually populated field from datastore.php (Kalle)
 	Changed result sets' getNumRows methods to return 0 if the result is destroyed (Kalle)
+	Changed usergroupinfo to be an object rather than an array (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
@@ -83,6 +88,16 @@
 	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)
 
 	Removed the /dev/extra folder, as the bootstraper is long outdated and not maintained (Kalle)
+
+	Template changes:
+	 - Added
+	   - error_listbit
+	   - index
+	 - Updated
+	   - error
+	   - footer
+	   - header
+	   - redirect
 
 
 	Tuxxedo Engine 1.0.0
