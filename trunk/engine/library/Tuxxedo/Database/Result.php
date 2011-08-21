@@ -36,6 +36,7 @@
 	use Tuxxedo\Exception;
 	use Tuxxedo\Database;
 	use Tuxxedo\Database\Result;
+	use Tuxxedo\Design;
 
 
 	/**
@@ -55,7 +56,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	abstract class Result implements \Iterator, \Countable, Result\Specification
+	abstract class Result extends Design\Iteratable implements Result\Specification
 	{
 		/**
 		 * Fetch mode constant - row
