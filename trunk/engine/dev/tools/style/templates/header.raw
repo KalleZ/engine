@@ -373,6 +373,10 @@
 			{
 				color:				#A9272C;
 			}
+			.warning input
+			{
+				border-color:			#A9272C;
+			}
 		.wrapper
 		{
 			color:				#3B7286;

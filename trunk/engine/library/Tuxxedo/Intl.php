@@ -32,6 +32,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Intl;
 	use Tuxxedo\Registry;
@@ -53,7 +54,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Intl extends InfoAccess implements Invokable
+	class Intl extends InfoAccess implements Design\Invokable
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -79,6 +80,8 @@
 		{
 			$this->registry		= Registry::init();
 			$this->information 	= $languageinfo;
+
+			$this->registry->set('phrase', Array());
 		}
 
 		/**
@@ -160,6 +163,8 @@
 
 				$this->phrases[$row['phrasegroup']][$row['title']] = $row['translation'];
 			}
+
+			$this->registry->set('phrase', $this->getPhrases());
 
 			return(true);
 		}

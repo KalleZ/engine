@@ -1,4 +1,5 @@
 <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+
 <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
 <html dir=\"ltr\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
 	<head>
@@ -27,7 +28,6 @@
 		}
 		input
 		{
-			background:		#044968 url('./style/images/top-background.png') repeat-x center left;
 			border:			0px;
 			border-radius:		4px;
 			color:			#FFFFFF;

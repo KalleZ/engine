@@ -37,9 +37,13 @@
 		{
 			tuxxedo_doc_error($e);
 		}
+		elseif($e instanceof Exception\FormData)
+		{
+			tuxxedo_error_list(htmlspecialchars($e->getMessage(), ENT_QUOTES), $e->getFields());
+		}
 		elseif($e instanceof Exception)
 		{
-			tuxxedo_error(htmlentities($e->getMessage()));
+			tuxxedo_error(htmlspecialchars($e->getMessage(), ENT_QUOTES));
 		}
 
 		if(Registry::globals('error_reporting'))
@@ -559,6 +563,37 @@
 	{
 		eval(page('error'));
 		exit;
+	}
+
+	/**
+	 * Prints an error message using the current loaded 
+	 * theme with an list of failed conditions which 
+	 * makes it suitable for form data exceptions, this 
+	 * function also terminates the script
+	 *
+	 * @param	string				The error message
+	 * @param	array				The list of errors to display
+	 * @param	boolean				Whether to show the 'Go back' button or not
+	 * @return	void				No value is returned
+	 */
+	function tuxxedo_error_list($message, Array $formdata, $go_back = true)
+	{
+		$registry = Registry::init();
+
+		if(!$registry->style)
+		{
+			return('');
+		}
+
+		$error_list = '';
+
+		foreach($formdata as $error)
+		{
+			eval('$error_list .= "' . $registry->style->fetch('error_listbit') . '";');
+		}
+
+		eval(page('error'));
+		exit;	
 	}
 
 	/**

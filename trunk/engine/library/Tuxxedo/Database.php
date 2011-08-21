@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 
 
@@ -54,7 +55,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	abstract class Database implements Database\Driver, Invokable
+	abstract class Database implements Database\Driver, Design\Invokable
 	{
 		/**
 		 * Link pointer, this contains the internal link 
