@@ -16,9 +16,8 @@
 
 
 	/**
-	 * Style storage namespace, this is for handlers that can load templates via 
-	 * different backends such as file system or database. All must extend the 
-	 * \Tuxxedo\Style\Storage class.
+	 * Helper namespace, this namespace is for standard helpers that comes 
+	 * with Engine.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
