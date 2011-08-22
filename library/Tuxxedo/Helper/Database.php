@@ -49,7 +49,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Database extends Helper
+	class Database
 	{
 		/**
 		 * Database instance
