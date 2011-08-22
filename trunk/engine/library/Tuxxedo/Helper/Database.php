@@ -116,5 +116,35 @@
 
 			return($this->instance->equery($sql, $table));
 		}
+
+		/**
+		 * Counts the number of rows in a table
+		 *
+		 * @param	string				The table to count
+		 * @param	string				Optionally an index, defaults to *
+		 * @return	integer				Returns the number of rows, and false on error
+		 *
+		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
+		 */
+		public function count($table, $index = '*')
+		{
+			if($index != '*')
+			{
+				$index = '`' . $index . '`';
+			}
+
+			$query = $this->instance->query('
+								SELECT 
+									COUNT(%s) as \'total\' 
+								FROM 
+									`%s`', $index, $table);
+
+			if(!$query || !$query->getNumRows())
+			{
+				return(false);
+			}
+
+			return((integer) $query->fetchObject()->total);
+		}
 	}
 ?>
