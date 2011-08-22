@@ -4,6 +4,20 @@
 	Tuxxedo Engine 1.1.0 Beta 1
 	------------------------------------------------
 
+	Helpers
+[F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
+
+
+	Tuxxedo Engine 1.1.0 Beta 2
+	------------------------------------------------
+
+	Core
+[B]	 - Fix input background CSS
+[C]	 - Helper factory should not require a Registry parameter
+[C]	 - Change $registry->cache to $registry->datastore to make room for future use
+[C]	 - Move InfoAccess to Design\
+[C]	 - Move Router to MVC\
+
 	Datamanagers
 [B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data
 	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
@@ -15,8 +29,8 @@
 [F]	   - Add the ability to re-define default values for options
 [C]	   - Change the options dev tool to work with the options datamanager
 
-	Helpers
-[F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
+	Intl
+[C]	 - Change $phrase, make it a global ref and use stdClass
 
 
 	Tuxxedo Engine 1.1.0 Release Candidate 1

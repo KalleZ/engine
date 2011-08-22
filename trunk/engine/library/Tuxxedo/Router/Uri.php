@@ -150,15 +150,15 @@
 			{
 				case(self::TYPE_CONTROLLER):
 				{
-					if(($pos = strpos($name, '.')) !== false)
+					if(($pos = \strpos($name, '.')) !== false)
 					{
-						return(substr($name, 0, $pos - 1));
+						return(\substr($name, 0, $pos - 1));
 					}
 				}
 				break;
 				case(self::TYPE_ACTION):
 				{
-					return((is_callable($name, true) && ((string)(integer) $name{0} === $name{0}) ? $name : false));
+					return((\is_callable($name, true) && ((string)(integer) $name{0} === $name{0}) ? $name : false));
 				}
 			}
 
