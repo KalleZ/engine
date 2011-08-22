@@ -11,11 +11,42 @@
     
 	Improve development tools
 	 - Add internationalization support
+	   - Language
+	     - Add
+	     - Edit
+	     - Delete
+	     - List
+	   - Phrasegroup
+	     - Add
+	     - Edit
+	     - Delete
+	     - List
+	   - Phrase
+	     - Add
+	     - Edit
+	     - Delete
+	     - Search
 	 - Add user and usergroups support
+	   - User
+	     - Add
+	     - Edit
+	     - Delete
+	     - Search
+	   - Usergroup
+	     - List
+	     - Add
+	     - Edit
+	     - Delete
+	   - Permission
+	     - List
+	     - Add
+	     - Edit
+	     - Delete
 	 - Add the DevTools theme as its own style rather than its hackery it is now
 	 - Implement installation generators
 	 - Other
 	   - Add the ability to export/import styles
+	   - Add the ability to export/import languages
 
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement validators
