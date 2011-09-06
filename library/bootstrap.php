@@ -247,6 +247,11 @@
 	unset($cache_buffer);
 
 	/**
+	 * Phrases reference
+	 */
+	$registry->set('phrase', $intl->getPhrases());
+
+	/**
 	 * Header and footer templates for the main site
 	 */
 	$header = new Template('header', true);

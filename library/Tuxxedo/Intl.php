@@ -66,7 +66,7 @@
 		/**
 		 * Holds the current loaded phrases
 		 *
-		 * @var		array
+		 * @var		Array
 		 */
 		protected $phrases	= Array();
 
@@ -80,8 +80,6 @@
 		{
 			$this->registry		= Registry::init();
 			$this->information 	= $languageinfo;
-
-			$this->registry->set('phrase', Array());
 		}
 
 		/**
@@ -163,8 +161,6 @@
 
 				$this->phrases[$row['phrasegroup']][$row['title']] = $row['translation'];
 			}
-
-			$this->registry->set('phrase', $this->getPhrases());
 
 			return(true);
 		}
@@ -284,17 +280,25 @@
 		 * limitation you must fetch the phrasegroup in which the phrase 
 		 * belongs and fetch it from there
 		 *
-		 * @return	array			Returns an array containing all loaded phrases
+		 * @return	ArrayObject		Returns an object containing all loaded phrases
 		 */
 		public function getPhrases()
 		{
-			$phrases = Array();
+			$phrases = new \ArrayObject();
 
 			if($this->phrases)
 			{
 				foreach($this->phrases as $group_phrases)
 				{
-					$phrases = \array_merge($phrases, $group_phrases);
+					if(!$group_phrases)
+					{
+						continue;
+					}
+
+					foreach($group_phrases as $name => $phrase)
+					{
+						$phrases[$name] = $phrase;
+					}
 				}
 			}
 
