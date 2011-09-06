@@ -126,15 +126,7 @@
 		 */
 		public function valid()
 		{
-			if(!$this->iterator || !isset($this->information['page']) || !isset($this->information['pages']) || !isset($this->information['limit']) || !$this->information['page'] || !$this->information['limit'] || !($size = \sizeof($this->iterator)) || $this->pointer == $this->information['limit'])
-			{
-				return(false);
-			}
-
-			$this->last_page	= (integer) \ceil($size / $this->information['limit']);
-			$this->calculated_limit = (integer) \ceil($this->information['page'] * $this->information['limit']);
-
-			return(true);
+			return(false);
 		}
 
 		/**
@@ -184,18 +176,16 @@
 		 */
 		public function count()
 		{
-			return(($this->iterator ? \sizeof($this->iterator) : 0));
 		}
 
 		/**
-		 * Gets the current page limit, requires the validity check 
-		 * to be executed first
+		 * Gets the current page limit, requires the mandatory options to be set 
+		 * before it can be executed
 		 *
 		 * @return	integer				Returns the current page limit
 		 */
 		public function getPageLimit()
 		{
-			return(($this->calculated_limit !== NULL ? $this->calculated_limit : 0));
 		}
 	}
 ?>
