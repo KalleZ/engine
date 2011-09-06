@@ -519,7 +519,7 @@
 			{
 				$name = 'PERMISSION_' . strtoupper($name);
 
-				if(!defined('\\' . $name))
+				if(!\defined('\\' . $name))
 				{
 					define($name, (integer) $bits);
 				}
