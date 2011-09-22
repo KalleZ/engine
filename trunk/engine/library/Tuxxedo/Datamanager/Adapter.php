@@ -621,7 +621,7 @@
 				return(false);
 			}
 
-			$this->fields[$field]['type'] 	= (integer) $type;
+			$this->fields[$field]['type'] = (integer) $type;
 
 			return(true);
 		}
