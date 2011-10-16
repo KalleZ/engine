@@ -104,7 +104,7 @@
 				}
 				elseif(in_array($function, $includes))
 				{
-					$trace->call		= '\\' . $t['function'];
+					$trace->call		= $t['function'];
 					$trace->callargs	= $t['function'] . ' \'' . tuxxedo_trim_path($t['args'][0]) . '\'';
 					$trace->notes 		= 'Include';
 
