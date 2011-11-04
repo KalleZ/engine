@@ -37,7 +37,7 @@
 		$buffer 	= '';
 		$styleid	= $registry->input->get('style', Input::TYPE_NUMERIC);
 
-		foreach($registry->cache->styleinfo as $value => $info)
+		foreach($registry->datastore->styleinfo as $value => $info)
 		{
 			$name 		= $info['name'];
 			$selected	= ($styleid == $value);
@@ -46,7 +46,7 @@
 		}
 
 		$default 	= ($styleid == $registry->options->style_id);
-		$valid		= isset($registry->cache->styleinfo[$styleid]);
+		$valid		= isset($registry->datastore->styleinfo[$styleid]);
 
 		eval('$buffer = "' . $style->fetch($widget) . '";');
 		return($buffer);

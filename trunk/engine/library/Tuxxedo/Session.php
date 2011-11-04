@@ -52,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Session extends InfoAccess implements Design\Invokable
+	class Session extends Design\InfoAccess implements Design\Invokable
 	{
 		/**
 		 * Whether a session is started or not
@@ -85,13 +85,13 @@
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
-		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	\Tuxxedo\Registry	The Registry reference
 		 * @param	array			The configuration array
 		 * @return	object			Object instance
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			if(!($options = $registry->cache->options))
+			if(!($options = $registry->datastore->options))
 			{
 				return;
 			}

@@ -188,7 +188,7 @@
 		 */
 		public static function isValidUsergroup(Adapter $dm, Registry $registry, $id = NULL)
 		{
-			return(isset($registry->cache->usergroups[$id]));
+			return(isset($registry->datastore->usergroups[$id]));
 		}
 
 		/**
@@ -201,12 +201,12 @@
 		 */
 		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone = NULL)
 		{
-			if(!isset($registry->cache->timezones[$timezone]))
+			if(!isset($registry->datastore->timezones[$timezone]))
 			{
 				return(false);
 			}
 
-			$this->data['timezone_offset'] = $registry->cache->timezones[$timezone];
+			$this->data['timezone_offset'] = $registry->datastore->timezones[$timezone];
 
 			return(true);
 		}
@@ -243,7 +243,7 @@
 		 */
 		public static function isValidStyleId(Adapter $dm, Registry $registry, $styleid = NULL)
 		{
-			return($registry->cache->styleinfo && isset($registry->cache->styleinfo[$styleid]));
+			return($registry->datastore->styleinfo && isset($registry->datastore->styleinfo[$styleid]));
 		}
 
 		/**
@@ -256,7 +256,7 @@
 		 */
 		public static function isValidLanguageId(Adapter $dm, Registry $registry, $languageid = NULL)
 		{
-			return($registry->cache->languages && isset($registry->cache->languages[$languageid]));
+			return($registry->datastore->languages && isset($registry->datastore->languages[$languageid]));
 		}
 	}
 ?>

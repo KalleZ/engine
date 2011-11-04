@@ -1,32 +1,71 @@
 {$header}
 
-<form action="./options.php?do=<if expression="$do == 'edit'">edit&option={$options['option']}<else />add</if>" method="post"<if expression="$do == 'edit'"> onsubmit="engine_options_editcheck();"</if>>
+<form action="./options.php?do=<if expression="$do == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post"<if expression="$do == 'edit'"> onsubmit="engine_options_editcheck();"</if>>
 <div class="box">
 	<h4><if expression="$do == 'edit'">Edit<else />Add</if> option</h4>
 
 	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Option information</h5></td>
+		</tr>
 		<tr>
 			<td style="width: 20%;">
 				Name</td>
 			<td>
-				<input type="text" name="name" size="32" value="<if expression="$do == 'edit'">{$options['option']}</if>" /></td>
+				<input type="text" name="name" size="32" value="<if expression="$do == 'edit'">{$opt['option']}</if>" /></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap">
 				Type</td>
 			<td>
 				<select name="characters" id="option_selector" onchange="engine_options_change_handler(this, 'option_edit_area');">
-					<option value="string"<if expression="$do == 'edit' && $options['type'] == 's'"> selected="selected"</if>>String</option>
-					<option value="integer"<if expression="$do == 'edit' && $options['type'] == 'i'"> selected="selected"</if>>Integer</option>
-					<option value="boolean"<if expression="$do == 'edit' && $options['type'] == 'b'"> selected="selected"</if>>Boolean</option>
+					<option value="string"<if expression="$do == 'edit' && $opt['type'] == 's'"> selected="selected"</if>>String</option>
+					<option value="integer"<if expression="$do == 'edit' && $opt['type'] == 'i'"> selected="selected"</if>>Integer</option>
+					<option value="boolean"<if expression="$do == 'edit' && $opt['type'] == 'b'"> selected="selected"</if>>Boolean</option>
 				</select></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap" valign="top">
 				Value</td>
 			<td id="option_edit_area">
-				<textarea name="value" id="optvalue" rows="5" cols="30"><if expression="$do == 'edit' && !empty($options['value']) && !empty($options['defaultvalue'])">{$options['value']}<else /><if expression="$do == 'edit' && !empty($options['defaultvalue'])">{$options['defaultvalue']}</if></if></textarea></td>
+				<textarea name="value" id="optvalue" rows="5" style="width: 99%;"><if expression="$do == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$do == 'edit' && !empty($opt['defaultvalue'])">{$opt['defaultvalue']}</if></if></textarea></td>
 		</tr>
+<if expression="$do == 'edit'">
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Options</h5></td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Set this as the new default value?</td>
+			<td>
+				<label><input type="checkbox" name="defaultoverride" value="1" /> Yes</label></td>
+		</tr>
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Datastore</h5></td>
+		</tr>
+<if expression="$cached">
+		<tr>
+			<td nowrap="nowrap">
+				Default value</td>
+			<td>
+				{$defaultvalue}</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap">
+				Cached value</td>
+			<td>
+				{$cachevalue}</td>
+		</tr>
+<else />
+		<tr>
+			<td colspan="2">
+				Option is not cached; save to rebuild the datastore</td>
+		</tr>
+</if>
+</if>
 	</table>
 </div>
 
@@ -36,7 +75,7 @@
 	<input type="submit" name="submit" value="<if expression="$do == 'edit'">Edit<else />Add</if>" />
 </div>
 
-<if expression="$do == 'edit' && $options['type'] != 's'">
+<if expression="$do == 'edit' && $opt['type'] != 's'">
 <script type="text/javascript">
 engine_options_change_handler(document.getElementById('option_selector'), 'option_edit_area');
 </script>

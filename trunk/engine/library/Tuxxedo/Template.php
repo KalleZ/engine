@@ -33,8 +33,8 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
-	use Tuxxedo\InfoAccess;
 	use Tuxxedo\Registry;
 
 
@@ -54,7 +54,7 @@
 	 * @package		Engine
 	 * @subpackage		MVC
 	 */
-	class Template extends InfoAccess
+	class Template extends Design\InfoAccess
 	{
 		/**
 		 * Private instance to the Tuxxedo registry

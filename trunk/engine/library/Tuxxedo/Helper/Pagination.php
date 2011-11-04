@@ -31,7 +31,7 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\InfoAccess;
+	use Tuxxedo\Design;
 	use Tuxxedo\Helper\Pagination\Page;
 	use Tuxxedo\Registry;
 
@@ -50,7 +50,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Pagination extends InfoAccess implements \Iterator, \Countable
+	class Pagination extends Design\InfoAccess implements \Iterator, \Countable
 	{
 		/**
 		 * Iterator instance

@@ -34,8 +34,8 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager\Hooks;
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
-	use Tuxxedo\InfoAccess;
 	use Tuxxedo\Registry;
 
 
@@ -57,7 +57,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	abstract class Adapter extends InfoAccess implements \Iterator
+	abstract class Adapter extends Design\InfoAccess implements \Iterator
 	{
 		/**
 		 * Indicates that a field is required

@@ -75,15 +75,21 @@
 		 * When loading multiple helpers and set them to register in the registry, then 
 		 * the last registered one will override the old one in the registry
 		 *
-		 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
 		 * @param	string				The helper handle to instanciate
 		 * @param	boolean				Whether to register this helper in the registry
 		 * @return	object				Returns a helper handle object reference
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid helpers
 		 */ 
-		final public static function factory(Registry $registry, $helper, $register = false)
+		final public static function factory($helper, $register = false)
 		{
+			static $registry;
+
+			if(!$registry)
+			{
+				$registry = Registry::init();
+			}
+
 			$class = (strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . ucfirst($helper);
 
 			if(isset(self::$loaded_helpers[$helper]))

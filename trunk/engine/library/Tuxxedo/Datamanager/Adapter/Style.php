@@ -141,7 +141,7 @@
 				return(false);
 			}
 
-			if(($datastore = $this->registry->cache->styleinfo) === false)
+			if(($datastore = $this->registry->datastore->styleinfo) === false)
 			{
 				$datastore = Array();
 			}
@@ -150,7 +150,7 @@
 			{
 				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
 
-				foreach(\explode(',', $this->registry->cache->styleinfo[$this->data['id']]['templateids']) as $id)
+				foreach(\explode(',', $this->registry->datastore->styleinfo[$this->data['id']]['templateids']) as $id)
 				{
 					if(empty($id))
 					{
@@ -189,7 +189,7 @@
 				$datastore[(integer) $this->data['id']] = $virtual;
 			}
 
-			if(!$this->registry->cache->rebuild('styleinfo', $datastore))
+			if(!$this->registry->datastore->rebuild('styleinfo', $datastore))
 			{
 				return(false);
 			}
@@ -204,7 +204,7 @@
 				$options		= (array) $this->registry->options;
 				$options['style_id']	= $this->data['id'];
 
-				return($this->registry->cache->rebuild('options', $options));
+				return($this->registry->datastore->rebuild('options', $options));
 			}
 
 			return(true);
@@ -219,12 +219,12 @@
 		 */
 		public function virtualInherit($value)
 		{
-			if(!isset($this->registry->cache->styleinfo[$value]))
+			if(!isset($this->registry->datastore->styleinfo[$value]))
 			{
 				return(false);
 			}
 
-			foreach(explode(',', $this->registry->cache->styleinfo[$value]['templateids']) as $id)
+			foreach(\explode(',', $this->registry->datastore->styleinfo[$value]['templateids']) as $id)
 			{
 				$template 		= Adapter::factory('template', $id, self::OPT_LOAD_ONLY, $this);
 				$template['styleid'] 	= $this->data['id'];

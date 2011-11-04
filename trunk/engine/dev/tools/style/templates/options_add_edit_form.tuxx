@@ -1,32 +1,71 @@
 {$header}
 
-<form action=\"./options.php?do=" . (($do == 'edit') ? ("edit&option={$options['option']}") : ("add")) . "\" method=\"post\"" . (($do == 'edit') ? (" onsubmit=\"engine_options_editcheck();\"") : '') . ">
+<form action=\"./options.php?do=" . (($do == 'edit') ? ("edit&option={$opt['option']}") : ("add")) . "\" method=\"post\"" . (($do == 'edit') ? (" onsubmit=\"engine_options_editcheck();\"") : '') . ">
 <div class=\"box\">
 	<h4>" . (($do == 'edit') ? ("Edit") : ("Add")) . " option</h4>
 
 	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Option information</h5></td>
+		</tr>
 		<tr>
 			<td style=\"width: 20%;\">
 				Name</td>
 			<td>
-				<input type=\"text\" name=\"name\" size=\"32\" value=\"" . (($do == 'edit') ? ("{$options['option']}") : '') . "\" /></td>
+				<input type=\"text\" name=\"name\" size=\"32\" value=\"" . (($do == 'edit') ? ("{$opt['option']}") : '') . "\" /></td>
 		</tr>
 		<tr>
 			<td nowrap=\"nowrap\">
 				Type</td>
 			<td>
 				<select name=\"characters\" id=\"option_selector\" onchange=\"engine_options_change_handler(this, 'option_edit_area');\">
-					<option value=\"string\"" . (($do == 'edit' && $options['type'] == 's') ? (" selected=\"selected\"") : '') . ">String</option>
-					<option value=\"integer\"" . (($do == 'edit' && $options['type'] == 'i') ? (" selected=\"selected\"") : '') . ">Integer</option>
-					<option value=\"boolean\"" . (($do == 'edit' && $options['type'] == 'b') ? (" selected=\"selected\"") : '') . ">Boolean</option>
+					<option value=\"string\"" . (($do == 'edit' && $opt['type'] == 's') ? (" selected=\"selected\"") : '') . ">String</option>
+					<option value=\"integer\"" . (($do == 'edit' && $opt['type'] == 'i') ? (" selected=\"selected\"") : '') . ">Integer</option>
+					<option value=\"boolean\"" . (($do == 'edit' && $opt['type'] == 'b') ? (" selected=\"selected\"") : '') . ">Boolean</option>
 				</select></td>
 		</tr>
 		<tr>
 			<td nowrap=\"nowrap\" valign=\"top\">
 				Value</td>
 			<td id=\"option_edit_area\">
-				<textarea name=\"value\" id=\"optvalue\" rows=\"5\" cols=\"30\">" . (($do == 'edit' && !empty($options['value']) && !empty($options['defaultvalue'])) ? ("{$options['value']}") : ("" . (($do == 'edit' && !empty($options['defaultvalue'])) ? ("{$options['defaultvalue']}") : '') . "")) . "</textarea></td>
+				<textarea name=\"value\" id=\"optvalue\" rows=\"5\" style=\"width: 99%;\">" . (($do == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])) ? ("{$opt['value']}") : ("" . (($do == 'edit' && !empty($opt['defaultvalue'])) ? ("{$opt['defaultvalue']}") : '') . "")) . "</textarea></td>
 		</tr>
+" . (($do == 'edit') ? ("
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Options</h5></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Set this as the new default value?</td>
+			<td>
+				<label><input type=\"checkbox\" name=\"defaultoverride\" value=\"1\" /> Yes</label></td>
+		</tr>
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Datastore</h5></td>
+		</tr>
+" . (($cached) ? ("
+		<tr>
+			<td nowrap=\"nowrap\">
+				Default value</td>
+			<td>
+				{$defaultvalue}</td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\">
+				Cached value</td>
+			<td>
+				{$cachevalue}</td>
+		</tr>
+") : ("
+		<tr>
+			<td colspan=\"2\">
+				Option is not cached; save to rebuild the datastore</td>
+		</tr>
+")) . "
+") : '') . "
 	</table>
 </div>
 
@@ -36,7 +75,7 @@
 	<input type=\"submit\" name=\"submit\" value=\"" . (($do == 'edit') ? ("Edit") : ("Add")) . "\" />
 </div>
 
-" . (($do == 'edit' && $options['type'] != 's') ? ("
+" . (($do == 'edit' && $opt['type'] != 's') ? ("
 <script type=\"text/javascript\">
 engine_options_change_handler(document.getElementById('option_selector'), 'option_edit_area');
 </script>

@@ -7,6 +7,13 @@
 		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
 
 		<script type=\"text/javascript\">
+		var $ = function(id)
+		{
+			return(document.getElementById(id));
+		};
+		</script>
+
+		<script type=\"text/javascript\">
 		function engine_options_handler(select, option)
 		{
 			var action = select.options[select.selectedIndex].value;
@@ -40,17 +47,17 @@
 			{
 				case('string'):
 				{
-					document.getElementById(canvas).innerHTML = '<textarea name=\"value\" id=\"optvalue\" rows=\"5\" cols=\"30\"></textarea>';
+					$(canvas).innerHTML = '<textarea name=\"value\" id=\"optvalue\" rows=\"5\" cols=\"30\"></textarea>';
 				}
 				break;
 				case('integer'):
 				{
-					document.getElementById(canvas).innerHTML = '<input type=\"text\" id=\"optvalue\" name=\"value\" size=\"32\" />';
+					$(canvas).innerHTML = '<input type=\"text\" id=\"optvalue\" name=\"value\" size=\"32\" />';
 				}
 				break;
 				case('boolean'):
 				{
-					document.getElementById(canvas).innerHTML = '<label><input type=\"radio\" id=\"optvalue1\" name=\"value\" value=\"1\" checked=\"checked\" /> True</label> <label><input type=\"radio\" id=\"optvalue2\" name=\"value\" value=\"0\" /> False</label>';
+					$(canvas).innerHTML = '<label><input type=\"radio\" id=\"optvalue1\" name=\"value\" value=\"1\" /> True</label> <label><input type=\"radio\" id=\"optvalue2\" name=\"value\" value=\"0\" /> False</label>';
 				}
 				break;
 			}
@@ -60,7 +67,7 @@
 
 		function engine_options_current_canvas()
 		{
-			if(document.getElementById('optvalue1'))
+			if($('optvalue1'))
 			{
 				return('optvalue1');
 			}
@@ -74,22 +81,27 @@
 
 			if(option_canvas == 'optvalue')
 			{
-				if(document.getElementById('option_current_value').value != '')
+				if($('option_current_value').value != '')
 				{
-					document.getElementById(option_canvas).value 		= document.getElementById('option_current_value').value;
-					document.getElementById('option_current_value').value 	= '';
+					$(option_canvas).value 		= $('option_current_value').value;
+					$('option_current_value').value = '';
 				}
 			}
 			else
 			{
-				document.getElementById(option_canvas).checked = false;
+				$(option_canvas).checked = false;
 
-				if(!document.getElementById('option_current_value').value || document.getElementById('option_current_value').value == 0)
+				if(!$('option_current_value').value)
+				{
+					return;
+				}
+
+				if($('option_current_value').value == 0)
 				{
 					option_canvas = 'optvalue2';
 				}
 
-				document.getElementById(option_canvas).checked = true;
+				$(option_canvas).checked = true;
 			}
 		}
 
@@ -99,11 +111,11 @@
 
 			if(option_canvas != 'optvalue')
 			{
-				document.getElementById('option_current_value').value = (document.getElementById(option_canvas).checked ? 1 : 0);
+				$('option_current_value').value = ($(option_canvas).checked ? 1 : ($('optvalue2').checked ? '0' : ''));
 			}
 			else
 			{
-				document.getElementById('option_current_value').value = document.getElementById(option_canvas).value;
+				$('option_current_value').value = $(option_canvas).value;
 			}
 		}
 
@@ -114,10 +126,10 @@
 
 		function engine_swap_password_to_text(id)
 		{
-			var password_value = document.getElementById(id).value;
+			var password_value 	= $(id).value;
 
-			document.getElementById(id).type 	= (document.getElementById(id).type == 'password' ? 'text' : 'password');
-			document.getElementById(id).value 	= password_value;
+			$(id).type 		= ($(id).type == 'password' ? 'text' : 'password');
+			$(id).value 		= password_value;
 		}
 
 		function engine_templates_handler(select, styleid, templateid)

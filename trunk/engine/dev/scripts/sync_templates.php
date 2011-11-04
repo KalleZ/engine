@@ -40,9 +40,9 @@
 	if($cli || isset($_POST['sync']))
 	{
 		$registry->register('db', '\Tuxxedo\Database');
-		$registry->register('cache', '\Tuxxedo\Datastore');
+		$registry->register('datastore', '\Tuxxedo\Datastore');
 
-		$cache->cache(Array('options'));
+		$datastore->cache(Array('options'));
 
 		$templates = $db->query('
 						SELECT 
@@ -53,7 +53,7 @@
 							`styleid` = %d
 						ORDER BY 
 							`title` 
-						ASC', $cache->options['style_id']);
+						ASC', $datastore->options['style_id']);
 
 		if(!$templates)
 		{

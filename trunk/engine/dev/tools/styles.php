@@ -72,7 +72,7 @@
 
 	if(($styleid = $input->get('style', Input::TYPE_NUMERIC)))
 	{
-		if(!isset($cache->styleinfo[$styleid]))
+		if(!isset($datastore->styleinfo[$styleid]))
 		{
 			tuxxedo_error('Invalid style');
 		}
@@ -104,7 +104,7 @@
 					}
 					elseif(isset($_POST['submit']))
 					{
-						if($action == 'edit' && !isset($_POST['defaultstyle']) && sizeof($cache->styledata) < 2)
+						if($action == 'edit' && !isset($_POST['defaultstyle']) && sizeof($datastore->styledata) < 2)
 						{
 							tuxxedo_error('Cannot disable default style when there only is one');
 						}
@@ -129,7 +129,7 @@
 						{
 							$styles_dropdown = '';
 
-							foreach($cache->styleinfo as $value => $data)
+							foreach($datastore->styleinfo as $value => $data)
 							{
 								$name 		= $data['name'];
 								$selected	= ($options->style_id == $value);
@@ -170,7 +170,7 @@
 			{
 				case('list'):
 				{
-					$templateids = explode(',', $cache->styleinfo[$styleid]['templateids']);
+					$templateids = explode(',', $datastore->styleinfo[$styleid]['templateids']);
 
 					if(!$templateids || empty($templateids[0]))
 					{

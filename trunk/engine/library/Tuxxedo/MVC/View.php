@@ -32,9 +32,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Exception;
-	use Tuxxedo\InfoAccess;
-	use Tuxxedo\Registry;
 	use Tuxxedo\Template;
 
 

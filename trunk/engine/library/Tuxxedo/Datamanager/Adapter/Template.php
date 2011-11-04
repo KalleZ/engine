@@ -147,7 +147,7 @@
 		{
 			if($this->context == self::CONTEXT_DELETE)
 			{
-				$styleinfo	= $this->registry->cache->styleinfo;
+				$styleinfo	= $this->registry->datastore->styleinfo;
 				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
 
 				foreach($ids as $index => $id)
@@ -162,7 +162,7 @@
 
 				$styleinfo[$this['styleid']]['templateids'] = \trim(\implode(',', $ids), ',');
 
-				return($this->registry->cache->rebuild('styleinfo', $styleinfo, false));
+				return($this->registry->datastore->rebuild('styleinfo', $styleinfo, false));
 			}
 			elseif($this->context == self::CONTEXT_SAVE)
 			{
@@ -171,7 +171,7 @@
 					return(true);
 				}
 
-				$styleinfo	= $this->registry->cache->styleinfo;
+				$styleinfo	= $this->registry->datastore->styleinfo;
 				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
 
 				foreach($ids as $index => $id)
@@ -195,7 +195,7 @@
 					$styleinfo[$virtual['styleid']]['templateids'] .= ',' . $this->data['id'];
 				}
 
-				return($this->registry->cache->rebuild('styleinfo', $styleinfo, false));
+				return($this->registry->datastore->rebuild('styleinfo', $styleinfo, false));
 			}
 
 			return(true);

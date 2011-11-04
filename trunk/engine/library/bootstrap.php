@@ -149,7 +149,7 @@
 	 * Register the default instances
 	 */
 	$registry->register('db', '\Tuxxedo\Database');
-	$registry->register('cache', '\Tuxxedo\Datastore');
+	$registry->register('datastore', '\Tuxxedo\Datastore');
 
 	/**
 	 * Precache elements from datastore
@@ -157,7 +157,7 @@
 	$cache_buffer		= Array();
 	$default_precache 	= Array('options', 'styleinfo', 'usergroups', 'languages', 'phrasegroups', 'permissions');
 
-	$cache->cache((!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+	$datastore->cache((!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
 
 	/**
 	 * Now the datastore is loaded we must instanciate the 
@@ -169,7 +169,7 @@
 	/**
 	 * Options and configuration references
 	 */
-	$registry->set('options', (object) $cache->options);
+	$registry->set('options', (object) $datastore->options);
 	$registry->set('configuration', $configuration);
 
 	/**

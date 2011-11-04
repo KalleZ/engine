@@ -614,7 +614,7 @@
 
 		if($format === NULL)
 		{
-			$format = $registry->cache->options['date_format'];
+			$format = $registry->datastore->options['date_format'];
 		}
 
 		if(!$registry->datetime)

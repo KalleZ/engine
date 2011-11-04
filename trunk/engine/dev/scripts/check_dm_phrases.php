@@ -106,12 +106,12 @@
 
 
 	$registry->register('db', '\Tuxxedo\Database');
-	$registry->register('cache', '\Tuxxedo\Datastore')->cache(Array('languages', 'options', 'phrasegroups'));
+	$registry->register('datastore', '\Tuxxedo\Datastore')->cache(Array('languages', 'options', 'phrasegroups'));
 	$registry->register('intl', '\Tuxxedo\Intl')->cache(Array('datamanagers'));
 
 	$intldm = $intl->getPhrasegroup('datamanagers');
 
-	foreach($cache->languages as $id => $languagedata)
+	foreach($datastore->languages as $id => $languagedata)
 	{
 		IO::headline('Checking datamanager phrases for \'' . $languagedata['title'] . '\'');
 
