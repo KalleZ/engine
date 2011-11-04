@@ -16,6 +16,12 @@
 
 
 	/**
+	 * Aliasing rules
+	 */
+	use Tuxxedo\Input;
+
+
+	/**
 	 * Global templates
 	 */
 	$templates 		= Array(
@@ -76,13 +82,18 @@
 		{
 			$option = $input->get('option');
 
-			if(($options = options_get_single($option)) == false)
+			if(($opt = options_get_single($option)) == false)
 			{
 				tuxxedo_error('Invalid option');
 			}
-			elseif($input->post('submit'))
+
+			$cached 	= isset($datastore->options[$option]);
+			$defaultvalue	= options_value_dump($opt['type'], $opt['defaultvalue']);
+			$cachevalue	= ($cached ? options_value_dump($opt['type'], $opt['value']) : 'N/A');
+
+			if($input->post('submit'))
 			{
-				if(!options_edit($option, $input->post('name'), $input->post('characters'), $input->post('value')))
+				if(!options_edit($option, $input->post('name'), $input->post('characters'), $input->post('value'), $input->post('defaultoverride', Input::TYPE_BOOLEAN)))
 				{
 					tuxxedo_error('Failed to edit option, possible naming conflict');
 				}
@@ -164,20 +175,20 @@
 			while($opt = $query->fetchAssoc())
 			{
 				$found[]	= $opt['option'];
-				$cached 	= isset($cache->options[$opt['option']]);
+				$cached 	= isset($datastore->options[$opt['option']]);
 				$value		= ($opt['value'] !== $opt['defaultvalue'] ? options_value_dump($opt['type'], $opt['value']) : '');
 				$defaultvalue	= options_value_dump($opt['type'], $opt['defaultvalue']);
-				$cachevalue	= ($cached ? options_value_dump($opt['type'], $cache->options[$opt['option']]) : 'N/A');
+				$cachevalue	= ($cached ? options_value_dump($opt['type'], $datastore->options[$opt['option']]) : 'N/A');
 
 				eval('$table .= "' . $style->fetch('options_index_itembit') . '";');
 
-				if(!$cached || ($cached && $opt['value'] != $cache->options[$opt['option']]))
+				if(!$cached || ($cached && $opt['value'] != $datastore->options[$opt['option']]))
 				{
 					$reminder = true;
 				}
 			}
 
-			if(array_diff(array_keys($cache->options), $found))
+			if(array_diff(array_keys($datastore->options), $found))
 			{
 				$reminder = true;
 			}

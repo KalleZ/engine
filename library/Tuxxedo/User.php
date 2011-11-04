@@ -33,6 +33,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Design;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Session;
 
@@ -51,7 +52,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class User extends InfoAccess
+	class User extends Design\InfoAccess
 	{
 		/**
 		 * User info constant, also get session information if 
@@ -142,7 +143,7 @@
 				if(($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 				{
 					$this->userinfo				= $userinfo;
-					$this->usergroupinfo			= (object) $this->registry->cache->usergroups[$userinfo->usergroupid];
+					$this->usergroupinfo			= (object) $this->registry->datastore->usergroups[$userinfo->usergroupid];
 					$this->userinfo->permissions		= (integer) $userinfo->permissions;
 					$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
 				}
@@ -222,9 +223,9 @@
 			Session::set('password', $userinfo->password);
 
 			$this->userinfo				= $userinfo;
-			$this->usergroupinfo			= (object) $this->registry->cache->usergroups[$userinfo->usergroupid];
+			$this->usergroupinfo			= (object) $this->registry->datastore->usergroups[$userinfo->usergroupid];
 			$this->sessiondm['userid'] 		= $userinfo->id;
-			$this->userinfo->permissions		= (integer) $this->userinfo->permissions;
+			$this->userinfo->permissions		= (integer) $userinfo->permissions;
 			$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
 
 			$this->registry->set('userinfo', $this->userinfo);
@@ -362,9 +363,9 @@
 
 				return(false);
 			}
-			elseif(isset($this->registry->cache->usergroups[$id]))
+			elseif(isset($this->registry->datastore->usergroups[$id]))
 			{
-				return($this->registry->cache->usergroups[$id]);
+				return($this->registry->datastore->usergroups[$id]);
 			}
 
 			return(false);
@@ -510,12 +511,12 @@
 		 */
 		protected function setPermissionConstants()
 		{
-			if(!$this->registry->cache->permissions)
+			if(!$this->registry->datastore->permissions)
 			{
 				return;
 			}
 
-			foreach($this->registry->cache->permissions as $name => $bits)
+			foreach($this->registry->datastore->permissions as $name => $bits)
 			{
 				$name = 'PERMISSION_' . strtoupper($name);
 

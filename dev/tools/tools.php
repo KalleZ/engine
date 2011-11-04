@@ -64,7 +64,8 @@
 	 */
 	$precache 		= Array(
 					'options', 
-					'permissions'
+					'permissions', 
+					'usergroups'
 					);
 
 	/**
@@ -321,12 +322,6 @@
 		break;
 		case('permissions'):
 		{
-			$cache_buffer = Array();
-
-			$registry->register('db', '\Tuxxedo\Database');
-			$cache->cache(Array('usergroups', 'permissions'), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
-			unset($cache_buffer);
-
 			$permissions = $users = $usergroups = '';
 
 			foreach(Array('permissions', 'users', 'usergroups') as $element)
@@ -362,7 +357,7 @@
 					break;
 					case('permissions'):
 					{
-						foreach($cache->permissions as $name => $bits)
+						foreach($datastore->permissions as $name => $bits)
 						{
 							$selected = (isset($_POST['permission_' . $name]) && $_POST['permission_' . $name]);
 
@@ -372,7 +367,7 @@
 					break;
 					case('usergroups'):
 					{
-						foreach($cache->usergroups as $value => $group)
+						foreach($datastore->usergroups as $value => $group)
 						{
 							$name 		= $group['title'];
 							$selected	= (isset($_POST['usergroup']) && $input->post('usergroup', Input::TYPE_NUMERIC) == $value);
@@ -399,7 +394,7 @@
 
 				$test_permissions = '';
 
-				foreach($cache->permissions as $name => $bits)
+				foreach($datastore->permissions as $name => $bits)
 				{
 					if(!isset($_POST['permission_' . $name]))
 					{

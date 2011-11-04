@@ -41,6 +41,6 @@
 	 * the bootstraper was a success
 	 */
 	echo new Template('index', true, Array(
-						'version' => Version::FULL . (Version::PREVIEW ? ' (development preview)' : '') . (TUXXEDO_DEBUG ? ' (DEBUG)' : '')
+						'version' => Version::FULL . (TUXXEDO_DEBUG ? ' (DEBUG)' : '')
 						));
 ?>

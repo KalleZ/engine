@@ -16,7 +16,7 @@
 		<if expression="$cached">Yes<else />No</if>
 	</td>
 	<td nowrap="nowrap">
-<if expression="$cached && ($cache->options[$opt['option']] == $opt['defaultvalue'])">
+<if expression="$cached && ($datastore->options[$opt['option']] == $opt['defaultvalue'])">
 		<em>Default</em>
 <else />
 		{$cachevalue}

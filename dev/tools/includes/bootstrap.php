@@ -140,7 +140,7 @@
 	}
 
 	$registry->register('db', '\Tuxxedo\Database');
-	$registry->register('cache', '\Tuxxedo\Datastore');
+	$registry->register('datastore', '\Tuxxedo\Datastore');
 	$registry->register('input', '\Tuxxedo\Input');
 
 	$registry->set('style', new Style);
@@ -149,7 +149,7 @@
 	{
 		$cache_buffer = Array();
 
-		$cache->cache($precache, $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+		$datastore->cache($precache, $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
 	}
 
 	$cache_buffer		= Array();
@@ -164,7 +164,7 @@
 
 	unset($cache_buffer);
 
-	$registry->set('options', (object) $cache->options);
+	$registry->set('options', (object) $datastore->options);
 
 	$engine_version = Version::FULL;
 	$widget_hook	= false;

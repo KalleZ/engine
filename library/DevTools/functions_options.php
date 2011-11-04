@@ -265,19 +265,18 @@
 	 * @param	string			The new option name
 	 * @param	string			The new option data type
 	 * @param	string			The new option value
+	 * @param	string			Whether to set this value as the new default value
 	 * @return	boolean			Returns true if the option were edited, otherwise false
 	 *
 	 * @throws	\Tuxxedo\Exception\SQL	Throws a SQL exception if the query should fail
 	 */
-	function options_edit($original, $name, $type, $value)
+	function options_edit($original, $name, $type, $value, $defaultoverride = false)
 	{
 		if(!options_is_valid($original) || empty($original) || ($original !== $name && (options_is_valid($name) || empty($name))))
 		{
 			return(false);
 		}
 
-		$default 	= options_get_single($original);
-		$default 	= $default['defaultvalue'];
 		$registry	= Registry::init();
 		$result 	= $registry->db->equery('
 								UPDATE 

@@ -70,6 +70,8 @@
 	Changed templateids from being a database field to be a virtually populated field from datastore.php (Kalle)
 	Changed result sets' getNumRows methods to return 0 if the result is destroyed (Kalle)
 	Changed usergroupinfo to be an object rather than an array (Kalle)
+	Changed the datastore reference name to be called 'datastore', rather than 'cache' (Kalle)
+	Changed the Router class to reside under the MVC namespace (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)

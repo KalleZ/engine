@@ -121,13 +121,13 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
-			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->cache->permissions[$this->data['name']]))
+			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->permissions[$this->data['name']]))
 			{
 				return(true);
 			}
 
 			$name		= (isset($virtual['name']) ? $virtual['name'] : $this->data['name']);
-			$permissions	= $this->registry->cache->permissions;
+			$permissions	= $this->registry->datastore->permissions;
 
 			unset($permissions[$name]);
 
@@ -136,7 +136,7 @@
 				$permissions[$name] = $this['bits'];
 			}
 
-			return($this->registry->cache->rebuild('permissions', $permissions, false));
+			return($this->registry->datastore->rebuild('permissions', $permissions, false));
 		}
 	}
 ?>

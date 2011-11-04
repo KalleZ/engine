@@ -122,7 +122,7 @@
 
 			$this->impersonate			= $userinfo->id;
 			$this->userinfo				= $userinfo;
-			$this->usergroupinfo			= $this->registry->cache->usergroups[$userinfo->usergroupid];
+			$this->usergroupinfo			= $this->registry->datastore->usergroups[$userinfo->usergroupid];
 			$this->sessiondm['userid'] 		= $userinfo->id;
 			$this->userinfo->permissions		= (integer) $this->userinfo->permissions;
 			$this->usergroupinfo['permissions'] 	= (integer) $this->usergroupinfo['permissions'];
@@ -166,13 +166,13 @@
 				$uid->free();
 			}
 
-			if(!isset($this->registry->cache->usergroups[$identifier]) || !$this->impersonateAsUser($user))
+			if(!isset($this->registry->datastore->usergroups[$identifier]) || !$this->impersonateAsUser($user))
 			{
 				return(false);
 			}
 
 			$this->userinfo->usergroupid		= $identifier;
-			$this->usergroupinfo			= $this->registry->cache->usergroups[$identifier];
+			$this->usergroupinfo			= $this->registry->datastore->usergroups[$identifier];
 			$this->usergroupinfo['permissions']	= (integer) $this->usergroupinfo['permissions'];
 
 			$this->registry->set('userinfo', $this->userinfo);

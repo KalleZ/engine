@@ -54,7 +54,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Intl extends InfoAccess implements Design\Invokable
+	class Intl extends Design\InfoAccess implements Design\Invokable
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -94,8 +94,8 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			$options	= $registry->cache->options;
-			$languagedata 	= $registry->cache->languages;
+			$options	= $registry->datastore->options;
+			$languagedata 	= $registry->datastore->languages;
 			$languageid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $options['language_id'] ? $registry->userinfo->language_id : $options['language_id']) : 0);
 
 			if($languageid && isset($languagedata[$languageid]))
@@ -314,7 +314,7 @@
 		 */
 		private function filter($phrasegroup)
 		{
-			return(isset($this->registry->cache->phrasegroups[$phrasegroup]) && $this->registry->cache->phrasegroups[$phrasegroup]['phrases']);
+			return(isset($this->registry->datastore->phrasegroups[$phrasegroup]) && $this->registry->datastore->phrasegroups[$phrasegroup]['phrases']);
 		}
 	}
 ?>

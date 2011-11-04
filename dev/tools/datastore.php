@@ -257,7 +257,7 @@
 						break;
 					}
 
-					if(($success = sizeof($current) && $cache->rebuild($element, $current, false)) === false)
+					if(($success = sizeof($current) && $datastore->rebuild($element, $current, false)) === false)
 					{
 						$corrupt_warn = true;
 					}

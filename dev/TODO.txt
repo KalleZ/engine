@@ -12,11 +12,7 @@
 	------------------------------------------------
 
 	Core
-[B]	 - Fix input background CSS
-[C]	 - Helper factory should not require a Registry parameter
-[C]	 - Change $registry->cache to $registry->datastore to make room for future use
-[C]	 - Move InfoAccess to Design\
-[C]	 - Move Router to MVC\
+[B]	 - Mention sync templates in RELEASE
 
 	Datamanagers
 [B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data

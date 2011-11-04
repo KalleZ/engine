@@ -49,7 +49,7 @@
 	 * caching templates and fetching them for execution.
 	 *
 	 * To compile templates thats loadable through this class 
-	 * you should look at the {@link Tuxxedo_Template_Compiler} 
+	 * you should look at the {@link \Tuxxedo\Template\Compiler} 
 	 * class.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
@@ -57,7 +57,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Style extends InfoAccess implements Design\Invokable
+	class Style extends Design\InfoAccess implements Design\Invokable
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -99,8 +99,8 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			$options	= $registry->cache->options;
-			$styledata 	= $registry->cache->styleinfo;
+			$options	= $registry->datastore->options;
+			$styledata 	= $registry->datastore->styleinfo;
 			$styleid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->style_id !== NULL && $registry->userinfo->style_id != $options['style_id'] ? $registry->userinfo->style_id : $options['style_id']) : 0);
 
 			if($styleid && isset($styledata[$styleid]))

@@ -183,13 +183,13 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
-			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->cache->options[$this['option']]))
+			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->options[$this['option']]))
 			{
 				return(true);
 			}
 
 			$option		= (isset($virtual['option']) ? $virtual['option'] : $this['option']);
-			$options 	= $this->registry->cache->options;
+			$options 	= $this->registry->datastore->options;
 
 			unset($options[$option]);
 
@@ -198,7 +198,7 @@
 				$options[$option] = $this['value'];
 			}
 
-			return($this->registry->cache->rebuild('options', $options, false));
+			return($this->registry->datastore->rebuild('options', $options, false));
 		}
 	}
 ?>

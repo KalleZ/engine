@@ -16,7 +16,7 @@
 		" . (($cached) ? ("Yes") : ("No")) . "
 	</td>
 	<td nowrap=\"nowrap\">
-" . (($cached && ($cache->options[$opt['option']] == $opt['defaultvalue'])) ? ("
+" . (($cached && ($datastore->options[$opt['option']] == $opt['defaultvalue'])) ? ("
 		<em>Default</em>
 ") : ("
 		{$cachevalue}
