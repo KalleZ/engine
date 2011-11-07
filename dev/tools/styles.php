@@ -52,7 +52,6 @@
 	 * Precache datastore elements
 	 */
 	$precache 		= Array(
-					'options', 
 					'styleinfo'
 					);
 
@@ -77,7 +76,7 @@
 			tuxxedo_error('Invalid style');
 		}
 
-		$styledm 	= Datamanager\Adapter::factory('style', $styleid, 0);
+		$styledm 	= Datamanager\Adapter::factory('style', $styleid);
 		$styledata	= $styledm->get();
 	}
 	elseif(!$styleid && !empty($do) && $do != 'style' && $action != 'add')

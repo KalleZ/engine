@@ -63,7 +63,7 @@
 	{
 		case('truncate'):
 		{
-			Helper::factory($registry, 'database')->truncate('datastore');
+			Helper::factory('database')->truncate('datastore');
 
 			tuxxedo_redirect('Datastore truncated, the datastore is now empty and must be rebuilt before it can be used again', './datastore.php');
 		}
@@ -108,8 +108,6 @@
 		{
 			if($input->post('progress'))
 			{
-				require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
-
 				$cache_items 	= '';
 				$corrupt_warn	= false;
 				$tables 	= Array(
@@ -156,7 +154,7 @@
 								{
 									case('options'):
 									{
-										$current[$s['option']] = options_convert_type(strtolower($s['type']{0}), $s['value']);
+										$current[$s['option']] = var_typecast_option(strtolower($s['type']{0}), $s['value']);
 									}
 									break;
 									case('phrasegroups'):

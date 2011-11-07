@@ -218,21 +218,21 @@
 					return(false);
 				}
 
-				$search = \array_search($this->phrases[$phrasegroup], $phrase);
+				$search = isset($this->phrases[$phrasegroup][$phrase]);
 
 				if($search === false)
 				{
 					return(false);
 				}
 
-				return($this->phrases[$phrasegroup][$search]);
+				return($this->phrases[$phrasegroup][$phrase]);
 			}
 
 			foreach($this->phrases as $phrases)
 			{
-				if(($search = \array_search($phrases, $phrase)) !== false)
+				if(isset($phrases[$phrase]))
 				{
-					return($phrases[$search]);
+					return($phrases[$phrase]);
 				}
 			}
 

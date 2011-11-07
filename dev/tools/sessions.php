@@ -34,7 +34,6 @@
 	 * Precache datastore elements
 	 */
 	$precache 		= Array(
-					'options', 
 					'usergroups'
 					);
 
@@ -84,7 +83,7 @@
 				break;
 				default:
 				{
-					Helper::factory($registry, 'database')->truncate('sessions');
+					Helper::factory('database')->truncate('sessions');
 
 					tuxxedo_redirect('Deleted all active and expired sessions', './sessions.php');
 				}

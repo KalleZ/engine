@@ -63,7 +63,6 @@
 	 * Precache datastore elements
 	 */
 	$precache 		= Array(
-					'options', 
 					'permissions', 
 					'usergroups'
 					);
