@@ -18,6 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Datamanager;
 	use Tuxxedo\Input;
 
 
@@ -57,7 +58,6 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
-	require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
 	switch($do = strtolower($input->get('do')))
 	{
@@ -65,10 +65,12 @@
 		{
 			if($input->post('submit'))
 			{
-				if(!options_add($input->post('name'), $input->post('characters'), $input->post('value')))
-				{
-					tuxxedo_error('Failed to add new option, possible naming conflict');
-				}
+				$opt 		= Datamanager\Adapter::factory('option');
+				$opt['option']	= $input->post('name');
+				$opt['type']	= $input->post('characters');
+				$opt['value']	= $input->post('value');
+
+				$opt->save();
 
 				tuxxedo_redirect('Added option', './options.php');
 			}
@@ -80,23 +82,21 @@
 		break;
 		case('edit'):
 		{
-			$option = $input->get('option');
-
-			if(($opt = options_get_single($option)) == false)
-			{
-				tuxxedo_error('Invalid option');
-			}
-
+			$option 	= $input->get('option');
+			$opt		= Datamanager\Adapter::factory('option', $option);
 			$cached 	= isset($datastore->options[$option]);
-			$defaultvalue	= options_value_dump($opt['type'], $opt['defaultvalue']);
-			$cachevalue	= ($cached ? options_value_dump($opt['type'], $opt['value']) : 'N/A');
+			$defaultvalue	= var_dump_option($opt['type'], $opt['defaultvalue']);
+			$cachevalue	= ($cached ? var_dump_option($opt['type'], $opt['value']) : 'N/A');
 
 			if($input->post('submit'))
 			{
-				if(!options_edit($option, $input->post('name'), $input->post('characters'), $input->post('value'), $input->post('defaultoverride', Input::TYPE_BOOLEAN)))
-				{
-					tuxxedo_error('Failed to edit option, possible naming conflict');
-				}
+				$opt['option']	= $input->post('name');
+				$opt['type']	= $input->post('characters');
+				$opt['value']	= $input->post('value');
+
+				/* $opt['defaultoverride']	= $input->post('defaultoverride', Input::TYPE_BOOLEAN); */
+
+				$opt->save();
 
 				tuxxedo_redirect('Edited option', './options.php');
 			}
@@ -109,13 +109,9 @@
 		case('delete'):
 		{
 			$option = $input->get('option');
+			$opt	= Datamanager\Adapter::factory('option', $option);
 
-			if(!options_is_valid($option))
-			{
-				tuxxedo_error('Invalid option');
-			}
-
-			options_delete($option) or tuxxedo_error('Unable to delete option');
+			$opt->delete();
 
 			tuxxedo_redirect('Deleted option', './options.php');
 		}
@@ -126,27 +122,34 @@
 
 			if($option !== NULL)
 			{
-				if(!options_is_valid($option))
-				{
-					tuxxedo_error('Invalid option');
-				}
+				$option 		= Datamanager\Adapter::factory('option', $option);
+				$option['value']	= $option['defaultvalue'];
 
-				options_reset($option);
+				$option->save();
 
 				tuxxedo_redirect('Option reset to default value', './options.php');
 			}
 			else
 			{
-				$options = options_get_all();
+				$query = $db->query('
+							SELECT 
+								`option`
+							FROM
+								`' . TUXXEDO_PREFIX . 'options` 
+							ORDER BY 
+								`option` ASC');
 
-				if(!$options)
+				if(!$query || !$query->getNumRows())
 				{
 					tuxxedo_error('No options found');
 				}
 
-				foreach($options as $name => $data)
+				while($opt = $query->fetchRow())
 				{
-					options_reset($name);
+					$option 		= Datamanager\Adapter::factory('option', $opt[0]);
+					$option['value']	= $option['defaultvalue'];
+
+					$option->save();
 				}
 
 				tuxxedo_redirect('All options reset to their default value', './options.php');
@@ -176,9 +179,9 @@
 			{
 				$found[]	= $opt['option'];
 				$cached 	= isset($datastore->options[$opt['option']]);
-				$value		= ($opt['value'] !== $opt['defaultvalue'] ? options_value_dump($opt['type'], $opt['value']) : '');
-				$defaultvalue	= options_value_dump($opt['type'], $opt['defaultvalue']);
-				$cachevalue	= ($cached ? options_value_dump($opt['type'], $datastore->options[$opt['option']]) : 'N/A');
+				$value		= ($opt['value'] !== $opt['defaultvalue'] ? var_dump_option($opt['type'], $opt['value']) : '');
+				$defaultvalue	= var_dump_option($opt['type'], $opt['defaultvalue']);
+				$cachevalue	= ($cached ? var_dump_option($opt['type'], $datastore->options[$opt['option']]) : 'N/A');
 
 				eval('$table .= "' . $style->fetch('options_index_itembit') . '";');
 

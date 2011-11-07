@@ -89,6 +89,7 @@
 	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
 	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)
+	Fixed a bug in \Tuxxedo\Intl::find() that would render the method useless (Kalle)
 
 	Removed the /dev/extra folder, as the bootstraper is long outdated and not maintained (Kalle)
 

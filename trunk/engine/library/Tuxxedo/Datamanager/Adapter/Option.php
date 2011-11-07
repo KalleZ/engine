@@ -137,6 +137,10 @@
 			{
 				return(false);
 			}
+			elseif($dm->identifier === NULL)
+			{
+				$dm['defaultvalue'] = $defaultvalue = $dm['value'];
+			}
 
 			switch(\strtolower($dm['type']{0}))
 			{
@@ -171,7 +175,12 @@
 				$types = Array('b', 'i', 's');
 			}
 
-			return(\in_array(\strtolower($dm['type']{0}), $types));
+			if(($retval = \in_array(\strtolower($dm['type']{0}), $types)) !== false)
+			{
+				$dm['type'] = $dm['type']{0};
+			}
+
+			return($retval);
 		}
 
 		/**

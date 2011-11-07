@@ -378,7 +378,7 @@
 					throw new Exception\Basic('Internationalization is not instanciated for form data phrases');
 				}
 
-				if(!$registry->intl->cache(array('datamanagers')))
+				if(!$registry->intl->cache(Array('datamanagers')))
 				{
 					throw new Exception\Basic('Unable to cache datamanager phrases');
 				}
@@ -647,12 +647,12 @@
 
 				foreach($this->invalid_fields as $field)
 				{
-					$formdata[$field] = ($intl && isset($this->registry->phrase['dm_' . $this->dmname . '_' . $field]) ? $this->registry->phrase['dm_' . $this->dmname . '_' . $field] : $field);
+					$formdata[$field] = ($intl && ($phrase = $this->registry->intl->find('dm_' . $this->dmname . '_' . $field, 'datamanagers')) !== false ? $phrase : $field);
 				}
 
 				$this->context = self::CONTEXT_NONE;
 
-				throw new Exception\Formdata($formdata, $this->registry->phrase['validation_failed']);
+				throw new Exception\Formdata($formdata, ($intl ? $this->registry->intl->find('validation_failed', 'datamanagers') : ''));
 			}
 
 			$values			= '';

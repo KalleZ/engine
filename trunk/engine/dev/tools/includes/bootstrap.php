@@ -142,15 +142,22 @@
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('datastore', '\Tuxxedo\Datastore');
 	$registry->register('input', '\Tuxxedo\Input');
-
 	$registry->set('style', new Style);
 
-	if(isset($precache) && $precache)
+	if(SCRIPT_NAME != 'datastore')
 	{
-		$cache_buffer = Array();
+		$cache_buffer		= Array();
+		$default_precache 	= Array('languages', 'options', 'phrasegroups');
 
-		$datastore->cache($precache, $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+		$datastore->cache((!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+
+		$registry->register('intl', '\Tuxxedo\Intl');
+
+		$cache_buffer = Array();
+		$intl->cache(Array('global'), $cache_buffer) or tuxxedo_multi_error('Unable to load phrasegroup \'%s\'', $cache_buffer);
 	}
+
+	$registry->set('options', (object) $datastore->options);
 
 	$cache_buffer		= Array();
 	$default_templates 	= Array('header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit');
@@ -164,20 +171,14 @@
 
 	unset($cache_buffer);
 
-	$registry->set('options', (object) $datastore->options);
-
 	$engine_version = Version::FULL;
 	$widget_hook	= false;
 
-	if(($widget_panel = $style->getSidebarWidget($widget_hook)) !== false)
+	if(($widget = $style->getSidebarWidget($widget_hook)) !== false)
 	{
-		if($widget_hook)
+		if(!$widget_hook)
 		{
-			$widget = $widget_panel;
-		}
-		else
-		{
-			eval('$widget = "' . $widget_panel . '";');
+			eval('$widget = "' . $widget . '";');
 		}
 	}
 

@@ -73,6 +73,67 @@
 		return($return_value);
 	}
 
+
+	/**
+	 * Returns a var_dump() a-like syntax for an option
+	 * and its datatype
+	 *
+	 * @param	string			The option datatype
+	 * @param	string			The option value
+	 * @return	string			Returns a string containing the datatype and its value and 'unknown' on error
+	 */
+	function var_dump_option($type, $value)
+	{
+		if(empty($type))
+		{
+			return('unknown');
+		}
+
+		switch(strtolower($type{0}))
+		{
+			case('s'):
+			{
+				return('string(' . strlen($value) . ') "' . $value . '"');
+			}
+			case('i'):
+			{
+				return('integer(' . (integer) $value . ')');
+			}
+			case('b'):
+			{
+				return('boolean(' . ($value ? 'true' : 'false') . ')');
+			}
+		}
+
+		return('unknown');
+	}
+
+	/**
+	 * Converts a value to an option type
+	 *
+	 * @param	string			The one character option type: b, i etc.
+	 * @param	string			The value to convert
+	 * @return	string			Converts the value into the desired type, and string for unknown types
+	 */
+	function var_typecast_option($type, $value)
+	{
+		switch($type)
+		{
+			case('b'):
+			{
+				return((boolean) $value);
+			}
+			break;
+			case('i'):
+			{
+				return((integer) $value);
+			}
+			break;
+		}
+
+		return((string) $value);
+	}
+
 	/**
 	 * Extended exception handler
 	 *

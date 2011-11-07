@@ -21,7 +21,6 @@
 	DevTools
 	 - Options
 [F]	   - Add the ability to re-define default values for options
-[C]	   - Change the options dev tool to work with the options datamanager
 
 
 	Tuxxedo Engine 1.1.0 Release Candidate 1
