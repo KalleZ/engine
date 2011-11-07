@@ -49,7 +49,7 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_LIBRARY', TUXXEDO_DIR . '/library');
+	define('TUXXEDO_LIBRARY', TUXXEDO_DIR . DIRECTORY_SEPARATOR . 'library');
 
 	/**
 	 * Configuration
