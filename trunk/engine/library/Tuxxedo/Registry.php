@@ -157,10 +157,10 @@
 		 * where custom aliasing rules may be defined.
 		 *
 		 * @param	string					The name of this instance
-		 * @param	string					The class to register, this must implement a 'magic' method called invoke to work
+		 * @param	string					The class to register, this supports the 'Invokable' interface
 		 * @return	object					Returns a reference to the created instance
 		 *
-		 * @throws	\Tuxxedo\Exception\Basic		This a basic exception if the class doesn't exists or implements the magic invoke method
+		 * @throws	\Tuxxedo\Exception\Basic		Throws a basic exception in case of failure
 		 */
 		public function register($refname, $class)
 		{
