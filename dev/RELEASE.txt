@@ -15,17 +15,20 @@
 
 	5)  Execute TRUNCATE TABLE sessions.
 
-	6)  Make sure database .sql files is at its current, by exporting the 
+	6)  Make sure that templates are upto date (database and file system) and 
+	    that the devtools is compiled.
+
+	7)  Make sure database .sql files is at its current, by exporting the 
 	    current development data into them and removing the clutter.
 
-	7)  Rebuild API dumps (`php ./dev/scripts/api_analyze.php')
+	8)  Rebuild API dumps (`php ./dev/scripts/api_analyze.php')
 
-	8)  Update version and make sure to do a touch on ./library/Tuxxedo/Version.php 
+	9)  Update version and make sure to do a touch on ./library/Tuxxedo/Version.php 
 	    to update the $Rev$ tag in there.
 
-	9)  Commit!
+	10) Commit!
 
-	10) Change the version back to its next release, make sure that preview tags, etc. 
+	11) Change the version back to its next release, make sure that preview tags, etc. 
 	    are at its current when going from stable to unstable and vice versa.
 
-	11) Commit!
+	12) Commit!
