@@ -1,6 +1,7 @@
 
 
 
+
 	Tuxxedo Engine 1.1.0 Beta 1
 	------------------------------------------------
 
@@ -10,9 +11,6 @@
 
 	Tuxxedo Engine 1.1.0 Beta 2
 	------------------------------------------------
-
-	Core
-[B]	 - Mention sync templates in RELEASE
 
 	Datamanagers
 [B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data
