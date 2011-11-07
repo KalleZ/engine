@@ -54,8 +54,35 @@
 	class Loader
 	{
 		/**
+		 * Loader mode - Default
+		 *
+		 * @var		integer
+		 */
+		const MODE_DEFAULT		= 1;
+
+		/**
+		 * Loader mode - PSR-0
+		 *
+		 * @var		integer
+		 */
+		const MODE_PSR0			= 2;
+
+
+		/**
+		 * Loader mode
+		 *
+		 * @var		integer
+		 */
+		public static $mode		= self::MODE_DEFAULT;
+
+		/**
 		 * Default separator for classes, this is commonly '_'
-		 * for non namespaced code.
+		 * for non namespaced code. Separators may have different 
+		 * meaning depending on the loader modes.
+		 *
+		 * This value is ignored in the following loader modes:
+		 *
+		 * PSR-0
 		 *
 		 * @var		string
 		 */
@@ -83,6 +110,17 @@
 		 */
 		public static $routes		= Array();
 
+
+		/**
+		 * Defines which loader mode to use
+		 *
+		 * @param	integer				The loader mode; one of the MODE_* class constants
+		 * @return	void				No value is returned
+		 */
+		public static function mode($new)
+		{
+			self::$mode = (integer) $new;
+		}
 
 		/**
 		 * Defines one or more rewrite rules for autoloading 
@@ -164,16 +202,16 @@
 			{
 				if(\strpos($name, self::$paths[$name]['separator']) !== false)
 				{
-					$name = \str_replace(self::$paths[$name]['separator'], '/', $name);
+					$name = \str_replace(self::$paths[$name]['separator'], \DIRECTORY_SEPARATOR, $name);
 				}
 
-				return(self::$paths[$name]['root'] . '/' . $name . '.php');
+				return(self::$paths[$name]['root'] . \DIRECTORY_SEPARATOR . $name . '.php');
 			}
 			elseif(self::$routes)
 			{
 				foreach(self::$routes as $regex => $replacement)
 				{
-					$match = \preg_replace('#' . $regex . '#Ui', $replacement, $name);
+					$match = \preg_replace($regex, $replacement, $name);
 
 					if($match && $match !== $name)
 					{
@@ -187,15 +225,33 @@
 
 			if(\strpos($name, self::$separator) !== false)
 			{
-				$name = \str_replace(self::$separator, '/', $name);
+				$name = \str_replace(self::$separator, \DIRECTORY_SEPARATOR, $name);
 			}
 
-			if($name{0} == '/')
+			switch(self::$mode)
+			{
+				case(self::MODE_PSR0):
+				{
+					$ptr 	= \strrpos($name, '\\');
+					$name	= \str_replace('\\', \DIRECTORY_SEPARATOR, \substr($name, 0, $ptr) . \str_replace('_', \DIRECTORY_SEPARATOR, \substr($name, $ptr)));
+				}
+				break;
+				default:
+				{
+					if(\strpos($name, self::$separator) !== false)
+					{
+						$name = \str_replace(self::$separator, \DIRECTORY_SEPARATOR, $name);
+					}
+				}
+				break;
+			}
+
+			if($name{0} == \DIRECTORY_SEPARATOR)
 			{
 				return(self::$root . $name . '.php');
 			}
 
-			return(self::$root . '/' . $name . '.php');
+			return(self::$root . \DIRECTORY_SEPARATOR . $name . '.php');
 		}
 
 		/**
