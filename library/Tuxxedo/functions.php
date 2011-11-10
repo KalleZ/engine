@@ -141,7 +141,7 @@
 		$configuration	= Registry::getConfiguration();
 
 		$called		= true;
-		$buffer		= ob_get_clean();
+		$buffer		= (ob_get_length() ? ob_get_clean() : '');
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
 		$utf8		= function_exists('utf8_encode');
@@ -475,9 +475,9 @@
 	 */
 	function tuxxedo_shutdown_handler()
 	{
-		$output = ob_get_clean();
+		$output = (ob_get_length() ? ob_get_clean() : '');
 
-		if(substr(ltrim($output), 0, 11) == 'Fatal error')
+		if($output && substr(ltrim($output), 0, 11) == 'Fatal error')
 		{
 			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 12)));
 		}
