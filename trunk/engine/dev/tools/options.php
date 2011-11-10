@@ -90,11 +90,10 @@
 
 			if($input->post('submit'))
 			{
-				$opt['option']	= $input->post('name');
-				$opt['type']	= $input->post('characters');
-				$opt['value']	= $input->post('value');
-
-				/* $opt['defaultoverride']	= $input->post('defaultoverride', Input::TYPE_BOOLEAN); */
+				$opt['option']		= $input->post('name');
+				$opt['type']		= $input->post('characters');
+				$opt['value']		= $input->post('value');
+				$opt['newdefault']	= $input->post('defaultoverride', Input::TYPE_BOOLEAN);
 
 				$opt->save();
 
