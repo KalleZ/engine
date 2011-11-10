@@ -532,6 +532,11 @@
 					$this->data[$field] = $props['default'];
 				}
 
+				if(!isset($props['validation']) || $props['type'] == self::FIELD_VIRTUAL)
+				{
+					$props['validation'] = 0;
+				}
+
 				if(!\in_array($props['validation'], Array(self::VALIDATE_STRING, self::VALIDATE_STRING_EMPTY, self::VALIDATE_BOOLEAN, self::VALIDATE_CALLBACK)) && $props['type'] != self::FIELD_PROTECTED && !isset($this->data[$field]))
 				{
 					$this->invalid_fields[] = $field;
