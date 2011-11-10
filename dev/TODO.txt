@@ -18,10 +18,6 @@
 [B]	   - Option
 [B]	   - Permission
 
-	DevTools
-	 - Options
-[F]	   - Add the ability to re-define default values for options
-
 
 	Tuxxedo Engine 1.1.0 Release Candidate 1
 	------------------------------------------------

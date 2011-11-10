@@ -78,7 +78,10 @@
 											'validation'	=> self::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidType'), 
 											'default'	=> 's'
-											), 
+											),
+							'newdefault' 	=> Array(
+											'type'		=> self::FIELD_VIRTUAL
+											)
 							);
 
 
@@ -137,7 +140,7 @@
 			{
 				return(false);
 			}
-			elseif($dm->identifier === NULL)
+			elseif($dm->identifier === NULL || $dm['newdefault'])
 			{
 				$dm['defaultvalue'] = $defaultvalue = $dm['value'];
 			}
