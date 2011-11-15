@@ -22,9 +22,9 @@
 	     - title (for same style id)
 	   - User
 	     - Email (name conflict)
-	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
-[B]	   - Option
-[B]	   - Permission
+[B]	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
+	   - Option
+	   - Permission
 
 
 	Tuxxedo Engine 1.1.0 Release Candidate 1
