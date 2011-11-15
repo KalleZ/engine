@@ -223,17 +223,15 @@
 				}
 			}
 
-			if(\strpos($name, self::$separator) !== false)
-			{
-				$name = \str_replace(self::$separator, \DIRECTORY_SEPARATOR, $name);
-			}
-
 			switch(self::$mode)
 			{
 				case(self::MODE_PSR0):
 				{
-					$ptr 	= \strrpos($name, '\\');
-					$name	= \str_replace('\\', \DIRECTORY_SEPARATOR, \substr($name, 0, $ptr) . \str_replace('_', \DIRECTORY_SEPARATOR, \substr($name, $ptr)));
+					if(\strpos($name, self::$separator) !== false)
+					{
+						$ptr 	= \strrpos($name, '\\');
+						$name	= \str_replace('\\', \DIRECTORY_SEPARATOR, \substr($name, 0, $ptr) . \str_replace('_', \DIRECTORY_SEPARATOR, \substr($name, $ptr)));
+					}
 				}
 				break;
 				default:
