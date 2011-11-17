@@ -64,7 +64,8 @@
 												), 
 							'title'			=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isValidTemplateTitle')
 												), 
 							'source'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
@@ -135,6 +136,46 @@
 			}
 
 			parent::init($registry, $options, $parent);
+		}
+
+		/**
+		 * Checks whether the template title is valid
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The title to check
+		 * @return	boolean				Returns true if the title is valid
+		 */
+		public static function isValidTemplateTitle(Adapter $dm, Registry $registry, $title)
+		{
+			static $cached;
+
+			if(!$cached)
+			{
+				$titles = $registry->db->query('
+								SELECT 
+									`title` 
+									`styleid`
+								FROM 
+									`' . \TUXXEDO_PREFIX . 'templates`');
+
+				if(!$titles || !$titles->getNumRows())
+				{
+					return(false);
+				}
+
+				foreach($titles as $row)
+				{
+					if(!isset($cached[$row['styleid']]))
+					{
+						$cached[$row['styleid']] = Array();
+					}
+
+					$cached[$row['styleid']][] = $row['title'];
+				}
+			}
+
+			return(isset($cached[$dm->styleid]) && !isset($cached[$dm->styleid][$title]));
 		}
 
 		/**

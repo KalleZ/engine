@@ -69,7 +69,8 @@
 												), 
 							'email'			=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_EMAIL
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isValidEmail')
 												), 
 							'name'			=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
@@ -230,7 +231,33 @@
 								`username` = \'%s\' 
 							LIMIT 1', $username);
 
-			return($query && $query->getNumRows() == 0);
+			return($query && !$query->getNumRows());
+		}
+
+		/**
+		 * Checks whether a user name is taken or not
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The username to check
+		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
+		 */
+		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
+		{
+			return(!self::isAvailableUserField($registry, 'username', $username));
+		}
+
+		/**
+		 * Checks whether an email address is taken or not
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The username to check
+		 * @return	boolean				Returns true if the email is free to be taken, otherwise false
+		 */
+		public static function isValidEmail(Adapter $dm, Registry $registry, $email = NULL)
+		{
+			return(\is_valid_email($email) && !self::isAvailableUserField($registry, 'email', $email));
 		}
 
 		/**
@@ -257,6 +284,28 @@
 		public static function isValidLanguageId(Adapter $dm, Registry $registry, $languageid = NULL)
 		{
 			return($registry->datastore->languages && isset($registry->datastore->languages[$languageid]));
+		}
+
+		/**
+		 * Helper validation routine to check a single field in the database
+		 *
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The field to check
+		 * @param	string				The value to check
+		 * @return	boolean				Returns true if the value exists, otherwise false
+		 */
+		protected static function isAvailableUserField(Registry $registry, $field, $value)
+		{
+			$query = $registry->db->equery('
+							SELECT 
+								* 
+							FROM 
+								`' . \TUXXEDO_PREFIX . 'users` 
+							WHERE 
+								`%s` = \'%s\' 
+							LIMIT 1', $field, $value);
+
+			return($query && $query->getNumRows());
 		}
 	}
 ?>
