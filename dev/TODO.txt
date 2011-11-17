@@ -14,10 +14,6 @@
 
 	Datamanagers
 [B]	 - Fix some datamanagers that doesn't use callbacks for validating cached data
-	   - Option
-	     - option (name conflict)
-	   - Permission
-	     - name (name conflict)
 	   - Template
 	     - title (for same style id)
 	   - User
