@@ -62,7 +62,8 @@
 		protected $fields		= Array(
 							'name'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'validation'	=> self::VALIDATE_CALLBACK, 
+											'callback'	=> Array(__CLASS__, 'isValidPermissionName')
 											), 
 							'bits'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
@@ -110,6 +111,19 @@
 			}
 
 			parent::init($registry, $options, $parent);
+		}
+
+		/**
+		 * Checks whether the permission name is valid
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The name to check
+		 * @return	boolean				Returns true if the name is valid
+		 */
+		public static function isValidPermissionName(Adapter $dm, Registry $registry, $name)
+		{
+			return(!isset($registry->datastore->permissions[$name]));
 		}
 
 		/**
