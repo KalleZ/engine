@@ -9,14 +9,6 @@
 [F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
 
 
-	Tuxxedo Engine 1.1.0 Beta 2
-	------------------------------------------------
-
-	Datamanagers
-[B]	 - Fix possible delete error in the followng datamanagers (Hooks\Cache):
-	   - Option
-	   - Permission
-
 
 	Tuxxedo Engine 1.1.0 Release Candidate 1
 	------------------------------------------------
