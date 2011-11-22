@@ -5,6 +5,16 @@
 	Tuxxedo Engine 1.1.0 Beta 1
 	------------------------------------------------
 
+	Datamanagers
+	 - Implement a "Resetable" hook interface in these datamanagers
+[F]	   - Option
+[F]	   - Permission
+[F]	   - Style
+[F]	   - Template
+
+	DevTools
+[B]	 - Fix reset template option not being available
+
 	Helpers
 [F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
 
