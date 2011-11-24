@@ -130,7 +130,7 @@
 		 */
 		public function parse()
 		{
-			$lowered_name = strtolower($this->name);
+			$lowered_name = \strtolower($this->name);
 
 			if($this->layout && $lowered_name != 'header' && $lowered_name != 'footer')
 			{
