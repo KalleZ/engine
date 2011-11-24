@@ -7,7 +7,6 @@
 
 	Datamanagers
 	 - Implement a "Resetable" hook interface in these datamanagers
-[F]	   - Option
 [F]	   - Template
 
 	DevTools
