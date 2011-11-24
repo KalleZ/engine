@@ -121,10 +121,7 @@
 
 			if($option !== NULL)
 			{
-				$option 		= Datamanager\Adapter::factory('option', $option);
-				$option['value']	= $option['defaultvalue'];
-
-				$option->save();
+				Datamanager\Adapter::factory('option', $option)->reset();
 
 				tuxxedo_redirect('Option reset to default value', './options.php');
 			}
@@ -145,10 +142,7 @@
 
 				while($opt = $query->fetchRow())
 				{
-					$option 		= Datamanager\Adapter::factory('option', $opt[0]);
-					$option['value']	= $option['defaultvalue'];
-
-					$option->save();
+					Datamanager\Adapter::factory('option', $opt[0])->reset();
 				}
 
 				tuxxedo_redirect('All options reset to their default value', './options.php');

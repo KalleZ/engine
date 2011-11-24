@@ -52,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Option extends Adapter implements Hooks\Cache
+	class Option extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
 		 * Fields for validation of options
@@ -137,6 +137,11 @@
 		 */
 		public static function isValidOptionName(Adapter $dm, Registry $registry, $name)
 		{
+			if($dm->identifier !== NULL)
+			{
+				return(isset($registry->datastore->options[$name]));
+			}
+
 			return(!isset($registry->datastore->options[$name]));
 		}
 
@@ -225,6 +230,21 @@
 			}
 
 			return($this->registry->datastore->rebuild('options', $options, false));
+		}
+
+
+		/**
+		 * Resets the data to its default values while keeping the 
+		 * identifier intact
+		 *
+		 * @return	boolean				Returns true on successful reset, otherwise false
+		 */
+		public function reset()
+		{
+			$ptr 		= clone $this;
+			$ptr['value'] 	= $ptr['defaultvalue'];
+
+			return($ptr->save());
 		}
 	}
 ?>
