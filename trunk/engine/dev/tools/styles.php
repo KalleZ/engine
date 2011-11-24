@@ -109,7 +109,7 @@
 						}
 						elseif($action == 'add')
 						{
-							$styledm 		= Datamanager\Adapter::factory('style', NULL, 0);
+							$styledm 		= Datamanager\Adapter::factory('style', NULL);
 							$styledm['inherit']	= $input->post('inherit');
 						}
 
@@ -291,11 +291,23 @@
 					tuxxedo_redirect('Template deleted with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}
 				break;
+				case('reset'):
+				{
+					try
+					{
+						Datamanager\Adapter::factory('template', $input->get('id'))->reset();
+					}
+					catch(Exception $e)
+					{
+						tuxxedo_error('Invalid template id');
+					}
+				}
+				break;
 				case('edit'):
 				{
 					try
 					{
-						$dm 	= Datamanager\Adapter::factory('template', $input->get('id'), 0);
+						$dm 	= Datamanager\Adapter::factory('template', $input->get('id'));
 						$source	= htmlspecialchars($dm['source'], ENT_QUOTES, 'UTF-8');
 					}
 					catch(Exception $e)
@@ -317,7 +329,7 @@
 
 						if(!isset($dm))
 						{
-							$dm 		= Datamanager\Adapter::factory('template', NULL, 0);
+							$dm 		= Datamanager\Adapter::factory('template', NULL);
 							$dm['styleid']	= $styleid;
 						}
 						else
