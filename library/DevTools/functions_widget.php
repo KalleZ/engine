@@ -49,6 +49,7 @@
 		$valid		= isset($registry->datastore->styleinfo[$styleid]);
 
 		eval('$buffer = "' . $style->fetch($widget) . '";');
+
 		return($buffer);
 	}
 ?>
