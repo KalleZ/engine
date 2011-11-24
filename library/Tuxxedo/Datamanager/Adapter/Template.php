@@ -36,6 +36,7 @@
 	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
+	use Tuxxedo\Template\Compiler;
 
 	/**
 	 * Include check
@@ -150,11 +151,16 @@
 		{
 			static $cached;
 
+			if($this->identifier === NULL)
+			{
+				return(!empty($title));
+			}
+
 			if(!$cached)
 			{
 				$titles = $registry->db->query('
 								SELECT 
-									`title` 
+									`title`, 
 									`styleid`
 								FROM 
 									`' . \TUXXEDO_PREFIX . 'templates`');
@@ -171,11 +177,16 @@
 						$cached[$row['styleid']] = Array();
 					}
 
-					$cached[$row['styleid']][] = $row['title'];
+					$cached[$row['styleid']][] = \strtolower($row['title']);
 				}
 			}
 
-			return(isset($cached[$dm->styleid]) && !isset($cached[$dm->styleid][$title]));
+			if(!isset($cached[$dm['styleid']]))
+			{
+				return(false);
+			}
+
+			return(!isset($cached[$dm['styleid']][\strtolower($title)]));
 		}
 
 		/**
@@ -240,6 +251,40 @@
 			}
 
 			return(true);
+		}
+
+
+		/**
+		 * Resets the data to its default values while keeping the 
+		 * identifier intact
+		 *
+		 * @return	boolean				Returns true on successful reset, otherwise false
+		 */
+		public function reset()
+		{
+			static $compiler;
+
+			if(!$compiler)
+			{
+				$compiler = new Compiler;
+			}
+
+			try
+			{
+				$compiler->set($this['defaultsource']);
+				$compiler->compile();
+			}
+			catch(Exception\TemplateCompiler $e)
+			{
+				return(false);
+			}
+
+			$ptr 			= clone $this;
+			$ptr['source'] 		= $ptr['defaultsource'];
+			$ptr['compiledsource']	= $compiler->get();
+			$ptr['changed']		= false;
+
+			return($ptr->save());
 		}
 	}
 ?>

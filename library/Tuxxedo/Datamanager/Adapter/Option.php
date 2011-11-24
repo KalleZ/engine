@@ -232,7 +232,6 @@
 			return($this->registry->datastore->rebuild('options', $options, false));
 		}
 
-
 		/**
 		 * Resets the data to its default values while keeping the 
 		 * identifier intact

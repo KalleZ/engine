@@ -296,6 +296,8 @@
 					try
 					{
 						Datamanager\Adapter::factory('template', $input->get('id'))->reset();
+
+						tuxxedo_redirect('Template reset to default with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 					}
 					catch(Exception $e)
 					{
