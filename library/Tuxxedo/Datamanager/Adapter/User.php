@@ -222,28 +222,6 @@
 		 */
 		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
 		{
-			$query = $registry->db->equery('
-							SELECT 
-								* 
-							FROM 
-								`' . \TUXXEDO_PREFIX . 'users` 
-							WHERE 
-								`username` = \'%s\' 
-							LIMIT 1', $username);
-
-			return($query && !$query->getNumRows());
-		}
-
-		/**
-		 * Checks whether a user name is taken or not
-		 *
-		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	string				The username to check
-		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
-		 */
-		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
-		{
 			return(!self::isAvailableUserField($registry, 'username', $username));
 		}
 
