@@ -371,10 +371,18 @@
 						padding:			10px;
 						text-shadow:			1px 1px 1px #000000;
 					}
-						.top ul li a:hover
+						.top ul li a span
 						{
-							text-decoration:		underline;
+							border-radius: 			2px;
+							padding:			1px 3px;
+
+							-moz-border-radius:		2px;
 						}
+							.top ul li a:hover span
+							{
+								text-shadow:			#FFFFFF 0px 0px 10px;
+								border-bottom:			2px solid #21A7CD;
+							}
 		.warning
 		{
 			background:			none;
@@ -402,18 +410,19 @@
 
 			<div class=\"top\">
 				<ul>
-					<li><a href=\"./\">Index</a></li>
-					<li><a href=\"./datastore.php\">Datastore cache</a></li>
-					<li><a href=\"./styles.php\">Styles &amp; Templates</a></li>
+					<li><a href=\"./\"><span>Index</span></a></li>
+					<li><a href=\"./datastore.php\"><span>Datastore cache</span></a></li>
+					<li><a href=\"./styles.php\"><span>Styles &amp; Templates</span></a></li>
 <!--
-					<li><a href=\"./#\">Internationalization</a></li>
+					<li><a href=\"./#\"><span>Internationalization</span></a></li>
 -->
-					<li><a href=\"./options.php\">Options</a></li>
+					<li><a href=\"./options.php\"><span>Options</span></a></li>
 <!--
-					<li><a href=\"./#\">Users &amp; Usergroups</a></li>
+					<li><a href=\"./#\"><span>Users &amp; Usergroups</span></a></li>
+					<li><a href=\"./#\"><span>Permissions</span></a></li>
 -->
-					<li><a href=\"./sessions.php\">Sessions</a></li>
-					<li><a href=\"./tools.php\">Tools</a></li>
+					<li><a href=\"./sessions.php\"><span>Sessions</span></a></li>
+					<li><a href=\"./tools.php\"><span>Tools</span></a></li>
 				</ul>
 				<div class=\"clear\"></div>
 			</div>
