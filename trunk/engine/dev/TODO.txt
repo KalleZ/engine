@@ -2,8 +2,20 @@
 
 
 
-	Tuxxedo Engine 1.1.0 Beta 1
+	Tuxxedo Engine 1.1.0 Beta
 	------------------------------------------------
+
+	Core
+[F]	 - Implement the Cookie Jar
+
+	Datamanagers
+[B]	 - Fix reset(), so we don't clone $this
+[B]	 - Fix reset(), so it sets a new state
+[B]	 - Fix delete(), so that its state is set to void
+
+	DevTools
+[F]	 - Implement usage of the pagination class in the DevTools
+[F]	 - Implement a new tool to REPAIR/OPTIMIZE SQL tables
 
 	Helpers
 [F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
@@ -19,4 +31,5 @@
 	 - Update version
 	 - Update TODO
 	 - Sync templates from MySQL to SQLite
-	 - Sync phrases from MYSQL to SQLite
+	 - Sync phrases from MySQL to SQLite
+	 - Sync options from MySQL to SQLite
