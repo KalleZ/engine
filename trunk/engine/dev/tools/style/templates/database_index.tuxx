@@ -1,0 +1,13 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Database Operations</h4>
+
+	<p>
+		These tools are categorized for various operations that can be 
+		executed on system database that Engine utilizes. Pick an operation 
+		on the left to continue.
+	</p>
+</div>
+
+{$footer}
