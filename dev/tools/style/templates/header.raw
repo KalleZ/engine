@@ -411,6 +411,7 @@
 			<div class="top">
 				<ul>
 					<li><a href="./"><span>Index</span></a></li>
+					<li><a href="./database.php"><span>Database</span></a></li>
 					<li><a href="./datastore.php"><span>Datastore cache</span></a></li>
 					<li><a href="./styles.php"><span>Styles &amp; Templates</span></a></li>
 <!--
@@ -431,7 +432,7 @@
 			<div class="box">
 				Warning, your configuration had debug mode set to false. This was automaticlly 
 				changed to true while executing the development tools. To remove this warning, then 
-				simply set 'debug' to true in your configuration file.
+				simply set <em>'debug'</em> to true in your configuration file.
 			</div>
 </if>
 

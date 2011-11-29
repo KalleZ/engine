@@ -7,6 +7,7 @@
 
 	Core
 [F]	 - Implement the Cookie Jar
+[C]	 - Change the requirements check for database drivers to return an verbose array of tested methods
 
 	Datamanagers
 [B]	 - Fix reset(), so we don't clone $this
