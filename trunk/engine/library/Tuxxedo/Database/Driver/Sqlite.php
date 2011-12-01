@@ -97,14 +97,14 @@
 	 	 *
 		 * @throws	\Tuxxedo\Exception\Basic	If a database connection fails
 		 */
-		public function connect(array $configuration = NULL)
+		public function connect(Array $configuration = NULL)
 		{
 			if($configuration !== NULL)
 			{
 				$this->configuration = $configuration;
 			}
 
-			if(is_resource($this->link))
+			if(\is_resource($this->link))
 			{
 				return(true);
 			}
@@ -188,7 +188,7 @@
 		 */
 		public function isPersistent()
 		{
-			return($this->cfg('persistent'));
+			return((boolean) $this->configuration['persistent']);
 		}
 
 		/**
