@@ -33,7 +33,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -50,13 +50,24 @@
 	interface Driver
 	{
 		/**
-		 * Returns if the current system supports the  driver, if this 
-		 * method isn't called, a driver may start shutting down or 
-		 * throwing random exceptions unexpectedly
+		 * Returns if the current system supports the driver, if this 
+		 * method isn't called, a driver may start not function properly 
+		 * on the system
 		 *
 		 * @return	boolean				True if dirver is supported, otherwise false
 		 */
 		public function isDriverSupported();
+
+		/**
+		 * Get driver requirements, as an array that can be iterated to 
+		 * see which requirements that passes, and which that do not
+		 *
+		 * Each driver may return their own set of keys, but built-in 
+		 * drivers will remain consistent across each other
+		 *
+		 * @return	array				Returns an array containing elements of which requirements and their status
+		 */
+		public function getDriverRequirements();
 
 		/**
 		 * Connect to a database, if no connection isn't already 

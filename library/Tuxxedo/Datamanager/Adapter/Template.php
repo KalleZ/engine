@@ -41,7 +41,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -52,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Template extends Adapter implements Hooks\Cache
+	class Template extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
 		 * Fields for validation of styles
@@ -151,7 +151,7 @@
 		{
 			static $cached;
 
-			if($this->identifier === NULL)
+			if($dm->identifier === NULL)
 			{
 				return(!empty($title));
 			}
@@ -262,6 +262,11 @@
 		 */
 		public function reset()
 		{
+			if($this->options & self::OPT_LOAD_ONLY || $this->identifier === NULL)
+			{
+				return(false);
+			}
+
 			static $compiler;
 
 			if(!$compiler)
@@ -273,18 +278,28 @@
 			{
 				$compiler->set($this['defaultsource']);
 				$compiler->compile();
+
+				$style 		= Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
+				$dottuxx 	= @\fopen(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', 'w');
+
+				if($dottuxx === false)
+				{
+					throw new Exception\Basic('Failed to open a file pointer to the template file');
+				}
+
+				\fwrite($dottuxx, $compiler->get());
+				\fclose($dottuxx);
 			}
-			catch(Exception\TemplateCompiler $e)
+			catch(\Exception $e)
 			{
 				return(false);
 			}
 
-			$ptr 			= clone $this;
-			$ptr['source'] 		= $ptr['defaultsource'];
-			$ptr['compiledsource']	= $compiler->get();
-			$ptr['changed']		= false;
+			$this['source'] 	= $this['defaultsource'];
+			$this['compiledsource']	= $compiler->get();
+			$this['changed']	= false;
 
-			return($ptr->save());
+			return($this->save());
 		}
 	}
 ?>

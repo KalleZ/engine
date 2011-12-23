@@ -29,9 +29,15 @@
 
 
 	/**
+	 * Alias rules
+	 */
+	use Tuxxedo\Helper\Pagination;
+
+
+	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -53,62 +59,86 @@
 		protected $pointer;
 
 		/**
-		 * Options array from the associated pagination 
-		 * object
+		 * The pagination object
 		 *
-		 * @var		array
+		 * @var		\Tuxxedo\Helper\Pagination
 		 */
-		protected $options		= Array();
+		protected $pagination;
 
 
 		/**
 		 * Constructor, constructs a new page object
 		 *
-		 * @param	integer			The pointer from the pagination object
-		 * @param	array			The options from the pagination object
+		 * @param	\Tuxxedo\Helper\Pagination	The pagination object
 		 */
-		public function __construct($pointer, Array $options)
+		public function __construct(Pagination $pagination)
 		{
-			$this->pointer 	= $pointer;
-			$this->options	= $options;
-		}
-
-		public function __toString()
-		{
-			return((string) 0);
+			$this->pointer 	= \key($pagination);
+			$this->instance	= $pagination;
 		}
 
 		/**
-		 * Checks if the current page is the first page over all
+		 * Gets the current page number
 		 *
-		 * @return	boolean			Returns true if the page is the first page, otherwise false
+		 * @return	integer				Returns the current page number (as a string)
+		 */
+		public function __toString()
+		{
+			return((string) $this->pointer);
+		}
+
+		/**
+		 * Checks if this is the first page over all
+		 *
+		 * @return	boolean				Returns true if the page is the first page, otherwise false
 		 */
 		public function isFirst()
 		{
 		}
 
+		/**
+		 * Checks if this is the last page over all
+		 *
+		 * @return	boolean			
+		 */
 		public function isLast()
 		{
 		}
 
+		/**
+		 * Gets the current page number
+		 *
+		 * @return	integer				Returns the current page number
+		 */
 		public function getCurrent()
 		{
+			return($this->pointer);
 		}
 
 		/**
-		 * Checks if the current page being iterated is 
+		 * Checks if the current page b()eing iterated is 
 		 * the current one (the value of $pagination['page'])
 		 *
-		 * @return	boolean			Returns true if the page is the current, otherwise false
+		 * @return	boolean				Returns true if the page is the current, otherwise false
 		 */
 		public function isCurrent()
 		{
 		}
 
+		/**
+		 * Checks if this is a 'previous' page (to the left of the current)
+		 *
+		 * @return	boolean				Returns true if this is a 'previous' page, otherwise false
+		 */
 		public function isPrevious()
 		{
 		}
 
+		/**
+		 * Checks if this is a 'next' page (to the right of the current)
+		 *
+		 * @return	boolean				Returns true if this is a 'next' page, otherwise false
+		 */
 		public function isNext()
 		{
 		}

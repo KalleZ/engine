@@ -1,25 +1,21 @@
-
-
-
+Use provide_object || default options on backtraces
+fix some methods now being reported as static (\Tuxxedo\Template\Compiler::test() for one)
 
 	Tuxxedo Engine 1.1.0 Beta
 	------------------------------------------------
 
-	Core
-[F]	 - Implement the Cookie Jar
-[C]	 - Change the requirements check for database drivers to return an verbose array of tested methods
-
-	Datamanagers
-[B]	 - Fix reset(), so we don't clone $this
-[B]	 - Fix reset(), so it sets a new state
-[B]	 - Fix delete(), so that its state is set to void
-
 	DevTools
-[F]	 - Implement usage of the pagination class in the DevTools
-[F]	 - Implement a new tool to REPAIR/OPTIMIZE SQL tables
+[C]	 - Re-implement the javascript editor code for the options
 
 	Helpers
-[F]	 - Implement a generic pagination class with handlers for database and other generic ones based on an interface
+[F]	 - Implement the pagination helper
+	   - Add support for the 'pages' option
+	   - Page
+	     - isFirst()
+	     - isLast()
+	     - isCurrent()
+	     - isPrevious()
+	     - isNext()
 
 
 
@@ -29,8 +25,5 @@
 	Core
 	 - Branch 1_1_0
 	 - Make trunk 1_2_0
-	 - Update version
 	 - Update TODO
-	 - Sync templates from MySQL to SQLite
-	 - Sync phrases from MySQL to SQLite
-	 - Sync options from MySQL to SQLite
+	 - Sync with r757-r763

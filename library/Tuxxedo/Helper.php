@@ -40,7 +40,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 	
 	/**
@@ -90,7 +90,7 @@
 				$registry = Registry::init();
 			}
 
-			$class = (strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . ucfirst($helper);
+			$class = (\strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . \ucfirst(\strtolower($helper));
 
 			if(isset(self::$loaded_helpers[$helper]))
 			{

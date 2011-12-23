@@ -1,3 +1,25 @@
+<if expression="!isset($_GET['do']) || (isset($_GET['do']) && !in_array(strtolower($_GET['do']), Array('kill', 'cron', 'details')))">
+<form action="./sessions.php" method="post">
+<div class="box">
+	<h4>Auto refresh</h4>
+
+	<div class="center">
+		<select onchange="this.form.submit();" name="autorefresh">
+			{$buffer}
+		</select>
+
+		<input type="submit" value="Set" />
+	</div>
+</div>
+</form>
+
+<if expression="$refresh_timer">
+<script type="text/javascript">
+setTimeout('location.href = location.href;', {$refresh_timer} * 1000);
+</script>
+</if>
+</if>
+
 <div class="box">
 	<h4>Sessions</h4>
 	<p>
@@ -8,6 +30,10 @@
 	<p>
 		This tool allows you to view the current active sessions, aswell 
 		as killing a specific session or them all.
+	</p>
+	<p>
+		Click a session id to find out detailed information about that 
+		paticular session.
 	</p>
 
 	<ul>

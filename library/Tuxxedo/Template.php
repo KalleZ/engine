@@ -41,7 +41,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -137,6 +137,8 @@
 				$header = new self('header', true);
 				$footer = new self('footer', true);
 			}
+
+			unset($lowered_name);
 
 			if($this->variables)
 			{

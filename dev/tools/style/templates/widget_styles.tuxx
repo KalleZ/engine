@@ -6,7 +6,7 @@
 			{$buffer}
 		</select>
 
-		<input type=\"button\" onclick=\"engine_styles_change(document.getElementById('style_list'));\" value=\"Select\" />
+		<input type=\"button\" onclick=\"engine_styles_change($('style_list'));\" value=\"Select\" />
 	</div>
 </div>
 

@@ -39,7 +39,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -97,18 +97,15 @@
 		public static $root		= \TUXXEDO_LIBRARY;
 
 		/**
-		 * Custom paths for third party libraries
+		 * Custom routing definitions
 		 *
 		 * @var		array
 		 */
-		public static $paths		= Array();
-
-		/**
-		 * Custom match points using regular expressions
-		 *
-		 * @var		array
-		 */
-		public static $routes		= Array();
+		protected static $routes	= Array(
+							'path'		=> Array(), 
+							'regex'		=> Array(), 
+							'callback'	=> Array()
+							);
 
 
 		/**
@@ -131,7 +128,7 @@
 		 * @param	string				The root path to load from
 		 * @return	void				No value is returned
 		 */
-		public static function add($path, $separator = NULL, $root = NULL)
+		public static function routeAsPath($path, $separator = NULL, $root = NULL)
 		{
 			$separator 	= ($separator !== NULL ?: self::$separator);
 			$root 		= ($root !== NULL ?: self::$root);
@@ -145,18 +142,18 @@
 
 				foreach($path as $p)
 				{
-					self::$paths[$p] = Array(
-									'separator'	=> $separator, 
-									'root'		=> $root
-									);
+					self::$routes['path'][$p] = Array(
+										'separator'	=> $separator, 
+										'root'		=> $root
+										);
 				}
 			}
 			else
 			{
-				self::$paths[$path] = Array(
-								'separator'	=> $separator, 
-								'root'		=> $root
-								);
+				self::$routes['path'][$path] = Array(
+									'separator'	=> $separator, 
+									'root'		=> $root
+									);
 			}
 		}
 
@@ -168,7 +165,7 @@
 		 * @param	string				The matching formatting, including separators if any
 		 * @return	void				No value is returned
 		 */
-		public static function route($regex, $replacement)
+		public static function routeAsRegex($regex, $replacement)
 		{
 			if(\is_array($regex) && \is_array($replacement))
 			{
@@ -179,37 +176,72 @@
 
 				for($n = 0; $n < $length; ++$n)
 				{
-					self::$routes[$regex[$n]] = $replacement[$n];
+					self::$routes['regex'][$regex[$n]] = $replacement[$n];
 				}
 			}
 			else
 			{
-				self::$routes[$regex] = $replacement;
+				self::$routes['regex'][$regex] = $replacement;
 			}
 		}
 
 		/**
-		 * Normalizes a class name into a path
+		 * Defines a callback for routing, this can be used to virtually alias 
+		 * or similar in siturations where the other routing implementations 
+		 * simply cannot match
 		 *
-		 * @param	string				The class to convert
+		 * @param	string				The matching part, this can be a full name or a partial string
+		 * @param	callback			The callback to route to
+		 * @return	void				No value is returned
+		 */
+		public static function routeAsCallback($match, $callback)
+		{
+			if(\is_array($match) && \is_array($callback))
+			{
+				if(!$match || !$callback || ($length = \sizeof($match)) != \sizeof($callback))
+				{
+					return;
+				}
+
+				for($n = 0; $n < $length; ++$n)
+				{
+					if(!\is_callable($callback[$n]))
+					{
+						continue;
+					}
+
+					self::$routes['callback'][$match[$n]] = $callback[$n];
+				}
+			}
+			elseif(\is_callable($callback))
+			{
+				self::$routes['callback'][$match] = $callback;
+			}
+		}
+	
+		/**
+		 * Normalizes a class/interface name into a path
+		 *
+		 * @param	string				The class/interface to convert
 		 * @return	string				Returns the matching path
 		 */
 		public static function getNormalizedPath($name, &$regex_match = NULL)
 		{
 			$regex_match = false;
 
-			if(self::$paths && isset(self::$paths[$name]))
+			if(self::$routes['path'] && isset(self::$routes['path'][$name]))
 			{
-				if(\strpos($name, self::$paths[$name]['separator']) !== false)
+				if(\strpos($name, self::$routes['path'][$name]['separator']) !== false)
 				{
-					$name = \str_replace(self::$paths[$name]['separator'], \DIRECTORY_SEPARATOR, $name);
+					$name = \str_replace(self::$routes['path'][$name]['separator'], \DIRECTORY_SEPARATOR, $name);
 				}
 
-				return(self::$paths[$name]['root'] . \DIRECTORY_SEPARATOR . $name . '.php');
+				return(self::$routes['path'][$name]['root'] . \DIRECTORY_SEPARATOR . $name . '.php');
 			}
-			elseif(self::$routes)
+
+			if(self::$routes['regex'])
 			{
-				foreach(self::$routes as $regex => $replacement)
+				foreach(self::$routes['regex'] as $regex => $replacement)
 				{
 					$match = \preg_replace($regex, $replacement, $name);
 
@@ -218,6 +250,17 @@
 						$name 		= $match;
 						$regex_match 	= $match;
 
+						break;
+					}
+				}
+			}
+
+			if(self::$routes['callback'])
+			{
+				foreach(self::$routes['callback'] as $match => $callback)
+				{
+					if(strpos($name, $match) !== false && \call_user_func($callback, $name))
+					{
 						break;
 					}
 				}
@@ -269,14 +312,14 @@
 
 			if($regex_match)
 			{
-				class_alias($regex_match, $name);
+				\class_alias($regex_match, $name);
 			}
 
 			if(self::exists($name))
 			{
 				return(true);
 			}
-			elseif(!is_file($path))
+			elseif(!\is_file($path))
 			{
 				if($silent)
 				{

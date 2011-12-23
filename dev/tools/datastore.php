@@ -231,6 +231,10 @@
 
 								$p->free();
 							}
+							elseif($element == 'options')
+							{
+								ksort($current);
+							}
 						}
 						break;
 						case('timezones'):

@@ -39,7 +39,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 	
 	/**
@@ -116,7 +116,7 @@
 		 */ 
 		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates)
 		{
-			$class = (strpos($engine, '\\') === false ? '\Tuxxedo\Style\Storage\\' : '') . ucfirst($engine);
+			$class = (\strpos($engine, '\\') === false ? '\Tuxxedo\Style\Storage\\' : '') . \ucfirst(\strtolower($engine));
 
 			if(isset(self::$loaded_engines[$engine]))
 			{

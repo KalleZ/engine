@@ -41,7 +41,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -240,10 +240,14 @@
 		 */
 		public function reset()
 		{
-			$ptr 		= clone $this;
-			$ptr['value'] 	= $ptr['defaultvalue'];
+			if($this->options & self::OPT_LOAD_ONLY || $this->identifier === NULL)
+			{
+				return(false);
+			}
 
-			return($ptr->save());
+			$this['value'] = $this['defaultvalue'];
+
+			return($this->save());
 		}
 	}
 ?>

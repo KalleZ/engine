@@ -43,18 +43,23 @@
 	     - Edit
 	     - Delete
 	 - Add the DevTools theme as its own style rather than its hackery it is now
+	 - Implement usage of the pagination class in the DevTools
 	 - Implement installation generators
+	 - Implement support for sqlite on the table status tool
 	 - Other
 	   - Add the ability to export/import styles
 	   - Add the ability to export/import languages
 
+	Improve the index page, showing some more information, link to /dev/tools etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement validators
+	Implement option categories
+	Implement XML Parsers
 	Implement some handler registry so we dont have to re-invent the wheel everytime a component may have handlers
 	Implement a form of Webservices handler backend that can be used to pull and push
 	 - Authentication support using Engine's authentication system
 	 - Map pull's in an object oriented way so they kinda work like SOAP objects, <error><code>123</code></error>: $api->getError()->getCode() or similar
-	
+
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases
 	 - Add language auto detection based on the request headers and iso codes for non logged in users
@@ -67,8 +72,12 @@
 	 - Split code from datastore.php into multiple sub classes so they can be executed at userland code without hacks
 	   - Make use of this new API in datamanagers, maybe we can have a new dynamic hook to do this
 
+	Change the styledir to be independed on /styles/
+	Change getAffectedRows to be a method of the result object, rather than the connection object
+
 	Helpers
 	 - Mail
+	 - Timer
 	 - Upload
 
 	Look at implementing playground projects

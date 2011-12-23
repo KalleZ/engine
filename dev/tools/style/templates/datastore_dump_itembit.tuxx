@@ -2,7 +2,7 @@
 	<td valign=\"top\">
 		{$row->name}
 	</td>
-	<td valign=\"top\">
+	<td valign=\"top\" nowrap=\"nowrap\">
 		{$row->length} bytes
 	</td>
 	<td valign=\"top\">

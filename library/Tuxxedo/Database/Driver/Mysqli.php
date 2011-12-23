@@ -41,7 +41,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -55,7 +55,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class MySQLi extends Database
+	class Mysqli extends Database
 	{
 		/**
 		 * Driver name
@@ -73,26 +73,47 @@
 		 */
 		protected $link;
 
-		/**
-		 * Check if persistent connections is active, this 
-		 * is to "fake" the isPersistent() method and make 
-		 * the return value correct
-		 *
-		 * @var		boolean
-		 */
-		protected $persistent = false;
-
 
 		/**
-		 * Returns if the current system supports the  driver, if this 
-		 * method isn't called, a driver may start shutting down or 
-		 * throwing random exceptions unexpectedly
+		 * Returns if the current system supports the driver, if this 
+		 * method isn't called, a driver may start not function properly 
+		 * on the system
 		 *
 		 * @return	boolean				True if dirver is supported, otherwise false
 		 */
 		public function isDriverSupported()
 		{
-			return(\extension_loaded('mysqli'));
+			static $supported;
+
+			if($supported === NULL)
+			{
+				$supported = \extension_loaded('mysqli');
+			}
+
+			return($supported);
+		}
+
+		/**
+		 * Get driver requirements, as an array that can be iterated to 
+		 * see which requirements that passes, and which that do not
+		 *
+		 * Each driver may return their own set of keys, but built-in 
+		 * drivers will remain consistent across each other
+		 *
+		 * @return	array				Returns an array containing elements of which requirements and their status
+		 */
+		public function getDriverRequirements()
+		{
+			static $requirements;
+
+			if(!$requirements)
+			{
+				$requirements = Array(
+							'extension'	=> \extension_loaded('mysqli')
+							);
+			}
+
+			return($requirements);
 		}
 
 		/**
@@ -116,13 +137,11 @@
 				return(true);
 			}
 
-			$hostname 		= $this->configuration['hostname'];
-			$this->persistent 	= false;
+			$hostname = $this->configuration['hostname'];
 
 			if($this->configuration['persistent'])
 			{
-				$host 			= 'p:' . $hostname;
-				$this->persistent	= true;
+				$host = 'p:' . $hostname;
 			}
 
 			Registry::globals('error_reporting', false);
@@ -195,7 +214,7 @@
 		 */
 		public function isPersistent()
 		{
-			return($this->persistent);
+			return((boolean) $this->configuration['persistent']);
 		}
 
 		/**
@@ -327,7 +346,7 @@
 			}
 			elseif(\func_num_args() > 1)
 			{
-				$sql = \call_user_func_array('\sprintf', \func_get_args());
+				$sql = \call_user_func_array('sprintf', \func_get_args());
 			}
 
 			Registry::globals('error_reporting', false);
@@ -344,7 +363,7 @@
 			{
 				$this->queries[] = $sql;
 
-				return(new MySQLi\Result($this, $query));
+				return(new Mysqli\Result($this, $query));
 			}
 			elseif($this->link->errno)
 			{

@@ -3,8 +3,8 @@
 	<p>
 		The datastore is where all the Engine's cached items are 
 		stored. The datastore dublicates commonly used values from 
-		tables to prevent generating overheat on tables that grows 
-		large.
+		tables to prevent generating overhead on tables that grows 
+		large on the heap.
 	</p>
 
 	<ul>

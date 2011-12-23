@@ -41,11 +41,11 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
-	 * MySQL driver for Tuxxedo
+	 * MySQL driver for Tuxxedo Engine
 	 *
 	 * This driver enables access to a MySQL 3+ based database using 
 	 * the mysql database extension. If using MySQL 4.1+ the MySQLi 
@@ -57,7 +57,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class MySQL extends Database
+	class Mysql extends Database
 	{
 		/**
 		 * Driver name
@@ -77,16 +77,45 @@
 
 
 		/**
-		 * Returns if the current system supports the  driver, if this 
-		 * method isn't called, a driver may start shutting down or 
-		 * throwing random exceptions unexpectedly
+		 * Returns if the current system supports the driver, if this 
+		 * method isn't called, a driver may start not function properly 
+		 * on the system
 		 *
 		 * @return	boolean				True if dirver is supported, otherwise false
 		 */
-
 		public function isDriverSupported()
 		{
-			return(\extension_loaded('mysql'));
+			static $supported;
+
+			if($supported === NULL)
+			{
+				$supported = \extension_loaded('mysql');
+			}
+
+			return($supported);
+		}
+
+		/**
+		 * Get driver requirements, as an array that can be iterated to 
+		 * see which requirements that passes, and which that do not
+		 *
+		 * Each driver may return their own set of keys, but built-in 
+		 * drivers will remain consistent across each other
+		 *
+		 * @return	array				Returns an array containing elements of which requirements and their status
+		 */
+		public function getDriverRequirements()
+		{
+			static $requirements;
+
+			if(!$requirements)
+			{
+				$requirements = Array(
+							'extension'	=> \extension_loaded('mysql')
+							);
+			}
+
+			return($requirements);
 		}
 
 		/**
@@ -335,7 +364,7 @@
 			{
 				$this->queries[] = $sql;
 
-				return(new MySQL\Result($this, $query));
+				return(new Mysql\Result($this, $query));
 			}
 			elseif(!\is_resource($query) && \mysql_errno($this->link))
 			{

@@ -1,6 +1,6 @@
 <tr>
 	<td>
-		{$session->sessionid}
+		<a href=\"./sessions.php?do=details&id={$session->sessionid}\">{$session->sessionid}</a>
 	</td>
 " . (($session->userid) ? ("
 	<td>
@@ -9,15 +9,12 @@
 	<td>
 		{$userinfo->username}
 	</td>
-	<td>
-		{$usergroup}
-	</td>
 ") : ("
-	<td colspan=\"3\" style=\"text-align: center;\">
-		<em>User session not authenticated</em>
+	<td colspan=\"2\" style=\"text-align: center;\">
+		<em>Session is not authenticated</em>
 	</td>
 ")) . "
-	<td>
+	<td nowrap=\"nowrap\">
 		{$session->lastactivity}
 	</td>
 	<td>

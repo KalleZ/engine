@@ -61,7 +61,7 @@
 			<td nowrap=\"nowrap\" valign=\"top\">
 				Reset revision number?</td>
 			<td>
-				<label><input type=\"checkbox\" name=\"resetrevsion\" value=\"1\" /> Yes</label></td>
+				<label><input type=\"checkbox\" name=\"resetrevision\" value=\"1\" /> Yes</label></td>
 		</tr>
 ") : '') . "
 </if>

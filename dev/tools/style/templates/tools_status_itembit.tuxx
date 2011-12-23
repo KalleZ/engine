@@ -1,0 +1,21 @@
+<tr>
+	<td>
+		{$row['Name']}
+	</td>
+	<td>
+		{$row['Rows']}
+	</td>
+	<td nowrap=\"nowrap\">
+		{$row['Data_length']} byte(s)
+	</td>
+	<td nowrap=\"nowrap\">
+		" . (($row['Data_free']) ? ("{$row['Data_free']} byte(s)") : ("&nbsp;")) . "
+	</td>
+	<td nowrap=\"nowrap\">
+		<select onchange=\"engine_tablestatus_handler(this, '{$row['Name']}');\">
+			<option></option>
+			<option value=\"optimize\">Optimize</option>
+			<option value=\"repair\">Repair</option>
+		</select>
+	</td>
+</tr>
