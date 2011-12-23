@@ -1,8 +1,12 @@
-Use provide_object || default options on backtraces
-fix some methods now being reported as static (\Tuxxedo\Template\Compiler::test() for one)
+
+
 
 	Tuxxedo Engine 1.1.0 Beta
 	------------------------------------------------
+
+	Core
+[C]	 - Use provide_object & backtrace options in backtraces for checking is_exception
+[B]	 - Fix some methods now being reported as static, \Tuxxedo\Template\Compiler::test() for example
 
 	DevTools
 [C]	 - Re-implement the javascript editor code for the options
@@ -26,4 +30,3 @@ fix some methods now being reported as static (\Tuxxedo\Template\Compiler::test(
 	 - Branch 1_1_0
 	 - Make trunk 1_2_0
 	 - Update TODO
-	 - Sync with r757-r763
