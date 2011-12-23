@@ -42,7 +42,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -227,7 +227,7 @@
 		{
 			if(!isset($this->iterator_data[$this->position]))
 			{
-				return($this->iterator_data[$this->position]);
+				return(false);
 			}
 
 			return($this->iterator_data[$this->position]);

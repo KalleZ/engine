@@ -20,6 +20,7 @@
 	 */
 	use DevTools\Test;
 	use DevTools\User;
+	use Tuxxedo\Helper;
 	use Tuxxedo\Input;
 	use Tuxxedo\Template\Compiler;
 
@@ -39,8 +40,7 @@
 										'tools_statistics_itembit'
 										), 
 					'password'		=> Array(
-										'tools_password', 
-										'tools_password_result'
+										'tools_password'
 										), 
 					'requirements'		=> Array(
 										'tools_requirements', 
@@ -56,6 +56,10 @@
 										'option', 
 										'tools_permissions', 
 										'tools_permissions_itembit'
+										), 
+					'status'		=> Array(
+										'tools_status', 
+										'tools_status_itembit'
 										)
 					);
 
@@ -194,13 +198,14 @@
 		break;
 		case('password'):
 		{
+			$valid = false;
+
 			if(isset($_POST['submit']) && ($password = $input->post('keyword')) !== false && !empty($password) && ($chars = $input->post('characters')) % 8 === 0)
 			{
+				$valid		= true;
 				$salt 		= htmlspecialchars(\Tuxxedo\User::getPasswordSalt($chars));
 				$hash 		= \Tuxxedo\User::getPasswordHash($password, $salt);
-				$password	= ($input->post('hide_password') ? '********' : htmlspecialchars($password));
-
-				eval('$results = "' . $style->fetch('tools_password_result') . '";');
+				$password	= htmlspecialchars($password);
 			}
 
 			eval(page('tools_password'));
@@ -410,6 +415,62 @@
 			}
 
 			eval(page('tools_permissions'));
+		}
+		break;
+		case('status'):
+		{
+			$dbdriver = Helper::factory('database')->getDriver();
+
+			if($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite')
+			{
+				tuxxedo_error('This tool is currently not available for SQLite');
+			}
+
+			$query = $db->query('SHOW TABLE STATUS FROM `%s`', $db->cfg('database'));
+
+			if(isset($_GET['table']) && isset($_GET['operation']) && in_array(strtolower($input->get('operation')), Array('optimize', 'repair')))
+			{
+				$table = strtolower($input->get('table'));
+
+				foreach($query as $row)
+				{
+					if($table == strtolower($row['Name']))
+					{
+						$match = true;
+
+						break;
+					}
+				}
+
+				if(!isset($match))
+				{
+					tuxxedo_error('Invalid table');
+				}
+
+				switch(strtolower($input->get('operation')))
+				{
+					case('optimize'):
+					case('repair'):
+					{
+						$result = $db->query('%s TABLE `%s`', strtoupper($input->get('operation')), $row['Name'])->fetch();
+
+						tuxxedo_redirect('Running operation \'' . strtolower($input->get('operation')) . '\' on table \'' . $row['Name'] . '\': ' . $result['Msg_text'], './tools.php?do=status');
+					}
+					default:
+					{
+						tuxxedo_error('Invalid operation');
+					}
+				}
+			}
+
+			$tablelist = '';
+
+			foreach($query as $row)
+			{
+				eval('$tablelist .= "' . $style->fetch('tools_status_itembit') . '";');
+			}
+
+			eval(page('tools_status'));
 		}
 		break;
 		default:

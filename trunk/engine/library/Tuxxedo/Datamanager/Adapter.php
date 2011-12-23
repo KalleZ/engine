@@ -42,7 +42,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -106,7 +106,14 @@
 		 *
 		 * @var		integer
 		 */
-		const CONTEXT_DELETE			= 4;
+		const CONTEXT_DELETE			= 3;
+
+		/**
+		 * Context constant, void context
+		 *
+		 * @var		integer
+		 */
+		const CONTEXT_VOID			= 4;
 
 		/**
 		 * Validation constant, no validation
@@ -314,24 +321,12 @@
 		 */
 		public function offsetGet($offset)
 		{
-			if(\is_object($this->information))
+			if(!isset($this->information[$offset]))
 			{
-				if(!isset($this->information->{$offset}))
-				{
-					$this->information->{$offset} = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
-				}
-
-				return($this->information->{$offset});
+				$this->information[$offset] = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
 			}
-			else
-			{
-				if(!isset($this->information[$offset]))
-				{
-					$this->information[$offset] = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
-				}
 
-				return($this->information[$offset]);
-			}
+			return($this->information[$offset]);
 		}
 
 		/**
@@ -384,7 +379,7 @@
 				}
 			}
 
-			$class	= (strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . ucfirst($datamanager);
+			$class	= (\strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . \ucfirst(\strtolower($datamanager));
 			$dm 	= new $class($registry, $identifier, $options, $parent);
 
 			if(\in_array($datamanager, self::$loaded_datamanagers))
@@ -470,7 +465,7 @@
 				}
 			}
 
-			return(($fields ? $fields : Array()));
+			return(($fields ?: Array()));
 		}
 
 		/**
@@ -537,7 +532,7 @@
 					$props['validation'] = 0;
 				}
 
-				if(!\in_array($props['validation'], Array(self::VALIDATE_STRING, self::VALIDATE_STRING_EMPTY, self::VALIDATE_BOOLEAN, self::VALIDATE_CALLBACK)) && $props['type'] != self::FIELD_PROTECTED && !isset($this->data[$field]))
+				if($props['validation'] && !\in_array($props['validation'], Array(self::VALIDATE_STRING, self::VALIDATE_STRING_EMPTY, self::VALIDATE_BOOLEAN, self::VALIDATE_CALLBACK)) && $props['type'] != self::FIELD_PROTECTED && !isset($this->data[$field]))
 				{
 					$this->invalid_fields[] = $field;
 
@@ -612,26 +607,6 @@
 		}
 
 		/**
-		 * Updates a field type (required or optional), note that its 
-		 * not possible to set a field to protected
-		 *
-		 * @param	string				Name of the field
-		 * @param	integer				The new type of the field
-		 * @return	boolean				Returns true if the new type was set, otherwise false
-		 */
-		public function setFieldType($field, $type)
-		{
-			if(!isset($this->fields[$field]) || ($type != self::FIELD_OPTIONAL && $type != self::FIELD_REQUIRED))
-			{
-				return(false);
-			}
-
-			$this->fields[$field]['type'] = (integer) $type;
-
-			return(true);
-		}
-
-		/**
 		 * Save method, attempts to validate and save the data 
 		 * into the database
 		 *
@@ -643,6 +618,11 @@
 		 */
 		public function save($execute_hooks = true)
 		{
+			if($this->context == self::CONTEXT_VOID)
+			{
+				return(false);
+			}
+
 			$this->context = self::CONTEXT_SAVE;
 
 			if(!$this->validate())
@@ -742,6 +722,11 @@
 		 */
 		public function delete()
 		{
+			if($this->context == self::CONTEXT_VOID)
+			{
+				return(false);
+			}
+
 			$this->invalid_fields = Array();
 
 			if($this->identifier === NULL && !($this->options & self::OPT_LOAD_ONLY))
@@ -758,7 +743,7 @@
 				return(false);
 			}
 
-			$this->context = self::CONTEXT_NONE;
+			$this->context = self::CONTEXT_VOID;
 
 			return($this->registry->db->equery('
 								DELETE FROM 

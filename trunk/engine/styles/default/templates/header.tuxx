@@ -31,8 +31,6 @@
 			border:			0px;
 			border-radius: 		4px;
 			padding:		3px 10px;
-
-			-moz-border-radius: 	4px;
 		}
 			input[type=password], input[type=text]
 			{
@@ -44,16 +42,12 @@
 			background-color: 	#D2D2D2;
 			border: 		3px solid #D2D2D2;
 			border-radius: 		4px;
-
-			-moz-border-radius: 	4px;
 		}
 			.box .inner
 			{
 				background-color: 	#FFFFFF;
 				border-radius: 		4px;
 				padding: 		6px;
-
-				-moz-border-radius: 	4px;
 			}
 		</style>
 	</head>

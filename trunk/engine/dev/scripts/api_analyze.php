@@ -86,7 +86,12 @@
 	 */
 	function resolve_namespace_alias($root_ns, Array $aliases, $object)
 	{
-		if($aliases && $object{0} != '\\')
+		if($object{0} == '\\')
+		{
+			return($object);
+		}
+
+		if($aliases)
 		{
 			$object_clone = $object;
 
@@ -114,6 +119,10 @@
 			}
 
 			return($root_ns . $object);
+		}
+		elseif($root_ns)
+		{
+			return($root_ns . '\\' . $object);
 		}
 
 		return($object);
@@ -365,8 +374,9 @@
 						'copyright'	=> 0, 
 						'license'	=> 1, 
 						'author'	=> 0, 
-						'param'		=> 1, 
-						'return'	=> 1
+						'param'		=> -1, 
+						'return'	=> 1, 
+						'throws'	=> -1
 						);
 		}
 
@@ -447,7 +457,7 @@
 
 				if(isset($special_tags[$tag]))
 				{
-					if(($times = $special_tags[$tag]) !== 0)
+					if(($times = $special_tags[$tag]) !== 0 && $times > 0)
 					{
 						$shifted = Array();
 						$current = 0;
@@ -463,7 +473,19 @@
 						while($times);
 					}
 
-					$parsed_split = Array(implode(' ', $split));
+					if($times < 0)
+					{
+						$temp = $split[1];
+
+						unset($split[1]);
+
+						$parsed_split 	= Array($temp, implode(' ', $split));
+						$split[1]	= $temp;
+					}
+					else
+					{
+						$parsed_split = Array(implode(' ', $split));
+					}
 
 					if(isset($shifted))
 					{
@@ -474,9 +496,28 @@
 
 						unset($shifted);
 					}
+
+					if($times >= 0)
+					{
+						$parsed_split = $parsed_split[0];
+					}
+				}
+				elseif(sizeof($split) === 1)
+				{
+					$split = $split[1];
 				}
 
-				$docblock['tags'][$tag][] = (isset($parsed_split) ? $parsed_split : $split);
+				if($docblock['tags'][$tag])
+				{
+					$docblock['tags'][$tag]	= Array(
+									$docblock['tags'][$tag], 
+									(isset($parsed_split) ? $parsed_split : $split)
+									);
+				}
+				else
+				{
+					$docblock['tags'][$tag] = (isset($parsed_split) ? $parsed_split : $split);
+				}
 
 				if(isset($parsed_split))
 				{
@@ -983,7 +1024,7 @@
 				break;
 				case(T_STATIC):
 				{
-					if(!$context->depth_check)
+					if(!$context->depth_check || $context->depth_check === 1)
 					{
 						$context->modifiers |= ACC_STATIC;
 					}
@@ -1014,11 +1055,11 @@
 		IO::ul(IO::TAG_END);
 	}
 
-	file_put_contents(__DIR__ . '/../api/dumps/serialized.dump', serialize($datamap));
+	file_put_contents(__DIR__ . '/../api/serialized.dump', serialize($datamap));
 
 	if(extension_loaded('json'))
 	{
-		file_put_contents(__DIR__ . '/../api/dumps/json.dump', json_encode($datamap));
+		file_put_contents(__DIR__ . '/../api/json.dump', json_encode($datamap));
 	}
 
 	IO::headline('Status', 1);

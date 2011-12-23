@@ -66,10 +66,10 @@
 	 * Set various handlers for errors, exceptions and 
 	 * shutdown
 	 */
-	set_error_handler('tuxxedo_error_handler');
-	set_exception_handler('tuxxedo_exception_handler');
-	register_shutdown_function('tuxxedo_shutdown_handler');
-	spl_autoload_register('Tuxxedo\Loader::load');
+	tuxxedo_handler('exception', 'tuxxedo_exception_handler');
+	tuxxedo_handler('error', 'tuxxedo_error_handler');
+	tuxxedo_handler('shutdown', 'tuxxedo_shutdown_handler');
+	tuxxedo_handler('autoload', '\Tuxxedo\Loader::load');
 
 	/**
 	 * Set database table prefix constant
@@ -175,7 +175,7 @@
 	/**
 	 * User information references
 	 */
-	$registry->set('userinfo', $user->getUserInfo(NULL, NULL, \Tuxxedo\User::OPT_CURRENT_ONLY));
+	$registry->set('userinfo', $user->getUserInfo(NULL, NULL, User::OPT_CURRENT_ONLY));
 	$registry->set('usergroup', $user->getUserGroupInfo());
 
 	/**

@@ -27,8 +27,20 @@
 	 */
 	$templates 		= Array(
 					'sessions_index', 
-					'sessions_index_itembit'
+					'sessions_index_itembit', 
+					'option'
 					);
+
+
+	/**
+	 * Action templates
+	 */
+	$action_templates	= Array(
+					'details'	=> Array(
+									'session_details'
+									)
+					);
+
 
 	/**
 	 * Precache datastore elements
@@ -46,6 +58,7 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
+
 
 	$sessions = $db->query('
 				SELECT 
@@ -102,6 +115,39 @@
 			tuxxedo_redirect('Executed cronjob, ' . ($result ? $db->getAffectedRows($result) : '0') . ' session(s) affected', './sessions.php');
 		}
 		break;
+		case('details'):
+		{
+			foreach($sessions as $session)
+			{
+				if($session['sessionid'] == $input->get('id'))
+				{
+					$matched = true;
+
+					break;
+				}
+			}
+
+			if(!isset($matched))
+			{
+				tuxxedo_error('Invalid session identifier');
+			}
+
+			$registry->set('user', new User(false, false));
+
+			$session['expires']		= (($expires = ($session['lastactivity'] + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
+			$session['lastactivity'] 	= tuxxedo_date($session['lastactivity']);
+			$session['location'] 		= htmlspecialchars(html_entity_decode($session['location']));
+			$session['useragent'] 		= htmlspecialchars(html_entity_decode($session['useragent']));
+
+			if($session['userid'])
+			{
+				$userinfo 	= $user->getUserInfo($session['userid'], 'id', User::OPT_CACHE);
+				$usergroup	= $user->getUserGroupInfo($userinfo->usergroupid);
+			}
+
+			eval(page('session_details'));
+		}
+		break;
 		default:
 		{
 			$userlist = '';
@@ -112,14 +158,17 @@
 			{
 				if($session->userid)
 				{
-					$userinfo 	= $user->getUserInfo($session->userid, 'id', User::OPT_CACHE);
-					$usergroup	= $user->getUserGroupInfo($userinfo->usergroupid);
-					$usergroup	= $usergroup['title'];
+					$userinfo = $user->getUserInfo($session->userid, 'id', User::OPT_CACHE);
 				}
 
-				$session->expires	= (($expires = ($session->lastactivity + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('Expires in %d second(s)', $expires - TIMENOW_UTC));
+				$session->expires	= (($expires = ($session->lastactivity + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
 				$session->lastactivity 	= tuxxedo_date($session->lastactivity);
 				$session->location	= htmlspecialchars(html_entity_decode($session->location));
+
+				if(($pos = strpos($session->location, '?')) !== false)
+				{
+					$session->location = substr($session->location, 0, $pos);
+				}
 
 				eval('$userlist .= "' . $style->fetch('sessions_index_itembit') . '";');
 			}

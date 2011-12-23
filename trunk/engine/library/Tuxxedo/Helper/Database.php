@@ -37,7 +37,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -89,10 +89,20 @@
 			$this->instance = $instance;
 			$this->driver	= \strtolower($instance->cfg('driver'));
 
-			if($this->driver == 'pdo' && ($subdriver = \strtolower($instance->cfg('subdriver')) != false))
+			if($this->driver == 'pdo' && ($subdriver = \strtolower($instance->cfg('subdriver'))) != false)
 			{
 				$this->driver .= '_' . $subdriver;
 			}
+		}
+
+		/**
+		 * Gets the canonical driver name
+		 *
+		 * @return	string				Returns the canonical driver name for the internal instance
+		 */
+		public function getDriver()
+		{
+			return($this->driver);
 		}
 
 		/**

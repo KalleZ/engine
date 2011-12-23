@@ -4,7 +4,7 @@
 	<h4>Consumption</h4>
 
 	<p>
-		The datastore current consumes <strong>{$total_size}</strong> bytes of uncompressed database storage.
+		The datastore current consumes <strong>{$total_size}</strong> bytes of database storage.
 	</p>
 </div>
 

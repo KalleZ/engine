@@ -41,7 +41,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -76,16 +76,45 @@
 
 
 		/**
-		 * Returns if the current system supports the  driver, if this 
-		 * method isn't called, a driver may start shutting down or 
-		 * throwing random exceptions unexpectedly
+		 * Returns if the current system supports the driver, if this 
+		 * method isn't called, a driver may start not function properly 
+		 * on the system
 		 *
 		 * @return	boolean				True if dirver is supported, otherwise false
 		 */
-
 		public function isDriverSupported()
 		{
-			return(\extension_loaded('sqlite3'));
+			static $supported;
+
+			if($supported === NULL)
+			{
+				$supported = \extension_loaded('sqlite3');
+			}
+
+			return($supported);
+		}
+
+		/**
+		 * Get driver requirements, as an array that can be iterated to 
+		 * see which requirements that passes, and which that do not
+		 *
+		 * Each driver may return their own set of keys, but built-in 
+		 * drivers will remain consistent across each other
+		 *
+		 * @return	array				Returns an array containing elements of which requirements and their status
+		 */
+		public function getDriverRequirements()
+		{
+			static $requirements;
+
+			if(!$requirements)
+			{
+				$requirements = Array(
+							'extension'	=> \extension_loaded('sqlite3')
+							);
+			}
+
+			return($requirements);
 		}
 
 		/**
@@ -108,8 +137,6 @@
 			{
 				return(true);
 			}
-
-			$this->persistent = false;
 
 			Registry::globals('error_reporting', false);
 
@@ -188,7 +215,11 @@
 		 */
 		public function isPersistent()
 		{
+<<<<<<< .mine
+			return(false);
+=======
 			return((boolean) $this->configuration['persistent']);
+>>>>>>> .r760
 		}
 
 		/**
@@ -341,7 +372,7 @@
 				return(true);
 			}
 
-			return(new SQLite\Result($this, $query));
+			return(new Sqlite\Result($this, $query));
 		}
 	}
 ?>

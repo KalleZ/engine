@@ -36,20 +36,19 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
     
 	/**
-	 * Basic exception type, this is used for errors that 
-	 * should act as fatal errors. If an exception of this 
-	 * is caught by the default exception handler it will 
-	 * terminate the execution.
+	 * Translated exception, this works like the standard 
+	 * UI exception except that it can format the message 
+	 * like the Internationalization object.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Intl extends \Tuxxedo\Exception
+	class Translated extends \Tuxxedo\Exception
 	{
 		/**
 		 * Constructs a new internalizationized exception, meaning that the 
@@ -64,9 +63,9 @@
 		 * <code>
 		 * try
 		 * {
-		 * 	throw new Exception\Intl('You are not old enough to view this content, you must be %d years old', 'age_limit_x', 18);
+		 * 	throw new Exception\Translated('You are not old enough to view this content, you must be %d years old', 'age_limit_x', 18);
 		 * }
-		 * catch(Exception\Intl $e)
+		 * catch(Exception\Translated $e)
 		 * {
 		 * 	echo $e->getMessage();
 		 * }

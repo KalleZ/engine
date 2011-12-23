@@ -342,7 +342,7 @@
 						$dm['title'] 	= $title;
 						$dm['revision']	+= 1;
 
-						if($dm['source'] != $source)
+						if($dm['source'] != $source || isset($_POST['sourceoverride']))
 						{
 							try
 							{

@@ -77,7 +77,7 @@
 
 " . (($do == 'edit' && $opt['type'] != 's') ? ("
 <script type=\"text/javascript\">
-engine_options_change_handler(document.getElementById('option_selector'), 'option_edit_area');
+engine_options_change_handler($('option_selector'), 'option_edit_area');
 </script>
 ") : '') . "
 

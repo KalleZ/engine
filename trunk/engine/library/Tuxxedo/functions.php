@@ -123,6 +123,55 @@
 	}
 
 	/**
+	 * Handler register
+	 *
+	 * This function is a wrapper for registering handlers to various 
+	 * functions, calling this function for registering handlers should 
+	 * be registered using this function or some features may stop working 
+	 * unexpectedly
+	 *
+	 * @param	string				The handler to register, can be one of 'error', 'exception', 'shutdown' or 'autoload'
+	 * @param	callback			The callback to register to the handler
+	 * @return	callback			Returns a callback, if only the first parameter is set, may also return false on error in any case
+	 */
+	function tuxxedo_handler($handler, $callback = NULL)
+	{
+		static $handlers;
+		static $references;
+
+		if($references === NULL)
+		{
+			$references 	= Array(
+						'error'		=> 'set_error_handler', 
+						'exception'	=> 'set_exception_handler', 
+						'shutdown'	=> 'register_shutdown_function', 
+						'autoload'	=> 'spl_autoload_register'
+						);
+		}
+
+		$handler = strtolower($handler);
+
+		if(!isset($references[$handler]))
+		{
+			return(false);
+		}
+
+		if($callback === NULL)
+		{
+			if(!isset($handlers[$handler]))
+			{
+				return(false);
+			}
+
+			return($handlers[$handler]);
+		}
+
+		$handlers[$handler] = $callback;
+
+		$references[$handler]($callback);
+	}
+
+	/**
 	 * Print a document error (startup) and halts script execution
 	 *
 	 * @param	mixed				The message to show, this can also be an exception
@@ -151,7 +200,7 @@
 
 		if(empty($message))
 		{
-			$message = 'Unknown error occured!';
+			$message = 'No error message given';
 		}
 		elseif($exception_sql)
 		{
@@ -160,20 +209,6 @@
 		elseif($utf8)
 		{
 			$message = utf8_encode($message);
-		}
-
-		if(TUXXEDO_DEBUG && $errors && $registry)
-		{
-			$message .= '<ul>' . PHP_EOL;
-
-			foreach($errors as $error)
-			{
-				$message .= '<li>' . (!$utf8 ?: utf8_encode($error)) . '</li>';
-			}
-
-			$message .= '</ul>' . PHP_EOL;
-
-			Registry::globals('errors', Array());
 		}
 
 		header('Content-Type: text/html');
@@ -188,15 +223,21 @@
 			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
 			'h1 { color: #FFFFFF; }' . PHP_EOL . 
 			'h1 sup { color: #3B7286; font-size: 35%; border-bottom: 1px solid #3B7286; }' . PHP_EOL . 
-			'table tr.head td { background-color: #D2D2D2; padding: 5px; }' . PHP_EOL . 
-			'table tr.row, table tr.row * { margin: 0px; padding: 5px; }' . PHP_EOL . 
-			'table tr.strong * { font-weight: bold; }' . PHP_EOL . 
-			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; -moz-border-radius: 4px; }' . PHP_EOL . 
-			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; -moz-border-radius: 4px; }' . PHP_EOL . 
+			'h2 { margin: 20px 0px 0px 0px; }' . PHP_EOL . 
+			'h2 span { background-color: #D2D2D2; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }' . PHP_EOL . 
+			'li, ul { margin: 0px; }' . PHP_EOL . 
+			'table tr.head td { background-color: #D2D2D2; padding: 5px; border-radius: 4px; }' . PHP_EOL . 
+			'table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }' . PHP_EOL . 
+			'table td.strong, table td.strong *, table tr.strong * { font-weight: bold; }' . PHP_EOL . 
+			'table tr.strong td { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; }' . PHP_EOL . 
+			'table tr.strong td.empty { background-color: #FFFFFF; }' . PHP_EOL . 
+			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
+			'.box.edge-title { border-top-left-radius: 0px; }' . PHP_EOL . 
+			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
-			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; -moz-border-radius: 4px; }' . PHP_EOL . 
+			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.infobox td { padding-right: 5px; }' . PHP_EOL . 
-			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; -moz-border-radius: 4px; }' . PHP_EOL . 
+			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.spacer { margin-bottom: 10px; }' . PHP_EOL . 
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
@@ -305,16 +346,39 @@
 				'</table>' . PHP_EOL . 
 				'</div>' . PHP_EOL . 
 				'<div style="margin: 10px 10px 10px 430px;">' . PHP_EOL . 
-				nl2br($message) . PHP_EOL
+				nl2br($message) . PHP_EOL . 
+				'<br />' . PHP_EOL
 				);
+
+			if(TUXXEDO_DEBUG && $errors && $registry)
+			{
+				echo(
+					'<br /> <br />' . PHP_EOL . 
+					'<strong>Warnings:</strong>' . PHP_EOL . 
+					'<div class="box">' . PHP_EOL 
+					);
+
+				foreach($errors as $error)
+				{
+					echo(
+						(!$utf8 ? $error : utf8_encode($error))
+						);
+				}
+
+				echo(
+					'</div>' . PHP_EOL 
+					);
+
+				Registry::globals('errors', Array());
+			}
 
 			if($exception_sql)
 			{
 				echo(
-					'<br /> <br />' . PHP_EOL . 
-					'<strong>SQL Query:</strong>' . PHP_EOL . 
+					'<br />' . PHP_EOL . 
+					'<strong>Query:</strong>' . PHP_EOL . 
 					'<div class="box">' . PHP_EOL . 
-					'<em>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</em>' . PHP_EOL . 
+					'<code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code>' . PHP_EOL . 
 					'</div>' . PHP_EOL
 					);
 			}
@@ -331,10 +395,10 @@
 			if($bts = sizeof($bt))
 			{
 				echo(
-					'<h1>Debug backtrace</h1>' . PHP_EOL . 
-					'<div class="box">' . PHP_EOL . 
+					'<h2><span>Backtrace</span></h2>' . PHP_EOL . 
+					'<div class="box edge-title">' . PHP_EOL . 
 					'<div class="inner">' . PHP_EOL . 
-					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
+					'<table width="100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td>&nbsp;</td>' . PHP_EOL . 
 					'<td class="strong">Call</td>' . PHP_EOL . 
@@ -348,13 +412,23 @@
 				{
 					echo(
 						'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
-						'<td><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
+						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->call . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap" width="100%">' . $trace->file . '</td>' . PHP_EOL . 
-						'<td nowrap="nowrap">' . $trace->line . '</td>' . PHP_EOL . 
+						'<td nowrap="nowrap" align="right">' . $trace->line . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->notes . '</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
+
+					if($trace->current)
+					{
+						echo(
+							'<tr class="strong row">' . PHP_EOL . 
+							'<td class="empty"><h3>&nbsp;</h3></td>' . PHP_EOL . 
+							'<td colspan="4">' . $trace->callargs . '</td>' . PHP_EOL . 
+							'</tr>' . PHP_EOL
+							);
+					}
 				}
 
 				echo(
@@ -367,10 +441,10 @@
 			if($registry && $registry->db && $registry->db->getNumQueries())
 			{
 				echo(
-					'<h1>Executed SQL queries</h1>' . PHP_EOL . 
-					'<div class="box">' . PHP_EOL . 
+					'<h2><span>Queries</span></h2>' . PHP_EOL . 
+					'<div class="box edge-title">' . PHP_EOL . 
 					'<div class="inner">' . PHP_EOL . 
-					'<table width="100%" cellspacing="0" cellpadding="0">' . PHP_EOL . 
+					'<table width="100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td width="10">&nbsp;</td>' . PHP_EOL . 
 					'<td class="strong">SQL</td>' . PHP_EOL . 
@@ -381,7 +455,7 @@
 				{
 					echo(
 						'<tr class="row">' . PHP_EOL . 
-						'<td><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
+						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
 						'<td><code>' . $sql . '</code></td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
@@ -390,7 +464,12 @@
 				echo(
 					'</table>' . PHP_EOL . 
 					'</div>' . PHP_EOL . 
-					'</div>' . PHP_EOL
+					'</div>' . PHP_EOL . 
+					'<p>' . PHP_EOL . 
+					'<em>' . 
+					'Tuxxedo Engine &copy; 2006+ - Tuxxedo Software Development' . 
+					'</em>' . PHP_EOL . 
+					'</p>'
 					);
 			}
 		}

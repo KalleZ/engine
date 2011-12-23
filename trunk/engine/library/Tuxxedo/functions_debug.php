@@ -50,7 +50,8 @@
 			$bt = array_merge($bt, $e->getTrace());
 		}
 
-		$bts = sizeof($bt);
+		$bts 			= sizeof($bt);
+		$exception_handler	= tuxxedo_handler('exception');
 
 		foreach($bt as $n => $t)
 		{
@@ -59,8 +60,8 @@
 				continue;
 			}
 
-			$trace = new stdClass;
-
+			$is_exception		= false;
+			$trace 			= new stdClass;
 			$trace->current		= ($n == 3);
 			$trace->callargs	= '';
 			$trace->notes		= (isset($t['type']) && $t['type'] == '::' ? 'Static call' : '');
@@ -70,6 +71,7 @@
 			{
 				$argument_list 	= true;
 				$function 	= strtolower($t['function']);
+				$is_exception	= ($function === $exception_handler);
 
 				if(isset($t['class']))
 				{
@@ -101,6 +103,8 @@
 					{
 						$trace->call = '\\' . $t['class'] . '::' . $t['function'];
 					}
+
+					$is_exception = ('\\' . $t['class'] . '::' . $t['function'] == $exception_handler || $t['class'] . '::' . $t['function'] == $exception_handler || Array($t['class'], $t['function']) === $exception_handler || Array('\\' . $t['class'], $t['function']) === $exception_handler);
 				}
 				elseif(in_array($function, $includes))
 				{
@@ -110,6 +114,11 @@
 
 					$argument_list		= false;
 				}
+				elseif($t['function'] == '{closure}')
+				{
+					$trace->call 	= '$closure';
+					$trace->notes	= 'Closure';
+				}
 				else
 				{
 					$trace->call = '\\' . $t['function'];
@@ -117,7 +126,7 @@
 
 				if($argument_list)
 				{
-					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && $t['args'] ? join(', ', array_map('tuxxedo_debug_typedata', $t['args'])) : '') . ')';
+					$trace->callargs 	= $trace->call . '(' . (isset($t['args']) && $t['args'] ? join(', ', array_map('tuxxedo_debug_typedata', $t['args'])) : 'void') . ')';
 					$trace->call 		.= '()';
 				}
 			}
@@ -152,7 +161,29 @@
 				$trace->file = tuxxedo_trim_path($trace->file);
 			}
 
+			if($is_exception)
+			{
+				$etrace = new stdClass;
+
+				$etrace->call		= 'throw new \\' . get_class($t['args'][0]);
+				$etrace->callargs	= $etrace->call . '(' . tuxxedo_debug_typedata($t['args'][0]->getMessage()) . ')';
+				$etrace->current	= ($trace->current || $bts === $n + 1);
+				$etrace->line		= $t['args'][0]->getLine();
+				$etrace->file		= tuxxedo_trim_path($t['args'][0]->getFile());
+				$etrace->notes		= 'Exception';
+
+				if($trace->current)
+				{
+					$trace->current = false;
+				}
+			}
+
 			$stack[] = $trace;
+
+			if($is_exception)
+			{
+				$stack[] = $etrace;
+			}	
 		}
 
 		return($stack);
@@ -170,7 +201,7 @@
 		{
 			case('object'):
 			{
-				return('(' . get_class($variable) . ')');
+				return('Object(' . get_class($variable) . ')');
 			}
 			case('array'):
 			{

@@ -42,7 +42,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -57,7 +57,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class PDO extends Database
+	class Pdo extends Database
 	{
 		/**
 		 * Driver name
@@ -86,15 +86,46 @@
 
 
 		/**
-		 * Returns if the current system supports the  driver, if this 
-		 * method isn't called, a driver may start shutting down or 
-		 * throwing random exceptions unexpectedly
+		 * Returns if the current system supports the driver, if this 
+		 * method isn't called, a driver may start not function properly 
+		 * on the system
 		 *
 		 * @return	boolean				True if dirver is supported, otherwise false
 		 */
 		public function isDriverSupported()
 		{
-			return(\extension_loaded('pdo') && \extension_loaded('pdo_' . \strtolower($this->configuration['subdriver'])));
+			static $supported;
+
+			if($supported === NULL)
+			{
+				$supported = \extension_loaded('pdo') && \extension_loaded('pdo_' . \strtolower($this->configuration['subdriver']));
+			}
+
+			return($supported);
+		}
+
+		/**
+		 * Get driver requirements, as an array that can be iterated to 
+		 * see which requirements that passes, and which that do not
+		 *
+		 * Each driver may return their own set of keys, but built-in 
+		 * drivers will remain consistent across each other
+		 *
+		 * @return	array				Returns an array containing elements of which requirements and their status
+		 */
+		public function getDriverRequirements()
+		{
+			static $requirements;
+
+			if(!$requirements)
+			{
+				$requirements = Array(
+							'extension'	=> \extension_loaded('pdo'), 
+							'subdriver'	=> \extension_loaded('pdo_' . \strtolower($this->configuration['subdriver']))
+							);
+			}
+
+			return($requirements);
 		}
 
 		/**
@@ -376,10 +407,10 @@
 			{
 				$this->queries[] = $sql;
 
-				return(new PDO\Result($this, $query));
+				return(new Pdo\Result($this, $query));
 			}
 
-			return(false);
+			return($query instanceof \PDOStatement);
 		}
 	}
 ?>

@@ -91,17 +91,13 @@
 			{
 				$(option_canvas).checked = false;
 
-				if(!$('option_current_value').value)
-				{
-					return;
-				}
-
-				if($('option_current_value').value == 0)
+				if((!$('option_current_value').value && $('option_current_value') != 0) || $('option_current_value').value == 0)
 				{
 					option_canvas = 'optvalue2';
 				}
 
-				$(option_canvas).checked = true;
+				$(option_canvas).checked 		= true;
+				$('options_current_value').value	= (option_canvas == 'optvalue1' ? '1' : '0');
 			}
 		}
 
@@ -141,6 +137,16 @@
 
 			this.location = './styles.php?style=' + styleid + '&do=templates&action=' + select.options[select.selectedIndex].value + '&id=' + templateid;
 		}
+
+		function engine_tablestatus_handler(select, table)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './tools.php?do=status&table=' + table + '&operation=' + select.options[select.selectedIndex].value;
+		}
 		</script>
 
 		<style type="text/css">
@@ -166,9 +172,11 @@
 					background-color:		#CC0000;
 					border-radius:			4px;
 					color:				#FFFFFF;
-
-					-moz-border-radius:		4px;
 				}
+			a img
+			{
+				border:				0px;
+			}
 		body
 		{
 			background-color:		#021420;
@@ -188,9 +196,11 @@
 			border-radius:			4px;
 			color:				#000000;
 			padding:			5px;
-
-			-moz-border-radius:		4px;
 		}
+			input[type=checkbox]:focus, input[type=radio]:focus, input[type=password]:focus, input[type=text]:focus
+			{
+				border:				1px solid #021420;
+			}
 			input[type=button], input[type=submit]
 			{
 				background:			#044968 url('./style/images/top-background.png') repeat-x center left;
@@ -227,27 +237,39 @@
 					border-right:			1px solid #21A7CD;
 					border-bottom-right-radius:	4px;
 					border-top-right-radius:	4px;
-
-					-moz-border-radius-topright:	4px;
-					-moz-border-radius-bottomright:	4px;
 				}
 				table tr.heading td.start
 				{
 					border-bottom-left-radius:	4px;
 					border-top-left-radius:		4px;
-
-					-moz-border-radius-topleft:	4px;
-					-moz-border-radius-bottomleft:	4px;
 				}
 			table tr.highlight td
 			{
 				background-color:		#044968;
 				color:				#FFFFFF;
 			}
+				table tr.highlight td span.error
+				{
+					background-color:		#FFFFFF;
+					border-radius:			4px;
+					padding:			2px;
+				}
 			table tr td
 			{
 				padding:			10px;
 			}
+				table tr td a
+				{
+					border:				1px solid transparent;
+					border-radius:			4px;
+					padding:			5px;
+				}
+					table tr td a:hover
+					{
+						background-color:		#C2EDFD;
+						border:				1px solid #21A7CD;
+						color:				#044968;
+					}
 		textarea
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
@@ -258,8 +280,6 @@
 			border-radius:			4px;
 			margin-bottom:			10px;
 			padding:			10px;
-
-			-moz-border-radius:		4px;
 		}
 			.box h3, .box h4, .warning h3, .warning h4
 			{
@@ -270,13 +290,12 @@
 			.box h4, .warning h4
 			{
 				background:			#044968 url('./style/images/top-background.png') repeat-x top left;
+				border-bottom:			2px solid #21A7CD;
 				border-radius:			4px;
 				color:				#FFFFFF;
 				margin:				-10px -10px 5px -10px;
 				padding:			10px;
 				text-shadow:			1px 1px 1px #000000;
-
-				-moz-border-radius:		4px;
 			}
 		.clear
 		{
@@ -325,7 +344,15 @@
 			}
 			.panel h4
 			{
+				border-bottom:			2px solid #21A7CD;
+			}
+			.panel h4, .panel h5
+			{
 				font-size:			14px;
+			}
+			.panel h5
+			{
+				margin-bottom:			0px;
 			}
 			.panel ul
 			{
@@ -338,8 +365,6 @@
 			background:			#044968 url('./style/images/top-background.png') repeat-x top left;
 			border-radius:			4px;
 			padding:			0px 4px;
-
-			-moz-border-radius:		4px;
 		}
 			.top h2
 			{
@@ -375,8 +400,6 @@
 						{
 							border-radius: 			2px;
 							padding:			1px 3px;
-
-							-moz-border-radius:		2px;
 						}
 							.top ul li a:hover span
 							{
@@ -406,21 +429,22 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<img src="./style/images/logo-tuxxedo.png" alt="Tuxxedo" />
+			<a href="./"><img src="./style/images/logo-tuxxedo.png" alt="Tuxxedo" /></a>
 
 			<div class="top">
 				<ul>
 					<li><a href="./"><span>Index</span></a></li>
-					<li><a href="./database.php"><span>Database</span></a></li>
-					<li><a href="./datastore.php"><span>Datastore cache</span></a></li>
+<!--
+					<li><a href="./configuration.php"><span>Configurations</span></a></li>
+-->
+					<li><a href="./datastore.php"><span>Datastore</span></a></li>
 					<li><a href="./styles.php"><span>Styles &amp; Templates</span></a></li>
 <!--
-					<li><a href="./#"><span>Internationalization</span></a></li>
+					<li><a href="./intl.php"><span>Internationalization</span></a></li>
 -->
 					<li><a href="./options.php"><span>Options</span></a></li>
 <!--
-					<li><a href="./#"><span>Users &amp; Usergroups</span></a></li>
-					<li><a href="./#"><span>Permissions</span></a></li>
+					<li><a href="./users.php"><span>Users &amp; Usergroups</span></a></li>
 -->
 					<li><a href="./sessions.php"><span>Sessions</span></a></li>
 					<li><a href="./tools.php"><span>Tools</span></a></li>

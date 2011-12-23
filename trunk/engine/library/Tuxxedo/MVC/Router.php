@@ -40,7 +40,7 @@
 	/**
 	 * Include check
 	 */
-	defined('\TUXXEDO_LIBRARY') or exit;
+	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
 	/**
@@ -215,6 +215,7 @@
 			{
 				$controller = $this->prefix . $this->controller;
 				$controller = new $controller($this->registry);
+
 				$controller->setRouter($this);
 			}
 			catch(Exception\Basic $e)

@@ -106,11 +106,10 @@
 
 	date_default_timezone_set('UTC');
 
-	set_error_handler('tuxxedo_error_handler');
-	register_shutdown_function('tuxxedo_shutdown_handler');
-	spl_autoload_register('\Tuxxedo\Loader::load');
-
-	set_exception_handler('devtools_exception_handler');
+	tuxxedo_handler('exception', 'devtools_exception_handler');
+	tuxxedo_handler('error', 'tuxxedo_error_handler');
+	tuxxedo_handler('shutdown', 'tuxxedo_shutdown_handler');
+	tuxxedo_handler('autoload', '\Tuxxedo\Loader::load');
 
 	Registry::globals('error_reporting', 	true);
 	Registry::globals('errors', 		Array());
@@ -142,6 +141,7 @@
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('datastore', '\Tuxxedo\Datastore');
 	$registry->register('input', '\Tuxxedo\Input');
+	$registry->register('cookie', '\Tuxxedo\Cookie');
 	$registry->set('style', new Style);
 
 	if(SCRIPT_NAME != 'datastore')
