@@ -90,7 +90,7 @@
 				$registry = Registry::init();
 			}
 
-			$class = (\strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . \ucfirst(\strtolower($helper));
+			$class = (\strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . \ucfirst($helper);
 
 			if(isset(self::$loaded_helpers[$helper]))
 			{

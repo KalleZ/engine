@@ -188,7 +188,7 @@
 		 */
 		final public static function factory($driver, Array $configuration)
 		{
-			$class = (\strpos($driver, '\\') === false ? '\Tuxxedo\Database\Driver\\' : '') . \ucfirst(\strtolower($driver));
+			$class = (\strpos($driver, '\\') === false ? '\Tuxxedo\Database\Driver\\' : '') . \ucfirst($driver);
 
 			if(\in_array($driver, self::$loaded_drivers))
 			{

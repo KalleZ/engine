@@ -7,6 +7,7 @@
 	Core
 [C]	 - Use provide_object & backtrace options in backtraces for checking is_exception
 [B]	 - Fix some methods now being reported as static, \Tuxxedo\Template\Compiler::test() for example
+[B]	 - Fix dublicate dm_session_sessionid and dm_session_userid phrases
 
 	DevTools
 [C]	 - Re-implement the javascript editor code for the options
