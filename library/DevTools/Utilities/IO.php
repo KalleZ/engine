@@ -99,7 +99,7 @@
 
 			if($cli === NULL)
 			{
-				$cli = (PHP_SAPI == 'cli');
+				$cli = (\PHP_SAPI == 'cli');
 			}
 
 			return($cli);
@@ -116,12 +116,12 @@
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s%s%s', self::eol(), $text, self::eol(2));
+				\fprintf(\STDOUT, '%s%s%s', self::eol(), $text, self::eol(2));
 
 				return;
 			}
 
-			printf('<h%1$d>%2$s</h%1$d>', $size, $text);
+			\printf('<h%1$d>%2$s</h%1$d>', $size, $text);
 		}
 
 		/**
@@ -163,12 +163,12 @@
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s* %s%s', str_repeat(' ', self::$depth), $text, self::eol());
+				\fprintf(STDOUT, '%s* %s%s', \str_repeat(' ', self::$depth), $text, self::eol());
 
 				return;
 			}
 
-			printf('<li>%s</li>', self::style($text, $style));
+			\printf('<li>%s</li>', self::style($text, $style));
 		}
 
 		/**
@@ -183,12 +183,12 @@
 		{
 			if(self::isCli())
 			{
-				fprintf(STDOUT, '%s%s', $text, self::eol());
+				\fprintf(STDOUT, '%s%s', $text, self::eol());
 
 				return;
 			}
 
-			printf('%s%s', self::style($text, $style), self::eol());
+			\printf('%s%s', self::style($text, $style), self::eol());
 		}
 
 		/**
@@ -201,10 +201,10 @@
 		{
 			if(self::isCli())
 			{
-				return(str_repeat(PHP_EOL, $times));
+				return(\str_repeat(\PHP_EOL, $times));
 			}
 
-			return(str_repeat('<br />', $times));
+			return(\str_repeat('<br />', $times));
 		}
 
 		/**
@@ -218,17 +218,17 @@
 		{
 			if($style & self::STYLE_BOLD)
 			{
-				$buffer = sprintf('<strong>%s</strong>', $buffer);
+				$buffer = \sprintf('<strong>%s</strong>', $buffer);
 			}
 
 			if($style & self::STYLE_ITALIC)
 			{
-				$buffer = sprintf('<em>%s</em>', $buffer);
+				$buffer = \sprintf('<em>%s</em>', $buffer);
 			}
 
 			if($style & self::STYLE_UNDERLINE)
 			{
-				$buffer = sprintf('<span style="text-decoration: underline;">%s</span>', $buffer);
+				$buffer = \sprintf('<span style="text-decoration: underline;">%s</span>', $buffer);
 			}
 
 			return($buffer);

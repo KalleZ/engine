@@ -36,6 +36,7 @@
 	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
+	use Tuxxedo\Template;
 
 
 	/**
@@ -142,6 +143,25 @@
 			}
 
 			return($this->templates->{$template});
+		}
+
+		/**
+		 * Fetches a catched template and returns it as a template object
+		 *
+		 * @param	string				The name of the template to fetch
+		 * @param	boolean				Whether to activate the layout mode option of the template object
+		 * @return	\Tuxxedo\Template		Returns a template object containing the template
+		 */
+		public function template($template, $layout = false)
+		{
+			$template = strtolower($template);
+
+			if(!isset($this->templates->{$template}))
+			{
+				return(false);
+			}
+
+			return(new Template($template, $layout));
 		}
 
 		/**

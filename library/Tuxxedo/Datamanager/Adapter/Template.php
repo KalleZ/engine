@@ -199,6 +199,13 @@
 		{
 			if($this->context == self::CONTEXT_DELETE)
 			{
+				$template = \TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx';
+
+				if(\is_file($template) && !@\unlink($template))
+				{
+					return(false);
+				}
+
 				$styleinfo	= $this->registry->datastore->styleinfo;
 				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
 

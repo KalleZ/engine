@@ -80,6 +80,11 @@
 											'callback'	=> Array(__CLASS__, 'isValidType'), 
 											'default'	=> 's'
 											),
+							'category'	=> Array(
+											'type'		=> self::FIELD_OPTIONAL, 
+											'validation'	=> self::VALIDATE_CALLBACK, 
+											'callback'	=> Array(__CLASS__, 'isValidCategory')
+											), 
 							'newdefault' 	=> Array(
 											'type'		=> self::FIELD_VIRTUAL
 											)
@@ -94,7 +99,7 @@
 		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
-		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the usergroup id is set and it failed to load for some reason
+		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the option name is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
@@ -203,6 +208,38 @@
 			}
 
 			return($retval);
+		}
+
+		/**
+		 * Checks whether the category is valid
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The category to check
+		 * @return	boolean				Returns true if the category is valid
+		 */
+		public static function isValidCategory(Adapter $dm, Registry $registry, $category)
+		{
+			static $cache;
+
+			if($cache === NULL)
+			{
+				$query = $registry->db->query('
+								SELECT 
+									`name`
+								FROM
+									`' . \TUXXEDO_PREFIX . 'optioncategories`');
+
+				if($query && $query->getNumRows())
+				{
+					foreach($query as $row)
+					{
+						$cache[] = $row['name'];
+					}
+				}
+			}
+
+			return(\in_array($category, $cache));
 		}
 
 		/**

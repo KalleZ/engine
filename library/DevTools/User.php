@@ -110,7 +110,7 @@
 				$this->logout(true);
 			}
 
-			$userinfo = $this->getUserInfo($identifier, 'id');
+			$userinfo = $this->getUserInfo($identifier, 'username');
 
 			if(!$userinfo)
 			{

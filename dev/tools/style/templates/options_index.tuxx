@@ -1,32 +1,46 @@
 {$header}
 
+" . ((isset($categories)) ? ("
+{$categories}
+") : '') . "
+
+" . (($orphan) ? ("
 <div class=\"box\">
-	<h4>Configurative options</h4>
+	<h4>Orphan options</h4>
+
+	<p>
+		Orphan options are options thats not assigned to a valid 
+		category, or no category at all. Note that this is a virtual 
+		category and it will disapear once all below options have 
+		a valid category.
+	</p>
+	<br />
 
 	<table cellspacing=\"0\" cellpadding=\"0\">
 		<tr class=\"heading\">
-			<td class=\"start\">
+			<td class=\"start\" style=\"width: 137px;\">
 				Name
 			</td>
-			<td>
+			<td style=\"width: 193px;\">
 				Value
 			</td>
-			<td nowrap=\"nowrap\">
-				Default Value
+			<td nowrap=\"nowrap\" style=\"width: 150px;\">
+				Default value
 			</td>
-			<td>
+			<td style=\"width: 62px;\">
 				Cached?
 			</td>
-			<td nowrap=\"nowrap\">
+			<td nowrap=\"nowrap\" style=\"width: 108px;\">
 				Datastore value
 			</td>
 			<td class=\"end\">
 				&nbsp;
 			</td>
 		</tr>
-		{$table}
+		{$rows}
 	</table>
 </div>
+") : '') . "
 
 " . (($reminder) ? ("
 <div class=\"warning\">

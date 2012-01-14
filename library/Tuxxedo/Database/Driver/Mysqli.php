@@ -276,26 +276,6 @@
 		}
 
 		/**
-		 * Get the number of affected rows from last INSERT INTO/UPDATE/DELETE 
-		 * operation. Due to internal reasons this driver also counts number of 
-		 * rows like the {@link \Tuxxedo\Database\Driver\MySQLi\Result::getNumRows()} 
-		 * on SELECT statements, this is only for this driver and should NOT be 
-		 * relied on.
-		 *
-		 * @param	\Tuxxedo\Database\Result	The result used to determine how many affected rows there were
-		 * @return	integer				Returns the number of affected rows, and 0 on error
-		 */
-		public function getAffectedRows($result)
-		{
-			if(!\is_object($this->link))
-			{
-				return(0);
-			}
-
-			return((integer) $this->link->affected_rows);
-		}
-
-		/**
 		 * Escape a piece of data using the database specific 
 		 * escape method
 		 *
@@ -355,7 +335,8 @@
 
 			if($query === true)
 			{
-				$this->queries[] = $sql;
+				$this->queries[] 	= $sql;
+				$this->affected_rows	= (integer) $this->link->affected_rows;
 
 				return(true);
 			}
@@ -367,7 +348,7 @@
 			}
 			elseif($this->link->errno)
 			{
-				throw new Exception\SQL($sql, $this->link->error, $this->link->errno, $this->link->sqlstate);
+				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->error, $this->link->errno, $this->link->sqlstate);
 			}
 
 			return(false);

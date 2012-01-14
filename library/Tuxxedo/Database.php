@@ -66,6 +66,14 @@
 		protected $link;
 
 		/**
+		 * Affected rows by last successful query that changed 
+		 * data in the database
+		 * 
+		 * @var		integer
+		 */
+		protected $affected_rows		= 0;
+
+		/**
 		 * Whether the database connection still is delayed
 		 * or not
 		 *
@@ -246,6 +254,17 @@
 			}
 
 			return($this->query($sql));
+		}
+
+		/**
+		 * Gets the affected rows by last successful query that changed 
+		 * data in the database
+		 *
+		 * @return	integer			Returns the affected rows
+		 */
+		public function getAffectedRows()
+		{
+			return($this->affected_rows);
 		}
 
 		/**

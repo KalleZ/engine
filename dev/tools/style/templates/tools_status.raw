@@ -25,4 +25,24 @@
 	</table>
 </div>
 
+<form action="./tools.php?do=status&action=all" method="post">
+<div class="box">
+	<h4>Options</h4>
+
+	<p>
+		Check below operations to run them on all tables within the 
+		database.
+	</p>
+
+	<ul style="list-style-type: none;">
+		<li><label><input type="checkbox" name="optimize" value="1" /> Optimize</label></li>
+		<li><label><input type="checkbox" name="repair" value="1" /> Repair</label></li>
+	</ul>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="Execute" />
+</div>
+</form>
+
 {$footer}

@@ -280,23 +280,6 @@
 		}
 
 		/**
-		 * Get the number of affected rows from last INSERT INTO/UPDATE/DELETE 
-		 * operation.
-		 *
-		 * @param	\Tuxxedo\Database\Result	The result used to determine how many affected rows there were
-		 * @return	integer				Returns the number of affected rows, and 0 on error
-		 */
-		public function getAffectedRows($result)
-		{
-			if(!\is_object($this->link))
-			{
-				return(0);
-			}
-
-			return((integer) \mysql_affected_rows($this->link));
-		}
-
-		/**
 		 * Escape a piece of data using the database specific 
 		 * escape method
 		 *
@@ -356,7 +339,8 @@
 
 			if($query === true)
 			{
-				$this->queries[] = $sql;
+				$this->queries[] 	= $sql;
+				$this->affected_rows 	= (integer) \mysql_affected_rows();
 
 				return(true);
 			}
@@ -368,7 +352,7 @@
 			}
 			elseif(!\is_resource($query) && \mysql_errno($this->link))
 			{
-				throw new Exception\SQL($sql, \mysql_error($this->link), \mysql_errno($this->link));
+				throw new Exception\SQL($sql, self::DRIVER_NAME, \mysql_error($this->link), \mysql_errno($this->link));
 			}
 
 			return(false);

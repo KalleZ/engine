@@ -87,7 +87,7 @@
 
 		if($level & E_RECOVERABLE_ERROR)
 		{
-			tuxxedo_doc_error('<strong>Recoverable error:</strong> ' . $message);
+			tuxxedo_doc_error('<strong>Recoverable error:</strong> ' . str_replace($file, tuxxedo_trim_path($file), $message));
 		}
 		elseif($level & E_USER_ERROR)
 		{
@@ -271,7 +271,7 @@
 			{
 				echo(
 					'<tr>' . PHP_EOL . 
-					'<td>Application:</td>' . PHP_EOL . 
+					'<td><strong>Application:</strong></td>' . PHP_EOL . 
 					'<td class="value" width="100%">' . $application . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
@@ -279,11 +279,11 @@
 
 			echo(
 				'<tr>' . PHP_EOL . 
-				'<td nowrap="nowrap">Engine Version:</td>' . PHP_EOL . 
+				'<td nowrap="nowrap"><strong>Engine Version:</strong></td>' . PHP_EOL . 
 				'<td class="value" width="100%">' . Version::FULL . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL .  
 				'<tr>' . PHP_EOL . 
-				'<td>Script:</td>' . PHP_EOL . 
+				'<td><strong>Script:</strong></td>' . PHP_EOL . 
 				'<td class="value" nowrap="nowrap">' . tuxxedo_trim_path(realpath($_SERVER['SCRIPT_FILENAME'])) . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL
 				);
@@ -292,7 +292,7 @@
 			{
 				echo(
 					'<tr>' . PHP_EOL . 
-					'<td>Timestamp:</td>' . PHP_EOL . 
+					'<td><strong>Timestamp:</strong></td>' . PHP_EOL . 
 					'<td class="value">' . $date . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
@@ -309,7 +309,7 @@
 
 				echo(
 					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap">Exception Type:</td>' . PHP_EOL . 
+					'<td nowrap="nowrap"><strong>Exception Type:</strong></td>' . PHP_EOL . 
 					'<td class="value">' . $class . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
@@ -322,11 +322,11 @@
 					'<td colspan="2">&nbsp;</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap">Database Driver:</td>' . PHP_EOL . 
-					'<td class="value" width="100%">' . constant(get_class($registry->db) . '::DRIVER_NAME') . '</td>' . PHP_EOL . 
+					'<td nowrap="nowrap"><strong>Database Driver:</strong></td>' . PHP_EOL . 
+					'<td class="value" width="100%">' . $e->getDriver() . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
+					'<td nowrap="nowrap"><strong>Error code:</strong></td>' . PHP_EOL . 
 					'<td class="value" width="100%">' . $e->getCode() . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
@@ -335,7 +335,7 @@
 				{
 					echo(
 						'<tr>' . PHP_EOL . 
-						'<td nowrap="nowrap">SQL State:</td>' . PHP_EOL . 
+						'<td nowrap="nowrap"><strong>SQL State:</strong></td>' . PHP_EOL . 
 						'<td class="value" width="100%">' . $sqlstate . '</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
@@ -360,8 +360,13 @@
 
 				foreach($errors as $error)
 				{
+					if(!$error)
+					{
+						continue;
+					}
+
 					echo(
-						(!$utf8 ? $error : utf8_encode($error))
+						(!$utf8 ? $error : utf8_encode($error)) . '<br />' . PHP_EOL
 						);
 				}
 
@@ -554,9 +559,10 @@
 	 */
 	function tuxxedo_shutdown_handler()
 	{
-		$output = (ob_get_length() ? ob_get_clean() : '');
+		$configuration	= Registry::getConfiguration();
+		$output 	= (ob_get_length() ? ob_get_clean() : '');
 
-		if($output && substr(ltrim($output), 0, 11) == 'Fatal error')
+		if($configuration['application']['debug'] && $output && substr(ltrim($output), 0, 11) == 'Fatal error')
 		{
 			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 12)));
 		}
@@ -589,7 +595,7 @@
 	 *
 	 * @param	string				A sprintf-like format
 	 * @param	array				An array with elements to loop through
-	 * @param	string				A fully quanified exception name to throw
+	 * @param	string				A fully quantified exception name to throw
 	 * @return	void				No value is returned
 	 *
 	 * @throws	mixed				Throws an exception until the errors have been cleared

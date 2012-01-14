@@ -33,7 +33,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager\Adapter;
-	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
@@ -45,14 +44,14 @@
 
 
 	/**
-	 * Datamanager for permissions
+	 * Datamanager for datastore
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Permission extends Adapter implements Hooks\Cache
+	class Datastore extends Adapter
 	{
 		/**
 		 * Fields for validation of permissions
@@ -63,94 +62,112 @@
 							'name'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidPermissionName')
+											'callback'	=> Array(__CLASS__, 'isValidDatastoreName')
 											), 
-							'bits'		=> Array(
+							'data'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_NUMERIC
+											'validation'	=> self::VALIDATE_CALLBACK, 
+											'callback'	=> Array(__CLASS__, 'isValidDatastoreData')
 											)
 							);
 
 
 		/**
-		 * Constructor, fetches a new permission based on its name if set
+		 * Constructor, fetches a new datastore element based on its name if set
 		 *
 		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	integer				The permission name
+		 * @param	integer				The datastore element name
 		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
-		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the permission name is set and it failed to load for some reason
+		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the datastore name is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'permission';
-			$this->tablename	= \TUXXEDO_PREFIX . 'permissions';
+			$this->dmname		= 'datastore';
+			$this->tablename	= \TUXXEDO_PREFIX . 'datastore';
 			$this->idname		= 'name';
 
 			if($identifier !== NULL)
 			{
-				$permission = $registry->db->equery('
+				$element = $registry->db->equery('
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'permissions` 
+										`' . \TUXXEDO_PREFIX . 'datastore` 
 									WHERE 
 										`name` = \'%s\'', $identifier);
 
-				if(!$permission || !$permission->getNumRows())
+				if(!$element || !$element->getNumRows())
 				{
-					throw new Exception('Invalid permission name passed to datamanager');
+					throw new Exception('Invalid datastore element name passed to datamanager');
+
+					return;
 				}
 
-				$this->data 		= $permission->fetchAssoc();
+				$this->data 		= $element->fetchAssoc();
+				$this->data['data']	= @\unserialize($this->data['data']);
 				$this->identifier 	= $identifier;
 
-				$permission->free();
+				$element->free();
 			}
 
 			parent::init($registry, $options, $parent);
 		}
 
 		/**
-		 * Checks whether the permission name is valid
+		 * Checks whether the name is valid
 		 *
 		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The name to check
 		 * @return	boolean				Returns true if the name is valid
 		 */
-		public static function isValidPermissionName(Adapter $dm, Registry $registry, $name)
+		public static function isValidDatastoreName(Adapter $dm, Registry $registry, $name)
 		{
-			return(!isset($registry->datastore->permissions[$name]));
+			static $cache;
+
+			if($cache === NULL)
+			{
+				$query = $registry->db->query('
+								SELECT 
+									`name`
+								FROM
+									`' . \TUXXEDO_PREFIX . 'datastore`');
+
+				if($query && $query->getNumRows())
+				{
+					foreach($query as $row)
+					{
+						$cache[] = $row['name'];
+					}
+				}
+			}
+
+			$exists = \in_array($name, $cache);
+
+			if(!$dm->identifier)
+			{
+				$exists = !$exists;
+			}
+
+			return($exists);
 		}
 
 		/**
-		 * Save the permission in the datastore, this method is called from 
-		 * the parent class in cases when the save method was success
+		 * Checks whether the data is valid
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
-		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The data to check
+		 * @return	boolean				Returns true if the data is valid
 		 */
-		public function rebuild(Array $virtual)
+		public static function isValidDatastoreData(Adapter $dm, Registry $registry, $data)
 		{
-			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->permissions[$this->data['name']]))
-			{
-				return(true);
-			}
+			$dm->data['data'] = @\serialize($data);
 
-			$name		= (isset($virtual['name']) ? $virtual['name'] : $this->data['name']);
-			$permissions	= $this->registry->datastore->permissions;
-
-			unset($permissions[$name]);
-
-			if($this->context == self::CONTEXT_SAVE)
-			{
-				$permissions[$name] = $this['bits'];
-			}
-
-			return($this->registry->datastore->rebuild('permissions', $permissions, false));
+			return($dm->data['data'] !== false);
 		}
 	}
 ?>

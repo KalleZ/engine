@@ -222,7 +222,7 @@
 		 */
 		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
 		{
-			return(!self::isAvailableUserField($registry, 'username', $username));
+			return(self::isAvailableUserField($registry, 'username', $username));
 		}
 
 		/**
@@ -235,7 +235,7 @@
 		 */
 		public static function isValidEmail(Adapter $dm, Registry $registry, $email = NULL)
 		{
-			return(\is_valid_email($email) && !self::isAvailableUserField($registry, 'email', $email));
+			return(\is_valid_email($email) && self::isAvailableUserField($registry, 'email', $email));
 		}
 
 		/**
@@ -276,14 +276,14 @@
 		{
 			$query = $registry->db->equery('
 							SELECT 
-								* 
+								`id` 
 							FROM 
 								`' . \TUXXEDO_PREFIX . 'users` 
 							WHERE 
 								`%s` = \'%s\' 
 							LIMIT 1', $field, $value);
 
-			return($query && $query->getNumRows());
+			return(!$query || !$query->getNumRows());
 		}
 	}
 ?>

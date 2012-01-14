@@ -410,7 +410,7 @@
 				return(false);
 			}
 
-			$granted = ($this->userinfo->permissions & $permission) !== 0;
+			$granted = ($this->userinfo->permissions & (integer) $permission) !== 0;
 
 			if(!$granted && $checkgroup)
 			{
@@ -437,7 +437,7 @@
 				return(false);
 			}
 
-			return(($this->usergroupinfo['permissions'] & $permission) !== 0);
+			return(($this->usergroupinfo['permissions'] & (integer) $permission) !== 0);
 		}
 
 		/**
@@ -509,7 +509,7 @@
 		 *
 		 * @return	void			No value is returned
 		 */
-		protected function setPermissionConstants()
+		public function setPermissionConstants()
 		{
 			if(!$this->registry->datastore->permissions)
 			{
@@ -522,7 +522,7 @@
 
 				if(!\defined('\\' . $name))
 				{
-					define($name, (integer) $bits);
+					\define($name, (integer) $bits);
 				}
 			}
 		}

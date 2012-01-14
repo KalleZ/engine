@@ -179,6 +179,16 @@
 		}
 
 		/**
+		 * Checks whenever the result is freed or not
+		 *
+		 * @return	boolean				Returns true if the result is freed from memory, otherwise false
+		 */
+		public function isFreed()
+		{
+			return(!$this->result);
+		}
+
+		/**
 		 * Iterator method - key
 		 *
 		 * @return	integer				Returns the numeric position of the current row in the resultset

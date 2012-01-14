@@ -32,10 +32,7 @@
 				<td style="width: 20%;">
 					User</td>
 				<td>
-					<select name="user">
-						<option value="0"></option>
-						{$users}
-					</select></td>
+					<input type="text" name="user" /></td>
 			</tr>
 			<tr>
 				<td style="width: 20%;">

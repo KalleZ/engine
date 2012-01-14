@@ -314,23 +314,6 @@
 		}
 
 		/**
-		 * Get the number of affected rows from last INSERT INTO/UPDATE/DELETE 
-		 * operation.
-		 *
-		 * @param	\Tuxxedo\Database\Result	The result used to determine how many affected rows there were
-		 * @return	integer				Returns the number of affected rows, and 0 on error
-		 */
-		public function getAffectedRows($result)
-		{
-			if(!$this->isResult($result) || $result->isFreed())
-			{
-				return(0);
-			}
-
-			return($result->rowCount());
-		}
-
-		/**
 		 * Escape a piece of data using the database specific 
 		 * escape method
 		 *
@@ -394,7 +377,7 @@
 			}
 			catch(\PDOException $e)
 			{
-				throw new Exception\SQL($sql, $e->getMessage(), $e->getCode());
+				throw new Exception\SQL($sql, self::DRIVER_NAME, $e->getMessage(), $e->getCode());
 			}
 
 			if($query !== false && (!$query->columnCount() && $query->num_rows))
@@ -410,7 +393,14 @@
 				return(new Pdo\Result($this, $query));
 			}
 
-			return($query instanceof \PDOStatement);
+			if($query instanceof \PDOStatement)
+			{
+				$this->affected_rows = (integer) $query->rowCount();
+
+				return(true);
+			}
+
+			return(false);
 		}
 	}
 ?>

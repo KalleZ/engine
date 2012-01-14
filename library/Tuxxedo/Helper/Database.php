@@ -156,5 +156,37 @@
 
 			return((integer) $query->fetchObject()->total);
 		}
+
+		/**
+		 * Table operation - optimize
+		 *
+		 * @param	string				The table name
+		 * @return	string				Returns the status, and false if unsupported
+		 */
+		public function tableOptimize($table)
+		{
+			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			{
+				return(false);
+			}
+
+			return($this->instance->equery('OPTIMIZE TABLE `%s`', $table)->fetchObject()->Msg_text);
+		}
+
+		/**
+		 * Table operation - repair
+		 *
+		 * @param	string				The table name
+		 * @return	string				Returns the status, and false if unsupported
+		 */
+		public function tableRepair($table)
+		{
+			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			{
+				return(false);
+			}
+
+			return($this->instance->equery('REPAIR TABLE `%s`', $table)->fetchObject()->Msg_text);
+		}
 	}
 ?>

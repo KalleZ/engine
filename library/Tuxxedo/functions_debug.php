@@ -35,15 +35,16 @@
 			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
 
 			$descriptions	= Array(
-						'tuxxedo_shutdown_handler'	=> 'Shutdown handler', 
-						'tuxxedo_exception_handler'	=> 'Exception handler', 
-						'tuxxedo_error_handler'		=> 'Error handler', 
+						'tuxxedo_shutdown_handler'	=> 'Internal Shutdown handler', 
+						'tuxxedo_exception_handler'	=> 'Internal Exception handler', 
+						'tuxxedo_error_handler'		=> 'Internal Error handler', 
+						'\Tuxxedo\Loader::load'		=> 'Internal Auto loader', 
 						'tuxxedo_multi_error'		=> 'Multi error, possibly caused by left operand call'
 						);
 		}
 
 		$stack 	= Array();
-		$bt 	= debug_backtrace();
+		$bt 	= debug_backtrace((defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? DEBUG_BACKTRACE_PROVIDE_OBJECT : true));
 
 		if($e)
 		{
@@ -104,7 +105,7 @@
 						$trace->call = '\\' . $t['class'] . '::' . $t['function'];
 					}
 
-					$is_exception = ('\\' . $t['class'] . '::' . $t['function'] == $exception_handler || $t['class'] . '::' . $t['function'] == $exception_handler || Array($t['class'], $t['function']) === $exception_handler || Array('\\' . $t['class'], $t['function']) === $exception_handler);
+					$is_exception = in_array($exception_handler, tuxxedo_debug_object_variants($t));
 				}
 				elseif(in_array($function, $includes))
 				{
@@ -114,7 +115,7 @@
 
 					$argument_list		= false;
 				}
-				elseif($t['function'] == '{closure}')
+				elseif(strpos($t['function'], '{closure}'))
 				{
 					$trace->call 	= '$closure';
 					$trace->notes	= 'Closure';
@@ -146,9 +147,11 @@
 				$trace->file = $t['file'];
 			}
 
-			if(!isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
+			if(($is_closure = strpos($trace->call, '{closure}')) !== false || !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
 			{
-				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Callback';
+				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . (isset($is_closure) && $is_closure !== false ? 'Closure, ' : '') . 'Callback';
+
+				unset($is_closure);
 			}
 
 			if(isset($t['function']) && isset($descriptions[$function]))
@@ -163,8 +166,7 @@
 
 			if($is_exception)
 			{
-				$etrace = new stdClass;
-
+				$etrace 		= new stdClass;
 				$etrace->call		= 'throw new \\' . get_class($t['args'][0]);
 				$etrace->callargs	= $etrace->call . '(' . tuxxedo_debug_typedata($t['args'][0]->getMessage()) . ')';
 				$etrace->current	= ($trace->current || $bts === $n + 1);
@@ -172,18 +174,17 @@
 				$etrace->file		= tuxxedo_trim_path($t['args'][0]->getFile());
 				$etrace->notes		= 'Exception';
 
-				if($trace->current)
-				{
-					$trace->current = false;
-				}
+				$trace->current		= false;
+				$trace->notes 		= (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Exception handler';
 			}
 
 			$stack[] = $trace;
 
 			if($is_exception)
 			{
-				$stack[] = $etrace;
-			}	
+				$stack[] 	= $etrace;
+				$is_exception	= false;
+			}
 		}
 
 		return($stack);
@@ -215,5 +216,28 @@
 				return(rtrim(ob_get_clean()));
 			}
 		}
+	}
+
+	/**
+	 * Generates a list of method variants for comparison
+	 *
+	 * @param	array			The trace array to use
+	 * @return	array			Returns an array with possible method variants
+	 */
+	function tuxxedo_debug_object_variants(Array $trace)
+	{
+		$variants = Array(
+					$trace['class'] . '::' . $trace['function'], 
+					'\\' . $trace['class'] . '::' . $trace['function'], 
+					Array($trace['class'], $trace['function']), 
+					Array('\\' . $trace['class'], $trace['function'])
+					);
+
+		if(isset($trace['object']))
+		{
+			$variants[] = Array($trace['object'], $trace['function']);
+		}
+
+		return($variants);
 	}
 ?>

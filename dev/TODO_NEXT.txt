@@ -43,6 +43,7 @@
 	     - Edit
 	     - Delete
 	 - Add the DevTools theme as its own style rather than its hackery it is now
+	 - Add translation to the DevTools
 	 - Implement usage of the pagination class in the DevTools
 	 - Implement installation generators
 	 - Implement support for sqlite on the table status tool
@@ -50,20 +51,20 @@
 	   - Add the ability to export/import styles
 	   - Add the ability to export/import languages
 
-	Improve the index page, showing some more information, link to /dev/tools etc.
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement validators
-	Implement option categories
 	Implement XML Parsers
-	Implement some handler registry so we dont have to re-invent the wheel everytime a component may have handlers
 	Implement a form of Webservices handler backend that can be used to pull and push
 	 - Authentication support using Engine's authentication system
 	 - Map pull's in an object oriented way so they kinda work like SOAP objects, <error><code>123</code></error>: $api->getError()->getCode() or similar
 
+	Improve debug mode
+	 - Separate configuration category
+	 - Trace mode, e.g. SQL query traces
+
 	Improve internationalization
 	 - Add the possibility to have different backends for phrases
 	 - Add language auto detection based on the request headers and iso codes for non logged in users
-	 - Add translation for /dev/tools
 	 - Add an unload method to make it possible to unload phrasegroups, make sure to account for rebuilding the phrase index to avoid inconsistencies
 	 - Add a feature so that its possible for MVC controllers to auto load a specific phrase group
 
@@ -73,9 +74,12 @@
 	   - Make use of this new API in datamanagers, maybe we can have a new dynamic hook to do this
 
 	Change the styledir to be independed on /styles/
-	Change getAffectedRows to be a method of the result object, rather than the connection object
+	Change sync_templates.php to work with all storage engines and use the current as master
+	Change check_dm_phrases.php to check for obsolete and orphan phrases
 
 	Helpers
+	 - Calendar
+	 - Pagination
 	 - Mail
 	 - Timer
 	 - Upload

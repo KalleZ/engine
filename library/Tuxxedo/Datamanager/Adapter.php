@@ -179,11 +179,18 @@
 		const OPT_LOAD_ONLY			= 2;
 
 		/**
+		 * Factory option constant - internationalization, load if available
+		 *
+		 * @var		integer
+		 */
+		const OPT_INTL_AUTO			= 4;
+
+		/**
 		 * Factory option constant - default options
 		 *
 		 * @var		integer
 		 */
-		const OPT_DEFAULT			= self::OPT_INTL;
+		const OPT_DEFAULT			= self::OPT_INTL_AUTO;
 
 
 		/**
@@ -327,6 +334,24 @@
 			}
 
 			return($this->information[$offset]);
+		}
+
+		/**
+		 * Overloads the info access 'set' method so that its prohibited to 
+		 * set elements that doesn't exists
+		 *
+		 * @param	scalar			The information row name to set
+		 * @param	mixed			The information row value to set
+		 * @return	void			No value is returned
+		 */
+		public function offsetSet($offset, $value)
+		{
+			if(!isset($this->fields[$offset]))
+			{
+				throw new Exception('Cannot define value for non existing field \'%s\'', $offset);
+			}
+
+			$this->information[$offset] = $value;
 		}
 
 		/**
@@ -627,7 +652,7 @@
 
 			if(!$this->validate())
 			{
-				$intl		= $this->registry->intl && ($this->options & self::OPT_INTL);
+				$intl		= $this->registry->intl && ($this->options & (self::OPT_INTL | self::OPT_INTL_AUTO));
 				$formdata 	= Array();
 
 				foreach($this->invalid_fields as $field)
@@ -664,6 +689,13 @@
 				}
 			}
 
+			$new_identifier = isset($virtual[$this->idname]);
+
+			if($new_identifier)
+			{
+				$sql = 'UPDATE `' . $this->tablename . '` SET ';
+			}
+
 			foreach($virtual as $field => $data)
 			{
 				if(($field == $this->idname && $this->options & self::OPT_LOAD_ONLY) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
@@ -676,11 +708,27 @@
 					continue;
 				}
 
-				$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
-				$values .= (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : 'NULL') : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
+				if($new_identifier)
+				{
+					$sql .= '`' . $field . '` = ' . (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : 'NULL') : '\'' . $this->registry->db->escape($data) . '\'') . (--$n ? ', ' : '');
+				}
+				else
+				{
+					$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
+					$values .= (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : 'NULL') : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
+				}
 			}
 
-			if(!$this->registry->db->query($sql . ') VALUES (' . $values . ')'))
+			if($new_identifier)
+			{
+				$sql .= ' WHERE `' . $this->idname . '` = \'' . $this->registry->db->escape($this->identifier) . '\'';
+			}
+			else
+			{
+				$sql .= ') VALUES (' . $values . ')';
+			}
+
+			if(!$this->registry->db->query($sql))
 			{
 				$this->context = self::CONTEXT_NONE;
 
