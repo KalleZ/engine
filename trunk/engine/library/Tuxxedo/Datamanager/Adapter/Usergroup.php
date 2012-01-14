@@ -146,7 +146,7 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
-			if(($datastore = $registry->datastore->usergroups) === false)
+			if(($datastore = $this->registry->datastore->usergroups) === false)
 			{
 				$datastore = Array();
 			}
@@ -160,7 +160,7 @@
 				$datastore[(integer) $this->data[$this->idname]] = $virtual;
 			}
 
-			return($registry->datastore->rebuild('usergroups', $datastore));
+			return($this->registry->datastore->rebuild('usergroups', $datastore));
 		}
 	}
 ?>

@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `phrases` (
   `languageid` int(11) NOT NULL,
   `phrasegroup` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
 
 --
 -- Data dump for tabellen `phrases`
@@ -154,10 +154,8 @@ INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`
 (15, 'dm_usergroup_permissions', 'Permission mask', 1, 'datamanagers'),
 (16, 'dm_session_sessionid', 'Session identifier', 1, 'datamanagers'),
 (17, 'dm_session_userid', 'User identifier', 1, 'datamanagers'),
-(18, 'dm_session_sessionid', 'Session identifier', 1, 'datamanagers'),
-(19, 'dm_session_userid', 'User identifier', 1, 'datamanagers'),
-(20, 'dm_session_location', 'User location', 1, 'datamanagers'),
-(21, 'dm_session_useragent', 'User agent string', 1, 'datamanagers');
+(18, 'dm_session_location', 'User location', 1, 'datamanagers'),
+(19, 'dm_session_useragent', 'User agent string', 1, 'datamanagers');
 
 -- --------------------------------------------------------
 

@@ -50,13 +50,14 @@
 	require('./includes/bootstrap.php');
 
 	$indices = Array(
-				'languages'	=> 'id', 
-				'options'	=> 'option', 
-				'permissions'	=> 'name', 
-				'phrasegroups'	=> 'id', 
-				'styleinfo'	=> 'id', 
-				'usergroups'	=> 'id', 
-				'timezones'	=> NULL
+				'languages'		=> 'id', 
+				'optioncategories'	=> 'name', 
+				'options'		=> 'option', 
+				'permissions'		=> 'name', 
+				'phrasegroups'		=> 'id', 
+				'styleinfo'		=> 'id', 
+				'usergroups'		=> 'id', 
+				'timezones'		=> NULL
 				);
 
 	switch(strtolower($input->get('do')))
@@ -111,13 +112,14 @@
 				$cache_items 	= '';
 				$corrupt_warn	= false;
 				$tables 	= Array(
-							'languages'	=> 'languages', 
-							'options'	=> 'options', 
-							'permissions'	=> 'permissions', 
-							'phrasegroups'	=> 'phrasegroups', 
-							'styleinfo'	=> 'styles', 
-							'usergroups'	=> 'usergroups', 
-							'timezones'	=> NULL
+							'languages'		=> 'languages', 
+							'optioncategories'	=> 'optioncategories', 
+							'options'		=> 'options', 
+							'permissions'		=> 'permissions', 
+							'phrasegroups'		=> 'phrasegroups', 
+							'styleinfo'		=> 'styles', 
+							'usergroups'		=> 'usergroups', 
+							'timezones'		=> NULL
 							);
 
 				foreach(array_keys($tables) as $element)
@@ -128,6 +130,7 @@
 					switch($element)
 					{
 						case('languages'):
+						case('optioncategories'):
 						case('options'):
 						case('permissions'):
 						case('phrasegroups'):
@@ -152,6 +155,11 @@
 							{
 								switch($element)
 								{
+									case('optioncategories'):
+									{
+										$current[] = $s['name'];
+									}
+									break;
 									case('options'):
 									{
 										$current[$s['option']] = var_typecast_option(strtolower($s['type']{0}), $s['value']);

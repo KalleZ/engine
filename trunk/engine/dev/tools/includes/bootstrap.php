@@ -23,7 +23,6 @@
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
-
 	/**
 	 * Ini configuration overrides
 	 */
@@ -43,14 +42,14 @@
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_DIR', '../..');
+	define('TUXXEDO_DIR', realpath('../../'));
 
 	/**
 	 * Sets the library path
 	 *
 	 * @var		string
 	 */
-	define('TUXXEDO_LIBRARY', '../../library');
+	define('TUXXEDO_LIBRARY', realpath('../../library'));
 
 	/**
 	 * URL of the current page being executed, including its 
@@ -149,7 +148,7 @@
 		$cache_buffer		= Array();
 		$default_precache 	= Array('languages', 'options', 'phrasegroups');
 
-		$datastore->cache((!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+		$datastore->cache((!isset($precache) ? $default_precache : array_unique(array_merge($default_precache, (array) $precache))), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
 
 		$registry->register('intl', '\Tuxxedo\Intl');
 

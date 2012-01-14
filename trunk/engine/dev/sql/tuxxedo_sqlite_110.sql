@@ -3,7 +3,7 @@
 # http://www.sqlitemanager.org/
 # 
 # Host: localhost
-# Generation Time: Thursday 22nd 2011f December 2011 03:46 pm
+# Generation Time: Friday 06th 2012f January 2012 03:11 pm
 # SQLite Version: 3.6.15
 # PHP Version: 5.3.0
 # Database: tuxxedo.sqlite3
@@ -52,30 +52,49 @@ INSERT INTO 'languages' ('id', 'title', 'developer', 'isotitle', 'default', 'cha
 
 
 #
+# Table structure for table: optioncategories
+#
+CREATE TABLE 'optioncategories' (
+'name' VARCHAR(128)  PRIMARY KEY
+);
+CREATE UNIQUE INDEX optioncategories_name ON 'optioncategories'('name');
+
+#
+# Dumping data for table: optioncategories
+#
+INSERT INTO 'optioncategories' ('name') VALUES ('session');
+INSERT INTO 'optioncategories' ('name') VALUES ('datetime');
+INSERT INTO 'optioncategories' ('name') VALUES ('language');
+INSERT INTO 'optioncategories' ('name') VALUES ('style');
+# --------------------------------------------------------
+
+
+#
 # Table structure for table: options
 #
 CREATE TABLE 'options' (
 'option' VARCHAR(128) NOT NULL,
 'value' MEDIUMTEXT NOT NULL,
 'defaultvalue' MEDIUMTEXT NOT NULL,
-'type' CHAR(1) NOT NULL DEFAULT 's'
+'type' CHAR(1) NOT NULL DEFAULT '''s''',
+'category' VARCHAR(128)  DEFAULT 'core'
 );
 CREATE UNIQUE INDEX options_option ON 'options' ('option');
 
 #
 # Dumping data for table: options
 #
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('style_id', '1', '1', 'i');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('cookie_domain', '', '', 's');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('cookie_path', '', '', 's');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('cookie_expires', '1800', '1800', 'i');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('cookie_prefix', 'tuxxedo_', 'tuxxedo_', 's');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('date_format', 'H:i:s, j/n - Y', 'H:i:s, j/n - Y', 's');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('date_timezone', 'UTC', 'UTC', 's');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('date_timezone_offset', '0', '0', 'i');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('language_id', '1', '1', 'i');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('style_storage', 'filesystem', 'filesystem', 's');
-INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type') VALUES ('cookie_secure', '', '', 'b');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('style_id', '1', '1', 'i', 'style');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('cookie_domain', '', '', 's', 'session');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('cookie_path', '', '', 's', 'session');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('cookie_expires', '1800', '1800', 'i', 'session');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('cookie_prefix', 'tuxxedo_', 'tuxxedo_', 's', 'session');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('date_format', 'H:i:s, j/n - Y', 'H:i:s, j/n - Y', 's', 'datetime');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('date_timezone', 'UTC', 'UTC', 's', 'core');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('date_timezone_offset', '0', '0', 'i', 'datetime');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('language_id', '1', '1', 'i', 'language');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('style_storage', 'filesystem', 'filesystem', 's', 'style');
+INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VALUES ('cookie_secure', '', '', 'b', 'session');
 # --------------------------------------------------------
 
 
@@ -143,32 +162,34 @@ INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup'
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('15', 'dm_usergroup_permissions', 'Permission mask', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('16', 'dm_session_sessionid', 'Session identifier', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('17', 'dm_session_userid', 'User identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('18', 'dm_session_sessionid', 'Session identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('19', 'dm_session_userid', 'User identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('20', 'dm_session_location', 'User location', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('21', 'dm_session_useragent', 'User agent string', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('22', 'dm_session_lastactivity', 'Last activity', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('23', 'dm_usergroup_id', 'Usergroup identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('24', 'dm_style_id', 'Style identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('25', 'dm_style_defaultstyle', 'Default style setting', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('26', 'dm_user_id', 'User identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('27', 'dm_user_timezone_offset', 'User timezone offset', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('28', 'dm_user_permissions', 'User permissions', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('29', 'dm_template_id', 'Template identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('30', 'dm_template_title', 'Template title', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('31', 'dm_template_source', 'Template source', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('32', 'dm_template_compiledsource', 'Template compiled source', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('33', 'dm_template_defaultsource', 'Template default source', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('34', 'dm_template_styleid', 'Template style identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('35', 'dm_template_revision', 'Template revision', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('36', 'dm_template_changed', 'Template customization status', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('37', 'dm_permission_name', 'Permission name', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('38', 'dm_permission_bits', 'Permission bitmask', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('39', 'dm_option_option', 'Option name', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('40', 'dm_option_value', 'Option value', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('41', 'dm_option_defaultvalue', 'Option default value', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('42', 'dm_option_type', 'Option data type', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('43', 'validation_failed', 'Failed validation of datamanager fields', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('18', 'dm_session_location', 'User location', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('19', 'dm_session_useragent', 'User agent string', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('20', 'dm_session_lastactivity', 'Last activity', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('21', 'dm_usergroup_id', 'Usergroup identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('22', 'dm_style_id', 'Style identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('23', 'dm_style_defaultstyle', 'Default style setting', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('24', 'dm_user_id', 'User identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('25', 'dm_user_timezone_offset', 'User timezone offset', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('26', 'dm_user_permissions', 'User permissions', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('27', 'dm_template_id', 'Template identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('28', 'dm_template_title', 'Template title', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('29', 'dm_template_source', 'Template source', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('30', 'dm_template_compiledsource', 'Template compiled source', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('31', 'dm_template_defaultsource', 'Template default source', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('32', 'dm_template_styleid', 'Template style identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('33', 'dm_template_revision', 'Template revision', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('34', 'dm_template_changed', 'Template customization status', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('35', 'dm_permission_name', 'Permission name', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('36', 'dm_permission_bits', 'Permission bitmask', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('37', 'dm_option_option', 'Option name', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('38', 'dm_option_value', 'Option value', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('39', 'dm_option_defaultvalue', 'Option default value', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('40', 'dm_option_type', 'Option data type', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('41', 'validation_failed', 'Failed validation of datamanager fields', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('42', 'dm_option_category', 'Option category', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('43', 'dm_optioncategory_name', 'Option category name', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('44', 'dm_datastore_name', 'Datastore cache name', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('45', 'dm_datastore_data', 'Datastore cache data', '1', 'datamanagers');
 # --------------------------------------------------------
 
 

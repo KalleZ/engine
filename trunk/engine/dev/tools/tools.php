@@ -59,7 +59,9 @@
 										), 
 					'status'		=> Array(
 										'tools_status', 
-										'tools_status_itembit'
+										'tools_status_itembit', 
+										'tools_status_all', 
+										'tools_status_all_itembit'
 										)
 					);
 
@@ -328,37 +330,10 @@
 		{
 			$permissions = $users = $usergroups = '';
 
-			foreach(Array('permissions', 'users', 'usergroups') as $element)
+			foreach(Array('permissions', 'usergroups') as $element)
 			{
 				switch($element)
 				{
-					case('users'):
-					{
-						$allusers = $db->query('
-									SELECT 
-										`id`, 
-										`username`
-									FROM
-										`' . TUXXEDO_PREFIX . 'users` 
-									ORDER BY 
-										`id` 
-									ASC');
-
-						if(!$allusers->getNumRows())
-						{
-							tuxxedo_error('Unable to fetch users');
-						}
-
-						while($user = $allusers->fetchRow())
-						{
-							$value 		= $user[0];
-							$name		= $user[1];
-							$selected	= (isset($_POST['user']) && $input->post('user', Input::TYPE_NUMERIC) == $user[0]);
-
-							eval('$users .= "' . $style->fetch('option') . '";');
-						}
-					}
-					break;
 					case('permissions'):
 					{
 						foreach($datastore->permissions as $name => $bits)
@@ -419,7 +394,8 @@
 		break;
 		case('status'):
 		{
-			$dbdriver = Helper::factory('database')->getDriver();
+			$dbhelper = Helper::factory('database');
+			$dbdriver = $dbhelper->getDriver();
 
 			if($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite')
 			{
@@ -450,27 +426,67 @@
 				switch(strtolower($input->get('operation')))
 				{
 					case('optimize'):
+					{
+						$result = $dbhelper->tableOptimize($row['Name']);
+					}
+					break;
 					case('repair'):
 					{
-						$result = $db->query('%s TABLE `%s`', strtoupper($input->get('operation')), $row['Name'])->fetch();
-
-						tuxxedo_redirect('Running operation \'' . strtolower($input->get('operation')) . '\' on table \'' . $row['Name'] . '\': ' . $result['Msg_text'], './tools.php?do=status');
+						$result = $dbhelper->tableRepair($row['Name']);
 					}
+					break;
 					default:
 					{
 						tuxxedo_error('Invalid operation');
 					}
 				}
+
+				tuxxedo_redirect('Running operation \'' . strtolower($input->get('operation')) . '\' on table \'' . $row['Name'] . '\': ' . $result, './tools.php?do=status');
 			}
-
-			$tablelist = '';
-
-			foreach($query as $row)
+			elseif(isset($_POST['submit']))
 			{
-				eval('$tablelist .= "' . $style->fetch('tools_status_itembit') . '";');
-			}
+				$optimize 	= isset($_POST['optimize']);
+				$repair		= isset($_POST['repair']);
 
-			eval(page('tools_status'));
+				if(!$optimize && !$repair)
+				{
+					tuxxedo_error('No operation was selected');
+				}
+
+				$tablelist = '';
+
+				foreach($query as $row)
+				{
+					if($optimize)
+					{
+						$operation	= 'optimize';
+						$result 	= $dbhelper->tableOptimize($row['Name']);
+
+						eval('$tablelist .= "' . $style->fetch('tools_status_all_itembit') . '";');
+					}
+
+					if($repair)
+					{
+						$operation	= 'repair';
+						$result		= $dbhelper->tableRepair($row['Name']);
+
+						eval('$tablelist .= "' . $style->fetch('tools_status_all_itembit') . '";');
+					}
+				}
+
+				eval(page('tools_status_all'));
+			}
+			else
+			{
+				$tablelist = '';
+
+				foreach($query as $row)
+				{
+					eval('$tablelist .= "' . $style->fetch('tools_status_itembit') . '";');
+				}
+
+				eval(page('tools_status'));
+			}
 		}
 		break;
 		default:

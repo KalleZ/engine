@@ -755,8 +755,7 @@
 						++$statistics->no_docblock;
 					}
 
-					$context->depth_check			= 1;
-					$context->modifiers			= 0;
+					$context->modifiers = 0;
 
 					++$statistics->elements;
 
@@ -812,9 +811,9 @@
 							++$statistics->no_docblock;
 						}
 
-						$context->depth_check									= (!($context->modifiers & ACC_ABSTRACT) ? 1 : false);
-						$context->modifiers									= 0;
-						$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
+						$context->depth_check	= (!($context->modifiers & ACC_ABSTRACT) ? 1 : false);
+						$context->modifiers	= $context->depth = 0;
+						$metadata 		= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
 
 						++$statistics->elements;
 
@@ -982,8 +981,9 @@
 						++$statistics->no_docblock;
 					}
 
-					$context->modifiers									= 0;
-					$metadata 										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
+					$context->modifiers	= 0;
+					$metadata 		= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
+
 					++$statistics->elements;
 
 					IO::li(sprintf('PROPERTY (%s) %s', $property, dump_metadata($metadata['metadata'])));
@@ -1024,7 +1024,7 @@
 				break;
 				case(T_STATIC):
 				{
-					if(!$context->depth_check || $context->depth_check === 1)
+					if(!$context->depth_check)
 					{
 						$context->modifiers |= ACC_STATIC;
 					}
@@ -1032,15 +1032,15 @@
 				break;
 				case('{'):
 				{
-					if($context->depth_check && $context->depth_check !== 1)
+					if($context->depth_check)
 					{
-						++$context->depth_check;
+						++$context->depth;
 					}
 				}
 				break;
 				case('}'):
 				{
-					if($context->depth_check && --$context->depth)
+					if($context->depth_check && !--$context->depth)
 					{
 						$context->depth_check = false;
 					}

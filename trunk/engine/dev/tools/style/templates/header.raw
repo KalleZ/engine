@@ -14,6 +14,44 @@
 		</script>
 
 		<script type="text/javascript">
+		function engine_optedit_typechange(select)
+		{
+			var current_value = engine_optedit_current_value();
+
+			$('optedit_canvas').innerHTML = engine_optedit_render_form(select.options[select.selectedIndex].value);
+
+			engine_optedit_set_value(current_value);
+		}
+
+		function engine_optedit_render_form(type)
+		{
+			switch(type)
+			{
+				case('integer'):
+				{
+					return('int');
+				}
+				case('boolean'):
+				{
+					return('bool');
+				}
+				case('string'):
+				default:
+				{
+					return('str');
+				}
+			}
+		}
+
+		function engine_optedit_current_value()
+		{
+			return('');
+		}
+
+		function engine_optedit_set_value(old_current)
+		{
+		}
+
 		function engine_options_handler(select, option)
 		{
 			var action = select.options[select.selectedIndex].value;
@@ -25,7 +63,7 @@
 				{
 					if(confirm('Are you sure?'))
 					{
-						window.location = './options.php?do=' + action + '&option=' + option;
+						window.location = './options.php?do=options&action=' + action + '&option=' + option;
 					}
 				}
 				break;
@@ -33,85 +71,9 @@
 				{
 					if(action.length && option.length)
 					{
-						window.location = './options.php?do=' + action + '&option=' + option;
+						window.location = './options.php?do=options&action=' + action + '&option=' + option;
 					}
 				}
-			}
-		}
-
-		function engine_options_change_handler(select, canvas)
-		{
-			engine_options_save_current();
-
-			switch(select.options[select.selectedIndex].value)
-			{
-				case('string'):
-				{
-					$(canvas).innerHTML = '<textarea name="value" id="optvalue" rows="5" cols="30"></textarea>';
-				}
-				break;
-				case('integer'):
-				{
-					$(canvas).innerHTML = '<input type="text" id="optvalue" name="value" size="32" />';
-				}
-				break;
-				case('boolean'):
-				{
-					$(canvas).innerHTML = '<label><input type="radio" id="optvalue1" name="value" value="1" /> True</label> <label><input type="radio" id="optvalue2" name="value" value="0" /> False</label>';
-				}
-				break;
-			}
-
-			engine_options_editcheck();
-		}
-
-		function engine_options_current_canvas()
-		{
-			if($('optvalue1'))
-			{
-				return('optvalue1');
-			}
-
-			return('optvalue');
-		}
-
-		function engine_options_editcheck()
-		{
-			var option_canvas = engine_options_current_canvas();
-
-			if(option_canvas == 'optvalue')
-			{
-				if($('option_current_value').value != '')
-				{
-					$(option_canvas).value 		= $('option_current_value').value;
-					$('option_current_value').value = '';
-				}
-			}
-			else
-			{
-				$(option_canvas).checked = false;
-
-				if((!$('option_current_value').value && $('option_current_value') != 0) || $('option_current_value').value == 0)
-				{
-					option_canvas = 'optvalue2';
-				}
-
-				$(option_canvas).checked 		= true;
-				$('options_current_value').value	= (option_canvas == 'optvalue1' ? '1' : '0');
-			}
-		}
-
-		function engine_options_save_current()
-		{
-			var option_canvas = engine_options_current_canvas();
-
-			if(option_canvas != 'optvalue')
-			{
-				$('option_current_value').value = ($(option_canvas).checked ? 1 : ($('optvalue2').checked ? '0' : ''));
-			}
-			else
-			{
-				$('option_current_value').value = $(option_canvas).value;
 			}
 		}
 
@@ -122,10 +84,7 @@
 
 		function engine_swap_password_to_text(id)
 		{
-			var password_value 	= $(id).value;
-
-			$(id).type 		= ($(id).type == 'password' ? 'text' : 'password');
-			$(id).value 		= password_value;
+			$(id).type = ($(id).type == 'text' ? 'password' : 'text');
 		}
 
 		function engine_templates_handler(select, styleid, templateid)
@@ -197,7 +156,7 @@
 			color:				#000000;
 			padding:			5px;
 		}
-			input[type=checkbox]:focus, input[type=radio]:focus, input[type=password]:focus, input[type=text]:focus
+			input[type=checkbox]:focus, input[type=radio]:focus, input[type=password]:focus, input[type=text]:focus, option:focus, select:focus, textarea:focus
 			{
 				border:				1px solid #021420;
 			}
@@ -297,6 +256,20 @@
 				padding:			10px;
 				text-shadow:			1px 1px 1px #000000;
 			}
+				.box h4 span
+				{
+					font-size:			12px;
+					float:				right;
+					padding-top:			2px;
+				}
+					.box h4 span a
+					{
+						color:				#FFFFFF;
+					}
+						.box h4 span a:hover
+						{
+							text-decoration:		underline;
+						}
 		.clear
 		{
 			clear:				both;

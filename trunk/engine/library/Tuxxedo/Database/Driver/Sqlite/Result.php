@@ -112,16 +112,6 @@
 		}
 
 		/**
-		 * Checks whenever the result is freed or not
-		 *
-		 * @return	boolean				Returns true if the result is freed from memory, otherwise false
-		 */
-		public function isFreed()
-		{
-			return($this->result !== NULL);
-		}
-
-		/**
 		 * Get the number of rows in the result
 		 *
 		 * @return	integer				Returns the number of rows in the result, and boolean false on error
@@ -163,7 +153,18 @@
 				return(false);
 			}
 
-			$row = \array_merge($this->iterator_data[$this->position], \array_values($this->iterator_data[$this->position]));
+			$row		= Array();
+			$void_keys 	= \range(0, \sizeof($this->iterator_data[$this->position]) - 1);
+
+			foreach($this->iterator_data[$this->position] as $key => $value)
+			{
+				if(\is_numeric($key) && \in_array($key, $void_keys))
+				{
+					continue;
+				}
+
+				$row[$key] = $value;
+			}
 
 			++$this->position;
 

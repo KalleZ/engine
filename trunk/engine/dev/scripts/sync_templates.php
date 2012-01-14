@@ -61,7 +61,8 @@
 			exit;
 		}
 
-		IO::headline('Synchronize...');
+		IO::headline('Template Synchronizer');
+
 		IO::ul();
 
 		while($template = $templates->fetchAssoc())

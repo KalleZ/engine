@@ -33,6 +33,8 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Datamanager;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
 
@@ -119,59 +121,46 @@
 		 *
 		 * @param	string			The datastore element
 		 * @param	mixed			This can be either an array or object, if this is NULL then the datastore is deleted completely
-		 * @param	boolean			Should this action be delayed until shutdown? (Defaults to true)
 		 * @return	boolean			True on success, otherwise false on error
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail (only if the delay parameter is set to false)
 		 */
 		public function rebuild($name, Array $data = NULL, $delay = true)
 		{
-			if($data === NULL)
+			try
 			{
-				$sql = \sprintf('
-							DELETE FROM 
-								`' . \TUXXEDO_PREFIX . 'datastore` 
-							WHERE 
-								`name` = \'%s\';', $this->registry->db->escape($name));
+				$dm = Datamanager\Adapter::factory('datastore', $name);
+
+				if($data === NULL)
+				{
+					unset($this->cache[$name]);
+
+					return($dm->delete());
+				}
 			}
-			else
-			{
-				$sql = \sprintf('
-							REPLACE INTO 
-								`' . \TUXXEDO_PREFIX . 'datastore` 
-								(
-									`name`, 
-									`data`
-								) 
-							VALUES 
-								(
-								\'%s\', 
-									\'%s\'
-								);', $this->registry->db->escape($name), $this->registry->db->escape(\serialize($data)));
-			}
-
-			if($delay)
-			{
-				$this->registry->db->setShutdownQuery($sql);
-
-				return(true);
-			}
-
-			$retval = $this->registry->db->query($sql);
-
-			if($retval)
+			catch(Exception $e)
 			{
 				if($data === NULL)
 				{
 					unset($this->cache[$name]);
+
+					return(true);
 				}
-				else
-				{
-					$this->cache[$name] = $data;
-				}
+
+				$dm 		= Datamanager\Adapter::factory('datastore');
+				$dm['name']	= $name;
 			}
 
-			return($retval);
+			$dm['data'] = $data;
+
+			if(!$dm->save())
+			{
+				return(false);
+			}
+
+			$this->cache[$name] = $data;
+
+			return(true);
 		}
 
 		/**

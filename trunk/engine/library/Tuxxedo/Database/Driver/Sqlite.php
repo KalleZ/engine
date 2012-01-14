@@ -215,11 +215,7 @@
 		 */
 		public function isPersistent()
 		{
-<<<<<<< .mine
 			return(false);
-=======
-			return((boolean) $this->configuration['persistent']);
->>>>>>> .r760
 		}
 
 		/**
@@ -278,23 +274,6 @@
 			}
 
 			return($this->link->lastInsertRowID());
-		}
-
-		/**
-		 * Get the number of affected rows from last INSERT INTO/UPDATE/DELETE 
-		 * operation.
-		 *
-		 * @param	\Tuxxedo\Database\Result	The result used to determine how many affected rows there were
-		 * @return	integer				Returns the number of affected rows, and 0 on error
-		 */
-		public function getAffectedRows($result)
-		{
-			if(!($this->link instanceof \SQLite3))
-			{
-				return(0);
-			}
-
-			return((integer) $this->link->changes());
 		}
 
 		/**
@@ -362,13 +341,15 @@
 
 			if(!$query)
 			{
-				throw new Exception\SQL($sql, $this->link->lastErrorMsg(), $this->link->lastErrorCode());
+				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->lastErrorMsg(), $this->link->lastErrorCode());
 			}
 
 			$this->queries[] = $sql;
 
 			if(!$query->numColumns())
 			{
+				$this->affected_rows = (integer) $this->link->changes();
+
 				return(true);
 			}
 

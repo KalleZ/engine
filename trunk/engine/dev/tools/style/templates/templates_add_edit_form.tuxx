@@ -49,6 +49,13 @@
 				currently in-use. Note that resetting the version number is linked 
 				to the default override and only have an effect if the override is 
 				checked.
+
+				<br /> <br />
+
+				The custom revision setting is however not linked to the reset 
+				to default and can be used at all times. Note that custom revision 
+				over rules to the reset revision, meaning they cannot be used 
+				in conjuction with each other.
 			</td>
 		</tr>
 		<tr>
@@ -63,13 +70,29 @@
 			<td>
 				<label><input type=\"checkbox\" name=\"resetrevision\" value=\"1\" /> Yes</label></td>
 		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Set custom revision number?</td>
+			<td>
+				<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
+					<tr>
+						<td style=\"padding: 0px; width: 20%;\">
+							<label><input type=\"checkbox\" name=\"customrevision\" value=\"1\" /> Yes</label></td>
+						<td style=\"padding: 0px;\">
+							<input type=\"text\" name=\"newrevision\" value=\"{$dm['revision']}\" size=\"5\" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
 ") : '') . "
 </if>
 	</table>
 </div>
 
 <div class=\"box\">
-	<input type=\"submit\" name=\"submit\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . "\" />
+	<input type=\"hidden\" name=\"submit\" value=\"true\" />
+	<input type=\"submit\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . "\" />
+	<input type=\"submit\" name=\"reload\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . " and reload\" />
 </div>
 </form>
 

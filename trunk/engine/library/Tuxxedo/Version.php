@@ -120,6 +120,16 @@
 		const PREVIEW_NUMBER		= 2;
 
 		/**
+		 * Development codename, this value is always the same for each 
+		 * pre-release of a new branch and only changes upon major or minor 
+		 * version changes. Each release codename is based on influence that 
+		 * caused a new version to branch out.
+		 *
+		 * @var		string
+		 */
+		const CODENAME			= 'Ushas';
+
+		/**
 		 * Current version control system revision number
 		 *
 		 * @var		string

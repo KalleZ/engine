@@ -364,7 +364,7 @@
 							$dm['source'] 		= $source;
 							$dm['compiledsource']	= $compiler->get();
 
-							if(isset($_POST['sourceoverride']))
+							if($action == 'edit' && isset($_POST['sourceoverride']))
 							{
 								$dm['changed']		= false;
 								$dm['defaultsource'] 	= $dm['compiledsource'];
@@ -376,9 +376,19 @@
 							}
 						}
 
+						if($action == 'edit' && isset($_POST['customrevision']) && isset($_POST['newrevision']) && $_POST['newrevision'])
+						{
+							$dm['revision'] = $input->post('newrevision', Input::TYPE_NUMERIC);
+						}
+
 						if(!$dm->save())
 						{
 							tuxxedo_error('Unable to save template data');
+						}
+
+						if(isset($_POST['reload']))
+						{
+							tuxxedo_header_redirect('./styles.php?style=' . $styleid . '&do=templates&action=edit&id=' . $dm['id']);
 						}
 
 						tuxxedo_redirect(($action == 'edit' ? 'Template edited with success' : 'Template added with success'), './styles.php?style=' . $styleid . '&do=templates&action=list');

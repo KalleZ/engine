@@ -1,8 +1,8 @@
 {$header}
 
-<form action="./options.php?do=<if expression="$do == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post"<if expression="$do == 'edit'"> onsubmit="engine_options_editcheck();"</if>>
+<form action="./options.php?do=options&action=<if expression="$action == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post">
 <div class="box">
-	<h4><if expression="$do == 'edit'">Edit<else />Add</if> option</h4>
+	<h4><if expression="$action == 'edit'">Edit<else />Add</if> option</h4>
 
 	<table cellspacing="0" cellpadding="0">
 		<tr class="heading">
@@ -13,29 +13,38 @@
 			<td style="width: 20%;">
 				Name</td>
 			<td>
-				<input type="text" name="name" size="32" value="<if expression="$do == 'edit'">{$opt['option']}</if>" /></td>
+				<input type="text" name="name" size="32" value="<if expression="$action == 'edit'">{$opt['option']}</if>" /></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap">
 				Type</td>
 			<td>
-				<select name="characters" id="option_selector" onchange="engine_options_change_handler(this, 'option_edit_area');">
-					<option value="string"<if expression="$do == 'edit' && $opt['type'] == 's'"> selected="selected"</if>>String</option>
-					<option value="integer"<if expression="$do == 'edit' && $opt['type'] == 'i'"> selected="selected"</if>>Integer</option>
-					<option value="boolean"<if expression="$do == 'edit' && $opt['type'] == 'b'"> selected="selected"</if>>Boolean</option>
+				<select name="characters" id="optedit_type" onchange="engine_optedit_typechange(this);">
+					<option value="string"<if expression="$action == 'edit' && $opt['type'] == 's'"> selected="selected"</if>>String</option>
+					<option value="integer"<if expression="$action == 'edit' && $opt['type'] == 'i'"> selected="selected"</if>>Integer</option>
+					<option value="boolean"<if expression="$action == 'edit' && $opt['type'] == 'b'"> selected="selected"</if>>Boolean</option>
 				</select></td>
 		</tr>
 		<tr>
 			<td nowrap="nowrap" valign="top">
 				Value</td>
-			<td id="option_edit_area">
-				<textarea name="value" id="optvalue" rows="5" style="width: 99%;"><if expression="$do == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$do == 'edit' && !empty($opt['defaultvalue'])">{$opt['defaultvalue']}</if></if></textarea></td>
+			<td id="optedit_canvas">
+				<textarea name="value" id="optedit_value1" rows="5" style="width: 99%;"><if expression="$action == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$action == 'edit' && (!empty($opt['defaultvalue']) || $opt['defaultvalue'] == '0')">{$opt['defaultvalue']}</if></if></textarea></td>
 		</tr>
-<if expression="$do == 'edit'">
 		<tr class="heading">
 			<td colspan="2" class="start end">
 				<h5>Options</h5></td>
 		</tr>
+		<tr>
+			<td nowrap="nowrap" valign="top">
+				Option category</td>
+			<td>
+				<select name="category">
+					<option></option>
+					{$categories_dropdown}
+				</select></td>
+		</tr>
+<if expression="$action == 'edit'">
 		<tr>
 			<td nowrap="nowrap" valign="top">
 				Set this as the new default value?</td>
@@ -69,18 +78,19 @@
 	</table>
 </div>
 
-<div class="box">
-	<input type="hidden" id="option_current_value" value="" />
+<if expression="$action == 'edit'">
+<div style="display: none;" id="optedit_original_value"><if expression="$action == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$action == 'edit' && (!empty($opt['defaultvalue']) || $opt['defaultvalue'] == '0')">{$opt['defaultvalue']}</if></if></div>
 
-	<input type="submit" name="submit" value="<if expression="$do == 'edit'">Edit<else />Add</if>" />
-</div>
-
-<if expression="$do == 'edit' && $opt['type'] != 's'">
+<if expression="$opt['type'] != 's'">
 <script type="text/javascript">
-engine_options_change_handler($('option_selector'), 'option_edit_area');
+engine_optedit_typechange($('optedit_type'));
 </script>
 </if>
+</if>
 
+<div class="box">
+	<input type="submit" name="submit" value="<if expression="$action == 'edit'">Edit<else />Add</if>" />
+</div>
 </form>
 
 {$footer}

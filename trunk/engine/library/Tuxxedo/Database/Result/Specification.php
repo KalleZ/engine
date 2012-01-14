@@ -55,13 +55,6 @@
 		public function free();
 
 		/**
-		 * Checks whether the result is freed or not
-		 *
-		 * @return	boolean			Returns true if the result is freed from memory, otherwise false
-		 */
-		public function isFreed();
-
-		/**
 		 * Get the number of rows in the result
 		 *
 		 * @return	integer			Returns the number of rows in the result, and 0 on error

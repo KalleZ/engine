@@ -71,7 +71,7 @@
 
 	if(!$sessions || !$sessions->getNumRows())
 	{
-		tuxxedo_error('There is currently no users logged in.');
+		tuxxedo_error('There is currently no active sessions', false);
 	}
 
 	switch(strtolower($input->get('do')))
@@ -82,11 +82,11 @@
 			{
 				case('single'):
 				{
-					if(($result = $db->equery('
-									DELETE FROM 
-										`' . TUXXEDO_PREFIX . 'sessions` 
-									WHERE 
-										`sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows($result))
+					if(($db->equery('
+								DELETE FROM 
+									`' . TUXXEDO_PREFIX . 'sessions` 
+								WHERE 
+									`sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows())
 					{
 						tuxxedo_redirect('Killed session with success', './sessions.php');
 					}
@@ -112,7 +112,7 @@
 						WHERE 
 							`lastactivity` + %d < %d', $options->cookie_expires, TIMENOW_UTC);
 
-			tuxxedo_redirect('Executed cronjob, ' . ($result ? $db->getAffectedRows($result) : '0') . ' session(s) affected', './sessions.php');
+			tuxxedo_redirect('Executed cronjob, ' . $db->getAffectedRows() . ' session(s) affected', './sessions.php');
 		}
 		break;
 		case('details'):

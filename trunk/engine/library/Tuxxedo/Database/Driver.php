@@ -142,14 +142,6 @@
 		public function getInsertId();
 
 		/**
-		 * Get the number of affected rows from last INSERT INTO/UPDATE/DELETE 
-		 * operation.
-		 *
-		 * @return	integer				Returns the number of affected rows, and 0 on error
-		 */
-		public function getAffectedRows($result);
-
-		/**
 		 * Escape a piece of data using the database specific 
 		 * escape method
 		 *
