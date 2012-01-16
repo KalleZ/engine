@@ -2,15 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.1.0 Beta
-	------------------------------------------------
-
-	Helpers
-[C]	 - Move the pagination helper to the playground branch
-
-
-
-	Tuxxedo Engine 1.1.0 Release Candidate 1
+	Tuxxedo Engine 1.1.0 Release Candidate
 	------------------------------------------------
 
 	Core
