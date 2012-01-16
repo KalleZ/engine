@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.1.0 Beta 2 (experimental)';
+		const FULL			= '1.1.0 Beta 2';
 	}
 ?>
