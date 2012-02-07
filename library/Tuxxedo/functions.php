@@ -692,7 +692,7 @@
 	{
 		$registry = Registry::init();
 
-		if($timestamp === NULL)
+		if(!$timestamp)
 		{
 			$timestamp = (defined('TIMENOW') ? TIMENOW : TIMENOW_UTC);
 		}

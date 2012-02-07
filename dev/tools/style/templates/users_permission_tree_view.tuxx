@@ -1,0 +1,30 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Permission tree</h4>
+
+	<p>
+		Tested as " . ((isset($userinfo)) ? ("user <strong>{$userinfo->username}</strong>") : ("usergroup <strong>{$groupinfo->title}</strong>")) . " 
+		" . ((isset($_POST['opt_showbits'])) ? ("(Bits: " . ((isset($userinfo)) ? ("User: <strong>{$userinfo->permissions}</strong> Group: ") : '') . "<strong>{$groupinfo->permissions}</strong>)") : '') . "
+	</p>
+	<br />
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td class=\"start\" style=\"width: 100%;\">
+				Permission
+			</td>
+" . ((isset($userinfo)) ? ("
+			<td>
+				User
+			</td>
+") : '') . "
+			<td class=\"end\">
+				Usergroup
+			</td>
+		</tr>
+		{$rows}
+	</table>
+</div>
+
+{$footer}

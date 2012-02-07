@@ -1,0 +1,18 @@
+<tr>
+	<td style=\"width: 100%;\">
+		{$name}
+	</td>
+	<td>
+		{$bits}
+	</td>
+	<td nowrap=\"nowrap\">
+		<label>
+			<input type=\"radio\" name=\"permission[{$name}]\" value=\"1\"" . (($permitted) ? (" checked=\"checked\"") : '') . " />
+			Permitted
+		</label>
+		<label>
+			<input type=\"radio\" name=\"permission[{$name}]\" value=\"0\"" . ((!$permitted) ? (" checked=\"checked\"") : '') . " />
+			Restricted
+		</label>
+	</td>
+</tr>

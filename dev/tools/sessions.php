@@ -18,8 +18,8 @@
 	/**
 	 * Aliasing rules
 	 */
+	use DevTools\User;
 	use Tuxxedo\Helper;
-	use Tuxxedo\User;
 
 
 	/**
@@ -132,7 +132,7 @@
 				tuxxedo_error('Invalid session identifier');
 			}
 
-			$registry->set('user', new User(false, false));
+			$registry->set('user', new User);
 
 			$session['expires']		= (($expires = ($session['lastactivity'] + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
 			$session['lastactivity'] 	= tuxxedo_date($session['lastactivity']);
@@ -163,12 +163,6 @@
 
 				$session->expires	= (($expires = ($session->lastactivity + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
 				$session->lastactivity 	= tuxxedo_date($session->lastactivity);
-				$session->location	= htmlspecialchars(html_entity_decode($session->location));
-
-				if(($pos = strpos($session->location, '?')) !== false)
-				{
-					$session->location = substr($session->location, 0, $pos);
-				}
 
 				eval('$userlist .= "' . $style->fetch('sessions_index_itembit') . '";');
 			}

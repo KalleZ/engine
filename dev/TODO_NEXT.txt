@@ -1,16 +1,36 @@
 
 
-	Tuxxedo Engine Future
-	---------------------
-	
+	Tuxxedo Engine 1.2.0 "Intero" Alpha 1
+	-------------------------------------
 
-	Add new datamanagers
-	 - Language
-	 - Phrase
-	 - Phrasegroup
-    
-	Improve development tools
-	 - Add internationalization support
+	Core
+	 - Change the codebase to not rely on /styles/ being the styledir
+
+	Datamanagers
+	 - Add new datamanagers
+	   - Language
+	   - Phrase
+	   - Phrasegroup
+
+	Internationalization
+	 - Add a browser language auto detection option to switch language for non logged in users
+	 - Add an uload method to make it possible to unload phrasegroups, much like the template unloader 
+	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
+	 - Change the phrasegroup class to implement InfoAccess
+	 - Change to use the phrasegroup class rather than ArrayObject
+
+	MVC
+	 - Add better controller based autoloading feature
+	   - Permissions
+	   - Phrasegroups
+	   - Views
+
+
+	Tuxxedo Engine 1.2.0 "Intero" Alpha 2
+	-------------------------------------
+
+	DevTools
+	 - Add new the internationalization component
 	   - Language
 	     - Add
 	     - Edit
@@ -26,71 +46,49 @@
 	     - Edit
 	     - Delete
 	     - Search
-	 - Add user and usergroups support
-	   - User
-	     - Add
-	     - Edit
-	     - Delete
-	     - Search
-	   - Usergroup
-	     - List
-	     - Add
-	     - Edit
-	     - Delete
-	   - Permission
-	     - List
-	     - Add
-	     - Edit
-	     - Delete
-	 - Add the DevTools theme as its own style rather than its hackery it is now
-	 - Add translation to the DevTools
-	 - Implement usage of the pagination class in the DevTools
-	 - Implement installation generators
-	 - Implement support for sqlite on the table status tool
-	 - Other
-	   - Add the ability to export/import styles
-	   - Add the ability to export/import languages
+	 - Change to use MVC as a backend
+	   - Add translation for the entire application using the 'DevTools' phrasegroup
+	   - Change the templating system to use its own 'DevTools' style
 
-	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
-	Implement validators
-	Implement XML Parsers
-	Implement a form of Webservices handler backend that can be used to pull and push
-	 - Authentication support using Engine's authentication system
-	 - Map pull's in an object oriented way so they kinda work like SOAP objects, <error><code>123</code></error>: $api->getError()->getCode() or similar
 
-	Improve debug mode
-	 - Separate configuration category
-	 - Trace mode, e.g. SQL query traces
 
-	Improve internationalization
-	 - Add the possibility to have different backends for phrases
-	 - Add language auto detection based on the request headers and iso codes for non logged in users
-	 - Add an unload method to make it possible to unload phrasegroups, make sure to account for rebuilding the phrase index to avoid inconsistencies
-	 - Add a feature so that its possible for MVC controllers to auto load a specific phrase group
+	Tuxxedo Engine 1.2.0 "Intero" Beta 1
+	------------------------------------
 
-	Improve the datastore cacher
-	 - Implement a temporary memory storage, with backends for APC etc.
-	 - Split code from datastore.php into multiple sub classes so they can be executed at userland code without hacks
-	   - Make use of this new API in datamanagers, maybe we can have a new dynamic hook to do this
+	Datastore
+	 - Add a datastore recache class, with adapters
+	   - languages
+	   - optioncategories
+	   - options
+	   - permissions
+	   - phrasegroups
+	   - styleinfo
+	   - usergroups
+	   - timezones
+	 - Add a new datamanager hook for recache or make 'Cache' work as automatted as possible
+	 - Change the datastore rebuilder in the DevTools to make use of these new classes
 
-	Change the styledir to be independed on /styles/
-	Change sync_templates.php to work with all storage engines and use the current as master
-	Change check_dm_phrases.php to check for obsolete and orphan phrases
+	Debug
+	 - Implement trace mode
+	   - Queries
+	 - Change configuration.php so it have its own 'debug' category
 
 	Helpers
-	 - Calendar
-	 - Pagination
-	 - Mail
 	 - Timer
-	 - Upload
 
-	Look at implementing playground projects
-	 - Query builder
-	 - Configuration parser (Xml, Ini, JSON)
-	 - Generic Datamanager
-	 - MVC Request
-	 - API indexer
 
-	Extend the API generator
-	 - Parse parameter prototypes
-	 - Change the parser to fetch docblocks of files
+	Tuxxedo Engine 1.2.0 "Intero" Beta 2
+	------------------------------------
+
+	Core
+	 - Implement validators
+
+	Dev
+	 - api_analyze.php
+	   - Add the ability to parse the actual prototypes
+	   - Add the ability to fetch file docblocks
+	   - Add the ability to fetch default values of properties and the like
+	 - check_dm_phrases.php
+	   - Add a check for obsolete and orphan phrases
+	 - sync_templates.php
+	   - Add support for all storage engines

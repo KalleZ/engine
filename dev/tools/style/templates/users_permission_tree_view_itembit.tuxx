@@ -1,0 +1,13 @@
+<tr" . ((!$accessible) ? (" class=\"heading highlight\"") : '') . ">
+	<td>
+		" . ((!$accessible) ? ("<span class=\"underlined\">") : '') . "{$permission} " . ((isset($_POST['opt_showbits'])) ? ("(Bits: {$bits})") : '') . "" . ((!$accessible) ? ("</span>") : '') . "
+	</td>
+" . ((isset($userinfo)) ? ("
+	<td>
+		" . ((!$accessible) ? ("<em>") : '') . "{$user_perm}" . ((!$accessible) ? ("</em>") : '') . "
+	</td>
+") : '') . "
+	<td>
+		" . ((!$accessible || !$uaccessible) ? ("<em class=\"error\"><strong>") : '') . "{$group_perm}" . ((!$accessible || !$uaccessible) ? ("</strong></em>") : '') . "
+	</td>
+</tr>

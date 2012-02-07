@@ -109,7 +109,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Release Candidate';
+		const PREVIEW_TYPE		= 'Beta';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 1;
+		const PREVIEW_NUMBER		= 3;
 
 		/**
 		 * Development codename, this value is always the same for each 
@@ -127,7 +127,7 @@
 		 *
 		 * @var		string
 		 */
-		const CODENAME			= 'Ushas';
+		const CODENAME			= 'Fawks';
 
 		/**
 		 * Current version control system revision number
@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.1.0 Release Candidate 1 (experimental)';
+		const FULL			= '1.1.0 "Fawks" Beta 3';
 	}
 ?>

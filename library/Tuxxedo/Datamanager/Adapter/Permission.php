@@ -62,8 +62,7 @@
 		protected $fields		= Array(
 							'name'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidPermissionName')
+											'validation'	=> self::VALIDATE_IDENTIFIER
 											), 
 							'bits'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
@@ -105,25 +104,13 @@
 				}
 
 				$this->data 		= $permission->fetchAssoc();
+				$this->data['bits']	= (integer) $this->data['bits'];
 				$this->identifier 	= $identifier;
 
 				$permission->free();
 			}
 
 			parent::init($registry, $options, $parent);
-		}
-
-		/**
-		 * Checks whether the permission name is valid
-		 *
-		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	string				The name to check
-		 * @return	boolean				Returns true if the name is valid
-		 */
-		public static function isValidPermissionName(Adapter $dm, Registry $registry, $name)
-		{
-			return(!isset($registry->datastore->permissions[$name]));
 		}
 
 		/**
@@ -147,10 +134,10 @@
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				$permissions[$name] = $this['bits'];
+				$permissions[$name] = (integer) $this['bits'];
 			}
 
-			return($this->registry->datastore->rebuild('permissions', $permissions, false));
+			return($this->registry->datastore->rebuild('permissions', $permissions));
 		}
 	}
 ?>

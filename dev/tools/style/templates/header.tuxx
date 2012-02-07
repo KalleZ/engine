@@ -14,44 +14,6 @@
 		</script>
 
 		<script type=\"text/javascript\">
-		function engine_optedit_typechange(select)
-		{
-			var current_value = engine_optedit_current_value();
-
-			$('optedit_canvas').innerHTML = engine_optedit_render_form(select.options[select.selectedIndex].value);
-
-			engine_optedit_set_value(current_value);
-		}
-
-		function engine_optedit_render_form(type)
-		{
-			switch(type)
-			{
-				case('integer'):
-				{
-					return('int');
-				}
-				case('boolean'):
-				{
-					return('bool');
-				}
-				case('string'):
-				default:
-				{
-					return('str');
-				}
-			}
-		}
-
-		function engine_optedit_current_value()
-		{
-			return('');
-		}
-
-		function engine_optedit_set_value(old_current)
-		{
-		}
-
 		function engine_options_handler(select, option)
 		{
 			var action = select.options[select.selectedIndex].value;
@@ -79,6 +41,11 @@
 
 		function engine_styles_change(select)
 		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
 			this.location = './styles.php?style=' + select.options[select.selectedIndex].value + '&do=style&action=edit';
 		}
 
@@ -105,6 +72,43 @@
 			}
 
 			this.location = './tools.php?do=status&table=' + table + '&operation=' + select.options[select.selectedIndex].value;
+		}
+
+		function engine_permission_handler(select, permission)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './users.php?do=permission&action=' + select.options[select.selectedIndex].value + '&permission=' + permission;
+		}
+
+		function engine_usergroup_handler(select, id, formid)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+			else if(select.options[select.selectedIndex].value == 'viewusers')
+			{
+				$('hiddenform_' + formid + '_identifier').value = id;
+				$('hiddenform_' + formid + '_submit').click();
+
+				return;
+			}
+
+			this.location = './users.php?do=usergroup&action=' + select.options[select.selectedIndex].value + '&usergroup=' + id;
+		}
+
+		function engine_user_handler(select, id)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './users.php?do=user&action=' + select.options[select.selectedIndex].value + '&user=' + id;
 		}
 		</script>
 
@@ -138,7 +142,7 @@
 			}
 		body
 		{
-			background-color:		#021420;
+			background:			#E4F4FC;
 			color:				#3B7286;
 			font-family:			\"Helvetica Neue\", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
 			font-size:			82%;
@@ -180,7 +184,7 @@
 		}
 			table tr.heading td
 			{
-				background-color:		#FFFFFF;
+				background-color:		#C2EDFD;
 				border:				1px solid #21A7CD;
 				border-right:			0px;
 				font-weight:			bold;
@@ -204,8 +208,9 @@
 				}
 			table tr.highlight td
 			{
-				background-color:		#044968;
-				color:				#FFFFFF;
+				background:			transparent;
+				color:				#A9272C;
+				border:				1px solid transparent;
 			}
 				table tr.highlight td span.error
 				{
@@ -235,14 +240,15 @@
 		}
 		.box, .warning
 		{
-			background:			#FFFFFF url('./style/images/box-background.png') repeat-x top left;
+			background-color:		#FFFFFF;
+			border:				2px solid #C2EDFD;
 			border-radius:			4px;
 			margin-bottom:			10px;
 			padding:			10px;
 		}
 			.box h3, .box h4, .warning h3, .warning h4
 			{
-				font-size:			18px;
+				font-size:			14px;
 				margin:				0px;
 				padding:			0px;
 			}
@@ -252,7 +258,7 @@
 				border-bottom:			2px solid #21A7CD;
 				border-radius:			4px;
 				color:				#FFFFFF;
-				margin:				-10px -10px 5px -10px;
+				margin:				-2px -2px 5px -2px;
 				padding:			10px;
 				text-shadow:			1px 1px 1px #000000;
 			}
@@ -260,7 +266,7 @@
 				{
 					font-size:			12px;
 					float:				right;
-					padding-top:			2px;
+					padding-top:			1px;
 				}
 					.box h4 span a
 					{
@@ -284,7 +290,7 @@
 			}
 		.copyright
 		{
-			color:				#FFFFFF;
+			color:				#3B3B3B;
 			font-size:			75%;
 			text-align:			right;
 		}
@@ -319,12 +325,9 @@
 			{
 				border-bottom:			2px solid #21A7CD;
 			}
-			.panel h4, .panel h5
-			{
-				font-size:			14px;
-			}
 			.panel h5
 			{
+				font-size:			13px;
 				margin-bottom:			0px;
 			}
 			.panel ul
@@ -374,11 +377,17 @@
 							border-radius: 			2px;
 							padding:			1px 3px;
 						}
-							.top ul li a:hover span
+							.top ul li a:hover span, .top ul li a.current span
 							{
 								text-shadow:			#FFFFFF 0px 0px 10px;
 								border-bottom:			2px solid #21A7CD;
 							}
+		.underlined
+		{
+			border-bottom:			2px solid #A9272C;
+			color:				#A9272C;
+			padding-bottom:			2px;
+		}
 		.warning
 		{
 			background:			none;
@@ -406,21 +415,19 @@
 
 			<div class=\"top\">
 				<ul>
-					<li><a href=\"./\"><span>Index</span></a></li>
+					<li><a href=\"./\"" . ((SCRIPT_NAME == 'index') ? (" class=\"current\"") : '') . "><span>Home</span></a></li>
 <!--
-					<li><a href=\"./configuration.php\"><span>Configurations</span></a></li>
+					<li><a href=\"./configuration.php\"" . ((SCRIPT_NAME == 'configurations') ? (" class=\"current\"") : '') . "><span>Configurations</span></a></li>
 -->
-					<li><a href=\"./datastore.php\"><span>Datastore</span></a></li>
-					<li><a href=\"./styles.php\"><span>Styles &amp; Templates</span></a></li>
+					<li><a href=\"./datastore.php\"" . ((SCRIPT_NAME == 'datastore') ? (" class=\"current\"") : '') . "><span>Datastore</span></a></li>
+					<li><a href=\"./styles.php\"" . ((SCRIPT_NAME == 'styles') ? (" class=\"current\"") : '') . "><span>Styles &amp; Templates</span></a></li>
 <!--
-					<li><a href=\"./intl.php\"><span>Internationalization</span></a></li>
+					<li><a href=\"./intl.php\"" . ((SCRIPT_NAME == 'intl') ? (" class=\"current\"") : '') . "><span>Internationalization</span></a></li>
 -->
-					<li><a href=\"./options.php\"><span>Options</span></a></li>
-<!--
-					<li><a href=\"./users.php\"><span>Users &amp; Usergroups</span></a></li>
--->
-					<li><a href=\"./sessions.php\"><span>Sessions</span></a></li>
-					<li><a href=\"./tools.php\"><span>Tools</span></a></li>
+					<li><a href=\"./options.php\"" . ((SCRIPT_NAME == 'options') ? (" class=\"current\"") : '') . "><span>Options</span></a></li>
+					<li><a href=\"./users.php\"" . ((SCRIPT_NAME == 'users') ? (" class=\"current\"") : '') . "><span>Users &amp; Usergroups</span></a></li>
+					<li><a href=\"./sessions.php\"" . ((SCRIPT_NAME == 'sessions') ? (" class=\"current\"") : '') . "><span>Sessions</span></a></li>
+					<li><a href=\"./tools.php\"" . ((SCRIPT_NAME == 'tools') ? (" class=\"current\"") : '') . "><span>Tools</span></a></li>
 				</ul>
 				<div class=\"clear\"></div>
 			</div>

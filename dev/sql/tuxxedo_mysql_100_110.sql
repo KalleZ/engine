@@ -59,6 +59,9 @@ INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`
 INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`) VALUES (44, 'dm_datastore_name', 'Datastore cache name', 1, 'datamanagers');
 INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`) VALUES (45, 'dm_datastore_data', 'Datastore cache data', 1, 'datamanagers');
 
+UPDATE `phrases` SET `title` = 'dm_user_style_id' WHERE `id` = 11;
+UPDATE `phrases` SET `title` = 'dm_user_language_id' WHERE `id` = 12;
+
 INSERT INTO `datastore` (`name`, `data`) VALUES
 ('languages', 'a:1:{i:1;a:6:{s:2:"id";s:1:"1";s:5:"title";s:7:"English";s:9:"developer";s:28:"Tuxxedo Software Development";s:8:"isotitle";s:2:"en";s:7:"default";s:1:"1";s:7:"charset";s:5:"UTF-8";}}'),
 ('options', 'a:10:{s:13:"cookie_domain";s:0:"";s:14:"cookie_expires";i:1800;s:11:"cookie_path";s:0:"";s:13:"cookie_prefix";s:8:"tuxxedo_";s:11:"date_format";s:14:"H:i:s, j/n - Y";s:13:"date_timezone";s:3:"UTC";s:20:"date_timezone_offset";i:0;s:11:"language_id";i:1;s:8:"style_id";i:1;s:13:"style_storage";s:8:"database";}'),

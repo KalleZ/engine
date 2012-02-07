@@ -64,6 +64,18 @@
 
 
 		/**
+		 * Constructor
+		 */
+		public function __construct()
+		{
+			$this->registry 	= Registry::init();
+			$this->userinfo 	= $this->usergroupinfo = new \stdClass;
+			$this->information	= $this->userinfo;
+
+			$this->setPermissionConstants();
+		}
+
+		/**
 		 * Destructor
 		 */
 		public function __destruct()

@@ -1,0 +1,28 @@
+{$header}
+
+<form action=\"./users.php?do=usergroup&action=permissions&usergroup={$dm['id']}\" method=\"post\">
+<div class=\"box\">
+	<h4>Edit permissions for '{$dm['title']}'</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td class=\"start\">
+				Permission
+			</td>
+			<td>
+				Bits
+			</td>
+			<td class=\"end\">
+				Status
+			</td>
+		</tr>
+		{$rows}
+	</table>
+</div>
+
+<div class=\"box\">
+	<input type=\"submit\" name=\"submit\" value=\"Save\" />
+</div>
+</form>
+
+{$footer}

@@ -4,11 +4,3 @@
 
 	Tuxxedo Engine 1.1.0 Release Candidate
 	------------------------------------------------
-
-	Core
-	 - Branch 1_1_0
-	 - Make trunk 1_2_0
-	 - Update TODO
-
-	DevTools
-[W]	 - Re-implement the javascript editor code for the options

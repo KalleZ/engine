@@ -388,7 +388,8 @@
 			}
 			elseif($query instanceof \PDOStatement && $query->columnCount())
 			{
-				$this->queries[] = $sql;
+				$this->queries[] 	= $sql;
+				$this->affected_rows 	= (integer) $query->rowCount();
 
 				return(new Pdo\Result($this, $query));
 			}

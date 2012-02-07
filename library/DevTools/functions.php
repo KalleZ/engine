@@ -25,13 +25,12 @@
 	 * A recursive glob function
 	 *
 	 * @param	string			The glob expression to execute
+	 * @param	integer			The expression prefix character position, this is only for recursive calls and is auto-filled
 	 * @return	array			Returns an array containing the matched elements and false on error
 	 */
-	function recursive_glob($expression)
+	function recursive_glob($expression, $expression_prefix = NULL)
 	{
-		static $expression_prefix;
-
-		if(!$expression_prefix)
+		if($expression_prefix === NULL)
 		{
 			$expression_prefix = strlen($expression) + 1;
 		}
@@ -49,7 +48,7 @@
 		{
 			if(is_dir($entry))
 			{
-				if(($entries = recursive_glob($entry)) !== false)
+				if(($entries = recursive_glob($entry, $expression_prefix)) !== false)
 				{
 					foreach($entries as $sub_entry)
 					{

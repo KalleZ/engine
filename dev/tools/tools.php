@@ -52,11 +52,6 @@
 					'authentication'	=> Array(
 										'tools_authentication'
 										), 
-					'permissions'		=> Array(
-										'option', 
-										'tools_permissions', 
-										'tools_permissions_itembit'
-										), 
 					'status'		=> Array(
 										'tools_status', 
 										'tools_status_itembit', 
@@ -311,7 +306,7 @@
 		break;
 		case('authentication'):
 		{
-			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), Array('username', 'email')))
+			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), Array('id', 'username', 'email')))
 			{
 				$registry->register('user', '\Tuxxedo\User');
 
@@ -326,72 +321,6 @@
 			eval(page('tools_authentication'));
 		}
 		break;
-		case('permissions'):
-		{
-			$permissions = $users = $usergroups = '';
-
-			foreach(Array('permissions', 'usergroups') as $element)
-			{
-				switch($element)
-				{
-					case('permissions'):
-					{
-						foreach($datastore->permissions as $name => $bits)
-						{
-							$selected = (isset($_POST['permission_' . $name]) && $_POST['permission_' . $name]);
-
-							eval('$permissions .= "' . $style->fetch('tools_permissions_itembit') . '";');
-						}
-					}
-					break;
-					case('usergroups'):
-					{
-						foreach($datastore->usergroups as $value => $group)
-						{
-							$name 		= $group['title'];
-							$selected	= (isset($_POST['usergroup']) && $input->post('usergroup', Input::TYPE_NUMERIC) == $value);
-
-							eval('$usergroups .= "' . $style->fetch('option') . '";');
-						}
-					}
-					break;
-				}
-			}
-
-			if(isset($_POST['progress']))
-			{
-				$user = new User;
-
-				if(isset($_POST['user']) && !empty($_POST['user']) && !$user->impersonateAsUser($input->post('user')))
-				{
-					tuxxedo_error('Unable to impersonate user');
-				}
-				elseif(!$user->isImpersonatingUser() && isset($_POST['usergroup']) && !$user->impersonateAsUsergroup($input->post('usergroup'), $input->post('user')))
-				{
-					tuxxedo_error('Unable to impersonate usergroup');
-				}
-
-				$test_permissions = '';
-
-				foreach($datastore->permissions as $name => $bits)
-				{
-					if(!isset($_POST['permission_' . $name]))
-					{
-						continue;
-					}
-
-					eval('$test_permissions .= "' . $style->fetch('tools_permissions_itembit') . '";');
-				}
-
-				if(empty($test_permissions))
-				{
-					unset($test_permissions);
-				}
-			}
-
-			eval(page('tools_permissions'));
-		}
-		break;
 		case('status'):
 		{
 			$dbhelper = Helper::factory('database');
@@ -402,7 +331,7 @@
 				tuxxedo_error('This tool is currently not available for SQLite');
 			}
 
-			$query = $db->query('SHOW TABLE STATUS FROM `%s`', $db->cfg('database'));
+			$query = $dbhelper->getTables();
 
 			if(isset($_GET['table']) && isset($_GET['operation']) && in_array(strtolower($input->get('operation')), Array('optimize', 'repair')))
 			{

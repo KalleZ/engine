@@ -12,31 +12,31 @@
 			<td style=\"width: 20%;\">
 				Session ID</td>
 			<td>
-				<strong>{$session['sessionid']}</strong></td>
+				<code>{$session['sessionid']}</code></td>
 		</tr>
 		<tr>
 			<td>
 				Last activity</td>
 			<td>
-				<strong>{$session['lastactivity']}</strong></td>
+				{$session['lastactivity']}</td>
 		</tr>
 		<tr>
 			<td>
 				Expiration</td>
 			<td>
-				<strong>{$session['expires']}</strong></td>
+				{$session['expires']}</td>
 		</tr>
 		<tr>
 			<td>
 				Browser</td>
 			<td>
-				<strong>{$session['useragent']}</strong></td>
+				{$session['useragent']}</td>
 		</tr>
 		<tr>
 			<td>
 				Location</td>
 			<td>
-				<strong>{$session['location']}</strong></td>
+				{$session['location']}</td>
 		</tr>
 " . (($session['userid']) ? ("
 		<tr class=\"heading\">
@@ -47,19 +47,19 @@
 			<td>
 				User ID</td>
 			<td>
-				<strong>{$session['userid']}</strong></td>
+				{$session['userid']}</td>
 		</tr>
 		<tr>
 			<td>
 				Username</td>
 			<td>
-				<strong>{$userinfo->username}</strong></td>
+				{$userinfo->username}</td>
 		</tr>
 		<tr>
 			<td>
 				Usergroup</td>
 			<td>
-				<strong>{$usergroup['title']}</strong></td>
+				{$usergroup->title}</td>
 		</tr>
 ") : '') . "
 	</table>

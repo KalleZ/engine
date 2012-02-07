@@ -697,7 +697,7 @@
 						$alias[0] = '\\' . $alias[0];
 					}
 
-					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], $alias);
+					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], Array($alias));
 
 					++$statistics->elements;
 

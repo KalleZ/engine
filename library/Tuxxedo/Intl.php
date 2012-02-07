@@ -284,7 +284,7 @@
 		 */
 		public function getPhrases()
 		{
-			$phrases = new \ArrayObject();
+			$phrases = new \ArrayObject;
 
 			if($this->phrases)
 			{

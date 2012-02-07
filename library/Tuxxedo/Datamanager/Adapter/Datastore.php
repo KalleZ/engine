@@ -61,8 +61,7 @@
 		protected $fields		= Array(
 							'name'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidDatastoreName')
+											'validation'	=> self::VALIDATE_IDENTIFIER
 											), 
 							'data'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
@@ -114,45 +113,6 @@
 			}
 
 			parent::init($registry, $options, $parent);
-		}
-
-		/**
-		 * Checks whether the name is valid
-		 *
-		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	string				The name to check
-		 * @return	boolean				Returns true if the name is valid
-		 */
-		public static function isValidDatastoreName(Adapter $dm, Registry $registry, $name)
-		{
-			static $cache;
-
-			if($cache === NULL)
-			{
-				$query = $registry->db->query('
-								SELECT 
-									`name`
-								FROM
-									`' . \TUXXEDO_PREFIX . 'datastore`');
-
-				if($query && $query->getNumRows())
-				{
-					foreach($query as $row)
-					{
-						$cache[] = $row['name'];
-					}
-				}
-			}
-
-			$exists = \in_array($name, $cache);
-
-			if(!$dm->identifier)
-			{
-				$exists = !$exists;
-			}
-
-			return($exists);
 		}
 
 		/**

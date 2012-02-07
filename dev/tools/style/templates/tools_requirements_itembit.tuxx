@@ -1,11 +1,11 @@
 <tr" . ((!$passed) ? (" class=\"heading highlight\"") : '') . ">
-	<td" . ((!$passed) ? (" class=\"start\"") : '') . ">
-		{$component}
+	<td>
+		" . ((!$passed) ? ("<span class=\"underlined\">") : '') . "{$component}" . ((!$passed) ? ("</span>") : '') . "
 	</td>
 	<td>
-		" . (($required) ? ("Yes") : ("No")) . "
+		" . ((!$passed) ? ("<em>") : '') . "" . (($required) ? ("Yes") : ("No")) . "" . ((!$passed) ? ("</em>") : '') . "
 	</td>
-	<td" . ((!$passed) ? (" class=\"end\"") : '') . ">
-		" . (($passed) ? ("Yes") : ("No")) . "
+	<td>
+		" . ((!$passed) ? ("<em>") : '') . "" . (($passed) ? ("Yes") : ("No")) . "" . ((!$passed) ? ("</em>") : '') . "
 	</td>
 </tr>

@@ -158,6 +158,29 @@
 		}
 
 		/**
+		 * Gets all table within a database
+		 *
+		 * @param	string				The database name, if differs from the current connection
+		 * @return	\Tuxxedo\Database\Result	Returns a database result object, and false if unsupported or if no tables exists
+		 */
+		public function getTables($database = NULL)
+		{
+			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			{
+				return(false);
+			}
+
+			$tables = $this->instance->equery('SHOW TABLE STATUS FROM `%s`', ($database === NULL ? $this->instance->cfg('database') : $database));
+
+			if(!$tables || !$tables->getNumRows())
+			{
+				return(false);
+			}
+
+			return($tables);
+		}
+
+		/**
 		 * Table operation - optimize
 		 *
 		 * @param	string				The table name

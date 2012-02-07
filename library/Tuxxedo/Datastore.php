@@ -115,17 +115,15 @@
 		 * Rebuilds a datastore element if it already exists, or adds 
 		 * a new entry in the datastore if no elements with that name 
 		 * already exists. To delete a datastore element completely,  
-		 * the data parameter must be set to NULL. If the delay 
-		 * parameter is set to true, then the current cached data 
-		 * will not be updated with the new data.
+		 * the data parameter must be set to NULL
 		 *
 		 * @param	string			The datastore element
 		 * @param	mixed			This can be either an array or object, if this is NULL then the datastore is deleted completely
 		 * @return	boolean			True on success, otherwise false on error
 		 *
-		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail (only if the delay parameter is set to false)
+		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail
 		 */
-		public function rebuild($name, Array $data = NULL, $delay = true)
+		public function rebuild($name, Array $data = NULL)
 		{
 			try
 			{

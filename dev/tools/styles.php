@@ -105,6 +105,8 @@
 					{
 						if($action == 'edit' && !isset($_POST['defaultstyle']) && sizeof($datastore->styledata) < 2)
 						{
+							unset($styledm);
+
 							tuxxedo_error('Cannot disable default style when there only is one');
 						}
 						elseif($action == 'add')
@@ -120,7 +122,7 @@
 
 						$styledm->save();
 
-						tuxxedo_redirect('Saved style with success', './styles.php?style=' . $styledm->get('id') . '&do=style&action=edit');
+						tuxxedo_redirect('Saved style with success', './styles.php?style=' . $styledm['id'] . '&do=style&action=edit');
 					}
 					else
 					{

@@ -129,24 +129,19 @@
 		 * Constructor, instanciates a new user session.
 		 *
 		 * @param	boolean				Whether to auto detect if a user is logged in or not
-		 * @param	boolean				Whether to start a session or not
 		 */
-		public function __construct($autodetect = true, $session = true)
+		public function __construct($autodetect = true)
 		{
-			$this->registry = Registry::init();
+			$this->registry 	= Registry::init();
+			$this->session 		= $this->registry->invoke('\Tuxxedo\Session');
+			$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id, false);
 
-			if($session && $autodetect)
+			if($autodetect && ($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 			{
-				$this->session 		= $this->registry->register('session', '\Tuxxedo\Session');
-				$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id, false);
-
-				if(($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
-				{
-					$this->userinfo				= $userinfo;
-					$this->usergroupinfo			= (object) $this->registry->datastore->usergroups[$userinfo->usergroupid];
-					$this->userinfo->permissions		= (integer) $userinfo->permissions;
-					$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
-				}
+				$this->userinfo				= $userinfo;
+				$this->usergroupinfo			= (object) $this->registry->datastore->usergroups[$userinfo->usergroupid];
+				$this->userinfo->permissions		= (integer) $userinfo->permissions;
+				$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
 			}
 
 			if(!$this->userinfo)
@@ -154,15 +149,12 @@
 				$this->userinfo = $this->usergroupinfo = new \stdClass;
 			}
 
-			$this->userinfo->session	= $this->session;
-			$this->information		= $this->userinfo;
+			$this->userinfo->session		= $this->session;
+			$this->information			= $this->userinfo;
 
-			if($session)
-			{
-				$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
-				$this->sessiondm['location']		= \TUXXEDO_SELF;
-				$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
-			}
+			$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
+			$this->sessiondm['location']		= \TUXXEDO_SELF;
+			$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
 
 			$this->setPermissionConstants();
 		}
@@ -172,16 +164,18 @@
 		 */
 		public function __destruct()
 		{
-			if($this->session instanceof Session)
+			if(!($this->sessiondm instanceof Datamanager\Adapter))
 			{
-				$this->sessiondm->save();
-
-				$this->registry->db->query('
-								DELETE FROM 
-									`' . \TUXXEDO_PREFIX . 'sessions` 
-								WHERE 
-									`lastactivity` + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
+				return;
 			}
+
+			$this->sessiondm->save();
+
+			$this->registry->db->query('
+							DELETE FROM 
+								`' . \TUXXEDO_PREFIX . 'sessions` 
+							WHERE 
+								`lastactivity` + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
 		}
 
 		/**
@@ -365,7 +359,7 @@
 			}
 			elseif(isset($this->registry->datastore->usergroups[$id]))
 			{
-				return($this->registry->datastore->usergroups[$id]);
+				return((object) $this->registry->datastore->usergroups[$id]);
 			}
 
 			return(false);
@@ -437,7 +431,7 @@
 				return(false);
 			}
 
-			return(($this->usergroupinfo['permissions'] & (integer) $permission) !== 0);
+			return(($this->usergroupinfo->permissions & (integer) $permission) !== 0);
 		}
 
 		/**

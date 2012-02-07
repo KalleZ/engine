@@ -1,0 +1,39 @@
+
+
+	Tuxxedo Engine Future
+	---------------------
+    
+	Improve development tools
+	 - Implement usage of the pagination class in the DevTools
+	 - Implement installation generators
+	 - Implement support for sqlite on the table status tool
+	 - Other
+	   - Add the ability to export/import styles
+	   - Add the ability to export/import languages
+	   - Change searches with only 1 result to redirect to its editor page
+
+	Improve the user component
+	 - Implement a "Remember me?" API
+	 - Implement a disallowed permission based system
+	 - Implement a user activation API
+	 - Make use of InfoAccess
+
+	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
+	Implement XML Parsers
+	Implement a temporary memory storage, with backends for APC etc.
+	Implement a form of Webservices handler backend that can be used to pull and push
+	 - Authentication support using Engine's authentication system
+	 - Map pull's in an object oriented way so they kinda work like SOAP objects, <error><code>123</code></error>: $api->getError()->getCode() or similar
+
+	Helpers
+	 - Calendar
+	 - Pagination
+	 - Mail
+	 - Upload
+
+	Look at implementing playground projects
+	 - Query builder
+	 - Configuration parser (Xml, Ini, JSON)
+	 - Generic Datamanager
+	 - MVC Request
+	 - API indexer

@@ -1,0 +1,42 @@
+{$header}
+
+<form action=\"./users.php?do=permission&action=delete&permission={$dm['name']}\" method=\"post\">
+<div class=\"box\">
+	<h4>Confirm delete</h4>
+
+	<p>
+		When deleting a permission, you must make sure that you don't 
+		make use of the constant '<em>{$const}</em>' as it will become undefined.
+	</p>
+
+" . ((!empty($users)) ? ("
+	<br />
+	<p>
+		The following users have this permission set as a custom, uncheck 
+		the boxes if you want this bit to remain:
+	</p>
+
+	<ul style=\"list-style-type: none;\">
+		{$users}
+	</ul>
+") : '') . "
+
+" . ((!empty($usergroups)) ? ("
+	<br />
+	<p>
+		The following usergroups have this permission set as a custom, uncheck 
+		the boxes if you want this bit to remain:
+	</p>
+
+	<ul style=\"list-style-type: none;\">
+		{$usergroups}
+	</ul>
+") : '') . "
+</div>
+
+<div class=\"box\">
+	<input type=\"submit\" name=\"submit\" value=\"Delete '{$dm['name']}'\" />
+</div>
+</form>
+
+{$footer}

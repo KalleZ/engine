@@ -168,7 +168,24 @@
 			{
 				return($this->instances[$refname]);
 			}
-			elseif(!\class_exists($class))
+
+			$instance = $this->invoke($class);
+
+			$this->set($refname, $instance);
+
+			return($instance);
+		}
+
+		/**
+		 * Invokes a class, calling its preloading method if available
+		 * and then returns the instance object
+		 *
+		 * @param	string					The class to register, this supports the 'Invokable' interface
+		 * @return	object					Returns a reference to the created instance
+		 */
+		public function invoke($class)
+		{
+			if(!\class_exists($class))
 			{
 				throw new Exception\Basic('Passed object class (%s) does not exists', $class);
 			}
@@ -181,8 +198,6 @@
 			{
 				$instance = new $class;
 			}
-
-			$this->set($refname, $instance);
 
 			return($instance);
 		}

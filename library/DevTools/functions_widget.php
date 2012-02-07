@@ -97,4 +97,22 @@
 
 		return($sidebar);
 	}
+
+	/**
+	 * Widget hook function - users
+	 *
+	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\Tuxxedo\Registry	The registry reference
+	 * @param	string			The template name of the widget
+	 * @return	string			Returns the compiled sidebar widget
+	 */
+	function widget_hook_users(Style $style, Registry $registry, $widget)
+	{
+		$any_usergroups		= sizeof($registry->datastore->usergroups);
+		$any_permissions 	= sizeof($registry->datastore->permissions);
+
+		eval('$sidebar = "' . $style->fetch($widget) . '";');
+
+		return($sidebar);
+	}
 ?>

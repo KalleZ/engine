@@ -1,6 +1,6 @@
 {$header}
 
-<form action="./options.php?do=options&action=<if expression="$action == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post">
+<form action="./options.php?do=options&action=<if expression="$action == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post" id="optedit" onsubmit="return(false);">
 <div class="box">
 	<h4><if expression="$action == 'edit'">Edit<else />Add</if> option</h4>
 
@@ -28,8 +28,14 @@
 		<tr>
 			<td nowrap="nowrap" valign="top">
 				Value</td>
-			<td id="optedit_canvas">
-				<textarea name="value" id="optedit_value1" rows="5" style="width: 99%;"><if expression="$action == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$action == 'edit' && (!empty($opt['defaultvalue']) || $opt['defaultvalue'] == '0')">{$opt['defaultvalue']}</if></if></textarea></td>
+			<td>
+				<textarea name="value" rows="5" style="width: 99%;"><if expression="$action == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$action == 'edit' && (!empty($opt['defaultvalue']) || $opt['defaultvalue'] == '0')">{$opt['defaultvalue']}</if></if></textarea>
+
+				<ul>
+					<li><strong>String:</strong> Can be any value, even on multiple lines</li>
+					<li><strong>Integer:</strong> Numeric values</li>
+					<li><strong>Boolean:</strong> True/False value, use 1 or 0</li>
+				</ul></td>
 		</tr>
 		<tr class="heading">
 			<td colspan="2" class="start end">
@@ -51,11 +57,11 @@
 			<td>
 				<label><input type="checkbox" name="defaultoverride" value="1" /> Yes</label></td>
 		</tr>
+<if expression="$cached">
 		<tr class="heading">
 			<td colspan="2" class="start end">
-				<h5>Datastore</h5></td>
+				<h5>Memory</h5></td>
 		</tr>
-<if expression="$cached">
 		<tr>
 			<td nowrap="nowrap">
 				Default value</td>
@@ -68,25 +74,10 @@
 			<td>
 				{$cachevalue}</td>
 		</tr>
-<else />
-		<tr>
-			<td colspan="2">
-				Option is not cached; save to rebuild the datastore</td>
-		</tr>
 </if>
 </if>
 	</table>
 </div>
-
-<if expression="$action == 'edit'">
-<div style="display: none;" id="optedit_original_value"><if expression="$action == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])">{$opt['value']}<else /><if expression="$action == 'edit' && (!empty($opt['defaultvalue']) || $opt['defaultvalue'] == '0')">{$opt['defaultvalue']}</if></if></div>
-
-<if expression="$opt['type'] != 's'">
-<script type="text/javascript">
-engine_optedit_typechange($('optedit_type'));
-</script>
-</if>
-</if>
 
 <div class="box">
 	<input type="submit" name="submit" value="<if expression="$action == 'edit'">Edit<else />Add</if>" />

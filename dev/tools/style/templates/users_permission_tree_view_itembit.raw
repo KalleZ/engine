@@ -1,0 +1,13 @@
+<tr<if expression="!$accessible"> class="heading highlight"</if>>
+	<td>
+		<if expression="!$accessible"><span class="underlined"></if>{$permission} <if expression="isset($_POST['opt_showbits'])">(Bits: {$bits})</if><if expression="!$accessible"></span></if>
+	</td>
+<if expression="isset($userinfo)">
+	<td>
+		<if expression="!$accessible"><em></if>{$user_perm}<if expression="!$accessible"></em></if>
+	</td>
+</if>
+	<td>
+		<if expression="!$accessible || !$uaccessible"><em class="error"><strong></if>{$group_perm}<if expression="!$accessible || !$uaccessible"></strong></em></if>
+	</td>
+</tr>

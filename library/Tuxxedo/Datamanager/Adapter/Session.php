@@ -97,6 +97,7 @@
 			$this->tablename	= \TUXXEDO_PREFIX . 'sessions';
 			$this->idname		= 'sessionid';
 			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;
+			$this->reidentify	= true;
 
 			parent::init($registry, $options, $parent);
 		}

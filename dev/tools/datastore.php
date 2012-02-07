@@ -48,6 +48,7 @@
 	 * Require the bootstraper
 	 */
 	require('./includes/bootstrap.php');
+	require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
 	$indices = Array(
 				'languages'		=> 'id', 
@@ -184,7 +185,16 @@
 									break;
 									case('usergroups'):
 									{
-										$s['permissions'] = (integer) $s['permissions'];
+										$result = $db->query('
+													SELECT 
+														COUNT(`id`) as \'count\' 
+													FROM 
+														`' . TUXXEDO_PREFIX . 'users` 
+													WHERE 
+														`usergroupid` = %d', $s['id']);
+
+										$s['permissions'] 	= (integer) $s['permissions'];
+										$s['users']		= ($result && $result->getNumRows() ? (integer) $result->fetchObject()->count : 0);
 									}
 									case('languages'):
 									{
@@ -259,6 +269,11 @@
 									$tzname = str_replace('_', ' ', $tzname);
 								}
 
+								if(($start_pos = strpos($tzname, '/')) !== false && ($end_pos = strpos($tzname, '/', $start_pos + 1)) !== false)
+								{
+									$tzname = substr_replace($tzname, '', $start_pos, $end_pos - $start_pos);
+								}
+
 								$current[$tzname] = (string) ($tz->getOffset($utc) / 3600);
 							}
 
@@ -267,7 +282,7 @@
 						break;
 					}
 
-					if(($success = sizeof($current) && $datastore->rebuild($element, $current, false)) === false)
+					if(($success = sizeof($current) && $datastore->rebuild($element, $current)) === false)
 					{
 						$corrupt_warn = true;
 					}

@@ -5,7 +5,7 @@
 
 	<table cellspacing=\"0\" cellpadding=\"0\">
 		<tr class=\"heading\">
-			<td class=\"start\">
+			<td class=\"start\" style=\"width: 100%;\">
 				Component
 			</td>
 			<td>
@@ -32,7 +32,7 @@
 	<p>
 		Note, these results are only the core Engine requirements, applications 
 		written on the Engine will inherit these requirements and may add additional 
-		ones.
+		ones, also one of the database extensions is needed for database connectivity.
 	</p>
 </div>
 
