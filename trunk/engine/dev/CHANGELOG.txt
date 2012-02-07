@@ -2,7 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.1.0
+	Tuxxedo Engine 1.1.0 "Fawks"
 	------------------------------------------------
 
 	Added new datamanager and validation constant to allow fields to be empty (Kalle)
@@ -13,8 +13,9 @@
 	 - sync_templates.php
 	Added new DevTools: (Kalle)
 	 - Style & Templates manager
-	 - User authentication
-	 - User permissions
+	 - Users & Usergroups manager
+	 - Permission manager
+	 - User authentication tester
 	 - Table status
 	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
 	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
@@ -58,6 +59,9 @@
 	Added an auto refresh option to the session DevTool (Kalle)
 	Added a detailed session information page to the session DevTool (Kalle)
 	Added option categories (Kalle)
+	Added the ability for datamanagers to tell the core whether to 're-identify' identifying names (Kalle)
+	Added a new method to the registry class, invoke() to directly invoke new instances without registering the reference (Kalle)
+	Added a new validation constant, VALIDATE_IDENTIFIER to auto validate and state configure the base adapter (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -90,11 +94,14 @@
 	Changed the name of the 'Intl' exception, its now called 'Translated' (Kalle)
 	Changed the default value of 'style_storage' from 'filesystem' to 'database' (Kalle)
 	Changed SQL exceptions to require a driver that caused the exception to trigger (Kalle)
+	Changed the user class to always initiate session (Kalle)
+	Changed the 'name' field in the user datamanager to be optional (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
 	Fixed api_analyze.php to correctly resolve nested namespace aliases (Kalle)
 	Fixed api_analyze.php to correctly resolve class and interface names without aliases but within a namespace (Kalle)
+	Fixed api_analyze.php to correctly export classes/interface aliases (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
 	Fixed namespace alias rules in functions.php to inherit the 'Exception' namespace (Kalle)
 	Fixed error_reporting not being reset when testing compiled templates (Kalle)
@@ -128,6 +135,8 @@
 	Removed the setFieldType() method on the datamanager adapter main class (Kalle)
 	Removed the $delay parameter on the datastore rebuild method (Kalle)
 	Removed the $result parameter on the getAffectedRows method (Kalle)
+	Removed the $session parameter on the user class constructor (Kalle)
+	Removed the options editor in the DevTools that never really worked (Kalle)
 
 	Template changes:
 	 - Added

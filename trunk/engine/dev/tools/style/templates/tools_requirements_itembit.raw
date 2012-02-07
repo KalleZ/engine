@@ -1,11 +1,11 @@
 <tr<if expression="!$passed"> class="heading highlight"</if>>
-	<td<if expression="!$passed"> class="start"</if>>
-		{$component}
+	<td>
+		<if expression="!$passed"><span class="underlined"></if>{$component}<if expression="!$passed"></span></if>
 	</td>
 	<td>
-		<if expression="$required">Yes<else />No</if>
+		<if expression="!$passed"><em></if><if expression="$required">Yes<else />No</if><if expression="!$passed"></em></if>
 	</td>
-	<td<if expression="!$passed"> class="end"</if>>
-		<if expression="$passed">Yes<else />No</if>
+	<td>
+		<if expression="!$passed"><em></if><if expression="$passed">Yes<else />No</if><if expression="!$passed"></em></if>
 	</td>
 </tr>

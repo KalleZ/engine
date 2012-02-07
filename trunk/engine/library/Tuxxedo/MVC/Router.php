@@ -32,6 +32,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Loader;
 	use Tuxxedo\Registry;
@@ -53,7 +54,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Router
+	class Router extends Design\InfoAccess
 	{
 		/**
 		 * Private instance to the Tuxxedo registry
@@ -116,6 +117,7 @@
 			$this->registry		= Registry::init();
 			$this->controller 	= self::$default_controller;
 			$this->action 		= self::$default_action;
+			$this->parameters	= &$this->information;
 
 			if($prefix !== NULL)
 			{
@@ -176,19 +178,13 @@
 		}
 
 		/**
-		 * Get a parameter value
+		 * Gets all parameters
 		 *
-		 * @param	string						Index of the parameter
-		 * @return	string						The Parameter value, and NULL on undefined parameters
+		 * @return	array						Returns all the parameters defined
 		 */
-		public function __get($parameter)
+		public function getParameters()
 		{
-			if(!isset($this->parameters[$parameter]))
-			{
-				return;
-			}
-
-			return($this->parameters[$parameter]);
+			return($this->parameters);
 		}
 
 		/**
@@ -199,7 +195,7 @@
 		 */
 		public function __isset($parameter)
 		{
-			return(isset($this->params[$parameter]));
+			return(isset($this->parameters[$parameter]));
 		}
 
 		/**
@@ -220,7 +216,7 @@
 			}
 			catch(Exception\Basic $e)
 			{
-				throw new Exception\MVC\InvalidController($e);
+				throw new Exception\MVC\InvalidController;
 			}
 
 			return($controller);

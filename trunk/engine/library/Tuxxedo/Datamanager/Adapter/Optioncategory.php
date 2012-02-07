@@ -62,8 +62,7 @@
 		protected $fields		= Array(
 							'name'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidCategoryName')
+											'validation'	=> self::VALIDATE_IDENTIFIER
 											)
 							);
 
@@ -109,38 +108,6 @@
 			}
 
 			parent::init($registry, $options, $parent);
-		}
-
-		/**
-		 * Checks whether the category name is valid
-		 *
-		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	string				The category name to check
-		 * @return	boolean				Returns true if the category name is valid
-		 */
-		public static function isValidCategoryName(Adapter $dm, Registry $registry, $name)
-		{
-			static $cache;
-
-			if($cache === NULL)
-			{
-				$query = $registry->db->query('
-								SELECT 
-									`name`
-								FROM
-									`' . \TUXXEDO_PREFIX . 'optioncategories`');
-
-				if($query && $query->getNumRows())
-				{
-					foreach($query as $row)
-					{
-						$cache[] = $row['name'];
-					}
-				}
-			}
-
-			return(!\in_array($name, $cache));
 		}
 
 		/**

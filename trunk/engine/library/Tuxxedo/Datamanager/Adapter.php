@@ -165,6 +165,13 @@
 		const VALIDATE_STRING_EMPTY		= 7;
 
 		/**
+		 * Validation option constant, identifier
+		 *
+		 * @var		integer
+		 */
+		const VALIDATE_IDENTIFIER		= 8;
+
+		/**
 		 * Factory option constant - internationalization (default enabled)
 		 *
 		 * @var		integer
@@ -229,6 +236,13 @@
 		protected $identifier;
 
 		/**
+		 * Whether to re-identify the data when saving
+		 *
+		 * @var		boolean
+		 */
+		protected $reidentify 			= false;
+ 
+		/**
 		 * Iterator position
 		 *
 		 * @var		integer
@@ -256,6 +270,12 @@
 		 */
 		protected $data				= Array();
 
+		/**
+		 * Cache data if the identifier is gonna be validated
+		 *
+		 * @var		array
+		 */
+		protected $identifier_data		= Array();
 
 		/**
 		 * List of shutdown handlers to execute
@@ -374,6 +394,23 @@
 			{
 				$this->identifier = $this->fields[$this->idname]['value'] = NULL;
 			}
+
+			if(isset($this->fields[$this->idname]['validation']) && $this->fields[$this->idname]['validation'] == self::VALIDATE_IDENTIFIER)
+			{
+				$query = $registry->db->query('
+								SELECT 
+									`%s` 
+								FROM 
+									`%s`', $this->idname, $this->tablename);
+
+				if($query && $query->getNumRows())
+				{
+					foreach($query as $row)
+					{
+						$this->identifier_cache[] = $row[$this->idname];
+					}
+				}
+			}
 		}
 
 		/**
@@ -391,14 +428,14 @@
 		{
 			$registry = Registry::init();
 
-			if($options & self::OPT_INTL)
+			if($options & (self::OPT_INTL | self::OPT_INTL_AUTO))
 			{
-				if(!$registry->intl)
+				if($options & self::OPT_INTL && !$registry->intl)
 				{
 					throw new Exception\Basic('Internationalization is not instanciated for form data phrases');
 				}
 
-				if(!$registry->intl->cache(Array('datamanagers')))
+				if($registry->intl && !$registry->intl->cache(Array('datamanagers')))
 				{
 					throw new Exception\Basic('Unable to cache datamanager phrases');
 				}
@@ -542,7 +579,7 @@
 
 			foreach($this->fields as $field => $props)
 			{
-				if($props['type'] == self::FIELD_OPTIONAL && !isset($props['default']) && !isset($this->data[$field]))
+				if($props['type'] == self::FIELD_PROTECTED && !isset($props['validation']) || $props['type'] == self::FIELD_OPTIONAL && !isset($props['default']) && !isset($this->data[$field]))
 				{
 					continue;
 				}
@@ -620,6 +657,46 @@
 						}
 					}
 					break;
+					case(self::VALIDATE_IDENTIFIER):
+					{
+						if(!isset($this->data[$field]) || empty($this->data[$field]))
+						{
+							$this->invalid_fields[] = $field;
+
+							continue;
+						}
+
+						if($this->identifier)
+						{
+							$exists = \in_array($field, $this->identifier_data);
+
+							if($this->identifier != $this->data[$field])
+							{
+								if($exists)
+								{
+									$this->invalid_fields[] = $field;
+
+									continue;
+								}
+							}
+							elseif($exists)
+							{
+								$this->invalid_fields[] = $field;
+
+								continue;
+							}
+						}
+						else
+						{
+							$this->reidentify = true;
+						}
+					}
+					break;
+					default:
+					{
+						$this->invalid_fields[] = $field;
+					}
+					break;
 				}
 			}
 
@@ -662,11 +739,10 @@
 
 				$this->context = self::CONTEXT_NONE;
 
-				throw new Exception\Formdata($formdata, ($intl ? $this->registry->intl->find('validation_failed', 'datamanagers') : ''));
+				throw new Exception\FormData($formdata, ($intl ? $this->registry->intl->find('validation_failed', 'datamanagers') : ''));
 			}
 
 			$values			= '';
-			$sql 			= ($this->options & self::OPT_LOAD_ONLY ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (';
 			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $this->data) : $this->data);
 			$virtual_fields		= $this->getVirtualFields();
 			$n 			= \sizeof($virtual);
@@ -689,12 +765,8 @@
 				}
 			}
 
-			$new_identifier = isset($virtual[$this->idname]);
-
-			if($new_identifier)
-			{
-				$sql = 'UPDATE `' . $this->tablename . '` SET ';
-			}
+			$new_identifier = isset($virtual[$this->idname]) && !$this->reidentify;
+			$sql		= ($new_identifier ? 'UPDATE `' . $this->tablename . '` SET ' : ($this->options & self::OPT_LOAD_ONLY ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (');
 
 			foreach($virtual as $field => $data)
 			{

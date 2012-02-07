@@ -268,8 +268,7 @@
 	'devtools' => Array(
 
 	/**
-	 * Database path for file based databases if above 
-	 * path is relative.
+	 * Database path for file based databases
 	 */
 	'database'	=> '../sql/bin/tuxxedo.sqlite3'
 

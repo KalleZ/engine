@@ -67,12 +67,6 @@
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_STRING
 											), 
-							'type'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidType'), 
-											'default'	=> 2
-											), 
 							'permissions'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_NUMERIC, 
@@ -113,28 +107,14 @@
 					throw new Exception('Invalid usergroup id passed to datamanager');
 				}
 
-				$this->data 		= $usergroup->fetchAssoc();
-				$this->identifier 	= $identifier;
+				$this->data 			= $usergroup->fetchAssoc();
+				$this->data['permissions']	= (integer) $this->data['permissions'];
+				$this->identifier 		= $identifier;
 
 				$usergroup->free();
 			}
 
 			parent::init($registry, $options, $parent);
-		}
-
-		/**
-		 * Checks whether a usergroup type is valid, this is 
-		 * used as a callback for the validation filter, hence 
-		 * its staticlly defined
-		 *
-		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
-		 * @param	\Tuxxedo\Registry		The Registry reference
-		 * @param	integer				The type to check
-		 * @return	boolean				Returns true if the type is valid, otherwise false
-		 */
-		public static function isValidType(Adapter $dm, Registry $registry, $type)
-		{
-			return($type > 0 && $type < 3);
 		}
 
 		/**
@@ -146,21 +126,33 @@
 		 */
 		public function rebuild(Array $virtual)
 		{
-			if(($datastore = $this->registry->datastore->usergroups) === false)
+			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->usergroups[$this->data['id']]))
 			{
-				$datastore = Array();
+				return(true);
 			}
 
-			if(!$virtual)
+			$id		= (isset($virtual['id']) ? $virtual['id'] : $this->data['id']);
+			$usergroups	= $this->registry->datastore->usergroups;
+
+			unset($usergroups[$id]);
+
+			if($this->context == self::CONTEXT_SAVE)
 			{
-				unset($datastore[(integer) ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier)]);
-			}
-			else
-			{
-				$datastore[(integer) $this->data[$this->idname]] = $virtual;
+				$query = $this->registry->db->query('
+									SELECT 
+										COUNT(`id`) as \'count\' 
+									FROM 
+										`' . \TUXXEDO_PREFIX . 'users` 
+									WHERE 
+										`usergroupid` = %d', $id);
+
+				$virtual['users']	= ($query && $query->getNumRows() ? (integer) $query->fetchObject()->count : 0);
+				$usergroups[$id] 	= $virtual;
 			}
 
-			return($this->registry->datastore->rebuild('usergroups', $datastore));
+			\ksort($usergroups);
+
+			return($this->registry->datastore->rebuild('usergroups', $usergroups));
 		}
 	}
 ?>

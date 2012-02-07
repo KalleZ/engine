@@ -344,12 +344,11 @@
 				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->lastErrorMsg(), $this->link->lastErrorCode());
 			}
 
-			$this->queries[] = $sql;
+			$this->queries[] 	= $sql;
+			$this->affected_rows 	= (integer) $this->link->changes();
 
 			if(!$query->numColumns())
 			{
-				$this->affected_rows = (integer) $this->link->changes();
-
 				return(true);
 			}
 

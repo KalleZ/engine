@@ -337,10 +337,11 @@
 			$query = \mysql_query($sql);
 			Registry::globals('error_reporting', true);
 
+			$this->affected_rows = (integer) \mysql_affected_rows();
+
 			if($query === true)
 			{
-				$this->queries[] 	= $sql;
-				$this->affected_rows 	= (integer) \mysql_affected_rows();
+				$this->queries[] = $sql;
 
 				return(true);
 			}

@@ -155,8 +155,8 @@ INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup'
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('8', 'dm_user_salt', 'Password salt', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('9', 'dm_user_timezone', 'Timezone', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('10', 'dm_user_username', 'Username', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('11', 'dm_user_styleid', 'Style identifier', '1', 'datamanagers');
-INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('12', 'dm_user_languageid', 'Language identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('11', 'dm_user_style_id', 'Style identifier', '1', 'datamanagers');
+INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('12', 'dm_user_language_id', 'Language identifier', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('13', 'dm_usergroup_title', 'Usergroup title', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('14', 'dm_usergroup_type', 'Usergroup type', '1', 'datamanagers');
 INSERT INTO 'phrases' ('id', 'title', 'translation', 'languageid', 'phrasegroup') VALUES ('15', 'dm_usergroup_permissions', 'Permission mask', '1', 'datamanagers');

@@ -1,0 +1,34 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Usergroups</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td class=\"start\">
+				Id
+			</td>
+			<td style=\"width: 100%;\">
+				Title
+			</td>
+			<td>
+				Users
+			</td>
+			<td nowrap=\"nowrap\">
+				Permission bits
+			</td>
+			<td class=\"end\">
+				&nbsp;
+			</td>
+		</tr>
+		{$rows}
+	</table>
+
+	<form action=\"./users.php?do=user&action=search\" method=\"post\">
+		<input type=\"hidden\" name=\"query_field\" value=\"usergroupid\" />
+		<input type=\"hidden\" name=\"query\" id=\"hiddenform_viewusers_identifier\" />
+		<input type=\"submit\" name=\"submit\" id=\"hiddenform_viewusers_submit\" value=\"true\" style=\"display: none;\" />
+	</form>
+</div>
+
+{$footer}

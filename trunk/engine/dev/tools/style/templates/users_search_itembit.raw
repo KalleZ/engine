@@ -1,0 +1,22 @@
+<tr>
+	<td>
+		{$user['id']}
+	</td>
+	<td nowrap="nowrap" style="width: 100%;">
+		{$user['username']}
+	</td>
+	<td nowrap="nowrap">
+		{$usergroup}
+	</td>
+	<td>
+		<if expression="$user['permissions']">{$user['permissions']}<else /><em>Default</em></if>
+	</td>
+	<td nowrap="nowrap">
+		<select onchange="engine_user_handler(this, '{$user['id']}');">
+			<option></option>
+			<option value="edit">Edit</option>
+			<option value="permissions">Permissions</option>
+			<option value="delete">Delete</option>
+		</select>
+	</td>
+</tr>

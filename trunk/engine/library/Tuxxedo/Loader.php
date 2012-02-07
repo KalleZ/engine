@@ -259,8 +259,15 @@
 			{
 				foreach(self::$routes['callback'] as $match => $callback)
 				{
-					if(strpos($name, $match) !== false && \call_user_func($callback, $name))
+					$path = NULL;
+
+					if(strpos($name, $match) !== false && \call_user_func($callback, $name, $path))
 					{
+						if($path !== NULL)
+						{
+							return($path);
+						}
+
 						break;
 					}
 				}

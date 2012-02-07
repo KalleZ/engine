@@ -333,10 +333,11 @@
 			$query = $this->link->query($sql);
 			Registry::globals('error_reporting', true);
 
+			$this->affected_rows = (integer) $this->link->affected_rows;
+
 			if($query === true)
 			{
-				$this->queries[] 	= $sql;
-				$this->affected_rows	= (integer) $this->link->affected_rows;
+				$this->queries[] = $sql;
 
 				return(true);
 			}

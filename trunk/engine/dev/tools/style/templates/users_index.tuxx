@@ -1,0 +1,11 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Users &amp; Usergroups</h4>
+
+	<p>
+		Pick an action to the left to work with.
+	</p>
+</div>
+
+{$footer}

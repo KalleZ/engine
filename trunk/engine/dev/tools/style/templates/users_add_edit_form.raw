@@ -1,0 +1,105 @@
+{$header}
+
+<form action="./users.php?do=user&action=<if expression="$action == 'edit'">edit&user={$dm['id']}<else />add</if>" method="post">
+<div class="box">
+	<h4><if expression="$action == 'edit'">Edit<else />Add</if> user</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Basic information</h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				All basic information is required, on user creation 
+				then the password field is required too.</td>
+		</tr>
+		<tr>
+			<td style="width: 20%;">
+				Username</td>
+			<td>
+				<input type="text" name="username" size="32" value="<if expression="$action == 'edit'">{$dm['username']}</if>" /></td>
+		</tr>
+		<tr>
+			<td>
+				Email</td>
+			<td>
+				<input type="text" name="eaddress" size="32" value="<if expression="$action == 'edit'">{$dm['email']}</if>" /></td>
+		</tr>
+		<tr>
+			<td>
+				Name</td>
+			<td>
+				<input type="text" name="name" size="32" value="<if expression="$action == 'edit'">{$dm['name']}</if>" /></td>
+		</tr>
+		<tr>
+			<td>
+				Usergroup</td>
+			<td>
+				<select name="usergroupid">
+					{$usergroups_dropdown}
+				</select></td>
+		</tr>
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Change password</h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				If a password change is required, use this field to change 
+				it or leave it blank to keep the current password.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				New password</td>
+			<td>
+				<input type="password" name="newpassword" size="32" /></td>
+		</tr>
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Personal preferences</h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				Values thats "blank", means they inherit the system value. For 
+				example if the user speaks a different language, than what the 
+				default application language is, then these preferences can be 
+				used to override the system default.
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Language</td>
+			<td>
+				<select name="languageid">
+					<option></option>
+					{$languages_dropdown}
+				</select></td>
+		</tr>
+		<tr>
+			<td>
+				Style</td>
+			<td>
+				<select name="styleid">
+					<option></option>
+					{$styles_dropdown}
+				</select></td>
+		</tr>
+		<tr>
+			<td>
+				Timezone</td>
+			<td>
+				<select name="timezone">
+					{$timezones_dropdown}
+				</select></td>
+		</tr>
+	</table>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="<if expression="$action == 'edit'">Edit<else />Add</if>" />
+</div>
+</form>
+
+{$footer}
