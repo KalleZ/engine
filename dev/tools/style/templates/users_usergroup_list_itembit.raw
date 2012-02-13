@@ -15,7 +15,7 @@
 		<select onchange="engine_usergroup_handler(this, '{$id}', 'viewusers');">
 			<option></option>
 			<option value="edit">Edit</option>
-			<option value="permissions">Permssions</option>
+			<option value="permissions">Permissions</option>
 			<option value="delete">Delete</option>
 			<option value="viewusers">View users</option>
 		</select>

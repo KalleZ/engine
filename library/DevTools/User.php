@@ -197,16 +197,17 @@
 		 * Overloads the logout function to make it complatible 
 		 * with the user impersonating code
 		 *
-		 * @return	boolean				Returns true if the user was logged out, otherwise false
+		 * @param	boolean			Whether to restart the session or not
+		 * @return	boolean			Returns true if the user was logged out, otherwise false
 		 */
-		public function logout()
+		public function logout($restart = false)
 		{
 			if($this->impersonate)
 			{
 				$this->impersonate = 0;
 			}
 
-			parent::logout();
+			parent::logout($restart);
 		}
 	}
 ?>

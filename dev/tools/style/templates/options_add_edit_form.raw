@@ -1,6 +1,6 @@
 {$header}
 
-<form action="./options.php?do=options&action=<if expression="$action == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post" id="optedit" onsubmit="return(false);">
+<form action="./options.php?do=options&action=<if expression="$action == 'edit'">edit&option={$opt['option']}<else />add</if>" method="post">
 <div class="box">
 	<h4><if expression="$action == 'edit'">Edit<else />Add</if> option</h4>
 

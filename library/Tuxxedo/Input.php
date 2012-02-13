@@ -61,42 +61,42 @@
 		 *
 		 * @var		integer
 		 */
-		const TYPE_NUMERIC	= 0x0001;
+		const TYPE_NUMERIC			= 0x0001;
 
 		/**
 		 * Data filter constant, string value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_STRING	= 0x0002;
+		const TYPE_STRING			= 0x0002;
 
 		/**
 		 * Data filter constant, email value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_EMAIL	= 0x0003;
+		const TYPE_EMAIL			= 0x0003;
 
 		/**
 		 * Data filter constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_BOOLEAN	= 0x0004;
+		const TYPE_BOOLEAN			= 0x0004;
 
 		/**
 		 * Data filter constant, callback value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_CALLBACK	= 0x0005;
+		const TYPE_CALLBACK			= 0x0005;
 
 		/**
 		 * Data filter constant, string value (empty allowed)
 		 *
 		 * @var		integer
 		 */
-		const TYPE_STRING_EMPTY	= 0x0006;
+		const TYPE_STRING_EMPTY			= 0x0006;
 
 		/**
 		 * Data filter option, gets the raw value 
@@ -104,7 +104,7 @@
 		 *
 		 * @var		integer
 		 */
-		const INPUT_OPT_RAW	= 0x01FF;
+		const OPT_RAW				= 0x01FF;
 
 		/**
 		 * Data filter option, tells the cleaner that this 
@@ -114,7 +114,7 @@
 		 *
 		 * @var		integer
 		 */
-		const INPUT_OPT_ARRAY	= 0x02FF;
+		const OPT_ARRAY				= 0x02FF;
 
 
 		/**
@@ -268,9 +268,9 @@
 					return;
 				}
 
-				if($options & self::INPUT_OPT_RAW)
+				if($options & self::OPT_RAW)
 				{
-					return(\filter_input($data, $field, \FILTER_UNSAFE_RAW, ($options & self::INPUT_OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0)));
+					return(\filter_input($data, $field, \FILTER_UNSAFE_RAW, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0)));
 				}
 
 				switch($type)
@@ -303,7 +303,7 @@
 				}
 				else
 				{
-					$input = \filter_input($data, $field, $flags, ($options & self::INPUT_OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
+					$input = \filter_input($data, $field, $flags, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
 				}
 
 				if($type == self::TYPE_STRING && empty($input))
@@ -320,12 +320,12 @@
 					return;
 				}
 
-				if($options & self::INPUT_OPT_RAW)
+				if($options & self::OPT_RAW)
 				{
 					return($data[$field]);
 				}
 
-				if($options & self::INPUT_OPT_ARRAY)
+				if($options & self::OPT_ARRAY)
 				{
 					$data[$field] = (array) $data[$field];
 

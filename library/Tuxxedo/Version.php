@@ -56,7 +56,7 @@
 	 	 *
 		 * @var		string
 		 */
-		const SIMPLE			= '1.2.0';
+		const SIMPLE			= '1.1.0';
 
 		/**
 		 * Major version number
@@ -70,7 +70,7 @@
 		 *
 		 * @var		integer
 		 */
-		const MINOR			= 2;
+		const MINOR			= 1;
 
 		/**
 		 * Release version number
@@ -93,7 +93,7 @@
 		 *
 		 * @var		integer
 		 */
-		const ID			= 10200;
+		const ID			= 10100;
 
 		/**
 		 * Development preview mode, this is set to true if this is a development 
@@ -109,7 +109,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Alpha';
+		const PREVIEW_TYPE		= 'Beta';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 1;
+		const PREVIEW_NUMBER		= 3;
 
 		/**
 		 * Development codename, this value is always the same for each 
@@ -127,7 +127,7 @@
 		 *
 		 * @var		string
 		 */
-		const CODENAME			= 'Intero';
+		const CODENAME			= 'Fawks';
 
 		/**
 		 * Current version control system revision number
@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Intero" Alpha 1 (experimental)';
+		const FULL			= '1.1.0 "Fawks" Beta 3';
 	}
 ?>

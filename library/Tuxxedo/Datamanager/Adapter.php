@@ -441,7 +441,7 @@
 				}
 			}
 
-			$class	= (\strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . \ucfirst(\strtolower($datamanager));
+			$class	= (\strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . $datamanager;
 			$dm 	= new $class($registry, $identifier, $options, $parent);
 
 			if(\in_array($datamanager, self::$loaded_datamanagers))
@@ -807,7 +807,7 @@
 				return(false);
 			}
 
-			if(($new_id = $this->registry->db->getInsertId()) !== false)
+			if(($new_id = $this->registry->db->getInsertId()))
 			{
 				$this->data[$this->idname] = $new_id;
 			}
