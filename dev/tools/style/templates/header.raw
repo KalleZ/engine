@@ -433,7 +433,7 @@
 			</div>
 			<br />
 <if expression="isset($debug_notice)">
-			<div class="box">
+			<div class="warning">
 				Warning, your configuration had debug mode set to false. This was automaticlly 
 				changed to true while executing the development tools. To remove this warning, then 
 				simply set <em>'debug'</em> to true in your configuration file.
