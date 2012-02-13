@@ -1,0 +1,99 @@
+{$header}
+
+<form action=\"./styles.php?style={$styleid}&do=templates&action=" . (($action == 'edit') ? ("edit&id={$dm['id']}") : ("add")) . "\" method=\"post\">
+<div class=\"box\">
+	<h4>" . (($action == 'edit') ? ("Edit") : ("Add")) . " template</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Template information</h5></td>
+		</tr>
+		<tr>
+			<td style=\"width: 20%;\">
+				Name</td>
+			<td>
+				<input type=\"text\" name=\"title\" size=\"32\" value=\"" . (($action == 'edit') ? ("{$dm['title']}") : '') . "\" /></td>
+		</tr>
+" . (($action == 'edit') ? ("
+		<tr>
+			<td valign=\"top\">
+				Revision</td>
+			<td>
+				{$dm['revision']}</td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Customized?</td>
+			<td>
+				" . (($dm['changed']) ? ("Yes") : ("No")) . "</td>
+") : '') . "
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Source</h5></td>
+		</tr>
+		<tr>
+			<td colspan=\"2\">
+				<textarea name=\"source\" style=\"width: 99%;\" rows=\"20\">" . ((isset($source)) ? ("{$source}") : '') . "</textarea></td>
+		</tr>
+" . (($action == 'edit') ? ("
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Options</h5></td>
+		</tr>
+		<tr>
+			<td colspan=\"2\">
+				Below option should only be used if you understand the impact of 
+				how overriding defaults works. Overriding default templates can only 
+				be reverted by re-importing the templates from the Engine version 
+				currently in-use. Note that resetting the version number is linked 
+				to the default override and only have an effect if the override is 
+				checked.
+
+				<br /> <br />
+
+				The custom revision setting is however not linked to the reset 
+				to default and can be used at all times. Note that custom revision 
+				over rules to the reset revision, meaning they cannot be used 
+				in conjuction with each other.
+			</td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Set this as default template code?</td>
+			<td>
+				<label><input type=\"checkbox\" name=\"sourceoverride\" value=\"1\" /> Yes</label></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Reset revision number?</td>
+			<td>
+				<label><input type=\"checkbox\" name=\"resetrevision\" value=\"1\" /> Yes</label></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Set custom revision number?</td>
+			<td>
+				<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
+					<tr>
+						<td style=\"padding: 0px; width: 20%;\">
+							<label><input type=\"checkbox\" name=\"customrevision\" value=\"1\" /> Yes</label></td>
+						<td style=\"padding: 0px;\">
+							<input type=\"text\" name=\"newrevision\" value=\"{$dm['revision']}\" size=\"5\" /></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+") : '') . "
+</if>
+	</table>
+</div>
+
+<div class=\"box\">
+	<input type=\"hidden\" name=\"submit\" value=\"true\" />
+	<input type=\"submit\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . "\" />
+	<input type=\"submit\" name=\"reload\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . " and reload\" />
+</div>
+</form>
+
+{$footer}

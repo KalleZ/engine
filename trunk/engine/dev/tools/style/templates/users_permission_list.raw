@@ -1,0 +1,22 @@
+{$header}
+
+<div class="box">
+	<h4>Permissions</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td class="start">
+				Name
+			</td>
+			<td>
+				Bits
+			</td>
+			<td class="end">
+				&nbsp;
+			</td>
+		</tr>
+		{$rows}
+	</table>
+</div>
+
+{$footer}

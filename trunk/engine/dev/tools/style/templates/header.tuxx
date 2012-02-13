@@ -1,0 +1,449 @@
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+	<head>
+		<title>Tuxxedo Engine Development Tools</title>
+
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+
+		<script type=\"text/javascript\">
+		var $ = function(id)
+		{
+			return(document.getElementById(id));
+		};
+		</script>
+
+		<script type=\"text/javascript\">
+		function engine_options_handler(select, option)
+		{
+			var action = select.options[select.selectedIndex].value;
+
+			switch(action)
+			{
+				case('delete'):
+				case('reset'):
+				{
+					if(confirm('Are you sure?'))
+					{
+						window.location = './options.php?do=options&action=' + action + '&option=' + option;
+					}
+				}
+				break;
+				default:
+				{
+					if(action.length && option.length)
+					{
+						window.location = './options.php?do=options&action=' + action + '&option=' + option;
+					}
+				}
+			}
+		}
+
+		function engine_styles_change(select)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './styles.php?style=' + select.options[select.selectedIndex].value + '&do=style&action=edit';
+		}
+
+		function engine_swap_password_to_text(id)
+		{
+			$(id).type = ($(id).type == 'text' ? 'password' : 'text');
+		}
+
+		function engine_templates_handler(select, styleid, templateid)
+		{
+			if(!select.options[select.selectedIndex].value || select.options[select.selectedIndex].value == 'delete' && !confirm('Are you sure you wish to delete this template?'))
+			{
+				return;
+			}
+
+			this.location = './styles.php?style=' + styleid + '&do=templates&action=' + select.options[select.selectedIndex].value + '&id=' + templateid;
+		}
+
+		function engine_tablestatus_handler(select, table)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './tools.php?do=status&table=' + table + '&operation=' + select.options[select.selectedIndex].value;
+		}
+
+		function engine_permission_handler(select, permission)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './users.php?do=permission&action=' + select.options[select.selectedIndex].value + '&permission=' + permission;
+		}
+
+		function engine_usergroup_handler(select, id, formid)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+			else if(select.options[select.selectedIndex].value == 'viewusers')
+			{
+				$('hiddenform_' + formid + '_identifier').value = id;
+				$('hiddenform_' + formid + '_submit').click();
+
+				return;
+			}
+
+			this.location = './users.php?do=usergroup&action=' + select.options[select.selectedIndex].value + '&usergroup=' + id;
+		}
+
+		function engine_user_handler(select, id)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './users.php?do=user&action=' + select.options[select.selectedIndex].value + '&user=' + id;
+		}
+		</script>
+
+		<style type=\"text/css\">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		none;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
+			a.redirect
+			{
+				text-decoration:		underline;
+			}
+			a.redlink
+			{
+				color:				#CC0000;
+			}
+				a.redlink:hover
+				{
+					background-color:		#CC0000;
+					border-radius:			4px;
+					color:				#FFFFFF;
+				}
+			a img
+			{
+				border:				0px;
+			}
+		body
+		{
+			background:			#E4F4FC;
+			color:				#3B7286;
+			font-family:			\"Helvetica Neue\", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
+			margin-top:			30px;
+		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		input, select, textarea
+		{
+			background-color:		#FFFFFF;
+			border:				1px solid #21A7CD;
+			border-radius:			4px;
+			color:				#000000;
+			padding:			5px;
+		}
+			input[type=checkbox]:focus, input[type=radio]:focus, input[type=password]:focus, input[type=text]:focus, option:focus, select:focus, textarea:focus
+			{
+				border:				1px solid #021420;
+			}
+			input[type=button], input[type=submit]
+			{
+				background:			#044968 url('./style/images/top-background.png') repeat-x center left;
+				border:				0px;
+				color:				#FFFFFF;
+			}
+		label
+		{
+			cursor:				pointer;
+		}
+		p.spacer
+		{
+			margin-bottom:			10px;
+		}
+		table
+		{
+			width:				100%;
+		}
+			table tr.heading td
+			{
+				background-color:		#C2EDFD;
+				border:				1px solid #21A7CD;
+				border-right:			0px;
+				font-weight:			bold;
+			}
+				table tr.heading h5
+				{
+					font-size:			14px;
+					margin:				0px;
+					padding:			0px;
+				}
+				table tr.heading td.end
+				{
+					border-right:			1px solid #21A7CD;
+					border-bottom-right-radius:	4px;
+					border-top-right-radius:	4px;
+				}
+				table tr.heading td.start
+				{
+					border-bottom-left-radius:	4px;
+					border-top-left-radius:		4px;
+				}
+			table tr.highlight td
+			{
+				background:			transparent;
+				color:				#A9272C;
+				border:				1px solid transparent;
+			}
+				table tr.highlight td span.error
+				{
+					background-color:		#FFFFFF;
+					border-radius:			4px;
+					padding:			2px;
+				}
+			table tr td
+			{
+				padding:			10px;
+			}
+				table tr td a
+				{
+					border:				1px solid transparent;
+					border-radius:			4px;
+					padding:			5px;
+				}
+					table tr td a:hover
+					{
+						background-color:		#C2EDFD;
+						border:				1px solid #21A7CD;
+						color:				#044968;
+					}
+		textarea
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		.box, .warning
+		{
+			background-color:		#FFFFFF;
+			border:				2px solid #C2EDFD;
+			border-radius:			4px;
+			margin-bottom:			10px;
+			padding:			10px;
+		}
+			.box h3, .box h4, .warning h3, .warning h4
+			{
+				font-size:			14px;
+				margin:				0px;
+				padding:			0px;
+			}
+			.box h4, .warning h4
+			{
+				background:			#044968 url('./style/images/top-background.png') repeat-x top left;
+				border-bottom:			2px solid #21A7CD;
+				border-radius:			4px;
+				color:				#FFFFFF;
+				margin:				-2px -2px 5px -2px;
+				padding:			10px;
+				text-shadow:			1px 1px 1px #000000;
+			}
+				.box h4 span
+				{
+					font-size:			12px;
+					float:				right;
+					padding-top:			1px;
+				}
+					.box h4 span a
+					{
+						color:				#FFFFFF;
+					}
+						.box h4 span a:hover
+						{
+							text-decoration:		underline;
+						}
+		.clear
+		{
+			clear:				both;
+		}
+		.content
+		{
+			margin-left:			270px;
+		}
+			.content .box p, .content .warning p
+			{
+				margin:				0px;
+			}
+		.copyright
+		{
+			color:				#3B3B3B;
+			font-size:			75%;
+			text-align:			right;
+		}
+			.copyright .logo
+			{
+				float:                          right;
+				margin-left:                    10px;
+			}
+			.copyright .text
+			{
+				float:                          right;
+			}
+		.error
+		{
+			color:				#A9272C;
+		}
+		.panel
+		{
+			float:				left;
+			width:				250px;
+		}
+			.panel a
+			{
+				text-decoration:		underline;
+			}
+			.panel div.center
+			{
+				margin:				15px auto;
+				width:				160px;
+			}
+			.panel h4
+			{
+				border-bottom:			2px solid #21A7CD;
+			}
+			.panel h5
+			{
+				font-size:			13px;
+				margin-bottom:			0px;
+			}
+			.panel ul
+			{
+				list-style-type:		square;
+				margin:				0px;
+				padding:			0px 0px 0px 20px;
+			}
+		.top
+		{
+			background:			#044968 url('./style/images/top-background.png') repeat-x top left;
+			border-radius:			4px;
+			padding:			0px 4px;
+		}
+			.top h2
+			{
+				color:				#FFFFFF;
+				float:				right;
+				margin:				0px 5px 0px 0px;
+				padding:			0px;
+				width:				250px;
+			}
+				.top h2 div
+				{
+					font-size:			10px;
+					margin-top:			-5px;
+				}
+			.top ul
+			{
+				list-style-type:		none;
+				margin:				0px;
+				padding:			0px;
+			}
+				.top ul li
+				{
+					float:				left;
+				}
+					.top ul li a
+					{
+						color:				#FFFFFF;
+						display:			block;
+						padding:			10px;
+						text-shadow:			1px 1px 1px #000000;
+					}
+						.top ul li a span
+						{
+							border-radius: 			2px;
+							padding:			1px 3px;
+						}
+							.top ul li a:hover span, .top ul li a.current span
+							{
+								text-shadow:			#FFFFFF 0px 0px 10px;
+								border-bottom:			2px solid #21A7CD;
+							}
+		.underlined
+		{
+			border-bottom:			2px solid #A9272C;
+			color:				#A9272C;
+			padding-bottom:			2px;
+		}
+		.warning
+		{
+			background:			none;
+			background-color:		#FFFFFF;
+			border:				2px solid #A9272C;
+		}
+			.warning *
+			{
+				color:				#A9272C;
+			}
+			.warning input
+			{
+				border-color:			#A9272C;
+			}
+		.wrapper
+		{
+			color:				#3B7286;
+			padding:			0px 50px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class=\"wrapper\">
+			<a href=\"./\"><img src=\"./style/images/logo-tuxxedo.png\" alt=\"Tuxxedo\" /></a>
+
+			<div class=\"top\">
+				<ul>
+					<li><a href=\"./\"" . ((SCRIPT_NAME == 'index') ? (" class=\"current\"") : '') . "><span>Home</span></a></li>
+<!--
+					<li><a href=\"./configuration.php\"" . ((SCRIPT_NAME == 'configurations') ? (" class=\"current\"") : '') . "><span>Configurations</span></a></li>
+-->
+					<li><a href=\"./datastore.php\"" . ((SCRIPT_NAME == 'datastore') ? (" class=\"current\"") : '') . "><span>Datastore</span></a></li>
+					<li><a href=\"./styles.php\"" . ((SCRIPT_NAME == 'styles') ? (" class=\"current\"") : '') . "><span>Styles &amp; Templates</span></a></li>
+<!--
+					<li><a href=\"./intl.php\"" . ((SCRIPT_NAME == 'intl') ? (" class=\"current\"") : '') . "><span>Internationalization</span></a></li>
+-->
+					<li><a href=\"./options.php\"" . ((SCRIPT_NAME == 'options') ? (" class=\"current\"") : '') . "><span>Options</span></a></li>
+					<li><a href=\"./users.php\"" . ((SCRIPT_NAME == 'users') ? (" class=\"current\"") : '') . "><span>Users &amp; Usergroups</span></a></li>
+					<li><a href=\"./sessions.php\"" . ((SCRIPT_NAME == 'sessions') ? (" class=\"current\"") : '') . "><span>Sessions</span></a></li>
+					<li><a href=\"./tools.php\"" . ((SCRIPT_NAME == 'tools') ? (" class=\"current\"") : '') . "><span>Tools</span></a></li>
+				</ul>
+				<div class=\"clear\"></div>
+			</div>
+			<br />
+" . ((isset($debug_notice)) ? ("
+			<div class=\"box\">
+				Warning, your configuration had debug mode set to false. This was automaticlly 
+				changed to true while executing the development tools. To remove this warning, then 
+				simply set <em>'debug'</em> to true in your configuration file.
+			</div>
+") : '') . "
+
+" . ((isset($widget)) ? ("
+			<div class=\"panel\">
+				{$widget}
+			</div>
+") : '') . "
+
+			<div class=\"content\">

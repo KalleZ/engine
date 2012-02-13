@@ -1,0 +1,23 @@
+<div class=\"box\">
+	<h4>About</h4>
+	<p>
+		The development tools are written as an application on top of the engine 
+		as an example of how you can extend the engine. However there is several 
+		parts that hacks the code to allow bypassing some feature locks to integrate 
+		directly into the engine.
+	</p>
+</div>
+
+<div class=\"box\">
+	<h4>Credits</h4>
+	<p>
+		Tuxxedo Engine is developed by Tuxxedo Software Development
+	</p>
+
+	<ul>
+		<li>Kalle Sommer Nielsen</li>
+		<li>Ross Masters</li>
+		<li>Blake Cannell</li>
+		<li>Peter Emil Henriksen</li>
+	</ul>
+</div>

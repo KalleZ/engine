@@ -1,0 +1,96 @@
+
+
+	Tuxxedo Engine 1.2.0 "Intero" Alpha 1
+	-------------------------------------
+
+	Core
+	 - Change $registry->options to also work with option categories
+	 - Change the codebase to not rely on /styles/ being the styledir
+	 - Fix backtraces showing internal + shorthand name for known aliases if no custom is set
+
+	Datamanagers
+	 - Add new datamanagers
+	   - Language
+	   - Phrase
+	   - Phrasegroup
+
+	Internationalization
+	 - Add a browser language auto detection option to switch language for non logged in users
+	 - Add an uload method to make it possible to unload phrasegroups, much like the template unloader 
+	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
+	 - Change the phrasegroup class to implement InfoAccess
+	 - Change to use the phrasegroup class rather than ArrayObject
+
+	MVC
+	 - Add better controller based autoloading feature
+	   - Permissions
+	   - Phrasegroups
+	   - Views
+
+
+	Tuxxedo Engine 1.2.0 "Intero" Alpha 2
+	-------------------------------------
+
+	DevTools
+	 - Add new the internationalization component
+	   - Language
+	     - Add
+	     - Edit
+	     - Delete
+	     - List
+	   - Phrasegroup
+	     - Add
+	     - Edit
+	     - Delete
+	     - List
+	   - Phrase
+	     - Add
+	     - Edit
+	     - Delete
+	     - Search
+	 - Change to use MVC as a backend
+	   - Add translation for the entire application using the 'DevTools' phrasegroup
+	   - Change the templating system to use its own 'DevTools' style
+
+
+
+	Tuxxedo Engine 1.2.0 "Intero" Beta 1
+	------------------------------------
+
+	Datastore
+	 - Add a datastore recache class, with adapters
+	   - languages
+	   - optioncategories
+	   - options
+	   - permissions
+	   - phrasegroups
+	   - styleinfo
+	   - usergroups
+	   - timezones
+	 - Add a new datamanager hook for recache or make 'Cache' work as automatted as possible
+	 - Change the datastore rebuilder in the DevTools to make use of these new classes
+
+	Debug
+	 - Implement trace mode
+	   - Queries
+	 - Change configuration.php so it have its own 'debug' category
+
+	Helpers
+	 - Timer
+
+
+	Tuxxedo Engine 1.2.0 "Intero" Beta 2
+	------------------------------------
+
+	Core
+	 - Implement validators
+
+	Dev
+	 - api_analyze.php
+	   - Add the ability to parse the actual prototypes
+	   - Add the ability to fetch file docblocks
+	   - Add the ability to fetch default values of properties and the like
+	 - check_dm_phrases.php
+	   - Add a check for obsolete and orphan phrases
+	 - sync_templates.php
+	   - Add support for all storage engines

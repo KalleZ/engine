@@ -1,0 +1,22 @@
+<div class="box">
+	<h4>Options</h4>
+	<p>
+		Options are runtime configurations of an application, it can be
+		really useful to turn certain features on or off within the 
+		application. Engine comes with a few predefined options that 
+		should not be deleted.
+	</p>
+	<p>
+		Options are categorized by default, this can be useful for large 
+		applications that needs many runtime options. Whether options are 
+		split into core categories or per application namespace doesn't play 
+		a role, as categories programmically is just visual candy.
+	</p>
+
+	<ul>
+		<li><a href="./options.php">Display all options</a></li>
+		<li><a href="./options.php?do=categories&action=add">Add new category</a></li>
+		<li><a href="./options.php?do=options&action=add">Add new option</a></li>
+		<li><a href="./options.php?do=options&action=reset">Reset all options</a></li>
+	</ul>
+</div>

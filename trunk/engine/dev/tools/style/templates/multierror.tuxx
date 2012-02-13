@@ -1,0 +1,25 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Error</h4>
+
+	<p>
+" . ((!empty($message)) ? ("
+		{$message}
+") : ("
+		Form validation failed. One or more fields did have their 
+		intended values. Please go over the below list and go back 
+		and fix the values:
+")) . "
+	</p>
+
+	<ul>
+		{$list}
+	</ul>
+</div>
+
+<div class=\"box\">
+	<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+</div>
+
+{$footer}

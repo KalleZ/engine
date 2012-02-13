@@ -1,0 +1,60 @@
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+<html dir=\"ltr\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">
+	<head>
+		<title>Tuxxedo Engine</title>
+
+		<style type=\"text/css\">
+		*
+		{
+			font-family: 		\"Helvetica Neue\", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+		}
+		a
+		{
+			color:			#021420;
+			font-weight:		bold;
+		}
+		body
+		{
+			background-color: 	#021420;
+			font-size: 		82%;
+			color: 			#3B7286;
+			padding: 		0px 30px;
+		}
+		h1
+		{
+			color: 			#FFFFFF;
+		}
+		input, .link-button
+		{
+			background-color:	#EAEAEA;
+			border:			0px;
+			border-radius: 		4px;
+			padding:		3px 10px;
+		}
+			input[type=password], input[type=text]
+			{
+				background-color:	#FFFFFF;
+				border:			1px solid #EAEAEA;
+			}
+		.box
+		{
+			background-color: 	#D2D2D2;
+			border: 		3px solid #D2D2D2;
+			border-radius: 		4px;
+		}
+			.box .inner
+			{
+				background-color: 	#FFFFFF;
+				border-radius: 		4px;
+				padding: 		6px;
+			}
+		.wrapper
+		{
+			margin:			0px auto;
+			width:			80%;
+		}
+		</style>
+	</head>
+	<body>
+		<div class=\"wrapper\">

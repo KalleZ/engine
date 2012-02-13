@@ -1,0 +1,110 @@
+{$header}
+
+<form action="./tools.php?do=compiler" method="post">
+<div class="box">
+	<h4>Template compiler</h4>
+
+	<p>
+		This tools allows you to test and compile templates that doesn't 
+		belong to any specify style. The output is the compiled markup 
+		code found in <em>.tuxx</em> files.
+	</p>
+
+	<br />
+	<textarea name="sourcecode" rows="15" style="width: 99%;">{$source}</textarea>
+</div>
+
+<div class="box">
+	<h4>Compiler options</h4>
+
+	<p>
+		Compiler options are special overrides to allow bypassing certain 
+		restrictions in conditionals. Note that non standard calls, like 
+		application specific routines <em>will not</em> execute here in 
+		this basic sandbox test.
+	</p>
+	<p>
+		If calls are allowed then the relevant names should be inserted into 
+		the text fields in a comma separated manner.
+	</p>
+	<br />
+
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+				<input type="checkbox" name="opt_function_limit"<if expression="isset($_POST['opt_function_limit'])"> checked="checked"</if>> Allow procedural function calls
+			</td>
+			<td>
+				<input type="text" name="opt_data_function"<if expression="isset($predefined_function)"> value="{$predefined_function}"</if> />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" name="opt_class_limit"<if expression="isset($_POST['opt_class_limit'])"> checked="checked"</if>> Allow class method calls
+			</td>
+			<td>
+				<input type="text" name="opt_data_class"<if expression="isset($predefined_class)"> value="{$predefined_class}"</if> />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" name="opt_closure_limit"<if expression="isset($_POST['opt_closure_limit'])"> checked="checked"</if>> Allow closure calls
+			</td>
+			<td>
+				<input type="text" name="opt_data_closure"<if expression="isset($predefined_closure)"> value="{$predefined_closure}"</if> />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="checkbox" name="opt_interpolated_limit"<if expression="isset($_POST['opt_interpolated_limit'])"> checked="checked"</if>> Allow inline interpolated calls
+			</td>
+			<td>
+				&nbsp;
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="warning">
+	<h3>Warning</h3>
+
+	<p>
+		Use of incorrect or disallowed class WILL result in a blank page, so if you keep getting such then 
+		you should go over your code and make sure that all you're calls within the template expressions 
+		are allowed. Below option is enabled by default to prevent such blank screens:
+	</p>
+	<br />
+
+	<p>
+		<label><input type="checkbox" name="verbose_test" value="1"<if expression="!(isset($_POST['submit']) && !isset($_POST['verbose_test']) && isset($result))"> checked="checked"</if> /> Enable verbose testing</label>
+	</p>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="Compile" />
+</div>
+</form>
+
+<if expression="isset($result) && $test">
+<div class="box">
+	<h4>Result</h4>
+
+	<textarea rows="15" style="width: 99%;">{$result}</textarea>
+</div>
+</if>
+<if expression="isset($error) || isset($test) && !$test">
+<div class="box">
+	<p class="error">
+<if expression="isset($test)">
+		There was a parse error in one of the conditionals that 
+		caused the compilation to bail. Check if the PHP syntax is 
+		correct.
+<else />
+		Compilation did not pass, the following error was emitted:
+		<br /><code>{$error}</code>
+</if>
+	</p>
+</div>
+</if>
+
+{$footer}

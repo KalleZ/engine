@@ -1,0 +1,27 @@
+<div class="box">
+	<h4>Tools</h4>
+	<p>
+		Tools are minor scripts that helps you perform 
+		minor tasks, much like quick and dirty scripts 
+		you normally would write while developing an 
+		application.
+	</p>
+
+	<h5>Database</h5>
+	<ul>
+		<li><a href="./tools.php?do=status">Table status</a></li>
+	</ul>
+
+	<h5>Users</h5>
+	<ul>
+		<li><a href="./tools.php?do=password">Password generator</a></li>
+		<li><a href="./tools.php?do=authentication">Authentication tester</a></li>
+	</ul>
+
+	<h5>Miscellaneous</h5>
+	<ul>
+		<li><a href="./tools.php?do=statistics">Code statistics</a></li>
+		<li><a href="./tools.php?do=requirements">Requirements check</a></li>
+		<li><a href="./tools.php?do=compiler">Template compiler</a></li>
+	</ul>
+</div>

@@ -1,0 +1,19 @@
+{$header}
+
+<form action="./users.php?do=user&action=delete&user={$dm['id']}" method="post">
+<div class="box">
+	<h4>Confirm delete</h4>
+
+	<p>
+		When deleting a user, all user data <em>WILL</em> remain, it is up to 
+		the invidual application to also account for deleting or updating records 
+		added by the user.
+	</p>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="Delete '{$dm['username']}'" />
+</div>
+</form>
+
+{$footer}

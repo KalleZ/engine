@@ -1,0 +1,41 @@
+{$header}
+
+<form action="./datastore.php" method="post">
+	<div class="box">
+		<h4>Datastore rebuilder</h4>
+		<p>
+			Rebuilding the cache, this will update the following 
+			cache indices:
+		</p>
+
+		<ul>
+		{$cache_items}
+		</ul>
+	</div>
+	<div class="box">
+		<input type="hidden" name="do" value="rebuild" />
+		<input type="submit" name="progress" value="Rebuild cache" />
+	</div>
+</form>
+
+<if expression="isset($corrupt_warn)">
+<div class="box">
+	<p>
+		Datastore caches have been rebuilt.
+	</p>
+</div>
+
+<if expression="$corrupt_warn">
+<div class="warning">
+	<h3>Warning</h3>
+
+	<p>
+		Not all datastore elements was re-cached with success. This 
+		can be caused by no elements were available to cache or 
+		if there was a database error.
+	</p>
+</div>
+</if>
+</if>
+
+{$footer}

@@ -1,0 +1,15 @@
+<tr>
+	<td valign=\"top\">
+		{$row->name}
+	</td>
+	<td valign=\"top\" nowrap=\"nowrap\">
+		{$row->length} bytes
+	</td>
+	<td valign=\"top\">
+" . ((empty($row->data)) ? ("
+		<em>No data cached</em>
+") : ("
+		<pre>{$row->data}</pre>
+")) . "
+	</td>
+</tr>

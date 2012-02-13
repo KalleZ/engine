@@ -1,0 +1,25 @@
+<tr>
+	<td>
+		{$template['id']}
+	</td>
+	<td nowrap=\"nowrap\" style=\"width: 100%;\">
+		{$template['title']}
+	</td>
+	<td>
+		{$matched_strings}
+	</td>
+	<td>
+		{$template['revision']}
+	</td>
+	<td>
+		" . (($template['changed']) ? ("Yes") : ("No")) . "
+	</td>
+	<td nowrap=\"nowrap\">
+		<select onchange=\"engine_templates_handler(this, '{$styleid}', '{$template['id']}');\">
+			<option></option>
+			<option value=\"edit\">Edit</option>
+			<option value=\"delete\">Delete</option>
+			" . (($template['changed']) ? ("<option value=\"reset\">Reset to default</option>") : '') . "
+		</select>
+	</td>
+</tr>

@@ -1,0 +1,87 @@
+{$header}
+
+<form action=\"./options.php?do=options&action=" . (($action == 'edit') ? ("edit&option={$opt['option']}") : ("add")) . "\" method=\"post\">
+<div class=\"box\">
+	<h4>" . (($action == 'edit') ? ("Edit") : ("Add")) . " option</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Option information</h5></td>
+		</tr>
+		<tr>
+			<td style=\"width: 20%;\">
+				Name</td>
+			<td>
+				<input type=\"text\" name=\"name\" size=\"32\" value=\"" . (($action == 'edit') ? ("{$opt['option']}") : '') . "\" /></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\">
+				Type</td>
+			<td>
+				<select name=\"characters\" id=\"optedit_type\" onchange=\"engine_optedit_typechange(this);\">
+					<option value=\"string\"" . (($action == 'edit' && $opt['type'] == 's') ? (" selected=\"selected\"") : '') . ">String</option>
+					<option value=\"integer\"" . (($action == 'edit' && $opt['type'] == 'i') ? (" selected=\"selected\"") : '') . ">Integer</option>
+					<option value=\"boolean\"" . (($action == 'edit' && $opt['type'] == 'b') ? (" selected=\"selected\"") : '') . ">Boolean</option>
+				</select></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Value</td>
+			<td>
+				<textarea name=\"value\" rows=\"5\" style=\"width: 99%;\">" . (($action == 'edit' && !empty($opt['value']) && !empty($opt['defaultvalue'])) ? ("{$opt['value']}") : ("" . (($action == 'edit' && (!empty($opt['defaultvalue']) || $opt['defaultvalue'] == '0')) ? ("{$opt['defaultvalue']}") : '') . "")) . "</textarea>
+
+				<ul>
+					<li><strong>String:</strong> Can be any value, even on multiple lines</li>
+					<li><strong>Integer:</strong> Numeric values</li>
+					<li><strong>Boolean:</strong> True/False value, use 1 or 0</li>
+				</ul></td>
+		</tr>
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Options</h5></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Option category</td>
+			<td>
+				<select name=\"category\">
+					<option></option>
+					{$categories_dropdown}
+				</select></td>
+		</tr>
+" . (($action == 'edit') ? ("
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Set this as the new default value?</td>
+			<td>
+				<label><input type=\"checkbox\" name=\"defaultoverride\" value=\"1\" /> Yes</label></td>
+		</tr>
+" . (($cached) ? ("
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Memory</h5></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\">
+				Default value</td>
+			<td>
+				{$defaultvalue}</td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\">
+				Cached value</td>
+			<td>
+				{$cachevalue}</td>
+		</tr>
+") : '') . "
+") : '') . "
+	</table>
+</div>
+
+<div class=\"box\">
+	<input type=\"submit\" name=\"submit\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . "\" />
+</div>
+</form>
+
+{$footer}

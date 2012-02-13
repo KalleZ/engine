@@ -1,0 +1,33 @@
+<tr>
+	<td>
+		{$option}
+	</td>
+	<td nowrap="nowrap">
+<if expression="!strlen($data['dumpvalue'])">
+		<em>Default</em>
+<else />
+		{$data['dumpvalue']}
+</if>
+	</td>
+	<td nowrap="nowrap">
+		{$data['defaultvalue']}
+	</td>
+	<td>
+		<if expression="$data['cached']">Yes<else />No</if>
+	</td>
+	<td nowrap="nowrap">
+<if expression="$data['cached'] && ($data['cachedvalue'] == $data['defaultvalue'])">
+		<em>Default</em>
+<else />
+		{$data['cachedvalue']}
+</if>
+	</td>
+	<td nowrap="nowrap">
+		<select onchange="engine_options_handler(this, '{$option}');">
+			<option></option>
+			<option value="edit">Edit</option>
+			<option value="delete">Delete</option>
+			<option value="reset">Reset</option>
+		</select>
+	</td>
+</tr>

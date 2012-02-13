@@ -1,0 +1,69 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Code statistics</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td class=\"start\" width=\"25%\">
+				Files
+			</td>
+			<td nowrap=\"nowrap\" width=\"25%\">
+				File extensions
+			</td>
+			<td nowrap=\"nowrap\" width=\"25%\">
+				Total lines of code
+			</td>
+			<td nowrap=\"nowrap\" class=\"end\" width=\"25%\">
+				Total size (bytes)
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{$statistics['total']['files']}
+			</td>
+			<td>
+				{$statistics['extensions']}
+			</td>
+			<td>
+				{$statistics['total']['lines']}
+			</td>
+			<td>
+				{$statistics['total']['size']}
+			</td>
+		</tr>
+	</table>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td class=\"start\">
+				Extension
+			</td>
+			<td nowrap=\"nowrap\">
+				Lines of code
+			</td>
+			<td nowrap=\"nowrap\">
+				Number of files
+			</td>
+			<td nowrap=\"nowrap\">
+				Size (bytes)
+			</td>
+			<td nowrap=\"nowrap\">
+				Blank lines
+			</td>
+			<td class=\"end\">
+				Notes
+			</td>
+		</tr>
+		{$extensions}
+	</table>
+</div>
+
+<div class=\"box\">
+	<p>
+		Note that images and other binary files such as SQLite databases are 
+		not included in any of the above statistics.
+	</p>
+</div>
+
+{$footer}

@@ -1,0 +1,155 @@
+
+
+
+
+	Tuxxedo Engine 1.1.0 "Fawks"
+	------------------------------------------------
+
+	Added new datamanager and validation constant to allow fields to be empty (Kalle)
+	Added virtual fields and virtual field hooks in datamanager adapters (Kalle)
+	Added a developmental IO utilities class (Kalle)
+	Added new scripts to /dev/scripts: (Kalle)
+	 - check_dm_phrases.php
+	 - sync_templates.php
+	Added new DevTools: (Kalle)
+	 - Style & Templates manager
+	 - Users & Usergroups manager
+	 - Permission manager
+	 - User authentication tester
+	 - Table status
+	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
+	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
+	Added new datamanagers: (Kalle)
+	 - Datastore
+	 - Option
+	 - Optioncategory
+	 - Permission
+	 - Template
+	Added the concept of parent datamanagers, shutdown handlers and an improved way to execute hooks (Kalle)
+	Added a new optional parameter to the datamanager save method to prohibit execution of hooks (Kalle)
+	Added support for throwing exceptions if the autoloader fails to load with fallback to the old behaviour (Kalle)
+	Added support for loading helper classes into the runtime (Kalle)
+	Added support for regular expressions within autoloading matches (Kalle)
+	Added new functions: (Kalle)
+	 - page_print()
+	 - tuxxedo_error_list()
+	 - tuxxedo_handler()
+	Added the development tools theme to all default templates, including a new index page (Kalle)
+	Added a new parameter on the view constructor to allow setting variables at construction time (Kalle)
+	Added a new Template class thats not encapsulated within the MVC component (Kalle)
+	Added more configurative options to the template compiler DevTool to allow more generic compilations (Kalle)
+	Added the possibility to unload templates at runtime (Kalle)
+	Added the permission database table and runtime defined constants (Kalle)
+	Added support for exporting Docblock tags when running api_analyze.php (Kalle)
+	Added a new DevTool class to impersonate a user (Kalle)
+	Added a new method to the datamanager class to fetch the parent datamanager (Kalle)
+	Added contexts to datamanagers so its easier for hooks to figure out what to do in a certain context (Kalle)
+	Added a new template compiler option to make failed calls to test() verbose instead of silent (Kalle)
+	Added support for database result set iterators (Kalle)
+	Added a fetching mode and general fetch method in all database drivers (Kalle)
+	Added countable support for database result sets (Kalle)
+	Added missing datamanager phrases for a few datamanagers (Kalle)
+	Added iterator support to datamanagers, making it possible to iterate over data in the datamanager (Kalle)
+	Added a new namespace for design related classes/interfaces, such as the Invokable interface (Kalle)
+	Added the Iteratable interface (Kalle)
+	Added support for PSR-0 autoloader mode, disabled by default (Kalle)
+	Added the Resetable datamanager hook (Kalle)
+	Added a new autoloader method, routeAsCallback() (Kalle)
+	Added a new 'void' state, that is set after a delete() call and prohibits usage of save() and validate() in datamanagers (Kalle)
+	Added an auto refresh option to the session DevTool (Kalle)
+	Added a detailed session information page to the session DevTool (Kalle)
+	Added option categories (Kalle)
+	Added the ability for datamanagers to tell the core whether to 're-identify' identifying names (Kalle)
+	Added a new method to the registry class, invoke() to directly invoke new instances without registering the reference (Kalle)
+	Added a new validation constant, VALIDATE_IDENTIFIER to auto validate and state configure the base adapter (Kalle)
+
+	Changed the datamanager adapters to internally use the new initializer method (Kalle)
+	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
+	Changed CSRF tokens to be SHA1 hashed rather than MD5 hashed (Kalle)
+	Changed the random string generator to be more variable (Kalle)
+	Changed the debugging backtraces to not Engine backtrace caller (Kalle)
+	Changed the datastore to skip attempting to reload elements if cache is called twice (Kalle)
+	Changed the datamanager adapters to fetch the new identifer when inserting a new id record (Kalle)
+	Changed the datamanager adapters to invalidate empty fields unless specified by the adapter (Kalle)
+	Changed datamanager adapters to throw standard exceptions instead of basic ones in case of an error (Kalle)
+	Changed the datamanager deletion method to signal adapters with cache hooks to rebuild the datastore (Kalle)
+	Changed the styles to contain the ids of which templates thats assigned to the style (Kalle)
+	Changed the name of the 'Filter' class to be 'Input' (Kalle)
+	Changed style engines to load faster if multiple instances of the same handle have been loaded (Kalle)
+	Changed the custom loading logic in datamanagers and style storage engines to autodetect custom classes (Kalle)
+	Changed the MVC specific exceptions to use the concept of previous exceptions both internally and in the API (Kalle)
+	Changed the view constructor, so that it supports setting the layout mode at instanciation (Kalle)
+	Changed the views to not escape double quotes if the view has layout mode active (Kalle)
+	Changed the undocumented docblocks while parsing the source in api_analyze.php to be more verbose (Kalle)
+	Changed datamanagers that have the LOAD_ONLY option enabled data to be visiable thru the array access syntax (Kalle)
+	Changed templateids from being a database field to be a virtually populated field from datastore.php (Kalle)
+	Changed result sets' getNumRows() methods to return 0 if the result is destroyed (Kalle)
+	Changed usergroupinfo to be an object rather than an array (Kalle)
+	Changed the datastore reference name to be called 'datastore', rather than 'cache' (Kalle)
+	Changed the Router class to reside under the MVC namespace (Kalle)
+	Changed the autoloader methods add to be called routeAsPath() (Kalle)
+	Changed the autoloader normalizer to fallback to regex if there is no paths (Kalle)
+	Changed debug backtraces to show thrown exceptions (Kalle)
+	Changed isDriverSupported() in the database component to use internal caching (Kalle)
+	Changed the name of the 'Intl' exception, its now called 'Translated' (Kalle)
+	Changed the default value of 'style_storage' from 'filesystem' to 'database' (Kalle)
+	Changed SQL exceptions to require a driver that caused the exception to trigger (Kalle)
+	Changed the user class to always initiate session (Kalle)
+	Changed the 'name' field in the user datamanager to be optional (Kalle)
+
+	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
+	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
+	Fixed api_analyze.php to correctly resolve nested namespace aliases (Kalle)
+	Fixed api_analyze.php to correctly resolve class and interface names without aliases but within a namespace (Kalle)
+	Fixed api_analyze.php to correctly export classes/interface aliases (Kalle)
+	Fixed fatal error if page() was called without the style component loaded (Kalle)
+	Fixed namespace alias rules in functions.php to inherit the 'Exception' namespace (Kalle)
+	Fixed error_reporting not being reset when testing compiled templates (Kalle)
+	Fixed various aliasing rules all around the Engine (Kalle)
+	Fixed possible error while attempting to display an error due to wrong initialization order in the development tools (Kalle)
+	Fixed array handling of raw data when using the filter component using the ext/filter backend from PHP (Kalle)
+	Fixed exception calls in datamanager adapters to resolve correctly (Kalle)
+	Fixed version comparison logic in the requirements test (Kalle)
+	Fixed the $goback parameter naming in page(), so that the go back button will work correct (Kalle)
+	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
+	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
+	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)
+	Fixed a bug in \Tuxxedo\Intl::find() that would render the method useless (Kalle)
+	Fixed debug backtraces to account for closures (Kalle)
+	Fixed some autoloading issues on case sensitive file systems (Kalle)
+	Fixed a loading error when trying to make an instance of an already loaded database driver (Kalle)
+	Fixed the PDO driver's query method to return a correct value on INSERT/REPLACE queries (Kalle)
+	Fixed validation of fields marked as 'virtual' so they don't always fail in datamanagers (Kalle)
+	Fixed the restriction on the variable name 'lowered_name' when using the Template class (Kalle)
+	Fixed getAffectedRows() to correctly work when using PDO (Kalle)
+	Fixed isFreed() to return the correct return value for all drivers (Kalle)
+	Fixed some dublicate phrases in the SQL files (Kalle)
+	Fixed datamanagers to work correctly when changing the identifier to not leave a dublicate copy (Kalle)
+	Fixed E_RECOVERABLE_ERROR's not to show full path in some rare cases (Kalle)
+	Fixed a bug in the template that datamanger that wouldn't delete the template on the file system (Kalle)
+
+	Removed the /dev/extra folder, as the bootstraper is long outdated and not maintained (Kalle)
+	Removed the /dev/api/dumps folder, as dumps are now directly dumped into /dev/api/ (Kalle)
+	Removed the persistent faking code in several database drivers (Kalle)
+	Removed the $custom parameter on the database factory method, this is now auto detected (Kalle)
+	Removed the setFieldType() method on the datamanager adapter main class (Kalle)
+	Removed the $delay parameter on the datastore rebuild method (Kalle)
+	Removed the $result parameter on the getAffectedRows method (Kalle)
+	Removed the $session parameter on the user class constructor (Kalle)
+	Removed the options editor in the DevTools that never really worked (Kalle)
+
+	Template changes:
+	 - Added
+	   - error_listbit
+	   - index
+	 - Updated
+	   - error
+	   - footer
+	   - header
+	   - redirect
+
+
+	Tuxxedo Engine 1.0.0
+	------------------------------------------------
+
+	Initial release

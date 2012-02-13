@@ -1,0 +1,31 @@
+{$header}
+
+<div class="box">
+	<h4>Active user sessions</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td class="start" nowrap="nowrap">
+				Session Id
+			</td>
+			<td nowrap="nowrap">
+				User Id
+			</td>
+			<td>
+				Username
+			</td>
+			<td nowrap="nowrap">
+				Last activity
+			</td>
+			<td nowrap="nowrap">
+				Session expiration
+			</td>
+			<td class="end">
+				&nbsp;
+			</td>
+		</tr>
+		{$userlist}
+	</table>
+</div>
+
+{$footer}

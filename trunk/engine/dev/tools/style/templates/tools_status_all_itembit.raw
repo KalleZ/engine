@@ -1,0 +1,11 @@
+<tr>
+	<td>
+		{$row['Name']}
+	</td>
+	<td>
+		{$operation}
+	</td>
+	<td nowrap="nowrap">
+		{$result}
+	</td>
+</tr>

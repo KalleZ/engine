@@ -1,0 +1,50 @@
+{$header}
+
+<form action=\"./styles.php?" . ((isset($styleid)) ? ("style={$styleid}&do=style&action=edit") : ("do=style&action=add")) . "\" method=\"post\">
+<div class=\"box\">
+	<h4>" . (($action == 'edit') ? ("Edit") : ("Add")) . " style</h4>
+
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr>
+			<td style=\"width: 20%;\">
+				Name</td>
+			<td>
+				<input type=\"text\" name=\"name\" size=\"32\" value=\"" . (($action == 'edit') ? ("{$styledata['name']}") : '') . "\" /></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Developer</td>
+			<td>
+				<input type=\"text\" name=\"developer\" size=\"32\" value=\"" . (($action == 'edit') ? ("{$styledata['developer']}") : '') . "\" /></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Style directory</td>
+			<td>
+				<input type=\"text\" name=\"styledir\" size=\"32\" value=\"" . (($action == 'edit') ? ("{$styledata['styledir']}") : '') . "\" /></td>
+		</tr>
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Set this style as default?</td>
+			<td>
+				<label><input type=\"checkbox\" name=\"defaultstyle\" value=\"1\"" . (($action == 'edit' && $styledata['defaultstyle']) ? (" checked=\"checked\"") : '') . " /> Yes</label></td>
+		</tr>
+" . (($action == 'add') ? ("
+		<tr>
+			<td nowrap=\"nowrap\" valign=\"top\">
+				Inherit templates from</td>
+			<td>
+				<select name=\"inherit\">
+					{$styles_dropdown}
+				</select></td>
+		</tr>
+") : '') . "
+	</table>
+</div>
+
+<div class=\"box\">
+	<input type=\"submit\" name=\"submit\" value=\"" . (($action == 'edit') ? ("Edit") : ("Add")) . "\" />
+</div>
+</form>
+
+{$footer}

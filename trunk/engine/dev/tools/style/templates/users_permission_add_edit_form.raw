@@ -1,0 +1,49 @@
+{$header}
+
+<form action="./users.php?do=permission&action=<if expression="$action == 'edit'">edit&permission={$dm['name']}<else />add</if>" method="post">
+<div class="box">
+	<h4><if expression="$action == 'edit'">Edit<else />Add</if> permission</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Permission information</h5></td>
+		</tr>
+		<tr>
+			<td style="width: 20%;">
+				Name</td>
+			<td>
+				<input type="text" name="name" size="32" value="<if expression="$action == 'edit'">{$dm['name']}</if>" /></td>
+		</tr>
+		<tr>
+			<td>
+				Bits</td>
+			<td>
+				<input type="text" name="bits" size="32" value="<if expression="$action == 'edit'">{$dm['bits']}</if>" /></td>
+		</tr>
+		<tr class="heading">
+			<td colspan="2" class="start end">
+				<h5>Notes</h5></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				The bit field must have a numeric bit-compliant value or the permission can in wrost 
+				case, cause all permissions will fail to function properly. A wrong value may also cause 
+				data loss in cases where the affected permission is assigned to a user (as an additional 
+				permission) or to a usergroup and may need re-configuration.
+
+				<br /> <br />
+
+				Any bit values will work here, you can even create a master permission with the bit 
+				<em>-1</em> that will enable everything which can be handy in some rare occasions.
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="box">
+	<input type="submit" name="submit" value="<if expression="$action == 'edit'">Edit<else />Add</if>" />
+</div>
+</form>
+
+{$footer}
