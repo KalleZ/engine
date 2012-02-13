@@ -1,1 +1,0 @@
-<option value="{$value}"<if expression="isset($selected) && $selected"> selected="selected"</if>>{$name}</option>

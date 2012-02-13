@@ -1,1 +1,0 @@
-<li><label><input type="checkbox" name="deleteperm[{$prefix}][{$item['id']}]" value="1" checked="checked" /> <if expression="$prefix == 'user'">{$item['username']}<else />{$item['title']}</if></label></li>

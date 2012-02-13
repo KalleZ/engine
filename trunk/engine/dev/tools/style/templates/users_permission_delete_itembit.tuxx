@@ -1,1 +1,0 @@
-<li><label><input type=\"checkbox\" name=\"deleteperm[{$prefix}][{$item['id']}]\" value=\"1\" checked=\"checked\" /> " . (($prefix == 'user') ? ("{$item['username']}") : ("{$item['title']}")) . "</label></li>

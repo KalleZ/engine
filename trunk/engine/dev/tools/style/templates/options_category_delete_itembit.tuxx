@@ -1,1 +1,0 @@
-<li><a href=\"./options.php?do=options&action=edit&option={$row['option']}\">{$row['option']}</a></li>

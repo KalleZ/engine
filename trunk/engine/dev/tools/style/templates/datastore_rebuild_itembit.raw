@@ -1,1 +1,0 @@
-<li><span<if expression="isset($success) && !$success"> class="error"</if>>{$element}</span></li>
