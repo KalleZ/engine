@@ -4,10 +4,24 @@
 	<h4>Development Tools</h4>
 
 	<p>
-		The development tools is designed for engine application developers 
-		and is even used for developing engine itself. It provides a simple 
+		The development tools is designed for Engine application developers 
+		and is even used for developing Engine itself. It provides a simple 
 		interface for interacting with configurable core components and 
-		concepts within the engine.
+		concepts within the framework.
+	</p>
+
+	<br />
+	<p>
+		The DevTools, as this application also is known for short, is written 
+		as an application on Engine itself as a proof-of-concept for showing 
+		advanced features of the framework.
+	</p>
+
+	<br />
+	<p>
+		Almost all features that can be configured, can be controlled in using 
+		the DevTools, there currently is two exceptions to this: Internationalization 
+		and Configuration files.
 	</p>
 </div>
 

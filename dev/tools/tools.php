@@ -216,6 +216,7 @@
 						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('spl')), 
 						'json'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('json')), 
 						'tokenizer'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('tokenizer')), 
+						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('filter')), 
 						'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysql')), 
 						'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysqli')), 
 						'sqlite3'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('sqlite3')), 

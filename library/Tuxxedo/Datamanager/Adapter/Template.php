@@ -199,15 +199,15 @@
 		{
 			if($this->context == self::CONTEXT_DELETE)
 			{
-				$template = \TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx';
+				$styleinfo	= $this->registry->datastore->styleinfo;
+				$template 	= \TUXXEDO_DIR . '/styles/' . $styleinfo[$this['styleid']]['styledir'] . '/templates/' . $this['title'] . '.tuxx';
 
 				if(\is_file($template) && !@\unlink($template))
 				{
 					return(false);
 				}
 
-				$styleinfo	= $this->registry->datastore->styleinfo;
-				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
+				$ids = \explode(',', $styleinfo[$this['styleid']]['templateids']);
 
 				foreach($ids as $index => $id)
 				{

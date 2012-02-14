@@ -111,7 +111,7 @@
 						}
 						elseif($action == 'add')
 						{
-							$styledm 		= Datamanager\Adapter::factory('style', NULL);
+							$styledm 		= Datamanager\Adapter::factory('style');
 							$styledm['inherit']	= $input->post('inherit');
 						}
 
@@ -182,7 +182,7 @@
 
 					foreach($templateids as $id)
 					{
-						$template = Datamanager\Adapter::factory('template', $id, Datamanager\Adapter::OPT_LOAD_ONLY);
+						$template = Datamanager\Adapter::factory('template', $id);
 
 						eval('$table .= "'. $style->fetch('templates_list_itembit') . '";');
 					}
@@ -276,14 +276,7 @@
 				break;
 				case('delete'):
 				{
-					try
-					{
-						$dm = Datamanager\Adapter::factory('template', $input->get('id'), Datamanager\Adapter::OPT_LOAD_ONLY);
-					}
-					catch(Exception $e)
-					{
-						tuxxedo_error('Invalid template id');
-					}
+					$dm = Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC));
 
 					if(!$dm->delete())
 					{
@@ -295,29 +288,15 @@
 				break;
 				case('reset'):
 				{
-					try
-					{
-						Datamanager\Adapter::factory('template', $input->get('id'))->reset();
+					Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC))->reset();
 
-						tuxxedo_redirect('Template reset to default with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
-					}
-					catch(Exception $e)
-					{
-						tuxxedo_error('Invalid template id');
-					}
+					tuxxedo_redirect('Template reset to default with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}
 				break;
 				case('edit'):
 				{
-					try
-					{
-						$dm 	= Datamanager\Adapter::factory('template', $input->get('id'));
-						$source	= htmlspecialchars($dm['source'], ENT_QUOTES, 'UTF-8');
-					}
-					catch(Exception $e)
-					{
-						tuxxedo_error('Invalid template id');
-					}
+					$dm 	= Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC));
+					$source = htmlspecialchars($dm['source'], ENT_QUOTES, 'UTF-8');
 				}
 				case('add'):
 				{
@@ -326,14 +305,9 @@
 						$title 	= strtolower($input->post('title'));
 						$source	= $input->post('source');
 
-						if(empty($title))
-						{
-							tuxxedo_error('Template titles may not be blank');
-						}
-
 						if(!isset($dm))
 						{
-							$dm 		= Datamanager\Adapter::factory('template', NULL);
+							$dm 		= Datamanager\Adapter::factory('template');
 							$dm['styleid']	= $styleid;
 						}
 						else
@@ -351,6 +325,7 @@
 								$compiler = new Compiler;
 
 								$compiler->set($source);
+								$compiler->setOptions($compiler->getOptions() & ~Compiler::OPT_VERBOSE_TEST);
 								$compiler->compile();
 
 								if(!$compiler->test())
@@ -370,17 +345,16 @@
 							{
 								$dm['changed']		= false;
 								$dm['defaultsource'] 	= $dm['compiledsource'];
-
-								if(isset($_POST['resetrevision']))
-								{
-									$dm['revision'] = 1;
-								}
 							}
 						}
 
 						if($action == 'edit' && isset($_POST['customrevision']) && isset($_POST['newrevision']) && $_POST['newrevision'])
 						{
 							$dm['revision'] = $input->post('newrevision', Input::TYPE_NUMERIC);
+						}
+						elseif(isset($_POST['resetrevision']))
+						{
+							$dm['revision'] = 1;
 						}
 
 						if(!$dm->save())
