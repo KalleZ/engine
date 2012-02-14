@@ -61,42 +61,28 @@
 		 *
 		 * @var		integer
 		 */
-		const TYPE_NUMERIC			= 0x0001;
+		const TYPE_NUMERIC			= 1;
 
 		/**
 		 * Data filter constant, string value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_STRING			= 0x0002;
+		const TYPE_STRING			= 2;
 
 		/**
 		 * Data filter constant, email value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_EMAIL			= 0x0003;
+		const TYPE_EMAIL			= 3;
 
 		/**
 		 * Data filter constant, boolean value
 		 *
 		 * @var		integer
 		 */
-		const TYPE_BOOLEAN			= 0x0004;
-
-		/**
-		 * Data filter constant, callback value
-		 *
-		 * @var		integer
-		 */
-		const TYPE_CALLBACK			= 0x0005;
-
-		/**
-		 * Data filter constant, string value (empty allowed)
-		 *
-		 * @var		integer
-		 */
-		const TYPE_STRING_EMPTY			= 0x0006;
+		const TYPE_BOOLEAN			= 4;
 
 		/**
 		 * Data filter option, gets the raw value 
@@ -104,7 +90,7 @@
 		 *
 		 * @var		integer
 		 */
-		const OPT_RAW				= 0x01FF;
+		const OPT_RAW				= 1;
 
 		/**
 		 * Data filter option, tells the cleaner that this 
@@ -114,7 +100,7 @@
 		 *
 		 * @var		integer
 		 */
-		const OPT_ARRAY				= 0x02FF;
+		const OPT_ARRAY				= 2;
 
 
 		/**
@@ -144,23 +130,6 @@
 		{
 			self::$have_filter_ext 		= \extension_loaded('filter');
 			self::$have_magic_quotes	= \get_magic_quotes_gpc();
-		}
-
-		/**
-		 * Validates data using a user specified callback method
-		 *
-		 * @param	mixed			The data to validate
-		 * @param	callback		A callback thats used to validate the data
-		 * @return	boolean			Returns true if the callback returned success, otherwise false
-		 */
-		public function validate($data, $callback)
-		{
-			if(\is_callable($callback))
-			{
-				return(\call_user_func($callback, $data));
-			}
-
-			return(false);
 		}
 
 		/**
@@ -301,6 +270,19 @@
 				{
 					$input = \filter_var($data, $flags, 0);
 				}
+				elseif($options & self::OPT_ARRAY && ($type == self::TYPE_NUMERIC || $type == self::TYPE_BOOLEAN))
+				{
+					$array = \filter_input($data, $field, \FILTER_UNSAFE_RAW, \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY);
+
+					if($type == self::TYPE_NUMERIC)
+					{
+						$input = array_map(function($var) { return((integer) $var); }, $array);
+					}
+					else
+					{
+						$input = array_map(function($var) { return((boolean) $var); }, $array);
+					}
+				}
 				else
 				{
 					$input = \filter_input($data, $field, $flags, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
@@ -325,84 +307,70 @@
 					return($data[$field]);
 				}
 
-				if($options & self::OPT_ARRAY)
+				if($source != 4 && self::$have_magic_quotes)
 				{
-					$data[$field] = (array) $data[$field];
-
-					if(self::$have_magic_quotes)
-					{
-						$data[$field] = \array_map('\stripslashes', $data[$field]);
-					}
-
-					if($data[$field])
-					{
-						foreach($data[$field] as $var => $tmp)
-						{
-							switch($type)
-							{
-								case(self::TYPE_NUMERIC):
-								{
-									$data[$field][$var] = (integer) $tmp;
-								}
-								break;
-								case(self::TYPE_EMAIL):
-								{
-									$data[$field][$var] = (\is_valid_email($data[$field]) ? $data[$field] : false);
-								}
-								break;
-								case(self::TYPE_BOOLEAN):
-								{
-									$data[$field][$var] = (boolean) $tmp;
-								}
-								break;
-								default:
-								{
-									$data[$field][$var] = (string) $tmp;
-								}
-								break;
-							}
-						}
-					}
+					$data[$field] = \stripslashes($data[$field]);
 				}
-				else
-				{
-					if($source != 4 && self::$have_magic_quotes)
-					{
-						$data[$field] = \stripslashes($data[$field]);
-					}
 
-					switch($type)
+				switch($type)
+				{
+					case(self::TYPE_NUMERIC):
 					{
-						case(self::TYPE_NUMERIC):
+						if($options & self::OPT_ARRAY)
+						{
+							$data[$field] = array_map(function($var) { return((integer) $var); }, (array) $data[$field]);
+						}
+						else
 						{
 							$data[$field] = (integer) $data[$field];
 						}
-						break;
-						case(self::TYPE_EMAIL):
+					}
+					break;
+					case(self::TYPE_EMAIL):
+					{
+						if($options & self::OPT_ARRAY)
+						{
+							$data[$field] = array_map(function($var) { return((\is_valid_email($var) ? $var : false)); }, (array) $data[$field]);
+						}
+						else
 						{
 							$data[$field] = (\is_valid_email($data[$field]) ? $data[$field] : false);
 						}
-						break;
-						case(self::TYPE_BOOLEAN):
+					}
+					break;
+					case(self::TYPE_BOOLEAN):
+					{
+						if($options & self::OPT_ARRAY)
+						{
+							$data[$field] = array_map(function($var) { return((boolean) $var); }, (array) $data[$field]);
+						}
+						else
 						{
 							$data[$field] = (boolean) $data[$field];
 						}
-						break;
-						default:
-						{
-							$data[$field] = (string) $data[$field];
-						}
-						break;
 					}
+					break;
+					default:
+					{
+						if($options & self::OPT_ARRAY)
+						{
+							$data[$field] = array_map(function($var) { return((string) $var); }, (array) $data[$field]);
+						}
+						else
+						{
+							$data[$field] = (\is_array($data[$field]) ? '' : (string) $data[$field]);
+						}
+					}
+					break;
 				}
-
-				if($type == self::TYPE_NUMERIC && $data[$field] == 0 || $type == self::TYPE_STRING && empty($data[$field]))
-				{
-					return;
-				}
-
-				return($data[$field]);
 			}
+
+			if($type == self::TYPE_NUMERIC && $data[$field] == 0 || $type == self::TYPE_STRING && empty($data[$field]))
+			{
+				return;
+			}
+
+			return($data[$field]);
 		}
 	}
 ?>

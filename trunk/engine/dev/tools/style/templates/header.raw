@@ -182,6 +182,75 @@
 		{
 			width:				100%;
 		}
+			table tr td
+			{
+				padding:			10px;
+			}
+				table tr td a
+				{
+					border:				1px solid transparent;
+					border-radius:			4px;
+					padding:			5px;
+				}
+					table tr td a:hover
+					{
+						background-color:		#C2EDFD;
+						border:				1px solid #21A7CD;
+						color:				#044968;
+					}
+			table tr.header
+			{
+				background:			#044968 url('./style/images/top-background.png') repeat-x top left;
+				border-radius:			4px;
+				color:				#FFFFFF;
+				font-weight:			bold;
+				padding:			10px;
+				text-shadow:			1px 1px 1px #000000;
+			}
+				table tr.header td
+				{
+					border-bottom:			1px solid #21A7CD;
+					font-size:			14px;
+				}
+					table tr.header td span
+					{
+						font-size:			12px;
+						float:				right;
+						padding-top:			1px;
+					}
+						table tr.header td span a
+						{
+							border:				0px;
+							color:				#FFFFFF;
+							padding:			0px;
+						}
+							table tr.header td span a:hover
+							{
+								background-color:		transparent;
+								border:				0px;
+								text-decoration:		underline;
+							}
+							table tr.header td span a.redlink:hover
+							{
+								background-color:		#CC0000;
+								border-radius:			4px;
+								color:				#FFFFFF;
+							}
+					table tr.header td.end
+					{
+						border-bottom-right-radius:	4px;
+						border-top-right-radius:	4px;
+					}
+					table tr.header td.start
+					{
+						border-bottom-left-radius:	4px;
+						border-top-left-radius:		4px;
+					}
+					table tr.header td.start-end-connected
+					{
+						border-top-left-radius:		4px;
+						border-top-right-radius:	4px;
+					}
 			table tr.heading td
 			{
 				background-color:		#C2EDFD;
@@ -201,10 +270,32 @@
 					border-bottom-right-radius:	4px;
 					border-top-right-radius:	4px;
 				}
+				table tr.heading td.end-connected-bottom
+				{
+					border-right:			1px solid #21A7CD;
+					border-bottom-right-radius:	0px;
+					border-top-right-radius:	4px;
+				}
+				table tr.heading td.end-connected-top
+				{
+					border-right:			1px solid #21A7CD;
+					border-bottom-right-radius:	4px;
+					border-top-right-radius:	0px;
+				}
 				table tr.heading td.start
 				{
 					border-bottom-left-radius:	4px;
 					border-top-left-radius:		4px;
+				}
+				table tr.heading td.start-connected-bottom
+				{
+					border-bottom-left-radius:	0px;
+					border-top-left-radius:		4px;
+				}
+				table tr.heading td.start-connected-top
+				{
+					border-bottom-left-radius:	4px;
+					border-top-left-radius:		0px;
 				}
 			table tr.highlight td
 			{
@@ -218,22 +309,10 @@
 					border-radius:			4px;
 					padding:			2px;
 				}
-			table tr td
+			table.list
 			{
-				padding:			10px;
+				margin:				-2px -2px 5px -2px;
 			}
-				table tr td a
-				{
-					border:				1px solid transparent;
-					border-radius:			4px;
-					padding:			5px;
-				}
-					table tr td a:hover
-					{
-						background-color:		#C2EDFD;
-						border:				1px solid #21A7CD;
-						color:				#044968;
-					}
 		textarea
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
@@ -262,20 +341,6 @@
 				padding:			10px;
 				text-shadow:			1px 1px 1px #000000;
 			}
-				.box h4 span
-				{
-					font-size:			12px;
-					float:				right;
-					padding-top:			1px;
-				}
-					.box h4 span a
-					{
-						color:				#FFFFFF;
-					}
-						.box h4 span a:hover
-						{
-							text-decoration:		underline;
-						}
 		.clear
 		{
 			clear:				both;
@@ -434,9 +499,13 @@
 			<br />
 <if expression="isset($debug_notice)">
 			<div class="warning">
-				Warning, your configuration had debug mode set to false. This was automaticlly 
-				changed to true while executing the development tools. To remove this warning, then 
-				simply set <em>'debug'</em> to true in your configuration file.
+				<h3>Warning</h3>
+
+				<p>
+					The configuration had debug mode set to false. This was automaticlly 
+					changed to true while executing the development tools. To remove this warning, then 
+					simply set <em>'debug'</em> to true in your configuration file.
+				</p>
 			</div>
 </if>
 

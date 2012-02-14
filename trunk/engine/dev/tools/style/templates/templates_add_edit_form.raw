@@ -46,9 +46,7 @@
 				Below option should only be used if you understand the impact of 
 				how overriding defaults works. Overriding default templates can only 
 				be reverted by re-importing the templates from the Engine version 
-				currently in-use. Note that resetting the version number is linked 
-				to the default override and only have an effect if the override is 
-				checked.
+				currently in-use.
 
 				<br /> <br />
 

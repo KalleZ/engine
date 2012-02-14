@@ -1,12 +1,46 @@
 {$header}
 
-<if expression="isset($categories)">
-{$categories}
+<if expression="isset($categories) || $orphan">
+<div class="box">
+	<table cellspacing="0" cellpadding="0" class="list">
+		<if expression="isset($categories)">
+			{$categories}
+		</if>
+		<if expression="$orphan">
+			<tr class="header">
+				<td colspan="6" class="start-end-connected">
+					Orphan options
+				</td>
+			</tr>
+			<tr class="heading">
+				<td class="start-connected-top">
+					Name
+				</td>
+				<td>
+					Value
+				</td>
+				<td nowrap="nowrap">
+					Default value
+				</td>
+				<td>
+					Cached?
+				</td>
+				<td nowrap="nowrap">
+					Datastore value
+				</td>
+				<td class="end-connected-top">
+					&nbsp;
+				</td>
+			</tr>
+			{$rows}
+		</if>
+	</table>
+</div>
 </if>
 
 <if expression="$orphan">
 <div class="box">
-	<h4>Orphan options</h4>
+	<h3>Note</h3>
 
 	<p>
 		Orphan options are options thats not assigned to a valid 
@@ -14,31 +48,6 @@
 		category and it will disapear once all below options have 
 		a valid category.
 	</p>
-	<br />
-
-	<table cellspacing="0" cellpadding="0">
-		<tr class="heading">
-			<td class="start" style="width: 137px;">
-				Name
-			</td>
-			<td style="width: 193px;">
-				Value
-			</td>
-			<td nowrap="nowrap" style="width: 150px;">
-				Default value
-			</td>
-			<td style="width: 62px;">
-				Cached?
-			</td>
-			<td nowrap="nowrap" style="width: 108px;">
-				Datastore value
-			</td>
-			<td class="end">
-				&nbsp;
-			</td>
-		</tr>
-		{$rows}
-	</table>
 </div>
 </if>
 

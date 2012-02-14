@@ -109,9 +109,19 @@
 				return(false);
 			}
 
-			while($row = $result->fetchAssoc())
+			$loaded = Array();
+
+			foreach($result as $row)
 			{
-				$this->templates->{$row['title']} = $row['compiledsource'];
+				$loaded[]				= $row['title'];
+				$this->templates->{$row['title']} 	= $row['compiledsource'];
+			}
+
+			if(($diff = array_diff($templates, $loaded)) !== false)
+			{
+				$error_buffer = $diff;
+
+				return(false);
 			}
 
 			return(true);
