@@ -728,7 +728,16 @@
 					$context->type_multiple			= $type_multiple;
 					$context->{$type} 			= $name;
 					$extends				= lexical_scan_extends_implements($tokens_copy, $index, T_EXTENDS, Array(T_IMPLEMENTS, '{'));
-					$extends 				= ($extends ? $extends[0] : '');
+					$extends 				= ($extends ? resolve_namespace_alias(key($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $extends[0]) : '');
+					$implements				= lexical_scan_extends_implements($tokens_copy, $index, T_IMPLEMENTS);
+
+					if($implements)
+					{
+						foreach($implements as $index => $iface)
+						{
+							$implements[$index] = resolve_namespace_alias(key($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $iface);
+						}
+					}
 
 					$datamap[$file][$type_multiple][$name]	= Array(
 											'constants'	=> Array(), 
@@ -736,7 +745,7 @@
 											'methods'	=> Array(), 
 											'namespace'	=> key($datamap[$file]['namespaces']), 
 											'extends'	=> $extends, 
-											'implements'	=> lexical_scan_extends_implements($tokens_copy, $index, T_IMPLEMENTS),  
+											'implements'	=> $implements,  
 											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 											'metadata'	=> Array(
 															'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
