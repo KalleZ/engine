@@ -114,23 +114,22 @@
 		 * Save the option category in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
 			if(($datastore = $this->registry->datastore->optioncategories) === false)
 			{
 				$datastore = Array();
 			}
 
-			$id 		= ($this->data[$this->idname] ? $this->data[$this->idname] : $this->identifier);
+			$id 		= (isset($this->data['name']) ? $this['name'] : $this->identifier);
 			$old_category	= '';
 			$new_category	= '';
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				if(isset($virtual[$this->idname]))
+				if(isset($this['name']))
 				{
 					foreach($datastore as $key => $value)
 					{
@@ -145,7 +144,7 @@
 					$old_category = $id;
 				}
 
-				$datastore[] = $new_category = $virtual[$this->idname];
+				$datastore[] = $new_category = $this['name'];
 			}
 			elseif($this->context == self::CONTEXT_DELETE && \in_array($id, $datastore))
 			{

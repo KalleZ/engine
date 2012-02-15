@@ -458,9 +458,9 @@
 
 			if(!self::$hooks_executor)
 			{
-				self::$hooks_executor = function(Adapter $self, Array $virtual, Array $virtual_fields)
+				self::$hooks_executor = function(Adapter $self, Array $virtual_fields)
 				{
-					if($self instanceof Hooks\Cache && !$self->rebuild($virtual))
+					if($self instanceof Hooks\Cache && !$self->rebuild())
 					{
 						return(false);
 					}
@@ -473,7 +473,7 @@
 						{
 							if($dispatch)
 							{
-								$method = 'Virtual' . $field;
+								$method = 'virtual' . $field;
 
 								if(\method_exists($self, $method) && !$self->{$method}($value))
 								{
@@ -694,7 +694,10 @@
 					break;
 					default:
 					{
-						$this->invalid_fields[] = $field;
+						if($props['type'] != self::FIELD_VIRTUAL)
+						{
+							$this->invalid_fields[] = $field;
+						}
 					}
 					break;
 				}
@@ -742,35 +745,22 @@
 				throw new Exception\FormData($formdata, ($intl ? $this->registry->intl->find('validation_failed', 'datamanagers') : ''));
 			}
 
-			$values			= '';
-			$virtual		= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $this->data) : $this->data);
-			$virtual_fields		= $this->getVirtualFields();
-			$n 			= \sizeof($virtual);
+			$values		= '';
+			$virtual	= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $this->data) : $this->data);
+			$virtual_fields	= $this->getVirtualFields();
+			$n 		= \sizeof($virtual);
 
 			if($virtual_fields)
 			{
 				$n -= \sizeof($virtual_fields);
 			}
 
-			if($diff = \array_diff(\array_keys($this->fields), \array_keys($virtual)))
-			{
-				foreach($diff as $index)
-				{
-					if(isset($this->fields[$index]['default']))
-					{
-						$virtual[$index] = $this->fields[$index]['default'];
-
-						++$n;
-					}
-				}
-			}
-
-			$new_identifier = isset($virtual[$this->idname]) && !$this->reidentify;
-			$sql		= ($new_identifier ? 'UPDATE `' . $this->tablename . '` SET ' : ($this->options & self::OPT_LOAD_ONLY ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (');
+			$new_identifier = isset($this->data[$this->idname]) && !$this->reidentify;
+			$sql		= ($new_identifier ? 'UPDATE `' . $this->tablename . '` SET ' : (($this->options & self::OPT_LOAD_ONLY) ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (');
 
 			foreach($virtual as $field => $data)
 			{
-				if(($field == $this->idname && $this->options & self::OPT_LOAD_ONLY) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
+				if(($field == $this->idname && ($this->options & self::OPT_LOAD_ONLY)) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
 				{
 					if($field == $this->idname && ($this->options & self::OPT_LOAD_ONLY))
 					{
@@ -818,13 +808,13 @@
 
 				if(!$this->parent)
 				{
-					$result 	= $hooks($this, $virtual, $virtual_fields);
+					$result 	= $hooks($this, $virtual_fields);
 					$this->context 	= self::CONTEXT_NONE;
 
 					return($result);
 				}
 
-				$this->parent->setShutdownHandler($hooks, Array($this, $virtual, $virtual_fields));
+				$this->parent->setShutdownHandler($hooks, Array($this, $virtual_fields));
 			}
 
 			$this->context = self::CONTEXT_NONE;

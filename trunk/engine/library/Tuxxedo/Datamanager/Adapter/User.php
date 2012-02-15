@@ -97,8 +97,7 @@
 												'callback'	=> Array(__CLASS__, 'isValidUsergroup')
 												), 
 							'salt'			=> Array(
-												'type'		=> self::FIELD_PROTECTED, 
-												'validation'	=> self::VALIDATE_STRING
+												'type'		=> self::FIELD_PROTECTED
 												), 
 							'style_id'		=> Array(
 												'type'		=> self::FIELD_OPTIONAL, 
@@ -337,12 +336,11 @@
 		/**
 		 * Updates the number of users in the usergroup
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
-			if(!isset($virtual['usergroupid']) || !$this->usergroupid || $virtual['usergroupid'] == $this->usergroupid || !isset($this->registry->datastore->usergroups[$virtual['usergroupid']]) || !isset($this->registry->datastore->usergroups[$this->usergroupid]))
+			if(!isset($this['usergroupid']) || !$this->usergroupid || $this['usergroupid'] == $this->usergroupid || !isset($this->registry->datastore->usergroups[$this['usergroupid']]) || !isset($this->registry->datastore->usergroups[$this->usergroupid]))
 			{
 				return(false);
 			}
@@ -353,7 +351,7 @@
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				++$usergroups[$virtual['usergroupid']]['users'];
+				++$usergroups[$this['usergroupid']]['users'];
 			}
 
 			return($this->registry->datastore->rebuild('usergroups', $usergroups));

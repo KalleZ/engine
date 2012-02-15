@@ -28,10 +28,11 @@ UPDATE `options` SET `value` = 'database' WHERE `option` = 'style_storage';
 
 ALTER TABLE `usergroups` DROP `type`;
 ALTER TABLE `languages` CHANGE `charset` `charset` VARCHAR( 12 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'UTF-8';
-ALTER TABLE `styles` CHANGE `default` `defaultstyle` TINYINT(1) NOT NULL DEFAULT '0';
+ALTER TABLE `styles` CHANGE `default` `defaultstyle` TINYINT( 1 ) NOT NULL DEFAULT '0';
 ALTER TABLE `usergroups` AUTO_INCREMENT = 3;
 ALTER TABLE `styles` DROP `templateids`;
 ALTER TABLE `options` ADD `category` VARCHAR( 128 ) NOT NULL;
+ALTER TABLE `templates` CHANGE `changed` `changed` TINYINT( 1 ) NOT NULL;
 
 INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`) VALUES (20, 'dm_session_lastactivity', 'Last activity', 1, 'datamanagers');
 INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`) VALUES (21, 'dm_usergroup_id', 'Usergroup identifier', 1, 'datamanagers');

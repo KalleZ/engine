@@ -5,8 +5,7 @@
 	Tuxxedo Engine 1.1.0 Release Candidate
 	------------------------------------------------
 
-	 - Fix template datamanager, does not resync on filesystem
 	 - Fix template datamanager, doesn't insert data into `defaultsource` on edit
 	 - Fix template datamanager, seems to corrupt the 'changed' field (empty data)
-	 - Fix template datamanager, does not resync datastore ids correct
+	 - Fix template datamanager, doesn't reset revision and bugs even more because of the `defaultsource` bug
 	 - Fix options UI table, doesn't look right in Opera

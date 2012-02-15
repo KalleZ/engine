@@ -121,33 +121,32 @@
 		 * Save the usergroup in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
 			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->usergroups[$this->data['id']]))
 			{
 				return(true);
 			}
 
-			$id		= (isset($virtual['id']) ? $virtual['id'] : $this->data['id']);
-			$usergroups	= $this->registry->datastore->usergroups;
+			$usergroups = $this->registry->datastore->usergroups;
 
-			unset($usergroups[$id]);
+			unset($usergroups[$this['id']]);
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				$query = $this->registry->db->query('
-									SELECT 
-										COUNT(`id`) as \'count\' 
-									FROM 
-										`' . \TUXXEDO_PREFIX . 'users` 
-									WHERE 
-										`usergroupid` = %d', $id);
+				$virtual	= $this->data;
+				$query 		= $this->registry->db->query('
+										SELECT 
+											COUNT(`id`) as \'count\' 
+										FROM 
+											`' . \TUXXEDO_PREFIX . 'users` 
+										WHERE 
+											`usergroupid` = %d', $this['id']);
 
-				$virtual['users']	= ($query && $query->getNumRows() ? (integer) $query->fetchObject()->count : 0);
-				$usergroups[$id] 	= $virtual;
+				$virtual['users']		= ($query && $query->getNumRows() ? (integer) $query->fetchObject()->count : 0);
+				$usergroups[$this['id']] 	= $virtual;
 			}
 
 			\ksort($usergroups);

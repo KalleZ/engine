@@ -51,9 +51,8 @@
 		 * This event method is called if the query to store the 
 		 * data was success, to rebuild the datastore cache
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual);
+		public function rebuild();
 	}
 ?>

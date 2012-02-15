@@ -120,21 +120,20 @@
 		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
 			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->permissions[$this->data['name']]))
 			{
 				return(true);
 			}
 
-			$name		= (isset($virtual['name']) ? $virtual['name'] : $this->data['name']);
-			$permissions	= $this->registry->datastore->permissions;
+			$permissions = $this->registry->datastore->permissions;
 
-			unset($permissions[$name]);
+			unset($permissions[$this['name']]);
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				$permissions[$name] = (integer) $this['bits'];
+				$permissions[$this['name']] = (integer) $this['bits'];
 			}
 
 			return($this->registry->datastore->rebuild('permissions', $permissions));

@@ -131,12 +131,11 @@
 		 * Save the style in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
-			if(!$this->identifier && !$this->data['id'])
+			if(!$this->identifier && !$this['id'])
 			{
 				return(false);
 			}
@@ -148,9 +147,9 @@
 
 			if($this->context == self::CONTEXT_DELETE)
 			{
-				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
+				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
 
-				foreach(\explode(',', $this->registry->datastore->styleinfo[$this->data['id']]['templateids']) as $id)
+				foreach(\explode(',', $this->registry->datastore->styleinfo[$this['id']]['templateids']) as $id)
 				{
 					if(empty($id))
 					{
@@ -162,6 +161,7 @@
 			}
 			elseif($this->context == self::CONTEXT_SAVE)
 			{
+				$virtual		= $this->data;
 				$virtual['templateids']	= '';
 				$templates		= $this->registry->db->query('
 											SELECT 
@@ -172,7 +172,7 @@
 												`styleid` = %d
  											ORDER BY 
 												`id` 
-											ASC', $this->data['id']);
+											ASC', $this['id']);
 
 				if($templates && $templates->getNumRows())
 				{
@@ -186,7 +186,7 @@
 					$virtual['templateids'] = \implode(',', $ids);
 				}
 
-				$datastore[(integer) $this->data['id']] = $virtual;
+				$datastore[(integer) $this['id']] = $virtual;
 			}
 
 			if(!$this->registry->datastore->rebuild('styleinfo', $datastore))
@@ -194,7 +194,7 @@
 				return(false);
 			}
 
-			if(isset($virtual['defaultstyle']) && $this->registry->options->style_id != $this->data[$this->idname])
+			if(isset($this['defaultstyle']) && $this->registry->options->style_id != $this['id'])
 			{
 				$dm 			= Adapter::factory('style', $this->registry->options->style_id, 0, $this);
 				$dm['defaultstyle']	= false;
@@ -202,7 +202,7 @@
 				$dm->save();
 
 				$options		= (array) $this->registry->options;
-				$options['style_id']	= $this->data['id'];
+				$options['style_id']	= $this['id'];
 
 				return($this->registry->datastore->rebuild('options', $options));
 			}

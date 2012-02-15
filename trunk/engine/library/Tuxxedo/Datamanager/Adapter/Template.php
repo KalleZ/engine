@@ -192,16 +192,15 @@
 		/**
 		 * Syncronizes the templateids in the style manager
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
+			$styleinfo 	= $this->registry->datastore->styleinfo;
+			$template 	= \TUXXEDO_DIR . '/styles/' . $styleinfo[$this['styleid']]['styledir'] . '/templates/' . $this['title'] . '.tuxx';
+
 			if($this->context == self::CONTEXT_DELETE)
 			{
-				$styleinfo	= $this->registry->datastore->styleinfo;
-				$template 	= \TUXXEDO_DIR . '/styles/' . $styleinfo[$this['styleid']]['styledir'] . '/templates/' . $this['title'] . '.tuxx';
-
 				if(\is_file($template) && !@\unlink($template))
 				{
 					return(false);
@@ -225,33 +224,25 @@
 			}
 			elseif($this->context == self::CONTEXT_SAVE)
 			{
-				if(!$virtual || !isset($virtual['styleid']) || $virtual['styleid'] == $this['styleid'])
+				if(!@\file_put_contents($template, $this['source']))
 				{
-					return(true);
+					return(false);
 				}
 
-				$styleinfo	= $this->registry->datastore->styleinfo;
-				$ids 		= \explode(',', $styleinfo[$this['styleid']]['templateids']);
-
-				foreach($ids as $index => $id)
+				if(empty($styleinfo[$this['styleid']]['templateids']))
 				{
-					if($id == $this['id'])
-					{
-						unset($ids[$index]);
-
-						break;
-					}
-				}
-
-				$styleinfo[$this['styleid']]['templateids'] = \trim(\implode(',', $ids), ',');
-
-				if(empty($styleinfo[$virtual['styleid']]['templateids']))
-				{
-					$styleinfo[$virtual['styleid']]['templateids'] = $this->data['id'];
+					$styleinfo[$this['styleid']]['templateids'] = $this->data['id'];
 				}
 				else
 				{
-					$styleinfo[$virtual['styleid']]['templateids'] .= ',' . $this->data['id'];
+					$ids = \explode(',', $styleinfo[$this->data['styleid']]['templateids']);
+
+					if(!\in_array($this->data['id'], $ids))
+					{
+						$ids[] = $this->data['id'];
+					}
+
+					$styleinfo[$this->data['styleid']]['templateids'] = \implode(',', \array_unique($ids));
 				}
 
 				return($this->registry->datastore->rebuild('styleinfo', $styleinfo));
@@ -269,7 +260,7 @@
 		 */
 		public function reset()
 		{
-			if($this->options & self::OPT_LOAD_ONLY || $this->identifier === NULL)
+			if(($this->options & self::OPT_LOAD_ONLY) || $this->identifier === NULL)
 			{
 				return(false);
 			}
@@ -286,18 +277,14 @@
 				$compiler->set($this['defaultsource']);
 				$compiler->compile();
 
-				$style 		= Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
-				$dottuxx 	= @\fopen(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', 'w');
+				$style 	= Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
 
-				if($dottuxx === false)
+				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', $compiler->get()))
 				{
 					throw new Exception\Basic('Failed to open a file pointer to the template file');
 				}
-
-				\fwrite($dottuxx, $compiler->get());
-				\fclose($dottuxx);
 			}
-			catch(\Exception $e)
+			catch(Exception $e)
 			{
 				return(false);
 			}
