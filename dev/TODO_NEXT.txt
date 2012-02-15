@@ -16,7 +16,7 @@
 
 	Internationalization
 	 - Add a browser language auto detection option to switch language for non logged in users
-	 - Add an uload method to make it possible to unload phrasegroups, much like the template unloader 
+	 - Add an unload method to make it possible to unload phrasegroups, much like the template unloader 
 	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
 	 - Change the phrasegroup class to implement InfoAccess
 	 - Change to use the phrasegroup class rather than ArrayObject

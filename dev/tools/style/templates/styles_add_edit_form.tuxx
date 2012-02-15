@@ -5,6 +5,10 @@
 	<h4>" . (($action == 'edit') ? ("Edit") : ("Add")) . " style</h4>
 
 	<table cellspacing=\"0\" cellpadding=\"0\">
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Style information</h5></td>
+		</tr>
 		<tr>
 			<td style=\"width: 20%;\">
 				Name</td>
@@ -22,6 +26,10 @@
 				Style directory</td>
 			<td>
 				<input type=\"text\" name=\"styledir\" size=\"32\" value=\"" . (($action == 'edit') ? ("{$styledata['styledir']}") : '') . "\" /></td>
+		</tr>
+		<tr class=\"heading\">
+			<td colspan=\"2\" class=\"start end\">
+				<h5>Options</h5></td>
 		</tr>
 		<tr>
 			<td nowrap=\"nowrap\" valign=\"top\">

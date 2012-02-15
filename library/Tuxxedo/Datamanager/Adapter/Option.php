@@ -227,24 +227,22 @@
 		 * Save the option in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
-		 * @param	array				A virtually populated array from the datamanager abstraction
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
 		 */
-		public function rebuild(Array $virtual)
+		public function rebuild()
 		{
 			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->options[$this['option']]))
 			{
 				return(true);
 			}
 
-			$option		= (isset($virtual['option']) ? $virtual['option'] : $this['option']);
-			$options 	= $this->registry->datastore->options;
+			$options = $this->registry->datastore->options;
 
-			unset($options[$option]);
+			unset($options[$this['option']]);
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				$options[$option] = $this['value'];
+				$options[$this['option']] = $this['value'];
 			}
 
 			return($this->registry->datastore->rebuild('options', $options));

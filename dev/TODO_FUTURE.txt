@@ -10,7 +10,7 @@
 	 - Other
 	   - Add the ability to export/import styles
 	   - Add the ability to export/import languages
-	   - Change searches with only 1 result to redirect to its editor page
+	   - Change searches with only 1 result to redirect to its editor page?
 	   - Kill session doesn't actually kill a session id
 
 	Improve the user component
