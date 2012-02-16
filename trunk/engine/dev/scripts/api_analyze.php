@@ -86,6 +86,9 @@
 	 */
 	function resolve_namespace_alias($root_ns, Array $aliases, $object)
 	{
+if($root_ns == '\Tuxxedo\Database\Driver' && $object == 'Database'){
+$s=true;
+}
 		if($object{0} == '\\')
 		{
 			return($object);
@@ -100,12 +103,12 @@
 				$object_clone = substr($object, 0, $pos);
 			}
 
-			$object_clone 	= ucfirst(strtolower($object_clone));
-			$object_len	= strlen($object_clone);
+			$object_clone = ucfirst(strtolower($object_clone));
 
 			foreach($aliases as $alias)
 			{
-				$pos = strrpos($alias, '\\');
+				$alias	= $alias[0];
+				$pos 	= strrpos($alias, '\\');
 
 				if(substr($alias, $pos + 1) == $object_clone)
 				{

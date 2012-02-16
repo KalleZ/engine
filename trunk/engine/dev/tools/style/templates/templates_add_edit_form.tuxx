@@ -42,25 +42,16 @@
 				<h5>Options</h5></td>
 		</tr>
 		<tr>
-			<td colspan=\"2\">
-				Below option should only be used if you understand the impact of 
-				how overriding defaults works. Overriding default templates can only 
-				be reverted by re-importing the templates from the Engine version 
-				currently in-use.
-
-				<br /> <br />
-
-				The custom revision setting is however not linked to the reset 
-				to default and can be used at all times. Note that custom revision 
-				over rules to the reset revision, meaning they cannot be used 
-				in conjuction with each other.
-			</td>
-		</tr>
-		<tr>
 			<td nowrap=\"nowrap\" valign=\"top\">
-				Set this as default template code?</td>
+				Set this as the new template default?</td>
 			<td>
 				<label><input type=\"checkbox\" name=\"sourceoverride\" value=\"1\" /> Yes</label></td>
+		</tr>
+		<tr>
+			<td colspan=\"2\">
+				Note that custom revision over rules to the reset revision, 
+				meaning they cannot be used in conjuction with each other.
+			</td>
 		</tr>
 		<tr>
 			<td nowrap=\"nowrap\" valign=\"top\">

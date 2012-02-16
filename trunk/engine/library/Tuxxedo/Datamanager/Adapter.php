@@ -605,7 +605,7 @@
 				{
 					case(self::VALIDATE_NUMERIC):
 					{
-						if(!\is_numeric($this->data[$field]))
+						if((!isset($this->data[$field]) && $props['type'] == self::FIELD_REQUIRED) || !\is_numeric($this->data[$field]))
 						{
 							$this->invalid_fields[] = $field;
 
@@ -621,7 +621,7 @@
 					}
 					case(self::VALIDATE_STRING):
 					{
-						if($props['type'] == self::FIELD_REQUIRED && !isset($this->data[$field]) || empty($this->data[$field]))
+						if((!isset($this->data[$field]) && $props['type'] == self::FIELD_REQUIRED) || empty($this->data[$field]))
 						{
 							$this->invalid_fields[] = $field;
 
@@ -631,7 +631,7 @@
 					break;
 					case(self::VALIDATE_EMAIL):
 					{
-						if(!\is_valid_email($this->data[$field]))
+						if((!isset($this->data[$field]) && $props['type'] == self::FIELD_REQUIRED) || !\is_valid_email($this->data[$field]))
 						{
 							$this->invalid_fields[] = $field;
 
@@ -641,7 +641,7 @@
 					break;
 					case(self::VALIDATE_BOOLEAN):
 					{
-						$this->data[$field] = (isset($this->data[$field]) ? (boolean) $this->data[$field] : false);
+						$this->data[$field] = (isset($this->data[$field]) ? (boolean) $this->data[$field] : (isset($props['default']) ? (boolean) $props['default'] : false));
 
 						continue;
 					}
@@ -846,7 +846,7 @@
 
 			$this->context = self::CONTEXT_DELETE;
 
-			if($this instanceof Hooks\Cache && !$this->rebuild(Array()))
+			if($this instanceof Hooks\Cache && !$this->rebuild())
 			{
 				$this->context = self::CONTEXT_NONE;
 

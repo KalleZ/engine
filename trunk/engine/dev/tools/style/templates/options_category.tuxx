@@ -1,5 +1,5 @@
-<tr class=\"header\">
-	<td colspan=\"6\" class=\"start-end-connected\">
+<tr class=\"heading header\">
+	<td colspan=\"6\" class=\"start end\">
 		{$category}
 
 		<span>
