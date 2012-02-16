@@ -70,19 +70,20 @@
 												), 
 							'source'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING_EMPTY
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isValidSource')
 												), 
 							'compiledsource' 	=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING_EMPTY
+												'type'		=> self::FIELD_PROTECTED
 												), 
 							'defaultsource'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
+												'type'		=> self::FIELD_OPTIONAL, 
 												'validation'	=> self::VALIDATE_STRING_EMPTY
 												), 
 							'styleid'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_NUMERIC
+												'validation'	=> self::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isValidStyleId')
 												), 
 							'changed'		=> Array(
 												'type'		=> self::FIELD_OPTIONAL, 
@@ -190,6 +191,54 @@
 		}
 
 		/**
+		 * Checks whether the source code is valid
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The source code to check
+		 * @return	boolean				Returns true if the source code is valid
+		 */
+		public static function isValidSource(Adapter $dm, Registry $registry, $source)
+		{
+			try
+			{
+				$compiler = new Compiler;
+
+				$compiler->setOptions(-1 & ~Compiler::OPT_VERBOSE_TEST);
+				$compiler->set($source);
+
+				$compiler->compile();
+
+				if(!isset($dm->data['defaultsource']) || empty($dm->data['defaultsource']))
+				{
+					$dm->data['defaultsource'] = $source;
+				}
+
+				$dm->data['source'] 		= $source;
+				$dm->data['compiledsource']	= $compiler->get();
+			}
+			catch(Exception $e)
+			{
+				return(false);
+			}
+
+			return(true);
+		}
+
+		/**
+		 * Checks whether the style identifier is valid
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The style identifier to check
+		 * @return	boolean				Returns true if the style identifier is valid
+		 */
+		public static function isValidStyleId(Adapter $dm, Registry $registry, $styleid)
+		{
+			return(isset($registry->datastore->styleinfo[$styleid]));
+		}
+
+		/**
 		 * Syncronizes the templateids in the style manager
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
@@ -224,7 +273,7 @@
 			}
 			elseif($this->context == self::CONTEXT_SAVE)
 			{
-				if(!@\file_put_contents($template, $this['source']))
+				if(!@\file_put_contents($template, $this['compiledsource']))
 				{
 					return(false);
 				}
@@ -277,7 +326,7 @@
 				$compiler->set($this['defaultsource']);
 				$compiler->compile();
 
-				$style 	= Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
+				$style = Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
 
 				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', $compiler->get()))
 				{

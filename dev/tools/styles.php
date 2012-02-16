@@ -276,12 +276,7 @@
 				break;
 				case('delete'):
 				{
-					$dm = Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC));
-
-					if(!$dm->delete())
-					{
-						tuxxedo_error('Unable to delete template');
-					}
+					Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC))->delete();
 
 					tuxxedo_redirect('Template deleted with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}
@@ -312,40 +307,17 @@
 						}
 						else
 						{
-							$dm['changed']	= true;
+							$dm['changed'] = true;
 						}
 
 						$dm['title'] 	= $title;
+						$dm['source'] 	= $source;
 						$dm['revision']	+= 1;
 
-						if($dm['source'] != $source || isset($_POST['sourceoverride']))
+						if($action == 'edit' && isset($_POST['sourceoverride']))
 						{
-							try
-							{
-								$compiler = new Compiler;
-
-								$compiler->set($source);
-								$compiler->setOptions($compiler->getOptions() & ~Compiler::OPT_VERBOSE_TEST);
-								$compiler->compile();
-
-								if(!$compiler->test())
-								{
-									throw new Exception\TemplateCompiler('Source code does not pass compiler test, possily syntax error');
-								}
-							}
-							catch(Exception\TemplateCompiler $e)
-							{
-								tuxxedo_error('Template compiler error: ' . $e->getMessage());
-							}
-
-							$dm['source'] 		= $source;
-							$dm['compiledsource']	= $compiler->get();
-
-							if($action == 'edit' && isset($_POST['sourceoverride']))
-							{
-								$dm['changed']		= false;
-								$dm['defaultsource'] 	= $dm['compiledsource'];
-							}
+							$dm['defaultsource'] 	= $source;
+							$dm['changed']		= false;
 						}
 
 						if($action == 'edit' && isset($_POST['customrevision']) && isset($_POST['newrevision']) && $_POST['newrevision'])
@@ -357,10 +329,7 @@
 							$dm['revision'] = 1;
 						}
 
-						if(!$dm->save())
-						{
-							tuxxedo_error('Unable to save template data');
-						}
+						$dm->save();
 
 						if(isset($_POST['reload']))
 						{

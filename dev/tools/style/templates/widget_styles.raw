@@ -20,18 +20,17 @@
 
 	<ul>
 		<li><a href="./styles.php?style={$styleid}&do=style&action=edit">Edit style info</a></li>
+<if expression="!$default">
+		<li><a href="./styles.php?style={$styleid}&do=style&action=delete" class="redlink" onclick="return(confirm('Are you sure you wish to delete this style? It cannot be undone'));">Delete this style</a></li>
+</if>
+	</ul>
+	<br />
+
+	<ul>
 		<li><a href="./styles.php?style={$styleid}&do=templates&action=add">Add template</a></li>
 		<li><a href="./styles.php?style={$styleid}&do=templates&action=list">Manage templates</a></li>
 		<li><a href="./styles.php?style={$styleid}&do=templates&action=search">Search in templates</a></li>
 	</ul>
-
-<if expression="!$default">
-	<br />
-
-	<ul>
-		<li><a href="./styles.php?style={$styleid}&do=style&action=delete" class="redlink" onclick="return(confirm('Are you sure you wish to delete this style? It cannot be undone'));">Delete this style</a></li>
-	</ul>
-</if>
 <else />
 	<p>
 		Styles are one of the core and most central piece of Engine. Styles 
