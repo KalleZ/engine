@@ -19,9 +19,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Input;
-	use Tuxxedo\Template\Compiler;
 
 
 	/**

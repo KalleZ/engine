@@ -329,6 +329,10 @@
 				$dm->data['salt'] 	= UserAPI::getPasswordSalt();
 				$dm->data['password']	= UserAPI::getPasswordHash($password, $dm->data['salt']);
 			}
+			elseif(($dm->options & self::OPT_LOAD_ONLY) || !$dm->identifier)
+			{
+				return(false);
+			}
 
 			return(true);
 		}
