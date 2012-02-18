@@ -150,7 +150,7 @@
 				$this->dispatcher(self::DISPATCH_PRE);
 			}
 
-			$action		= strtolower($this->router->getAction());
+			$action		= \strtolower($this->router->getAction());
 			$action_method 	= $this->router->getActionMethod();
 
 			if(!\method_exists($this, $action_method))

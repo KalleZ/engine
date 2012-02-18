@@ -84,7 +84,7 @@
 		 */
 		public function getSidebarWidget(&$hook_called = false)
 		{
-			$widget = 'widget_' . SCRIPT_NAME;
+			$widget = 'widget_' . \SCRIPT_NAME;
 
 			if(!$this->storage->exists($widget))
 			{
@@ -93,11 +93,11 @@
 
 			$this->cache(Array($widget));
 
-			if(\function_exists('\widget_hook_' . SCRIPT_NAME))
+			if(\function_exists('\widget_hook_' . \SCRIPT_NAME))
 			{
 				$hook_called = true;
 
-				return(\call_user_func('\widget_hook_' . SCRIPT_NAME, $this, $this->registry, $widget));
+				return(\call_user_func('\widget_hook_' . \SCRIPT_NAME, $this, $this->registry, $widget));
 			}
 
 			return($this->fetch($widget));

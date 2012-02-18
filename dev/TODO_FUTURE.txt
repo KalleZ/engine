@@ -15,9 +15,9 @@
 
 	Improve the user component
 	 - Implement a "Remember me?" API
-	 - Implement a disallowed permission based system
+	 - Implement a disallowed permission based system for users
 	 - Implement a user activation API
-	 - Make use of InfoAccess
+	 - Implement use of InfoAccess
 
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement XML Parsers

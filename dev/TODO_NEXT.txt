@@ -6,7 +6,6 @@
 	Core
 	 - Change $registry->options to also work with option categories
 	 - Change the codebase to not rely on /styles/ being the styledir
-	 - Fix backtraces showing internal + shorthand name for known aliases if no custom is set
 
 	Datamanagers
 	 - Add new datamanagers

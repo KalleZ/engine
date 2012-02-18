@@ -85,13 +85,6 @@
 		protected $action;
 
 		/**
-		 * Additional parameters
-		 *
-		 * @var		array
-		 */
-		protected $parameters			= Array();
-
-		/**
 		 * Default controller
 		 *
 		 * @var		string
@@ -104,6 +97,13 @@
 		 * @var		string
 		 */
 		public static $default_action		= 'index';
+
+		/**
+		 * Additional parameters
+		 *
+		 * @var		array
+		 */
+		protected $parameters			= Array();
 
 
 		/**

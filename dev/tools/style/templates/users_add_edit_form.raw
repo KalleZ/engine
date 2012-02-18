@@ -52,7 +52,7 @@
 		</tr>
 		<tr>
 			<td>
-				New password</td>
+				Password</td>
 			<td>
 				<input type="password" name="newpassword" size="32" /></td>
 		</tr>

@@ -513,7 +513,7 @@
 
 						foreach($datastore->usergroups as $item)
 						{
-							if($item['permissions'] & (integer) $dm['bits'])
+							if($item['permissions'] & $dm['bits'])
 							{
 								eval('$usergroups .= "' . $style->fetch('users_permission_delete_itembit') . '";');
 							}

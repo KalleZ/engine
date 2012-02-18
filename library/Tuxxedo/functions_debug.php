@@ -175,7 +175,7 @@
 				$etrace->notes		= 'Exception';
 
 				$trace->current		= false;
-				$trace->notes 		= (!empty($trace->notes) ? $trace->notes . ', ' : '') . 'Exception handler';
+				$trace->notes 		= (!empty($trace->notes) ? $trace->notes . ', ' : '') . (isset($t['function']) && !isset($descriptions[$function]) ? 'Exception handler' : '');
 			}
 
 			$stack[] = $trace;
