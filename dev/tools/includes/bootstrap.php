@@ -20,6 +20,7 @@
 	 */
 	use DevTools\Style;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Input;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
@@ -33,7 +34,7 @@
 	 *
 	 * @var		boolean
 	 */
-	define('TUXXEDO_DEBUG', 	true);
+	define('TUXXEDO_DEBUG', true);
 
 	/**
 	 * Sets the path to where the root script is, if the 
@@ -139,8 +140,9 @@
 
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('datastore', '\Tuxxedo\Datastore');
-	$registry->register('input', '\Tuxxedo\Input');
 	$registry->register('cookie', '\Tuxxedo\Cookie');
+
+	$registry->set('input', new Input);
 	$registry->set('style', new Style);
 
 	if(SCRIPT_NAME != 'datastore')

@@ -631,7 +631,7 @@
 					break;
 					case(self::VALIDATE_EMAIL):
 					{
-						if((!isset($this->data[$field]) && $props['type'] == self::FIELD_REQUIRED) || !\is_valid_email($this->data[$field]))
+						if((!isset($this->data[$field]) && $props['type'] == self::FIELD_REQUIRED) || !\filter_var($this->data[$field], \FILTER_VALIDATE_EMAIL))
 						{
 							$this->invalid_fields[] = $field;
 

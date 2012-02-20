@@ -33,7 +33,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Design;
 	use Tuxxedo\Registry;
 
 
@@ -54,7 +53,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Input implements Design\Invokable
+	class Input
 	{
 		/**
 		 * Data filter constant, numeric value
@@ -102,35 +101,6 @@
 		 */
 		const OPT_ARRAY				= 2;
 
-
-		/**
-		 * Whether the filter extension is available
-		 *
-		 * @var		boolean
-		 */
-		public static $have_filter_ext		= false;
-
-		/**
-		 * Whether magic_quotes_gpc is enabled or not
-		 *
-		 * @var		boolean
-		 */
-		public static $have_magic_quotes	= false;
-
-
-		/**
-		 * Magic method called when creating a new instance of the 
-		 * object from the registry
-		 *
-		 * @param	\Tuxxedo\Registry	The Registry reference
-		 * @param	array			The configuration array
-		 * @return	object			Object instance
-		 */
-		public static function invoke(Registry $registry, Array $configuration)
-		{
-			self::$have_filter_ext 		= \extension_loaded('filter');
-			self::$have_magic_quotes	= \get_magic_quotes_gpc();
-		}
 
 		/**
 		 * Filters 'GET' data
@@ -199,28 +169,22 @@
 			{
 				case(1):
 				{
-					$data = (self::$have_filter_ext ? \INPUT_GET : $_GET);
+					$data = \INPUT_GET;
 				}
 				break;
 				case(2):
 				{
-					$data = (self::$have_filter_ext ? \INPUT_POST : $_POST);
+					$data = \INPUT_POST;
 				}
 				break;
 				case(3):
 				{
-					$data = (self::$have_filter_ext ? \INPUT_COOKIE : $_COOKIE);
+					$data = \INPUT_COOKIE;
 				}
 				break;
 				case(4):
 				{
 					$data = $field;
-
-					if(!self::$have_filter_ext)
-					{
-						$data 	= Array($field);
-						$field	= 0;
-					}
 				}
 				break;
 				default:
@@ -230,147 +194,76 @@
 				break;
 			}
 
-			if(self::$have_filter_ext)
-			{
-				if($source != 4 && !\filter_has_var($data, $field))
-				{
-					return;
-				}
-
-				if($options & self::OPT_RAW)
-				{
-					return(\filter_input($data, $field, \FILTER_UNSAFE_RAW, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0)));
-				}
-
-				switch($type)
-				{
-					case(self::TYPE_NUMERIC):
-					{
-						$flags = \FILTER_VALIDATE_INT;
-					}
-					break;
-					case(self::TYPE_EMAIL):
-					{
-						$flags = \FILTER_VALIDATE_EMAIL;
-					}
-					break;
-					case(self::TYPE_BOOLEAN):
-					{
-						$flags = \FILTER_VALIDATE_BOOLEAN;
-					}
-					break;
-					default:
-					{
-						$flags = \FILTER_DEFAULT;
-					}
-					break;
-				}
-
-				if($source == 4)
-				{
-					$input = \filter_var($data, $flags, 0);
-				}
-				elseif($options & self::OPT_ARRAY && ($type == self::TYPE_NUMERIC || $type == self::TYPE_BOOLEAN))
-				{
-					$array = \filter_input($data, $field, \FILTER_UNSAFE_RAW, \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY);
-
-					if($type == self::TYPE_NUMERIC)
-					{
-						$input = array_map(function($var) { return((integer) $var); }, $array);
-					}
-					else
-					{
-						$input = array_map(function($var) { return((boolean) $var); }, $array);
-					}
-				}
-				else
-				{
-					$input = \filter_input($data, $field, $flags, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
-				}
-
-				if($type == self::TYPE_STRING && empty($input))
-				{
-					return;
-				}
-
-				return($input);
-			}
-			else
-			{
-				if($source != 4 && !isset($data[$field]))
-				{
-					return;
-				}
-
-				if($options & self::OPT_RAW)
-				{
-					return($data[$field]);
-				}
-
-				if($source != 4 && self::$have_magic_quotes)
-				{
-					$data[$field] = \stripslashes($data[$field]);
-				}
-
-				switch($type)
-				{
-					case(self::TYPE_NUMERIC):
-					{
-						if($options & self::OPT_ARRAY)
-						{
-							$data[$field] = array_map(function($var) { return((integer) $var); }, (array) $data[$field]);
-						}
-						else
-						{
-							$data[$field] = (integer) $data[$field];
-						}
-					}
-					break;
-					case(self::TYPE_EMAIL):
-					{
-						if($options & self::OPT_ARRAY)
-						{
-							$data[$field] = array_map(function($var) { return((\is_valid_email($var) ? $var : false)); }, (array) $data[$field]);
-						}
-						else
-						{
-							$data[$field] = (\is_valid_email($data[$field]) ? $data[$field] : false);
-						}
-					}
-					break;
-					case(self::TYPE_BOOLEAN):
-					{
-						if($options & self::OPT_ARRAY)
-						{
-							$data[$field] = array_map(function($var) { return((boolean) $var); }, (array) $data[$field]);
-						}
-						else
-						{
-							$data[$field] = (boolean) $data[$field];
-						}
-					}
-					break;
-					default:
-					{
-						if($options & self::OPT_ARRAY)
-						{
-							$data[$field] = array_map(function($var) { return((string) $var); }, (array) $data[$field]);
-						}
-						else
-						{
-							$data[$field] = (\is_array($data[$field]) ? '' : (string) $data[$field]);
-						}
-					}
-					break;
-				}
-			}
-
-			if($type == self::TYPE_NUMERIC && $data[$field] == 0 || $type == self::TYPE_STRING && empty($data[$field]))
+			if($source != 4 && !\filter_has_var($data, $field))
 			{
 				return;
 			}
 
-			return($data[$field]);
+			if($options & self::OPT_RAW)
+			{
+				return(\filter_input($data, $field, \FILTER_UNSAFE_RAW, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0)));
+			}
+
+			switch($type)
+			{
+				case(self::TYPE_NUMERIC):
+				{
+					$flags = \FILTER_VALIDATE_INT;
+				}
+				break;
+				case(self::TYPE_EMAIL):
+				{
+					$flags = \FILTER_VALIDATE_EMAIL;
+				}
+				break;
+				case(self::TYPE_BOOLEAN):
+				{
+					$flags = \FILTER_VALIDATE_BOOLEAN;
+				}
+				break;
+				default:
+				{
+					$flags = \FILTER_DEFAULT;
+				}
+				break;
+			}
+
+			if($source == 4)
+			{
+				$input = \filter_var($data, $flags, 0);
+			}
+			elseif($options & self::OPT_ARRAY && ($type == self::TYPE_NUMERIC || $type == self::TYPE_BOOLEAN))
+			{
+				$array = \filter_input($data, $field, \FILTER_UNSAFE_RAW, \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY);
+
+				if($type == self::TYPE_NUMERIC)
+				{
+					$input = function($var)
+					{
+						return((integer) $var);
+					};
+				}
+				else
+				{
+					$mapper = function($var)
+					{
+						return((boolean) $var); 
+					};
+				}
+
+				$input = \array_map($mapper, $array);
+			}
+			else
+			{
+				$input = \filter_input($data, $field, $flags, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0));
+			}
+
+			if($type == self::TYPE_STRING && empty($input))
+			{
+				return;
+			}
+
+			return($input);
 		}
 	}
 ?>
