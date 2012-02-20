@@ -253,7 +253,7 @@
 		 */
 		public static function isValidEmail(Adapter $dm, Registry $registry, $email = NULL)
 		{
-			if(!\is_valid_email($email))
+			if(!$email || !\filter_var($email, \FILTER_VALIDATE_EMAIL))
 			{
 				return(false);
 			}

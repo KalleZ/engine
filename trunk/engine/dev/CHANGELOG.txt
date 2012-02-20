@@ -96,7 +96,7 @@
 	Changed SQL exceptions to require a driver that caused the exception to trigger (Kalle)
 	Changed the user class to always initiate session (Kalle)
 	Changed the 'name' field in the user datamanager to be optional (Kalle)
-	Changed the the behaviour of how the Input class works, and is more cross compatible with and without the filter extension (Kalle)
+	Changed the codebase to require the filter extension (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
@@ -141,6 +141,7 @@
 	Removed the options editor in the DevTools that never really worked (Kalle)
 	Removed the input filters, TYPE_STRING_EMPTY and TYPE_CALLBACK (Kalle)
 	Removed the validate() method in the Input class (Kalle)
+	Removed the is_valid_email() function (Kalle)
 
 	Template changes:
 	 - Added
