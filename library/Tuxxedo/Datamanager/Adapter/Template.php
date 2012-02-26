@@ -205,7 +205,7 @@
 				$compiler = new Compiler;
 
 				$compiler->setOptions(-1 & ~Compiler::OPT_VERBOSE_TEST);
-				$compiler->set($source);
+				$compiler->setSource($source);
 
 				$compiler->compile();
 
@@ -215,7 +215,7 @@
 				}
 
 				$dm->data['source'] 		= $source;
-				$dm->data['compiledsource']	= $compiler->get();
+				$dm->data['compiledsource']	= $compiler->getCompiledSource();
 			}
 			catch(Exception $e)
 			{
@@ -323,12 +323,12 @@
 
 			try
 			{
-				$compiler->set($this['defaultsource']);
+				$compiler->setSource($this['defaultsource']);
 				$compiler->compile();
 
 				$style = Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
 
-				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', $compiler->get()))
+				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', $compiler->getCompiledSource()))
 				{
 					throw new Exception\Basic('Failed to open a file pointer to the template file');
 				}
@@ -339,7 +339,7 @@
 			}
 
 			$this['source'] 	= $this['defaultsource'];
-			$this['compiledsource']	= $compiler->get();
+			$this['compiledsource']	= $compiler->getCompiledSource();
 			$this['changed']	= false;
 
 			return($this->save());

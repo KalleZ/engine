@@ -250,19 +250,7 @@
 		{
 			echo(
 				'<div class="box">' . PHP_EOL . 
-				'<div class="inner">' . PHP_EOL
-				);
-
-			if($exception && $e instanceof Exception\Core)
-			{
-				echo(
-					'<div class="infobox spacer">' . PHP_EOL . 
-					'<strong>This is a critical error and should only occur in development releases!</strong>' . PHP_EOL . 
-					'</div>' . PHP_EOL
-					);
-			}
-
-			echo(
+				'<div class="inner">' . PHP_EOL . 
 				'<div class="infobox" style="float: left; width: 400px;">' . PHP_EOL . 
 				'<table cellspacing="2" cellpadding="0">' . PHP_EOL
 				);

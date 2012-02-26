@@ -249,10 +249,10 @@
 		 */
 		public function format()
 		{
-			$args = \func_get_args();
-			$size = \func_num_args($args);
+			$args 		= \func_get_args();
+			$size 		= \func_num_args($args);
 
-			$args[0] = $this->find($args[0]);
+			$args[0] 	= (!isset($this->phrases[$args[0]]) ?: $this->phrases[$args[0]]);
 
 			if(!$args[0] || !$size)
 			{
@@ -307,7 +307,7 @@
 
 		/**
 		 * Filter callback for checking if a phrasegroup have any 
-		 * elements phrases
+		 * phrases
 		 *
 		 * @param	string			The phrasegroup to check
 		 * @return	boolean			True if is one or more phrases in that phrasegroup, false if none

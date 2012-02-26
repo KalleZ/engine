@@ -115,20 +115,18 @@
 		protected $error_reporting;
 
 		/**
+		 * The current compiler stack data
+		 *
+		 * @var		\stdClass
+		 */
+		protected $stack_data;
+
+		/**
 		 * Compiler options bitmask
 		 *
 		 * @var		integer
 		 */
 		protected $options			= -1;
-
-		/**
-		 * The current number of parsed conditions, this is used for 
-		 * making error messages more expressive so its easier to locate 
-		 * an error
-		 *
-		 * @var		integer
-		 */
-		protected $conditions			= 0;
 
 		/**
 		 * The default functions to allow in expressions, note 
@@ -139,16 +137,16 @@
 		 * @var		array
 		 */
 		protected $functions			= Array(
-								'and', 
-								'or', 
-								'xor', 
+								'and'		=> true, 
+								'or'		=> true, 
+								'xor'		=> true, 
 
-								'array', 
-								'defined', 
-								'empty', 
-								'isset', 
-								'sizeof', 
-								'count'
+								'array'		=> true, 
+								'defined'	=> true, 
+								'empty'		=> true, 
+								'isset'		=> true, 
+								'sizeof'	=> true, 
+								'count'		=> true
 								);
 
 		/**
@@ -156,36 +154,42 @@
 		 *
 		 * @var		array
 		 */
-		protected $classes			= Array(
-								'user'		=> true, 
-								'usergroup'	=> true
-								);
+		protected $classes			= Array();
 
 		/**
 		 * The default closures to allow in expressions
 		 *
 		 * @var		array
 		 */
-		protected $closures			= Array(
-								);
+		protected $closures			= Array();
 
 
 		/**
 		 * Template compiler constructor
 		 *
 		 * @param	integer			The compiler options, this is used for recursive code by the compiler, or by setting the default
-		 * @param	integer			The current conditions, this is used for recursive code by the compile method and should not be touched
+		 * @param	integer			The current compiler stack data, this is only used for recursive calls
 		 */
-		public function __construct($options = -1, $conditions = NULL)
+		public function __construct($options = -1, \stdClass $stack_data = NULL)
 		{
 			if($options !== -1)
 			{
 				$this->options = (integer) $options;
 			}
 
-			if($conditions !== NULL)
+			if($stack_data !== NULL)
 			{
-				$this->conditions = $conditions;
+				$this->stack_data = $stack_data;
+
+				if(!isset($stack_data->conditions))
+				{
+					$this->stack_data->conditions = 0;
+				}
+			}
+			else
+			{
+				$this->stack_data 		= new \stdClass;
+				$this->stack_data->conditions	= 0;
 			}
 		}
 
@@ -226,9 +230,16 @@
 		 */
 		public function allowFunction($function)
 		{
+			$function = \strtolower($function);
+
 			if(!\function_exists($function) || isset($this->functions[$function]))
 			{
 				return(false);
+			}
+
+			if($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT)
+			{
+				$this->options &= ~self::OPT_NO_FUNCTION_CALL_LIMIT;
 			}
 
 			$this->functions[$function] = true;
@@ -244,9 +255,16 @@
 		 */
 		public function allowClass($class)
 		{
+			$class = \strtolower($class);
+
 			if(isset($this->classes[$class]))
 			{
 				return(false);
+			}
+
+			if($this->options & self::OPT_NO_CLASS_CALL_LIMIT)
+			{
+				$this->options &= ~self::OPT_NO_CLASS_CALL_LIMIT;
 			}
 
 			$this->classes[$class] = true;
@@ -262,40 +280,21 @@
 		 */
 		public function allowClosure($closure)
 		{
+			$closure = \strtolower($closure);
+
 			if(isset($this->closures[$closure]))
 			{
 				return(false);
 			}
 
+			if($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT)
+			{
+				$this->options &= ~self::OPT_NO_CLOSURE_CALL_LIMIT;
+			}
+
 			$this->closures[$closure] = true;
 
 			return(true);
-		}
-
-		/**
-		 * Sets a new uncompiled source code
-		 *
-		 * @param	string			The new uncompiled source code
-		 * @return	void			No value is returned
-		 */
-		public function set($source)
-		{
-			$this->source = (string) $source;
-		}
-
-		/**
-		 * Gets the compiled template source
-		 *
-		 * @return	string			Returns the source code of the original template in compiled form and boolean false if template isn't compiled yet
-		 */
-		public function get()
-		{
-			if($this->compiled_source === NULL)
-			{
-				return(false);
-			}
-
-			return($this->compiled_source);
 		}
 
 		/**
@@ -307,7 +306,7 @@
 		 */
 		public function compile()
 		{
-			static $tokens;
+			static $tokens, $token_lengths;
 
 			$src = $this->source;
 
@@ -320,11 +319,17 @@
 
 			if(!$tokens)
 			{
-				$tokens = Array(
-						'if_start'	=> '<if expression=', 
-						'if_end'	=> '</if>', 
-						'else'		=> '<else />'
-						);
+				$tokens 	= Array(
+							'if_start'	=> '<if expression=', 
+							'if_end'	=> '</if>', 
+							'else'		=> '<else />'
+							);
+
+				$token_lengths	= Array(
+							'if_start'	=> 15, 
+							'if_end'	=> 5, 
+							'else'		=> 8
+							);
 			}
 
 			$ptr = Array(
@@ -349,9 +354,9 @@
 					break;
 				}
 
-				++$this->conditions;
+				++$this->stack_data->conditions;
 
-				$expr_start 		= $ptr['if_open'] + \strlen($tokens['if_start']) + 1;
+				$expr_start 		= $ptr['if_open'] + $token_lengths['if_start'] + 1;
 				$delimiter 		= $src{$expr_start - 1};
 				$ptr['else_bytes']	= 2;
 
@@ -364,14 +369,14 @@
 
 				if($delimiter != '"' && $delimiter != '\'')
 				{
-					throw new Exception\TemplateCompiler('Invalid expression delimiter, must be either \' or "', $this->conditions);
+					throw new Exception\TemplateCompiler('Invalid expression delimiter, must be either \' or "', $this->stack_data);
 				}
 
 				$ptr['if_close'] = \stripos($src, $tokens['if_end'], $expr_start + 3);
 
 				if($ptr['if_close'] === false)
 				{
-					throw new Excpetion\TemplateCompiler('No closing if found', $this->conditions);
+					throw new Excpetion\TemplateCompiler('No closing if found', $this->stack_data);
 				}
 
 				$expr_end = -1;
@@ -388,18 +393,18 @@
 
 				if($expr_end == -1)
 				{
-					throw new Exception\TemplateCompiler('No end of expression found or malformed expression', $this->conditions);
+					throw new Exception\TemplateCompiler('No end of expression found or malformed expression', $this->stack_data);
 				}
 
 				$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
 
 				if(empty($expr_value) || ((string)(integer) $expr_value !== $expr_value) && $expr_value != 0)
 				{
-					throw new Exception\TemplateCompiler('Expressions may not be empty', $this->conditions);
+					throw new Exception\TemplateCompiler('Expressions may not be empty', $this->stack_data);
 				}
 				elseif(\strpos($expr_value, '`') !== false)
 				{
-					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->conditions);
+					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->stack_data);
 				}
 				elseif(\preg_match_all('#([a-z0-9_{}$>-]+)(?:\s|/\*.*\*/|(?:\#|//)[^\r\n]*(?:\r|\n))*\(#si', $expr_value, $matches))
 				{
@@ -407,23 +412,23 @@
 					{
 						$function = \strtolower(\stripslashes($function));
 
-						if($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT || isset($this->functions[$function]))
+						if(($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) || isset($this->functions[$function]))
 						{
 							continue;
 						}
 						elseif($function{0} == '$')
 						{
-							if($this->options & self::OPT_NO_CLASS_CALL_LIMIT || ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
+							if(($this->options & self::OPT_NO_CLASS_CALL_LIMIT) || ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
 							{
 								continue;
 							}
-							elseif($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT || \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
+							elseif(($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) || \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
 							{
 								continue;
 							}
 						}
 
-						throw new Exception\TemplateCompiler('Use of unsafe call expression: ' . $function . '()', $this->conditions);
+						throw new Exception\TemplateCompiler('Use of unsafe call expression: ' . $function . '()', $this->stack_data);
 					}
 				}
 
@@ -442,7 +447,7 @@
 
 					if($ptr['if_close'] === false)
 					{
-						throw new Exception\TemplateCompiler('No closing if found', $this->conditions);
+						throw new Exception\TemplateCompiler('No closing if found', $this->stack_data);
 					}
 				}
 
@@ -469,7 +474,7 @@
 
 				if($ptr['else'] == -1)
 				{
-					$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - \strlen($tokens['if_end']) - $expr_end + 2);
+					$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - $token_lengths['if_end'] - $expr_end + 2);
 					$false 	= '';
 				}
 				else
@@ -478,7 +483,7 @@
 					$false	= \substr($src, $ptr['else'] + \strlen($tokens['else']), $ptr['if_close'] - \strlen($tokens['if_end']) - $ptr['else'] - $ptr['else_bytes']);
 				}
 
-				$compiler = new self($this->options, $this->conditions);
+				$compiler = new self($this->options, $this->stack_data);
 
 				if(\stripos($true, $tokens['if_start']) !== false)
 				{
@@ -487,10 +492,10 @@
 						$true = \str_replace('\"', '"', $true);
 					}
 
-					$compiler->set($true);
+					$compiler->setSource($true);
 					$compiler->compile();
 
-					$true = $compiler->get();
+					$true = $compiler->getCompiledSource();
 				}
 
 				if(\stripos($false, $tokens['if_start']) !== false)
@@ -500,10 +505,10 @@
 						$false = \str_replace('\"', '"', $false);
 					}
 
-					$compiler->set($false);
+					$compiler->setSource($false);
 					$compiler->compile();
 
-					$false = $compiler->get();
+					$false = $compiler->getCompiledSource();
 				}
 
 				$compiler 		= NULL;
@@ -553,8 +558,50 @@
 				throw new Exception\TemplateCompiler('Interpolated function calls are not allowed');
 			}
 
-			$this->compiled_source 	= $src;
-			$this->conditions	= 0;
+			$this->compiled_source 		= $src;
+			$this->stack_data->conditions	= 0;
+		}
+
+		/**
+		 * Gets the compiled source
+		 *
+		 * @return	string			Returns the compiled source from the last successful compilation and false on error
+		 */
+		public function getCompiledSource()
+		{
+			if(!$this->compiled_source)
+			{
+				return(false);
+			}
+
+			return($this->compiled_source);
+		}
+
+		/**
+		 * Sets a new uncompiled source code
+		 *
+		 * @param	string			The new uncompiled source code
+		 * @return	void			No value is returned
+		 */
+		public function setSource($source)
+		{
+			$this->source 			= (string) $source;
+			$this->stack_data->conditions	= 0;
+		}
+
+		/**
+		 * Gets the uncompiled source code
+		 *
+	 	 * @return	string			Returns the uncompiled source code and false on error
+		 */
+		public function getSource()
+		{
+			if(!$this->source)
+			{
+				return(false);
+			}
+
+			return($this->source);
 		}
 
 		/**

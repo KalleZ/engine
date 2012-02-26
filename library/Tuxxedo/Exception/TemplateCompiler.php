@@ -43,21 +43,41 @@
 	class TemplateCompiler extends \Tuxxedo\Exception
 	{
 		/**
+		 * Compiler stack data
+		 *
+		 * @var		\stdClass
+		 */
+		protected $stack_data;
+
+
+		/**
 		 * Constructs a template compiler excepton
 		 *
 		 * @param	string			The error message
-		 * @param	array			The current condition this error occured at
+		 * @param	\stdClass		The current compiler stack data
 		 */
-		public function __construct($message, $conditions = NULL)
+		public function __construct($message, \stdClass $stack_data = NULL)
 		{
-			if($conditions !== NULL && !empty($conditions))
+			if($stack_data && isset($stack_data->conditions))
 			{
-				parent::__construct('%s at condition #%d', $message, $conditions);
+				parent::__construct('%s at condition #%d', $message, $stack_data->conditions);
 			}
 			else
 			{
 				parent::__construct($message);
 			}
+
+			$this->stack_data = $stack_data;
+		}
+
+		/**
+		 * Fetches the compiler stack data
+		 *
+		 * @return	\stdClass		Returns the compiler stack data, and NULL if non was available
+		 */
+		public function getStackData()
+		{
+			return($this->stack_data);
 		}
 	}
 ?>

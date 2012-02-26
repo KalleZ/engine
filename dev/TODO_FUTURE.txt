@@ -17,7 +17,6 @@
 	 - Implement a "Remember me?" API
 	 - Implement a disallowed permission based system for users
 	 - Implement a user activation API
-	 - Implement use of InfoAccess
 
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement XML Parsers

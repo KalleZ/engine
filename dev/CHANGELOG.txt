@@ -62,6 +62,7 @@
 	Added the ability for datamanagers to tell the core whether to 're-identify' identifying names (Kalle)
 	Added a new method to the registry class, invoke() to directly invoke new instances without registering the reference (Kalle)
 	Added a new validation constant, VALIDATE_IDENTIFIER to auto validate and state configure the base adapter (Kalle)
+	Added the 'getSource' method to the template compiler class (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -97,6 +98,9 @@
 	Changed the user class to always initiate session (Kalle)
 	Changed the 'name' field in the user datamanager to be optional (Kalle)
 	Changed the codebase to require the filter extension (Kalle)
+	Changed the method name 'free' to 'unload' in the datastore class for consistency (Kalle)
+	Changed the template compiler to use a stack for recursive data for further expansion (Kalle)
+	Changed the name of the 'get' method to 'getCompiledSource' in the template compiler class (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
@@ -129,6 +133,7 @@
 	Fixed E_RECOVERABLE_ERROR's not to show full path in some rare cases (Kalle)
 	Fixed a bug in the template that datamanger that wouldn't delete the template on the file system (Kalle)
 	Fixed the Input class to correctly return arrays when OPT_ARRAY is used (Kalle)
+	Fixed a case sensitive issue with the 'allow*' methods in the template compiler (Kalle)
 
 	Removed the /dev/extra folder, as the bootstraper is long outdated and not maintained (Kalle)
 	Removed the /dev/api/dumps folder, as dumps are now directly dumped into /dev/api/ (Kalle)
@@ -142,6 +147,8 @@
 	Removed the input filters, TYPE_STRING_EMPTY and TYPE_CALLBACK (Kalle)
 	Removed the validate() method in the Input class (Kalle)
 	Removed the is_valid_email() function (Kalle)
+	Removed the default classes allowed from the template compiler (Kalle)
+	Removed the 'Core' exception (Kalle)
 
 	Template changes:
 	 - Added
