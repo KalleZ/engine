@@ -98,12 +98,12 @@
 		}
 
 		/**
-		 * Frees a datastore from the loaded cache
+		 * Unloads a datastore element from the loaded cache
 		 *
 		 * @param	string			The datastore element to free from cache
 		 * @return	void			No value is returned
 		 */
-		public function free($name)
+		public function unload($name)
 		{
 			if(isset($this->cache[$name]))
 			{

@@ -281,20 +281,20 @@
 					array_map(Array($compiler, 'allow' . $data), $raw);
 				}
 
-				if(isset($_POST['verbose_test']))
+				if(!isset($_POST['verbose_test']))
 				{
-					$opts |= Compiler::OPT_VERBOSE_TEST;
+					$opts &= ~Compiler::OPT_VERBOSE_TEST;
 				}
 
 				$compiler->setOptions($opts);
 
 				try
 				{
-					$compiler->set($src);
+					$compiler->setSource($src);
 					$compiler->compile();
 
 					$test 	= $compiler->test();
-					$result = $compiler->get();
+					$result = $compiler->getCompiledSource();
 				}
 				catch(Exception\TemplateCompiler $e)
 				{

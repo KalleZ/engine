@@ -177,7 +177,7 @@
 				return(false);
 			}
 
-			if(is_array($list))
+			if(\is_array($list))
 			{
 				foreach($list as $template)
 				{

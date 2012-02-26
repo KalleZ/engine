@@ -104,7 +104,7 @@
 		public function __construct($options, Array $argv)
 		{
 			$this->options  = (integer) $options;
-			$this->argv     = $argv;
+			$this->argv     = (array) $argv;
 		}
 
 		/**

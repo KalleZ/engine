@@ -53,8 +53,10 @@
 		IO::ul(IO::TAG_START);
 
 		$compiler = new Compiler;
+
 		$compiler->allowFunction('strlen');
-		$compiler->allowClass('template');
+		$compiler->allowFunction('strtolower');
+		$compiler->allowFunction('in_array');
 
 		foreach($templates as $template)
 		{
@@ -63,10 +65,10 @@
 
 			try
 			{
-				$compiler->set(file_get_contents(TEMPLATE_DIR . '/' . $template . '.raw'));
+				$compiler->setSource(file_get_contents(TEMPLATE_DIR . '/' . $template . '.raw'));
 				$compiler->compile();
 
-				file_put_contents(TEMPLATE_DIR . '/' . $template . '.tuxx', $compiler->get());
+				file_put_contents(TEMPLATE_DIR . '/' . $template . '.tuxx', $compiler->getCompiledSource());
 
 				$result = 'Success';
 			}
