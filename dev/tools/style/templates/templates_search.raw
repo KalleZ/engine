@@ -15,7 +15,7 @@
 				<td>
 					Search in customized templates only?</td>
 				<td>
-					<label><input type="checkbox" name="search_changed" value="1" /> Yes</label></td>
+					<label><input type="checkbox" name="search_changed" value="1"<if expression="isset($safe_query) && isset($_POST['search_changed'])"> checked="checked"</if> /> Yes</label></td>
 			</tr>
 		</table>
 	</div>
@@ -26,7 +26,8 @@
 
 <if expression="isset($table)">
 <div class="box">
-	<h4>Matched templates</h4>
+<if expression="!empty($table)">
+	<h4>Search results</h4>
 
 	<p>
 		{$matches} template(s) matched your search criteria
@@ -41,9 +42,11 @@
 			<td>
 				Name
 			</td>
+<if expression="!$wildsearch">
 			<td nowrap="nowrap">
 				Matched keywords
 			</td>
+</if>
 			<td>
 				Revision
 			</td>
@@ -56,6 +59,11 @@
 		</tr>
 		{$table}
 	</table>
+<else />
+	<p class="error">
+		Search returned zero results.
+	</p>
+</if>
 </div>
 </if>
 

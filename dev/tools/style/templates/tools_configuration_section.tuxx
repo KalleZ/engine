@@ -1,0 +1,22 @@
+<tr class=\"heading header\">
+	<td colspan=\"3\" class=\"start end\">
+		{$section}
+	</td>
+</tr>
+<tr class=\"heading\">
+	<td class=\"start-connected-top\">
+		Name
+	</td>
+	<td>
+		Value
+	</td>
+</tr>
+" . ((!empty($rows)) ? ("
+	{$rows}
+") : ("
+	<td colspan=\"2\">
+		<p>
+			There is no values within this section.
+		</p>
+	</td>
+")) . "

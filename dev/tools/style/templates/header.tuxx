@@ -402,6 +402,7 @@
 		.top
 		{
 			background:			#044968 url('./style/images/top-background.png') repeat-x top left;
+			border-bottom:			2px solid #21A7CD;
 			border-radius:			4px;
 			padding:			0px 4px;
 		}
@@ -488,21 +489,16 @@
 					<li><a href=\"./users.php\"" . ((SCRIPT_NAME == 'users') ? (" class=\"current\"") : '') . "><span>Users &amp; Usergroups</span></a></li>
 					<li><a href=\"./sessions.php\"" . ((SCRIPT_NAME == 'sessions') ? (" class=\"current\"") : '') . "><span>Sessions</span></a></li>
 					<li><a href=\"./tools.php\"" . ((SCRIPT_NAME == 'tools') ? (" class=\"current\"") : '') . "><span>Tools</span></a></li>
+" . ((isset($session) && $session['__devtools_authenticated']) ? ("
+					<li style=\"float: right;\"><a href=\"./?logout=true\"><span>Log out</span></a></li>
+" . (($configuration['devtools']['protective'] == 2) ? ("
+					<li style=\"float: right;\"><a>Logged in as '{$devuserinfo->username}'</a></li>
+") : '') . "
+") : '') . "
 				</ul>
 				<div class=\"clear\"></div>
 			</div>
 			<br />
-" . ((isset($debug_notice)) ? ("
-			<div class=\"warning\">
-				<h3>Warning</h3>
-
-				<p>
-					The configuration had debug mode set to false. This was automaticlly 
-					changed to true while executing the development tools. To remove this warning, then 
-					simply set <em>'debug'</em> to true in your configuration file.
-				</p>
-			</div>
-") : '') . "
 
 " . ((isset($widget)) ? ("
 			<div class=\"panel\">

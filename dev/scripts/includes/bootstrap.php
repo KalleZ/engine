@@ -45,6 +45,7 @@
 	define('TUXXEDO_LIBRARY', 	realpath(__DIR__ . '/../../..') . '/library');
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
+	require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
@@ -56,27 +57,20 @@
 	register_shutdown_function('tuxxedo_shutdown_handler');
 	spl_autoload_register('\Tuxxedo\Loader::load');
 
+	$registry = Registry::init($configuration);
+
 	Registry::globals('error_reporting', 	true);
 	Registry::globals('errors', 		Array());
 
-	$registry = Registry::init($configuration);
-
 	$registry->set('timezone', new DateTimeZone('UTC'));
 	$registry->set('datetime', new DateTime('now', $timezone));
-
-	/**
-	 * Current time constant
-	 *
-	 * @var		integer
-	 */
-	define('TIMENOW', $datetime->getTimestamp());
 
 	/**
 	 * Set the UTC time constant
 	 *
 	 * @var		integer
 	 */
-	define('TIMENOW_UTC', TIMENOW);
+	define('TIMENOW_UTC', $datetime->getTimestamp());
 
 	/**
 	 * Set database table prefix constant

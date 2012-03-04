@@ -27,6 +27,12 @@
 
 
 	/**
+	 * Alias rules
+	 */
+	use Tuxxedo\Version;
+
+
+	/**
 	 * Include check
 	 */
 	\defined('\TUXXEDO_LIBRARY') or exit;
@@ -106,17 +112,75 @@
 		}
 
 		/**
+		 * Engine signature line, this only applies in CLI mode
+		 *
+		 * @return	void				No value is returned
+		 */
+		public static function signature()
+		{
+			if(!self::isCli())
+			{
+				return;
+			}
+
+			IO::headline('Tuxxedo Engine ' . Version::FULL, 1);
+		}
+
+		/**
+		 * Gets an input variable, this uses argv in CLI and $_GET in web
+		 *
+		 * @param	string				The argument to get
+		 * @param	mixed				The default value used on error
+		 * @return	string				Returns the value as a string, and false if the argument was not found
+		 */
+		public static function input($argument, $default = false)
+		{
+			if(self::isCli())
+			{
+				global $argv;
+
+				$key = \array_search('-' . $argument, $argv);
+
+				if($key === false || !isset($argv[$key + 1]))
+				{
+					return($default);
+				}
+
+				return((string) $argv[$key + 1]);
+			}
+
+			return((isset($_GET[$argument]) ? (string) $_GET[$argument] : $default));
+		}
+
+		/**
+		 * Prints a serve error message
+		 *
+		 * @param	string				The error message
+		 * @param	boolean				Whether or not to abort execution of the script (defaults to true)
+		 * @return	void				No value is returned
+		 */
+		public static function error($error, $exit = true)
+		{
+			IO::headline('Error: ' . $error);
+
+			if($exit)
+			{
+				exit;
+			}
+		}
+
+		/**
 		 * Writes a headline
 		 *
 		 * @param	string				The headline text
-		 * @param	integer				The headline size (web only)
+		 * @param	integer				The headline size (web only), for CLI this works as the number of EOL's to apply
 		 * @return	void				No value is returned
 		 */
 		public static function headline($text, $size = 2)
 		{
 			if(self::isCli())
 			{
-				\fprintf(\STDOUT, '%s%s%s', self::eol(), $text, self::eol(2));
+				\fprintf(\STDOUT, '%s%s%s', self::eol(), $text, self::eol($size));
 
 				return;
 			}
@@ -163,7 +227,7 @@
 		{
 			if(self::isCli())
 			{
-				\fprintf(STDOUT, '%s* %s%s', \str_repeat(' ', self::$depth), $text, self::eol());
+				\fprintf(\STDOUT, '%s* %s%s', \str_repeat(' ', self::$depth), $text, self::eol());
 
 				return;
 			}
@@ -183,7 +247,7 @@
 		{
 			if(self::isCli())
 			{
-				\fprintf(STDOUT, '%s%s', $text, self::eol());
+				\fprintf(\STDOUT, '%s%s', $text, self::eol());
 
 				return;
 			}
@@ -199,12 +263,14 @@
 		 */
 		public static function eol($times = 1)
 		{
-			if(self::isCli())
+			static $eol;
+
+			if(!$eol)
 			{
-				return(\str_repeat(\PHP_EOL, $times));
+				$eol = (self::isCli() ? \PHP_EOL : '<br />');
 			}
 
-			return(\str_repeat('<br />', $times));
+			return(\str_repeat($eol, $times));
 		}
 
 		/**
@@ -216,6 +282,11 @@
 		 */
 		public static function style($buffer, $style = 0)
 		{
+			if(self::isCli())
+			{
+				return($buffer);
+			}
+
 			if($style & self::STYLE_BOLD)
 			{
 				$buffer = \sprintf('<strong>%s</strong>', $buffer);

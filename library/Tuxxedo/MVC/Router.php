@@ -89,14 +89,14 @@
 		 *
 		 * @var		string
 		 */
-		public static $default_controller	= 'index';
+		public static $default_controller	= 'main';
 
 		/**
 		 * Default action
 		 *
 		 * @var		string
 		 */
-		public static $default_action		= 'index';
+		public static $default_action		= 'main';
 
 		/**
 		 * Additional parameters
@@ -209,7 +209,7 @@
 		{
 			try
 			{
-				$controller = $this->prefix . $this->controller;
+				$controller = $this->prefix . \ucfirst(\strtolower($this->controller));
 				$controller = new $controller($this->registry);
 
 				$controller->setRouter($this);

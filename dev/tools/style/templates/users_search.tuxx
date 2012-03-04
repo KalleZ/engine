@@ -28,7 +28,7 @@
 
 " . ((isset($table)) ? ("
 <div class=\"box\">
-	<h4>Matched users</h4>
+	<h4>Search results</h4>
 
 	<p>
 		{$matches} user(s) matched your search criteria

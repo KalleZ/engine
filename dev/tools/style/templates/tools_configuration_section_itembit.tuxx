@@ -1,0 +1,11 @@
+<tr>
+	<td style=\"width: 20%;\">
+		{$name}</td>
+	<td>
+" . (($value == '0' || !empty($value)) ? ("
+		<code>{$value}</code>
+") : ("
+		<em>No value</em>
+")) . "
+</td>
+</tr>

@@ -1,0 +1,26 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Configuration</h4>
+
+	<p>
+		This is a visual of the '<code>configuration.php</code>' file 
+		normally found in the root of the 'library' folder.
+	</p>
+
+	<br />
+	<table cellspacing=\"0\" cellpadding=\"0\">
+		{$sections}
+	</table>
+</div>
+
+" . ((!$configuration['devtools']['protective']) ? ("
+<div class=\"box\">
+	<p>
+		Note, due to security reasons, some directives here 
+		are masked with asterisks.
+	</p>
+</div>
+") : '') . "
+
+{$footer}

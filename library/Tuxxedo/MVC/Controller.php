@@ -35,7 +35,6 @@
 	use Tuxxedo\Exception;
 	use Tuxxedo\MVC\View;
 	use Tuxxedo\Registry;
-	use Tuxxedo\Router;
 
 
 	/**
@@ -189,12 +188,11 @@
 
 				if($this->layout)
 				{
-					eval('$this->buffer = "' . (string) $this->layout . '";');
-					return($this->buffer);
+					page_print((string) $this->layout);
 				}
 			}
 
-			return($content);
+			echo($content);
 		}
 	}
 ?>

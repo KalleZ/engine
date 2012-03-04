@@ -86,9 +86,6 @@
 	 */
 	function resolve_namespace_alias($root_ns, Array $aliases, $object)
 	{
-if($root_ns == '\Tuxxedo\Database\Driver' && $object == 'Database'){
-$s=true;
-}
 		if($object{0} == '\\')
 		{
 			return($object);
@@ -107,6 +104,11 @@ $s=true;
 
 			foreach($aliases as $alias)
 			{
+				if(!$alias)
+				{
+					continue;
+				}
+
 				$alias	= $alias[0];
 				$pos 	= strrpos($alias, '\\');
 
@@ -378,7 +380,7 @@ $s=true;
 						'license'	=> 1, 
 						'author'	=> 0, 
 						'param'		=> -1, 
-						'return'	=> 1, 
+						'return'	=> -1, 
 						'throws'	=> -1
 						);
 		}
@@ -404,7 +406,7 @@ $s=true;
 
 			$line = trim($line);
 
-			if($line{0} == '*')
+			if(isset($line{0}) && $line{0} == '*')
 			{
 				$line = ltrim(substr($line, 1));
 			}
@@ -603,6 +605,7 @@ $s=true;
 
 
 	$engine_path			= realpath(__DIR__ . '/../../');
+	$cli				= IO::isCli();
 	$files 				= analyze($engine_path);
 	$datamap			= Array();
 
@@ -611,7 +614,8 @@ $s=true;
 	$statistics->no_docblock_list	= Array();
 	$statistics->elements		= 0;
 
-	IO::headline('Lexical analyze of the Tuxxedo Engine API', 1);
+	IO::signature();
+	IO::headline('Lexical API analyze', 1);
 
 	foreach($files as $real_file)
 	{
@@ -627,7 +631,14 @@ $s=true;
 			IO::ul(IO::TAG_END);
 		}
 
-		IO::headline('/' . $file, 3);
+		if($cli)
+		{
+			IO::headline(IO::eol() . '/' . $file);
+		}
+		else
+		{
+			IO::headline('/' . $file, 3);
+		}
 
 		$context 		= new stdClass;
 		$context->current 	= false;
@@ -695,12 +706,17 @@ $s=true;
 						continue;
 					}
 
+					if($alias[0]{0} == '(')
+					{
+						continue;
+					}
+
 					if($alias[0]{0} != '\\')
 					{
 						$alias[0] = '\\' . $alias[0];
 					}
 
-					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], Array($alias));
+					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], Array($alias[0] => (isset($alias[1]) ? $alias[1] : '')));
 
 					++$statistics->elements;
 
@@ -746,7 +762,7 @@ $s=true;
 											'constants'	=> Array(), 
 											'properties'	=> Array(), 
 											'methods'	=> Array(), 
-											'namespace'	=> key($datamap[$file]['namespaces']), 
+											'namespace'	=> (($ns = key($datamap[$file]['namespaces'])) ? $ns : ''), 
 											'extends'	=> $extends, 
 											'implements'	=> $implements,  
 											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
@@ -837,7 +853,7 @@ $s=true;
 					{
 						$datamap[$file]['functions'][] = Array(
 											'function'	=> $function, 
-											'namespace'	=> end($datamap[$file]['namespaces']), 
+											'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
 											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 											'metadata'	=> Array(
 															'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
@@ -878,6 +894,7 @@ $s=true;
 
 						$const 					= substr($const, 1, strlen($const) - 2);
 						$datamap[$file]['constants'][$const]	= Array(
+												'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
 												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 												'metadata'	=> Array(
 																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
@@ -912,7 +929,7 @@ $s=true;
 					{
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] 	= Array(
 																		'constant'	=> $const, 
-																		'namespace'	=> end($datamap[$file]['namespaces']), 
+																		'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
 																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 																		'metadata'	=> Array(
 																						'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
@@ -938,6 +955,7 @@ $s=true;
 					else
 					{
 						$datamap[$file]['constants'][$const] 	= Array(
+												'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
 												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
 												'metadata'	=> Array(
 																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
@@ -1066,6 +1084,8 @@ $s=true;
 	{
 		IO::ul(IO::TAG_END);
 	}
+
+	ksort($datamap);
 
 	file_put_contents(__DIR__ . '/../api/serialized.dump', serialize($datamap));
 

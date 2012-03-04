@@ -85,7 +85,8 @@
 			$this->registry		= Registry::init();
 			$this->information 	= $styleinfo;
 			$this->templates	= new \stdClass;
-			$this->storage		= Style\Storage::factory($this->registry, $this, $this->registry->options->style_storage, $this->templates);
+
+			$this->storage		= Style\Storage::factory($this->registry, $this, (isset($styleinfo['storage']) ? $styleinfo['storage'] : $this->registry->options->style_storage), $this->templates);
 		}
 
 		/**
@@ -125,6 +126,17 @@
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
 			return($this->storage->cache($templates, $error_buffer));
+		}
+
+		/**
+		 * Checks if a template is loaded
+		 *
+		 * @param	string				The name of the template
+		 * @return	boolean				Returns true if the template is loaded, otherwise false
+		 */
+		public function isLoaded($template)
+		{
+			return(isset($this->templates->{$template}));
 		}
 
 		/**

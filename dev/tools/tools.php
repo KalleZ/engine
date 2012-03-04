@@ -57,6 +57,11 @@
 										'tools_status_itembit', 
 										'tools_status_all', 
 										'tools_status_all_itembit'
+										), 
+					'configuration'		=> Array(
+										'tools_configuration', 
+										'tools_configuration_section', 
+										'tools_configuration_section_itembit'
 										)
 					);
 
@@ -82,7 +87,7 @@
 	{
 		case('statistics'):
 		{
-			$files = recursive_glob('../..');
+			$files = recursive_glob('../..', false);
 
 			if(!$files)
 			{
@@ -112,8 +117,9 @@
 
 			foreach($files as $path)
 			{
-				$path		= '../../' . $path;
+				$path		= $path;
 				$extension 	= pathinfo($path, PATHINFO_EXTENSION);
+				$tokenizer	= extension_loaded('tokenizer');
 
 				if(in_array(strtolower($extension), $ignored))
 				{
@@ -146,7 +152,7 @@
 					$statistics['extensions'][$extension]['blanks'] = 0;
 				}
 
-				if(stripos($extension, 'php') !== false)
+				if($tokenizer && stripos($extension, 'php') !== false)
 				{
 					$statistics['extensions'][$extension]['tokens'] += sizeof(token_get_all(file_get_contents($path)));
 				}
@@ -223,7 +229,8 @@
 						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo')), 
 						'pdo_mysql'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo_mysql')), 
 						'pdo_sqlite'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo_sqlite')), 
-						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath'))
+						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath')), 
+						'getopt()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_OPTIONAL, Array('getopt'))
 						);
 
 			$failed = false;
@@ -316,6 +323,12 @@
 				if($logged_in)
 				{
 					$user->logout();
+
+					unset($session['userid']);
+					unset($session['password']);
+
+					unset($session[$options->cookie_prefix . 'userid']);
+					unset($session[$options->cookie_prefix . 'password']);
 				}
 			}
 
@@ -417,6 +430,49 @@
 
 				eval(page('tools_status'));
 			}
+		}
+		break;
+		case('configuration'):
+		{
+			if(!$configuration)
+			{
+				tuxxedo_error('No sections found in the configuration file');
+			}
+
+			$sections = '';
+			$dbdriver = Helper::factory('database')->getDriver();
+
+			foreach($configuration as $section => $directives)
+			{
+				$rows = '';
+
+				if($directives)
+				{
+					foreach($directives as $name => $value)
+					{
+						$lname = strtolower($name);
+
+						if(($lname == 'password' || $lname == 'database' && ($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite' || $section == 'devtools')) && !$configuration['devtools']['protective'])
+						{
+							$value = '"********"';
+						}
+						elseif(is_bool($value))
+						{
+							$value = ($value ? 'true' : 'false');
+						}
+						elseif($value == '0' || !empty($value))
+						{
+							$value = '"' . $value . '"';
+						}
+
+						eval('$rows .= "' . $style->fetch('tools_configuration_section_itembit') . '";');
+					}
+				}
+
+				eval('$sections .= "' . $style->fetch('tools_configuration_section') . '";');
+			}
+
+			eval(page('tools_configuration'));
 		}
 		break;
 		default:

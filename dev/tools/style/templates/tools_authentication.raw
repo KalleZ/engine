@@ -12,6 +12,14 @@
 		</p>
 		<br />
 
+		<if expression="isset($logged_in)">
+		<div class="<if expression="$logged_in">box<else />warning</if>">
+			<p>
+				The user information <strong><if expression="$logged_in">PASSED<else />FAILED</if></strong> the test
+			</p>
+		</div>
+		</if>
+
 		<table cellspacing="0" cellpadding="0">
 			<tr>
 				<td>
@@ -43,13 +51,5 @@
 		<input type="submit" name="progress" value="Test log in" />
 	</div>
 </form>
-
-<if expression="isset($logged_in)">
-<div class="<if expression="$logged_in">box<else />warning</if>">
-	<p>
-		The user information <strong><if expression="$logged_in">PASSED<else />FAILED</if></strong> the test
-	</p>
-</div>
-</if>
 
 {$footer}

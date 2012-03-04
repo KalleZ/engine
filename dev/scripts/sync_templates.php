@@ -34,6 +34,7 @@
 	 */
 	define('TEMPLATE_DIR', realpath(__DIR__ . '../../..') . '/styles/default/templates');
 
+	IO::signature();
 
 	$cli = IO::isCLI();
 
@@ -78,7 +79,7 @@
 		{
 ?>
 <form action="./sync_templates.php" method="post">
-	<input type="submit" name="sync" value="Re-Synchronize" />
+	<input type="submit" name="sync" value="Re-synchronize" />
 </form>
 <?php
 		}

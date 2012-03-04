@@ -5,9 +5,11 @@
 	<td nowrap="nowrap" style="width: 100%;">
 		{$template['title']}
 	</td>
+<if expression="!$wildsearch">
 	<td>
 		{$matched_strings}
 	</td>
+</if>
 	<td>
 		{$template['revision']}
 	</td>

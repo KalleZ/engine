@@ -2,5 +2,5 @@
 
 
 
-	Tuxxedo Engine 1.1.0 Release Candidate
+	Tuxxedo Engine 1.1.0 "Fawks" Gold
 	------------------------------------------------

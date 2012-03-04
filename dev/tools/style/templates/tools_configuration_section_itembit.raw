@@ -1,0 +1,11 @@
+<tr>
+	<td style="width: 20%;">
+		{$name}</td>
+	<td>
+<if expression="$value == '0' || !empty($value)">
+		<code>{$value}</code>
+<else />
+		<em>No value</em>
+</if>
+</td>
+</tr>

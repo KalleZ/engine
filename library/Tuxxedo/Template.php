@@ -151,6 +151,13 @@
 				}
 			}
 
+			if(!$this->registry->style->isLoaded($this->name))
+			{
+				$this->buffer = Array();
+
+				$this->registry->style->cache(Array($this->name), $this->buffer) or \tuxxedo_error('Unable to load template \'%s\'', $this->buffer);
+			}
+
 			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');
 
 			if($this->layout)

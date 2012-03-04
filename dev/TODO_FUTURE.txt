@@ -10,7 +10,7 @@
 	 - Other
 	   - Add the ability to export/import styles
 	   - Add the ability to export/import languages
-	   - Change searches with only 1 result to redirect to its editor page?
+	   - Change forms to use CSRF protection
 	   - Kill session doesn't actually kill a session id
 
 	Improve the user component
@@ -18,6 +18,8 @@
 	 - Implement a disallowed permission based system for users
 	 - Implement a user activation API
 
+	Implement CLI support
+	 - tuxxedo_doc_error()
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement XML Parsers
 	Implement a temporary memory storage, with backends for APC etc.

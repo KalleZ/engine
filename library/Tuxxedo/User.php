@@ -156,6 +156,14 @@
 			$this->sessiondm['location']		= \TUXXEDO_SELF;
 			$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
 
+			if(!isset($this->session['__engine_csrf_token']))
+			{
+				Session::regenerate();
+
+				$this->session['__engine_csrf_token'] 	= \sha1(self::getPasswordSalt(40));
+				$this->sessiondm['sessionid'] 		= Session::$id;
+			}
+
 			$this->setPermissionConstants();
 		}
 
@@ -176,6 +184,44 @@
 								`' . \TUXXEDO_PREFIX . 'sessions` 
 							WHERE 
 								`lastactivity` + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
+		}
+
+		/**
+		 * Get the specified CSRF token
+		 *
+		 * @return	string			Returns a token string thats hexadecimal, and boolean false if its undefined
+		 */
+		public function getCSRFToken()
+		{
+			if(!Session::$started)
+			{
+				return;
+			}
+
+			if(!isset($this->session['csrf_token']))
+			{
+				return(false);
+			}
+
+			return($this->session['csrf_token']);
+		}
+
+		/**
+		 * Creates a new CSRF token, note that this regenerates the session id and therefore 
+		 * the relevant APIs must update the session id if its kept in storage.
+		 *
+		 * @return	string			Returns the new token value
+		 */
+		public function getNewCSRFToken()
+		{
+			if(!Session::$started)
+			{
+				return;
+			}
+
+			Session::regenerate();
+
+			return($this->session['csrf_token'] = \sha1(self::getPasswordSalt(40)));
 		}
 
 		/**
@@ -222,9 +268,6 @@
 			$this->userinfo->permissions		= (integer) $userinfo->permissions;
 			$this->usergroupinfo->permissions 	= (integer) $this->usergroupinfo->permissions;
 
-			$this->registry->set('userinfo', $this->userinfo);
-			$this->registry->set('usergroup', $this->usergroupinfo);
-
 			$this->setPermissionConstants();
 
 			return(true);
@@ -233,7 +276,7 @@
 		/**
 		 * Log the current logged in user out
 		 *
-		 * @param	boolean			Whether to restart the session or not
+		 * @param	boolean			Whether to terminate and restart the session or not
 		 * @return	void			No value is returned
 		 */
 		public function logout($restart = false)
@@ -247,10 +290,9 @@
 
 			$this->sessiondm->delete();
 
-			Session::terminate();
-
 			if($restart)
 			{
+				Session::terminate();
 				Session::start();
 			}
 		}
@@ -312,7 +354,7 @@
 											' . \TUXXEDO_PREFIX . 'users.%s = \'%s\' 
 									LIMIT 1', $identifier_field, $identifier);
 			}
-			else
+			elseif($identifier)
 			{
 				$query = $this->registry->db->equery('
 									SELECT 
@@ -324,7 +366,7 @@
 									LIMIT 1', $identifier_field, $identifier);
 			}
 
-			if($query && $query->getNumRows())
+			if(isset($query) && $query && $query->getNumRows())
 			{
 				$userinfo = $query->fetchObject();
 
