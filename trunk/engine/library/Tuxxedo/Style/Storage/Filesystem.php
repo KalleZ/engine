@@ -73,7 +73,7 @@
 			$this->registry 	= $registry;
 			$this->style		= $style;
 			$this->templates	= $templates;
-			$this->path		= \TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/';
+			$this->path		= (isset($style['templatesdir']) ? $style['templatesdir'] : \TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/');
 		}
 
 		/**
@@ -96,7 +96,9 @@
 
 			foreach($templates as $title)
 			{
-				if(($contents = @\file_get_contents($this->path . $title . '.tuxx')) !== false)
+				$dottuxx = $this->path . $title . '.tuxx';
+
+				if(\is_file($dottuxx) && ($contents = @\file_get_contents($dottuxx)) !== false)
 				{
 					$this->templates->{$title} = $contents;
 				}

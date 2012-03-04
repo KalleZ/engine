@@ -17,6 +17,7 @@
 	 - Permission manager
 	 - User authentication tester
 	 - Table status
+	 - Configuration file viewer
 	Added CLI support for the developmental scripts in /dev/scripts (Kalle)
 	Added options to the datamanager adapters, which replaces the $intl parameter on the factory method (Kalle)
 	Added new datamanagers: (Kalle)
@@ -63,6 +64,13 @@
 	Added a new method to the registry class, invoke() to directly invoke new instances without registering the reference (Kalle)
 	Added a new validation constant, VALIDATE_IDENTIFIER to auto validate and state configure the base adapter (Kalle)
 	Added the 'getSource' method to the template compiler class (Kalle)
+	Added a password protective mode to the DevTools application (Kalle)
+	Added so that manual loading a style object may define its own storage engine and templates directory (Kalle)
+	Added the isLoaded() method to the style storage engine base class (Kalle)
+	Added the regenerate() method to the session class (Kalle)
+	Added a new and encapsulated way to write bootstrapers (Kalle)
+	Added support for __isset() and __unset() in the datastore and registry classes (Kalle)
+	Added the unload() method to the registry class (Kalle)
 
 	Changed the datamanager adapters to internally use the new initializer method (Kalle)
 	Changed the datamanager to have hooks and migrated the APICache interface into it (Kalle)
@@ -101,12 +109,19 @@
 	Changed the method name 'free' to 'unload' in the datastore class for consistency (Kalle)
 	Changed the template compiler to use a stack for recursive data for further expansion (Kalle)
 	Changed the name of the 'get' method to 'getCompiledSource' in the template compiler class (Kalle)
+	Changed the $restart parameter on \Tuxxedo\User::logout() to only trigger session termination if true (Kalle)
+	Changed the default controller and action names to be 'main' (Kalle)
+	Changed the controller dispatch() method to not return the content, but to print it directly (Kalle)
+	Changed the CSRF code from the session class to the user class (Kalle)
+	Changed the name of the dev script 'compile_devtools.php' to 'compile_dev.php' to allow future expansion (Kalle)
 
 	Fixed api_analyze.php to respect curly braces to not identify some methods as 'static' (Kalle)
 	Fixed api_analyze.php to parse methods/functions with inline closures correctly (Kalle)
 	Fixed api_analyze.php to correctly resolve nested namespace aliases (Kalle)
 	Fixed api_analyze.php to correctly resolve class and interface names without aliases but within a namespace (Kalle)
 	Fixed api_analyze.php to correctly export classes/interface aliases (Kalle)
+	Fixed api_analyze.php to correctly parse closure statements and not report false aliases
+	Fixed api_analyze.php to correctly export constants within namespaces thats not within a class/interface (Kalle)
 	Fixed fatal error if page() was called without the style component loaded (Kalle)
 	Fixed namespace alias rules in functions.php to inherit the 'Exception' namespace (Kalle)
 	Fixed error_reporting not being reset when testing compiled templates (Kalle)
@@ -119,6 +134,7 @@
 	Fixed possible naming conflict error messages on the DevTools due to a JavaScript bug (Kalle)
 	Fixed possible bugs in the old partically implemented permission system thats now fully functional (Kalle)
 	Fixed a bug that would not trim fatal errors caught in the shutdown handler entirely (Kalle)
+	Fixed a bug that would not trim paths in fatal errors aught in the shutdown handler (Kalle)
 	Fixed a bug in \Tuxxedo\Intl::find() that would render the method useless (Kalle)
 	Fixed debug backtraces to account for closures (Kalle)
 	Fixed some autoloading issues on case sensitive file systems (Kalle)

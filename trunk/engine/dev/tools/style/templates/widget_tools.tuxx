@@ -20,6 +20,7 @@
 
 	<h5>Miscellaneous</h5>
 	<ul>
+		<li><a href=\"./tools.php?do=configuration\">Configuration file</a></li>
 		<li><a href=\"./tools.php?do=statistics\">Code statistics</a></li>
 		<li><a href=\"./tools.php?do=requirements\">Requirements check</a></li>
 		<li><a href=\"./tools.php?do=compiler\">Template compiler</a></li>

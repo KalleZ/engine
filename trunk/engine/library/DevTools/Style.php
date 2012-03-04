@@ -84,7 +84,10 @@
 		 */
 		public function getSidebarWidget(&$hook_called = false)
 		{
-			$widget = 'widget_' . \SCRIPT_NAME;
+			global $configuration;
+
+			$script = ($configuration['devtools']['protective'] && !Registry::init()->session['__devtools_authenticated'] ? 'index' : \SCRIPT_NAME);
+			$widget = 'widget_' . $script;
 
 			if(!$this->storage->exists($widget))
 			{
@@ -93,11 +96,11 @@
 
 			$this->cache(Array($widget));
 
-			if(\function_exists('\widget_hook_' . \SCRIPT_NAME))
+			if(\function_exists('\widget_hook_' . $script))
 			{
 				$hook_called = true;
 
-				return(\call_user_func('\widget_hook_' . \SCRIPT_NAME, $this, $this->registry, $widget));
+				return(\call_user_func('\widget_hook_' . $script, $this, $this->registry, $widget));
 			}
 
 			return($this->fetch($widget));

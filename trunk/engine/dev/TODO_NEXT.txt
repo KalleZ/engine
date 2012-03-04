@@ -6,12 +6,17 @@
 	Core
 	 - Change $registry->options to also work with option categories
 	 - Change the codebase to not rely on /styles/ being the styledir
+	 - Change the bootstraper scripts to be much easier to write (e.g. convert most of the code into tuxxedo_init())
 
 	Datamanagers
 	 - Add new datamanagers
 	   - Language
 	   - Phrase
 	   - Phrasegroup
+
+	DevTools
+	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
+	 - Change the authentication testing tool to simulate a login rather than using sessions to do an actual login
 
 	Internationalization
 	 - Add a browser language auto detection option to switch language for non logged in users

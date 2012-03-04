@@ -32,13 +32,13 @@
 		if(!$includes)
 		{
 			$includes	= Array('require', 'require_once', 'include', 'include_once');
-			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array', 'call_user_method', 'call_user_method_array');
+			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array');
 
 			$descriptions	= Array(
-						'tuxxedo_shutdown_handler'	=> 'Internal Shutdown handler', 
-						'tuxxedo_exception_handler'	=> 'Internal Exception handler', 
-						'tuxxedo_error_handler'		=> 'Internal Error handler', 
-						'\Tuxxedo\Loader::load'		=> 'Internal Auto loader', 
+						'tuxxedo_shutdown_handler'	=> 'Internal shutdown handler', 
+						'tuxxedo_exception_handler'	=> 'Internal exception handler', 
+						'tuxxedo_error_handler'		=> 'Internal error handler', 
+						'\Tuxxedo\Loader::load'		=> 'Internal auto loader', 
 						'tuxxedo_multi_error'		=> 'Multi error, possibly caused by left operand call'
 						);
 		}

@@ -13,9 +13,9 @@
 
 	4)  Make sure to resync the datastore.
 
-	5)  Execute TRUNCATE TABLE sessions.
+	5)  Execute `TRUNCATE TABLE sessions'.
 
-	6)  Make sure that templates are upto date (database and file system) and 
+	6)  Make sure that templates are up to date (database and file system) and 
 	    that the devtools is compiled.
 
 	7)  Make sure database .sql files is at its current, by exporting the 
@@ -29,6 +29,6 @@
 	10) Commit!
 
 	11) Change the version back to its next release, make sure that preview tags, etc. 
-	    are at its current when going from stable to unstable and vice versa.
+	    are at its current when going from unstable to stable and vice versa.
 
 	12) Commit!

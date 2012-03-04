@@ -59,7 +59,8 @@
 		 */
 		protected $fields		= Array(
 							'sessionid'	=> Array(
-											'type'		=> self::FIELD_PROTECTED
+											'type'		=> self::FIELD_REQUIRED, 
+											'validation'	=> self::VALIDATE_STRING
 											), 
 							'userid'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
@@ -96,8 +97,12 @@
 			$this->dmname		= 'session';
 			$this->tablename	= \TUXXEDO_PREFIX . 'sessions';
 			$this->idname		= 'sessionid';
-			$this->identifier	= $this->fields['sessionid']['default'] = $identifier;
-			$this->reidentify	= true;
+
+			if($identifier)
+			{
+				$this->identifier = $this->fields['sessionid']['default'] = $identifier;
+				$this->reidentify = true;
+			}
 
 			parent::init($registry, $options, $parent);
 		}

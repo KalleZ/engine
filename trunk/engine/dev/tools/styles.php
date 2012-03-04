@@ -193,7 +193,8 @@
 					if(isset($_POST['query']) && !empty($_POST['query']))
 					{
 						$safe_query	= htmlspecialchars($input->post('query'), ENT_QUOTES);
-						$query 		= str_replace(Array('*', '%'), Array('%', '\%'), $input->post('query'));
+						$query 		= str_replace('%', '\%', $input->post('query'));
+						$query		= str_replace('*', '%', $query);
 						$stripped_query	= str_replace('*', '', $query);
 
 						if($query{0} != '*')
@@ -208,7 +209,7 @@
 
 						if(isset($_POST['search_changed']) && $_POST['search_changed'])
 						{
-							$query = $db->equery('
+							$squery = $db->equery('
 										SELECT 
 											`id`, 
 											`title`, 
@@ -228,7 +229,7 @@
 						}
 						else
 						{
-							$query = $db->equery('
+							$squery = $db->equery('
 										SELECT 
 											`id`, 
 											`title`, 
@@ -245,28 +246,51 @@
 											`styleid` = %d', $query, $styleid);
 						}
 
-						if(!$query || !$query->getNumRows())
-						{
-							tuxxedo_error('Search return zero results');
-						}
-
 						$table = '';
 
-						while($template = $query->fetchArray())
+						if(!$squery || !$squery->getNumRows())
 						{
-							$matched_strings	= 0;
-							$pos			= 0;
+							eval(page('templates_search'));
+							exit;
+						}
 
-							while($pos = stripos($template['source'], $stripped_query, $pos))
+						while(strpos($stripped_query, '%%') !== false)
+						{
+							$stripped_query = str_replace('%%', '%', $stripped_query);
+						}
+
+						$wildsearch = false;
+
+						foreach(str_split($stripped_query) as $char)
+						{
+							if($char != '%')
 							{
-								++$matched_strings;
-								++$pos;
+								$wildsearch = true;
+
+								break;
+							}
+						}
+
+						while($template = $squery->fetchArray())
+						{
+							if(!$wildsearch)
+							{
+								$matched_strings	= 0;
+								$pos			= 0;
+
+								while(($pos = stripos($template['source'], $stripped_query, $pos)) !== false)
+								{
+									++$matched_strings;
+									++$pos;
+								}
 							}
 
 							eval('$table .= "' . $style->fetch('templates_search_itembit') . '";');
+
+							unset($matched_strings);
 						}
 
-						$matches = $query->getNumRows();
+						$matches = $squery->getNumRows();
 					}
 
 					eval(page('templates_search'));

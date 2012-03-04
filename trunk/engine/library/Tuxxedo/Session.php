@@ -34,7 +34,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Design;
-	use Tuxxedo\User;
 
 
 	/**
@@ -77,7 +76,8 @@
 							'expires'	=> 1800, 
 							'prefix'	=> '', 
 							'domain'	=> '', 
-							'path'		=> ''
+							'path'		=> '', 
+							'secure'	=> false
 							);
 
 
@@ -100,7 +100,8 @@
 						'expires'	=> $options['cookie_expires'], 
 						'prefix'	=> $options['cookie_prefix'], 
 						'domain'	=> $options['cookie_domain'], 
-						'path'		=> $options['cookie_path']
+						'path'		=> $options['cookie_path'], 
+						'secure'	=> $options['cookie_secure']
 						);
 
 			self::start();
@@ -165,15 +166,8 @@
 				throw new Exception\Basic('Possible session hijacking detected');
 			}
 
-			\session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], false, true);
+			\session_set_cookie_params(self::$options['expires'], self::$options['domain'], self::$options['path'], self::$options['secure'], true);
 			\session_start();
-
-			if(!isset($_SESSION[self::$options['prefix'] . '__engine_csrf_token']))
-			{
-				\session_regenerate_id(true);
-
-				$_SESSION[self::$options['prefix'] . '__engine_csrf_token'] = \md5(User::GetPasswordSalt(32));
-			}
 
 			self::$started 	= true;
 			self::$id	= \session_id();
@@ -193,7 +187,7 @@
 
 			if(\ini_get('session.use_cookies'))
 			{
-				\setcookie(\session_name(), '', \TIMENOW_UTC - 86400, self::$options['path'], self::$options['domain'], false, true);
+				\setcookie(\session_name(), '', \TIMENOW_UTC - 86400, self::$options['path'], self::$options['domain'], self::$options['secure'], true);
 			}
 
 			\session_unset();
@@ -204,41 +198,18 @@
 		}
 
 		/**
-		 * Get the specified CSRF token
+		 * Regenerates a new session ID, note that API's that utilizes the 
+		 * session ID must be manually notified of this update to not cause 
+		 * data mismatch
 		 *
-		 * @return	string			Returns a token string thats hexadecimal, and boolean false if its undefined
+		 * @param	boolean			Whether or not to keep the old session data
+		 * @return	void			No value is returned
 		 */
-		public function getSecurityToken()
+		public static function regenerate($stayalive = false)
 		{
-			if(!$this::$started)
-			{
-				return;
-			}
+			\session_regenerate_id(!$stayalive);
 
-			if(!isset($this['__engine_csrf_token']))
-			{
-				return(false);
-			}
-
-			return($this['__engine_csrf_token']);
-		}
-
-		/**
-		 * Creates a new security token, note that this regenerates the session id and therefore 
-		 * the relevant APIs must update the session id if its kept in storage.
-		 *
-		 * @return	string			Returns the new token value
-		 */
-		public function getNewSecurityToken()
-		{
-			if(!$this::$started)
-			{
-				return;
-			}
-
-			\session_regenerate_id(true);
-
-			return($this['__engine_csrf_token'] = \sha1(User::GetPasswordSalt(32)));
+			self::$id = \session_id();
 		}
 
 		/**

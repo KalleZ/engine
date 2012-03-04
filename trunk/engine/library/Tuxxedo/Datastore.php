@@ -84,7 +84,7 @@
 		 * Quick reference for overloading of a loaded 
 		 * element in the datastore.
 		 *
-		 * @param	string			The datastore element to load
+		 * @param	string			The datastore element to get
 		 * @return	array			An array is returned, otherwise boolean false on error
 		 */
 		public function __get($name)
@@ -98,6 +98,31 @@
 		}
 
 		/**
+		 * Allows the usage of isset() on datastore elements
+		 *
+		 * @param	string			The datastore element to check
+		 * @return	boolean			Returns true if the element is loaded otherwise false
+		 */
+		public function __isset($name)
+		{
+			return(isset($this->cache[$name]) && !empty($this->cache[$name]));
+		}
+
+		/**
+		 * Allows the usge of unset() on datastore elements
+		 *
+		 * @param	string			The datastore element to unload
+		 * @return	void			No value is returned
+		 */
+		public function __unset($name)
+		{
+			if(isset($this->cache[$name]))
+			{
+				unset($this->cache[$name]);
+			}
+		}
+
+		/**
 		 * Unloads a datastore element from the loaded cache
 		 *
 		 * @param	string			The datastore element to free from cache
@@ -105,10 +130,7 @@
 		 */
 		public function unload($name)
 		{
-			if(isset($this->cache[$name]))
-			{
-				unset($this->cache[$name]);
-			}
+			$this->__unset($name);
 		}
 
 		/**

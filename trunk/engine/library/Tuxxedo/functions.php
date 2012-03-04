@@ -87,7 +87,12 @@
 
 		if($level & E_RECOVERABLE_ERROR)
 		{
-			tuxxedo_doc_error('<strong>Recoverable error:</strong> ' . str_replace($file, tuxxedo_trim_path($file), $message));
+			if(($spos = strpos($message, TUXXEDO_DIR)) !== false)
+			{
+				$message = substr_replace($message, tuxxedo_trim_path(substr($message, $spos, $epos = strrpos($message, ' on line') - $spos)), $spos, $epos);
+			}
+
+			tuxxedo_doc_error('<strong>Recoverable error:</strong> ' . $message);
 		}
 		elseif($level & E_USER_ERROR)
 		{
@@ -190,7 +195,7 @@
 		$configuration	= Registry::getConfiguration();
 
 		$called		= true;
-		$buffer		= (ob_get_length() ? ob_get_clean() : '');
+		$buffer		= ob_get_clean();
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
 		$utf8		= function_exists('utf8_encode');
@@ -204,7 +209,7 @@
 		}
 		elseif($exception_sql)
 		{
-			$message = (TUXXEDO_DEBUG ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
+			$message = (defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -222,7 +227,7 @@
 			'<style type="text/css">' . PHP_EOL . 
 			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
 			'h1 { color: #FFFFFF; }' . PHP_EOL . 
-			'h1 sup { color: #3B7286; font-size: 35%; border-bottom: 1px solid #3B7286; }' . PHP_EOL . 
+			'h1 sup { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; font-size: 35%; padding: 1px 3px; }' . PHP_EOL . 
 			'h2 { margin: 20px 0px 0px 0px; }' . PHP_EOL . 
 			'h2 span { background-color: #D2D2D2; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }' . PHP_EOL . 
 			'li, ul { margin: 0px; }' . PHP_EOL . 
@@ -242,11 +247,11 @@
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
-			(TUXXEDO_DEBUG && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
+			(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
 			'<h1>Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup></h1>' . PHP_EOL
 			);
 
-		if(TUXXEDO_DEBUG)
+		if(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG)
 		{
 			echo(
 				'<div class="box">' . PHP_EOL . 
@@ -333,19 +338,15 @@
 			echo(
 				'</table>' . PHP_EOL . 
 				'</div>' . PHP_EOL . 
-				'<div style="margin: 10px 10px 10px 430px;">' . PHP_EOL . 
+				'<div style="margin: 0px 0px 10px 430px;">' . PHP_EOL . 
+				'<div class="infobox">' . PHP_EOL . 
 				nl2br($message) . PHP_EOL . 
+				'</div>' . PHP_EOL . 
 				'<br />' . PHP_EOL
 				);
 
-			if(TUXXEDO_DEBUG && $errors && $registry)
+			if(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $errors)
 			{
-				echo(
-					'<br /> <br />' . PHP_EOL . 
-					'<strong>Warnings:</strong>' . PHP_EOL . 
-					'<div class="box">' . PHP_EOL 
-					);
-
 				foreach($errors as $error)
 				{
 					if(!$error)
@@ -354,13 +355,12 @@
 					}
 
 					echo(
-						(!$utf8 ? $error : utf8_encode($error)) . '<br />' . PHP_EOL
+						'<div class="infobox">' . PHP_EOL . 
+						(!$utf8 ? $error : utf8_encode($error)) . PHP_EOL . 
+						'</div>' . PHP_EOL . 
+						'<br />'
 						);
 				}
-
-				echo(
-					'</div>' . PHP_EOL 
-					);
 
 				Registry::globals('errors', Array());
 			}
@@ -368,10 +368,8 @@
 			if($exception_sql)
 			{
 				echo(
-					'<br />' . PHP_EOL . 
-					'<strong>Query:</strong>' . PHP_EOL . 
-					'<div class="box">' . PHP_EOL . 
-					'<code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code>' . PHP_EOL . 
+					'<div class="infobox">' . PHP_EOL . 
+					'<strong>SQL:</strong> <code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code>' . PHP_EOL . 
 					'</div>' . PHP_EOL
 					);
 			}
@@ -517,7 +515,7 @@
 	{
 		static $dir;
 
-		if(!$debug_trim && TUXXEDO_DEBUG)
+		if(!$debug_trim && defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG)
 		{
 			return($path);
 		}
@@ -552,19 +550,33 @@
 
 		if($configuration['application']['debug'] && $output && substr(ltrim($output), 0, 11) == 'Fatal error')
 		{
-			tuxxedo_doc_error(trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 12)));
+			$error = trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 12));
+
+			if(($spos = strpos($error, TUXXEDO_DIR)) !== false)
+			{
+				$error = substr_replace($error, tuxxedo_trim_path(substr($error, $spos, $epos = strrpos($error, ' on line') - $spos)), $spos, $epos);
+			}
+
+			tuxxedo_doc_error($error);
 		}
 
 		$errors = Registry::globals('errors');
 
-		if(!TUXXEDO_DEBUG || !$errors)
+		if(!defined('TUXXEDO_DEBUG') || !TUXXEDO_DEBUG || !$errors)
 		{
 			echo($output);
 
 			return;
 		}
 
-		$buffer = '<br />' . implode('<br />', $errors);
+		if(PHP_SAPI == 'cli')
+		{
+			$buffer = PHP_EOL . strip_tags(implode(PHP_EOL, $errors));
+		}
+		else
+		{
+			$buffer = '<br />' . implode('<br />', $errors);
+		}
 
 		if($pos = stripos($output, '</body>'))
 		{
@@ -682,7 +694,7 @@
 
 		if(!$timestamp)
 		{
-			$timestamp = (defined('TIMENOW') ? TIMENOW : TIMENOW_UTC);
+			$timestamp = (defined('TIMENOW_UTC') ? TIMENOW_UTC : time());
 		}
 
 		if($format === NULL)

@@ -32,7 +32,7 @@
 <if expression="isset($rows)">
 	{$rows}
 <else />
-	<td colspan="6">>
+	<td colspan="6">
 		<p>
 			There is currently no options assigned to this category, add or edit an 
 			option to list it here.

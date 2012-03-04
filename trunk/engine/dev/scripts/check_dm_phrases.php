@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Utilities\IO;
+	use Tuxxedo\Datamanager;
 
 
 	/**
@@ -49,60 +50,27 @@
 	const TUXXEDO_USERAGENT	= NULL;
 
 
-	/**
-	 * Function to fetch the field names for a specific adapter
-	 *
-	 * @param	string			The file where the adapter is located
-	 * @param	string			The name of the adapter
-	 * @return	array			Returns an array with the field names
-	 */
-	function fetch_field_names($file, $adapter)
+	$dm_fields = function($adapter)
 	{
-		global $registry;
+		$tempdm = Datamanager\Adapter::factory($adapter);
 
-		static $class_code;
-		static $ticks;
-
-		if(!$class_code)
+		return(array_filter($tempdm->getFields(), function($field) use($tempdm)
 		{
-			$class_code = 	'Class Temp%d extends \Tuxxedo\Datamanager\Adapter\%s ' . 
-					'{' . 
-					'public function getFields()' . 
-					'{' . 
-					'$fields = Array();' . 
-					'foreach(array_keys($this->fields) as $field)' . 
-					'{' . 
-					'if($this->fields[$field][\'type\'] != self::FIELD_VIRTUAL)' . 
-					'{' . 
-					'$fields[] = $field;' . 
-					'}' . 
-					'}' . 
-					'return($fields);' . 
-					'}' . 
-					'}';
-		}
+			static $virtual;
 
-		require($file);
+			if(!$virtual)
+			{
+				$virtual = $tempdm->getVirtualFields();
+			}
 
-		++$ticks;
+			return(in_array($field, $virtual));
+		}));
+	};
 
-		eval(sprintf($class_code, $ticks, $adapter));
-		eval(sprintf('$temp = new Temp%d($registry);', $ticks));
-
-		return($temp->getFields());
-	}
-
-	/**
-	 * Converts a field name into a field phrase
-	 *
-	 * @param	string			The adapter name
-	 * @param	string			The field name
-	 * @return	string			Returns the phrase name for the field
-	 */
-	function field_phrase($adapter, $field)
+	$phrase_name = function($adapter, $field)
 	{
 		return('dm_' . strtolower($adapter . '_' . $field));
-	}
+	};
 
 
 	$registry->register('db', '\Tuxxedo\Database');
@@ -111,17 +79,18 @@
 
 	$intldm = $intl->getPhrasegroup('datamanagers');
 
+	IO::signature();
+
 	foreach($datastore->languages as $id => $languagedata)
 	{
 		IO::headline('Checking datamanager phrases for \'' . $languagedata['title'] . '\'');
 
 		foreach(glob(ADAPTERS_DIR . '*.php') as $file)
 		{
-			$file 	= realpath($file);
-			$last 	= explode(DIRECTORY_SEPARATOR, $file);
+			$last 	= explode(DIRECTORY_SEPARATOR, realpath($file));
 			$last 	= substr($last[sizeof($last) - 1], 0, -4);
 
-			$fields = fetch_field_names($file, $last);
+			$fields = $dm_fields($last);
 
 			IO::ul();
 			IO::li($last);
@@ -129,14 +98,16 @@
 
 			foreach($fields as $field)
 			{
-				if(!$intldm->getPhrase(field_phrase($last, $field)))
+				$phrase = $phrase_name($last, $field);
+
+				if(!$intldm->getPhrase($phrase))
 				{
 					if(!isset($missing[$languagedata['title']]))
 					{
 						$missing[$languagedata['title']] = Array();
 					}
 
-					$missing[$languagedata['title']][] = field_phrase($last, $field);
+					$missing[$languagedata['title']][] = $phrase;
 
 					IO::li($field . '... MISSING');
 				}
@@ -170,6 +141,6 @@
 	}
 	else
 	{
-		IO::text('Perfect! There is no missing datamanger phrases');
+		IO::text(IO::eol() . 'Perfect! There is no missing datamanger phrases');
 	}
 ?>

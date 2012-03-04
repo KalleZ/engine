@@ -25,30 +25,43 @@
 	 * A recursive glob function
 	 *
 	 * @param	string			The glob expression to execute
-	 * @param	integer			The expression prefix character position, this is only for recursive calls and is auto-filled
 	 * @return	array			Returns an array containing the matched elements and false on error
 	 */
-	function recursive_glob($expression, $expression_prefix = NULL)
+	function recursive_glob($expression)
 	{
-		if($expression_prefix === NULL)
+		if(($pos = strpos($expression, '*')) !== false)
 		{
-			$expression_prefix = strlen($expression) + 1;
-		}
+			$glob = glob(substr($expression, 0, $pos) . ($expression{$pos - 1} != '/' && $expression{$pos - 1} != '\\' ? '/' : '') . '*');
 
-		$glob = glob($expression . '/*');
+			if(strlen($expression) > $pos)
+			{
+				$suffix 	= substr($expression, $pos + 1);
+				$suffix_len	= strlen($suffix);
+			}
+		}
+		else
+		{
+			$glob 		= glob($expression . '/*');
+			$expression_len	= strlen($expression);
+		}
 
 		if(!$glob)
 		{
 			return(false);
 		}
 
-		$return_value = Array();
+		$return_value 	= Array();
 
 		foreach($glob as $entry)
 		{
 			if(is_dir($entry))
 			{
-				if(($entries = recursive_glob($entry, $expression_prefix)) !== false)
+				if(isset($suffix))
+				{
+					$entry .= '/*' . $suffix;
+				}
+
+				if(($entries = recursive_glob($entry)) !== false)
 				{
 					foreach($entries as $sub_entry)
 					{
@@ -59,11 +72,11 @@
 				continue;
 			}
 
-			$entry = substr_replace($entry, '', 0, $expression_prefix);
+			$entry_len = strlen($entry);
 
-			if(strpos($entry, '\\') !== false)
+			if(isset($suffix) && ($entry_len < $suffix_len || substr($entry, $entry_len - $suffix_len) != $suffix))
 			{
-				$entry = str_replace('\\', '/', $entry);
+				continue;
 			}
 
 			$return_value[] = $entry;

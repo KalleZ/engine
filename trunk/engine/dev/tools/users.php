@@ -251,7 +251,7 @@
 
 					$fields_dropdown = '';
 
-					if(isset($_POST['submit']) && isset($_POST['query_field']) && in_array((string) $_POST['query_field'], $fields))
+					if(isset($_POST['submit']) && isset($_POST['query']) && $_POST['query'] && isset($_POST['query_field']) && in_array((string) $_POST['query_field'], $fields))
 					{
 						$safe_query	= htmlspecialchars($input->post('query'), ENT_QUOTES);
 						$query 		= str_replace(Array('*', '%'), Array('%', '\%'), $input->post('query'));

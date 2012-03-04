@@ -8,12 +8,10 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		Engine
-	 * @subpackage		DevTools
+	 * @package		DevTools
 	 *
 	 * =============================================================================
 	 */
-
 
 
 	/**
@@ -31,8 +29,8 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Datamanager;
 	use Tuxxedo\Registry;
+
 
 	/**
 	 * Include check
@@ -41,33 +39,28 @@
 
 
 	/**
-	 * DevTools user class, this class is used to bypass some of the 
-	 * restrictions the core user class prohibits in order to ease 
-	 * the code for some of the development tools and testing.
+	 * DevTools session interface override. This class overrides 
+	 * the options and 'bakes' them into the class so that it can 
+	 * be used without loading the datastore.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		DevTools
 	 */
-	class User extends \Tuxxedo\User
+	class Session extends \Tuxxedo\Session
 	{
 		/**
-		 * Constructor
+		 * Magic method called when creating a new instance of the 
+		 * object from the registry
+		 *
+		 * @param	\Tuxxedo\Registry	The Registry reference
+		 * @param	array			The configuration array
+		 * @return	object			Object instance
 		 */
-		public function __construct()
+		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			$this->registry 	= Registry::init();
-			$this->userinfo 	= $this->usergroupinfo = new \stdClass;
-			$this->information	= $this->userinfo;
-
-			if($this->registry->session['__devtools_userid'])
-			{
-				$this->userinfo 		= $this->getUserinfo($this->registry->session['__devtools_userid']);
-				$this->userinfo->permissions	= (integer) $this->userinfo->permissions;
-			}
-
-			$this->setPermissionConstants();
+			self::start();
 		}
 	}
 ?>

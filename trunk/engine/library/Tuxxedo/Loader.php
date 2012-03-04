@@ -303,7 +303,7 @@
 		}
 
 		/**
-		 * Autoloads a class, if a class fails to load, the error handler is called 
+		 * Autoloads a class or interface, if the class or interface fails to load, the error handler is called 
 		 * directly and the error is shown.
 		 *
 		 * @param	string				The class or interface to autoload

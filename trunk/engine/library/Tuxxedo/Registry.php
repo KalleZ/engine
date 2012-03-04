@@ -116,6 +116,42 @@
 		}
 
 		/**
+		 * Allows the usage of isset() on registry objects
+		 *
+		 * @param	string			The registry object to check
+		 * @return	boolean			Returns true if the object exists otherwise false
+		 */
+		public function __isset($name)
+		{
+			return(isset(self::$instance->instances[$name]) && !empty(self::$instance->instances[$name]));
+		}
+
+		/**
+		 * Allows the usge of unset() on registry objects
+		 *
+		 * @param	string			The registry object to unload
+		 * @return	void			No value is returned
+		 */
+		public function __unset($name)
+		{
+			if(isset(self::$instance->instances[$name]))
+			{
+				unset(self::$instance->instances[$name]);
+			}
+		}
+
+		/**
+		 * Unloads a registry object
+		 *
+		 * @param	string			The registry object to unload
+		 * @return	void			No value is returned
+		 */
+		public function unload($name)
+		{
+			self::$instance->__unset($name);
+		}
+
+		/**
 		 * Initializes a new object instance, this implements the 
 		 * singleton pattern and can be called from any context and 
 		 * the same object is returned
@@ -130,7 +166,7 @@
 				self::$instance = new self;
 			}
 
-			if(is_array($configuration))
+			if(\is_array($configuration))
 			{
 				self::$instance->configuration = $configuration;
 			}
@@ -192,6 +228,11 @@
 			elseif(($ifaces = \class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Design\Invokable']))
 			{
 				$instance = \call_user_func(Array($class, 'invoke'), $this, $this->configuration);
+
+				if(\is_object($class) && !\is_object($instance))
+				{
+					$instance = $class;
+				}
 			}
 
 			if(!isset($instance) || !\is_object($instance))
