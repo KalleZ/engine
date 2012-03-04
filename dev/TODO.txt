@@ -2,5 +2,5 @@
 
 
 
-	Tuxxedo Engine 1.1.0 "Fawks" Gold
+	Tuxxedo Engine 1.2.0 "Intero"
 	------------------------------------------------
