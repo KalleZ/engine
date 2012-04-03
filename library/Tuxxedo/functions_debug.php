@@ -147,7 +147,7 @@
 				$trace->file = $t['file'];
 			}
 
-			if(($is_closure = strpos($trace->call, '{closure}')) !== false || !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks))
+			if(($is_closure = strpos($trace->call, '{closure}')) !== false || !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && in_array(strtolower($bt[$n + 1]['function']), $callbacks) || empty($t['file']) && empty($t['line']) && isset($bt[$n + 1]))
 			{
 				$trace->notes = (!empty($trace->notes) ? $trace->notes . ', ' : '') . (isset($is_closure) && $is_closure !== false ? 'Closure, ' : '') . 'Callback';
 
@@ -175,7 +175,7 @@
 				$etrace->notes		= 'Exception';
 
 				$trace->current		= false;
-				$trace->notes 		= (!empty($trace->notes) ? $trace->notes . ', ' : '') . (isset($t['function']) && !isset($descriptions[$function]) ? 'Exception handler' : '');
+				$trace->notes 		= (!empty($trace->notes) ? $trace->notes : '') . (isset($t['function']) && !isset($descriptions[$function]) ? (!empty($trace->notes) ? ', ' : '') . 'Exception handler' : '');
 			}
 
 			$stack[] = $trace;
@@ -202,7 +202,7 @@
 		{
 			case('object'):
 			{
-				return('Object(' . get_class($variable) . ')');
+				return(($variable instanceof \Exception ? 'Exception' : 'Object') . '(' . get_class($variable) . ')');
 			}
 			case('array'):
 			{

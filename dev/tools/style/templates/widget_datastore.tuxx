@@ -13,3 +13,13 @@
 		<li><a href=\"./datastore.php?do=dump\">Dump contents</a></li>
 	</ul>
 </div>
+
+" . (($total_size !== NULL) ? ("
+<div class=\"box\">
+	<h4>Consumption</h4>
+	<p>
+		The datastore current consumes <strong>{$total_size}</strong> 
+		bytes of database storage.
+	</p>
+</div>
+") : '') . "

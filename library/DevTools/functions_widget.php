@@ -8,7 +8,8 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -21,6 +22,42 @@
 	use Tuxxedo\Input;
 	use Tuxxedo\Registry;
 
+
+
+	/**
+	 * Widget hook function - datastore
+	 *
+	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\Tuxxedo\Registry	The registry reference
+	 * @param	string			The template name of the widget
+	 * @return	string			Returns the compiled sidebar widget
+	 */
+	function widget_hook_datastore(Style $style, Registry $registry, $widget)
+	{
+		static $total_size;
+
+		if($total_size === NULL && !isset($_POST['progress']))
+		{
+			$total_size	= 0;
+			$ds 		= $registry->db->query('
+								SELECT 
+									`data` 
+								FROM 
+									`' . TUXXEDO_PREFIX . 'datastore`');
+
+			if($ds && $ds->getNumRows())
+			{
+				foreach($ds as $row)
+				{
+					$total_size += strlen($row['data']);
+				}
+			}
+		}
+
+		eval('$sidebar = "' . $style->fetch($widget) . '";');
+
+		return($sidebar);
+	}
 
 	/**
 	 * Widget hook function - styles

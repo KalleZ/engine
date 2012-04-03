@@ -94,23 +94,27 @@
 				return(false);
 			}
 
+			$loaded = Array();
+
 			foreach($templates as $title)
 			{
 				$dottuxx = $this->path . $title . '.tuxx';
 
 				if(\is_file($dottuxx) && ($contents = @\file_get_contents($dottuxx)) !== false)
 				{
-					$this->templates->{$title} = $contents;
+					$loaded[]			= $title;
+					$this->templates->{$title} 	= $contents;
 				}
-				else
-				{
-					if($error_buffer !== NULL)
-					{
-						$error_buffer[] = $title;
-					}
+			}
 
-					return(false);
+			if(($diff = \array_diff($templates, $loaded)))
+			{
+				if($error_buffer !== NULL)
+				{
+					$error_buffer = $diff;
 				}
+
+				return(false);
 			}
 
 			return(true);			

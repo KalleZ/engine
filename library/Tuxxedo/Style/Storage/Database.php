@@ -117,7 +117,7 @@
 				$this->templates->{$row['title']} 	= $row['compiledsource'];
 			}
 
-			if(($diff = array_diff($templates, $loaded)) !== false)
+			if(($diff = \array_diff($templates, $loaded)))
 			{
 				$error_buffer = $diff;
 

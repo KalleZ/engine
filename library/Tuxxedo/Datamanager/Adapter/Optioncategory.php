@@ -55,7 +55,7 @@
 	class Optioncategory extends Adapter implements Hooks\Cache
 	{
 		/**
-		 * Fields for validation of permissions
+		 * Fields for validation of option categories
 		 *
 		 * @var		array
 		 */
@@ -123,13 +123,13 @@
 				$datastore = Array();
 			}
 
-			$id 		= (isset($this->data['name']) ? $this['name'] : $this->identifier);
+			$id 		= (isset($this->data['name']) ? $this->data['name'] : $this->identifier);
 			$old_category	= '';
 			$new_category	= '';
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				if(isset($this['name']))
+				if(isset($this->data['name']))
 				{
 					foreach($datastore as $key => $value)
 					{
@@ -144,7 +144,7 @@
 					$old_category = $id;
 				}
 
-				$datastore[] = $new_category = $this['name'];
+				$datastore[] = $new_category = $this->data['name'];
 			}
 			elseif($this->context == self::CONTEXT_DELETE && \in_array($id, $datastore))
 			{

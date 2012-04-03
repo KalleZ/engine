@@ -58,6 +58,13 @@
 	abstract class Database implements Database\Driver, Design\Invokable
 	{
 		/**
+		 * Private instance to the Tuxxedo registry
+		 *
+		 * @var		\Tuxxedo\Registry
+		 */
+		protected $registry;
+
+		/**
 		 * Link pointer, this contains the internal link 
 		 * to the database from the driver
 		 *
@@ -129,6 +136,7 @@
 
 			$this->configuration 	= $configuration;
 			$this->delayed		= $configuration['delay'];
+			$this->registry		= Registry::init();
 
 			if(!$this->isDriverSupported())
 			{

@@ -2,5 +2,84 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Intero"
+	Tuxxedo Engine 1.2.0 "Timewarp" Alpha 1
 	------------------------------------------------
+
+	Core
+[C]	 - Redesign the \Tuxxedo\Bootstrap::setHook(), its currently too rough I think
+[B]	 - Fix non absolute paths for DIR and LIBRARY causing tuxxedo_trim_path() to not work at all
+[B]	 - Datamanagers fields with type 'callback' does not respect the 'parameters' option
+
+	DevTools
+[C]	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
+[W]	 - Change to use MVC as a backend
+[F]	   - Add translation for the entire application using the 'DevTools' phrasegroup
+[F]	   - Change the templating system to use its own 'DevTools' style
+[C]	     - Change to use DevTools\Style
+[C]	     - Widgets
+	   - Convertion
+	     - index
+	     - datastore
+	       - truncate
+	       - dump
+	       - rebuild
+	       - index
+	     - styles
+	       - index
+	       - styles
+		 - add
+		 - edit
+		 - delete
+		 - list
+	       - templates
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - search
+		 - reset
+             - users
+	       - index
+	       - users
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - permissions
+	       - usergroups
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - permissions
+	       - permissions
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - tree
+	     - options
+	       - categories
+		 - add
+		 - edit
+		 - delete
+	       - options
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - reset
+	     - sessions
+	       - kill
+	       - details
+	       - cron
+	       - list
+	     - tools
+	       - statistics
+	       - password
+	       - requirements
+	       - compiler
+	       - authentication
+	       - status
+	       - configuration
+	       - index

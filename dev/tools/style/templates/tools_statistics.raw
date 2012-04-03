@@ -63,6 +63,11 @@
 	<p>
 		Note that images and other binary files such as SQLite databases are 
 		not included in any of the above statistics.
+
+<if expression="$ignored">
+		The following extensions are ignored when counting the above 
+		statistics: {$ignored}
+</if>
 	</p>
 </div>
 

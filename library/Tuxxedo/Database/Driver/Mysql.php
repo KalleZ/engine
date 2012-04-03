@@ -34,6 +34,7 @@
 	 */
 	use Tuxxedo\Database;
 	use Tuxxedo\Database\Driver\Mysql;
+	use Tuxxedo\Debug;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
@@ -333,9 +334,24 @@
 				$sql = \call_user_func_array('\sprintf', \func_get_args());
 			}
 
+			if($this->registry->trace)
+			{
+				$this->registry->trace->start();
+			}
+
 			Registry::globals('error_reporting', false);
 			$query = \mysql_query($sql);
 			Registry::globals('error_reporting', true);
+
+			$sql = Array(
+					'sql'	=> $sql, 
+					'trace'	=> false
+					);
+
+			if($this->registry->trace)
+			{
+				$sql['trace'] = $this->registry->trace->end();
+			}
 
 			$this->affected_rows = (integer) \mysql_affected_rows();
 
@@ -353,7 +369,7 @@
 			}
 			elseif(!\is_resource($query) && \mysql_errno($this->link))
 			{
-				throw new Exception\SQL($sql, self::DRIVER_NAME, \mysql_error($this->link), \mysql_errno($this->link));
+				throw new Exception\SQL($sql['sql'], self::DRIVER_NAME, \mysql_error($this->link), \mysql_errno($this->link));
 			}
 
 			return(false);

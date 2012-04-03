@@ -127,7 +127,7 @@
 		 *
 		 * @var		string
 		 */
-		const CODENAME			= 'Intero';
+		const CODENAME			= 'Timewarp';
 
 		/**
 		 * Current version control system revision number
@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Intero" Alpha 1 (experimental)';
+		const FULL			= '1.2.0 "Timewarp" Alpha 1 (experimental)';
 	}
 ?>

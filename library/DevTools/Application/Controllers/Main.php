@@ -9,28 +9,30 @@
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
 	 * @package		Engine
+	 * @subpackage		Documentor
 	 *
 	 * =============================================================================
 	 */
 
 
 	/**
-	 * MVC Exception namespace. This contains all the specialized exceptions for 
-	 * MVC components.
+	 * DevTools application controllers namespace, this contains all the 
+	 * controllers for the application.
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
-	 * @author		Ross Masters 		<ross@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
-	 * @subpackage		Library
+	 * @subpackage		DevTools
 	 */
-	namespace Tuxxedo\Exception\MVC;
+	namespace DevTools\Application\Controllers;
 
 
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Exception;
+	use Tuxxedo\MVC\Controller;
+	use Tuxxedo\MVC\View;
+	use Tuxxedo\MVC\View\Layout;
 
 
 	/**
@@ -38,26 +40,23 @@
 	 */
 	\defined('\TUXXEDO_LIBRARY') or exit;
 
-    
+
 	/**
-	 * Invalid permission
+	 * Main application entry point controller
 	 *
-	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @subpackage		DevTools
 	 */
-	class InvalidPermission extends Exception\Basic
+	class Main extends Controller
 	{
 		/**
-		 * Constructor, sets the standardized exception message
-		 *
-		 * @param	\Exception				The previous exception if any
+		 * Main application entry point action
 		 */
-		public function __construct(\Exception $previous = NULL)
+		public function ActionMain()
 		{
-			$this->previous = $previous;
-
-			parent::__construct('Invalid access permissions');
+			echo new Layout('index');
 		}
-	}    
+	}
 ?>

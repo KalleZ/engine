@@ -41,7 +41,10 @@
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
+	$db->query('SEQUEL FAILED');
 	echo new Template('index', true, Array(
-						'version' => Version::FULL . (TUXXEDO_DEBUG ? ' (DEBUG)' : '')
+						'app'		=> $configuration['application'], 
+						'debug'		=> $configuration['debug'], 
+						'version'	=> Version::FULL
 						));
 ?>

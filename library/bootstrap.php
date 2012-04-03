@@ -48,7 +48,7 @@
 	/**
 	 * Preloadables
 	 */
-	$default_precache_datastore 	= Array('options', 'styleinfo', 'usergroups', 'languages', 'phrasegroups', 'permissions');
+	$default_precache_datastore 	= Array('options', 'optioncategories', 'styleinfo', 'usergroups', 'languages', 'phrasegroups', 'permissions');
 	$default_precache_templates 	= Array('header', 'footer', 'error', 'error_listbit', 'redirect');
 	$default_precache_phrasegroups	= Array('global');
 

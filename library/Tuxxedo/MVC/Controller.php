@@ -82,13 +82,6 @@
 		 */
 		protected $view;
 
-		/**
-		 * Template buffer
-		 *
-		 * @var		string
-		 */
-		protected $buffer		= '';
-
 
 		/**
 		 * Constructor
@@ -103,10 +96,10 @@
 		/**
 		 * Set the router object
 		 *
-		 * @param	\Tuxxedo\Router\Uri		Router object used
+		 * @param	\Tuxxedo\Router			Router object used
 		 * @return	void				No value is returned
 		 */
-		final public function setRouter(Router\Uri $router)
+		final public function setRouter(Router $router)
 		{
 			$this->router = $router;
 		}
@@ -138,9 +131,10 @@
 		/**
 		 * Dispatches the controller and renders the page content
 		 *
-		 * @return	string				Rendered view
+		 * @return	string					Rendered view
 		 *
-		 * @throws	\Tuxxedo\Exception		If the controller does not exists
+		 * @throws	\Tuxxedo\Exception			If the controller does not exists
+		 * @throws	\Tuxxedo\Exception\MVC\InvalidAction	If the action method does not exists
 		 */
 		final public function dispatch()
 		{
@@ -155,11 +149,6 @@
 			if(!\method_exists($this, $action_method))
 			{
 				throw new Exception\MVC\InvalidAction;
-			}
-
-			if(isset($this->acl) && $this->registry->user && (!\is_array($this->acl) && !$this->registry->user->isGranted((integer) $this->acl) || \is_array($this->acl) && isset($this->acl[$action]) && !$this->registry->user->isGranted($this->acl[$action])))
-			{
-				throw new Exception\MVC\InvalidPermission;
 			}
 
 			\ob_start();

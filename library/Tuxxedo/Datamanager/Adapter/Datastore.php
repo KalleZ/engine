@@ -54,7 +54,7 @@
 	class Datastore extends Adapter
 	{
 		/**
-		 * Fields for validation of permissions
+		 * Fields for validation of datastore elements
 		 *
 		 * @var		array
 		 */

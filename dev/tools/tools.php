@@ -95,8 +95,11 @@
 			}
 
 			$ignored	= Array(
+						'dump', 
 						'png', 
-						'sqlite3'
+						'sqlite3', 
+						'txt', 
+						'tuxx'
 						);
 
 			$statistics 	= Array(
@@ -196,6 +199,8 @@
 			$statistics['lines'] 		= sizeof($statistics['lines']);
 			$statistics['extensions']	= sizeof(array_keys($statistics['files']));
 
+			$ignored			= '.' . implode(', .', $ignored);
+
 			eval(page('tools_statistics'));
 		}
 		break;
@@ -229,8 +234,7 @@
 						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo')), 
 						'pdo_mysql'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo_mysql')), 
 						'pdo_sqlite'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo_sqlite')), 
-						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath')), 
-						'getopt()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_OPTIONAL, Array('getopt'))
+						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath'))
 						);
 
 			$failed = false;
@@ -316,20 +320,7 @@
 		{
 			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), Array('id', 'username', 'email')))
 			{
-				$registry->register('user', '\Tuxxedo\User');
-
-				$logged_in = $user->login($input->post('identifier'), $input->post('password'), $input->post('identifier_field'));
-
-				if($logged_in)
-				{
-					$user->logout();
-
-					unset($session['userid']);
-					unset($session['password']);
-
-					unset($session[$options->cookie_prefix . 'userid']);
-					unset($session[$options->cookie_prefix . 'password']);
-				}
+				$logged_in = test_login($input->post('identifier'), $input->post('password'), $input->post('identifier_field'));
 			}
 
 			eval(page('tools_authentication'));

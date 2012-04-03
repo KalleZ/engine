@@ -59,6 +59,8 @@
 		 * special characters and spaces. Underscores is an exclusion to 
 		 * this. The main reason for these is to have an autoloadable canonical
 		 * name.
+		 *
+		 * This can also be utilized by the MVC component for routing.
 		 */
 		'canonical'	=> '', 
 
@@ -69,10 +71,55 @@
 		 * and some error messages will become more verbose. Fatal errors 
 		 * will display a backtrace
 		 */
-		'debug'		=> false, 
+		'debug'		=> true
 
 	/**
 	 * End application configuration
+	 */
+	), 
+
+	/**
+	 * Debug configuration
+	 */
+	'debug' => Array(
+
+		/**
+		 * Trace mode
+		 *
+		 * If enabled this activates the tracing component 
+		 * which will time certain calls and trace them 
+		 * back to where they originated from.
+		 *
+		 * Tracing is costly, and only applies if debug mode 
+		 * is enabled. Application performance will greatly 
+		 * be reduced, so only enable this for in-depth 
+		 * debugging.
+		 *
+		 * Currently the following parts can be traced:
+		 *
+		 * 1) Queries sent to the database layer
+		 */
+		'trace'		=> true, 
+
+		/**
+		 * Trace timer precision
+		 *
+		 * Precision can be used to fine tune how the trace 
+		 * timers are represented.
+		 */
+		'precision'	=> 5, 
+
+		/**
+		 * Backtrace call details
+		 *
+		 * If this option is enabled, then all frames in the 
+		 * backtraces shown on error screens will have the full 
+		 * call line with arguments.
+		 */
+		'fullbacktrace'	=> true
+	
+	/**
+	 * End debug configuration
 	 */
 	), 
 

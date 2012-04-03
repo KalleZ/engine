@@ -201,6 +201,7 @@
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
+		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if(empty($message))
@@ -223,41 +224,49 @@
 			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . PHP_EOL . 
 			'<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . PHP_EOL . 
 			'<head>' . PHP_EOL . 
-			'<title>Tuxxedo Engine Error</title>' . PHP_EOL . 
+			'<title>' . ($debug_mode ? 'Tuxxedo Engine' : 'Application') . ' Error</title>' . PHP_EOL . 
 			'<style type="text/css">' . PHP_EOL . 
-			'body { background-color: #021420; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; padding: 0px 30px; }' . PHP_EOL . 
-			'h1 { color: #FFFFFF; }' . PHP_EOL . 
+			'body { background-color: #E4F4FC; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; margin: 0px 30px; }' . PHP_EOL . 
+			'fieldset { background-color: #C2EDFD; border: 1px solid#21A7CD; border-radius: 4px; }' . PHP_EOL . 
+			'fieldset legend, td.value { background-color: #FFFFFF; border: 1px solid #21A7CD; border-radius: 4px; padding: 3px; }' . PHP_EOL . 
+			'h1 { margin: 30px 0px -6px 0px; }' . PHP_EOL . 
 			'h1 sup { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; font-size: 35%; padding: 1px 3px; }' . PHP_EOL . 
 			'h2 { margin: 20px 0px 0px 0px; }' . PHP_EOL . 
-			'h2 span { background-color: #D2D2D2; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }' . PHP_EOL . 
+			'h2 span { background-color: #C2EDFD; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }' . PHP_EOL . 
 			'li, ul { margin: 0px; }' . PHP_EOL . 
-			'table tr.head td { background-color: #D2D2D2; padding: 5px; border-radius: 4px; }' . PHP_EOL . 
+			'table tr td { border: 1px solid transparent; }' . PHP_EOL . 
+			'table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }' . PHP_EOL . 
 			'table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }' . PHP_EOL . 
-			'table td.strong, table td.strong *, table tr.strong * { font-weight: bold; }' . PHP_EOL . 
-			'table tr.strong td { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; }' . PHP_EOL . 
+			'table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }' . PHP_EOL . 
 			'table tr.strong td.empty { background-color: #FFFFFF; }' . PHP_EOL . 
-			'.box { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; }' . PHP_EOL . 
+			'.box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }' . PHP_EOL . 
 			'.box.edge-title { border-top-left-radius: 0px; }' . PHP_EOL . 
 			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
-			'.infobox { background-color: #D2D2D2; border: 3px solid #D2D2D2; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.content { margin: 13px 0px 10px 430px; }' . PHP_EOL . 
+			'.infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
 			'.infobox td { padding-right: 5px; }' . PHP_EOL . 
-			'.infobox td.value { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.left-content { float: left; }' . PHP_EOL . 
+			'.left-content fieldset { width: 400px; }' . PHP_EOL . 
 			'.spacer { margin-bottom: 10px; }' . PHP_EOL . 
+			'.wrapper { padding: 0px 50px; }' . PHP_EOL . 
 			'</style>' . PHP_EOL .  
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
+			'<div class="wrapper">' . PHP_EOL . 
 			(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
-			'<h1>Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup></h1>' . PHP_EOL
+			'<h1>' . ($debug_mode ? 'Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup>' : 'Application Error') . '</h1>' . PHP_EOL
 			);
 
-		if(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG)
+		if($debug_mode)
 		{
 			echo(
 				'<div class="box">' . PHP_EOL . 
 				'<div class="inner">' . PHP_EOL . 
-				'<div class="infobox" style="float: left; width: 400px;">' . PHP_EOL . 
-				'<table cellspacing="2" cellpadding="0">' . PHP_EOL
+				'<div class="left-content">' . PHP_EOL . 
+				'<fieldset>' . PHP_EOL . 
+				'<legend><strong>Application information</strong></legend>' . PHP_EOL . 
+				'<table cellspacing="4" cellpadding="0">' . PHP_EOL
 				);
 
 			if($application)
@@ -265,15 +274,23 @@
 				echo(
 					'<tr>' . PHP_EOL . 
 					'<td><strong>Application:</strong></td>' . PHP_EOL . 
-					'<td class="value" width="100%">' . $application . '</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $application . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 			}
 
 			echo(
 				'<tr>' . PHP_EOL . 
-				'<td nowrap="nowrap"><strong>Engine Version:</strong></td>' . PHP_EOL . 
-				'<td class="value" width="100%">' . Version::FULL . '</td>' . PHP_EOL . 
+				'<td nowrap="nowrap"><strong>Engine version:</strong></td>' . PHP_EOL . 
+				'<td class="value" style="width: 100%">' . Version::FULL . '</td>' . PHP_EOL . 
+				'</tr>' . PHP_EOL .  
+				'<tr>' . PHP_EOL . 
+				'<td nowrap="nowrap"><strong>Library path:</strong></td>' . PHP_EOL . 
+				'<td class="value" style="width: 100%">' . str_replace(TUXXEDO_DIR, '', TUXXEDO_LIBRARY) . '</td>' . PHP_EOL . 
+				'</tr>' . PHP_EOL .  
+				'<tr>' . PHP_EOL . 
+				'<td nowrap="nowrap"><strong>Working directory:</strong></td>' . PHP_EOL . 
+				'<td class="value" style="width: 100%">' . TUXXEDO_DIR . '</td>' . PHP_EOL . 
 				'</tr>' . PHP_EOL .  
 				'<tr>' . PHP_EOL . 
 				'<td><strong>Script:</strong></td>' . PHP_EOL . 
@@ -302,7 +319,7 @@
 
 				echo(
 					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap"><strong>Exception Type:</strong></td>' . PHP_EOL . 
+					'<td nowrap="nowrap"><strong>Exception type:</strong></td>' . PHP_EOL . 
 					'<td class="value">' . $class . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
@@ -315,12 +332,12 @@
 					'<td colspan="2">&nbsp;</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap"><strong>Database Driver:</strong></td>' . PHP_EOL . 
-					'<td class="value" width="100%">' . $e->getDriver() . '</td>' . PHP_EOL . 
+					'<td nowrap="nowrap"><strong>Database driver:</strong></td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getDriver() . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
 					'<td nowrap="nowrap"><strong>Error code:</strong></td>' . PHP_EOL . 
-					'<td class="value" width="100%">' . $e->getCode() . '</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getCode() . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 
@@ -329,7 +346,7 @@
 					echo(
 						'<tr>' . PHP_EOL . 
 						'<td nowrap="nowrap"><strong>SQL State:</strong></td>' . PHP_EOL . 
-						'<td class="value" width="100%">' . $sqlstate . '</td>' . PHP_EOL . 
+						'<td class="value" style="width: 100%">' . $sqlstate . '</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
 				}
@@ -337,8 +354,9 @@
 
 			echo(
 				'</table>' . PHP_EOL . 
+				'</fieldset>' . PHP_EOL . 
 				'</div>' . PHP_EOL . 
-				'<div style="margin: 0px 0px 10px 430px;">' . PHP_EOL . 
+				'<div class="content">' . PHP_EOL . 
 				'<div class="infobox">' . PHP_EOL . 
 				nl2br($message) . PHP_EOL . 
 				'</div>' . PHP_EOL . 
@@ -368,9 +386,14 @@
 			if($exception_sql)
 			{
 				echo(
-					'<div class="infobox">' . PHP_EOL . 
-					'<strong>SQL:</strong> <code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code>' . PHP_EOL . 
-					'</div>' . PHP_EOL
+					'<fieldset>' . PHP_EOL . 
+					'<legend><strong>SQL</strong></legend>' . PHP_EOL .
+					'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL . 
+					'<tr>' . PHP_EOL . 
+					'<td colspan="2" class="value" style="width: 100%"><code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code></td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL . 
+					'</table>' . PHP_EOL . 
+					'</fieldset>' . PHP_EOL
 					);
 			}
 
@@ -389,7 +412,7 @@
 					'<h2><span>Backtrace</span></h2>' . PHP_EOL . 
 					'<div class="box edge-title">' . PHP_EOL . 
 					'<div class="inner">' . PHP_EOL . 
-					'<table width="100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
+					'<table style="width: 100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
 					'<td>&nbsp;</td>' . PHP_EOL . 
 					'<td class="strong">Call</td>' . PHP_EOL . 
@@ -405,18 +428,18 @@
 						'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
 						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->call . '</td>' . PHP_EOL . 
-						'<td nowrap="nowrap" width="100%">' . $trace->file . '</td>' . PHP_EOL . 
+						'<td nowrap="nowrap" style="width: 100%">' . $trace->file . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap" align="right">' . $trace->line . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->notes . '</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
 
-					if($trace->current)
+					if($configuration['debug']['fullbacktrace'] || $trace->current)
 					{
 						echo(
-							'<tr class="strong row">' . PHP_EOL . 
+							'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
 							'<td class="empty"><h3>&nbsp;</h3></td>' . PHP_EOL . 
-							'<td colspan="4">' . $trace->callargs . '</td>' . PHP_EOL . 
+							'<td colspan="4"><em>' . $trace->callargs . '</em></td>' . PHP_EOL . 
 							'</tr>' . PHP_EOL
 							);
 					}
@@ -435,19 +458,90 @@
 					'<h2><span>Queries</span></h2>' . PHP_EOL . 
 					'<div class="box edge-title">' . PHP_EOL . 
 					'<div class="inner">' . PHP_EOL . 
-					'<table width="100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
+					'<table style="width: 100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
 					'<tr class="head">' . PHP_EOL . 
-					'<td width="10">&nbsp;</td>' . PHP_EOL . 
+					'<td style="width: 10">&nbsp;</td>' . PHP_EOL . 
 					'<td class="strong">SQL</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 
-				foreach($registry->db->getQueries() as $n => $sql)
+				foreach($registry->db->getQueries() as $n => $query)
 				{
 					echo(
 						'<tr class="row">' . PHP_EOL . 
 						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
-						'<td><code>' . $sql . '</code></td>' . PHP_EOL . 
+						'<td>' . PHP_EOL
+						);
+
+					if($query['trace'])
+					{
+						echo(
+							'<fieldset>' . PHP_EOL . 
+							'<legend><strong>SQL</strong></legend>' . PHP_EOL . 
+							'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL . 
+							'<tr>' . PHP_EOL . 
+							'<td class="value" style="width: 100%"><code>' . $query['sql'] . '</code></td>' . PHP_EOL . 
+							'</tr>' . PHP_EOL . 
+							'</table>' . PHP_EOL . 
+							'</fieldset>' . PHP_EOL . 
+							'<div style="margin-top: 10px; padding: 0px;">' . PHP_EOL . 
+							'<div style="float: left; margin-right: 10px; padding: 0px; width: 50%;">' . PHP_EOL . 
+							'<fieldset>' . PHP_EOL . 
+							'<legend><strong>Trace information</strong></legend>' . PHP_EOL . 
+							'<table cellspacing="4" cellpadding="0">' . PHP_EOL . 
+							'<tr>' . PHP_EOL . 
+							'<td nowrap="nowrap"><strong>Execution time:</strong></td>' . PHP_EOL . 
+							'<td class="value" style="width: 100%">' . $query['trace']['timer'] . ' seconds</td>' . PHP_EOL . 
+							'</tr>' . PHP_EOL . 
+							'</table>' . PHP_EOL . 
+							'</fieldset>' . PHP_EOL
+							);
+
+						if($query['trace']['frames'])
+						{
+							$frames = sizeof($query['trace']['frames']);
+
+							echo(
+								'</div>' . PHP_EOL . 
+								'<div style="padding: 0px;">' . PHP_EOL . 
+								'<fieldset>' . PHP_EOL . 
+								'<legend><strong>Backtrace</strong></legend>' . PHP_EOL . 
+								'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL
+								);
+
+							foreach($query['trace']['frames'] as $x => $trace)
+							{
+								if($x < 2)
+								{
+									continue;
+								}
+
+								echo(
+									'<tr>' . PHP_EOL . 
+									'<td><strong>' . ($frames - $x) . '</strong></td>' . PHP_EOL . 
+									'<td class="value" style="width: 100%">' . $trace->call . '</td>' . PHP_EOL . 
+									'</tr>' . PHP_EOL
+									);
+							}
+
+							echo(
+								'</table>' . PHP_EOL . 
+								'</fieldset>' . PHP_EOL . 
+								'</div>' . PHP_EOL . 
+								'</div>' . PHP_EOL . 
+								'<div class="clear"></div>' . PHP_EOL
+								);
+						}
+					}
+					else
+					{
+						echo(
+							'<code>' . $query['sql'] . '</code>' . PHP_EOL
+							);
+					}
+
+					echo(
+						'</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
 						);
 				}
@@ -474,13 +568,14 @@
 				'</div>' . PHP_EOL . 
 				'<p>' . PHP_EOL . 
 				'<em>' . 
-				'This error was generated by ' . ($application ? $application . ' (' : '') . 'Tuxxedo Engine ' . Version::SIMPLE . ($application ? ')' : '') . 
+				'This error was generated by ' . ($application ? $application . ' (Powered by ' : '') . 'Tuxxedo Engine ' . Version::SIMPLE . ($application ? ')' : '') . 
 				'</em>' . PHP_EOL . 
 				'</p>'
 				);
 		}
 
 		die(
+			'</div>' . PHP_EOL . 
 			'</body>' . PHP_EOL . 
 			'</html>'
 			);
@@ -513,7 +608,7 @@
 	 */
 	function tuxxedo_trim_path($path, $debug_trim = true)
 	{
-		static $dir;
+		static $dir, $lib;
 
 		if(!$debug_trim && defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG)
 		{
@@ -528,14 +623,17 @@
 		if(!$dir)
 		{
 			$dir = realpath(TUXXEDO_DIR);
+			$lib = realpath(TUXXEDO_LIBRARY);
 		}
 
-		if(strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, $dir) !== false)
+		$trimmed = (strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, $dir) !== false ? str_replace(Array('/', '\\', $dir), DIRECTORY_SEPARATOR, $path) : ($path{1} != ':' && $path{2} != '\\' ? DIRECTORY_SEPARATOR : '') . ltrim($path, DIRECTORY_SEPARATOR));
+
+		if($trimmed == $path)
 		{
-			$path = str_replace(Array('/', '\\', $dir), DIRECTORY_SEPARATOR, $path);
+			$trimmed = str_replace((($ptr = strrpos($lib, DIRECTORY_SEPARATOR)) !== false ? substr($lib, 0, $ptr) : $lib), '', $trimmed);
 		}
 
-		return(($path{1} != ':' && $path{2} != '\\' ? DIRECTORY_SEPARATOR : '') . ltrim($path, DIRECTORY_SEPARATOR));
+		return(str_replace(Array('\\\\', '//'), Array('\\', '/'), $trimmed));
 	}
 
 	/**

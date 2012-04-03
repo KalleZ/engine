@@ -16,38 +16,70 @@
 		}
 		body
 		{
-			background-color: 	#021420;
-			font-size: 		82%;
-			color: 			#3B7286;
-			padding: 		0px 30px;
+			background:			#E4F4FC;
+			color:				#3B7286;
+			font-family:			\"Helvetica Neue\", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, Sans-serif;
+			font-size:			82%;
+			padding: 			5% 30px;
 		}
+		fieldset
+		{
+			background-color:		#C2EDFD;
+			border:				1px solid #21A7CD;
+			border-radius:			4px;
+			margin-top:			13px;
+			width:				400px;
+		}
+			fieldset legend, .cell
+			{
+				background-color:		#FFFFFF;
+				border:				1px solid #21A7CD;
+				border-radius:			4px;
+				padding:			3px;
+			}
 		h1
 		{
-			color: 			#FFFFFF;
+			color: 				#3B7286;
+			margin:				0px 0px -6px 0px;
 		}
-		input, .link-button
+		input, .inner
 		{
-			background-color:	#EAEAEA;
-			border:			0px;
-			border-radius: 		4px;
-			padding:		3px 10px;
+			background-color:		#C2EDFD;
+			border:				1px solid #21A7CD;
+			border-radius:			4px;
+			font-weight:			bold;
+			padding:			5px;
 		}
 			input[type=password], input[type=text]
 			{
 				background-color:	#FFFFFF;
 				border:			1px solid #EAEAEA;
 			}
+		table
+		{
+			width:				100%;
+		}
+			table td
+			{
+				padding:			5px;
+			}
 		.box
 		{
-			background-color: 	#D2D2D2;
-			border: 		3px solid #D2D2D2;
-			border-radius: 		4px;
+			background-color:		#FFFFFF;
+			border:				2px solid #C2EDFD;
+			border-radius:			4px;
+			margin-bottom:			10px;
+			padding:			10px;
 		}
-			.box .inner
+		.inner
+		{
+			float:				right;
+			margin-left:			10px;
+		}
+			.inner ul
 			{
-				background-color: 	#FFFFFF;
-				border-radius: 		4px;
-				padding: 		6px;
+				list-style-type:		square;
+				padding:			0px 20px;
 			}
 		.wrapper
 		{

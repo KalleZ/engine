@@ -2,6 +2,45 @@
 
 
 
+	Tuxxedo Engine 1.2.0 "Timewarp"
+	------------------------------------------------
+
+	Added debug tracing for SQL queries (Kalle)
+	Added new helpers: (Kalle)
+	 - Timer
+	Added the \Tuxxedo\Options class, so that $registry->options also may work with categories (Kalle)
+	Added \Tuxxedo\MVC\Controller::getPreloadables() to get preloadable data for controllers (Kalle)
+	Added \Tuxxedo\Intl::getISOCodes() to get the browser request language based on ISO codes (Kalle)
+	Added \Tuxxedo\Datastore::getRef() to get a reference of datastore data rather than copying it (Kalle)
+	Added a new theming to the default templates and tuxxedo_doc_error() based on the DevTools style (Kalle)
+	Added a language auto detection option for non logged in users based on the browser's ISO codes (Kalle)
+
+	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
+	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
+	Changed \Tuxxedo\Intl::getPhrases() to return an array rather than an instance of \ArrayObject and an empty array instead of false (Kalle)
+	Changed the autoloader to trim paths on errors (Kalle)
+	Changed the authentication tester tool to not use sessions at all (Kalle)
+	Changed \Tuxxedo\Input::process() to be protected rather than private (Kalle)
+
+	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
+	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
+	Fixed not all actual callbacks in debug traces being reported as callbacks (Kalle)
+	Fixed a formatting error if a template fails to load in \Tuxxedo\Template::parse() (Kalle)
+
+	Removed the optional requirement on getopt() (Kalle)
+	Removed the magic 'acl' property from controllers (Kalle)
+	Removed the \Tuxxedo\Exception\MVC\InvalidPermission exception (Kalle)
+	Removed \Tuxxedo\Intl\Phrasegroup::getPhrase() (Kalle)
+
+	Template changes:
+	 - Updated
+	   - error
+	   - header
+	   - index
+	   - redirect
+
+
+
 	Tuxxedo Engine 1.1.0 "Fawks"
 	------------------------------------------------
 
