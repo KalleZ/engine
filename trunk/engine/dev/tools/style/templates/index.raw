@@ -16,13 +16,6 @@
 		as an application on Engine itself as a proof-of-concept for showing 
 		advanced features of the framework.
 	</p>
-
-	<br />
-	<p>
-		Almost all features that can be configured, can be controlled in using 
-		the DevTools, there currently is two exceptions to this: Internationalization 
-		and Configuration files.
-	</p>
 </div>
 
 {$footer}

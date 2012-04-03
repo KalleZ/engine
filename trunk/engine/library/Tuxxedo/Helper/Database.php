@@ -66,7 +66,7 @@
 
 
 		/**
-		 * Dummy constructor
+		 * Constructs the database helper
 		 *
 	 	 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
 		 */

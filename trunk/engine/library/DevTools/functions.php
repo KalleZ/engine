@@ -8,7 +8,8 @@
 	 * @version		1.0
 	 * @copyright		Tuxxedo Software Development 2006+
 	 * @license		Apache License, Version 2.0
-	 * @package		DevTools
+	 * @package		Engine
+	 * @subpackage		DevTools
 	 *
 	 * =============================================================================
 	 */
@@ -19,6 +20,7 @@
 	 */
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
+	use Tuxxedo\User;
 
 
 	/**
@@ -42,7 +44,7 @@
 		else
 		{
 			$glob 		= glob($expression . '/*');
-			$expression_len	= strlen($expression);
+			$expression_len	= strlen($expression . '/');
 		}
 
 		if(!$glob)
@@ -83,6 +85,23 @@
 		}
 
 		return($return_value);
+	}
+
+	/**
+	 * Tests a log in without interfering with the current session
+	 *
+	 * @param	string			The user identifier
+	 * @param	string			The user password
+	 * @param	string			The user identifier field
+	 * @return	boolean			Returns true if the login was successful and otherwise false
+	 */
+	function test_login($identifier, $password, $identifier_field = 'username')
+	{
+		$registry 	= Registry::init();
+		$user		= ($registry->user ? $registry->user : Registry::invoke('\Tuxxedo\User'));
+		$userinfo	= $user->getUserInfo($identifier, $identifier_field);
+
+		return($userinfo && User::isValidPassword($password, $userinfo->salt, $userinfo->password));
 	}
 
 	/**

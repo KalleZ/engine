@@ -163,7 +163,7 @@
 		 * @param	integer			Additional filtering options
 		 * @return	mixed			Returns the filtered value, returns NULL on error
 		 */
-		private function process($source, $field, $type = self::TYPE_STRING, $options = 0)
+		protected function process($source, $field, $type = self::TYPE_STRING, $options = 0)
 		{
 			switch($source)
 			{

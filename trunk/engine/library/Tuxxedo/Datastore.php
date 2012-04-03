@@ -81,11 +81,26 @@
 		}
 
 		/**
+		 * Gets a reference to the loaded element, so that it can be 
+	 	 * referenced in memory rather than copied
+		 *
+		 * @param	string			The datastore element to get a reference of
+		 * @param	array			Returns a reference to an array for the element, or boolean false on error
+		 */
+		public function getRef($name, &$data)
+		{
+			if(isset($this->cache[$name]))
+			{
+				$data = $this->cache[$name];
+			}
+		}
+
+		/**
 		 * Quick reference for overloading of a loaded 
 		 * element in the datastore.
 		 *
 		 * @param	string			The datastore element to get
-		 * @return	array			An array is returned, otherwise boolean false on error
+		 * @return	array			Returns an array is returned, otherwise boolean false on error
 		 */
 		public function __get($name)
 		{

@@ -330,6 +330,11 @@
 				$sql = \call_user_func_array('\sprintf', \func_get_args());
 			}
 
+			if($this->registry->trace)
+			{
+				$this->registry->trace->start();
+			}
+
 			Registry::globals('error_reporting', false);
 			$query = $this->link->prepare($sql);
 			Registry::globals('error_reporting', true);
@@ -341,7 +346,22 @@
 
 			if(!$query)
 			{
+				if($this->registry->trace)
+				{
+					$this->registry->trace->end();
+				}
+
 				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->lastErrorMsg(), $this->link->lastErrorCode());
+			}
+
+			$sql = Array(
+					'sql'	=> $sql, 
+					'trace'	=> false
+					);
+
+			if($this->registry->trace)
+			{
+				$sql['trace'] = $this->registry->trace->end();
 			}
 
 			$this->queries[] 	= $sql;

@@ -329,9 +329,24 @@
 				$sql = \call_user_func_array('sprintf', \func_get_args());
 			}
 
+			if($this->registry->trace)
+			{
+				$this->registry->trace->start();
+			}
+
 			Registry::globals('error_reporting', false);
 			$query = $this->link->query($sql);
 			Registry::globals('error_reporting', true);
+
+			$sql = Array(
+					'sql'	=> $sql, 
+					'trace'	=> false
+					);
+
+			if($this->registry->trace)
+			{
+				$sql['trace'] = $this->registry->trace->end();
+			}
 
 			$this->affected_rows = (integer) $this->link->affected_rows;
 
@@ -349,7 +364,7 @@
 			}
 			elseif($this->link->errno)
 			{
-				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->error, $this->link->errno, $this->link->sqlstate);
+				throw new Exception\SQL($sql['sql'], self::DRIVER_NAME, $this->link->error, $this->link->errno, $this->link->sqlstate);
 			}
 
 			return(false);

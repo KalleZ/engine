@@ -132,13 +132,6 @@
 		 */
 		const FLAG_USER			= 128;
 
-		/**
-		 * Loader flag - No debug constant
-		 *
-		 * @var		integer
-		 */
-		const FLAG_NODEBUGCONST		= 256;
-
 
 		/**
 		 * Holds which elements thats been loaded (flags)
@@ -146,6 +139,13 @@
 		 * @var		integer
 		 */
 		protected static $loaded	= 0;
+
+		/**
+		 * Holds the registered hooks
+		 *
+		 * @var		array
+		 */
+		protected static $hooks		= Array();
 
 		/**
 		 * Holds the elements that should be preloaded
@@ -179,6 +179,61 @@
 		}
 
 		/**
+		 * Hooks into the initilization code and runs a callback
+		 * before the default code is executed.
+		 *
+		 * If the callback returns true, then the flag will be marked 
+		 * as initialized, otherwise the default code is executed.
+		 *
+		 * Each flag can only have one hook. To reset a hook, then simply 
+		 * pass NULL as the callback.
+		 *
+		 * @param	integer			The loader flag, this cannot be a bitmask or the 'core' flag
+		 * @param	callback		The loader callback
+		 * @param	string			The index of the preloadables, if any to send to the callback
+		 * @return	void			No value is returned
+		 */
+		public static function setHook($flag, $callback, $preloadables = NULL)
+		{
+			static $flags;
+
+			if(!$flags)
+			{
+				$flags = Array(
+						self::FLAG_DATE, 
+						self::FLAG_DATABASE, 
+						self::FLAG_DATASTORE, 
+						self::FLAG_INTL, 
+						self::FLAG_OPTIONS, 
+						self::FLAG_STYLE, 
+						self::FLAG_USER
+						);
+			}
+
+			$flag = (integer) $flag;
+
+			if(!\in_array($flag, $flags))
+			{
+				return;
+			}
+			elseif(isset(self::$hooks[$flag]) && $callback === NULL)
+			{
+				unset(self::$hooks[$flag]);
+
+				return;
+			}
+			elseif(!\is_callable($callback))
+			{
+				return;
+			}
+
+			self::$hooks[$flag] = Array(
+							'callback'	=> $callback, 
+							'preloadables'	=> (isset(self::$preloadables[$preloadables]) ? $preloadables : NULL)
+							);
+		}
+
+		/**
 		 * Initializes the bootstraper
 		 *
 		 *
@@ -188,8 +243,6 @@
 		 */
 		public static function init($mode = self::MODE_NORMAL, $flags = NULL)
 		{
-			$debugconst = ($flags && ($flags & self::FLAG_NODEBUGCONST));
-
 			switch($mode)
 			{
 				case(self::MODE_MINIMAL):
@@ -287,19 +340,34 @@
 
 				$registry->set('configuration', $configuration);
 
-				if($debugconst)
+				/**
+				 * Set the debug mode constant
+				 *
+				 * @var		boolean
+				 */
+				define('TUXXEDO_DEBUG', $configuration['application']['debug']);
+
+				if(TUXXEDO_DEBUG && $configuration['debug']['trace'])
 				{
-					/**
-					 * Set the debug mode constant
-					 *
-					 * @var		boolean
-					 */
-					define('TUXXEDO_DEBUG', $configuration['application']['debug']);
+					$registry->register('trace', '\Tuxxedo\Debug\Trace');
 				}
 			}
 			else
 			{
 				$registry = Registry::init();
+			}
+
+			if(self::$hooks)
+			{
+				foreach(self::$hooks as $flag => $hook)
+				{
+					if(\call_user_func($hook['callback'], $registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL)))
+					{
+						$flags &= ~$flag;
+
+						unset(self::$preloadables[$preloadables]);
+					}
+				}
 			}
 
 			if($flags & self::FLAG_DATE)
@@ -342,7 +410,7 @@
 
 			if($flags & self::FLAG_OPTIONS && $registry->datastore && $registry->datastore->options)
 			{
-				$registry->set('options', (object) $registry->datastore->options);
+				$registry->register('options', '\Tuxxedo\Options');
 			}
 
 			if($flags & self::FLAG_USER)
@@ -384,8 +452,6 @@
 					unset($cache_buffer);
 
 					self::$preloadables['phrasegroups'] = Array();
-
-					$registry->set('phrase', $registry->intl->getPhrases());
 				}
 			}
 

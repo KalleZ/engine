@@ -80,6 +80,8 @@
 		{
 			$this->registry		= Registry::init();
 			$this->information 	= $languageinfo;
+
+			$this->registry->set('phrase', Array());
 		}
 
 		/**
@@ -94,9 +96,47 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
+			static $iso_to_language;
+
+			if(!$iso_to_language)
+			{
+				$iso_to_language = function() use($registry)
+				{
+					static $map;
+
+					$isos = Intl::getISOCodes();
+
+					if(!$isos || !$registry->datastore->languages)
+					{
+						return($registry->options['language_id']);
+					}
+
+					if(!$map)
+					{
+						$map = Array();
+
+						foreach($registry->datastore->languages as $id => $lang)
+						{
+							$map[\strtolower($lang['isotitle'])] = $id;
+						}
+					}
+
+					foreach($isos as $isotitle)
+					{
+						if(isset($map[$isotitle]))
+						{
+							return($map[$isotitle]);
+						}
+					}
+
+					return($registry->options['language_id']);
+				};
+			}
+
 			$options	= $registry->datastore->options;
 			$languagedata 	= $registry->datastore->languages;
-			$languageid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $options['language_id'] ? $registry->userinfo->language_id : $options['language_id']) : 0);
+			$languageid	= ($options && $options['language_autodetect'] ? $iso_to_language() : ($options ? $options['language_id'] : 0));
+			$languageid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $languageid ? $registry->userinfo->language_id : $languageid) : $languageid);
 
 			if($languageid && isset($languagedata[$languageid]))
 			{
@@ -161,6 +201,8 @@
 
 				$this->phrases[$row['phrasegroup']][$row['title']] = $row['translation'];
 			}
+
+			$this->registry->set('phrase', $this->getPhrases());
 
 			return(true);
 		}
@@ -280,29 +322,107 @@
 		 * limitation you must fetch the phrasegroup in which the phrase 
 		 * belongs and fetch it from there
 		 *
-		 * @return	ArrayObject		Returns an object containing all loaded phrases
+		 * @return	array			Returns an array containing all loaded phrases and empty array if no phrases are loaded
 		 */
 		public function getPhrases()
 		{
-			$phrases = new \ArrayObject;
-
-			if($this->phrases)
+			if(!$this->phrases)
 			{
-				foreach($this->phrases as $group_phrases)
-				{
-					if(!$group_phrases)
-					{
-						continue;
-					}
+				return(Array());
+			}
 
-					foreach($group_phrases as $name => $phrase)
-					{
-						$phrases[$name] = $phrase;
-					}
+			$phrases = Array();
+
+			foreach($this->phrases as $group_phrases)
+			{
+				if(!$group_phrases)
+				{
+					continue;
+				}
+
+				foreach($group_phrases as $name => $phrase)
+				{
+					$phrases[$name] = $phrase;
 				}
 			}
 
 			return($phrases);
+		}
+
+		/**
+		 * Gets the browser language codes in priority
+		 *
+		 * @return	array			Returns an array with the language codes in priority from the user's browser, each code may be either 2 or 5 bytes long
+		 */
+		public static function getISOCodes()
+		{
+			static $codes;
+
+			if($codes === NULL)
+			{
+				$codes = Array();
+
+				if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+				{
+					foreach(\explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $part)
+					{
+						$parts = \explode(',', $part);
+
+						if(\strpos($parts[0], '=') === false)
+						{
+							$codes[] = \strtolower($parts[0]);
+						}
+
+						if(isset($parts[1]))
+						{
+							$codes[] = \strtolower($parts[1]);
+						}
+					}
+
+					$codes = \array_unique($codes);
+				}
+			}
+
+			return($codes);
+		}
+
+		/**
+		 * Unloads a phrasegroup from current memory
+		 *
+		 * @param	string|array			The name of the phrasegroup(s) to remove from the cache
+		 * @return	boolean				Returns true on success and false on error
+		 */
+		public function unload($list)
+		{
+			if(!$list)
+			{
+				return(false);
+			}
+
+			if(\is_array($list))
+			{
+				foreach($list as $group)
+				{
+					if(isset($this->phrases[$group]))
+					{
+						unset($this->phrases[$group]);
+					}
+				}
+
+				$this->registry->set('phrase', $this->getPhrases());
+
+				return(true);
+			}
+			elseif(!isset($this->phrases[$list]))
+			{
+				return(false);
+			}
+
+			unset($this->phrases[$list]);
+
+			$this->registry->set('phrase', $this->getPhrases());
+
+			return(true);
 		}
 
 		/**

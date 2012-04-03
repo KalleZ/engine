@@ -84,13 +84,11 @@
 				tuxxedo_error('No datastore elements to show');
 			}
 
-			$rows 		= '';
-			$total_size 	= 0;
+			$rows = '';
 
 			while($row = $ds->fetchObject())
 			{
-				$row->length 	= strlen($row->data);
-				$total_size	+= $row->length;
+				$row->length = strlen($row->data);
 
 				if(($data = @unserialize($row->data)) !== false)
 				{

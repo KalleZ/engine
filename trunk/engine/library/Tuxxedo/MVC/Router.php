@@ -110,7 +110,7 @@
 		 * Constructor, set the controller and action to their 
 		 * default names
 		 *
-		 * @param	string						The application prefix (namespace)
+		 * @param	string						The application prefix (namespace), e.g. \Application\Controllers\, must end with a \
 		 */
 		public function __construct($prefix = NULL)
 		{
@@ -123,6 +123,32 @@
 			{
 				$this->prefix = $prefix;
 			}
+		}
+
+		/**
+		 * Gets the preloadables for the bootstrap before dispatching 
+		 * the router
+		 *
+		 * @return	array						Returns a multi dimentional array with preloadable data
+		 *
+		 * @throws	\Tuxxedo\Exception\MVC\InvalidController	Throws an invalid controller exception if the controller could not be loaded
+		 */
+		public function getPreloadables()
+		{
+			$controller	= $this->route();
+			$preloadables 	= Array();
+
+			foreach(Array('datastore', 'views', 'actionviews', 'phrasegroups') as $preloadable)
+			{
+				$preloadables[$preloadable] = (isset($controller->{$preloadable}) ? (array) $controller->{$preloadable} : Array());
+			}
+
+			if(!empty($this->action) && isset($controller->actionviews) && isset($controller->actionviews[$this->action]))
+			{
+				$preloadables['views'] = \array_merge($preloadables['views'], (array) $controller->actionviews[$this->action]);
+			}
+
+			return($preloadables);
 		}
 
 		/**

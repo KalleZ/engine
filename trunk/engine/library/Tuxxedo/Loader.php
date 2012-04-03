@@ -335,10 +335,10 @@
 
 				if(self::exists('\Tuxxedo\Exception\Basic'))
 				{
-					throw new Exception\Basic('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, $path);
+					throw new Exception\Basic('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \tuxxedo_trim_path($path));
 				}
 
-				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, $path));
+				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, \tuxxedo_trim_path($path)));
 			}
 
 			require($path);

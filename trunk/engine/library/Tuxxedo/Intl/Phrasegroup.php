@@ -30,6 +30,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Intl;
 
@@ -49,17 +50,8 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class Phrasegroup
+	class Phrasegroup extends Design\InfoAccess
 	{
-		/**
-		 * Holds the list of loaded phrases for 
-		 * this phrasegroup
-		 *
-		 * @var		array
-		 */
-		protected $phrases	= Array();
-
-
 		/**
 		 * Constructs a new phrasegroup object
 		 *
@@ -77,23 +69,7 @@
 				throw Exception\Basic('Unable to instanciate phrasegroup. Phrasegroup \'%s\' is not loaded into cache', $phrasegroup);
 			}
 
-			$this->phrases = $phrases;
-		}
-
-		/**
-		 * Gets a specific phrase from this phrasegroup
-		 *
-		 * @param	string			Title of the phrase to get
-		 * @return	string			Returns the phrase translation, and false on error
-		 */
-		public function getPhrase($title)
-		{
-			if(isset($this->phrases[$title]))
-			{
-				return($this->phrases[$title]);
-			}
-
-			return(false);
+			$this->information = $phrases;
 		}
 
 		/**
@@ -103,7 +79,7 @@
 		 */
 		public function getPhrases()
 		{
-			return($this->phrases);
+			return($this->information);
 		}
 	}
 ?>

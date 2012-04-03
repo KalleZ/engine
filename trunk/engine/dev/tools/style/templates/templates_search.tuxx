@@ -6,13 +6,13 @@
 
 		<table cellspacing=\"0\" cellpadding=\"0\">
 			<tr>
-				<td style=\"width: 30%;\">
+				<td nowrap=\"nowrap\" style=\"width: 30%;\">
 					Search phrase:</td>
 				<td>
 					<input type=\"text\" name=\"query\"" . ((isset($safe_query)) ? (" value=\"{$safe_query}\"") : '') . " /></td>
 			</tr>
 			<tr>
-				<td>
+				<td nowrap=\"nowrap\">
 					Search in customized templates only?</td>
 				<td>
 					<label><input type=\"checkbox\" name=\"search_changed\" value=\"1\"" . ((isset($safe_query) && isset($_POST['search_changed'])) ? (" checked=\"checked\"") : '') . " /> Yes</label></td>

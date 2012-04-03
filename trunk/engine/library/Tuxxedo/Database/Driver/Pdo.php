@@ -371,13 +371,33 @@
 				$sql = \call_user_func_array('\sprintf', \func_get_args());
 			}
 
+			if($this->registry->trace)
+			{
+				$this->registry->trace->start();
+			}
+
 			try
 			{
 				$query = $this->link->query($sql);
 			}
 			catch(\PDOException $e)
 			{
+				if($this->registry->trace)
+				{
+					$this->registry->trace->end();
+				}
+
 				throw new Exception\SQL($sql, self::DRIVER_NAME, $e->getMessage(), $e->getCode());
+			}
+
+			$sql = Array(
+					'sql'	=> $sql, 
+					'trace'	=> false
+					);
+
+			if($this->registry->trace)
+			{
+				$sql['trace'] = $this->registry->trace->end();
 			}
 
 			if($query !== false && (!$query->columnCount() && $query->num_rows))
