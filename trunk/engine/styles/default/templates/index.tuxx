@@ -67,6 +67,16 @@
 			applications. If you are interested in how Engine is developed, head over to 
 			our blog and our project site.
 		</p>
+
+		<h3>Development</h3>
+		<p>
+			API documentation can be exported using the <em>api_analyze.php</em> script found in 
+			the <em>/dev/scripts</em> folder.
+		</p>
+		<p>
+			Debug mode enables extended information on error pages, to see an example of this then 
+			<a href=\"./?error=true\">click here</a>.
+		</p>
 	</div>
 	<div class=\"clear\"></div>
 </div>

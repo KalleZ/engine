@@ -30,7 +30,8 @@
 
 
 	$locations = Array(
-				'Tuxxedo Engine DevTools' => '/tools/style/templates/'
+				'Tuxxedo Engine DevTools' 	=> '/tools/style/templates/', 
+				'Tuxxedo Engine DevTools v2'	=> '/tools2/style/templates/'
 				);
 
 	IO::signature();
@@ -82,7 +83,7 @@
 				}
 				catch(Exception\TemplateCompiler $e)
 				{
-					IO::li($template . '... Failed (' . $e->getMessage() . ')', IO::STYLE_BOLD);
+					IO::li($temp . '... Failed (' . $e->getMessage() . ')', IO::STYLE_BOLD);
 				}
 			}
 

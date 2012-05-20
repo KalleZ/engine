@@ -40,6 +40,9 @@
 	 * combination of the built-in interfaces in PHP, Iterator 
 	 * and Countable
 	 *
+	 * This is a class because we cannot use multiple inheritance 
+	 * in PHP.
+	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine

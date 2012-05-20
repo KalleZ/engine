@@ -43,6 +43,28 @@
 	class TemplateCompiler extends \Tuxxedo\Exception
 	{
 		/**
+		 * Exception type - None
+		 *
+		 * @var		integer
+		 */
+		const TYPE_NONE			= 0;
+
+		/**
+		 * Exception type - Condition
+		 *
+		 * @var		integer
+		 */
+		const TYPE_CONDITION		= 1;
+
+		/**
+		 * Exception type - Phrase
+		 *
+		 * @var		integer
+		 */
+		const TYPE_PHRASE		= 2;
+
+
+		/**
 		 * Compiler stack data
 		 *
 		 * @var		\stdClass
@@ -58,9 +80,9 @@
 		 */
 		public function __construct($message, \stdClass $stack_data = NULL)
 		{
-			if($stack_data && isset($stack_data->conditions))
+			if($stack_data && isset($stack_data->type) && $stack_data->type != self::TYPE_NONE)
 			{
-				parent::__construct('%s at condition #%d', $message, $stack_data->conditions);
+				parent::__construct('%s at %s #%d', $message, ($stack_data->type == self::TYPE_CONDITION ? 'condition' : 'phrase'), $stack_data->conditions);
 			}
 			else
 			{

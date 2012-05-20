@@ -24,3 +24,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 INSERT INTO `options` (`option`, `value`, `defaultvalue`, `type`, `category`) VALUES
 ('language_autodetect', '0', '0', 'b', 'language');
+
+INSERT INTO `tuxxedo`.`phrasegroups` (`id`, `title`, `language`) VALUES 
+(NULL , 'devtools', '1');

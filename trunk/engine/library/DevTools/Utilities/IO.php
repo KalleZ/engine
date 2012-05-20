@@ -113,22 +113,28 @@
 		}
 
 		/**
-		 * Engine signature line, this only applies in CLI mode
+		 * Engine signature line
 		 *
 		 * @return	void				No value is returned
 		 */
 		public static function signature()
 		{
-			if(!self::isCli())
-			{
-				return;
-			}
-
 			IO::headline('Tuxxedo Engine ' . Version::FULL, 1);
 		}
 
 		/**
 		 * Gets an input variable, this uses argv in CLI and $_GET in web
+		 *
+		 * In CLI, arguments must be prefixed with a hyphen ('-') and have 
+		 * a space (ASCII 0x20) or it will return the default value.
+		 *
+		 * <code>
+		 * // CLI: `php ./script.php -arg1 Hello -arg2 World'
+		 * // Web: http://<url>/script.php?arg1=Hello&arg2=World
+		 *
+		 * // Hello World
+		 * echo IO::input('arg1') . ' ' . IO::input('arg2');
+		 * </code>
 		 *
 		 * @param	string				The argument to get
 		 * @param	mixed				The default value used on error

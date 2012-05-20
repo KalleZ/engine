@@ -165,68 +165,40 @@
 		 */
 		protected function process($source, $field, $type = self::TYPE_STRING, $options = 0)
 		{
-			switch($source)
+			static $sources, $flags_map;
+
+			if(!$sources)
 			{
-				case(1):
-				{
-					$data = \INPUT_GET;
-				}
-				break;
-				case(2):
-				{
-					$data = \INPUT_POST;
-				}
-				break;
-				case(3):
-				{
-					$data = \INPUT_COOKIE;
-				}
-				break;
-				case(4):
-				{
-					$data = $field;
-				}
-				break;
-				default:
-				{
-					return;
-				}
-				break;
+				$sources 	= Array(
+							\INPUT_GET, 
+							\INPUT_POST, 
+							\INPUT_COOKIE
+							);
+
+				$flags_map	= Array(
+							self::TYPE_NUMERIC	=> \FILTER_VALIDATE_INT, 
+							self::TYPE_EMAIL	=> \FILTER_VALIDATE_EMAIL, 
+							self::TYPE_BOOLEAN	=> \FILTER_VALIDATE_BOOLEAN
+							);
 			}
 
-			if($source != 4 && !\filter_has_var($data, $field))
+			if($source != 4 && (!isset($sources[$source - 1])))
 			{
 				return;
 			}
 
-			if($options & self::OPT_RAW)
+			$data = ($source == 4 ? $field : $sources[$source - 1]);
+
+			if(!\filter_has_var($data, $field))
+			{
+				return;
+			}
+			elseif($options & self::OPT_RAW)
 			{
 				return(\filter_input($data, $field, \FILTER_UNSAFE_RAW, ($options & self::OPT_ARRAY ? \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY : 0)));
 			}
 
-			switch($type)
-			{
-				case(self::TYPE_NUMERIC):
-				{
-					$flags = \FILTER_VALIDATE_INT;
-				}
-				break;
-				case(self::TYPE_EMAIL):
-				{
-					$flags = \FILTER_VALIDATE_EMAIL;
-				}
-				break;
-				case(self::TYPE_BOOLEAN):
-				{
-					$flags = \FILTER_VALIDATE_BOOLEAN;
-				}
-				break;
-				default:
-				{
-					$flags = \FILTER_DEFAULT;
-				}
-				break;
-			}
+			$flags = (isset($flags_map[$type]) ? $flags_map[$type] : \FILTER_DEFAULT);
 
 			if($source == 4)
 			{
@@ -234,24 +206,15 @@
 			}
 			elseif($options & self::OPT_ARRAY && ($type == self::TYPE_NUMERIC || $type == self::TYPE_BOOLEAN))
 			{
-				$array = \filter_input($data, $field, \FILTER_UNSAFE_RAW, \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY);
-
-				if($type == self::TYPE_NUMERIC)
+				$input = \array_map(function($var) use($type)
 				{
-					$input = function($var)
+					if($type == self::TYPE_NUMERIC)
 					{
 						return((integer) $var);
-					};
-				}
-				else
-				{
-					$mapper = function($var)
-					{
-						return((boolean) $var); 
-					};
-				}
+					}
 
-				$input = \array_map($mapper, $array);
+					return((boolean) $var);
+				}, \filter_input($data, $field, \FILTER_UNSAFE_RAW, \FILTER_REQUIRE_ARRAY | \FILTER_FORCE_ARRAY));
 			}
 			else
 			{

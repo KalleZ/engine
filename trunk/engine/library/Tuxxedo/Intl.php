@@ -50,6 +50,9 @@
 	 * This class deals with basic routines for internationalization 
 	 * support and its relative components.
 	 *
+	 * This component reserves the registry name 'phrase' for the 
+	 * global phrase array.
+	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine

@@ -293,13 +293,6 @@
 		protected $invalid_fields		= Array();
 
 		/**
-		 * Hooks executor callback
-		 *
-		 * @var		\Closure
-		 */
-		protected static $hooks_executor;
-
-		/**
 		 * List of loaded datamanagers used for caching in the 
 		 * special required cases where more than one driver 
 		 * have to be loaded
@@ -332,9 +325,9 @@
 		{
 			if($this->shutdown_handlers)
 			{
-				foreach($this->shutdown_handlers as $c)
+				foreach($this->shutdown_handlers as $callback)
 				{
-					call_user_func_array($c['handler'], $c['arguments']);
+					call_user_func_array($callback['handler'], $callback['arguments']);
 				}
 			}
 		}
@@ -455,41 +448,6 @@
 			}
 
 			self::$loaded_datamanagers[] = $datamanager;
-
-			if(!self::$hooks_executor)
-			{
-				self::$hooks_executor = function(Adapter $self, Array $virtual_fields)
-				{
-					if($self instanceof Hooks\Cache && !$self->rebuild())
-					{
-						return(false);
-					}
-
-					$dispatch = ($self instanceof Hooks\VirtualDispatcher);
-
-					if($virtual_fields && ($dispatch || $self instanceof Hooks\Virtual))
-					{
-						foreach($virtual_fields as $field => $value)
-						{
-							if($dispatch)
-							{
-								$method = 'virtual' . $field;
-
-								if(\method_exists($self, $method) && !$self->{$method}($value))
-								{
-									return(false);
-								}
-							}
-							elseif(!$this->virtual($field, $value))
-							{
-								return(false);
-							}
-						}
-					}
-
-					return(true);
-				};
-			}
 
 			return($dm);
 		}
@@ -804,17 +762,15 @@
 
 			if($execute_hooks)
 			{
-				$hooks = self::$hooks_executor;
-
 				if(!$this->parent)
 				{
-					$result 	= $hooks($this, $virtual_fields);
+					$result 	= $this->hooks($this);
 					$this->context 	= self::CONTEXT_NONE;
 
 					return($result);
 				}
 
-				$this->parent->setShutdownHandler($hooks, Array($this, $virtual_fields));
+				$this->parent->setShutdownHandler(Array($this, 'hooks'), Array($this));
 			}
 
 			$this->context = self::CONTEXT_NONE;
@@ -846,7 +802,7 @@
 
 			$this->context = self::CONTEXT_DELETE;
 
-			if($this instanceof Hooks\Cache && !$this->rebuild())
+			if(($this instanceof Hooks\Cache && !$this->rebuild()) || ($this instanceof Hooks\Recache && !$this->recache()))
 			{
 				$this->context = self::CONTEXT_NONE;
 
@@ -935,6 +891,74 @@
 		public function valid()
 		{
 			return(\sizeof($this->data) - 1 != $this->iterator_position);
+		}
+
+		/**
+		 * Hooks executor
+		 *
+		 * This method executes hooks on a datamanager instance, this is cannot be 
+		 * called publically.
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The datamanager adapter instance to execute hooks on
+		 * @return	boolean				Returns true if all fields 
+		 */
+		protected function hooks(Adapter $self)
+		{
+			if(($self instanceof Hooks\Cache && !$self->rebuild()) || ($self instanceof Hooks\Recache && !$self->recache()))
+			{
+				return(false);
+			}
+
+			$dispatch 	= ($self instanceof Hooks\VirtualDispatcher);
+			$virtual	= $this->getVirtualFields();
+
+			if($virtual && ($dispatch || $self instanceof Hooks\Virtual))
+			{
+				foreach($virtual as $field => $value)
+				{
+					if($dispatch)
+					{
+						$method = 'virtual' . $field;
+
+						if(\method_exists($self, $method) && !$self->{$method}($value))
+						{
+							return(false);
+						}
+					}
+					elseif(!$this->virtual($field, $value))
+					{
+						return(false);
+					}
+				}
+			}
+
+			return(true);
+		}
+
+		/**
+		 * Re-Cache method
+		 *
+		 * This method recaches datastore elements for adapters that implement the 
+		 * recache hook, this cannot be called publically.
+		 *
+		 * The reason for the existance of this method is because Engine supports 
+		 * PHP 5.3.x and therefore cannot implement it using traits.
+		 *
+		 * @return	void		No value is returned
+		 * @wip
+		 */
+		public function recache()
+		{
+			if(!($this instanceof Hooks\Recache) || !isset($this->dsname) || !$this->dsname || $this->context == self::CONTEXT_NONE)
+			{
+				return;
+			}
+			elseif($this->context == self::CONTEXT_DELETE)
+			{
+				self::factory('datastore', $this->dsname)->delete();
+
+				return;
+			}
 		}
 	}
 ?>
