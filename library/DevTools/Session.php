@@ -19,7 +19,7 @@
 	 * Developmental Tools namespace. This namespace is for all development 
 	 * tool related routines, as used by /dev/tools.
 	 *
-	 * @author              Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @author              Kalle Sommer Nielsen 	<kalle@tuxxedo.net>
 	 * @version             1.0
 	 * @package             Engine
 	 * @subpackage          DevTools
@@ -44,7 +44,7 @@
 	 * the options and 'bakes' them into the class so that it can 
 	 * be used without loading the datastore.
 	 *
-	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @author		Kalle Sommer Nielsen 	<kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		DevTools

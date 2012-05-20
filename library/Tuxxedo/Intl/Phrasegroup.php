@@ -71,15 +71,5 @@
 
 			$this->information = $phrases;
 		}
-
-		/**
-		 * Gets all loaded phrases from this phrasegroup
-		 * 
-		 * @return	array			Returns all loaded phrases for this phrasegroup
-		 */
-		public function getPhrases()
-		{
-			return($this->information);
-		}
 	}
 ?>

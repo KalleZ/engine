@@ -1,0 +1,17 @@
+{$header}
+
+<div class="box">
+	<h4>Error</h4>
+
+	<p>
+		{$message}
+	</p>
+</div>
+
+<if expression="isset($go_back) && $go_back">
+	<div class="box">
+		<input type="button" onclick="history.back(-1);" value="Go back" />
+	</div>
+</if>
+
+{$footer}

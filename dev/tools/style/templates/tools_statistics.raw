@@ -5,16 +5,19 @@
 
 	<table cellspacing="0" cellpadding="0">
 		<tr class="heading">
-			<td class="start" width="25%">
+			<td class="start" width="20%">
 				Files
 			</td>
-			<td nowrap="nowrap" width="25%">
+			<td nowrap="nowrap" width="20%">
 				File extensions
 			</td>
-			<td nowrap="nowrap" width="25%">
+			<td nowrap="nowrap" width="20%">
 				Total lines of code
 			</td>
-			<td nowrap="nowrap" class="end" width="25%">
+			<td nowrap="nowrap" width="20%">
+				Total blank lines
+			</td>
+			<td nowrap="nowrap" class="end" width="20%">
 				Total size (bytes)
 			</td>
 		</tr>
@@ -23,10 +26,13 @@
 				{$statistics['total']['files']}
 			</td>
 			<td>
-				{$statistics['extensions']}
+				{$statistics['total']['extensions']}
 			</td>
 			<td>
 				{$statistics['total']['lines']}
+			</td>
+			<td>
+				{$statistics['total']['blanks']}
 			</td>
 			<td>
 				{$statistics['total']['size']}
@@ -56,6 +62,51 @@
 			</td>
 		</tr>
 		{$extensions}
+	</table>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td class="start end" colspan="6">
+				Average statistics
+			</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap">
+				Lines per file
+			</td>
+			<td>
+				{$avg['lines_per_file']}
+			</td>
+			<td nowrap="nowrap">
+				Blank lines per file
+			</td>
+			<td>
+				{$avg['blanks_per_file']}
+			</td>
+			<td nowrap="nowrap">
+				Tokens per PHP file line:
+			</td>
+			<td>
+				{$avg['tokens_per_line']}
+			</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap">
+				Bytes per line
+			</td>
+			<td>
+				{$avg['bytes_per_line']}
+			</td>
+			<td colspan="2">
+				&nbsp;
+			</td>
+			<td nowrap="nowrap">
+				Tokens per PHP file:
+			</td>
+			<td>
+				{$avg['tokens_per_file']}
+			</td>
+		</tr>
 	</table>
 </div>
 

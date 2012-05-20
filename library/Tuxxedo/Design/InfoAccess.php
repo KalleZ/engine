@@ -48,12 +48,46 @@
 	abstract class InfoAccess implements \ArrayAccess
 	{
 		/**
+		 * Information event prefix, if this have a value then 
+		 * events are triggered when overloading
+		 *
+		 * @var		string
+		 */
+		protected $information_event	= '';
+
+		/**
 		 * Information array
 		 * 
-		 * @var		array
+		 * @var		array|object
 		 */
-		protected $information		= Array();
+		protected $information;
 
+
+		/**
+		 * Imports multiple information in one go
+		 *
+		 * @param	array|object		The information to import
+		 * @return	void			No value is returned
+		 */
+		final public function import($information)
+		{
+			if(!\is_object($information) && !\is_array($information))
+			{
+				return;
+			}
+
+			$this->information = $information;
+		}
+
+		/**
+		 * Exports the entire information in one go
+		 *
+		 * @return	array|object		Returns an object if the internal information is an object, otherwise an array
+		 */
+		public function export()
+		{
+			return($this->information);
+		}
 
 		/**
 		 * Checks whether an information is available 
@@ -63,6 +97,13 @@
 		 */
 		public function offsetExists($offset)
 		{
+			if($this->information_event)
+			{
+				Event::fire($this->information_event . 'exists', $this, Array(
+												'offset' => $offset
+												));
+			}
+
 			if(\is_object($this->information))
 			{
 				return(isset($this->information->{$offset}));
@@ -79,6 +120,13 @@
 		 */
 		public function offsetGet($offset)
 		{
+			if($this->information_event)
+			{
+				Event::fire($this->information_event . 'get', $this, Array(
+												'offset' => $offset
+												));
+			}
+
 			if(\is_object($this->information))
 			{
 				return($this->information->{$offset});
@@ -98,6 +146,14 @@
 		 */
 		public function offsetSet($offset, $value)
 		{
+			if($this->information_event)
+			{
+				Event::fire($this->information_event . 'set', $this, Array(
+												'offset' 	=> $offset, 
+												'value'		=> $value
+												));
+			}
+
 			if(\is_object($this->information))
 			{
 				$this->information->{$offset} = $value;
@@ -116,6 +172,13 @@
 		 */
 		public function offsetUnset($offset)
 		{
+			if($this->information_event)
+			{
+				Event::fire($this->information_event . 'unset', $this, Array(
+												'offset' => $offset
+												));
+			}
+
 			if(\is_object($this->information))
 			{
 				unset($this->information->{$offset});

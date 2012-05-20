@@ -121,6 +121,11 @@
 
 			if($prefix !== NULL)
 			{
+				if($prefix{\strlen($prefix) - 1} != '\\')
+				{
+					$prefix .= '\\';
+				}
+
 				$this->prefix = $prefix;
 			}
 		}
@@ -246,6 +251,18 @@
 			}
 
 			return($controller);
+		}
+
+		/**
+		 * Route (shorthand method for the route() method)
+		 *
+		 * @return	\Tuxxedo\MVC\Controller				Returns a new controller instance
+		 *
+		 * @throws	\Tuxxedo\Exception\MVC\InvalidController	Throws an invalid controller exception if the controller could not be loaded
+		 */
+		public function __invoke()
+		{
+			return($this->route());
 		}
 	}
 ?>

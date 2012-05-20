@@ -112,8 +112,7 @@
 							'timezone'		=> Array(
 												'type'		=> self::FIELD_OPTIONAL, 
 												'validation'	=> self::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidTimezone'), 
-												'default'	=> 'UTC'
+												'callback'	=> Array(__CLASS__, 'isValidTimezone')
 												), 
 							'timezone_offset'	=> Array(
 												'type'		=> self::FIELD_PROTECTED, 

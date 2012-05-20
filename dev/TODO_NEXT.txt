@@ -27,23 +27,84 @@
 	     - Delete
 	     - Search
 
+	DevTools
+	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
+	 - Change to use MVC as a backend
+	   - Add translation for the entire application using the 'DevTools' phrasegroup
+	   - Add SQLite support for translation of DevTools
+	   - Change the templating system to use its own 'DevTools' style
+	     - Split header up to .js files
+	   - Convertion
+	     - index
+	     - datastore
+	       - truncate
+	       - dump
+	       - rebuild
+	       - index
+	     - styles
+	       - index
+	       - styles
+		 - add
+		 - edit
+		 - delete
+		 - list
+	       - templates
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - search
+		 - reset
+             - users
+	       - index
+	       - users
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - permissions
+	       - usergroups
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - permissions
+	       - permissions
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - tree
+	     - options
+	       - categories
+		 - add
+		 - edit
+		 - delete
+	       - options
+		 - add
+		 - edit
+		 - delete
+		 - list
+		 - reset
+	     - sessions
+	       - kill
+	       - details
+	       - cron
+	       - list
+	     - tools
+	       - statistics
+	       - password
+	       - requirements
+	       - compiler
+	       - authentication
+	       - status
+	       - configuration
+	       - index
+
 
 
 	Tuxxedo Engine 1.2.0 "Timewarp" Beta 1
 	------------------------------------
-
-	Datastore
-	 - Add a datastore recache class, with adapters
-	   - languages
-	   - optioncategories
-	   - options
-	   - permissions
-	   - phrasegroups
-	   - styleinfo
-	   - usergroups
-	   - timezones
-	 - Add a new datamanager hook for recache or make 'Cache' work as automatted as possible
-	 - Change the datastore rebuilder in the DevTools to make use of these new classes
 
 	Internationalization
 	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
@@ -61,6 +122,7 @@
 	   - Add the ability to fetch file docblocks
 	   - Add the ability to fetch default values of properties and the like
 	   - Add the ability to parse <code> blocks correctly
+	   - Drop serialized output and require JSON
 	 - check_dm_phrases.php
 	   - Add a check for obsolete and orphan phrases
 	 - sync_templates.php

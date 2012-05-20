@@ -50,7 +50,7 @@
 	 * This class is inspired by the vBulletin template 
 	 * compilation model.
 	 *
-	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
+	 * @author		Kalle Sommer Nielsen 	<kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
@@ -91,6 +91,20 @@
 		 * @var		integer
 		 */
 		const OPT_VERBOSE_TEST			= 16;
+
+		/**
+		 * Compiler option - parse <if> tags
+		 *
+		 * @var		integer
+		 */
+		const OPT_PARSE_IF_TAGS			= 32;
+
+		/**
+		 * Compiler option - parse <phrase> tags
+		 *
+		 * @var		integer
+		 */
+		const OPT_PARSE_PHRASE_TAGS		= 64;
 
 
 		/**
@@ -185,11 +199,17 @@
 				{
 					$this->stack_data->conditions = 0;
 				}
+
+				if(!isset($stack->data->phrases))
+				{
+					$this->stack_data->phrases = 0;
+				}
 			}
 			else
 			{
 				$this->stack_data 		= new \stdClass;
-				$this->stack_data->conditions	= 0;
+				$this->stack_data->conditions	= $this->stack_data->phrases = 0;
+				$this->stack_data->type		= Exception\TemplateCompiler::TYPE_NONE;
 			}
 		}
 
@@ -230,21 +250,7 @@
 		 */
 		public function allowFunction($function)
 		{
-			$function = \strtolower($function);
-
-			if(!\function_exists($function) || isset($this->functions[$function]))
-			{
-				return(false);
-			}
-
-			if($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT)
-			{
-				$this->options &= ~self::OPT_NO_FUNCTION_CALL_LIMIT;
-			}
-
-			$this->functions[$function] = true;
-
-			return(true);
+			return($this->symtable('functions', $function, self::OPT_NO_FUNCTION_CALL_LIMIT));
 		}
 
 		/**
@@ -255,21 +261,7 @@
 		 */
 		public function allowClass($class)
 		{
-			$class = \strtolower($class);
-
-			if(isset($this->classes[$class]))
-			{
-				return(false);
-			}
-
-			if($this->options & self::OPT_NO_CLASS_CALL_LIMIT)
-			{
-				$this->options &= ~self::OPT_NO_CLASS_CALL_LIMIT;
-			}
-
-			$this->classes[$class] = true;
-
-			return(true);
+			return($this->symtable('classes', $class, self::OPT_NO_CLASS_CALL_LIMIT));
 		}
 
 		/**
@@ -280,19 +272,32 @@
 		 */
 		public function allowClosure($closure)
 		{
-			$closure = \strtolower($closure);
+			return($this->symtable('closures', $closure, self::OPT_NO_CLOSURE_CALL_LIMIT));
+		}
 
-			if(isset($this->closures[$closure]))
+		/**
+		 * Updates a internl symbol table
+		 *
+		 * @param	string			The symbol table to update
+		 * @param	string			The symbol to be added
+		 * @param	integer			The symbol table bitfield
+		 * @return	boolean			Returns true if success, and false if the symbol already exists
+		 */
+		protected function symtable($symtable, $symbol, $bitfield)
+		{
+			$symbol = \strtolower($symbol);
+
+			if(isset($this->{$symtable}[$symbol]))
 			{
 				return(false);
 			}
 
-			if($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT)
+			if($this->options & $bitfield)
 			{
-				$this->options &= ~self::OPT_NO_CLOSURE_CALL_LIMIT;
+				$this->options &= ~$bitfield;
 			}
 
-			$this->closures[$closure] = true;
+			$this->{$symtable}[$symbol] = true;
 
 			return(true);
 		}
@@ -322,13 +327,16 @@
 				$tokens 	= Array(
 							'if_start'	=> '<if expression=', 
 							'if_end'	=> '</if>', 
-							'else'		=> '<else />'
+							'else'		=> '<else />', 
+							'phrase_start'	=> '<phrase', 
+							'phrase_end'	=> '</phrase>'
 							);
 
 				$token_lengths	= Array(
 							'if_start'	=> 15, 
 							'if_end'	=> 5, 
-							'else'		=> 8
+							'phrase_start'	=> 7, 
+							'phrase_end'	=> 9
 							);
 			}
 
@@ -337,7 +345,12 @@
 					'if_close'		=> -1, 
 					'recursive_if'		=> -1, 
 					'else'			=> -1, 
-					'else_bytes'		=> -1
+					'else_bytes'		=> -1, 
+					'conditions'		=> -1, 
+					'phrase_conditionals'	=> Array(), 
+					'phrase_ignore'		=> Array(), 
+					'phrase_open'		=> -1, 
+					'phrase_close'		=> -1
 					);
 
 			if(\strpos($src, '"') !== false)
@@ -345,177 +358,274 @@
 				$src = \str_replace('"', '\\"', $src);
 			}
 
-			while(1)
+			if($this->options & self::OPT_PARSE_IF_TAGS)
 			{
-				$ptr['if_open'] = \stripos($src, $tokens['if_start'], $ptr['if_close'] + 1);
-
-				if($ptr['if_open'] === false)
-				{
-					break;
-				}
-
-				++$this->stack_data->conditions;
-
-				$expr_start 		= $ptr['if_open'] + $token_lengths['if_start'] + 1;
-				$delimiter 		= $src{$expr_start - 1};
-				$ptr['else_bytes']	= 2;
-
-				if($delimiter == '\\' && isset($src{$expr_start}))
-				{
-					$delimiter 		= $src{$expr_start};
-					$ptr['else_bytes'] 	= 3;
-					$expr_start		+= 1;
-				}
-
-				if($delimiter != '"' && $delimiter != '\'')
-				{
-					throw new Exception\TemplateCompiler('Invalid expression delimiter, must be either \' or "', $this->stack_data);
-				}
-
-				$ptr['if_close'] = \stripos($src, $tokens['if_end'], $expr_start + 3);
-
-				if($ptr['if_close'] === false)
-				{
-					throw new Excpetion\TemplateCompiler('No closing if found', $this->stack_data);
-				}
-
-				$expr_end = -1;
-
-				for($c = $expr_start, $bounds = \strlen($src); $c < $bounds; ++$c)
-				{
-					if($src{$c} == $delimiter && $src{$c - 2} != '\\' && $src{$c + 1} == '>')
-					{
-						$expr_end = ($delimiter == '"' ? $c - 1 : $c);
-
-						break;
-					}
-				}
-
-				if($expr_end == -1)
-				{
-					throw new Exception\TemplateCompiler('No end of expression found or malformed expression', $this->stack_data);
-				}
-
-				$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
-
-				if(empty($expr_value) || ((string)(integer) $expr_value !== $expr_value) && $expr_value != 0)
-				{
-					throw new Exception\TemplateCompiler('Expressions may not be empty', $this->stack_data);
-				}
-				elseif(\strpos($expr_value, '`') !== false)
-				{
-					throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->stack_data);
-				}
-				elseif(\preg_match_all('#([a-z0-9_{}$>-]+)(?:\s|/\*.*\*/|(?:\#|//)[^\r\n]*(?:\r|\n))*\(#si', $expr_value, $matches))
-				{
-					foreach($matches[1] as $function)
-					{
-						$function = \strtolower(\stripslashes($function));
-
-						if(($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) || isset($this->functions[$function]))
-						{
-							continue;
-						}
-						elseif($function{0} == '$')
-						{
-							if(($this->options & self::OPT_NO_CLASS_CALL_LIMIT) || ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
-							{
-								continue;
-							}
-							elseif(($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) || \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
-							{
-								continue;
-							}
-						}
-
-						throw new Exception\TemplateCompiler('Use of unsafe call expression: ' . $function . '()', $this->stack_data);
-					}
-				}
-
-				$ptr['recursive_if'] = $ptr['if_open'];
+				$this->stack_data->type = Exception\TemplateCompiler::TYPE_CONDITION;
 
 				while(1)
 				{
-					$ptr['recursive_if'] = \stripos($src, $tokens['if_start'], $ptr['recursive_if'] + 1);
+					$ptr['if_open'] = \stripos($src, $tokens['if_start'], $ptr['if_close'] + 1);
 
-					if($ptr['recursive_if'] === false || $ptr['recursive_if'] >= $ptr['if_close'])
+					if($ptr['if_open'] === false)
 					{
 						break;
 					}
 
-					$ptr['if_close'] = \stripos($src, $tokens['if_end'], $ptr['if_close'] + 1);
+					++$this->stack_data->conditions;
+					++$ptr['conditions'];
+
+					$expr_start 		= $ptr['if_open'] + $token_lengths['if_start'] + 1;
+					$delimiter 		= $src{$expr_start - 1};
+					$ptr['else_bytes']	= 2;
+
+					if($delimiter == '\\' && isset($src{$expr_start}))
+					{
+						$delimiter 		= $src{$expr_start};
+						$ptr['else_bytes'] 	= 3;
+						$expr_start		+= 1;
+					}
+
+					if($delimiter != '"' && $delimiter != '\'')
+					{
+						throw new Exception\TemplateCompiler('Invalid expression delimiter, must be either \' or "', $this->stack_data);
+					}
+
+					$ptr['if_close'] = \stripos($src, $tokens['if_end'], $expr_start + 3);
 
 					if($ptr['if_close'] === false)
 					{
-						throw new Exception\TemplateCompiler('No closing if found', $this->stack_data);
+						throw new Excpetion\TemplateCompiler('No closing if found', $this->stack_data);
 					}
-				}
 
-				$ptr['else'] = \stripos($src, $tokens['else'], $expr_end + $ptr['else_bytes']);
+					$expr_end = -1;
+
+					for($c = $expr_start, $bounds = \strlen($src); $c < $bounds; ++$c)
+					{
+						if($src{$c} == $delimiter && $src{$c - 2} != '\\' && $src{$c + 1} == '>')
+						{
+							$expr_end = ($delimiter == '"' ? $c - 1 : $c);
+
+							break;
+						}
+					}
+
+					if($expr_end == -1)
+					{
+						throw new Exception\TemplateCompiler('No end of expression found or malformed expression', $this->stack_data);
+					}
+
+					$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
+
+					if(empty($expr_value) || ((string)(integer) $expr_value !== $expr_value) && $expr_value != 0)
+					{
+						throw new Exception\TemplateCompiler('Expressions may not be empty', $this->stack_data);
+					}
+					elseif(\strpos($expr_value, '`') !== false)
+					{
+						throw new Exception\TemplateCompiler('Expressions may not contain backticks', $this->stack_data);
+					}
+					elseif(\preg_match_all('#([a-z0-9_{}$>-]+)(?:\s|/\*.*\*/|(?:\#|//)[^\r\n]*(?:\r|\n))*\(#si', $expr_value, $matches))
+					{
+						foreach($matches[1] as $function)
+						{
+							$function = \strtolower(\stripslashes($function));
+
+							if(($this->options & self::OPT_NO_FUNCTION_CALL_LIMIT) || isset($this->functions[$function]))
+							{
+								continue;
+							}
+							elseif($function{0} == '$')
+							{
+								if(($this->options & self::OPT_NO_CLASS_CALL_LIMIT) || ($pos = \strpos($function, '->')) !== false && isset($this->classes[\substr($function, 1, $pos - 1)]))
+								{
+									continue;
+								}
+								elseif(($this->options & self::OPT_NO_CLOSURE_CALL_LIMIT) || \strpos($function, '->') === false && isset($this->closures[\substr($function, 1)]))
+								{
+									continue;
+								}
+							}
+
+							throw new Exception\TemplateCompiler('Use of unsafe call expression: ' . $function . '()', $this->stack_data);
+						}
+					}
+					elseif(\stripos($expr_value, $tokens['phrase_start']) !== false || \stripos($expr_value, $tokens['phrase_end']))
+					{
+						$ptr['phrase_conditionals'][] = $ptr['conditions'];
+					}
+
+					$ptr['recursive_if'] = $ptr['if_open'];
+
+					while(1)
+					{
+						$ptr['recursive_if'] = \stripos($src, $tokens['if_start'], $ptr['recursive_if'] + 1);
+
+						if($ptr['recursive_if'] === false || $ptr['recursive_if'] >= $ptr['if_close'])
+						{
+							break;
+						}
+
+						$ptr['if_close'] = \stripos($src, $tokens['if_end'], $ptr['if_close'] + 1);
+
+						if($ptr['if_close'] === false)
+						{
+							throw new Exception\TemplateCompiler('No closing if found', $this->stack_data);
+						}
+					}
+
+					$ptr['else'] = \stripos($src, $tokens['else'], $expr_end + $ptr['else_bytes']);
+
+					while(1)
+					{
+						if($ptr['else'] === false || $ptr['else'] >= $ptr['if_close'])
+						{
+							$ptr['else'] = -1;
+
+							break;
+						}
+
+						$body = \substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end + $ptr['else_bytes']);
+
+						if(\substr_count($body, $tokens['if_start']) == \substr_count($body, $tokens['if_end']))
+						{
+							break;
+						}
+
+						$ptr['else'] = \stripos($src, $tokens['else'], $ptr['else'] + 1);
+					}
+
+					if($ptr['else'] == -1)
+					{
+						$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - $token_lengths['if_end'] - $expr_end + 2);
+						$false 	= '';
+					}
+					else
+					{
+						$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end - $ptr['else_bytes']);
+						$false	= \substr($src, $ptr['else'] + \strlen($tokens['else']), $ptr['if_close'] - \strlen($tokens['if_end']) - $ptr['else'] - $ptr['else_bytes']);
+					}
+
+					$compiler = new self($this->options, $this->stack_data);
+
+					if(\stripos($true, $tokens['if_start']) !== false)
+					{
+						if(\strpos($true, '\"') !== false)
+						{
+							$true = \str_replace('\"', '"', $true);
+						}
+
+						$compiler->setSource($true);
+						$compiler->compile();
+
+						$true = $compiler->getCompiledSource();
+					}
+
+					if(\stripos($false, $tokens['if_start']) !== false)
+					{
+						if(\strpos($false, '\"') !== false)
+						{
+							$false = \str_replace('\"', '"', $false);
+						}
+
+						$compiler->setSource($false);
+						$compiler->compile();
+
+						$false = $compiler->getCompiledSource();
+					}
+
+					$compiler 		= NULL;
+					$expression 		= '" . ((' . $expr_value . ') ? ("' . $true . '") : ' . ($false ? '("' . $false . '")' : '\'\'') . ') . "';
+					$src 			= \substr_replace($src, $expression, $ptr['if_open'], $ptr['if_close'] + \strlen($tokens['if_end']) - $ptr['if_open']);
+					$ptr['if_close'] 	= $ptr['if_open'] + \strlen($expression) - 1;
+				}
+			}
+
+			if(0 && $this->options & self::OPT_PARSE_PHRASE_TAGS)
+			{
+				$this->stack_data->type = Exception\TemplateCompiler::TYPE_PHRASE;
+
+				if(\strpos($src, '\\"') !== false)
+				{
+					$src = \str_replace('\\"', '"', $src);
+				}
 
 				while(1)
 				{
-					if($ptr['else'] === false || $ptr['else'] >= $ptr['if_close'])
-					{
-						$ptr['else'] = -1;
+					$ptr['phrase_open'] = \stripos($src, $tokens['phrase_start'], $ptr['phrase_close'] + 1);
 
-						break;
-					}
-
-					$body = \substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end + $ptr['else_bytes']);
-
-					if(\substr_count($body, $tokens['if_start']) == \substr_count($body, $tokens['if_end']))
+					if($ptr['phrase_open'] === false)
 					{
 						break;
 					}
 
-					$ptr['else'] = \stripos($src, $tokens['else'], $ptr['else'] + 1);
-				}
+					++$this->stack_data->phrases;
 
-				if($ptr['else'] == -1)
-				{
-					$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['if_close'] - $token_lengths['if_end'] - $expr_end + 2);
-					$false 	= '';
-				}
-				else
-				{
-					$true 	= \substr($src, $expr_end + $ptr['else_bytes'], $ptr['else'] - $expr_end - $ptr['else_bytes']);
-					$false	= \substr($src, $ptr['else'] + \strlen($tokens['else']), $ptr['if_close'] - \strlen($tokens['if_end']) - $ptr['else'] - $ptr['else_bytes']);
-				}
+					$index		= -1;
+					$temp 		= \substr($src, $ptr['phrase_open'] + $token_lengths['phrase_start']);
+					$parsing	= false;
+					$delimiter	= '';
+					$key		= NULL;
+					$parameters	= Array();
 
-				$compiler = new self($this->options, $this->stack_data);
-
-				if(\stripos($true, $tokens['if_start']) !== false)
-				{
-					if(\strpos($true, '\"') !== false)
+					while($temp{++$index} != '>' || ($parsing && $temp{$index} == '>'))
 					{
-						$true = \str_replace('\"', '"', $true);
+						$char = $temp{$index};
+
+						if($parsing)
+						{
+							if($char == $delimiter && isset($temp{$index - 1}) && $temp{$index - 1} != '\\')
+							{
+								$parsing = false;
+
+								continue;
+							}
+
+							$parameters[$key] .= $char;
+						}
+						elseif(\is_numeric($char))
+						{
+							if(!isset($temp{$index + 1}) || $temp{$index + 1} != '=' || !isset($temp{$index + 2}) || ($temp{$index + 2} != '"' && $temp{$index + 2} != '\''))
+							{
+								throw new Exception\TemplateCompiler('Invalid parameter syntax', $this->stack_data);
+							}
+
+							$delimiter 		= $temp{$index + 2};
+							$index			+= 2;
+							$parsing		= true;
+							$key			= $char;
+							$parameters[$key]	= '';
+						}
 					}
 
-					$compiler->setSource($true);
-					$compiler->compile();
-
-					$true = $compiler->getCompiledSource();
-				}
-
-				if(\stripos($false, $tokens['if_start']) !== false)
-				{
-					if(\strpos($false, '\"') !== false)
+					if($parsing)
 					{
-						$false = \str_replace('\"', '"', $false);
+						throw new Exception\TemplateCompiler('Incomplete phrase tag', $this->stack_data);
 					}
 
-					$compiler->setSource($false);
-					$compiler->compile();
+					if($parameters)
+					{
+						\ksort($parameters);
+					}
 
-					$false = $compiler->getCompiledSource();
+					$ptr['phrase_close'] = \stripos($src, $tokens['phrase_end'], $ptr['phrase_open'] + $index + 1);
+
+					if($ptr['phrase_close'] === false)
+					{
+						throw new Exception\TemplateCompiler('No closing phrase found', $this->stack_data);
+					}
+
+					var_dump($phrase);
+
+					break;
 				}
 
-				$compiler 		= NULL;
-				$expression 		= '" . ((' . $expr_value . ') ? ("' . $true . '") : ' . ($false ? '("' . $false . '")' : '\'\'') . ') . "';
-				$src 			= \substr_replace($src, $expression, $ptr['if_open'], $ptr['if_close'] + \strlen($tokens['if_end']) - $ptr['if_open']);
-				$ptr['if_close'] 	= $ptr['if_open'] + \strlen($expression) - 1;
+				if(\strpos($src, '"') !== false)
+				{
+					$src = \str_replace('"', '\\"', $src);
+				}
 			}
+
+			$this->stack_data->type = Exception\TemplateCompiler::TYPE_NONE;
 
 			foreach(Array('\t', '\r', '\n', '\x', '\0', '\\\\', '\\\'', '\v') as $s)
 			{
@@ -559,7 +669,7 @@
 			}
 
 			$this->compiled_source 		= $src;
-			$this->stack_data->conditions	= 0;
+			$this->stack_data->conditions	= $this->stack_data->phrases = 0;
 		}
 
 		/**

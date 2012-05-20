@@ -158,6 +158,22 @@
 							'templates'	=> Array()
 							);
 
+		/**
+		 * Holds the various flags supported
+		 *
+		 * @var		array
+		 */
+		protected static $flags		= Array(
+							self::FLAG_CORE, 
+							self::FLAG_DATE, 
+							self::FLAG_DATABASE, 
+							self::FLAG_DATASTORE, 
+							self::FLAG_INTL, 
+							self::FLAG_OPTIONS, 
+							self::FLAG_STYLE, 
+							self::FLAG_USER
+							);
+
 
 		/**
 		 * Sets elements that should be preloaded by the next init call
@@ -185,34 +201,19 @@
 		 * If the callback returns true, then the flag will be marked 
 		 * as initialized, otherwise the default code is executed.
 		 *
-		 * Each flag can only have one hook. To reset a hook, then simply 
-		 * pass NULL as the callback.
+		 * To reset a hook, then simply pass NULL as the callback. This 
+		 * unregisters ALL hooks registered to that paticular flag.
 		 *
-		 * @param	integer			The loader flag, this cannot be a bitmask or the 'core' flag
+		 * @param	integer			The loader flag, this cannot be a bitmask
 		 * @param	callback		The loader callback
 		 * @param	string			The index of the preloadables, if any to send to the callback
 		 * @return	void			No value is returned
 		 */
 		public static function setHook($flag, $callback, $preloadables = NULL)
 		{
-			static $flags;
-
-			if(!$flags)
-			{
-				$flags = Array(
-						self::FLAG_DATE, 
-						self::FLAG_DATABASE, 
-						self::FLAG_DATASTORE, 
-						self::FLAG_INTL, 
-						self::FLAG_OPTIONS, 
-						self::FLAG_STYLE, 
-						self::FLAG_USER
-						);
-			}
-
 			$flag = (integer) $flag;
 
-			if(!\in_array($flag, $flags))
+			if(!\in_array($flag, self::$flags))
 			{
 				return;
 			}
@@ -227,7 +228,12 @@
 				return;
 			}
 
-			self::$hooks[$flag] = Array(
+			if(!isset(self::$hooks[$flag]))
+			{
+				self::$hooks[$flag] = Array();
+			}
+
+			self::$hooks[$flag][] = Array(
 							'callback'	=> $callback, 
 							'preloadables'	=> (isset(self::$preloadables[$preloadables]) ? $preloadables : NULL)
 							);
@@ -243,6 +249,13 @@
 		 */
 		public static function init($mode = self::MODE_NORMAL, $flags = NULL)
 		{
+			static $self;
+
+			if(!$self)
+			{
+				$self = new static;
+			}
+
 			switch($mode)
 			{
 				case(self::MODE_MINIMAL):
@@ -259,7 +272,7 @@
 						$flags |= self::FLAG_CORE;
 					}
 
-					if(!($flags & self::FLAG_DATE) && $flags & self::FLAG_USER)
+					if(!($flags & self::FLAG_DATE) && ($flags & self::FLAG_USER))
 					{
 						$flags |= self::FLAG_DATE;
 					}
@@ -281,6 +294,11 @@
 			if(!$flags)
 			{
 				return;
+			}
+
+			if(\method_exists($self, 'preInit'))
+			{
+				static::preInit($flags);
 			}
 
 			if($flags & self::FLAG_CORE)
@@ -359,14 +377,24 @@
 
 			if(self::$hooks)
 			{
-				foreach(self::$hooks as $flag => $hook)
+				foreach(self::$hooks as $flag => $hooks)
 				{
-					if(\call_user_func($hook['callback'], $registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL)))
+					if(!$hooks || !($flags & $flag))
 					{
-						$flags &= ~$flag;
-
-						unset(self::$preloadables[$preloadables]);
+						continue;
 					}
+
+					foreach($hooks as $hook)
+					{
+						if(\call_user_func($hook['callback'], $registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL)) && $flag != self::FLAG_CORE)
+						{
+							$flags &= ~$flag;
+
+							unset(self::$preloadables[$preloadables]);
+						}
+					}
+
+					unset(self::$hooks[$flag]);
 				}
 			}
 
@@ -419,8 +447,12 @@
 
 				$registry->set('userinfo', $registry->user->getUserInfo());
 				$registry->set('usergroup', $registry->user->getUserGroupInfo());
-				$registry->set('timezone', new \DateTimeZone(\strtoupper(empty($registry->userinfo->id) ? (isset($registry->options) ? $registry->options->date_timezone : 'UTC') : $registry->userinfo->timezone)));
-				$registry->set('datetime', new \DateTime('now', $registry->timezone));
+
+				if(($flags & self::FLAG_DATE) || (self::$loaded & self::FLAG_DATE))
+				{
+					$registry->set('timezone', new \DateTimeZone(\strtoupper(empty($registry->userinfo->id) ? (isset($registry->options) ? $registry->options->date_timezone : 'UTC') : $registry->userinfo->timezone)));
+					$registry->set('datetime', new \DateTime('now', $registry->timezone));
+				}
 			}
 
 			if($flags & self::FLAG_STYLE)
@@ -453,6 +485,11 @@
 
 					self::$preloadables['phrasegroups'] = Array();
 				}
+			}
+
+			if(\method_exists($self, 'postInit'))
+			{
+				static::postInit($registry);
 			}
 
 			self::$loaded |= $flags;

@@ -91,6 +91,13 @@
 		 */
 		protected $variables		= Array();
 
+		/**
+		 * Holds the globally declared variables
+		 *
+		 * @var		array
+		 */
+		protected static $globals	= Array();
+
 
 		/**
 		 * Constructor, constructs a new template
@@ -124,6 +131,57 @@
 		}
 
 		/**
+		 * Sets a global variable
+		 *
+		 * @param	string				The name of the variable
+		 * @param	mixed				The value of the variable
+		 * @return	void				No value is returned
+		 */
+		public static function globalSet($variable, $value)
+		{
+			self::$globals[$variable] = $value;
+		}
+
+		/**
+		 * Gets a global variable
+		 *
+		 * @param	string				The name of the variable
+		 * @return	mixed				Returns the variable value, and NULL on non existant variable
+		 */
+		public static function globalGet($variable)
+		{
+			if(isset(self::$globals[$variable]))
+			{
+				return(self::$globals[$variable]);
+			}
+		}
+
+		/**
+		 * Checks if a global variable exists
+		 *
+		 * @param	string				The name of the variable
+		 * @return	boolean				Returns true if the variable exists otherwise false
+		 */
+		public static function globalExists($variable)
+		{
+			return(isset(self::$globals[$variable]));
+		}
+
+		/**
+		 * Unsets a global variable
+		 *
+		 * @param	string				The name of the variable
+		 * @return	void				No value is returned
+		 */
+		public static function globalUnset($variable)
+		{
+			if(isset(self::$globals[$variable]))
+			{
+				unset(self::$globals[$variable]);
+			}
+		}
+
+		/**
 		 * Parses a template
 		 *
 		 * @return	string				Returns the parsed template
@@ -140,15 +198,19 @@
 
 			unset($lowered_name);
 
-			if($this->variables)
+			if($this->variables || self::$globals)
 			{
-				foreach($this->variables as $variable => $value)
+				$this->buffer = (self::$globals ? \array_merge(self::$globals, $this->variables) : $this->variables);
+
+				foreach($this->buffer as $variable => $value)
 				{
 					if(!isset(${$variable}))
 					{
 						${$variable} = $value;
 					}
 				}
+
+				$this->buffer = '';
 			}
 
 			if(!$this->registry->style->isLoaded($this->name))

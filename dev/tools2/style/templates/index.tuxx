@@ -1,0 +1,27 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Development Tools</h4>
+
+	<p>
+		The development tools is designed for Engine application developers 
+		and is even used for developing Engine itself. It provides a simple 
+		interface for interacting with configurable core components and 
+		concepts within the framework.
+	</p>
+
+	<br />
+	<p>
+		The DevTools, as this application also is known for short, is written 
+		as an application on Engine itself as a proof-of-concept for showing 
+		advanced features of the framework.
+	</p>
+</div>
+
+<phrase 1=\"Kalle\">named_phrase</phrase>
+
+" . (('<phrase') ? ("
+	This should show
+") : '') . "
+
+{$footer}

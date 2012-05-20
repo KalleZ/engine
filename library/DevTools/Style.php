@@ -58,9 +58,9 @@
 		public function __construct()
 		{
 			$this->registry		= Registry::init();
-			$this->information 	= Array();
+			$this->information 	= Array('templatesdir' => './style/templates/');
 			$this->templates	= new \stdClass;
-			$this->storage		= Storage::factory($this->registry, $this, '\DevTools\Style\Storage\DevTools', $this->templates, true);
+			$this->storage		= Storage::factory($this->registry, $this, 'filesystem', $this->templates, true);
 		}
 
 
@@ -90,14 +90,11 @@
 			$script = ($configuration['devtools']['protective'] && !Registry::init()->session['__devtools_authenticated'] ? 'index' : \SCRIPT_NAME);
 			$widget = 'widget_' . $script;
 
-			if(!$this->storage->exists($widget))
+			if(!$this->cache(Array($widget)))
 			{
 				return(false);
 			}
-
-			$this->cache(Array($widget));
-
-			if(\function_exists('\widget_hook_' . $script))
+			elseif(\function_exists('\widget_hook_' . $script))
 			{
 				$hook_called = true;
 

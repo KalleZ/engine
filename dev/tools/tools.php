@@ -109,7 +109,8 @@
 						'total'		=> Array(
 										'files'		=> 0, 
 										'lines'		=> 0, 
-										'size'		=> 0
+										'size'		=> 0, 
+										'blanks'	=> 0
 										), 
 						'extensions'	=> Array(
 										'php'		=> Array(
@@ -167,6 +168,7 @@
 					if(empty($line))
 					{
 						++$statistics['extensions'][$extension]['blanks'];
+						++$statistics['total']['blanks'];
 					}
 				}
 
@@ -175,6 +177,7 @@
 
 				$statistics['total']['lines']		+= sizeof($l);
 				$statistics['total']['size']		+= $s;
+
 
 				++$statistics['total']['files'];
 				++$statistics['files'][$extension];
@@ -196,10 +199,16 @@
 				eval('$extensions .= "' . $style->fetch('tools_statistics_itembit') . '";');
 			}
 
-			$statistics['lines'] 		= sizeof($statistics['lines']);
-			$statistics['extensions']	= sizeof(array_keys($statistics['files']));
+			$statistics['total']['extensions']	= sizeof(array_keys($statistics['files']));
+			$ignored				= '.' . implode(', .', $ignored);
 
-			$ignored			= '.' . implode(', .', $ignored);
+			$avg					= Array(
+									'lines_per_file'	=> round($statistics['total']['lines'] / $statistics['total']['files']), 
+									'bytes_per_line'	=> round($statistics['total']['size'] / $statistics['total']['lines']), 
+									'blanks_per_file'	=> round($statistics['total']['blanks'] / $statistics['total']['files']), 
+									'tokens_per_line'	=> round($statistics['extensions']['php']['tokens'] / $statistics['lines']['php']), 
+									'tokens_per_file'	=> round($statistics['extensions']['php']['tokens'] / $statistics['files']['php'])
+									);
 
 			eval(page('tools_statistics'));
 		}
@@ -295,6 +304,16 @@
 				if(!isset($_POST['verbose_test']))
 				{
 					$opts &= ~Compiler::OPT_VERBOSE_TEST;
+				}
+
+				if(isset($_POST['parse_tags_if']))
+				{
+					$opts |= Compiler::OPT_PARSE_IF_TAGS;
+				}
+
+				if(isset($_POST['parse_tags_phrase']))
+				{
+					$opts |= Compiler::OPT_PARSE_PHRASE_TAGS;
 				}
 
 				$compiler->setOptions($opts);

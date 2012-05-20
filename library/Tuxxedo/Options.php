@@ -89,11 +89,6 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			if(!$registry->datastore->optioncategories || !$registry->datastore->options)
-			{
-				throw new Exception\Basic('Unable to instanciate the options class, no options or categories are cached');
-			}
-
 			return(new self($registry));
 		}
 

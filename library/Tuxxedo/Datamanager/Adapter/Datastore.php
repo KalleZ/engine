@@ -98,18 +98,18 @@
 									WHERE 
 										`name` = \'%s\'', $identifier);
 
-				if(!$element || !$element->getNumRows())
+				if($element && $element->getNumRows())
 				{
-					throw new Exception('Invalid datastore element name passed to datamanager');
+					$this->data 		= $element->fetchAssoc();
+					$this->data['data']	= @\unserialize($this->data['data']);
+					$this->identifier 	= $identifier;
 
-					return;
+					$element->free();
 				}
-
-				$this->data 		= $element->fetchAssoc();
-				$this->data['data']	= @\unserialize($this->data['data']);
-				$this->identifier 	= $identifier;
-
-				$element->free();
+				else
+				{
+					$this->data['name'] = $identifier;
+				}
 			}
 
 			parent::init($registry, $options, $parent);

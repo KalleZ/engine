@@ -73,7 +73,7 @@
 			}
 		}
 
-		return((empty($dump) ? '' : 'meta=' . rtrim($dump, ', ')));
+		return((empty($dump) ? '' : '[meta=' . rtrim($dump, ', ')) . ']');
 	}
 
 	/**
@@ -102,15 +102,14 @@
 
 			$object_clone = ucfirst(strtolower($object_clone));
 
-			foreach($aliases as $alias)
+			foreach(array_keys($aliases) as $alias)
 			{
 				if(!$alias)
 				{
 					continue;
 				}
 
-				$alias	= $alias[0];
-				$pos 	= strrpos($alias, '\\');
+				$pos = strrpos($alias, '\\');
 
 				if(substr($alias, $pos + 1) == $object_clone)
 				{
@@ -337,9 +336,10 @@
 	 * @param	array				The tokens copy array
 	 * @param	integer				The token start index
 	 * @param	array				The stop tokens
+	 * @param	\stdClass			The Work-In-Progress instance
 	 * @return	array				Returns an array with structured docblock information on success and false on error
 	 */
-	function lexical_docblock(Array $tokens, $index, Array $stop_tokens)
+	function lexical_docblock(Array $tokens, $index, Array $stop_tokens, \stdClass $wip)
 	{
 		$tokens = array_reverse($tokens);
 		$index 	= sizeof($tokens) - $index;
@@ -357,7 +357,7 @@
 				continue;
 			}
 
-			return(lexical_docblock_parse($tokens[$index][1]));
+			return(lexical_docblock_parse($tokens[$index][1], $wip));
 		}
 
 		return(false);
@@ -367,9 +367,10 @@
 	 * Lexical docblock parser
 	 * 
 	 * @param	string				The docblock tag value to parse
+	 * @param	\stdClass			The Work-In-Progress instance
 	 * @return	array				Returns a structured array with the docblock variables and false on error
 	 */
-	function lexical_docblock_parse($dump)
+	function lexical_docblock_parse($dump, \stdClass $wip)
 	{
 		static $special_tags;
 
@@ -544,6 +545,11 @@
 			return(false);
 		}
 
+		if(isset($docblock['tags']['wip']))
+		{
+			$wip->is_wip = true;
+		}
+
 		return($docblock);
 	}
 
@@ -604,15 +610,21 @@
 	require(__DIR__ . '/includes/bootstrap.php');
 
 
-	$engine_path			= realpath(__DIR__ . '/../../');
-	$cli				= IO::isCli();
-	$files 				= analyze($engine_path);
-	$datamap			= Array();
+	$engine_path				= realpath(__DIR__ . '/../../');
+	$cli					= IO::isCli();
+	$files 					= analyze($engine_path);
+	$datamap				= Array();
 
-	$statistics			= new stdClass;
-	$statistics->no_docblock	= 0;
-	$statistics->no_docblock_list	= Array();
-	$statistics->elements		= 0;
+	$wip					= new stdClass;
+	$wip->is_wip				= false;
+	$wip->elements				= Array();
+
+	$statistics				= new stdClass;
+	$statistics->no_docblock		= 0;
+	$statistics->no_docblock_list		= Array();
+	$statistics->elements			= 0;
+	$statistics->counter			= new stdClass;
+	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->namespaces = $statistics->counter->aliases = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->class_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
 
 	IO::signature();
 	IO::headline('Lexical API analyze', 1);
@@ -677,7 +689,7 @@
 					}
 
 					$datamap[$file]['namespaces'][$name] 	= Array(
-											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}')), 
+											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}'), $wip), 
 											'metadata'	=> Array(
 															'docblock' => (boolean) ($context->modifiers & ACC_DOCBLOCK)
 															)
@@ -693,8 +705,10 @@
 						++$statistics->no_docblock;
 					}
 
-					$context->modifiers			= 0;
+					$context->modifiers = 0;
+
 					++$statistics->elements;
+					++$statistics->counter->namespaces;
 
 					IO::text(sprintf('NAMESPACE (%s) %s', $name, dump_metadata($datamap[$file]['namespaces'][$name]['metadata'])));
 				}
@@ -719,6 +733,7 @@
 					$datamap[$file]['aliases'] = array_merge($datamap[$file]['aliases'], Array($alias[0] => (isset($alias[1]) ? $alias[1] : '')));
 
 					++$statistics->elements;
+					++$statistics->counter->aliases;
 
 					IO::text(sprintf('ALIAS (%s)%s', $alias[0], (isset($alias[1]) ? ' AS (' . $alias[1] . ')' : '')));
 				}
@@ -746,6 +761,7 @@
 					$context->type				= $type;
 					$context->type_multiple			= $type_multiple;
 					$context->{$type} 			= $name;
+
 					$extends				= lexical_scan_extends_implements($tokens_copy, $index, T_EXTENDS, Array(T_IMPLEMENTS, '{'));
 					$extends 				= ($extends ? resolve_namespace_alias(key($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $extends[0]) : '');
 					$implements				= lexical_scan_extends_implements($tokens_copy, $index, T_IMPLEMENTS);
@@ -765,7 +781,7 @@
 											'namespace'	=> (($ns = key($datamap[$file]['namespaces'])) ? $ns : ''), 
 											'extends'	=> $extends, 
 											'implements'	=> $implements,  
-											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 											'metadata'	=> Array(
 															'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
 															'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
@@ -786,6 +802,7 @@
 					$context->modifiers = 0;
 
 					++$statistics->elements;
+					++$statistics->counter->{$type_multiple};
 
 					IO::text(sprintf('%s (%s) %s', strtoupper($type), $name, dump_metadata($datamap[$file][$type_multiple][$name]['metadata'])));
 					IO::ul();
@@ -815,9 +832,10 @@
 
 					if($context->current == T_CLASS || $context->current == T_INTERFACE)
 					{
+						$name											= $context->{$context->type} . '::' . $function . '()';
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] 	= Array(
 																		'method'	=> $function, 
-																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 																		'metadata'	=> Array(
 																						'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
 																						'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
@@ -833,7 +851,7 @@
 						{
 							$statistics->no_docblock_list[] = Array(
 												'file'	=> $file, 
-												'name'	=> $context->{$context->type} . '::' . $function . '()'
+												'name'	=> $name
 												);
 
 							++$statistics->no_docblock;
@@ -844,6 +862,7 @@
 						$metadata 		= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['methods']);
 
 						++$statistics->elements;
+						++$statistics->counter->methods;
 
 						IO::li(sprintf('METHOD (%s) %s', $function, dump_metadata($metadata['metadata'])));
 
@@ -851,10 +870,11 @@
 					}
 					else
 					{
-						$datamap[$file]['functions'][] = Array(
+						$name				= $function . '()';
+						$datamap[$file]['functions'][] 	= Array(
 											'function'	=> $function, 
 											'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
-											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+											'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 											'metadata'	=> Array(
 															'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 															)
@@ -864,15 +884,17 @@
 						{
 							$statistics->no_docblock_list[] = Array(
 												'file'	=> $file, 
-												'name'	=> $function
+												'name'	=> $name
 												);
 
 							++$statistics->no_docblock;
 						}
 
-						$context->modifiers		= 0;
-						$metadata			= end($datamap[$file]['functions']);
+						$context->modifiers	= 0;
+						$metadata		= end($datamap[$file]['functions']);
+
 						++$statistics->elements;
+						++$statistics->counter->functions;
 
 						IO::text(sprintf('FUNCTION (%s) %s', $function, dump_metadata($metadata['metadata'])));
 					}
@@ -893,9 +915,10 @@
 						}
 
 						$const 					= substr($const, 1, strlen($const) - 2);
+						$name					= '\\' . $const;
 						$datamap[$file]['constants'][$const]	= Array(
 												'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
-												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 												'metadata'	=> Array(
 																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																)
@@ -905,14 +928,16 @@
 						{
 							$statistics->no_docblock_list[] = Array(
 												'file'	=> $file, 
-												'name'	=> '\\' . $const
+												'name'	=> $name
 												);
 
 							++$statistics->no_docblock;
 						}
 
-						$context->modifiers			= 0;
+						$context->modifiers = 0;
+
 						++$statistics->elements;
+						++$statistics->counter->constants;
 
 						IO::text(sprintf('GLOBAL CONSTANT (%s) %s', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata'])));
 					}
@@ -927,10 +952,11 @@
 
 					if($context->current !== false)
 					{
+						$name											= $context->{$context->type} . '::' . $const;
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['constants'][] 	= Array(
 																		'constant'	=> $const, 
 																		'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
-																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+																		'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 																		'metadata'	=> Array(
 																						'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																						)
@@ -940,23 +966,25 @@
 						{
 							$statistics->no_docblock_list[] = Array(
 												'file'	=> $file, 
-												'name'	=> $context->{$context->type} . '::' . $const
+												'name'	=> $name
 												);
 							++$statistics->no_docblock;
 						}
 
-						$context->modifiers									= 0;
-						$metadata										= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['constants']);
+						$context->modifiers	= 0;
+						$metadata		= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['constants']);
 
 						++$statistics->elements;
+						++$statistics->counter->class_constants;
 
 						IO::li(sprintf('CONSTANT (%s) %s', $const, dump_metadata($metadata['metadata'])));
 					}
 					else
 					{
+						$name					= '\\' . $const;
 						$datamap[$file]['constants'][$const] 	= Array(
 												'namespace'	=> (($ns = end($datamap[$file]['namespaces'])) !== false ? $ns : ''), 
-												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+												'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 												'metadata'	=> Array(
 																'docblock'	=> (boolean) ($context->modifiers & ACC_DOCBLOCK)
 																)
@@ -966,14 +994,16 @@
 						{
 							$statistics->no_docblock_list[] = Array(
 												'file'	=> $file, 
-												'name'	=> '\\' . $const
+												'name'	=> $name
 												);
 
 							++$statistics->no_docblock;
 						}
 
-						$context->modifiers			= 0;
+						$context->modifiers = 0;
+
 						++$statistics->elements;
+						++$statistics->counter->constants;
 
 						IO::text(sprintf('GLOBAL CONSTANT (%s) %s', $const, dump_metadata($datamap[$file]['constants'][$const]['metadata'])));
 					}
@@ -987,9 +1017,10 @@
 					}
 
 					$property 										= substr($token[1], 1);
+					$name											= $context->{$context->type} . '::$' . $property;
 					$datamap[$file][$context->type_multiple][$context->{$context->type}]['properties'][]	= Array(
 																	'property'	=> $property, 
-																	'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';')), 
+																	'docblock'	=> lexical_docblock($tokens_copy, $index, Array('{', '}', ';'), $wip), 
 																	'metadata'	=> Array(
 																					'final'		=> (boolean) ($context->modifiers & ACC_FINAL), 
 																					'abstract'	=> (boolean) ($context->modifiers & ACC_ABSTRACT), 
@@ -1005,7 +1036,7 @@
 					{
 						$statistics->no_docblock_list[] = Array(
 											'file'	=> $file, 
-											'name'	=> $context->{$context->type} . '::$' . $property
+											'name'	=> $name
 											);
 
 						++$statistics->no_docblock;
@@ -1015,6 +1046,7 @@
 					$metadata 		= end($datamap[$file][$context->type_multiple][$context->{$context->type}]['properties']);
 
 					++$statistics->elements;
+					++$statistics->counter->properties;
 
 					IO::li(sprintf('PROPERTY (%s) %s', $property, dump_metadata($metadata['metadata'])));
 				}
@@ -1077,6 +1109,12 @@
 				}
 				break;
 			}
+
+			if($wip->is_wip)
+			{
+				$wip->elements[] 	= $name;
+				$wip->is_wip		= false;
+			}
 		}
 	}
 
@@ -1096,7 +1134,16 @@
 
 	IO::headline('Status', 1);
 	IO::ul();
-	IO::li('Total number of elements: ' . $statistics->elements, IO::STYLE_BOLD);
+	IO::li('Total scanned files: ' . sizeof($files), IO::STYLE_BOLD);
+	IO::li('Total number of scanned elements: ' . $statistics->elements, IO::STYLE_BOLD);
+	IO::ul();
+
+	foreach(Array('constants', 'functions', 'namespaces', 'aliases', 'classes', 'interfaces', 'class_constants', 'properties', 'methods') as $element)
+	{
+		IO::li(ucfirst(str_replace('_', ' ', $element)) . ': ' . $statistics->counter->{$element});
+	}
+
+	IO::ul(IO::TAG_END);
 	IO::li('Elements WITHOUT a docblock comment: ' . $statistics->no_docblock, IO::STYLE_BOLD);
 
 	if($statistics->no_docblock_list)
@@ -1106,6 +1153,19 @@
 		foreach($statistics->no_docblock_list as $undocumented)
 		{
 			IO::li('[' . $undocumented['file'] . '] ' . $undocumented['name']);
+		}
+
+		IO::ul(IO::TAG_END);
+	}
+
+	if($wip->elements)
+	{
+		IO::li('Elements that is marked work-in-progress: ' . sizeof($wip->elements), IO::STYLE_BOLD);
+		IO::ul();
+
+		foreach($wip->elements as $name)
+		{
+			IO::li($name);
 		}
 
 		IO::ul(IO::TAG_END);

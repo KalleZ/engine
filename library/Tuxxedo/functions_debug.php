@@ -27,10 +27,12 @@
 	 */
 	function tuxxedo_debug_backtrace(Exception $e = NULL)
 	{
-		static $includes, $callbacks, $fulltrace, $descriptions;
+		static $includes, $callbacks, $fulltrace, $descriptions, $debug_args;
 
 		if(!$includes)
 		{
+			$debug_args	= (defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
+
 			$includes	= Array('require', 'require_once', 'include', 'include_once');
 			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array');
 
@@ -44,7 +46,7 @@
 		}
 
 		$stack 	= Array();
-		$bt 	= debug_backtrace((defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? DEBUG_BACKTRACE_PROVIDE_OBJECT : true));
+		$bt 	= debug_backtrace($debug_args);
 
 		if($e)
 		{
@@ -168,7 +170,7 @@
 			{
 				$etrace 		= new stdClass;
 				$etrace->call		= 'throw new \\' . get_class($t['args'][0]);
-				$etrace->callargs	= $etrace->call . '(' . tuxxedo_debug_typedata($t['args'][0]->getMessage()) . ')';
+				$etrace->callargs	= htmlentities($etrace->call . '(' . tuxxedo_debug_typedata($t['args'][0]->getMessage()) . ')');
 				$etrace->current	= ($trace->current || $bts === $n + 1);
 				$etrace->line		= $t['args'][0]->getLine();
 				$etrace->file		= tuxxedo_trim_path($t['args'][0]->getFile());
@@ -185,6 +187,8 @@
 				$stack[] 	= $etrace;
 				$is_exception	= false;
 			}
+
+			$trace->callargs = htmlentities($trace->callargs);
 		}
 
 		return($stack);
@@ -202,7 +206,16 @@
 		{
 			case('object'):
 			{
-				return(($variable instanceof \Exception ? 'Exception' : 'Object') . '(' . get_class($variable) . ')');
+				if($variable instanceof \Exception)
+				{
+					return('Exception(\\' . get_class($variable) . ')');
+				}
+				elseif($variable instanceof \Closure)
+				{
+					return('$closure');
+				}
+
+				return('Object(\\' . get_class($variable) . ')');
 			}
 			case('array'):
 			{

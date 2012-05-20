@@ -134,7 +134,7 @@
 		{
 			$this->registry 	= Registry::init();
 			$this->session 		= $this->registry->invoke('\Tuxxedo\Session');
-			$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id, false);
+			$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id);
 
 			if($autodetect && ($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 			{
@@ -152,6 +152,7 @@
 			$this->userinfo->session		= $this->session;
 			$this->information			= $this->userinfo;
 
+			$this->sessiondm['sessionid']		= Session::$id;
 			$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
 			$this->sessiondm['location']		= \TUXXEDO_SELF;
 			$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
@@ -262,6 +263,7 @@
 			Session::set('userid', $userinfo->id);
 			Session::set('password', $userinfo->password);
 
+			$this->sessiondm 			= Datamanager\Adapter::factory('session', Session::$id, Datamanager\Adapter::OPT_DEFAULT);
 			$this->userinfo				= $userinfo;
 			$this->usergroupinfo			= (object) $this->registry->datastore->usergroups[$userinfo->usergroupid];
 			$this->sessiondm['userid'] 		= $userinfo->id;
@@ -294,6 +296,8 @@
 			{
 				Session::terminate();
 				Session::start();
+
+				$this->sessiondm = Datamanager\Adapter::factory('session', Session::$id);
 			}
 		}
 
@@ -302,7 +306,7 @@
 		 *
 		 * @param	string			The user identifier
 		 * @param	string			The user identifier field, this defaults to 'id' to lookup by user id
-		 * @param	integer			Additional options, this uses the Tuxxedo_User::OPT_* constants as a bitmask
+		 * @param	integer			Additional options, this uses the \Tuxxedo\User::OPT_* constants as a bitmask
 		 * @return	object			Returns a user data object with all user information if a user was found, otherwise false
 		 */
 		public function getUserInfo($identifier = NULL, $identifier_field = 'id', $options = 0)
