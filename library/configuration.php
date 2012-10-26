@@ -293,7 +293,7 @@
 		 * Some databases, like SQLite, thats file based does 
 		 * not use a username.
 		 */
-		'username' 	=> 'tuxxedo', 
+		'username' 	=> 'root', 
 
 		/**
 		 * Password
