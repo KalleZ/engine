@@ -934,31 +934,5 @@
 
 			return(true);
 		}
-
-		/**
-		 * Re-Cache method
-		 *
-		 * This method recaches datastore elements for adapters that implement the 
-		 * recache hook, this cannot be called publically.
-		 *
-		 * The reason for the existance of this method is because Engine supports 
-		 * PHP 5.3.x and therefore cannot implement it using traits.
-		 *
-		 * @return	void		No value is returned
-		 * @wip
-		 */
-		public function recache()
-		{
-			if(!($this instanceof Hooks\Recache) || !isset($this->dsname) || !$this->dsname || $this->context == self::CONTEXT_NONE)
-			{
-				return;
-			}
-			elseif($this->context == self::CONTEXT_DELETE)
-			{
-				self::factory('datastore', $this->dsname)->delete();
-
-				return;
-			}
-		}
 	}
 ?>

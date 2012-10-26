@@ -9,18 +9,5 @@
 	Core
 [W]	 - Implement <phrase> support in the template compiler
 [F]	 - Implement InfoAccess with Iterator
-[F]	 - Implement Exception\API for invalid use of API calls
 [C]	 - Change \Tuxxedo\Options so that $registry->options['category']->option is possible
-
-	Datastore
-[W]	 - Implement adapters
-[F]	   - languages
-[F]	   - optioncategories
-[F]	   - options
-[F]	   - permissions
-[F]	   - phrasegroups
-[F]	   - styleinfo
-[F]	   - usergroups
-[F]	   - timezones
-[W]	 - Add a new datamanager hook for recache or make 'Cache' work as automatted as possible
-[F]	 - Change the datastore rebuilder in the DevTools to make use of these new classes
+[B]	 - Fix database drivers name not being loadable if their case is not using the autoloader rules on non Windows
