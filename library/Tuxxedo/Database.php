@@ -190,7 +190,7 @@
 				throw new Exception\Basic('No database configuration found or no driver defined');
 			}
 
-			return(self::factory($configuration['database']['driver'], $configuration['database'], false));
+			return(self::factory(\ucfirst(\strtolower($configuration['database']['driver'])), $configuration['database'], false));
 		}
 
 		/**
