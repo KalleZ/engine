@@ -21,6 +21,7 @@
 	Added \Tuxxedo\Design\InfoAccess::import() (Kalle)
 	Added \Tuxxedo\Design\InfoAccess::export() (Kalle)
 	Added global template variables (Kalle)
+	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -33,6 +34,7 @@
 	Changed \Tuxxedo\Bootstrap::setHook() to support \Tuxxedo\Bootstrap::FLAG_CORE (Kalle)
 	Changed \Tuxxedo\Datamanager\Adapter::$hooks_executor to be a method, \Tuxxedo\Datamanager\Adapter::hooks() (Kalle)
 	Changed the datastore datamanager to not being able to fail on invalid name if non existant component is supplied (Kalle)
+	Changed various behaviours of \tuxxedo_multi_error() due to the new $show_all parameter (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)

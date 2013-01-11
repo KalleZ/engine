@@ -7,6 +7,9 @@
 	------------------------------------------------
 
 	Core
-[W]	 - Implement <phrase> support in the template compiler
 [F]	 - Implement InfoAccess with Iterator
+[F]	 - Implement \Tuxxedo\Exception\BasicMulti
+[C]	 - Change class name from \Tuxxedo\Exception\FormData to \Tuxxedo\Exception\Multi
 [C]	 - Change \Tuxxedo\Options so that $registry->options['category']->option is possible
+[B]	 - Fix usage of \tuxxedo_multi_error() across the codebase
+[C]	 - Move the <phrase> support to the playground
