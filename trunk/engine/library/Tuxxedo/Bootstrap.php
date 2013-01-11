@@ -428,7 +428,7 @@
 				{
 					$cache_buffer = Array();
 
-					$registry->datastore->cache(self::$preloadables['datastore'], $cache_buffer) or \tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+					$registry->datastore->cache(self::$preloadables['datastore'], $cache_buffer) or \tuxxedo_multi_error('Unable to load datastore elements:', $cache_buffer);
 
 					unset($cache_buffer);
 
@@ -463,7 +463,7 @@
 				{
 					$cache_buffer = Array();
 
-					$registry->style->cache(self::$preloadables['templates'], $cache_buffer) or \tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);
+					$registry->style->cache(self::$preloadables['templates'], $cache_buffer) or \tuxxedo_multi_error('Unable to load templates', $cache_buffer);
 
 					unset($cache_buffer);
 
@@ -479,7 +479,7 @@
 				{
 					$cache_buffer = Array();
 
-					$registry->intl->cache(self::$preloadables['phrasegroups'], $cache_buffer) or \tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);
+					$registry->intl->cache(self::$preloadables['phrasegroups'], $cache_buffer) or \tuxxedo_multi_error('Unable to load templates', $cache_buffer);
 
 					unset($cache_buffer);
 

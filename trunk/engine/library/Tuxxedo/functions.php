@@ -696,21 +696,31 @@
 	/**
 	 * Handles multiple errors repeatingly
 	 *
-	 * @param	string				A sprintf-like format
+	 * @param	string				A sprintf-like format, if the $show_all parameter is inactive then an element is passed as a string as the only parameter
 	 * @param	array				An array with elements to loop through
-	 * @param	string				A fully quantified exception name to throw
+	 * @param	string				A fully quantified exception name to throw, if the $show_all parameter is active this class must be able to handle multiple errors, note that parameters sent to this class is in reversed orders with $show_all
+	 * @param	boolean				Whether to show all possible elements (default) or a singular
 	 * @return	void				No value is returned
 	 *
 	 * @throws	mixed				Throws an exception until the errors have been cleared
 	 */
-	function tuxxedo_multi_error($format, Array $elements, $exception = '\Tuxxedo\Exception\Basic')
+	function tuxxedo_multi_error($format, Array $elements, $exception = NULL, $show_all = true)
 	{
 		if(!$elements)
 		{
 			return;
 		}
+		elseif($exception === NULL)
+		{
+			$exception = ($show_all ? '\Tuxxedo\Exception\FormData' : '\Tuxxedo\Exception\Basic');
+		}
 
-		throw new $exception($format, reset($elements));
+		if($show_all)
+		{
+			throw new $exception($elements, $format);
+		}
+
+		throw new $exception($format, (string) reset($elements));
 	}
 
 	/**
