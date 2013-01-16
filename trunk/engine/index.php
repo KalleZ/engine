@@ -38,14 +38,6 @@
 
 
 	/**
-	 * Provoke an error page
-	 */
-	if(isset($_GET['error']) && $_GET['error'])
-	{
-		$db->query('Example of an error page');
-	}
-
-	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
