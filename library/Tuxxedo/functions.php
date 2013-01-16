@@ -244,6 +244,7 @@
 			'.box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }' . PHP_EOL . 
 			'.box.edge-title { border-top-left-radius: 0px; }' . PHP_EOL . 
 			'.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
+			'.box .inner ul { padding: 3px 15px; }' . PHP_EOL . 
 			'.box .outer { padding: 6px; }' . PHP_EOL . 
 			'.content { margin: 15px 0px 10px 430px; }' . PHP_EOL . 
 			'.infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }' . PHP_EOL . 
@@ -360,7 +361,32 @@
 				'</div>' . PHP_EOL . 
 				'<div class="content">' . PHP_EOL . 
 				'<div class="infobox">' . PHP_EOL . 
-				nl2br($message) . PHP_EOL . 
+				nl2br($message) . PHP_EOL
+				);
+
+			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
+			{
+				echo(
+					'<div class="inner">' . PHP_EOL . 
+					'<ul>' . PHP_EOL
+					);
+
+				foreach($multi_errors as $error)
+				{
+					echo(
+						'<li>' . $error . '</li>' . PHP_EOL
+						);
+				}
+
+				echo(
+					'</ul>' . PHP_EOL . 
+					'</div>' . PHP_EOL
+					);
+
+				
+			}
+
+			echo(
 				'</div>' . PHP_EOL . 
 				'<br />' . PHP_EOL
 				);
@@ -696,10 +722,10 @@
 	/**
 	 * Handles multiple errors repeatingly
 	 *
-	 * @param	string				A sprintf-like format, if the $show_all parameter is inactive then an element is passed as a string as the only parameter
+	 * @param	string				A sprintf-like format, only applies for singular errors (if $show_all is set to false)
 	 * @param	array				An array with elements to loop through
-	 * @param	string				A fully quantified exception name to throw, if the $show_all parameter is active this class must be able to handle multiple errors, note that parameters sent to this class is in reversed orders with $show_all
-	 * @param	boolean				Whether to show all possible elements (default) or a singular
+	 * @param	string				A fully quantified exception name to throw, this should be able to handle multiple errors
+	 * @param	boolean				Whether to display all errors or not
 	 * @return	void				No value is returned
 	 *
 	 * @throws	mixed				Throws an exception until the errors have been cleared
@@ -712,7 +738,7 @@
 		}
 		elseif($exception === NULL)
 		{
-			$exception = ($show_all ? '\Tuxxedo\Exception\FormData' : '\Tuxxedo\Exception\Basic');
+			$exception = ($show_all ? '\Tuxxedo\Exception\BasicMulti' : '\Tuxxedo\Exception\Basic');
 		}
 
 		if($show_all)

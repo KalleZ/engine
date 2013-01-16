@@ -22,6 +22,7 @@
 	Added \Tuxxedo\Design\InfoAccess::export() (Kalle)
 	Added global template variables (Kalle)
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
+	Added \Tuxxedo\Exception\BasicMulti (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
