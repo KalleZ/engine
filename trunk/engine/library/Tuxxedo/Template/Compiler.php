@@ -99,13 +99,6 @@
 		 */
 		const OPT_PARSE_IF_TAGS			= 32;
 
-		/**
-		 * Compiler option - parse <phrase> tags
-		 *
-		 * @var		integer
-		 */
-		const OPT_PARSE_PHRASE_TAGS		= 64;
-
 
 		/**
 		 * The uncompiled raw source code
@@ -199,16 +192,11 @@
 				{
 					$this->stack_data->conditions = 0;
 				}
-
-				if(!isset($stack->data->phrases))
-				{
-					$this->stack_data->phrases = 0;
-				}
 			}
 			else
 			{
 				$this->stack_data 		= new \stdClass;
-				$this->stack_data->conditions	= $this->stack_data->phrases = 0;
+				$this->stack_data->conditions	= 0;
 				$this->stack_data->type		= Exception\TemplateCompiler::TYPE_NONE;
 			}
 		}
@@ -327,16 +315,12 @@
 				$tokens 	= Array(
 							'if_start'	=> '<if expression=', 
 							'if_end'	=> '</if>', 
-							'else'		=> '<else />', 
-							'phrase_start'	=> '<phrase', 
-							'phrase_end'	=> '</phrase>'
+							'else'		=> '<else />'
 							);
 
 				$token_lengths	= Array(
 							'if_start'	=> 15, 
-							'if_end'	=> 5, 
-							'phrase_start'	=> 7, 
-							'phrase_end'	=> 9
+							'if_end'	=> 5
 							);
 			}
 
@@ -346,11 +330,7 @@
 					'recursive_if'		=> -1, 
 					'else'			=> -1, 
 					'else_bytes'		=> -1, 
-					'conditions'		=> -1, 
-					'phrase_conditionals'	=> Array(), 
-					'phrase_ignore'		=> Array(), 
-					'phrase_open'		=> -1, 
-					'phrase_close'		=> -1
+					'conditions'		=> -1
 					);
 
 			if(\strpos($src, '"') !== false)
@@ -449,10 +429,6 @@
 							throw new Exception\TemplateCompiler('Use of unsafe call expression: ' . $function . '()', $this->stack_data);
 						}
 					}
-					elseif(\stripos($expr_value, $tokens['phrase_start']) !== false || \stripos($expr_value, $tokens['phrase_end']))
-					{
-						$ptr['phrase_conditionals'][] = $ptr['conditions'];
-					}
 
 					$ptr['recursive_if'] = $ptr['if_open'];
 
@@ -540,91 +516,6 @@
 				}
 			}
 
-			if(0 && $this->options & self::OPT_PARSE_PHRASE_TAGS)
-			{
-				$this->stack_data->type = Exception\TemplateCompiler::TYPE_PHRASE;
-
-				if(\strpos($src, '\\"') !== false)
-				{
-					$src = \str_replace('\\"', '"', $src);
-				}
-
-				while(1)
-				{
-					$ptr['phrase_open'] = \stripos($src, $tokens['phrase_start'], $ptr['phrase_close'] + 1);
-
-					if($ptr['phrase_open'] === false)
-					{
-						break;
-					}
-
-					++$this->stack_data->phrases;
-
-					$index		= -1;
-					$temp 		= \substr($src, $ptr['phrase_open'] + $token_lengths['phrase_start']);
-					$parsing	= false;
-					$delimiter	= '';
-					$key		= NULL;
-					$parameters	= Array();
-
-					while($temp{++$index} != '>' || ($parsing && $temp{$index} == '>'))
-					{
-						$char = $temp{$index};
-
-						if($parsing)
-						{
-							if($char == $delimiter && isset($temp{$index - 1}) && $temp{$index - 1} != '\\')
-							{
-								$parsing = false;
-
-								continue;
-							}
-
-							$parameters[$key] .= $char;
-						}
-						elseif(\is_numeric($char))
-						{
-							if(!isset($temp{$index + 1}) || $temp{$index + 1} != '=' || !isset($temp{$index + 2}) || ($temp{$index + 2} != '"' && $temp{$index + 2} != '\''))
-							{
-								throw new Exception\TemplateCompiler('Invalid parameter syntax', $this->stack_data);
-							}
-
-							$delimiter 		= $temp{$index + 2};
-							$index			+= 2;
-							$parsing		= true;
-							$key			= $char;
-							$parameters[$key]	= '';
-						}
-					}
-
-					if($parsing)
-					{
-						throw new Exception\TemplateCompiler('Incomplete phrase tag', $this->stack_data);
-					}
-
-					if($parameters)
-					{
-						\ksort($parameters);
-					}
-
-					$ptr['phrase_close'] = \stripos($src, $tokens['phrase_end'], $ptr['phrase_open'] + $index + 1);
-
-					if($ptr['phrase_close'] === false)
-					{
-						throw new Exception\TemplateCompiler('No closing phrase found', $this->stack_data);
-					}
-
-					var_dump($phrase);
-
-					break;
-				}
-
-				if(\strpos($src, '"') !== false)
-				{
-					$src = \str_replace('"', '\\"', $src);
-				}
-			}
-
 			$this->stack_data->type = Exception\TemplateCompiler::TYPE_NONE;
 
 			foreach(Array('\t', '\r', '\n', '\x', '\0', '\\\\', '\\\'', '\v') as $s)
@@ -669,7 +560,7 @@
 			}
 
 			$this->compiled_source 		= $src;
-			$this->stack_data->conditions	= $this->stack_data->phrases = 0;
+			$this->stack_data->conditions	= 0;
 		}
 
 		/**

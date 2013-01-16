@@ -19,11 +19,7 @@
 
 	<p>
 		The compiler supports different types of tags, each tag can be enabled 
-		or disabled here depending on what the template syntax should support. For 
-		example, the <em>&lt;phrase&gt;</em> tag can safely be disabled for 
-		applications that does not use the Internationalization component at all, 
-		while the <em>&lt;if&gt;</em> tag is a very common type of tag thats rarely 
-		disabled.
+		or disabled here depending on what the template syntax should support.
 	</p>
 	<br />
 
@@ -34,14 +30,6 @@
 			</td>
 			<td>
 				Enables the ability to use inline conditionals (supports if &amp; else tags)
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="checkbox" name="parse_tags_phrase"<if expression="!isset($opts) || ($opts & \Tuxxedo\Template\Compiler::OPT_PARSE_PHRASE_TAGS)"> checked="checked"</if>> &lt;phrase&gt;
-			</td>
-			<td>
-				Enables the ability to format phrases with parameters inline
 			</td>
 		</tr>
 	</table>
