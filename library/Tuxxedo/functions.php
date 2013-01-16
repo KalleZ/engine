@@ -37,9 +37,9 @@
 		{
 			tuxxedo_doc_error($e);
 		}
-		elseif($e instanceof Exception\FormData)
+		elseif($e instanceof Exception\Multi)
 		{
-			tuxxedo_error_list(htmlspecialchars($e->getMessage(), ENT_QUOTES), $e->getFields());
+			tuxxedo_error_list(htmlspecialchars($e->getMessage(), ENT_QUOTES), $e->getData());
 		}
 		elseif($e instanceof Exception)
 		{
@@ -792,7 +792,7 @@
 	/**
 	 * Prints an error message using the current loaded 
 	 * theme with an list of failed conditions which 
-	 * makes it suitable for form data exceptions, this 
+	 * makes it suitable for multi exceptions, this 
 	 * function also terminates the script
 	 *
 	 * @param	string				The error message
@@ -800,7 +800,7 @@
 	 * @param	boolean				Whether to show the 'Go back' button or not
 	 * @return	void				No value is returned
 	 */
-	function tuxxedo_error_list($message, Array $formdata, $go_back = true)
+	function tuxxedo_error_list($message, Array $errors, $go_back = true)
 	{
 		$registry = Registry::init();
 
@@ -811,7 +811,7 @@
 
 		$error_list = '';
 
-		foreach($formdata as $error)
+		foreach($errors as $error)
 		{
 			eval('$error_list .= "' . $registry->style->fetch('error_listbit') . '";');
 		}

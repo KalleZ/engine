@@ -39,7 +39,7 @@
 	 * Can throw multiple errors at the same time, and works like the 'Basic' 
 	 * exception and halts the execution.
 	 *
-	 * The 'FormData' exception is using the same basic design and is application 
+	 * The 'Multi' exception is using the same basic design and is application 
 	 * friendly and should be used for 'Runtime' errors.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
