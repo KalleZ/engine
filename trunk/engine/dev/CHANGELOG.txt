@@ -2,7 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Timewarp"
+	Tuxxedo Engine 1.2.0 "Invincible"
 	------------------------------------------------
 
 	Added the event handling subsystem (Kalle)
