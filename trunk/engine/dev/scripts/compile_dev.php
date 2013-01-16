@@ -30,8 +30,7 @@
 
 
 	$locations = Array(
-				'Tuxxedo Engine DevTools' 	=> '/tools/style/templates/', 
-				'Tuxxedo Engine DevTools v2'	=> '/tools2/style/templates/'
+				'Tuxxedo Engine DevTools' 	=> '/tools/style/templates/'
 				);
 
 	IO::signature();
