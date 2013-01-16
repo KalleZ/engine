@@ -36,6 +36,8 @@
 	Changed \Tuxxedo\Datamanager\Adapter::$hooks_executor to be a method, \Tuxxedo\Datamanager\Adapter::hooks() (Kalle)
 	Changed the datastore datamanager to not being able to fail on invalid name if non existant component is supplied (Kalle)
 	Changed various behaviours of \tuxxedo_multi_error() due to the new $show_all parameter (Kalle)
+	Changed the class name of '\Tuxxedo\Exception\FormData' to '\Tuxxedo\Exception\Multi' (Kalle)
+	Changed the name of '\Tuxxedo\Exception\Multi::getFields()' to '\Tuxxedo\Exception\Multi::getData()' (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)

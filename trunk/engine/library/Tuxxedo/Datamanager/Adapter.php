@@ -677,7 +677,7 @@
 		 * @return	boolean				Returns true if the data is saved with success, otherwise boolean false
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the query should fail
-		 * @throws	\Tuxxedo\Exception\FormData	Throws a formdata exception if validation fails
+		 * @throws	\Tuxxedo\Exception\Multi	Throws a multi exception if validation fails
 		 */
 		public function save($execute_hooks = true)
 		{
@@ -691,16 +691,16 @@
 			if(!$this->validate())
 			{
 				$intl		= $this->registry->intl && ($this->options & (self::OPT_INTL | self::OPT_INTL_AUTO));
-				$formdata 	= Array();
+				$multidata 	= Array();
 
 				foreach($this->invalid_fields as $field)
 				{
-					$formdata[$field] = ($intl && ($phrase = $this->registry->intl->find('dm_' . $this->dmname . '_' . $field, 'datamanagers')) !== false ? $phrase : $field);
+					$multidata[$field] = ($intl && ($phrase = $this->registry->intl->find('dm_' . $this->dmname . '_' . $field, 'datamanagers')) !== false ? $phrase : $field);
 				}
 
 				$this->context = self::CONTEXT_NONE;
 
-				throw new Exception\FormData($formdata, ($intl ? $this->registry->intl->find('validation_failed', 'datamanagers') : ''));
+				throw new Exception\Multi($multidata, ($intl ? $this->registry->intl->find('validation_failed', 'datamanagers') : ''));
 			}
 
 			$values		= '';

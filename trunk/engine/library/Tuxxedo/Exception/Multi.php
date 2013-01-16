@@ -34,36 +34,36 @@
 
 
 	/**
-	 * Form data exception, this exception is used to carry form data 
-	 * so it can be displayed in a form if an error should occur while 
-	 * processing the request
+	 * Multi exception, this exception is used to carry multiple data 
+	 * so it can be displayed when multiple causes were the reason for 
+	 * a fail, for example a form validation.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class FormData extends \Tuxxedo\Exception
+	class Multi extends \Tuxxedo\Exception
 	{
 		/**
-		 * Holds the current stored form data
+		 * Holds the current stored data
 		 *
 		 * @var		array
 		 */
-		protected $formdata		= Array();
+		protected $data		= Array();
 
 
 		/**
-		 * Constructs a new formdata exception from
+		 * Constructs a new data exception from
 		 *
-		 * @param	array			Form data to store as an array
+		 * @param	array			D to store as an array
 		 * @param	string			The error message, in a printf-alike formatted string or just a normal string
 		 * @param	mixed			Optional argument #n for formatting
 		 */
-		public function __construct(Array $formdata, $message = NULL)
+		public function __construct(Array $data, $message = NULL)
 		{
-			if(!$formdata)
+			if(!$data)
 			{
-				throw new Basic('A form data exception must contain atleast one element');
+				throw new Basic('A multi exception must contain atleast one element');
 			}
 
 			if($message)
@@ -82,17 +82,17 @@
 				}
 			}
 
-			$this->formdata = $formdata;
+			$this->data = $data;
 		}
 
 		/**
-		 * Gets all the fields within the form data exception
+		 * Gets all the data
 		 *
-		 * @return	array			Returns an array with all the registered elements
+		 * @return	array			Returns an array with all the data
 		 */
-		public function getFields()
+		public function getData()
 		{
-			return($this->formdata);
+			return($this->data);
 		}
 	}
 ?>

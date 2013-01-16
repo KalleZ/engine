@@ -8,5 +8,4 @@
 
 	Core
 [F]	 - Implement InfoAccess with Iterator
-[C]	 - Change class name from \Tuxxedo\Exception\FormData to \Tuxxedo\Exception\Multi
 [C]	 - Change \Tuxxedo\Options so that $registry->options['category']->option is possible

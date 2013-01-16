@@ -112,13 +112,13 @@
 	 */
 	function devtools_exception_handler(\Exception $e)
 	{
-		if($e instanceof Exception\FormData)
+		if($e instanceof Exception\Multi)
 		{
 			$list 		= '';
 			$style		= Registry::init()->style;
 			$message	= $e->getMessage();
 
-			foreach($e->getFields() as $field)
+			foreach($e->getData() as $field)
 			{
 				eval('$list .= "' . $style->fetch('multierror_itembit') . '";');
 			}
