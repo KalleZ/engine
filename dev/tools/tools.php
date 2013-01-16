@@ -311,11 +311,6 @@
 					$opts |= Compiler::OPT_PARSE_IF_TAGS;
 				}
 
-				if(isset($_POST['parse_tags_phrase']))
-				{
-					$opts |= Compiler::OPT_PARSE_PHRASE_TAGS;
-				}
-
 				$compiler->setOptions($opts);
 
 				try
