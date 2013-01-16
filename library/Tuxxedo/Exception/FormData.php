@@ -53,7 +53,7 @@
 
 
 		/**
-		 * Constructs a new formdata exception from an extended class
+		 * Constructs a new formdata exception from
 		 *
 		 * @param	array			Form data to store as an array
 		 * @param	string			The error message, in a printf-alike formatted string or just a normal string
