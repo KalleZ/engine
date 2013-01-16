@@ -135,12 +135,12 @@
 		$cache_buffer		= Array();
 		$default_precache 	= Array('languages', 'options', 'phrasegroups', 'usergroups');
 
-		$datastore->cache((!isset($precache) ? $default_precache : array_unique(array_merge($default_precache, (array) $precache))), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+		$datastore->cache((!isset($precache) ? $default_precache : array_unique(array_merge($default_precache, (array) $precache))), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore elements', $cache_buffer);
 
 		$registry->register('intl', '\Tuxxedo\Intl');
 
 		$cache_buffer = Array();
-		$intl->cache(Array('global'), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase group \'%s\'', $cache_buffer);
+		$intl->cache(Array('global'), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase groups', $cache_buffer);
 	}
 
 	$registry->set('options', (object) $datastore->options);
@@ -158,7 +158,7 @@
 		$default_templates = array_merge($default_templates, (array) $action_templates[(string) $_GET['do']]);
 	}
 
-	$style->cache((!isset($templates) ? $default_templates : array_merge($default_templates, (array) $templates)), $cache_buffer) or tuxxedo_multi_error('Unable to load template \'%s\'', $cache_buffer);
+	$style->cache((!isset($templates) ? $default_templates : array_merge($default_templates, (array) $templates)), $cache_buffer) or tuxxedo_multi_error('Unable to load templates', $cache_buffer);
 
 	unset($cache_buffer);
 
@@ -204,7 +204,7 @@
 		{
 			$cache_buffer = Array();
 
-			$datastore->cache(Array('usergroups'), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore element \'%s\', datastore possibly corrupted', $cache_buffer);
+			$datastore->cache(Array('usergroups'), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore elements', $cache_buffer);
 
 			unset($cache_buffer);
 		}
