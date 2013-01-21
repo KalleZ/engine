@@ -8,4 +8,3 @@
 
 	Core
 [F]	 - Implement InfoAccess with Iterator
-[C]	 - Change \Tuxxedo\Options so that $registry->options['category']->option is possible

@@ -103,7 +103,7 @@
 		{
 			$options	= $registry->datastore->options;
 			$styledata 	= $registry->datastore->styleinfo;
-			$styleid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->style_id !== NULL && $registry->userinfo->style_id != $options['style_id'] ? $registry->userinfo->style_id : $options['style_id']) : 0);
+			$styleid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->style_id !== NULL && $registry->userinfo->style_id != $options['style_id'] ? $registry->userinfo->style_id : $options['style_id']['value']) : 0);
 
 			if($styleid && isset($styledata[$styleid]))
 			{

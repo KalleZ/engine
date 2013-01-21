@@ -9,7 +9,7 @@
 	Added debug tracing for SQL queries (Kalle)
 	Added new helpers: (Kalle)
 	 - Timer
-	Added the \Tuxxedo\Options class, so that $registry->options also may work with categories (Kalle)
+	Added the \Tuxxedo\Options class, so that $registry->options also work with categories (Kalle)
 	Added \Tuxxedo\MVC\Controller::getPreloadables() to get preloadable data for controllers (Kalle)
 	Added \Tuxxedo\Intl::getISOCodes() to get the browser request language based on ISO codes (Kalle)
 	Added \Tuxxedo\Datastore::getRef() to get a reference of datastore data rather than copying it (Kalle)
@@ -38,6 +38,7 @@
 	Changed various behaviours of \tuxxedo_multi_error() due to the new $show_all parameter (Kalle)
 	Changed the class name of '\Tuxxedo\Exception\FormData' to '\Tuxxedo\Exception\Multi' (Kalle)
 	Changed the name of '\Tuxxedo\Exception\Multi::getFields()' to '\Tuxxedo\Exception\Multi::getData()' (Kalle)
+	Changed the syntax of the 'options' datastore element to also carry a category
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
