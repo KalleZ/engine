@@ -161,7 +161,10 @@
 									break;
 									case('options'):
 									{
-										$current[$s['option']] = var_typecast_option(strtolower($s['type']{0}), $s['value']);
+										$current[$s['option']] = Array(
+														'category'	=> $s['category'],
+														'value'		=> var_typecast_option(strtolower($s['type']{0}), $s['value'])
+														);
 									}
 									break;
 									case('phrasegroups'):

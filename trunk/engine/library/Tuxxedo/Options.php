@@ -73,8 +73,26 @@
 		 */
 		public function __construct(Registry $registry)
 		{
+			$categories = Array();
+
 			$registry->datastore->getRef('options', $this->options);
-			$registry->datastore->getRef('optioncategories', $this->information);
+			$registry->datastore->getRef('optioncategories', $categories);
+
+			if($categories)
+			{
+				foreach($categories as $category)
+				{
+					$this->information[$category] = new \stdClass;
+				}
+
+				if($this->options)
+				{
+					foreach($this->options as $option => $info)
+					{
+						$this->information[$info['category']]->{$option} = $info['value'];
+					}
+				}
+			}
 		}
 
 		/**
@@ -105,7 +123,7 @@
 				return;
 			}
 
-			return($this->options[$option]);
+			return($this->options[$option]['value']);
 		}
 	}
 ?>
