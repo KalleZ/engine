@@ -43,3 +43,6 @@
 	   - Add a check for obsolete and orphan phrases
 	 - sync_templates.php
 	   - Add support for all storage engines
+
+	Database
+	 - Make sure SQLite3 is fully functional
