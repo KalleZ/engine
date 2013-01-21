@@ -3,12 +3,6 @@
 	Tuxxedo Engine 1.2.0 "Invincible" Alpha 2
 	-------------------------------------
 
-	Datamanagers
-	 - Add new datamanagers
-	   - Language
-	   - Phrase
-	   - Phrasegroup
-
 	DevTools
 	 - Add new the internationalization component
 	   - Language
@@ -27,10 +21,6 @@
 	     - Delete
 	     - Search
 
-	DevTools
-	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
-
-
 
 	Tuxxedo Engine 1.2.0 "Invincible" Beta 1
 	------------------------------------
@@ -41,9 +31,6 @@
 
 	Tuxxedo Engine 1.2.0 "Invincible" Beta 2
 	------------------------------------
-
-	Core
-	 - Implement validators
 
 	Dev
 	 - api_analyze.php

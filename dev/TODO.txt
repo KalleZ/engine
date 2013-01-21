@@ -3,8 +3,18 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Invincible" Alpha 1
+	Tuxxedo Engine 1.2.0 "Invincible" Alpha 2
 	------------------------------------------------
 
 	Core
-[F]	 - Implement InfoAccess with Iterator
+	 - Implement CLI support
+	   - tuxxedo_doc_error()
+
+	Datamanagers
+	 - Add new datamanagers
+	   - Language
+	   - Phrase
+	   - Phrasegroup
+
+	DevTools
+	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper

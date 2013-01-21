@@ -18,8 +18,7 @@
 	 - Implement a disallowed permission based system for users
 	 - Implement a user activation API
 
-	Implement CLI support
-	 - tuxxedo_doc_error()
+	Implement validators
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement XML Parsers
 	Implement a temporary memory storage, with backends for APC etc.
