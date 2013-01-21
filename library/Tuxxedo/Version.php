@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Invincible" Alpha 1 (experimental)';
+		const FULL			= '1.2.0 "Invincible" Alpha 1';
 	}
 ?>
