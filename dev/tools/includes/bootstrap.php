@@ -143,7 +143,7 @@
 		$intl->cache(Array('global'), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase groups', $cache_buffer);
 	}
 
-	$registry->set('options', (object) $datastore->options);
+	$registry->register('options', '\Tuxxedo\Options');
 
 	$cache_buffer		= Array();
 	$default_templates 	= Array('header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit');
