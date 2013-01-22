@@ -138,7 +138,7 @@
 
 			$options	= $registry->datastore->options;
 			$languagedata 	= $registry->datastore->languages;
-			$languageid	= ($options && $options['language_autodetect'] ? $iso_to_language() : ($options ? $options['language_id'] : 0));
+			$languageid	= ($options && $options['language_autodetect']['value'] ? $iso_to_language() : ($options ? $options['language_id']['value'] : 0));
 			$languageid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $languageid ? $registry->userinfo->language_id : $languageid) : $languageid);
 
 			if($languageid && isset($languagedata[$languageid]))
