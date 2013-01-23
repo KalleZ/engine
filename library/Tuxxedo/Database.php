@@ -140,7 +140,7 @@
 
 			if(!$this->isDriverSupported())
 			{
-				throw new Exception\Basic('Unable to load database driver, one or more of the driver dependencies is missing');
+				throw new Exception\Basic('Unable to load database driver, one or more dependencies is missing');
 			}
 
 			if(!$configuration['delay'])
