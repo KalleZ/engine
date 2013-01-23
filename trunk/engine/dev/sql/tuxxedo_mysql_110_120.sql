@@ -25,10 +25,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 INSERT INTO `options` (`option`, `value`, `defaultvalue`, `type`, `category`) VALUES
 ('language_autodetect', '0', '0', 'b', 'language');
 
-INSERT INTO `tuxxedo`.`phrasegroups` (`id`, `title`, `language`) VALUES 
+INSERT INTO `phrasegroups` (`id`, `title`, `language`) VALUES 
 (NULL , 'devtools', '1');
 
-TRUNCATE TABLE `tuxxedo`.`datastore`;
+TRUNCATE TABLE `datastore`;
 
 INSERT INTO `datastore` (`name`, `data`) VALUES
 ('languages', 'a:1:{i:1;a:6:{s:2:"id";s:1:"1";s:5:"title";s:7:"English";s:9:"developer";s:28:"Tuxxedo Software Development";s:8:"isotitle";s:2:"en";s:7:"default";s:1:"1";s:7:"charset";s:5:"UTF-8";}}'),
