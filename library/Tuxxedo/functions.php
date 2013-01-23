@@ -33,6 +33,13 @@
 	 */
 	function tuxxedo_exception_handler(\Exception $e)
 	{
+		static $error_handler;
+
+		if(!$error_handler)
+		{
+			$error_handler = (PHP_SAPI == 'cli' ? 'tuxxedo_cli_error' : 'tuxxedo_doc_error');
+		}
+
 		if($e instanceof Exception\Basic)
 		{
 			tuxxedo_doc_error($e);
@@ -78,9 +85,16 @@
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
+		static $error_handler;
+
 		if(!Registry::globals('error_reporting') || !(error_reporting() & $level))
 		{
 			return;
+		}
+
+		if(!$error_handler)
+		{
+			$error_handler = (PHP_SAPI == 'cli' ? 'tuxxedo_cli_error' : 'tuxxedo_doc_error');
 		}
 
 		$message = htmlentities($message);
@@ -92,11 +106,11 @@
 				$message = substr_replace($message, tuxxedo_trim_path(substr($message, $spos, $epos = strrpos($message, ' on line') - $spos)), $spos, $epos);
 			}
 
-			tuxxedo_doc_error('<strong>Recoverable error:</strong> ' . $message);
+			$error_handler('<strong>Recoverable error:</strong> ' . $message);
 		}
 		elseif($level & E_USER_ERROR)
 		{
-			tuxxedo_doc_error('<strong>Fatal error:</strong> ' . $message);
+			$error_handler('<strong>Fatal error:</strong> ' . $message);
 		}
 		elseif($level & E_NOTICE || $level & E_USER_NOTICE)
 		{
@@ -610,6 +624,331 @@
 			'</body>' . PHP_EOL . 
 			'</html>'
 			);
+	}
+
+	/**
+	 * Print a document error (startup) and halts script execution, this function 
+	 * is mostly a copy of tuxxedo_doc_error() thats optimized for viewing at CLI.
+	 *
+	 * @param	mixed				The message to show, this can also be an exception
+	 * @return	void				No value is returned
+	 */
+	function tuxxedo_cli_error($e)
+	{
+		static $called;
+
+		if($called !== NULL)
+		{
+			return;
+		}
+
+		$registry 	= Registry::init();
+		$configuration	= Registry::getConfiguration();
+
+		$called		= true;
+		$buffer		= ob_get_clean();
+		$exception	= ($e instanceof \Exception);
+		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
+		$utf8		= function_exists('utf8_encode');
+		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
+		$errors		= ($registry ? Registry::globals('errors') : false);
+		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
+		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
+
+		if(empty($message))
+		{
+			$message = 'No error message given';
+		}
+		elseif($exception_sql)
+		{
+			$message = (defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
+		}
+		elseif($utf8)
+		{
+			$message = utf8_encode($message);
+		}
+
+		echo(
+			(!empty($buffer) ? $buffer . PHP_EOL : '') . 
+			($debug_mode ? 'Tuxxedo Engine Error' : 'Application Error') . PHP_EOL . 
+			PHP_EOL . 
+			PHP_EOL . 
+			$message . 
+			PHP_EOL . 
+			PHP_EOL . 
+			PHP_EOL
+			);
+
+		if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
+		{
+			foreach($multi_errors as $error)
+			{
+				echo(
+					' - ' . $error . PHP_EOL
+					);
+			}
+
+			echo(
+				PHP_EOL . 
+				PHP_EOL
+				);
+		}
+
+		if($debug_mode)
+		{
+			echo(
+				'Application information' . PHP_EOL . 
+				'-----------------------' . PHP_EOL
+				);
+
+			if($application)
+			{
+				echo(
+					' | Application: ' .  $application . PHP_EOL
+					);
+			}
+
+			echo(
+				' | Engine version: ' . Version::FULL . PHP_EOL . 
+				' | Library path: ' . str_replace(TUXXEDO_DIR, '', TUXXEDO_LIBRARY) . PHP_EOL . 
+				' | Working directory: ' . TUXXEDO_DIR . PHP_EOL . 
+				' | Script: ' . tuxxedo_trim_path(realpath($_SERVER['SCRIPT_FILENAME'])) . PHP_EOL
+				);
+
+			if(($date = tuxxedo_date(NULL, 'H:i:s j/n - Y (e)')))
+			{
+				echo(
+					' | Timestamp: ' . $date . PHP_EOL
+					);
+			}
+
+			if($exception)
+			{
+				$class = get_class($e);
+
+				if($class{0} != '\\')
+				{
+					$class = '\\' . $class;
+				}
+
+				echo(
+					' | Exception type: ' . $class . PHP_EOL
+					);
+			}
+
+			if($exception_sql)
+			{
+				echo(
+					' | Database driver: ' . $e->getDriver() . PHP_EOL . 
+					' | Error code: ' . $e->getCode() . PHP_EOL
+					);
+
+				if(($sqlstate = $e->getSQLState()) !== false)
+				{
+					echo(
+						' | SQL State: ' . $sqlstate . '</td>' . PHP_EOL
+						);
+				}
+			}
+
+			if(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $errors)
+			{
+				foreach($errors as $error)
+				{
+					if(!$error)
+					{
+						continue;
+					}
+
+					echo(
+						'<div class="infobox">' . PHP_EOL . 
+						(!$utf8 ? $error : utf8_encode($error)) . PHP_EOL . 
+						'</div>' . PHP_EOL . 
+						'<br />'
+						);
+				}
+
+				Registry::globals('errors', Array());
+			}
+
+			if($exception_sql)
+			{
+				echo(
+					'<fieldset>' . PHP_EOL . 
+					'<legend><strong>SQL</strong></legend>' . PHP_EOL .
+					'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL . 
+					'<tr>' . PHP_EOL . 
+					'<td colspan="2" class="value" style="width: 100%"><code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code></td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL . 
+					'</table>' . PHP_EOL . 
+					'</fieldset>' . PHP_EOL
+					);
+			}
+
+			echo(
+				'</div>' . PHP_EOL . 
+				'<div style="clear: left;"></div>' . PHP_EOL . 
+				'</div>' . PHP_EOL . 
+				'</div>' . PHP_EOL
+				);
+
+			$bt = ($exception ? tuxxedo_debug_backtrace($e) : tuxxedo_debug_backtrace());
+
+			if($bts = sizeof($bt))
+			{
+				echo(
+					'<h2><span>Backtrace</span></h2>' . PHP_EOL . 
+					'<div class="box edge-title">' . PHP_EOL . 
+					'<div class="inner">' . PHP_EOL . 
+					'<table style="width: 100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
+					'<tr class="head">' . PHP_EOL . 
+					'<td>&nbsp;</td>' . PHP_EOL . 
+					'<td class="strong">Call</td>' . PHP_EOL . 
+					'<td class="strong">File</td>' . PHP_EOL . 
+					'<td class="strong">Line</td>' . PHP_EOL . 
+					'<td class="strong">Notes</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
+
+				foreach($bt as $n => $trace)
+				{
+					echo(
+						'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
+						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
+						'<td nowrap="nowrap">' . $trace->call . '</td>' . PHP_EOL . 
+						'<td nowrap="nowrap" style="width: 100%">' . $trace->file . '</td>' . PHP_EOL . 
+						'<td nowrap="nowrap" align="right">' . $trace->line . '</td>' . PHP_EOL . 
+						'<td nowrap="nowrap">' . $trace->notes . '</td>' . PHP_EOL . 
+						'</tr>' . PHP_EOL
+						);
+
+					if($configuration['debug']['fullbacktrace'] || $trace->current)
+					{
+						echo(
+							'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
+							'<td class="empty"><h3>&nbsp;</h3></td>' . PHP_EOL . 
+							'<td colspan="4"><code>' . $trace->callargs . '</code></td>' . PHP_EOL . 
+							'</tr>' . PHP_EOL
+							);
+					}
+				}
+
+				echo(
+					'</table>' . PHP_EOL . 
+					'</div>' . PHP_EOL . 
+					'</div>' . PHP_EOL
+					);
+			}
+
+			if($registry && $registry->db && $registry->db->getNumQueries())
+			{
+				echo(
+					'<h2><span>Queries</span></h2>' . PHP_EOL . 
+					'<div class="box edge-title">' . PHP_EOL . 
+					'<div class="inner">' . PHP_EOL . 
+					'<table style="width: 100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
+					'<tr class="head">' . PHP_EOL . 
+					'<td style="width: 10">&nbsp;</td>' . PHP_EOL . 
+					'<td class="strong">SQL</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
+
+				foreach($registry->db->getQueries() as $n => $query)
+				{
+					echo(
+						'<tr class="row">' . PHP_EOL . 
+						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
+						'<td>' . PHP_EOL
+						);
+
+					if($query['trace'])
+					{
+						echo(
+							'<fieldset>' . PHP_EOL . 
+							'<legend><strong>SQL</strong></legend>' . PHP_EOL . 
+							'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL . 
+							'<tr>' . PHP_EOL . 
+							'<td class="value" style="width: 100%"><code>' . $query['sql'] . '</code></td>' . PHP_EOL . 
+							'</tr>' . PHP_EOL . 
+							'</table>' . PHP_EOL . 
+							'</fieldset>' . PHP_EOL . 
+							'<div style="margin-top: 10px; padding: 0px;">' . PHP_EOL . 
+							'<div style="float: left; margin-right: 10px; padding: 0px; width: 40%;">' . PHP_EOL . 
+							'<fieldset>' . PHP_EOL . 
+							'<legend><strong>Trace information</strong></legend>' . PHP_EOL . 
+							'<table cellspacing="4" cellpadding="0">' . PHP_EOL . 
+							'<tr>' . PHP_EOL . 
+							'<td nowrap="nowrap">Execution time:</td>' . PHP_EOL . 
+							'<td class="value" style="width: 100%">' . $query['trace']['timer'] . ' seconds</td>' . PHP_EOL . 
+							'</tr>' . PHP_EOL . 
+							'</table>' . PHP_EOL . 
+							'</fieldset>' . PHP_EOL
+							);
+
+						if($query['trace']['frames'])
+						{
+							$frames = sizeof($query['trace']['frames']);
+
+							echo(
+								'</div>' . PHP_EOL . 
+								'<div style="padding: 0px;">' . PHP_EOL . 
+								'<fieldset>' . PHP_EOL . 
+								'<legend><strong>Backtrace</strong></legend>' . PHP_EOL . 
+								'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL
+								);
+
+							foreach($query['trace']['frames'] as $x => $trace)
+							{
+								if($x < 2)
+								{
+									continue;
+								}
+
+								echo(
+									'<tr>' . PHP_EOL . 
+									'<td>' . ($frames - $x) . '</td>' . PHP_EOL . 
+									'<td class="value" style="width: 100%">' . $trace->call . '</td>' . PHP_EOL . 
+									'</tr>' . PHP_EOL
+									);
+							}
+
+							echo(
+								'</table>' . PHP_EOL . 
+								'</fieldset>' . PHP_EOL . 
+								'</div>' . PHP_EOL . 
+								'</div>' . PHP_EOL . 
+								'<div class="clear"></div>' . PHP_EOL
+								);
+						}
+					}
+					else
+					{
+						echo(
+							'<code>' . $query['sql'] . '</code>' . PHP_EOL
+							);
+					}
+
+					echo(
+						'</td>' . PHP_EOL . 
+						'</tr>' . PHP_EOL
+						);
+				}
+
+				echo(	
+					'</table>' . PHP_EOL . 
+					'</div>' . PHP_EOL . 
+					'</div>' . PHP_EOL
+					);
+			}
+		}
+		else
+		{
+			echo(
+				$message
+				);
+		}
+
+		exit;
 	}
 
 	/**
