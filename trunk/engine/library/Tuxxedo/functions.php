@@ -63,7 +63,7 @@
 		}
 		else
 		{
-			echo('<strong>Exception:</strong> ' . htmlentities($e->getMessage()) . '<br /> <br />');
+			echo((PHP_SAPI == 'cli' ? '<strong>Exception:</strong> ' : 'Exception: ') . htmlentities($e->getMessage()) . '<br /> <br />');
 		}
 	}
 
@@ -86,6 +86,7 @@
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
 		static $error_handler;
+		static $cli_mode;
 
 		if(!Registry::globals('error_reporting') || !(error_reporting() & $level))
 		{
@@ -94,7 +95,7 @@
 
 		if(!$error_handler)
 		{
-			$error_handler = (PHP_SAPI == 'cli' ? 'tuxxedo_cli_error' : 'tuxxedo_doc_error');
+			$error_handler = (($cli_mode = (PHP_SAPI == 'cli')) !== false ? 'tuxxedo_cli_error' : 'tuxxedo_doc_error');
 		}
 
 		$message = htmlentities($message);
@@ -106,27 +107,32 @@
 				$message = substr_replace($message, tuxxedo_trim_path(substr($message, $spos, $epos = strrpos($message, ' on line') - $spos)), $spos, $epos);
 			}
 
-			$error_handler('<strong>Recoverable error:</strong> ' . $message);
+			$error_handler(($cli_mode ? 'Recoverable error: ' : '<strong>Recoverable error:</strong> ') . $message);
 		}
 		elseif($level & E_USER_ERROR)
 		{
-			$error_handler('<strong>Fatal error:</strong> ' . $message);
+			$error_handler(($cli_mode ? 'Fatal error: ' : '<strong>Fatal error:</strong> ') . $message);
 		}
 		elseif($level & E_NOTICE || $level & E_USER_NOTICE)
 		{
-			$message = '<strong>Notice:</strong> ' . $message;
+			$prefix = '<strong>Notice:</strong> ';
 		}
 		elseif($level & E_DEPRECATED || $level & E_USER_DEPRECATED)
 		{
-			$message = '<strong>Deprecated:</strong> ' . $message;
+			$prefix = '<strong>Deprecated:</strong> ';
 		}
 		elseif($level & E_STRICT)
 		{
-			$message = '<strong>Strict standards:</strong> ' . $message;
+			$prefix = '<strong>Strict standards:</strong> ';
 		}
 		else
 		{
-			$message = '<strong>Warning:</strong> ' . $message;
+			$prefix = '<strong>Warning:</strong> ';
+		}
+
+		if($cli_mode)
+		{
+			$message = strip_tags($prefix) . $message;
 		}
 
 		if($file !== NULL && $line !== NULL)
