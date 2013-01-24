@@ -12,7 +12,6 @@
 	     - PHP errors
 	     - Backtrace
 	     - Query backtrace
-	 - Fix tuxxedo_doc_error() to correctly work with BasicMulti in non debug mode
 	 - Fix tuxxedo_error_handler() to strip tags for CLI mode
 
 	Datamanagers

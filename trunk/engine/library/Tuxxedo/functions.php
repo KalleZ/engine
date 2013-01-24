@@ -608,7 +608,32 @@
 			echo(
 				'<div class="box">' . PHP_EOL . 
 				'<div class="inner">' . PHP_EOL . 
-				nl2br($message) .  PHP_EOL . 
+				nl2br($message) .  PHP_EOL
+				);
+
+			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
+			{
+				echo(
+					'<div class="inner">' . PHP_EOL . 
+					'<ul>' . PHP_EOL
+					);
+
+				foreach($multi_errors as $error)
+				{
+					echo(
+						'<li>' . $error . '</li>' . PHP_EOL
+						);
+				}
+
+				echo(
+					'</ul>' . PHP_EOL . 
+					'</div>' . PHP_EOL
+					);
+
+				
+			}
+
+			echo(
 				'</div>' . PHP_EOL . 
 				'</div>' . PHP_EOL . 
 				'<p>' . PHP_EOL . 
