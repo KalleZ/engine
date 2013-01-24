@@ -977,20 +977,30 @@
 	}
 
 	/**
-	 * Formattable doc error
+	 * Formattable error, this function is SAPI aware and will 
+	 * call the CLI error handler on terminals
 	 *
 	 * @param	string				The error message, in a printf-alike formatted string or just a normal string
 	 * @param	mixed				Optional argument #n for formatting
 	 * @return	Void				No value is returned
 	 */
-	function tuxxedo_doc_errorf()
+	function tuxxedo_errorf()
 	{
 		if(!func_num_args())
 		{
 			tuxxedo_doc_error('Unknown error');
 		}
 
-		tuxxedo_doc_error(call_user_func_array('sprintf', func_get_args()));
+		$args = call_user_func_array('sprintf', func_get_args());
+
+		if(PHP_SAPI == 'cli')
+		{
+			tuxxedo_cli_error($args);
+		}
+		else
+		{
+			tuxxedo_doc_error($args);
+		}
 	}
 
 	/**
