@@ -199,6 +199,9 @@
 	/**
 	 * Print a document error (startup) and halts script execution
 	 *
+ 	 * This function does not escape HTML output of the message parameter, 
+	 * data sent to this function must be escaped prior.
+	 *
 	 * @param	mixed				The message to show, this can also be an exception
 	 * @return	void				No value is returned
 	 */
@@ -381,7 +384,7 @@
 				'</div>' . PHP_EOL . 
 				'<div class="content">' . PHP_EOL . 
 				'<div class="infobox">' . PHP_EOL . 
-				nl2br(htmlspecialchars($message)) . PHP_EOL
+				nl2br($message) . PHP_EOL
 				);
 
 			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
@@ -614,7 +617,7 @@
 			echo(
 				'<div class="box">' . PHP_EOL . 
 				'<div class="inner">' . PHP_EOL . 
-				nl2br(htmlspecialchars($message)) .  PHP_EOL
+				nl2br($message) .  PHP_EOL
 				);
 
 			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
