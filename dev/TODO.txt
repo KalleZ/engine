@@ -9,8 +9,6 @@
 	Core
 	 - Implement CLI support
 	   - tuxxedo_doc_error()
-	     - PHP errors
-	     - Backtrace
 	     - Query backtrace
 
 	Datamanagers

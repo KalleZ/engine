@@ -36,7 +36,7 @@
 	 */
 	require('./library/bootstrap.php');
 
-
+trigger_error('Test of CLI integration', E_USER_ERROR);
 	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
