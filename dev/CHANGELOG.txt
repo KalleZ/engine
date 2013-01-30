@@ -42,6 +42,7 @@
 	Changed the name of '\Tuxxedo\Exception\Multi::getFields()' to '\Tuxxedo\Exception\Multi::getData()' (Kalle)
 	Changed the syntax of the 'options' datastore element to also carry a category
 	Changed the name of 'tuxxedo_doc_errorf()' to 'tuxxedo_errorf()' and is now CLI compatible (Kalle)
+	Changed tuxxedo_doc_error() to no longer attempt to escape HTML in error messages (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
