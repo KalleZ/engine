@@ -24,6 +24,7 @@
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
 	Added \Tuxxedo\Exception\BasicMulti (Kalle)
 	Added CLI support to the core, error handlers, and 'tuxxedo_cli_error()' for terminals (Kalle)
+	Added tuxxedo_basic_error() that picks a suitable SAPI error handler itself (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)

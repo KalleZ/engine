@@ -42,7 +42,7 @@
 
 		if($e instanceof Exception\Basic)
 		{
-			tuxxedo_doc_error($e);
+			tuxxedo_basic_error($e);
 		}
 		elseif($e instanceof Exception\Multi)
 		{
@@ -219,7 +219,7 @@
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
 		$utf8		= function_exists('utf8_encode');
-		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
+		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
 		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
@@ -381,7 +381,7 @@
 				'</div>' . PHP_EOL . 
 				'<div class="content">' . PHP_EOL . 
 				'<div class="infobox">' . PHP_EOL . 
-				nl2br($message) . PHP_EOL
+				nl2br(htmlspecialchars($message)) . PHP_EOL
 				);
 
 			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
@@ -614,7 +614,7 @@
 			echo(
 				'<div class="box">' . PHP_EOL . 
 				'<div class="inner">' . PHP_EOL . 
-				nl2br($message) .  PHP_EOL
+				nl2br(htmlspecialchars($message)) .  PHP_EOL
 				);
 
 			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
@@ -983,6 +983,28 @@
 	}
 
 	/**
+	 * Basic error, this function picks the CLI handler for CLI mode 
+	 * and web otherwise for formatting to prevent having a lot of if 
+	 * conditionals to call the correct function.
+	 *
+	 * This function terminates the script.
+	 *
+	 * @param	mixed				The message to show, this can also be an exception
+	 * @return	void				No value is returned
+	 */
+	function tuxxedo_basic_error($e)
+	{
+		if(PHP_SAPI == 'cli')
+		{
+			tuxxedo_cli_error($e);
+		}
+		else
+		{
+			tuxxedo_doc_error($e);
+		}
+	}
+
+	/**
 	 * Formattable error, this function is SAPI aware and will 
 	 * call the CLI error handler on terminals
 	 *
@@ -997,16 +1019,8 @@
 			tuxxedo_doc_error('Unknown error');
 		}
 
-		$args = call_user_func_array('sprintf', func_get_args());
+		tuxxedo_basic_error(call_user_func_array('sprintf', func_get_args()));
 
-		if(PHP_SAPI == 'cli')
-		{
-			tuxxedo_cli_error($args);
-		}
-		else
-		{
-			tuxxedo_doc_error($args);
-		}
 	}
 
 	/**
@@ -1218,7 +1232,7 @@
 
 		if($format === NULL)
 		{
-			$format = $registry->datastore->options['date_format'];
+			$format = $registry->datastore->options['date_format']['value'];
 		}
 
 		if(!$registry->datetime)
