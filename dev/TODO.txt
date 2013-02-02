@@ -10,6 +10,8 @@
 	 - Implement CLI support
 	   - tuxxedo_doc_error()
 	     - Query backtrace
+	 - Fix tuxxedo_doc_error() no longer working with HTML tags
+	 - Fix backtraces in tuxxedo_doc_error() to show $trace->callargs on $trace->current
 
 	Datamanagers
 	 - Add new datamanagers
@@ -19,3 +21,4 @@
 
 	DevTools
 	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
+	 - Fix options.php to work with \Tuxxedo\Options
