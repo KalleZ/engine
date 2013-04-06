@@ -238,23 +238,22 @@
 		 */
 		public function route()
 		{
-			try
-			{
-				$controller = $this->prefix . \ucfirst(\strtolower($this->controller));
-				$controller = new $controller($this->registry);
+			$controller = $this->prefix . \ucfirst(\strtolower($this->controller));
 
-				$controller->setRouter($this);
-			}
-			catch(Exception\Basic $e)
+			if(!Loader::load($controller, true))
 			{
 				throw new Exception\MVC\InvalidController;
 			}
+
+			$controller = new $controller($this->registry);
+
+			$controller->setRouter($this);
 
 			return($controller);
 		}
 
 		/**
-		 * Route (shorthand method for the route() method)
+		 * Route (shorthand method for the route() method) and calls the controller dispatching mechanism
 		 *
 		 * @return	\Tuxxedo\MVC\Controller				Returns a new controller instance
 		 *
@@ -262,7 +261,7 @@
 		 */
 		public function __invoke()
 		{
-			return($this->route());
+			return($this->route()->dispatch());
 		}
 	}
 ?>

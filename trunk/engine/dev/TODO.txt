@@ -12,6 +12,7 @@
 	     - Query backtrace
 	 - Fix tuxxedo_doc_error() no longer working with HTML tags
 	 - Fix backtraces in tuxxedo_doc_error() to show $trace->callargs on $trace->current
+	 - Fix references to tuxxedo_doc_errorf() -> tuxxedo_errorf()
 
 	Datamanagers
 	 - Add new datamanagers
@@ -22,3 +23,4 @@
 	DevTools
 	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
 	 - Fix options.php to work with \Tuxxedo\Options
+	   - Some usage of $value -> $value['value'] conversation causes datastore to report inconsistencies

@@ -338,7 +338,7 @@
 					throw new Exception\Basic('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \tuxxedo_trim_path($path));
 				}
 
-				\tuxxedo_doc_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, \tuxxedo_trim_path($path)));
+				\tuxxedo_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, \tuxxedo_trim_path($path)));
 			}
 
 			require($path);
@@ -355,7 +355,7 @@
 					throw new Exception\Basic('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
 				}
 
-				\tuxxedo_doc_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, $path));
+				\tuxxedo_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, $path));
 			}
 
 			return(true);
