@@ -537,8 +537,7 @@
 
 							do
 							{
-								$s .= $src{$pos + $x};
-								++$x;
+								$s .= $src{$pos + $x++};
 							}
 							while(isset($src{$pos + $x}) && (string)(integer) $src{$pos + $x} !== $src{$pos + $x});
 

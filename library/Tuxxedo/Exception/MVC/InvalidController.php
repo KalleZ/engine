@@ -46,7 +46,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class InvalidController extends Exception\Basic
+	class InvalidController extends Exception
 	{
 		/**
 		 * Constructor, sets the standardized exception message

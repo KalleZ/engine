@@ -46,7 +46,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 */
-	class InvalidAction extends Exception\Basic
+	class InvalidAction extends Exception
 	{
 		/**
 		 * Constructor, sets the standardized exception message

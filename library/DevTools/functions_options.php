@@ -95,6 +95,11 @@
 		{
 			case('s'):
 			{
+				if(is_array($value))
+				{
+					$value = $value['value'];
+				}
+
 				return('string(' . strlen($value) . ') "' . ($htmlize ? htmlspecialchars($value) : $value) . '"');
 			}
 			case('i'):

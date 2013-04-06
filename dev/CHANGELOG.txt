@@ -33,7 +33,7 @@
 	Changed the authentication tester tool to not use sessions at all (Kalle)
 	Changed \Tuxxedo\Input::process() to be protected rather than private (Kalle)
 	Changed \Tuxxedo\Session to always work whether or not the datastore is loaded (Kalle)
-	Changed \Tuxxedo\MVC\Router to support __invoke() (Kalle)
+	Changed \Tuxxedo\MVC\Router to support __invoke(), which calls the controller dispatcher unlike the route method (Kalle)
 	Changed \Tuxxedo\Bootstrap::setHook() to support \Tuxxedo\Bootstrap::FLAG_CORE (Kalle)
 	Changed \Tuxxedo\Datamanager\Adapter::$hooks_executor to be a method, \Tuxxedo\Datamanager\Adapter::hooks() (Kalle)
 	Changed the datastore datamanager to not being able to fail on invalid name if non existant component is supplied (Kalle)
@@ -43,6 +43,7 @@
 	Changed the syntax of the 'options' datastore element to also carry a category
 	Changed the name of 'tuxxedo_doc_errorf()' to 'tuxxedo_errorf()' and is now CLI compatible (Kalle)
 	Changed tuxxedo_doc_error() to no longer attempt to escape HTML in error messages (Kalle)
+	Changed \Tuxxedo\Exception\MVC\* exceptions to be regular exceptions instead of basic ones (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
@@ -51,6 +52,7 @@
 	Fixed a couple of issues where tuxxedo_trim_path() didn't work on non-absolute paths (Kalle)
 	Fixed some rare conditions that could potentially cause fatal errors by using the User API (Kalle)
 	Fixed some rare remaining issues in resolving namespace aliases in api_analyze.php (Kalle)
+	Fixed a bug in \Tuxxedo\MVC\Router::route() that could cause fatal errors rather than exceptions if loading failed (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)
