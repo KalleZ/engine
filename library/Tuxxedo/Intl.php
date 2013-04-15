@@ -146,7 +146,7 @@
 				return(new self($languagedata[$languageid]));
 			}
 
-			throw new Exception\Basic('Invalid language id, try rebuild the datastore or use the repair tools');
+			throw new Exception\Basic('Invalid language id');
 		}
 
 		/**

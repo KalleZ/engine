@@ -110,7 +110,7 @@
 				return(new self($styledata[$styleid]));
 			}
 
-			throw new Exception\Basic('Invalid style id, try rebuild the datastore or use the repair tools');
+			throw new Exception\Basic('Invalid style id');
 		}
 
 		/**

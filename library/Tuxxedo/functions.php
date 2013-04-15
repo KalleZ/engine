@@ -381,7 +381,7 @@
 				'</div>' . PHP_EOL . 
 				'<div class="content">' . PHP_EOL . 
 				'<div class="infobox">' . PHP_EOL . 
-				nl2br(htmlspecialchars($message)) . PHP_EOL
+				nl2br($message) . PHP_EOL
 				);
 
 			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
@@ -970,14 +970,14 @@
 	 */
 	function tuxxedo_basic_error($e)
 	{
-		if(PHP_SAPI == 'cli')
+		static $error_handler;
+
+		if(!$error_handler)
 		{
-			tuxxedo_cli_error($e);
+			$error_handler = (PHP_SAPI == 'cli' ? 'tuxxedo_cli_error' : 'tuxxedo_doc_error');
 		}
-		else
-		{
-			tuxxedo_doc_error($e);
-		}
+
+		$error_handler($e);
 	}
 
 	/**
