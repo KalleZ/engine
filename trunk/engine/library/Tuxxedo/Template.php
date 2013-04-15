@@ -215,7 +215,7 @@
 
 			if(!$this->registry->style->isLoaded($this->name))
 			{
-				$this->registry->style->cache(Array($this->name)) or \tuxxedo_doc_errorf('Unable to load template \'%s\'', $this->name);
+				$this->registry->style->cache(Array($this->name)) or \tuxxedo_errorf('Unable to load template \'%s\'', $this->name);
 			}
 
 			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');

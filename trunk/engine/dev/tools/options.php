@@ -267,7 +267,7 @@
 							$orphan[$option]	= $options[$option];
 						}
 
-						if(!$options[$option]['cached'] || ($options[$option]['cached'] && $options[$option]['value'] != $datastore->options[$option]))
+						if(!$options[$option]['cached'] || ($options[$option]['cached'] && $options[$option]['value'] != $datastore->options[$option]['value']))
 						{
 							$reminder = true;
 						}

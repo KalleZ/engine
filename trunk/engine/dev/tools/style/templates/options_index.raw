@@ -1,5 +1,30 @@
 {$header}
 
+<if expression="$orphan">
+<div class="box">
+	<h3>Note</h3>
+
+	<p>
+		Orphan options are options thats not assigned to a valid 
+		category, or no category at all. Note that this is a virtual 
+		category and it will disapear once all below options have 
+		a valid category.
+	</p>
+</div>
+</if>
+
+<if expression="$reminder">
+<div class="warning">
+	<h3>Warning</h3>
+
+	<p>
+		Not all elements are cached in the datastore or some may be 
+		outdated, you need to rebuild the datastore for these changes 
+		to take effect.
+	</p>
+</div>
+</if>
+
 <if expression="isset($categories) || $orphan">
 <div class="box">
 	<table cellspacing="0" cellpadding="0" class="list">
@@ -35,31 +60,6 @@
 			{$rows}
 		</if>
 	</table>
-</div>
-</if>
-
-<if expression="$orphan">
-<div class="box">
-	<h3>Note</h3>
-
-	<p>
-		Orphan options are options thats not assigned to a valid 
-		category, or no category at all. Note that this is a virtual 
-		category and it will disapear once all below options have 
-		a valid category.
-	</p>
-</div>
-</if>
-
-<if expression="$reminder">
-<div class="warning">
-	<h3>Warning</h3>
-
-	<p>
-		Not all elements are cached in the datastore or some may be 
-		outdated, you need to rebuild the datastore for these changes 
-		to take effect.
-	</p>
 </div>
 </if>
 

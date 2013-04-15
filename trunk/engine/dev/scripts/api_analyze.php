@@ -1144,10 +1144,10 @@
 	}
 
 	IO::ul(IO::TAG_END);
-	IO::li('Elements WITHOUT a docblock comment: ' . $statistics->no_docblock, IO::STYLE_BOLD);
 
 	if($statistics->no_docblock_list)
 	{
+		IO::li('Elements WITHOUT a docblock comment: ' . $statistics->no_docblock, IO::STYLE_BOLD);
 		IO::ul();
 
 		foreach($statistics->no_docblock_list as $undocumented)
