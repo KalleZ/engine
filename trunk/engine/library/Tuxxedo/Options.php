@@ -89,7 +89,7 @@
 				{
 					foreach($this->options as $option => $info)
 					{
-						$this->information[$info['category']]->{$option} = $info['value'];
+						$this->information[$info['category']]->{$option} = &$this->options[$option]['value'];
 					}
 				}
 			}
