@@ -343,9 +343,7 @@
 				break;
 				case('delete'):
 				{
-					$dm = Datamanager\Adapter::factory('usergroup', $input->get('usergroup'));
-
-					$dm->delete();
+					Datamanager\Adapter::factory('usergroup', $input->get('usergroup'))->delete();
 
 					tuxxedo_redirect('Deleted usergroup', './users.php?do=usergroup&action=list');
 				}

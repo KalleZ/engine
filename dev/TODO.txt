@@ -6,18 +6,12 @@
 	Tuxxedo Engine 1.2.0 "Invincible" Alpha 2
 	------------------------------------------------
 
-	Core
-	 - Implement CLI support
-	   - tuxxedo_doc_error()
-	     - Query backtrace
-	 - tuxxedo_debug_backtrace() should use tuxxedo_handler() to be more dynamic in regards to $trace->notes
-
 	Datamanagers
 	 - Add new datamanagers
 	   - Language
 	   - Phrase
-	   - Phrasegroup
 
 	DevTools
 	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
 	 - Change to use the \Tuxxedo\Bootstrap class to remove this clutter code in bootstrap.php
+	 - Better UI on scripts using str_pad() (check_dm_phrases.php & sync_templates.php)

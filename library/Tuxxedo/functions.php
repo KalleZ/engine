@@ -487,7 +487,7 @@
 						echo(
 							'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
 							'<td class="empty"><h3>&nbsp;</h3></td>' . PHP_EOL . 
-							'<td colspan="4"><code>' . $trace->callargs . '</code></td>' . PHP_EOL . 
+							'<td colspan="4"><code>' . htmlentities($trace->callargs) . '</code></td>' . PHP_EOL . 
 							'</tr>' . PHP_EOL
 							);
 					}
@@ -614,7 +614,7 @@
 			echo(
 				'<div class="box">' . PHP_EOL . 
 				'<div class="inner">' . PHP_EOL . 
-				nl2br(htmlspecialchars($message)) .  PHP_EOL
+				nl2br($message) .  PHP_EOL
 				);
 
 			if($exception && $e instanceof Exception\BasicMulti && ($multi_errors = $e->getErrors()) !== false)
@@ -735,21 +735,21 @@
 			if($application)
 			{
 				echo(
-					'Application: ' .  $application . PHP_EOL
+					str_pad('Application: ', 20, ' ') .  $application . PHP_EOL
 					);
 			}
 
 			echo(
-				'Engine version: ' . Version::FULL . PHP_EOL . 
-				'Library path: ' . str_replace(TUXXEDO_DIR, '', TUXXEDO_LIBRARY) . PHP_EOL . 
-				'Working directory: ' . TUXXEDO_DIR . PHP_EOL . 
-				'Script: ' . tuxxedo_trim_path(realpath($_SERVER['SCRIPT_FILENAME'])) . PHP_EOL
+				str_pad('Engine version: ', 20, ' ') . Version::FULL . PHP_EOL . 
+				str_pad('Library path: ', 20, ' ') . str_replace(TUXXEDO_DIR, '', TUXXEDO_LIBRARY) . PHP_EOL . 
+				str_pad('Working directory: ', 20, ' ') . TUXXEDO_DIR . PHP_EOL . 
+				str_pad('Script: ', 20, ' ') . tuxxedo_trim_path(realpath($_SERVER['SCRIPT_FILENAME'])) . PHP_EOL
 				);
 
 			if(($date = tuxxedo_date(NULL, 'H:i:s j/n - Y (e)')))
 			{
 				echo(
-					'Timestamp: ' . $date . PHP_EOL
+					str_pad('Timestamp: ', 20, ' ') . $date . PHP_EOL
 					);
 			}
 
@@ -763,21 +763,23 @@
 				}
 
 				echo(
-					'Exception type: ' . $class . PHP_EOL
+					PHP_EOL . 
+					str_pad('Exception type: ', 20, ' ') . $class . PHP_EOL
 					);
 			}
 
 			if($exception_sql)
 			{
 				echo(
-					'Database driver: ' . $e->getDriver() . PHP_EOL . 
-					'Error code: ' . $e->getCode() . PHP_EOL
+					PHP_EOL . 
+					str_pad('Database driver: ', 20, ' ') . $e->getDriver() . PHP_EOL . 
+					str_pad('Error code: ', 20, ' ') . $e->getCode() . PHP_EOL
 					);
 
 				if(($sqlstate = $e->getSQLState()) !== false)
 				{
 					echo(
-						' | SQL State: ' . $sqlstate . '</td>' . PHP_EOL
+						str_pad('SQL State: ', 20, ' ') . $sqlstate . PHP_EOL
 						);
 				}
 			}
@@ -833,7 +835,7 @@
 				{
 					echo(
 						'#' . ++$n . ': ' . ($trace->file && $trace->line ? $trace->file . '(' . $trace->line . '):' : '') . PHP_EOL . 
-						($trace->current ? '> ' : '') . (($configuration['debug']['fullbacktrace'] || $trace->current) ? $trace->callargs : $trace->call) . PHP_EOL .
+						($trace->current ? '>>> ' : '') . (($configuration['debug']['fullbacktrace'] || $trace->current) ? $trace->callargs : $trace->call) . PHP_EOL .
 						PHP_EOL
 						);
 
@@ -847,49 +849,27 @@
 				}
 			}
 
-			if(0 && $registry && $registry->db && $registry->db->getNumQueries())
+			if($registry && $registry->db && $registry->db->getNumQueries())
 			{
 				echo(
-					'<h2><span>Queries</span></h2>' . PHP_EOL . 
-					'<div class="box edge-title">' . PHP_EOL . 
-					'<div class="inner">' . PHP_EOL . 
-					'<table style="width: 100%" cellspacing="2" cellpadding="0">' . PHP_EOL . 
-					'<tr class="head">' . PHP_EOL . 
-					'<td style="width: 10">&nbsp;</td>' . PHP_EOL . 
-					'<td class="strong">SQL</td>' . PHP_EOL . 
-					'</tr>' . PHP_EOL
+					PHP_EOL . 
+					PHP_EOL . 
+					'Queries' . PHP_EOL . 
+					'-------' . PHP_EOL
 					);
 
 				foreach($registry->db->getQueries() as $n => $query)
 				{
 					echo(
-						'<tr class="row">' . PHP_EOL . 
-						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
-						'<td>' . PHP_EOL
+						'#' . ++$n . ':' . PHP_EOL . 
+						tuxxedo_trim_sql($query['sql']) . PHP_EOL
 						);
 
 					if($query['trace'])
 					{
+
 						echo(
-							'<fieldset>' . PHP_EOL . 
-							'<legend><strong>SQL</strong></legend>' . PHP_EOL . 
-							'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL . 
-							'<tr>' . PHP_EOL . 
-							'<td class="value" style="width: 100%"><code>' . $query['sql'] . '</code></td>' . PHP_EOL . 
-							'</tr>' . PHP_EOL . 
-							'</table>' . PHP_EOL . 
-							'</fieldset>' . PHP_EOL . 
-							'<div style="margin-top: 10px; padding: 0px;">' . PHP_EOL . 
-							'<div style="float: left; margin-right: 10px; padding: 0px; width: 40%;">' . PHP_EOL . 
-							'<fieldset>' . PHP_EOL . 
-							'<legend><strong>Trace information</strong></legend>' . PHP_EOL . 
-							'<table cellspacing="4" cellpadding="0">' . PHP_EOL . 
-							'<tr>' . PHP_EOL . 
-							'<td nowrap="nowrap">Execution time:</td>' . PHP_EOL . 
-							'<td class="value" style="width: 100%">' . $query['trace']['timer'] . ' seconds</td>' . PHP_EOL . 
-							'</tr>' . PHP_EOL . 
-							'</table>' . PHP_EOL . 
-							'</fieldset>' . PHP_EOL
+							str_pad('Execution time: ', 20, ' ') . $query['trace']['timer'] . ' seconds' . PHP_EOL
 							);
 
 						if($query['trace']['frames'])
@@ -897,11 +877,8 @@
 							$frames = sizeof($query['trace']['frames']);
 
 							echo(
-								'</div>' . PHP_EOL . 
-								'<div style="padding: 0px;">' . PHP_EOL . 
-								'<fieldset>' . PHP_EOL . 
-								'<legend><strong>Backtrace</strong></legend>' . PHP_EOL . 
-								'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL
+								str_pad('Debug frames: ', 20, ' ') . $frames . PHP_EOL . 
+								PHP_EOL
 								);
 
 							foreach($query['trace']['frames'] as $x => $trace)
@@ -912,40 +889,16 @@
 								}
 
 								echo(
-									'<tr>' . PHP_EOL . 
-									'<td>' . ($frames - $x) . '</td>' . PHP_EOL . 
-									'<td class="value" style="width: 100%">' . $trace->call . '</td>' . PHP_EOL . 
-									'</tr>' . PHP_EOL
+									"\t#" . ($frames - $x) . ': ' . $trace->call . PHP_EOL
 									);
 							}
 
 							echo(
-								'</table>' . PHP_EOL . 
-								'</fieldset>' . PHP_EOL . 
-								'</div>' . PHP_EOL . 
-								'</div>' . PHP_EOL . 
-								'<div class="clear"></div>' . PHP_EOL
+								PHP_EOL
 								);
 						}
 					}
-					else
-					{
-						echo(
-							'<code>' . $query['sql'] . '</code>' . PHP_EOL
-							);
-					}
-
-					echo(
-						'</td>' . PHP_EOL . 
-						'</tr>' . PHP_EOL
-						);
 				}
-
-				echo(	
-					'</table>' . PHP_EOL . 
-					'</div>' . PHP_EOL . 
-					'</div>' . PHP_EOL
-					);
 			}
 		}
 		else
@@ -1035,6 +988,42 @@
 		}
 
 		return(str_replace(Array('\\\\', '//'), Array('\\', '/'), $trimmed));
+	}
+
+	/**
+	 * Trims whitespace in SQL in a very basic way
+	 *
+	 * Trimming will strip all whitespace pre and post string, and indented 
+	 * whitespace thats not contained within a 'string', starting with ", ' or ` 
+	 * as delimiters
+	 *
+	 * @param	string				The SQL string to trim
+	 * @return	string				Returns the trimmed SQL string
+	 */
+	function tuxxedo_trim_sql($sql)
+	{
+		$ret = '';
+		$str = str_split($sql);
+
+		if(!$str)
+		{
+			return('');
+		}
+
+		foreach($str as $pos => $c)
+		{
+			$ret .= $c;
+
+			$len = strlen($ret);
+			$ret = rtrim($ret);
+
+			if($len > strlen($ret))
+			{
+				$ret .= ' ';
+			}
+		}
+
+		return(trim($ret));
 	}
 
 	/**

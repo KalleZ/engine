@@ -18,7 +18,7 @@
 	/**
 	 * Backtrace handler
 	 * 
-	 * Generates a backtrace with extended information so theres 
+	 * Generates a backtrace with extended information so there is 
 	 * less to parse from the regular debug_backtrace() function 
 	 * in PHP
 	 *
@@ -35,15 +35,14 @@
 
 			$includes	= Array('require', 'require_once', 'include', 'include_once');
 			$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array');
-
-			$descriptions	= Array(
-						'tuxxedo_shutdown_handler'	=> 'Internal shutdown handler', 
-						'tuxxedo_exception_handler'	=> 'Internal exception handler', 
-						'tuxxedo_error_handler'		=> 'Internal error handler', 
-						'\Tuxxedo\Loader::load'		=> 'Internal auto loader', 
-						'tuxxedo_multi_error'		=> 'Multi error, possibly caused by left operand call'
-						);
 		}
+
+		$descriptions	= Array(
+					tuxxedo_handler('shutdown')	=> 'Shutdown handler', 
+					tuxxedo_handler('exception')	=> 'Exception handler', 
+					tuxxedo_handler('error')	=> 'Error handler', 
+					tuxxedo_handler('autoload')	=> 'Auto loader'
+					);
 
 		$stack 	= Array();
 		$bt 	= debug_backtrace($debug_args);
@@ -170,7 +169,7 @@
 			{
 				$etrace 		= new stdClass;
 				$etrace->call		= 'throw new \\' . get_class($t['args'][0]);
-				$etrace->callargs	= htmlentities($etrace->call . '(' . tuxxedo_debug_typedata($t['args'][0]->getMessage()) . ')');
+				$etrace->callargs	= $etrace->call . '(' . tuxxedo_debug_typedata($t['args'][0]->getMessage()) . ')';
 				$etrace->current	= ($trace->current || $bts === $n + 1);
 				$etrace->line		= $t['args'][0]->getLine();
 				$etrace->file		= tuxxedo_trim_path($t['args'][0]->getFile());
@@ -187,8 +186,6 @@
 				$stack[] 	= $etrace;
 				$is_exception	= false;
 			}
-
-			$trace->callargs = htmlentities($trace->callargs);
 		}
 
 		return($stack);

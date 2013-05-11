@@ -374,7 +374,7 @@
 
 					if($ptr['if_close'] === false)
 					{
-						throw new Excpetion\TemplateCompiler('No closing if found', $this->stack_data);
+						throw new Exception\TemplateCompiler('No closing if found', $this->stack_data);
 					}
 
 					$expr_end = -1;

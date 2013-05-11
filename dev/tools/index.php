@@ -30,7 +30,7 @@
 	/**
 	 * Require the bootstraper
 	 */
-	require('./includes/bootstrap2.php');
+	require('./includes/bootstrap.php');
 
 	eval(page('index'));
 ?>
