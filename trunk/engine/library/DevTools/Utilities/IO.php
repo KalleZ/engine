@@ -66,25 +66,32 @@
 		const TAG_END 		= 1;
 
 		/**
-		 * Style mode constant - indicates bold text
+		 * Style mode constant - indicates bold text (web)
 		 *
 		 * @var		integer
 		 */
 		const STYLE_BOLD 	= 1;
 
 		/**
-		 * Style mode constant - indicates italic text
+		 * Style mode constant - indicates italic text (web)
 		 *
 		 * @var		integer
 		 */
 		const STYLE_ITALIC 	= 2;
 
 		/**
-		 * Style mode constant - indicates underlined text
+		 * Style mode constant - indicates underlined text (web)
 		 *
 		 * @var		integer
 		 */
 		const STYLE_UNDERLINE 	= 4;
+
+		/**
+		 * Style mode constant - indicates a hidden 'dot' for \DevTools\Utilities\IO::li()
+		 *
+		 * @var		integer
+		 */
+		const STYLE_HIDDEN_DOT	= 8;
 
 
 		/**
@@ -234,7 +241,7 @@
 		{
 			if(self::isCli())
 			{
-				\fprintf(\STDOUT, '%s* %s%s', \str_repeat(' ', self::$depth), $text, self::eol());
+				\fprintf(\STDOUT, '%s%s %s%s', \str_repeat(' ', self::$depth), (!($style & self::STYLE_HIDDEN_DOT) ? '*' : ' '), $text, self::eol());
 
 				return;
 			}

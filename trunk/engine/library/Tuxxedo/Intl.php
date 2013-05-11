@@ -161,7 +161,7 @@
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{
-			if(!$phrasegroups || !($phrasegroups = \array_filter($phrasegroups, Array($this, 'filter'))))
+			if(!$phrasegroups || !($phrasegroups = \array_filter($phrasegroups, Array($this, 'doPhrasegroupFilter'))))
 			{
 				return(false);
 			}
@@ -355,35 +355,37 @@
 		/**
 		 * Gets the browser language codes in priority
 		 *
-		 * @return	array			Returns an array with the language codes in priority from the user's browser, each code may be either 2 or 5 bytes long
+		 * @return	array			Returns an array with the language codes in priority from the user's browser, each code may be either 2 or 5 bytes long or NULL in case the HTTP_ACCEPT_LANGUAGE variable was not set
 		 */
 		public static function getISOCodes()
 		{
 			static $codes;
 
+			if(!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+			{
+				return;
+			}
+ 
 			if($codes === NULL)
 			{
 				$codes = Array();
 
-				if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+				foreach(\explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $part)
 				{
-					foreach(\explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $part)
+					$parts = \explode(',', $part);
+
+					if(\strpos($parts[0], '=') === false)
 					{
-						$parts = \explode(',', $part);
-
-						if(\strpos($parts[0], '=') === false)
-						{
-							$codes[] = \strtolower($parts[0]);
-						}
-
-						if(isset($parts[1]))
-						{
-							$codes[] = \strtolower($parts[1]);
-						}
+						$codes[] = \strtolower($parts[0]);
 					}
 
-					$codes = \array_unique($codes);
+					if(isset($parts[1]))
+					{
+						$codes[] = \strtolower($parts[1]);
+					}
 				}
+
+				$codes = \array_unique($codes);
 			}
 
 			return($codes);
@@ -435,7 +437,7 @@
 		 * @param	string			The phrasegroup to check
 		 * @return	boolean			True if is one or more phrases in that phrasegroup, false if none
 		 */
-		private function filter($phrasegroup)
+		private function doPhrasegroupFilter($phrasegroup)
 		{
 			return(isset($this->registry->datastore->phrasegroups[$phrasegroup]) && $this->registry->datastore->phrasegroups[$phrasegroup]['phrases']);
 		}

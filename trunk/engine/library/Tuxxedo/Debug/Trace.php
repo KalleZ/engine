@@ -89,9 +89,9 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			if(!$configuration['application']['debug'] || !$configuration['debug']['trace'])
+			if(!\function_exists('tuxxedo_debug_backtrace'))
 			{
-				throw new Exception\Basic('Debug mode and tracing must be enabled before the tracing component can be loaded');
+				throw new Exception\Basic('The debugging backtrace function must be available prior to usage of debug tracing');
 			}
 		}
 

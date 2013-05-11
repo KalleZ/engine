@@ -78,15 +78,25 @@
 
 					file_put_contents(substr_replace($template, '.tuxx', -4, 4), $compiler->getCompiledSource());
 
-					IO::li($temp . '... ' . (!$cli ? 'Success' : ''));
+					IO::li((!$cli ? $temp . '... Success' : str_pad($temp . '... ', 40, ' ') . 'Success'));
 				}
 				catch(Exception\TemplateCompiler $e)
 				{
-					IO::li($temp . '... Failed (' . $e->getMessage() . ')', IO::STYLE_BOLD);
+					$failed = true;
+
+					IO::li((!$cli ? $temp . '... Failed' : str_pad($temp . '... ', 40, ' ') . 'Failed'), IO::STYLE_BOLD);
+					IO::li($e->getMessage(), IO::STYLE_BOLD | IO::STYLE_HIDDEN_DOT);
+					IO::li('', IO::STYLE_HIDDEN_DOT);
 				}
 			}
 
 			IO::ul(IO::TAG_END);
+		}
+
+		if(isset($failed))
+		{
+			IO::text(IO::eol());
+			IO::text('One or more templates failed to compile! Go back fix the compilation errors');
 		}
 
 		if(!$cli)

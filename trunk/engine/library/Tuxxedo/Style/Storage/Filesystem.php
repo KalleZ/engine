@@ -51,7 +51,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class FileSystem extends Style\Storage
+	class Filesystem extends Style\Storage
 	{
 		/**
 		 * Directory where the compiled templates are saved

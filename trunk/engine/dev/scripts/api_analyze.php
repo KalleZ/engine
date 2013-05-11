@@ -624,7 +624,8 @@
 	$statistics->no_docblock_list		= Array();
 	$statistics->elements			= 0;
 	$statistics->counter			= new stdClass;
-	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->namespaces = $statistics->counter->aliases = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->class_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
+	$statistics->counter->namespaces	= Array();
+	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->class_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
 
 	IO::signature();
 	IO::headline('Lexical API analyze', 1);
@@ -705,10 +706,10 @@
 						++$statistics->no_docblock;
 					}
 
-					$context->modifiers = 0;
+					$context->modifiers 			= 0;
+					$statistics->counter->namespaces[] 	= $name;
 
 					++$statistics->elements;
-					++$statistics->counter->namespaces;
 
 					IO::text(sprintf('NAMESPACE (%s) %s', $name, dump_metadata($datamap[$file]['namespaces'][$name]['metadata'])));
 				}
@@ -1117,6 +1118,8 @@
 			}
 		}
 	}
+
+	$statistics->counter->namespaces = sizeof(array_unique($statistics->counter->namespaces));
 
 	if(IO::$depth)
 	{

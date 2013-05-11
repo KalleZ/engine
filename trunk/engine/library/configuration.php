@@ -116,7 +116,7 @@
 		 * backtraces shown on error screens will have the full 
 		 * call line with arguments.
 		 */
-		'fullbacktrace'	=> true
+		'fullbacktrace'	=> false
 	
 	/**
 	 * End debug configuration
@@ -339,7 +339,7 @@
 		 * For more in-depth configuration of each of these modes 
 		 * when enabled, see below options.
 		 */
-		'protective'	=> 1,  
+		'protective'	=> 0,  
 
 		/**
 		 * Password
@@ -347,7 +347,7 @@
 		 * This only applies if the protective mode is set to the 
 		 * value of '1' (single password).
 		 */
-		'password'	=> 'hello', 
+		'password'	=> '', 
 
 		/**
 		 * Permissions

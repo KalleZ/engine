@@ -4,19 +4,22 @@
 	---------------------
     
 	Improve development tools
-	 - Implement usage of the pagination class in the DevTools
+	 - Implement usage of the pagination class in the DevTools (when Helper\Pagination is implemented)
 	 - Implement installation generators
-	 - Implement support for sqlite on the table status tool
+	 - Implement support for sqlite on the table status tool (if possible?)
 	 - Other
 	   - Add the ability to export/import styles
 	   - Add the ability to export/import languages
 	   - Change forms to use CSRF protection
-	   - Kill session doesn't actually kill a session id
+	   - Kill session doesn't actually kill a session id (new 'rehash' table index?)
 
 	Improve the user component
 	 - Implement a "Remember me?" API
 	 - Implement a disallowed permission based system for users
 	 - Implement a user activation API
+
+	Namespace procedural functions in the Tuxxedo namespace
+	Change the debug backtrace to be a class, where custom passes can be hooked into and put it in \Tuxxedo\Debug
 
 	Implement validators
 	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
@@ -24,7 +27,7 @@
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement a form of Webservices handler backend that can be used to pull and push
 	 - Authentication support using Engine's authentication system
-	 - Map pull's in an object oriented way so they kinda work like SOAP objects, <error><code>123</code></error>: $api->getError()->getCode() or similar
+	 - Map pull's in an object oriented way so they kinda work like SimpleXML objects, <error><code>123</code></error>: $api->error->code or similar
 
 	Helpers
 	 - Calendar
