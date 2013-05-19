@@ -70,7 +70,7 @@
 		{
 			file_put_contents(TEMPLATE_DIR . '/' . $template['title'] . '.tuxx', $template['compiledsource']);
 
-			IO::li($template['title'] . '... Success');
+			IO::li((!$cli ? $template['title'] . '... Success' : str_pad($template['title'] . '... ', 40, ' ') . 'success'));
 		}
 
 		IO::ul(IO::TAG_END);

@@ -3,63 +3,8 @@
 <h1>Tuxxedo Engine</h1>
 <div class=\"box\">
 	<div class=\"inner\">
-		<ul>
-			<li><a href=\"./dev/tools/\">DevTools</a></li>
-		</ul>
-		<ul>
-			<li><a href=\"http://www.tuxxedo.net/devblog/\">Blog</a></li>
-			<li><a href=\"http://code.google.com/p/tuxxedo\">Project</a></li>
-		</ul>
-	</div>
-	<div class=\"content\">
 		Thank you for choosing Tuxxedo Engine, version {$version} is installed 
 		and ready to use.
-
-		<fieldset>
-			<legend><strong>Application information</strong></legend>
-
-			<table>
-			<tr>
-				<td style=\"width: 150px;\">
-					<strong>Name:</strong></td>
-				<td class=\"cell\">
-					" . (($app['name']) ? ("{$app['name']}") : ("<em>No value</em>")) . "</td>
-			</tr>
-			<tr>
-				<td>
-					<strong>Version:</strong></td>
-				<td class=\"cell\">
-					" . (($app['version']) ? ("{$app['version']}") : ("<em>No value</em>")) . "</td>
-			</tr>
-			<tr>
-				<td nowrap=\"nowrap\">
-					<strong>Canonical name:</strong></td>
-				<td class=\"cell\">
-					" . (($app['canonical']) ? ("{$app['canonical']}") : ("<em>No value</em>")) . "</td>
-			</tr>
-			<tr>
-				<td colspan=\"2\">
-					&nbsp;</td>
-			</tr>
-			<tr>
-				<td nowrap=\"nowrap\">
-					<strong>Debug mode:</strong></td>
-				<td class=\"cell\">
-					" . (($app['debug']) ? ("Enabled") : ("<em>Disabled</em>")) . "</td>
-			</tr>
-			<tr>
-				<td nowrap=\"nowrap\">
-					<strong>Debug tracing:</strong></td>
-				<td class=\"cell\">
-					" . (($debug['trace']) ? ("Enabled") : ("<em>Disabled</em>")) . "</td>
-			</tr>
-			</table>
-		</fieldset>
-
-		<p>
-			If this is first time use, or above values appears 'empty', then head over to the 
-			'<em>/library/configuration.php</em>' file, and fill in the values in the 'application' 
-			section to define your application.
 
 		<p>
 			To begin developing, head over to the DevTools component, this component 
@@ -68,17 +13,18 @@
 			our blog and our project site.
 		</p>
 
-		<h3>Development</h3>
 		<p>
-			API documentation can be exported using the <em>api_analyze.php</em> script found in 
-			the <em>/dev/scripts</em> folder.
+			Remember to checkout the 'configuration.php' file, to define the application 
+			variables. Debugging mode can also be enabled/disabled here. The debug mode 
+			should always be enabled when working on a development server to give to 
+			more expressive error messages, and always turned off when the application 
+			is deployed to production servers.
 		</p>
-		<p>
-			Debug mode enables extended information on error pages, to see an example of this then 
-			<a href=\"./?error=true\">click here</a>.
-		</p>
+
+		<a class=\"link-button\" href=\"./dev/tools/\">DevTools</a> 
+		<a class=\"link-button\" href=\"http://www.tuxxedo.net/devblog/\">Blog</a> 
+		<a class=\"link-button\" href=\"http://code.google.com/p/tuxxedo\">Project</a>
 	</div>
-	<div class=\"clear\"></div>
 </div>
 
 {$footer}

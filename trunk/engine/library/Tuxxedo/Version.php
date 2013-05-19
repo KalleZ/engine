@@ -127,7 +127,7 @@
 		 *
 		 * @var		string
 		 */
-		const CODENAME			= 'Invincible';
+		const CODENAME			= 'Madeleine';
 
 		/**
 		 * Current version control system revision number
@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Invincible" Alpha 2 (Experimental)';
+		const FULL			= '1.2.0 "Madeleine" Alpha 2 (Experimental)';
 	}
 ?>
