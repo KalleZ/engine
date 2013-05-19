@@ -2,20 +2,24 @@
 
 <h1>Error</h1>
 <div class=\"box\">
-	{$message}
+	<div class=\"inner\">
+		{$message}
 
-	" . ((isset($error_list)) ? ("
-	<ul>
-		{$error_list}
-	</ul>
-	") : '') . "
+		" . ((isset($error_list)) ? ("
+		<ul>
+			{$error_list}
+		</ul>
+		") : '') . "
+	</div>
 </div>
 
 " . ((isset($go_back) && $go_back) ? ("
 <br />
 
 <div class=\"box\">
-	<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+	<div class=\"inner\">
+		<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+	</div>
 </div>
 ") : '') . "
 
