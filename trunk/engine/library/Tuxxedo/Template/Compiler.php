@@ -533,11 +533,11 @@
 						}
 						else
 						{
-							$x = 1;
+							$x = 0;
 
 							do
 							{
-								$s .= $src{$pos + $x++};
+								$s .= $src{$pos + ++$x};
 							}
 							while(isset($src{$pos + $x}) && (string)(integer) $src{$pos + $x} !== $src{$pos + $x});
 
