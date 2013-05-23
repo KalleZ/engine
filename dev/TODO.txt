@@ -3,15 +3,10 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Invincible" Alpha 2
+	Tuxxedo Engine 1.2.0 "Beloved" Alpha 2
 	------------------------------------------------
 
 	Datamanagers
 	 - Add new datamanagers
 	   - Language
 	   - Phrase
-
-	DevTools
-	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
-	 - Change to use the \Tuxxedo\Bootstrap class to remove this clutter code in bootstrap.php
-	 - Better UI on scripts using str_pad() (check_dm_phrases.php)

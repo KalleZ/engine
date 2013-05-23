@@ -60,10 +60,10 @@
 
 			if(!$virtual)
 			{
-				$virtual = $tempdm->getVirtualFields();
+				$virtual = $tempdm->getVirtualFields(false);
 			}
 
-			return(in_array($field, $virtual));
+			return(!$virtual || !isset($virtual[$field]));
 		}));
 	};
 
@@ -79,6 +79,8 @@
 
 	$intldm = $intl->getPhrasegroup('datamanagers');
 
+	$cli = IO::isCli();
+
 	IO::signature();
 
 	foreach($datastore->languages as $id => $languagedata)
@@ -87,6 +89,7 @@
 
 		foreach(glob(ADAPTERS_DIR . '*.php') as $file)
 		{
+			$ul	= false;
 			$last 	= explode(DIRECTORY_SEPARATOR, realpath($file));
 			$last 	= substr($last[sizeof($last) - 1], 0, -4);
 
@@ -94,26 +97,36 @@
 
 			IO::ul();
 			IO::li($last);
-			IO::ul();
 
 			foreach($fields as $field)
 			{
 				$phrase = $phrase_name($last, $field);
 
-				if(!$intldm->getPhrase($phrase))
+				if(!isset($intldm[$phrase]))
 				{
 					if(!isset($missing[$languagedata['title']]))
 					{
 						$missing[$languagedata['title']] = Array();
 					}
 
+					if(!$ul)
+					{
+						$ul = true;
+
+						IO::ul();
+					}
+
 					$missing[$languagedata['title']][] = $phrase;
 
-					IO::li($field . '... MISSING');
+					IO::li((!$cli ? $phrase . '... Missing' : str_pad($phrase . '... ', 40, ' ') . 'Missing'), IO::STYLE_BOLD);
 				}
 			}
 
-			IO::ul(IO::TAG_END);
+			if($ul)
+			{
+				IO::ul(IO::TAG_END);
+			}
+
 			IO::ul(IO::TAG_END);
 		}
 	}

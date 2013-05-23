@@ -610,6 +610,12 @@
 	require(__DIR__ . '/includes/bootstrap.php');
 
 
+	if(!extension_loaded('json'))
+	{
+		IO::error('The JSON extension is required to export the lexical output');
+	}
+
+
 	$engine_path				= realpath(__DIR__ . '/../../');
 	$cli					= IO::isCli();
 	$files 					= analyze($engine_path);
@@ -1128,12 +1134,7 @@
 
 	ksort($datamap);
 
-	file_put_contents(__DIR__ . '/../api/serialized.dump', serialize($datamap));
-
-	if(extension_loaded('json'))
-	{
-		file_put_contents(__DIR__ . '/../api/json.dump', json_encode($datamap));
-	}
+	file_put_contents(__DIR__ . '/api/engine_api.json', json_encode($datamap));
 
 	IO::headline('Status', 1);
 	IO::ul();

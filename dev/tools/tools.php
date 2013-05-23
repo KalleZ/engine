@@ -95,7 +95,7 @@
 			}
 
 			$ignored	= Array(
-						'dump', 
+						'json', 
 						'png', 
 						'sqlite3', 
 						'txt', 

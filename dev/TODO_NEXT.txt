@@ -1,7 +1,7 @@
 
 
-	Tuxxedo Engine 1.2.0 "Invincible" Alpha 2
-	-------------------------------------
+	Tuxxedo Engine 1.2.0 "Beloved" Alpha 2
+	--------------------------------------
 
 	DevTools
 	 - Add new the internationalization component
@@ -22,15 +22,19 @@
 	     - Search
 
 
-	Tuxxedo Engine 1.2.0 "Invincible" Beta 1
-	------------------------------------
+	Tuxxedo Engine 1.2.0 "Beloved" Beta 1
+	-------------------------------------
 
 	Internationalization
 	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
 
+	DevTools
+	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
+	 - Change to use the \Tuxxedo\Bootstrap class to remove this clutter code in bootstrap.php
 
-	Tuxxedo Engine 1.2.0 "Invincible" Beta 2
-	------------------------------------
+
+	Tuxxedo Engine 1.2.0 "Beloved" Beta 2
+	-------------------------------------
 
 	Dev
 	 - api_analyze.php
@@ -38,7 +42,6 @@
 	   - Add the ability to fetch file docblocks
 	   - Add the ability to fetch default values of properties and the like
 	   - Add the ability to parse <code> blocks correctly
-	   - Drop serialized output and require JSON
 	 - check_dm_phrases.php
 	   - Add a check for obsolete and orphan phrases
 	 - sync_templates.php

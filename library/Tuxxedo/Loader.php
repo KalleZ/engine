@@ -130,8 +130,8 @@
 		 */
 		public static function routeAsPath($path, $separator = NULL, $root = NULL)
 		{
-			$separator 	= ($separator !== NULL ?: self::$separator);
-			$root 		= ($root !== NULL ?: self::$root);
+			$separator 	= ($separator !== NULL ? $separator : self::$separator);
+			$root 		= ($root !== NULL ? $root : self::$root);
 
 			if(\is_array($path))
 			{
@@ -247,8 +247,7 @@
 
 					if($match && $match !== $name)
 					{
-						$name 		= $match;
-						$regex_match 	= $match;
+						$name = $regex_match = $match;
 
 						break;
 					}
