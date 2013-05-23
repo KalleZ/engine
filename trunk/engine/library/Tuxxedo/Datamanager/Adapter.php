@@ -466,9 +466,10 @@
 		/**
 		 * Gets a list of virtual fields from the datamanager adapter 
 		 *
-		 * @return	array				Returns an array with field => value pairs, and empty array on none
+		 * @param	boolean				Whether or not to check for populated data (defaults to true)
+		 * @return	array				Returns an array with field => value pairs, and empty array on none (if populated is set to off, all values are boolean true)
 		 */
-		public function getVirtualFields()
+		public function getVirtualFields($populated = true)
 		{
 			if(!$this->fields)
 			{
@@ -479,13 +480,18 @@
 
 			foreach($this->fields as $name => $props)
 			{
-				if(isset($props['type']) && $props['type'] == self::FIELD_VIRTUAL && isset($this->data[$name]))
+				if(isset($props['type']) && $props['type'] == self::FIELD_VIRTUAL)
 				{
-					$fields[$name] = $this->data[$name];
+					if($populated && !isset($this->data[$name]))
+					{
+						continue;
+					}
+
+					$fields[$name] = ($populated ? $this->data[$name] : true);
 				}
 			}
 
-			return(($fields ?: Array()));
+			return($fields);
 		}
 
 		/**

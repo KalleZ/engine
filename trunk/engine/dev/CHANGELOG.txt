@@ -2,7 +2,7 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Invincible"
+	Tuxxedo Engine 1.2.0 "Beloved"
 	------------------------------------------------
 
 	Added the event handling subsystem (Kalle)
@@ -20,14 +20,17 @@
 	Added two magic hooks for classes that extends the bootstraper: (Kalle)
 	 - preInit()
 	 - postInit()
-	Added \Tuxxedo\Design\InfoAccess::import() (Kalle)
-	Added \Tuxxedo\Design\InfoAccess::export() (Kalle)
-	Added global template variables (Kalle)
+	Added new methods to \Tuxxedo\Design\InfoAccess: (Kalle)
+	 - import()
+	 - export()
+	Added support global template variables using \Tuxxedo\Template (Kalle)
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
 	Added \Tuxxedo\Exception\BasicMulti (Kalle)
 	Added CLI support to the core, error handlers, and 'tuxxedo_cli_error()' for terminals (Kalle)
 	Added tuxxedo_basic_error() that picks a suitable SAPI error handler itself (Same as \Tuxxedo\Exception\Basic) (Kalle)
 	Added \DevTools\Utilities\IO::STYLE_HIDDEN_DOT (cli only) (Kalle)
+	Added more slightly better UI for /dev/scripts when used on the CLI (Kalle)
+	Added the $populated parameter to \Tuxxedo\Datamanager\Adapter::getVirtualFields() (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -51,6 +54,7 @@
 	Changed tuxxedo_debug_backtrace() to work with handlers, so customer handlers are correctly reported as such in traces (Kalle)
 	Changed api_analyze.php to show the number of unique namespaces rather than total declarations in the statistics summary (Kalle)
 	Changed the method name '\Tuxxedo\Intl::filter()' to '\Tuxxedo\Intl::doPhrasegroupFilter()' (Kalle)
+	Changed the API dump to only be exported as json, and relocated it to /dev/scripts/api/engine_api.json, causing JSON to be available for api_analyze.php to function (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
@@ -62,6 +66,8 @@
 	Fixed a bug in \Tuxxedo\MVC\Router::route() that could cause fatal errors rather than exceptions if loading failed (Kalle)
 	Fixed fatal error if a closing </if> was missing when compiling a template (Kalle)
 	Fixed fatal error when trying to autoload  \Tuxxedo\Style\Storage\Filesystem on a case sensitive filesystem (Kalle)
+	Fixed a bug in \Tuxxedo\Loader::addRouteAsCallback() that caused custom separators and roots not to be correctly set (Kalle)
+	Fixed check_dm_phrases.php to correctly function if no virtual fields are available (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)

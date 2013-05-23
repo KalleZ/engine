@@ -34,6 +34,12 @@
 		written on the Engine will inherit these requirements and may add additional 
 		ones, also one of the database extensions is needed for database connectivity.
 	</p>
+	<br /> 
+	<p>
+		Some extensions, like the JSON thats marked as optional are required for the 
+		DevTools and/or related scripts to function but not required to execute the 
+		core, hence why they are marked as optional.
+	</p>
 </div>
 
 {$footer}

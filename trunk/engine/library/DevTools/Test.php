@@ -128,6 +128,16 @@
 		}
 
 		/**
+		 * Gets the option flags assigned for this test
+		 *
+		 * @return      integer			Returns the option flags assigned for this test
+		 */
+		public function getOptions()
+		{
+			return($this->options);
+		}
+
+		/**
 		 * Executes the test case
 		 *
 		 * @return      boolean                 Returns true if the test passed, otherwise false
