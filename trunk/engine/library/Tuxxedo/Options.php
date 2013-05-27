@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Datamanager;
 	use Tuxxedo\Design;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
@@ -64,6 +65,13 @@
 		 * @var		array
 		 */
 		protected $options;
+
+		/**
+		 * Boolean flag to for the saving method
+		 *
+		 * @var		boolean
+		 */
+		protected $changed			= false;
 
 
 		/**
@@ -124,6 +132,54 @@
 			}
 
 			return($this->options[$option]['value']);
+		}
+
+		/**
+		 * Sets an option
+		 *
+		 * @param	string				The name of the option
+		 * @param	mixed				The value of the option
+		 * @return	void				Returns the old option value, and null on error
+		 */
+		public function __set($option, $value)
+		{
+			if(!isset($this->options[$option]))
+			{
+				return;
+			}
+
+			$old_value 		= $this->options[$option];
+			$this->options[$option] = $value;
+			$this->changed		= true;
+
+			return($old_value);
+		}
+
+		/**
+		 * Saves the current options within the datastore
+		 *
+		 * This is useful for when the options are updated here on the fly to reflect changes directly in the code
+		 *
+		 * @return	boolean				Returns true if the options were saved with success, otherwise false
+		 */
+		public function save()
+		{
+			if(!$this->changed)
+			{
+				return(true);
+			}
+
+			$dm 		= Datamanager\Adapter::factory('datastore', 'options');
+			$dm['data']	= $this->options;
+
+			$retval 	= $dm->save();
+
+			if($retval)
+			{
+				$this->changed = false;
+			}
+
+			return($retval);
 		}
 	}
 ?>

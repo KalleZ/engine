@@ -52,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Phrasegroup extends Adapter implements Hooks\Cache
+	class Phrasegroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
 		 * Fields for validation of phrase groups
@@ -72,6 +72,9 @@
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidLanguageId')
+											), 
+							'phrases'	=> Array(
+											'type'		=> self::FIELD_VIRTUAL
 											)
 							);
 
@@ -211,6 +214,23 @@
 			}
 
 			return($this->registry->datastore->rebuild('phrasegroups', $datastore));
+		}
+
+		/**
+		 * This event method is called if the query to store the 
+		 * data was success, to rebuild the datastore cache
+		 *
+		 * @param	mixed				The value to handle
+		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @wip
+		 */
+		public function virtualPhrases($value)
+		{
+			/**
+			 * @todo Recalculate 'phrases'
+			 */
+			return(true);
 		}
 	}
 ?>

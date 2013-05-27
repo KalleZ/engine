@@ -160,7 +160,7 @@
 				return;
 			}
 
-			foreach($this->shutdown_queries as $n => $sql)
+			foreach($this->shutdown_queries as $sql)
 			{
 				try
 				{

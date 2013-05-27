@@ -74,7 +74,7 @@
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_STRING
 											), 
-							'defaultstyle'	=> Array(
+							'isdefault'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_BOOLEAN, 
 											'default'	=> false
@@ -194,17 +194,19 @@
 				return(false);
 			}
 
-			if(isset($this['defaultstyle']) && $this->registry->options->style_id != $this['id'])
+			if(isset($this['isdefault']) && $this->registry->options->style_id != $this['id'])
 			{
 				$dm 			= Adapter::factory('style', $this->registry->options->style_id, 0, $this);
-				$dm['defaultstyle']	= false;
+				$dm['isdefault']	= false;
 
-				$dm->save();
+				if(!$dm->save())
+				{
+					return(false);
+				}
 
-				$options		= (array) $this->registry->options;
-				$options['style_id']	= $this['id'];
+				$this->registry->options->style_id = $this['id'];
 
-				return($this->registry->datastore->rebuild('options', $options));
+				$this->registry->options->save();
 			}
 
 			return(true);
@@ -239,9 +241,10 @@
 				$ids[] = $template->get('id');
 			}
 
-			$this->save(false);
+			$datastore 				= $registry->datastore->styleinfo;
+			$datastore[$value]['templateids'] 	= \implode(',', $ids);
 
-			return(true);
+			return($this->registry->datastore->rebuild('styleinfo', $datastore));
 		}
 	}
 ?>

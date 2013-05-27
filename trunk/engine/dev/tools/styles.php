@@ -113,10 +113,10 @@
 							$styledm['inherit']	= $input->post('inherit');
 						}
 
-						$styledm['name'] 		= $input->post('name');
-						$styledm['developer']		= $input->post('developer');
-						$styledm['styledir']		= $input->post('styledir');
-						$styledm['defaultstyle']	= $input->post('defaultstyle', Input::TYPE_BOOLEAN);
+						$styledm['name'] 	= $input->post('name');
+						$styledm['developer']	= $input->post('developer');
+						$styledm['styledir']	= $input->post('styledir');
+						$styledm['isdefault']	= $input->post('defaultstyle', Input::TYPE_BOOLEAN);
 
 						$styledm->save();
 

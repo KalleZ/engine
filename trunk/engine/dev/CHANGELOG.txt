@@ -21,8 +21,8 @@
 	 - preInit()
 	 - postInit()
 	Added new methods to \Tuxxedo\Design\InfoAccess: (Kalle)
-	 - import()
 	 - export()
+	 - import()
 	Added support global template variables using \Tuxxedo\Template (Kalle)
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
 	Added \Tuxxedo\Exception\BasicMulti (Kalle)
@@ -54,7 +54,9 @@
 	Changed tuxxedo_debug_backtrace() to work with handlers, so customer handlers are correctly reported as such in traces (Kalle)
 	Changed api_analyze.php to show the number of unique namespaces rather than total declarations in the statistics summary (Kalle)
 	Changed the method name '\Tuxxedo\Intl::filter()' to '\Tuxxedo\Intl::doPhrasegroupFilter()' (Kalle)
-	Changed the API dump to only be exported as json, and relocated it to /dev/scripts/api/engine_api.json, causing JSON to be available for api_analyze.php to function (Kalle)
+	Changed the API dump to only be exported as json, and relocated it to /dev/scripts/api/engine_api.json, causing the JSON extension to be available for api_analyze.php to function (Kalle)
+	Changed the name of style.defaultstyle to style.isdefault (Kalle)
+	Changed the name of language.default to language.isdefault (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
@@ -68,6 +70,7 @@
 	Fixed fatal error when trying to autoload  \Tuxxedo\Style\Storage\Filesystem on a case sensitive filesystem (Kalle)
 	Fixed a bug in \Tuxxedo\Loader::addRouteAsCallback() that caused custom separators and roots not to be correctly set (Kalle)
 	Fixed check_dm_phrases.php to correctly function if no virtual fields are available (Kalle)
+	Fixed an issue in the style datamanager that would cause an incorrect sync to the datastore when re-collecting template ids (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)

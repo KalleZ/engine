@@ -10,3 +10,8 @@
 	 - Add new datamanagers
 	   - Language
 	   - Phrase
+	 - Fix phrasegroup datamanager, does not recalculate virtual 'phrases' for the datastore
+	 - Fix usergroup datamanager, does not recalculate virtual 'users' for the datastore
+
+	Core
+	 - DevTools shows incorrect datastore values, possible sync error somewhere, but does not report it

@@ -1134,7 +1134,7 @@
 
 	ksort($datamap);
 
-	file_put_contents(__DIR__ . '/api/engine_api.json', json_encode($datamap));
+	file_put_contents(__DIR__ . '/apidump/engine_api.json', json_encode($datamap));
 
 	IO::headline('Status', 1);
 	IO::ul();

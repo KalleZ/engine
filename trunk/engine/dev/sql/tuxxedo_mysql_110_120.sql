@@ -44,3 +44,6 @@ INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`
 (46, 'dm_phrasegroup_id', 'Phrasegroup identifier', 1, 'datamanagers'),
 (47, 'dm_phrasegroup_title', 'Phrasegroup title', 1, 'datamanagers'),
 (48, 'dm_phrasegroup_language', 'Phrasegroup language identifier', 1, 'datamanagers');
+
+ALTER TABLE `languages` CHANGE `default` `isdefault` TINYINT( 1 ) NOT NULL DEFAULT '0'
+ALTER TABLE `styles` CHANGE `defaultstyle` `isdefault` TINYINT( 1 ) NOT NULL DEFAULT '0'

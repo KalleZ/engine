@@ -35,7 +35,7 @@
 			<td nowrap=\"nowrap\" valign=\"top\">
 				Set this style as default?</td>
 			<td>
-				<label><input type=\"checkbox\" name=\"defaultstyle\" value=\"1\"" . (($action == 'edit' && $styledata['defaultstyle']) ? (" checked=\"checked\"") : '') . " /> Yes</label></td>
+				<label><input type=\"checkbox\" name=\"defaultstyle\" value=\"1\"" . (($action == 'edit' && $styledata['isdefault']) ? (" checked=\"checked\"") : '') . " /> Yes</label></td>
 		</tr>
 " . (($action == 'add') ? ("
 		<tr>
