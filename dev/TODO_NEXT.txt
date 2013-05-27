@@ -19,7 +19,11 @@
 	     - Add
 	     - Edit
 	     - Delete
+	     - Reset
 	     - Search
+
+	Internationalization
+	 - Add support for 'resetable' phrases
 
 
 	Tuxxedo Engine 1.2.0 "Beloved" Beta 1

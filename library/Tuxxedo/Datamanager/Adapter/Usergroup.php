@@ -52,7 +52,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Usergroup extends Adapter implements Hooks\Cache
+	class Usergroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
 		 * Fields for validation of usergroups
@@ -71,6 +71,9 @@
 											'type'		=> self::FIELD_OPTIONAL, 
 											'validation'	=> self::VALIDATE_NUMERIC, 
 											'default'	=> 0
+											), 
+							'users'		=> Array(
+											'type'		=> self::FIELD_VIRTUAL
 											)
 							);
 
@@ -152,6 +155,23 @@
 			\ksort($usergroups);
 
 			return($this->registry->datastore->rebuild('usergroups', $usergroups));
+		}
+
+		/**
+		 * This event method is called if the query to store the 
+		 * data was success, to rebuild the datastore cache
+		 *
+		 * @param	mixed				The value to handle
+		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @wip
+		 */
+		public function virtualUsers($value)
+		{
+			/**
+			 * @todo Recalculate 'users'
+			 */
+			return(true);
 		}
 	}
 ?>

@@ -137,13 +137,16 @@
 
 		$datastore->cache((!isset($precache) ? $default_precache : array_unique(array_merge($default_precache, (array) $precache))), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore elements', $cache_buffer);
 
+		$registry->register('options', '\Tuxxedo\Options');
 		$registry->register('intl', '\Tuxxedo\Intl');
 
 		$cache_buffer = Array();
 		$intl->cache(Array('global'), $cache_buffer) or tuxxedo_multi_error('Unable to load phrase groups', $cache_buffer);
 	}
-
-	$registry->register('options', '\Tuxxedo\Options');
+	else
+	{
+		$registry->register('options', '\Tuxxedo\Options');
+	}
 
 	$cache_buffer		= Array();
 	$default_templates 	= Array('header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit');
