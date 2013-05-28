@@ -227,10 +227,18 @@
 		 */
 		public function virtualPhrases($value)
 		{
-			/**
-			 * @todo Recalculate 'phrases'
-			 */
-			return(true);
+			if(!isset($this->registry->datastore->phrasegroups[$value]))
+			{
+				return(false);
+			}
+
+			$phrasegroups 				= $this->registry->datastore->phrasegroups;
+			$phrasegroups[$value]['phrases'] 	= Helper::factory('database')->count('phrases', Array(
+															'phrasegroup' 	=> $value, 
+															'languageid'	=> $this->data['language']
+															));
+
+			return($this->registry->datastore->rebuild('phrasegroups', $phrasegroups));
 		}
 	}
 ?>
