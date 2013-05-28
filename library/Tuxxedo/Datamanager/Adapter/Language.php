@@ -137,6 +137,8 @@
 		 * the parent class in cases when the save method was success
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @wip
 		 */
 		public function rebuild()
 		{
@@ -152,6 +154,10 @@
 
 			if($this->context == self::CONTEXT_DELETE)
 			{
+				/**
+				 * @todo This bit does not account for phrasegroups are language specific, not global!
+				 */
+
 				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
 
 				$phrases = $this->registry->db->query('

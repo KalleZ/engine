@@ -43,6 +43,18 @@
 	/**
 	 * Database utilities helper
 	 *
+	 * This helper assumes the 'db' key is registered to an instance of 
+	 * \Tuxxedo\Database for usage, if not then it can be manually set 
+	 * using the 'setInstance' method.
+	 *
+	 * Parameters used by this class are sent directly as a part of the 
+	 * generated SQL query. Only parameters that specifically says so are 
+	 * escaped using the database escaping mechanism assigned to the 
+	 * database registry instance.
+	 *
+	 * Note that some drivers may not be fully supported, in paticular 
+	 * SQLite is not supported by some of the table operational methods.
+	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
@@ -132,22 +144,36 @@
 		 *
 		 * @param	string				The table to count
 		 * @param	string				Optionally an index, defaults to *
+		 * @param	array				Key => value pairs for a WHERE, defaults to no 'where' clause, all values are escaped
 		 * @return	integer				Returns the number of rows, and false on error
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
 		 */
-		public function count($table, $index = '*')
+		public function count($table, $index = '*', Array $where = Array())
 		{
 			if($index != '*')
 			{
 				$index = '`' . $index . '`';
 			}
 
+			$whereclaus = '';
+
+			if($where)
+			{
+				foreach($where as $field => $value)
+				{
+					$whereclause .= '`' . $field . '` = \'' . $this->instance->escape($value) . '\', ';
+				}
+
+				$whereclause = rtrim($whereclause, ', ');
+			}
+
 			$query = $this->instance->query('
 								SELECT 
 									COUNT(%s) as \'total\' 
 								FROM 
-									`%s`', $index, $table);
+									`%s`
+								%s', $index, $table, $whereclause);
 
 			if(!$query || !$query->getNumRows())
 			{
@@ -159,6 +185,10 @@
 
 		/**
 		 * Gets all table within a database
+		 *
+		 * Unsupported drivers are:
+		 *  - sqlite
+		 *  - pdo_sqlite
 		 *
 		 * @param	string				The database name, if differs from the current connection
 		 * @return	\Tuxxedo\Database\Result	Returns a database result object, and false if unsupported or if no tables exists
@@ -183,6 +213,10 @@
 		/**
 		 * Table operation - optimize
 		 *
+		 * Unsupported drivers are:
+		 *  - sqlite
+		 *  - pdo_sqlite
+		 *
 		 * @param	string				The table name
 		 * @return	string				Returns the status, and false if unsupported
 		 */
@@ -198,6 +232,10 @@
 
 		/**
 		 * Table operation - repair
+		 *
+		 * Unsupported drivers are:
+		 *  - sqlite
+		 *  - pdo_sqlite
 		 *
 		 * @param	string				The table name
 		 * @return	string				Returns the status, and false if unsupported

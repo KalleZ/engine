@@ -163,15 +163,20 @@
 		 *
 		 * @param	mixed				The value to handle
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
-		 *
-		 * @wip
 		 */
 		public function virtualUsers($value)
 		{
-			/**
-			 * @todo Recalculate 'users'
-			 */
-			return(true);
+			if(!isset($this->registry->datastore->usergroups[$value]))
+			{
+				return(false);
+			}
+
+			$usergroups 			= $this->registry->datastore->usergroups;
+			$usergroups[$value]['users'] 	= Helper::factory('database')->count('users', Array(
+														'usergroupid' => $value
+														));
+
+			return($this->registry->datastore->rebuild('usergroups', $usergroups));
 		}
 	}
 ?>
