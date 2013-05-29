@@ -24,6 +24,7 @@
 	 - export()
 	 - import()
 	Added support global template variables using \Tuxxedo\Template (Kalle)
+	Added \Tuxxedo\Template\Layout as a non MVC version of \Tuxxedo\MVC\View\Layout (Kalle)
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
 	Added \Tuxxedo\Exception\BasicMulti (Kalle)
 	Added CLI support to the core, error handlers, and 'tuxxedo_cli_error()' for terminals (Kalle)

@@ -18,7 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Template;
+	use Tuxxedo\Template\Layout;
 	use Tuxxedo\Version;
 
 
@@ -41,9 +41,9 @@
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
-	echo new Template('index', true, Array(
-						'app'		=> $configuration['application'], 
-						'debug'		=> $configuration['debug'], 
-						'version'	=> Version::FULL
-						));
+	echo new Layout('index', Array(
+					'app'		=> $configuration['application'], 
+					'debug'		=> $configuration['debug'], 
+					'version'	=> Version::FULL
+					));
 ?>
