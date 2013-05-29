@@ -222,8 +222,6 @@
 		 *
 		 * @param	mixed				The value to handle
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
-		 *
-		 * @wip
 		 */
 		public function virtualPhrases($value)
 		{
