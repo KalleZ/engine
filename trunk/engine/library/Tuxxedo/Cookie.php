@@ -72,17 +72,17 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			if(!($options = $registry->datastore->options))
+			if(!($options = $registry->options))
 			{
 				return;
 			}
 
 			self::$options = Array(
-						'expires'	=> $options['cookie_expires'], 
-						'prefix'	=> $options['cookie_prefix'], 
-						'domain'	=> $options['cookie_domain'], 
-						'path'		=> $options['cookie_path'], 
-						'secure'	=> $options['cookie_secure']
+						'expires'	=> $options->cookie_expires, 
+						'prefix'	=> $options->cookie_prefix, 
+						'domain'	=> $options->cookie_domain, 
+						'path'		=> $options->cookie_path, 
+						'secure'	=> $options->cookie_secure
 						);
 		}
 
