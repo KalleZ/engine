@@ -123,38 +123,17 @@
 		 * Defines one or more rewrite rules for autoloading 
 		 * paths
 		 *
-		 * @param	string|array			The class or an array of classes to define custom rules for
+		 * @param	string				The class to define custom rules for
 		 * @param	string				The class separator, defaults to a backslash
 		 * @param	string				The root path to load from
 		 * @return	void				No value is returned
 		 */
 		public static function routeAsPath($path, $separator = NULL, $root = NULL)
 		{
-			$separator 	= ($separator !== NULL ? $separator : self::$separator);
-			$root 		= ($root !== NULL ? $root : self::$root);
-
-			if(\is_array($path))
-			{
-				if(!$path)
-				{
-					return;
-				}
-
-				foreach($path as $p)
-				{
-					self::$routes['path'][$p] = Array(
-										'separator'	=> $separator, 
-										'root'		=> $root
-										);
-				}
-			}
-			else
-			{
-				self::$routes['path'][$path] = Array(
-									'separator'	=> $separator, 
-									'root'		=> $root
-									);
-			}
+			self::$routes['path'][$path] = Array(
+								'separator'	=> ($separator !== NULL ? $separator : self::$separator), 
+								'root'		=> ($root !== NULL ? $root : self::$root)
+								);
 		}
 
 		/**
@@ -167,22 +146,7 @@
 		 */
 		public static function routeAsRegex($regex, $replacement)
 		{
-			if(\is_array($regex) && \is_array($replacement))
-			{
-				if(!$regex || !$replacements || ($length = \sizeof($regex)) != \sizeof($replacement))
-				{
-					return;
-				}
-
-				for($n = 0; $n < $length; ++$n)
-				{
-					self::$routes['regex'][$regex[$n]] = $replacement[$n];
-				}
-			}
-			else
-			{
-				self::$routes['regex'][$regex] = $replacement;
-			}
+			self::$routes['regex'][$regex] = $replacement;
 		}
 
 		/**
@@ -196,24 +160,7 @@
 		 */
 		public static function routeAsCallback($match, $callback)
 		{
-			if(\is_array($match) && \is_array($callback))
-			{
-				if(!$match || !$callback || ($length = \sizeof($match)) != \sizeof($callback))
-				{
-					return;
-				}
-
-				for($n = 0; $n < $length; ++$n)
-				{
-					if(!\is_callable($callback[$n]))
-					{
-						continue;
-					}
-
-					self::$routes['callback'][$match[$n]] = $callback[$n];
-				}
-			}
-			elseif(\is_callable($callback))
+			if(\is_callable($callback))
 			{
 				self::$routes['callback'][$match] = $callback;
 			}

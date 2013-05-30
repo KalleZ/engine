@@ -66,9 +66,10 @@
 											), 
 							'title'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'validation'	=> self::VALIDATE_CALLBACK, 
+											'callback'	=> Array(__CLASS__, 'isValidPhrasegroupTitle')
 											), 
-							'language'	=> Array(
+							'languageid'	=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
 											'validation'	=> self::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidLanguageId')
@@ -104,11 +105,11 @@
 									FROM 
 										`' . \TUXXEDO_PREFIX . 'phrasegroups` 
 									WHERE 
-										`title` = \'%s\'', $identifier);
+										`id` = %d', $identifier);
 
 				if(!$phrasegroup || !$phrasegroup->getNumRows())
 				{
-					throw new Exception('Invalid phrase group title passed to datamanager');
+					throw new Exception('Invalid phrase group id passed to datamanager');
 
 					return;
 				}
@@ -133,6 +134,30 @@
 		public static function isValidLanguageId(Adapter $dm, Registry $registry, $languageid = NULL)
 		{
 			return($languageid === NULL || $registry->datastore->languages && isset($registry->datastore->languages[$languageid]));
+		}
+
+		/**
+		 * Checks whether a phrasegroup title is valid or not
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The phrasegroup title
+		 * @return	boolean				True if the phrasegroup title is valid, otherwise false
+		 */
+		public static function isValidPhrasegroupTitle(Adapter $dm, Registry $registry, $title = NULL)
+		{
+			$query = $registry->db->query('
+							SELECT 
+								`id`
+							FROM 
+								`' . \TUXXEDO_PREFIX . 'phrasegroups` 
+							WHERE 
+									`languageid` = %d 
+								AND 
+									`title` = \'%s\' 
+							LIMIT 1', $dm->data['languageid'], $registry->db->escape($title));
+
+			return(!$query || !$query->getNumRows());
 		}
 
 		/**
@@ -195,17 +220,19 @@
 			{
 				$groups = $this->registry->db->equery('
 									SELECT 
-										`option` 
+										`id` 
 									FROM 
 										`' . \TUXXEDO_PREFIX . 'phrases` 
 									WHERE 
-										`phrasegroup` = \'%s\'', $old_group);
+											`phrasegroup` = \'%s\'
+										AND 
+											`languageid` = %d', $this->registry->db->escape($old_group), $this->registry->db->escape($this->data['language']));
 
 				if($groups && $groups->getNumRows())
 				{
 					foreach($groups as $row)
 					{
-						$dm 			= Adapter::factory('phrase', $row['title']);
+						$dm 			= Adapter::factory('phrase', $row['id']);
 						$dm['phrasegroup']	= $new_group;
 
 						$dm->save();
@@ -233,7 +260,7 @@
 			$phrasegroups 				= $this->registry->datastore->phrasegroups;
 			$phrasegroups[$value]['phrases'] 	= Helper::factory('database')->count('phrases', Array(
 															'phrasegroup' 	=> $value, 
-															'languageid'	=> $this->data['language']
+															'languageid'	=> $this->data['languageid']
 															));
 
 			return($this->registry->datastore->rebuild('phrasegroups', $phrasegroups));

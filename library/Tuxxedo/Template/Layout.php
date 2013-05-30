@@ -53,7 +53,7 @@
 	class Layout extends Template
 	{
 		/**
-		 * Constructor, constructs a new view layout
+		 * Constructor, constructs a new template layout
 		 *
 		 * @param	string				The name of the view to load as layout
 		 * @param	array				Default variables to set
@@ -72,7 +72,7 @@
 		}
 
 		/**
-		 * Whether to set this as a layout or not
+		 * Whether to set this as a layout or not, disabled
 		 *
 		 * @param	boolean				Set to true to activate layout mode, and false to not, disabled for 'Layout' templates
 		 * @return	void				No value is returned

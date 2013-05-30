@@ -136,6 +136,15 @@
 			$this->session 		= $this->registry->invoke('\Tuxxedo\Session');
 			$this->sessiondm	= Datamanager\Adapter::factory('session', Session::$id);
 
+			if($this->sessiondm['rehash'])
+			{
+				Session::regenerate();
+
+				$this->sessiondm->delete();
+
+				$this->sessiondm = Datamanager\Adapter::factory('session');
+			}
+
 			if($autodetect && ($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))
 			{
 				$this->userinfo				= $userinfo;
@@ -156,6 +165,7 @@
 			$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
 			$this->sessiondm['location']		= \TUXXEDO_SELF;
 			$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
+			$this->sessiondm['lastactivity']	= \TIMENOW_UTC;
 
 			if(!isset($this->session['__engine_csrf_token']))
 			{

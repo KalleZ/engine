@@ -133,12 +133,38 @@
 		}
 
 		/**
+		 * Checks whether an ISO code is valid or not (syntax wise)
+		 *
+		 * @param	\Tuxxedo\Datamanager\Adapter	The current datamanager adapter
+		 * @param	\Tuxxedo\Registry		The Registry reference
+		 * @param	string				The ISO code
+		 * @return	boolean				True if the ISO code is valid, otherwise false
+		 */
+		public static function isValidISOTitle(Adapter $dm, Registry $registry, $iso = NULL)
+		{
+			$len = strlen($iso);
+
+			if($len != 2 && $len != 5)
+			{
+				return(false);
+			}
+
+			foreach(str_split($iso) as $index => $char)
+			{
+				if(is_numeric($char) || ($len == 5 && $index == 2 && $char != '-'))
+				{
+					return(false);
+				}
+			}
+
+			return(true);
+		}
+
+		/**
 		 * Save the language in the datastore, this method is called from 
 		 * the parent class in cases when the save method was success
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
-		 *
-		 * @wip
 		 */
 		public function rebuild()
 		{
@@ -154,28 +180,27 @@
 
 			if($this->context == self::CONTEXT_DELETE)
 			{
-				/**
-				 * @todo This bit does not account for phrasegroups are language specific, not global!
-				 */
-
 				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
 
-				$phrases = $this->registry->db->query('
-									SELECT 
-										`id`
-									FROM
-										`' . \TUXXEDO_PREFIX . 'phrases`
-									WHERE 
-										`language` = %d', $this['id']);
-
-				if(!$phrases || !$phrases->getNumRows())
+				foreach(Array('phrasegroup' => 'phrasegroups', 'phrase' => 'phrases') as $singular => $plural)
 				{
-					return(false);
-				}
+					$query = $this->registry->db->query('
+										SELECT 
+											`id` 
+										FROM 
+											`' . \TUXXEDO_PREFIX . $plural . '`
+										WHERE 
+											`languageid` = %d', $this->data['id']);
 
-				foreach($phrases as $row)
-				{
-					Adapter::factory('phrase', $row['id'])->delete();
+					if(!$query || !$query->getNumRows())
+					{
+						return(false);
+					}
+
+					foreach($query as $row)
+					{
+						Adapter::factory($singular, $row['id'])->delete();
+					}
 				}
 			}
 
@@ -208,8 +233,6 @@
 		 *
 		 * @param	mixed				The value to handle
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
-		 *
-		 * @wip
 		 */
 		public function virtualInherit($value)
 		{
@@ -218,9 +241,56 @@
 				return(false);
 			}
 
-			/**
-			 * @todo Fetch and update phrases + phrasegroups here
-			 */
+			$phrasegroups = $this->registry->db->query('
+									SELECT 
+										`id`, 
+										`title`
+									FROM 
+										`' . \TUXXEDO_PREFIX . 'phrasegroups` 
+									WHERE 
+										`languageid` = %d', $value);
+
+			if(!$phrasegroups || !$phrasegroups->getNumRows())
+			{
+				return(false);
+			}
+
+			foreach($phrasegroups as $pgroup)
+			{
+				$dm 			= Adapter::factory('phrasegroup', $pgroup['id'], self::OPT_LOAD_ONLY, $this);
+				$dm['languageid'] 	= $this->data['id'];
+
+				if(!$dm->save())
+				{
+					return(false);
+				}
+
+				$phrases = $this->registry->db->query('
+									SELECT 
+										`id` 
+									FROM 
+										`' . \TUXXEDO_PREFIX . 'phrases` 
+									WHERE 
+											`languageid` = %d 
+										AND 
+											`phrasegroup` = \'%s\'', $value, $this->registry->db->escape($pgroup['title']));
+
+				if(!$phrases || !$phrases->getNumRows())
+				{
+					continue;
+				}
+
+				foreach($phrases as $phrase)
+				{
+					$dm 			= Adapter::factory('phrase', $phrase['id'], self::OPT_LOAD_ONLY, $this);
+					$dm['languageid']	= $this->data['id'];
+
+					if(!$dm->save())
+					{
+						return(false);
+					}
+				}
+			}
 
 			return(true);
 		}

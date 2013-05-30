@@ -38,7 +38,7 @@
 	 * Virtual field dispatcher
 	 *
 	 * This interface tells the datamanager API to dispatch virtual 
-	 * fields to methods like: "username" -> "VirtualUsername".
+	 * fields to methods like: "username" -> "virtualUsername".
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0

@@ -80,6 +80,11 @@
 											'type'		=> self::FIELD_PROTECTED, 
 											'validation'	=> self::VALIDATE_NUMERIC, 
 											'default'	=> \TIMENOW_UTC
+											), 
+							'rehash'	=> Array(
+											'type'		=> self::FIELD_OPTIONAL, 
+											'validation'	=> self::VALIDATE_BOOLEAN, 
+											'default'	=> 0
 											)
 							);
 
@@ -100,8 +105,24 @@
 
 			if($identifier)
 			{
-				$this->identifier = $this->fields['sessionid']['default'] = $identifier;
-				$this->reidentify = true;
+				$this->identifier 	= $this->fields['sessionid']['default'] = $identifier;
+				$this->reidentify 	= true;
+				$this->data 		= $this->getDataStruct();
+
+				$session = $registry->db->query('
+									SELECT 
+										* 
+									FROM 
+										`' . \TUXXEDO_PREFIX . 'sessions` 
+									WHERE 
+										`sessionid` = \'%s\'', $registry->db->escape($identifier));
+
+				if($session && $session->getNumRows())
+				{
+					$this->data = $session->fetchAssoc();
+
+					$session->free();
+				}
 			}
 
 			parent::init($registry, $options, $parent);
