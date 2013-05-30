@@ -75,6 +75,7 @@
 
 	$registry->register('db', '\Tuxxedo\Database');
 	$registry->register('datastore', '\Tuxxedo\Datastore')->cache(Array('languages', 'options', 'phrasegroups'));
+	$registry->register('options', '\Tuxxedo\Options');
 	$registry->register('intl', '\Tuxxedo\Intl')->cache(Array('datamanagers'));
 
 	$intldm = $intl->getPhrasegroup('datamanagers');
@@ -85,7 +86,8 @@
 
 	foreach($datastore->languages as $id => $languagedata)
 	{
-		IO::headline('Checking datamanager phrases for \'' . $languagedata['title'] . '\'');
+		IO::headline($languagedata['title']);
+		IO::ul();
 
 		foreach(glob(ADAPTERS_DIR . '*.php') as $file)
 		{
@@ -95,7 +97,6 @@
 
 			$fields = $dm_fields($last);
 
-			IO::ul();
 			IO::li($last);
 
 			foreach($fields as $field)
@@ -126,9 +127,9 @@
 			{
 				IO::ul(IO::TAG_END);
 			}
-
-			IO::ul(IO::TAG_END);
 		}
+
+		IO::ul(IO::TAG_END);
 	}
 
 	if(isset($missing))

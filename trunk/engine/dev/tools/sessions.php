@@ -19,7 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\User;
-	use Tuxxedo\Helper;
+	use Tuxxedo\Datamanager;
 
 
 	/**
@@ -74,21 +74,39 @@
 		tuxxedo_error('There is currently no active sessions', false);
 	}
 
+	function cleanup_cron(&$affected_rows = NULL)
+	{
+		global $registry;
+
+		$registry->db->query('
+					DELETE FROM 
+						`' . TUXXEDO_PREFIX . 'sessions` 
+					WHERE 
+						`lastactivity` + %d < %d', $registry->options->cookie_expires, TIMENOW_UTC);
+
+		if($affected_rows !== NULL)
+		{
+			$affected_rows = $registry->db->getAffectedRows();
+		}
+	}
+
 	switch(strtolower($input->get('do')))
 	{
-		case('kill'):
+		case('rehash'):
 		{
 			switch(strtolower($input->get('action')))
 			{
 				case('single'):
 				{
 					if(($db->equery('
-								DELETE FROM 
+								UPDATE 
 									`' . TUXXEDO_PREFIX . 'sessions` 
+								SET 
+									`rehash` = 1
 								WHERE 
 									`sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows())
 					{
-						tuxxedo_redirect('Killed session with success', './sessions.php');
+						tuxxedo_redirect('Marked session for rehashing', './sessions.php');
 					}
 
 					tuxxedo_error('Invalid session');
@@ -96,23 +114,43 @@
 				break;
 				default:
 				{
-					Helper::factory('database')->truncate('sessions');
+					cleanup_cron();
 
-					tuxxedo_redirect('Deleted all active and expired sessions', './sessions.php');
+					$db->query('
+							UPDATE 
+								`' . TUXXEDO_PREFIX . 'sessions` 
+							SET 
+								`rehash` = 1');
+
+					tuxxedo_redirect('Cleaned up all expired sessions and marked active ones for rehashing', './sessions.php');
 				}
 				break;
 			}
 		}
 		break;
+		case('expired'):
+		{
+			$dm = Datamanager\Adapter::factory('session', $input->get('id'));
+
+			if(!$dm->export())
+			{
+				tuxxedo_error('Invalid session identifier');
+			}
+
+			$dm['lastactivity'] = TIMENOW_UTC - $registry->options->cookie_expires - 1;
+
+			$dm->save();
+
+			tuxxedo_redirect('Session marked as \'expired\'', './sessions.php');
+		}
+		break;
 		case('cron'):
 		{
-			$result = $db->query('
-						DELETE FROM 
-							`' . TUXXEDO_PREFIX . 'sessions` 
-						WHERE 
-							`lastactivity` + %d < %d', $options->cookie_expires, TIMENOW_UTC);
+			$affected_rows = 0;
 
-			tuxxedo_redirect('Executed cronjob, ' . $db->getAffectedRows() . ' session(s) affected', './sessions.php');
+			cleanup_cron($affected_rows);
+
+			tuxxedo_redirect('Executed cronjob, ' . $affected_rows . ' session(s) affected', './sessions.php');
 		}
 		break;
 		case('details'):
@@ -152,7 +190,7 @@
 		{
 			$userlist = '';
 
-			$registry->set('user', new User(false, false));
+			$registry->set('user', new User(false));
 
 			while($session = $sessions->fetchObject())
 			{

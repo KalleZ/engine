@@ -20,7 +20,12 @@
 	<td>
 		{$session->expires}
 	</td>
-	<td>
-		<a href=\"./sessions.php?do=kill&action=single&id={$session->sessionid}\">Kill</a>
+	<td" . (($session->rehash) ? (" colspan=\"2\"") : '') . ">
+		" . (($session->rehash) ? ("Yes") : ("No")) . "
 	</td>
+" . ((!$session->rehash) ? ("
+	<td>
+		<a href=\"./sessions.php?do=rehash&action=single&id={$session->sessionid}\">Rehash</a>
+	</td>
+") : '') . "
 </tr>

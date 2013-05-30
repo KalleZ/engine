@@ -45,5 +45,27 @@ INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`
 (47, 'dm_phrasegroup_title', 'Phrasegroup title', 1, 'datamanagers'),
 (48, 'dm_phrasegroup_language', 'Phrasegroup language identifier', 1, 'datamanagers');
 
-ALTER TABLE `languages` CHANGE `default` `isdefault` TINYINT( 1 ) NOT NULL DEFAULT '0'
-ALTER TABLE `styles` CHANGE `defaultstyle` `isdefault` TINYINT( 1 ) NOT NULL DEFAULT '0'
+INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`) VALUES
+(49, 'dm_language_id', 'Language identifier', 1, 'datamanagers'),
+(50, 'dm_language_title', 'Language title', 1, 'datamanagers'),
+(51, 'dm_language_developer', 'Language developer', 1, 'datamanagers'),
+(52, 'dm_language_isotitle', 'Language ISO code value', 1, 'datamanagers'),
+(53, 'dm_language_isdefault', 'Language default setting', 1, 'datamanagers'),
+(54, 'dm_language_charset', 'Language character set', 1, 'datamanagers');
+
+INSERT INTO `phrases` (`id`, `title`, `translation`, `languageid`, `phrasegroup`) VALUES
+(55, 'dm_phrase_id', 'Phrase identifier', 1, 'datamanagers'),
+(56, 'dm_phrase_title', 'Phrase title', 1, 'datamanagers'),
+(57, 'dm_phrase_translation', 'Phrase translation', 1, 'datamanagers'),
+(58, 'dm_phrase_languageid', 'Phrase language identifier', 1, 'datamanagers'),
+(59, 'dm_phrase_phrasegroup', 'Phrase phrasegroup', 1, 'datamanagers');
+
+ALTER TABLE `languages` CHANGE `default` `isdefault` TINYINT( 1 ) NOT NULL DEFAULT '0';
+ALTER TABLE `styles` CHANGE `defaultstyle` `isdefault` TINYINT( 1 ) NOT NULL DEFAULT '0';
+
+ALTER TABLE `phrasegroups` CHANGE `language` `languageid` INT( 11 ) NOT NULL;
+
+UPDATE `phrases` SET `title` = 'dm_style_isdefault' WHERE `title` = 'dm_style_defaultstyle' LIMIT 1;
+UPDATE `phrases` SET `title` = 'dm_phrasegroup_languageid' WHERE `title` = 'dm_phrasegroup_language' LIMIT 1;
+
+ALTER TABLE `sessions` ADD `rehash` INT( 1 ) NOT NULL DEFAULT '0';

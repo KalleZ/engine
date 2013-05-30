@@ -8,6 +8,8 @@
 	Added the event handling subsystem (Kalle)
 	Added debug tracing for SQL queries (Kalle)
 	Added new datamanagers: (Kalle)
+	 - Language
+	 - Phrase
 	 - Phrasegroup
 	Added new helpers: (Kalle)
 	 - Timer
@@ -21,8 +23,8 @@
 	 - preInit()
 	 - postInit()
 	Added new methods to \Tuxxedo\Design\InfoAccess: (Kalle)
-	 - export()
 	 - import()
+	 - export()
 	Added support global template variables using \Tuxxedo\Template (Kalle)
 	Added \Tuxxedo\Template\Layout as a non MVC version of \Tuxxedo\MVC\View\Layout (Kalle)
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
@@ -33,6 +35,9 @@
 	Added more slightly better UI for /dev/scripts when used on the CLI (Kalle)
 	Added the $populated parameter to \Tuxxedo\Datamanager\Adapter::getVirtualFields() (Kalle)
 	Added the $where parameter to \Tuxxedo\Helper\Database::count() (Kalle)
+	Added the ability to actually 'kill' a session by forcing it to be rehashed on next request (Kalle)
+	Added a minor tool to the session devtool that can mark a session as expired for debugging purposes (Kalle)
+	Added the \Tuxxedo\Datamanager::getDataStruct() method (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -56,9 +61,11 @@
 	Changed tuxxedo_debug_backtrace() to work with handlers, so customer handlers are correctly reported as such in traces (Kalle)
 	Changed api_analyze.php to show the number of unique namespaces rather than total declarations in the statistics summary (Kalle)
 	Changed the method name '\Tuxxedo\Intl::filter()' to '\Tuxxedo\Intl::doPhrasegroupFilter()' (Kalle)
+	Changed the method name '\Tuxxedo\Datastore::filter()' to '\Tuxxedo\Datastore::doCacheFilter()' (Kalle)
 	Changed the API dump to only be exported as json, and relocated it to /dev/scripts/api/engine_api.json, causing the JSON extension to be available for api_analyze.php to function (Kalle)
 	Changed the name of style.defaultstyle to style.isdefault (Kalle)
 	Changed the name of language.default to language.isdefault (Kalle)
+	Changed the name of phrasegroup.language to phrasegroup.languageid (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
@@ -73,6 +80,7 @@
 	Fixed a bug in \Tuxxedo\Loader::addRouteAsCallback() that caused custom separators and roots not to be correctly set (Kalle)
 	Fixed check_dm_phrases.php to correctly function if no virtual fields are available (Kalle)
 	Fixed an issue in the style datamanager that would cause an incorrect sync to the datastore when re-collecting template ids (Kalle)
+	Fixed the session datamanager so that it will actually allocate the \Tuxxedo\Datamanager\Adapter::$data property if possible (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)
@@ -81,6 +89,10 @@
 	Removed \Tuxxedo\Intl\Phrasegroup::getPhrases() (use \Tuxxedo\Design\InfoAccess::export()) (Kalle)
 	Removed the 'parameters' field structure option in datamanagers (Kalle)
 	Removed tuxxedo_multi_error() from the debug backtrace descriptions (Kalle)
+	Removed multi support from the autoloader routing methods: (Kalle)
+	 - \Tuxxedo\Loader::routeAsPath()
+	 - \Tuxxedo\Loader::routeAsRegex()
+	 - \Tuxxedo\Loader::routeAsCallback()
 
 	Template changes:
 	 - Updated

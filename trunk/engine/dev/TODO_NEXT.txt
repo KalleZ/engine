@@ -1,6 +1,6 @@
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" Alpha 2
+	Tuxxedo Engine 1.2.0 "Beloved" Alpha 3
 	--------------------------------------
 
 	DevTools
@@ -22,8 +22,9 @@
 	     - Reset
 	     - Search
 
-	Internationalization
+	Internationalization & Datamanagers
 	 - Add support for 'resetable' phrases
+	 - Phrases should use ids instead of named groups, which makes validation much easier
 
 
 	Tuxxedo Engine 1.2.0 "Beloved" Beta 1
@@ -46,6 +47,8 @@
 	   - Add the ability to fetch file docblocks
 	   - Add the ability to fetch default values of properties and the like
 	   - Add the ability to parse <code> blocks correctly
+	   - Add the ability to show @todo
+	   - Add the ability to use @wip on all docblocks (file, namespace, class, interface, procedural functions)
 	 - check_dm_phrases.php
 	   - Add a check for obsolete and orphan phrases
 	 - sync_templates.php

@@ -1,4 +1,4 @@
-<if expression="!isset($_GET['do']) || (isset($_GET['do']) && !in_array(strtolower($_GET['do']), Array('kill', 'cron', 'details')))">
+<if expression="!isset($_GET['do']) || (isset($_GET['do']) && !in_array(strtolower($_GET['do']), Array('rehash', 'cron', 'details')))">
 <form action="./sessions.php" method="post">
 <div class="box">
 	<h4>Auto refresh</h4>
@@ -28,17 +28,19 @@ setTimeout('location.href = location.href;', {$refresh_timer} * 1000);
 		again that session last was active.
 	</p>
 	<p>
-		This tool allows you to view the current active sessions, aswell 
-		as killing a specific session or them all.
+		This tool allows you to view the current active sessions. Click 
+		a session id to find out detailed information about that paticular 
+		session.
 	</p>
 	<p>
-		Click a session id to find out detailed information about that 
-		paticular session.
+		Rehashing can be applied to active sessions, forcing the next 
+		action taken with that ID to be regenerated, affectively causing 
+		them to log out.
 	</p>
 
 	<ul>
 		<li><a href="./sessions.php">Display active sessions</a></li>
-		<li><a href="./sessions.php?do=kill&action=all">Kill all active sessions</a></li>
+		<li><a href="./sessions.php?do=rehash&action=all">Rehash all active sessions</a></li>
 		<li><a href="./sessions.php?do=cron">Run clean-up cron</a></li>
 	</ul>
 </div>

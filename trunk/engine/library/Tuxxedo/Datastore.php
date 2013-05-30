@@ -210,7 +210,7 @@
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
-			$elements = \array_filter($elements, Array($this, 'filter'));
+			$elements = \array_filter($elements, Array($this, 'doCacheFilter'));
 
 			if(!$elements)
 			{
@@ -272,7 +272,7 @@
 		 * @param	string				The datastore element to check
 		 * @return	boolean				Returns true if the element not is loaded, otherwise false
 		 */
-		protected function filter($element)
+		protected function doCacheFilter($element)
 		{
 			return(!isset($this->cache[$element]));
 		}

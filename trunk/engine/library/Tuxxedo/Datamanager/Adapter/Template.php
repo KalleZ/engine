@@ -55,7 +55,7 @@
 	class Template extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
-		 * Fields for validation of styles
+		 * Fields for validation of templates
 		 *
 		 * @var		array
 		 */
@@ -299,7 +299,6 @@
 
 			return(true);
 		}
-
 
 		/**
 		 * Resets the data to its default values while keeping the 

@@ -821,7 +821,7 @@
 								DELETE FROM 
 									`' . $this->tablename . '`
 								WHERE 
-									`' . $this->idname .'` = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[$this->idname] : $this->identifier)));
+									`' . $this->idname . '` = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[$this->idname] : $this->identifier)));
 		}
 
 		/**
@@ -842,6 +842,23 @@
 		public function getFields()
 		{
 			return(\array_keys($this->fields));
+		}
+
+		/**
+		 * Gets default data to allocate the $data property internally
+		 *
+		 * @return	array				Returns an array with the same structure as the $data property and false on error
+		 */
+		public function getDataStruct()
+		{
+			$data = Array();
+
+			foreach($this->fields as $name => $props)
+			{
+				$data[$name] = (isset($props['default']) ? $props['default'] : '');
+			}
+
+			return($data);
 		}
 
 		/**

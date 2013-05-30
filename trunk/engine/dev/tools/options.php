@@ -259,7 +259,7 @@
 						$options[$option]['cached']		= isset($datastore->options[$option]);
 						$options[$option]['dumpvalue']		= ($opt['value'] !== $opt['defaultvalue'] ? var_dump_option($opt['type'], $opt['value']) : '');
 						$options[$option]['defaultvalue']	= var_dump_option($opt['type'], $opt['defaultvalue']);
-						$options[$option]['cachedvalue']	= ($options[$option]['cached'] ? var_dump_option($opt['type'], $datastore->options[$opt['option']]) : 'N/A');
+						$options[$option]['cachedvalue']	= ($options[$option]['cached'] ? var_dump_option($opt['type'], $datastore->options[$opt['option']]['value']) : 'N/A');
 
 						if(!in_array($opt['category'], $datastore->optioncategories))
 						{

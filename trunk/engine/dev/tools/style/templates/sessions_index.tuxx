@@ -20,6 +20,9 @@
 			<td nowrap=\"nowrap\">
 				Session expiration
 			</td>
+			<td>
+				Rehash?
+			</td>
 			<td class=\"end\">
 				&nbsp;
 			</td>

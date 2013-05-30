@@ -5,11 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Alpha 2
 	------------------------------------------------
-
-	Datamanagers
-	 - Add new datamanagers
-	   - Language
-	   - Phrase
-
-	Core
-	 - DevTools shows incorrect datastore values, possible sync error somewhere, but does not report it

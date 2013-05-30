@@ -16,6 +16,12 @@
 		</tr>
 		<tr>
 			<td>
+				Marked for rehash?</td>
+			<td>
+				" . (($session['rehash']) ? ("Yes") : ("No")) . "</td>
+		</tr>
+		<tr>
+			<td>
 				Last activity</td>
 			<td>
 				{$session['lastactivity']}</td>
@@ -28,7 +34,7 @@
 		</tr>
 		<tr>
 			<td>
-				Browser</td>
+				User agent string</td>
 			<td>
 				{$session['useragent']}</td>
 		</tr>
@@ -66,7 +72,8 @@
 </div>
 
 <div class=\"box\">
-	<input type=\"button\" onclick=\"location.href = './sessions.php?do=kill&action=single&id={$session['sessionid']}';\" value=\"Kill\" />
+	<input type=\"button\" onclick=\"location.href = './sessions.php?do=rehash&action=single&id={$session['sessionid']}';\" value=\"Rehash\" /> 
+	<input type=\"button\" onclick=\"location.href = './sessions.php?do=expired&id={$session['sessionid']}';\" value=\"Mark as 'expired'\" />
 </div>
 
 {$footer}

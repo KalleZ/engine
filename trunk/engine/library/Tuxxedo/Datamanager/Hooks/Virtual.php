@@ -48,8 +48,8 @@
 	interface Virtual
 	{
 		/**
-		 * This event method is called if the query to store the 
-		 * data was success, to rebuild the datastore cache
+		 * Virtually handles all fields, unlike singluar fields which 
+		 * VirtualDispatcher provides.
 		 *
 		 * @param	string				The virtual field to handle
 		 * @param	mixed				The virtual field's value
