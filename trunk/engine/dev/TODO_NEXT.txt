@@ -1,31 +1,5 @@
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" Alpha 3
-	--------------------------------------
-
-	DevTools
-	 - Add new the internationalization component
-	   - Language
-	     - Add
-	     - Edit
-	     - Delete
-	     - List
-	   - Phrasegroup
-	     - Add
-	     - Edit
-	     - Delete
-	     - List
-	   - Phrase
-	     - Add
-	     - Edit
-	     - Delete
-	     - Reset
-	     - Search
-
-	Internationalization & Datamanagers
-	 - Add support for 'resetable' phrases
-	 - Phrases should use ids instead of named groups, which makes validation much easier
-
 
 	Tuxxedo Engine 1.2.0 "Beloved" Beta 1
 	-------------------------------------
