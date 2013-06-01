@@ -117,7 +117,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 2;
+		const PREVIEW_NUMBER		= 3;
 
 		/**
 		 * Development codename, this value is always the same for each 
@@ -147,6 +147,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Beloved" Alpha 2';
+		const FULL			= '1.2.0 "Beloved" Alpha 3 (Experimental)';
 	}
 ?>
