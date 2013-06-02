@@ -482,9 +482,7 @@
 					<li><a href=\"./\"" . ((SCRIPT_NAME == 'index') ? (" class=\"current\"") : '') . "><span>Home</span></a></li>
 					<li><a href=\"./datastore.php\"" . ((SCRIPT_NAME == 'datastore') ? (" class=\"current\"") : '') . "><span>Datastore</span></a></li>
 					<li><a href=\"./styles.php\"" . ((SCRIPT_NAME == 'styles') ? (" class=\"current\"") : '') . "><span>Styles &amp; Templates</span></a></li>
-<!--
 					<li><a href=\"./intl.php\"" . ((SCRIPT_NAME == 'intl') ? (" class=\"current\"") : '') . "><span>Internationalization</span></a></li>
--->
 					<li><a href=\"./options.php\"" . ((SCRIPT_NAME == 'options') ? (" class=\"current\"") : '') . "><span>Options</span></a></li>
 					<li><a href=\"./users.php\"" . ((SCRIPT_NAME == 'users') ? (" class=\"current\"") : '') . "><span>Users &amp; Usergroups</span></a></li>
 					<li><a href=\"./sessions.php\"" . ((SCRIPT_NAME == 'sessions') ? (" class=\"current\"") : '') . "><span>Sessions</span></a></li>
