@@ -482,9 +482,7 @@
 					<li><a href="./"<if expression="SCRIPT_NAME == 'index'"> class="current"</if>><span>Home</span></a></li>
 					<li><a href="./datastore.php"<if expression="SCRIPT_NAME == 'datastore'"> class="current"</if>><span>Datastore</span></a></li>
 					<li><a href="./styles.php"<if expression="SCRIPT_NAME == 'styles'"> class="current"</if>><span>Styles &amp; Templates</span></a></li>
-<!--
 					<li><a href="./intl.php"<if expression="SCRIPT_NAME == 'intl'"> class="current"</if>><span>Internationalization</span></a></li>
--->
 					<li><a href="./options.php"<if expression="SCRIPT_NAME == 'options'"> class="current"</if>><span>Options</span></a></li>
 					<li><a href="./users.php"<if expression="SCRIPT_NAME == 'users'"> class="current"</if>><span>Users &amp; Usergroups</span></a></li>
 					<li><a href="./sessions.php"<if expression="SCRIPT_NAME == 'sessions'"> class="current"</if>><span>Sessions</span></a></li>
