@@ -38,6 +38,7 @@
 	Added the ability to actually 'kill' a session by forcing it to be rehashed on next request (Kalle)
 	Added a minor tool to the session devtool that can mark a session as expired for debugging purposes (Kalle)
 	Added the \Tuxxedo\Datamanager::getDataStruct() method (Kalle)
+	Added the ability for 'header' and 'footer' templates to be customized, no longer requiring them to be called a specific name (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -93,6 +94,10 @@
 	 - \Tuxxedo\Loader::routeAsPath()
 	 - \Tuxxedo\Loader::routeAsRegex()
 	 - \Tuxxedo\Loader::routeAsCallback()
+	Removed the CSRF code from \Tuxxedo\User, until a better implementation is implemented, effectively removing the following methods: (Kalle)
+	 - \Tuxxedo\User::getCSRFToken()
+	 - \Tuxxedo\User::newCSRFToken()
+	Removed the case insensitivity for 'header' and 'footer' templates when using 'layout'-mode in \Tuxxedo\Template (Kalle)
 
 	Template changes:
 	 - Updated

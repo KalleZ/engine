@@ -91,6 +91,37 @@
 	}
 
 	/**
+	 * Widget hook function - intl
+	 *
+	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\Tuxxedo\Registry	The registry reference
+	 * @param	string			The template name of the widget
+	 * @return	string			Returns the compiled sidebar widget
+	 */
+	function widget_hook_intl(Style $style, Registry $registry, $widget)
+	{
+		$style->cache(Array($widget));
+
+		$buffer 	= '';
+		$languageid	= $registry->input->get('language', Input::TYPE_NUMERIC);
+
+		foreach($registry->datastore->languages as $value => $info)
+		{
+			$name 		= $info['title'];
+			$selected	= ($languageid == $value);
+
+			eval('$buffer .= "' . $style->fetch('option') . '";');
+		}
+
+		$default 	= ($languageid == $registry->options->language_id);
+		$valid		= isset($registry->datastore->languages[$languageid]);
+
+		eval('$buffer = "' . $style->fetch($widget) . '";');
+
+		return($buffer);
+	}
+
+	/**
 	 * Widget hook function - sessions
 	 *
 	 * @param	\Devtools\Style		The Devtools style object

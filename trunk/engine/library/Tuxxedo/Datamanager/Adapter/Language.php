@@ -168,7 +168,7 @@
 		 */
 		public function rebuild()
 		{
-			if(!$this->identifier && !$this['id'])
+			if(!$this->identifier && !$this->data['id'])
 			{
 				return(false);
 			}
@@ -178,7 +178,15 @@
 				$datastore = Array();
 			}
 
-			if($this->context == self::CONTEXT_DELETE)
+			if($this->context == self::CONTEXT_SAVE)
+			{
+				$tmp = $this->data;
+
+				unset($tmp['inherit']);
+
+				$datastore[$this->data['id']] = $tmp;
+			}
+			elseif($this->context == self::CONTEXT_DELETE)
 			{
 				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
 
@@ -194,7 +202,7 @@
 
 					if(!$query || !$query->getNumRows())
 					{
-						return(false);
+						continue;
 					}
 
 					foreach($query as $row)
@@ -209,7 +217,7 @@
 				return(false);
 			}
 
-			if(isset($this['isdefault']) && $this->registry->options->language_id != $this['id'])
+			if($this->data['isdefault'] && $this->registry->options->language_id != $this->data['id'])
 			{
 				$dm 			= Adapter::factory('language', $this->registry->options->language_id, 0, $this);
 				$dm['isdefault']	= false;
@@ -219,7 +227,7 @@
 					return(false);
 				}
 
-				$this->registry->options->language_id = $this['id'];
+				$this->registry->options->language_id = $this->data['id'];
 
 				$this->registry->options->save();
 			}

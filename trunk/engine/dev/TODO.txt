@@ -8,11 +8,6 @@
 
 	DevTools
 	 - Add new the internationalization component
-	   - Language
-	     - Add
-	     - Edit
-	     - Delete
-	     - List
 	   - Phrasegroup
 	     - Add
 	     - Edit
@@ -25,6 +20,14 @@
 	     - Reset
 	     - Search
 
-	Internationalization & Datamanagers
+	Internationalization
 	 - Add support for 'resetable' phrases
 	 - Phrases should use ids instead of named groups, which makes validation much easier
+
+	Datamanagers
+	 - Session
+	  - Cleanup, remove the hacky part and make sure \Tuxxedo\User work
+
+	Bugs
+	 - Language
+	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same

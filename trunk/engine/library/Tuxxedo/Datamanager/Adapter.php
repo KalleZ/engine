@@ -808,7 +808,7 @@
 
 			$this->context = self::CONTEXT_DELETE;
 
-			if(($this instanceof Hooks\Cache && !$this->rebuild()) || ($this instanceof Hooks\Recache && !$this->recache()))
+			if(($this instanceof Hooks\Cache && !$this->rebuild()))
 			{
 				$this->context = self::CONTEXT_NONE;
 

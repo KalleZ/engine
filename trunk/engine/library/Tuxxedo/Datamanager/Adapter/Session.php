@@ -109,13 +109,13 @@
 				$this->reidentify 	= true;
 				$this->data 		= $this->getDataStruct();
 
-				$session = $registry->db->query('
+				$session = $registry->db->equery('
 									SELECT 
 										* 
 									FROM 
 										`' . \TUXXEDO_PREFIX . 'sessions` 
 									WHERE 
-										`sessionid` = \'%s\'', $registry->db->escape($identifier));
+										`sessionid` = \'%s\'', $identifier);
 
 				if($session && $session->getNumRows())
 				{

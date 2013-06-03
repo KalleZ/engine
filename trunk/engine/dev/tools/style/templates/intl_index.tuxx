@@ -1,0 +1,11 @@
+{$header}
+
+<div class=\"box\">
+	<h4>Internationalization manager</h4>
+
+	<p>
+		Pick a language on the left to work with.
+	</p>
+</div>
+
+{$footer}

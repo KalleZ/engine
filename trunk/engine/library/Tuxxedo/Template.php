@@ -85,6 +85,20 @@
 		protected $buffer		= '';
 
 		/**
+		 * Template name - header
+		 *
+		 * @var		string
+		 */
+		public static $header_template	= 'header';
+
+		/**
+		 * Template name - footer
+		 *
+		 * @var		string
+		 */
+		public static $footer_template	= 'footer';
+
+		/**
 		 * The variables used within the template
 		 *
 		 * @var		array
@@ -188,15 +202,11 @@
 		 */
 		public function parse()
 		{
-			$lowered_name = \strtolower($this->name);
-
-			if($this->layout && $lowered_name != 'header' && $lowered_name != 'footer')
+			if($this->layout && $this->name != self::$footer_template && $this->name != self::$header_template)
 			{
-				$header = new self('header', true);
-				$footer = new self('footer', true);
+				$header = new self(self::$header_template, true);
+				$footer = new self(self::$footer_template, true);
 			}
-
-			unset($lowered_name);
 
 			if($this->variables || self::$globals)
 			{

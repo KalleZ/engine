@@ -69,9 +69,9 @@
 		/**
 		 * Boolean flag to for the saving method
 		 *
-		 * @var		boolean
+		 * @var		array
 		 */
-		protected $changed			= false;
+		protected $changed			= Array();
 
 
 		/**
@@ -110,8 +110,6 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	array				The configuration array
 		 * @return	object				Object instance
-		 *
-		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if neither the 'options' and 'optioncategories' datastore is loaded
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
@@ -150,7 +148,7 @@
 
 			$old_value 		= $this->options[$option];
 			$this->options[$option] = $value;
-			$this->changed		= true;
+			$this->changed[]	= $option;
 
 			return($old_value);
 		}
@@ -169,17 +167,20 @@
 				return(true);
 			}
 
-			$dm 		= Datamanager\Adapter::factory('datastore', 'options');
-			$dm['data']	= $this->options;
-
-			$retval 	= $dm->save();
-
-			if($retval)
+			foreach($this->changed as $index => $option)
 			{
-				$this->changed = false;
+				$dm 		= Datamanager\Adapter::factory('option', $option);
+				$dm['value']	= $this->options[$option];
+
+				if(!$dm->save())
+				{
+					return(false);
+				}
+
+				unset($this->changed[$index]);
 			}
 
-			return($retval);
+			return(true);
 		}
 	}
 ?>

@@ -49,6 +49,16 @@
 			this.location = './styles.php?style=' + select.options[select.selectedIndex].value + '&do=templates&action=list';
 		}
 
+		function engine_intl_change(select)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './intl.php?language=' + select.options[select.selectedIndex].value + '&do=language&action=edit';
+		}
+
 		function engine_swap_password_to_text(id)
 		{
 			$(id).type = ($(id).type == 'text' ? 'password' : 'text');

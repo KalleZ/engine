@@ -101,7 +101,7 @@
 					}
 					elseif(isset($_POST['submit']))
 					{
-						if($action == 'edit' && !isset($_POST['defaultstyle']) && sizeof($datastore->styledata) < 2)
+						if($action == 'edit' && !isset($_POST['defaultstyle']) && sizeof($datastore->styleinfo) < 2)
 						{
 							unset($styledm);
 

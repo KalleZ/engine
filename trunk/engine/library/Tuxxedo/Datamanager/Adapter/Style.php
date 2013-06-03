@@ -135,7 +135,7 @@
 		 */
 		public function rebuild()
 		{
-			if(!$this->identifier && !$this['id'])
+			if(!$this->identifier && !$this->data['id'])
 			{
 				return(false);
 			}
@@ -172,7 +172,7 @@
 												`styleid` = %d
  											ORDER BY 
 												`id` 
-											ASC', $this['id']);
+											ASC', $this->data['id']);
 
 				if($templates && $templates->getNumRows())
 				{
@@ -186,7 +186,7 @@
 					$virtual['templateids'] = \implode(',', $ids);
 				}
 
-				$datastore[(integer) $this['id']] = $virtual;
+				$datastore[(integer) $this->data['id']] = $virtual;
 			}
 
 			if(!$this->registry->datastore->rebuild('styleinfo', $datastore))
@@ -194,7 +194,7 @@
 				return(false);
 			}
 
-			if(isset($this['isdefault']) && $this->registry->options->style_id != $this['id'])
+			if($this->data['isdefault'] && $this->registry->options->style_id != $this->data['id'])
 			{
 				$dm 			= Adapter::factory('style', $this->registry->options->style_id, 0, $this);
 				$dm['isdefault']	= false;
@@ -204,7 +204,7 @@
 					return(false);
 				}
 
-				$this->registry->options->style_id = $this['id'];
+				$this->registry->options->style_id = $this->data['id'];
 
 				$this->registry->options->save();
 			}
