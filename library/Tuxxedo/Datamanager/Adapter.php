@@ -927,7 +927,7 @@
 		 */
 		protected function hooks(Adapter $self)
 		{
-			if(($self instanceof Hooks\Cache && !$self->rebuild()) || ($self instanceof Hooks\Recache && !$self->recache()))
+			if(($self instanceof Hooks\Cache && !$self->rebuild()))
 			{
 				return(false);
 			}
