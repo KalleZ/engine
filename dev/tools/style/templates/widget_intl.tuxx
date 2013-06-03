@@ -1,0 +1,52 @@
+<div class=\"box\">
+	<h4>Languages</h4>
+
+	<div class=\"center\">
+		<select onchange=\"engine_intl_change(this);\" id=\"language_list\">
+			{$buffer}
+		</select>
+
+		<input type=\"button\" onclick=\"engine_intl_change($('language_list'));\" value=\"Select\" />
+	</div>
+</div>
+
+<div class=\"box\">
+	<h4>Tasks</h4>
+" . ((isset($languageid) && isset($valid) && $valid) ? ("
+	<p>
+		Pick a task below to alter this language, phrasegroups 
+		and phrases.
+	</p>
+
+	<ul>
+		<li><a href=\"./intl.php?language={$languageid}&do=language&action=edit\">Edit language info</a></li>
+" . ((!$default) ? ("
+		<li><a href=\"./intl.php?language={$languageid}&do=language&action=delete\" class=\"redlink\" onclick=\"return(confirm('Are you sure you wish to delete this language? It cannot be undone'));\">Delete this language</a></li>
+") : '') . "
+	</ul>
+	<br />
+
+	<ul>
+		<li><a href=\"./intl.php?language={$languageid}&do=phrasegroup&action=add\">Add phrasegroup</a></li>
+		<li><a href=\"./intl.php?language={$languageid}&do=phrasegroup&action=list\">Manage phrasegroups</a></li>
+	</ul>
+	<br />
+
+	<ul>
+		<li><a href=\"./intl.php?language={$languageid}&do=phrase&action=add\">Add phrase</a></li>
+		<li><a href=\"./intl.php?language={$languageid}&do=phrase&action=list\">Manage phrases</a></li>
+		<li><a href=\"./intl.php?language={$languageid}&do=phrase&action=search\">Search phrases</a></li>
+	</ul>
+") : ("
+	<p>
+		Languages can be used to re-use the same code to create applications 
+		thats available in multiple languages. Languages uses phrasegroups to 
+		encapsulate phrases so they are categorized and phrases for the actual 
+		translation.
+	</p>
+
+	<ul>
+		<li><a href=\"./intl.php?do=language&action=add\">Add new language</a></li>
+	</ul>
+")) . "
+</div>

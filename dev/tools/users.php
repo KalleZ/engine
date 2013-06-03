@@ -194,7 +194,7 @@
 								continue;
 							}
 
-							$bitfield |= $datastore->permissions[$permission];
+							$bitfield |= (integer) $datastore->permissions[$permission];
 						}
 
 						$dm['permissions'] = $bitfield;
@@ -208,6 +208,7 @@
 
 					foreach($datastore->permissions as $name => $bits)
 					{
+						$bits			= (integer) $bits;
 						$permitted 		= ($dm['permissions'] & $bits);
 						$group_permitted	= ($udm['permissions'] & $bits);
 

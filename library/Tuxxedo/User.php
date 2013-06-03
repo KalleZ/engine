@@ -167,14 +167,6 @@
 			$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
 			$this->sessiondm['lastactivity']	= \TIMENOW_UTC;
 
-			if(!isset($this->session['__engine_csrf_token']))
-			{
-				Session::regenerate();
-
-				$this->session['__engine_csrf_token'] 	= \sha1(self::getPasswordSalt(40));
-				$this->sessiondm['sessionid'] 		= Session::$id;
-			}
-
 			$this->setPermissionConstants();
 		}
 
@@ -195,44 +187,6 @@
 								`' . \TUXXEDO_PREFIX . 'sessions` 
 							WHERE 
 								`lastactivity` + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
-		}
-
-		/**
-		 * Get the specified CSRF token
-		 *
-		 * @return	string			Returns a token string thats hexadecimal, and boolean false if its undefined
-		 */
-		public function getCSRFToken()
-		{
-			if(!Session::$started)
-			{
-				return;
-			}
-
-			if(!isset($this->session['csrf_token']))
-			{
-				return(false);
-			}
-
-			return($this->session['csrf_token']);
-		}
-
-		/**
-		 * Creates a new CSRF token, note that this regenerates the session id and therefore 
-		 * the relevant APIs must update the session id if its kept in storage.
-		 *
-		 * @return	string			Returns the new token value
-		 */
-		public function getNewCSRFToken()
-		{
-			if(!Session::$started)
-			{
-				return;
-			}
-
-			Session::regenerate();
-
-			return($this->session['csrf_token'] = \sha1(self::getPasswordSalt(40)));
 		}
 
 		/**
@@ -273,7 +227,7 @@
 			Session::set('userid', $userinfo->id);
 			Session::set('password', $userinfo->password);
 
-			$this->sessiondm 			= Datamanager\Adapter::factory('session', Session::$id, Datamanager\Adapter::OPT_DEFAULT);
+			$this->sessiondm 			= Datamanager\Adapter::factory('session', Session::$id);
 			$this->userinfo				= $userinfo;
 			$this->usergroupinfo			= (object) $this->registry->datastore->usergroups[$userinfo->usergroupid];
 			$this->sessiondm['userid'] 		= $userinfo->id;

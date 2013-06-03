@@ -242,7 +242,10 @@
 
 			if($this->context == self::CONTEXT_SAVE)
 			{
-				$options[$this['option']] = $this['value'];
+				$options[$this['option']] = Array(
+									'category'	=> $this->data['category'], 
+									'value'		=> $this->data['value']
+									);
 			}
 
 			return($this->registry->datastore->rebuild('options', $options));
