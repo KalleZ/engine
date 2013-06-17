@@ -350,11 +350,13 @@
 
 			$usergroups = $this->registry->datastore->usergroups;
 
-			--$usergroups[$this->usergroupid]['users'];
-
 			if($this->context == self::CONTEXT_SAVE)
 			{
 				++$usergroups[$this['usergroupid']]['users'];
+			}
+			elseif($this->context == self::CONTEXT_DELETE)
+			{
+				--$usergroups[$this->usergroupid]['users'];
 			}
 
 			return($this->registry->datastore->rebuild('usergroups', $usergroups));
