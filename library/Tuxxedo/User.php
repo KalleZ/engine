@@ -401,7 +401,8 @@
 		/**
 		 * Checks whether the user's permissions can access a 
 		 * certain feature. Note that this checks for the user's 
-		 * permissions only, not per usergroup permissions
+		 * permissions only, not per usergroup permissions unless 
+		 * the secondary parameter is true
 		 *
 		 * @param	integer			The permission to check
 		 * @param	boolean			Whether to check if the user's group have permission as a fallback
@@ -442,6 +443,29 @@
 			}
 
 			return(($this->usergroupinfo->permissions & (integer) $permission) !== 0);
+		}
+
+		/**
+		 * Defines global constant values of datastore permissions
+		 *
+		 * @return	void			No value is returned
+		 */
+		public function setPermissionConstants()
+		{
+			if(!$this->registry->datastore->permissions)
+			{
+				return;
+			}
+
+			foreach($this->registry->datastore->permissions as $name => $bits)
+			{
+				$name = 'PERMISSION_' . strtoupper($name);
+
+				if(!\defined('\\' . $name))
+				{
+					\define($name, (integer) $bits);
+				}
+			}
 		}
 
 		/**
@@ -506,29 +530,6 @@
 			}
 
 			return($salt);
-		}
-
-		/**
-		 * Defines global constant values of datastore permissions
-		 *
-		 * @return	void			No value is returned
-		 */
-		public function setPermissionConstants()
-		{
-			if(!$this->registry->datastore->permissions)
-			{
-				return;
-			}
-
-			foreach($this->registry->datastore->permissions as $name => $bits)
-			{
-				$name = 'PERMISSION_' . strtoupper($name);
-
-				if(!\defined('\\' . $name))
-				{
-					\define($name, (integer) $bits);
-				}
-			}
 		}
 	}
 ?>
