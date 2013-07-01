@@ -6,6 +6,11 @@
 	Tuxxedo Engine 1.2.0 "Beloved" Alpha 2
 	------------------------------------------------
 
+	Core
+	 - Require PHP 5.4
+	 - Implement the backtracing rewrite
+	 - Implement trait support, and possible generators support if needed for backtraces
+
 	DevTools
 	 - Add new the internationalization component
 	   - Phrasegroup
@@ -31,5 +36,7 @@
 	Bugs
 	 - Language
 	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same
+	 - Template
+	  - Saving a template without a source causes it to be converted to NULL
 	 - Autoloader on case sensitive systems does not work, Helper, Style Storage, Datamanagers
 	 - Look into why converting to UTF-8 on some systems blanks out templates in the template manager

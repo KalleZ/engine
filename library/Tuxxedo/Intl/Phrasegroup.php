@@ -53,6 +53,14 @@
 	class Phrasegroup extends Design\InfoAccess
 	{
 		/**
+		 * Phrase group name
+		 *
+		 * @var		string
+		 */
+		protected $phrasegroup;
+
+
+		/**
 		 * Constructs a new phrasegroup object
 		 *
 		 * @param	\Tuxxedo\Intl			Reference to the internationalization object to use for this phrasegroup
@@ -69,7 +77,18 @@
 				throw Exception\Basic('Unable to instanciate phrasegroup. Phrasegroup \'%s\' is not loaded into cache', $phrasegroup);
 			}
 
+			$this->phrasegroup = $phrasegroup;
 			$this->information = $phrases;
+		}
+
+		/**
+		 * Gets the phrasegroup name for this object
+		 *
+		 * @return	string				Returns the phrasegroup name
+		 */
+		public function getName()
+		{
+			return($this->phrasegroup);
 		}
 	}
 ?>

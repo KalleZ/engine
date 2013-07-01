@@ -27,7 +27,7 @@
 	 */
 	function tuxxedo_debug_backtrace(Exception $e = NULL)
 	{
-		static $includes, $callbacks, $fulltrace, $descriptions, $debug_args;
+		static $includes, $callbacks, $fulltrace, $debug_args;
 
 		if(!$includes)
 		{
