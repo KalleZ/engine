@@ -214,6 +214,11 @@
 		 */
 		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone = NULL)
 		{
+			if($timezone === NULL && (($dm->options & self::OPT_LOAD_ONLY) || !$dm->identifier))
+			{
+				$timezone = 'UTC';
+			}
+
 			if(!isset($registry->datastore->timezones[$timezone]))
 			{
 				return(false);

@@ -298,7 +298,7 @@
 
 					foreach($fields as $value)
 					{
-						$name 		= ucfirst(str_replace('_', ' ', $value));
+						$name 		= ucfirst(str_replace(Array('_', 'usergroupid'), Array(' ', 'usergroup id'), $value));
 						$selected	= (isset($safe_query) && $value == (string) $_POST['query_field']);
 
 						eval('$fields_dropdown .= "' . $style->fetch('option') . '";');
