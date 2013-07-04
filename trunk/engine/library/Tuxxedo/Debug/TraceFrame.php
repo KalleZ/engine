@@ -143,7 +143,7 @@
 		protected $reflection_class;
 
 		/**
-		 * Is exception?
+		 * Boolean flags
 		 *
 		 * @var			boolean
 		 */
@@ -202,6 +202,16 @@
 		public function isInclude()
 		{
 			return((boolean) ($this->flags & self::FLAG_INCLUDE));
+		}
+
+		/**
+		 * Gets the boolean flags bitfield
+		 *
+		 * @return	integer				Returns the boolean flags for things like 'isException()', 'isInclude()', ...
+		 */
+		public function getFlags()
+		{
+			return($this->flags);
 		}
 
 		/**
