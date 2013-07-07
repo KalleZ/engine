@@ -142,7 +142,8 @@
 
 			if(!$debug_args)
 			{
-				$debug_args =  (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
+				$debug_args 	= (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
+				$includes	= Array('include', 'include_once', 'require', 'require_once');
 			}
 
 			$exception_handler 	= \strtolower(\tuxxedo_handler('exception'));
@@ -172,19 +173,88 @@
 				}
 
 				$flags		= 0;
-				$call		= $callargs = $refcall = '';
+				$call		= $callargs = $refcall = $refclass = '';
 				$notes 		= (isset($t['type']) && $t['type'] == '::' ? Array('Static call') : Array());
 				$line		= 0;
 				$file		= '';
 
 				if(isset($t['function']))
 				{
-					$function = \strtolower($t['function']);
+					$lcfunction 	= \strtolower($t['function']);
+					$args		= true;
+
+					if(isset($t['class']))
+					{
+						$refclass 	= 'ReflectionMethod';
+						$refcall	= $t['class'] . '::' . $t['function'];
+
+						if($t['type'] == '->')
+						{
+							switch($lcfunction)
+							{
+								case('__construct'):
+								case($lcfunction):
+								{
+									$call 		= 'new \\' . $t['class'];
+									$notes[]	= 'Class constructor';
+								}
+								break;
+								case('__destruct'):
+								{
+									$call		= '(unset) $' . $t['class'];
+									$notes[]	= 'Class destructor';
+								}
+								break;
+								default:
+								{
+									$call = '$' . $t['class'] . '->' . $t['function'];
+								}
+							}
+						}
+						elseif($t['type'] == '::')
+						{
+							$call = '\\' . $t['class'] . '::' . $t['function'];
+						}
+
+						if(!\in_array($exception_handler, self::getCallVariants($t)))
+						{
+							$flags &= TraceFrame::FLAG_EXCEPTION;
+						}
+					}
+					else
+					{
+						if(\in_array($lcfunction, $includes))
+						{
+							$notes[] = 'Include';
+						}
+						else
+						{
+							if($lcfunction === $exception_handler)
+							{
+								$flags &= TraceFrame::FLAG_EXCEPTION;
+							}
+
+							$refclass 	= 'ReflectionFunction';
+							$refcall	= $t['function'];
+						}
+					}
 				}
 				else
 				{
 					$call 		= $callargs = 'Main()';
 					$notes[] 	= 'Called from main scope';
+				}
+
+				if(($is_closure = strpos($call, '{closure}')) !== false || !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && \in_array(\strtolower($bt[$n + 1]['function']), $callbacks) || empty($t['file']) && empty($t['line']) && isset($bt[$n + 1]))
+				{
+					if(isset($is_closure) && $is_closure !== false)
+					{
+						$notes[] = 'Closure';
+					}
+
+					$notes[] = 'Callback';
+
+					unset($is_closure);
 				}
 
 				if(isset($t['line']))
@@ -197,12 +267,13 @@
 					$file = $t['file'];
 				}
 
-				if(isset($function) && isset($handlers[$function]))
+				if(isset($t['function']) && isset($handlers[$function]))
 				{
-					$notes[] = $handlers[$function];
+					$flags		&= TraceFrame::FLAG_HANDLER;
+					$notes[] 	= $handlers[$function];
 				}
 
-				$trace 			= new TraceFrame('REFLECTION_CLASS', 'FLAGS');			/* ? */
+				$trace 			= new TraceFrame($refclass, $flags);				/* ? */
 				$trace->frame		= $x;								/* ? */
 				$trace->call		= $call;							/* ? */
 				$trace->callargs	= $callargs;							/* ? */
@@ -213,11 +284,32 @@
 				$trace->notes		= \join(', ', $notes);						/* ? */
 
 				$stack[] = $trace;
-
-				unset($function);
 			}
 
 			return($stack);
+		}
+
+		/**
+		 * Gets callbackable variants for a trace frame
+		 *
+		 * @param	array				The trace frame returned by \debug_backtrace()
+		 * @return	array				Returns an array that can be used for comparison of callbacks based on the frame
+		 */
+		protected static function getCallVariants(Array $trace)
+		{
+			$variants = Array(
+						$trace['class'] . '::' . $trace['function'], 
+						'\\' . $trace['class'] . '::' . $trace['function'], 
+						Array($trace['class'], $trace['function']), 
+						Array('\\' . $trace['class'], $trace['function'])
+						);
+
+			if(isset($trace['object']))
+			{
+				$variants[] = Array($trace['object'], $trace['function']);
+			}
+
+			return($variants);
 		}
 
 		/**
