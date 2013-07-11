@@ -62,6 +62,14 @@
 		 */
 		protected $usergroupid;
 
+
+		/**
+		 * Whether or not to rehash the password
+		 *
+		 * @var		boolean
+		 */
+		protected $rehash_password	= false;
+
 		/**
 		 * Fields for validation of users
 		 *
@@ -172,7 +180,20 @@
 		}
 
 		/**
-		 * Overloads the set method, so we can catch timezones 
+		 * Overloads the arrayaccess set method, so that we can catch 
+		 * overloads in the set method
+		 *
+		 * @param	scalar			The information row name to set
+		 * @param	mixed			The information row value to set
+		 * @return	void			No value is returned
+		 */
+		public function offsetSet($field, $value)
+		{
+			$this->set($field, $value);
+		}
+
+		/**
+		 * Overloads the set method, so we can catch timezones and password
 		 * if updated so the validator passes
 		 *
 		 * @param	string				The field to update
@@ -187,8 +208,12 @@
 			{
 				$this->fields['timezone']['parameters'] = Array($value);
 			}
+			elseif($field == 'password')
+			{
+				$this->rehash_password = true;
+			}
 
-			$this->data->{$field} = $value;
+			$this->data[$field] = $value;
 		}
 
 		/**
@@ -328,7 +353,7 @@
 		 */
 		public static function isValidPassword(Adapter $dm, Registry $registry, $password = NULL)
 		{
-			if($password !== NULL)
+			if($password !== NULL && $dm->rehash_password)
 			{
 				$dm->data['salt'] 	= UserAPI::getPasswordSalt();
 				$dm->data['password']	= UserAPI::getPasswordHash($password, $dm->data['salt']);
