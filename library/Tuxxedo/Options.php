@@ -59,19 +59,26 @@
 	class Options extends Design\InfoAccess implements Design\Invokable
 	{
 		/**
+		 * Boolean flag to for the saving method
+		 *
+		 * @var		boolean
+		 */
+		protected $changed			= false;
+
+		/**
 		 * Holds the options, this is a reference to 
 		 * the datastore
 		 *
 		 * @var		array
 		 */
-		protected $options;
+		protected $options			= Array();
 
 		/**
-		 * Boolean flag to for the saving method
+		 * Holds a list of options and their categories
 		 *
 		 * @var		array
 		 */
-		protected $changed			= Array();
+		protected $categories			= Array();
 
 
 		/**
@@ -97,7 +104,8 @@
 				{
 					foreach($this->options as $option => $info)
 					{
-						$this->information[$info['category']]->{$option} = &$this->options[$option]['value'];
+						$this->categories[$option] 				= $info['category'];
+						$this->information[$info['category']]->{$option} 	= &$this->options[$option]['value'];
 					}
 				}
 			}
@@ -110,6 +118,8 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	array				The configuration array
 		 * @return	object				Object instance
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if neither the 'options' and 'optioncategories' datastore is loaded
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
@@ -147,8 +157,11 @@
 			}
 
 			$old_value 		= $this->options[$option];
-			$this->options[$option] = $value;
-			$this->changed[]	= $option;
+			$this->options[$option] = Array(
+							'category'	=> $this->categories[$option], 
+							'value'		=> $value
+							);
+			$this->changed		= true;
 
 			return($old_value);
 		}
@@ -167,20 +180,17 @@
 				return(true);
 			}
 
-			foreach($this->changed as $index => $option)
+			$dm 		= Datamanager\Adapter::factory('datastore', 'options');
+			$dm['data']	= $this->options;
+
+			$retval 	= $dm->save();
+
+			if($retval)
 			{
-				$dm 		= Datamanager\Adapter::factory('option', $option);
-				$dm['value']	= $this->options[$option];
-
-				if(!$dm->save())
-				{
-					return(false);
-				}
-
-				unset($this->changed[$index]);
+				$this->changed = false;
 			}
 
-			return(true);
+			return($retval);
 		}
 	}
 ?>
