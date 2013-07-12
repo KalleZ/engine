@@ -138,12 +138,13 @@
 		 */
 		public function getTrace(\Exception $e = NULL, $skip_frames = 2)
 		{
-			static $debug_args;
+			static $debug_args, $includes, $callbacks;
 
 			if(!$debug_args)
 			{
 				$debug_args 	= (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
 				$includes	= Array('include', 'include_once', 'require', 'require_once');
+				$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array');
 			}
 
 			$exception_handler 	= \strtolower(\tuxxedo_handler('exception'));
@@ -193,7 +194,7 @@
 							switch($lcfunction)
 							{
 								case('__construct'):
-								case($lcfunction):
+								case(\strtolower($t['class'])):
 								{
 									$call 		= 'new \\' . $t['class'];
 									$notes[]	= 'Class constructor';
@@ -216,9 +217,9 @@
 							$call = '\\' . $t['class'] . '::' . $t['function'];
 						}
 
-						if(!\in_array($exception_handler, self::getCallVariants($t)))
+						if(\in_array($exception_handler, self::getCallVariants($t)))
 						{
-							$flags &= TraceFrame::FLAG_EXCEPTION;
+							$flags |= TraceFrame::FLAG_EXCEPTION;
 						}
 					}
 					else
@@ -231,11 +232,13 @@
 						{
 							if($lcfunction === $exception_handler)
 							{
-								$flags &= TraceFrame::FLAG_EXCEPTION;
+								$flags |= TraceFrame::FLAG_EXCEPTION;
 							}
 
 							$refclass 	= 'ReflectionFunction';
 							$refcall	= $t['function'];
+
+							$call		= '\\' . $refcall;
 						}
 					}
 				}
@@ -250,6 +253,10 @@
 					if(isset($is_closure) && $is_closure !== false)
 					{
 						$notes[] = 'Closure';
+					}
+					else
+					{
+						$flags |= TraceFrame::FLAG_CALLBACK;
 					}
 
 					$notes[] = 'Callback';
@@ -267,23 +274,28 @@
 					$file = $t['file'];
 				}
 
-				if(isset($t['function']) && isset($handlers[$function]))
+				if(isset($t['function']) && isset($handlers[$t['function']]))
 				{
-					$flags		&= TraceFrame::FLAG_HANDLER;
-					$notes[] 	= $handlers[$function];
+					$flags		|= TraceFrame::FLAG_HANDLER;
+					$notes[] 	= $handlers[$t['function']];
 				}
 
-				$trace 			= new TraceFrame($refclass, $flags);				/* ? */
-				$trace->frame		= $x;								/* ? */
-				$trace->call		= $call;							/* ? */
-				$trace->callargs	= $callargs;							/* ? */
-				$trace->reflection_call	= $refcall;							/* ? */
+				$callargs	= $call . (isset($t['args']) && $t['args'] ? '(' . \join(', ', \array_map(Array(__CLASS__, 'getArgTypeData'), $t['args'])) . ')' : '()');
+				$call 		.= '()';
+
+				$trace 			= new TraceFrame($refclass, $flags);
+				$trace->frame		= $x;
+				$trace->call		= $call;
+				$trace->callargs	= $callargs;
+				$trace->reflection_call	= $refcall;
 				$trace->current		= (($n - $skip_frames - 1) == $x++);				/* ? */
-				$trace->line		= $line;							/* ? */
-				$trace->file		= $file; 							/* ? */
+				$trace->line		= $line;
+				$trace->file		= $file;
 				$trace->notes		= \join(', ', $notes);						/* ? */
 
 				$stack[] = $trace;
+
+				// ADD EXCEPTION!!!!111oneoneonetwo
 			}
 
 			return($stack);
@@ -310,6 +322,43 @@
 			}
 
 			return($variants);
+		}
+
+		/**
+		 * Gets the argument type data
+		 *
+		 * @param	mixed				The argument to display
+		 * @return	string				Returns a more human readable value of the type data to ease debugging
+		 */
+		protected function getArgTypeData($argument)
+		{
+			switch(\gettype($argument))
+			{
+				case('object'):
+				{
+					if($argument instanceof \Exception)
+					{
+						return('Exception(\\' . \get_class($argument) . ')');
+					}
+					elseif($argument instanceof \Closure)
+					{
+						return('$closure');
+					}
+
+					return('Object(\\' . \get_class($argument) . ')');
+				}
+				case('array'):
+				{
+					return('Array(' . \sizeof($argument) . ')');
+				}
+				default:
+				{
+					\ob_start();
+					\var_dump($argument);
+
+					return(\rtrim(\ob_get_clean()));
+				}
+			}
 		}
 
 		/**
