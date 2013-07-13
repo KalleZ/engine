@@ -6,7 +6,9 @@
 	------------------------------------------------
 
 	Added the event handling subsystem (Kalle)
-	Added debug tracing for SQL queries (Kalle)
+	Added new and improved debugging mode: (Kalle)
+	 - SQL queries trace mode
+	 - Rewritten debug backtracing API
 	Added new datamanagers: (Kalle)
 	 - Language
 	 - Phrase

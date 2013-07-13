@@ -48,7 +48,6 @@
 	require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
 
 	date_default_timezone_set('UTC');
 

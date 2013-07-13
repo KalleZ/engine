@@ -69,7 +69,6 @@
 	require(TUXXEDO_LIBRARY . '/DevTools/functions_widget.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
-	require(TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
 
 	/**
 	 * Set database table prefix constant

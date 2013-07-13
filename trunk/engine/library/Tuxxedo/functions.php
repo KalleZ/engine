@@ -18,6 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Debug;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
@@ -98,7 +99,8 @@
 			$error_handler = (($cli_mode = (PHP_SAPI == 'cli')) !== false ? 'tuxxedo_cli_error' : 'tuxxedo_doc_error');
 		}
 
-		$message = htmlentities($message);
+		$message 	= htmlentities($message);
+		$prefix 	= '<strong>Warning:</strong> ';
 
 		if($level & E_RECOVERABLE_ERROR)
 		{
@@ -124,10 +126,6 @@
 		elseif($level & E_STRICT)
 		{
 			$prefix = '<strong>Strict standards:</strong> ';
-		}
-		else
-		{
-			$prefix = '<strong>Warning:</strong> ';
 		}
 
 		if($cli_mode)
@@ -223,6 +221,11 @@
 		$errors		= ($registry ? Registry::globals('errors') : false);
 		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
+
+		if(!$exception)
+		{
+			$e = NULL;
+		}
 
 		if(empty($message))
 		{
@@ -452,7 +455,7 @@
 				'</div>' . PHP_EOL
 				);
 
-			$bt = ($exception ? tuxxedo_debug_backtrace($e) : tuxxedo_debug_backtrace());
+			$bt = new Debug\Backtrace($e);
 
 			if($bts = sizeof($bt))
 			{
@@ -470,13 +473,13 @@
 					'</tr>' . PHP_EOL
 					);
 
-				foreach($bt as $n => $trace)
+				foreach($bt as $trace)
 				{
 					echo(
 						'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
-						'<td align="center"><h3>' . ++$n . '</h3></td>' . PHP_EOL . 
+						'<td align="center"><h3>' . ($trace->frame + 1) . '</h3></td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->call . '</td>' . PHP_EOL . 
-						'<td nowrap="nowrap" style="width: 100%">' . $trace->file . '</td>' . PHP_EOL . 
+						'<td nowrap="nowrap" style="width: 100%">' . tuxxedo_trim_path($trace->file) . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap" align="right">' . $trace->line . '</td>' . PHP_EOL . 
 						'<td nowrap="nowrap">' . $trace->notes . '</td>' . PHP_EOL . 
 						'</tr>' . PHP_EOL
@@ -557,16 +560,16 @@
 								'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL
 								);
 
-							foreach($query['trace']['frames'] as $x => $trace)
+							foreach($query['trace']['frames'] as $trace)
 							{
-								if($x < 2)
+								if($trace->frame < 2)
 								{
 									continue;
 								}
 
 								echo(
 									'<tr>' . PHP_EOL . 
-									'<td>' . ($frames - $x) . '</td>' . PHP_EOL . 
+									'<td>' . ($frames - $trace->frame) . '</td>' . PHP_EOL . 
 									'<td class="value" style="width: 100%">' . $trace->call . '</td>' . PHP_EOL . 
 									'</tr>' . PHP_EOL
 									);
@@ -685,6 +688,11 @@
 		$errors		= ($registry ? Registry::globals('errors') : false);
 		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
+
+		if(!$exception)
+		{
+			$e = NULL;
+		}
 
 		if(empty($message))
 		{
@@ -820,7 +828,7 @@
 					);
 			}
 
-			$bt = ($exception ? tuxxedo_debug_backtrace($e) : tuxxedo_debug_backtrace());
+			$bt = new Debug\Backtrace($e);
 
 			if($bts = sizeof($bt))
 			{
@@ -831,10 +839,10 @@
 					'---------' . PHP_EOL
 					);
 
-				foreach($bt as $n => $trace)
+				foreach($bt as $trace)
 				{
 					echo(
-						'#' . ++$n . ': ' . ($trace->file && $trace->line ? $trace->file . '(' . $trace->line . '):' : '') . PHP_EOL . 
+						'#' . ($trace->frame + 1) . ': ' . ($trace->file && $trace->line ? tuxxedo_trim_path($trace->file) . '(' . $trace->line . '):' : '') . PHP_EOL . 
 						($trace->current ? '>>> ' : '') . (($configuration['debug']['fullbacktrace'] || $trace->current) ? $trace->callargs : $trace->call) . PHP_EOL .
 						PHP_EOL
 						);
@@ -881,15 +889,15 @@
 								PHP_EOL
 								);
 
-							foreach($query['trace']['frames'] as $x => $trace)
+							foreach($query['trace']['frames'] as $trace)
 							{
-								if($x < 2)
+								if($trace->frame < 2)
 								{
 									continue;
 								}
 
 								echo(
-									"\t#" . ($frames - $x) . ': ' . $trace->call . PHP_EOL
+									"\t#" . ($frames - $trace->frame) . ': ' . $trace->call . PHP_EOL
 									);
 							}
 

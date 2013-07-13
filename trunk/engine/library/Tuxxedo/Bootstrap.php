@@ -314,11 +314,6 @@
 				require(\TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 				require(\TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 
-				if($configuration['application']['debug'])
-				{
-					require(\TUXXEDO_LIBRARY . '/Tuxxedo/functions_debug.php');
-				}
-
 				tuxxedo_handler('exception', 'tuxxedo_exception_handler');
 				tuxxedo_handler('error', 'tuxxedo_error_handler');
 				tuxxedo_handler('shutdown', 'tuxxedo_shutdown_handler');

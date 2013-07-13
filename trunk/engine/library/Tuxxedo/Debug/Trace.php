@@ -62,7 +62,7 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	class Trace implements Design\Invokable
+	class Trace
 	{
 		/**
 		 * Timer
@@ -80,22 +80,6 @@
 
 
 		/**
-		 * Magic method called when creating a new instance of the 
-		 * object from the registry
-		 *
-		 * @param	\Tuxxedo\Registry	The Registry reference
-		 * @param	array			The configuration array
-		 * @return	void			No value is returned
-		 */
-		public static function invoke(Registry $registry, Array $configuration = NULL)
-		{
-			if(!\function_exists('tuxxedo_debug_backtrace'))
-			{
-				throw new Exception\Basic('The debugging backtrace function must be available prior to usage of debug tracing');
-			}
-		}
-
-		/**
 		 * Starts a trace
 		 *
 		 * @param	boolean				Whether or not to resume the old trace
@@ -103,7 +87,7 @@
 		 */
 		public function start()
 		{
-			$this->frames 	= \tuxxedo_debug_backtrace();
+			$this->frames 	= new Backtrace;
 			$this->timer	= Helper::factory('timer');
 
 			$this->timer->start('Debug tracer');

@@ -115,7 +115,7 @@
 		public $current			= false;
 
 		/**
-		 * Line number ('0' on callbacks)
+		 * Line number
 		 *
 		 * @var			integer
 		 */
