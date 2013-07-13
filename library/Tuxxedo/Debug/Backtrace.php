@@ -138,13 +138,11 @@
 		 */
 		public function getTrace(\Exception $e = NULL, $skip_frames = 2)
 		{
-			static $debug_args, $includes, $callbacks;
+			static $debug_args;
 
 			if(!$debug_args)
 			{
-				$debug_args 	= (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
-				$includes	= Array('include', 'include_once', 'require', 'require_once');
-				$callbacks	= Array('array_map', 'call_user_func', 'call_user_func_array');
+				$debug_args = (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
 			}
 
 			$exception_handler 	= \strtolower(\tuxxedo_handler('exception'));
@@ -163,7 +161,7 @@
 				$bt = \array_merge($bt, $e->getTrace());
 			}
 
-			$x	= 0;
+			$x	= $lx = 0;
 			$bts 	= \sizeof($bt);
 
 			foreach($bt as $n => $t)
@@ -174,7 +172,7 @@
 				}
 
 				$flags		= 0;
-				$call		= $callargs = $refcall = $refclass = '';
+				$call		= $refcall = $refclass = '';
 				$notes 		= (isset($t['type']) && $t['type'] == '::' ? Array('Static call') : Array());
 				$line		= 0;
 				$file		= '';
@@ -197,6 +195,8 @@
 								case(\strtolower($t['class'])):
 								{
 									$call 		= 'new \\' . $t['class'];
+									$refclass	= 'ReflectionClass';
+									$refcall	= '\\' . $t['class'];
 									$notes[]	= 'Class constructor';
 								}
 								break;
@@ -224,9 +224,11 @@
 					}
 					else
 					{
-						if(\in_array($lcfunction, $includes))
+						if(\in_array($lcfunction, self::$includes))
 						{
-							$notes[] = 'Include';
+							$flags 		|= TraceFrame::FLAG_INCLUDE;
+							$call		= $t['function'];
+							$notes[] 	= 'Include';
 						}
 						else
 						{
@@ -248,7 +250,7 @@
 					$notes[] 	= 'Called from main scope';
 				}
 
-				if(($is_closure = strpos($call, '{closure}')) !== false || !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && \in_array(\strtolower($bt[$n + 1]['function']), $callbacks) || empty($t['file']) && empty($t['line']) && isset($bt[$n + 1]))
+				if(($is_closure = strpos($call, '{closure}')) !== false || !isset($bt[$n + 1]['class']) && isset($bt[$n + 1]['function']) && \in_array(\strtolower($bt[$n + 1]['function']), self::$callbacks) || empty($t['file']) && empty($t['line']) && isset($bt[$n + 1]))
 				{
 					if(isset($is_closure) && $is_closure !== false)
 					{
@@ -260,8 +262,6 @@
 					}
 
 					$notes[] = 'Callback';
-
-					unset($is_closure);
 				}
 
 				if(isset($t['line']))
@@ -280,22 +280,42 @@
 					$notes[] 	= $handlers[$t['function']];
 				}
 
-				$callargs	= $call . (isset($t['args']) && $t['args'] ? '(' . \join(', ', \array_map(Array(__CLASS__, 'getArgTypeData'), $t['args'])) . ')' : '()');
-				$call 		.= '()';
+				if($flags & TraceFrame::FLAG_EXCEPTION)
+				{
+				}
 
 				$trace 			= new TraceFrame($refclass, $flags);
-				$trace->frame		= $x;
-				$trace->call		= $call;
-				$trace->callargs	= $callargs;
+				$trace->frame		= $lx++;
+				$trace->call		= $call . '()';
+				$trace->callargs	= $call . (isset($t['args']) && $t['args'] ? '(' . \join(', ', \array_map(Array(__CLASS__, 'getArgTypeData'), $t['args'])) . ')' : '()');
 				$trace->reflection_call	= $refcall;
-				$trace->current		= (($n - $skip_frames - 1) == $x++);				/* ? */
+				$trace->current		= (($n - $skip_frames - 1) == $x++);
 				$trace->line		= $line;
 				$trace->file		= $file;
-				$trace->notes		= \join(', ', $notes);						/* ? */
+				$trace->notes		= \join(', ', $notes);
 
-				$stack[] = $trace;
+				$stack[] 		= $trace;
 
-				// ADD EXCEPTION!!!!111oneoneonetwo
+				if($flags & TraceFrame::FLAG_EXCEPTION)
+				{
+					end($stack);
+
+					$index			= key($stack);
+
+					$etrace 		= new TraceFrame('ReflectionClass', TraceFrame::FLAG_EXCEPTION);
+					$etrace->frame		= $lx++;
+					$etrace->call		= 'throw new \\' . \get_class($t['args'][0]);
+					$etrace->callargs	= $etrace->call . '(' . self::getArgTypeData($t['args'][0]->getMessage()) . ')';
+					$etrace->current	= true;
+					$etrace->line		= $t['args'][0]->getLine();
+					$etrace->file		= $t['args'][0]->getFile();
+					$etrace->notes		= 'Exception';
+
+					$stack[$index]->current = false;
+					$stack[$index]->line	= $stack[$index]->file = '';
+
+					$stack[] 		= $etrace;
+				}
 			}
 
 			return($stack);

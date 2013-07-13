@@ -7,8 +7,6 @@
 	------------------------------------------------
 
 	Core
-	 - Require PHP 5.4
-	 - Implement the backtracing rewrite
 	 - Implement trait support, and possible generators support if needed for backtraces
 
 	DevTools
