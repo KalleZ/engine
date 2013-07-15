@@ -101,6 +101,15 @@
 	 - \Tuxxedo\User::getCSRFToken()
 	 - \Tuxxedo\User::newCSRFToken()
 	Removed the case insensitivity for 'header' and 'footer' templates when using 'layout'-mode in \Tuxxedo\Template (Kalle)
+	Removed auto convertion to UTF-8 when editing a template in the DevTools (Kalle)
+	Removed old global constants: (Kalle)
+	 - TUXXEDO_DEBUG
+	 - TUXXEDO_SELF
+	 - TUXXEDO_USERAGENT
+	Removed the $debug_trim parameter on tuxxedo_trim_path() (Kalle)
+	Removed the dependency on changing certain php.ini values (html_errors & magic_quotes_runtime) (Kalle)
+	Removed the $registry->configuration variable when initializing the bootstraper (Kalle)
+	Removed the page_print() function (Kalle)
 
 	Template changes:
 	 - Updated

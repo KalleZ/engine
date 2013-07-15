@@ -35,20 +35,6 @@
 	 */
 	define('ADAPTERS_DIR', realpath(__DIR__ . '/../..') . '/library/Tuxxedo/Datamanager/Adapter/');
 
-	/**
-	 * Compatibility constant - self
-	 *
-	 * @var		void
-	 */
-	const TUXXEDO_SELF	= NULL;
-
-	/**
-	 * Compatibility constant - user agent
-	 *
-	 * @var		void
-	 */
-	const TUXXEDO_USERAGENT	= NULL;
-
 
 	$dm_fields = function($adapter)
 	{

@@ -18,6 +18,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Registry;
 	use Tuxxedo\Template\Layout;
 	use Tuxxedo\Version;
 
@@ -41,9 +42,11 @@
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
+	$config = Registry::getConfiguration();
+
 	echo new Layout('index', Array(
-					'app'		=> $configuration['application'], 
-					'debug'		=> $configuration['debug'], 
+					'app'		=> $config['application'], 
+					'debug'		=> $config['debug'], 
 					'version'	=> Version::FULL
 					));
 ?>

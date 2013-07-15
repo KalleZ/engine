@@ -23,10 +23,6 @@
 	use Tuxxedo\Registry;
 	use Tuxxedo\Version;
 
-	/**
-	 * Ini configuration overrides
-	 */
-	ini_set('html_errors', 'Off');
 
 	/**
 	 * Sets the path to where the root script is, if the 
@@ -43,25 +39,6 @@
 	 * @var		string
 	 */
 	define('TUXXEDO_LIBRARY', realpath('../../library'));
-
-	/**
-	 * URL of the current page being executed, including its 
-	 * query string, note that this constant is using the 
-	 * raw data. It is up to the user of this constant to 
-	 * proper filter it
-	 *
-	 * @var		string
-	 */
-	define('TUXXEDO_SELF', $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
-
-	/**
-	 * User agent string if any for the browsing user, note that 
-	 * like the TUXXEDO_SELF constant, this have to be escaped if 
-	 * used in database context
-	 *
-	 * @var		string
-	 */
-	define('TUXXEDO_USERAGENT', (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
 
 
 	require(TUXXEDO_LIBRARY . '/configuration.php');
@@ -217,7 +194,7 @@
 			$session['__devtools_authmode']		= $configuration['devtools']['protective'];
 			$session['__devtools_userid']		= (($uid = $devuser->getUserinfo()->id) !== false ? $uid : 0);
 
-			tuxxedo_header_redirect(TUXXEDO_SELF);
+			tuxxedo_header_redirect($_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 		}
 		elseif(!$session['__devtools_authenticated'])
 		{
@@ -252,13 +229,6 @@
 			exit;
 		}
 	}
-
-	/**
-	 * Set the debug mode constant
-	 *
-	 * @var		boolean
-	 */
-	define('TUXXEDO_DEBUG', true);
 
 	$configuration['application']['debug'] = true;
 ?>

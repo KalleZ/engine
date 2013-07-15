@@ -219,7 +219,6 @@
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
-		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if(!$exception)
@@ -233,7 +232,7 @@
 		}
 		elseif($exception_sql)
 		{
-			$message = (defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
+			$message = ($configuration['application']['debug'] ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -280,7 +279,7 @@
 			'</head>' . PHP_EOL . 
 			'<body>' . PHP_EOL . 
 			'<div class="wrapper">' . PHP_EOL . 
-			(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
+			($configuration['application']['debug'] && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
 			'<h1>' . ($debug_mode ? 'Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup>' : 'Application Error') . '</h1>' . PHP_EOL
 			);
 
@@ -414,7 +413,7 @@
 				'<br />' . PHP_EOL
 				);
 
-			if(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $errors)
+			if($configuration['application']['debug'] && $errors)
 			{
 				foreach($errors as $error)
 				{
@@ -686,7 +685,6 @@
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
-		$debug_mode	= defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG;
 		$application	= ($configuration['application']['name'] ? $configuration['application']['name'] . ($configuration['application']['version'] ? ' ' . $configuration['application']['version'] : '') : false);
 
 		if(!$exception)
@@ -700,7 +698,7 @@
 		}
 		elseif($exception_sql)
 		{
-			$message = (defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
+			$message = ($configuration['application']['debug'] ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -792,7 +790,7 @@
 				}
 			}
 
-			if(defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG && $errors)
+			if($configuration['application']['debug'] && $errors)
 			{
 				echo(
 					PHP_EOL . 
@@ -965,17 +963,11 @@
 	 * of the application
 	 *
 	 * @param	string				The path to trim
-	 * @param	boolean				Should the path also be trimmed if debug mode is on? Defaults to true
 	 * @return	string				The trimmed path
 	 */
-	function tuxxedo_trim_path($path, $debug_trim = true)
+	function tuxxedo_trim_path($path)
 	{
 		static $dir, $lib;
-
-		if(!$debug_trim && defined('TUXXEDO_DEBUG') && TUXXEDO_DEBUG)
-		{
-			return($path);
-		}
 
 		if(empty($path))
 		{
@@ -1058,7 +1050,7 @@
 
 		$errors = Registry::globals('errors');
 
-		if(!defined('TUXXEDO_DEBUG') || !TUXXEDO_DEBUG || !$errors)
+		if(!$configuration['application']['debug'] || !$errors)
 		{
 			echo($output);
 
@@ -1241,18 +1233,5 @@
 			'global $header, $footer;' . 
 			'echo("' . $registry->style->fetch($template) . '");'
 			);
-	}
-
-	/**
-	 * Wrapper function for printing a page content 
-	 * from a variable. This function is mainly for 
-	 * views that have layout mode activated.
-	 *
-	 * @param	string				The template contents to print
-	 * @return	string				Returns a string for eval()'ing the content
-	 */
-	function page_print($content)
-	{
-		return('echo("' . $content . '");');
 	}
 ?>

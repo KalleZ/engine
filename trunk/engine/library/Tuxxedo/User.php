@@ -163,8 +163,6 @@
 
 			$this->sessiondm['sessionid']		= Session::$id;
 			$this->sessiondm['userid']		= (isset($this->userinfo->id) ? $this->userinfo->id : 0);
-			$this->sessiondm['location']		= \TUXXEDO_SELF;
-			$this->sessiondm['useragent']		= \TUXXEDO_USERAGENT;
 			$this->sessiondm['lastactivity']	= \TIMENOW_UTC;
 
 			$this->setPermissionConstants();

@@ -305,9 +305,6 @@
 			{
 				\error_reporting(-1);
 
-				\ini_set('html_errors', 'Off');
-				\ini_set('magic_quotes_runtime', 'Off');
-
 				\date_default_timezone_set('UTC');
 
 				require(\TUXXEDO_LIBRARY . '/configuration.php');
@@ -326,41 +323,14 @@
 				 */
 				define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 
-				/**
-				 * URL of the current page being executed, including its 
-				 * query string, note that this constant is using the 
-				 * raw data. It is up to the user of this constant to 
-				 * proper filter it
-				 *
-				 * @var		string
-				 */
-				define('TUXXEDO_SELF', $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
-
-				/**
-				 * User agent string if any for the browsing user, note that 
-				 * like the TUXXEDO_SELF constant, this have to be escaped if 
-				 * used in database context
-				 *
-				 * @var		string
-				 */
-				define('TUXXEDO_USERAGENT', (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''));
-
 
 				$registry = Registry::init($configuration);
 
 				Registry::globals('error_reporting', 	true);
 				Registry::globals('errors', 		Array());
 
-				$registry->set('configuration', $configuration);
 
-				/**
-				 * Set the debug mode constant
-				 *
-				 * @var		boolean
-				 */
-				define('TUXXEDO_DEBUG', $configuration['application']['debug']);
-
-				if(TUXXEDO_DEBUG && $configuration['debug']['trace'])
+				if($configuration['application']['debug'] && $configuration['debug']['trace'])
 				{
 					$registry->register('trace', '\Tuxxedo\Debug\Trace');
 				}

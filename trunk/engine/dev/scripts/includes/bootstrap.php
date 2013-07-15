@@ -22,13 +22,6 @@
 
 
 	/**
-	 * Set the debug mode constant
-	 *
-	 * @var		boolean
-	 */
-	define('TUXXEDO_DEBUG', 	true);
-
-	/**
 	 * Sets the path to where the root script is, if the 
 	 * constant CWD is defined before including this file, 
 	 * then it will be used as root dir

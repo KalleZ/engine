@@ -277,11 +277,8 @@
 				if(isset($t['function']) && isset($handlers[$t['function']]))
 				{
 					$flags		|= TraceFrame::FLAG_HANDLER;
+					$flags		= ($flags & ~TraceFrame::FLAG_EXCEPTION);
 					$notes[] 	= $handlers[$t['function']];
-				}
-
-				if($flags & TraceFrame::FLAG_EXCEPTION)
-				{
 				}
 
 				$trace 			= new TraceFrame($refclass, $flags);

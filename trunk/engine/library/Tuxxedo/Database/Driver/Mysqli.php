@@ -156,7 +156,7 @@
 			{
 				$format = 'Database error: failed to connect database';
 
-				if(\TUXXEDO_DEBUG)
+				if($this->debug)
 				{
 					$format = 'Database error: [%d] %s';
 				}

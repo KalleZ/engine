@@ -177,7 +177,7 @@
 
 				if($this->layout)
 				{
-					page_print((string) $this->layout);
+					eval('echo("' . (string) $this->layout . '");');
 				}
 			}
 
