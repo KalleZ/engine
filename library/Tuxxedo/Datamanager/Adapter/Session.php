@@ -68,13 +68,11 @@
 											), 
 							'location'	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING_EMPTY, 
-											'default'	=> \TUXXEDO_SELF
+											'validation'	=> self::VALIDATE_STRING_EMPTY
 											), 
 							'useragent' 	=> Array(
 											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING_EMPTY, 
-											'default'	=> \TUXXEDO_USERAGENT
+											'validation'	=> self::VALIDATE_STRING_EMPTY
 											), 
 							'lastactivity'	=> Array(
 											'type'		=> self::FIELD_PROTECTED, 
@@ -99,9 +97,12 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'session';
-			$this->tablename	= \TUXXEDO_PREFIX . 'sessions';
-			$this->idname		= 'sessionid';
+			$this->dmname				= 'session';
+			$this->tablename			= \TUXXEDO_PREFIX . 'sessions';
+			$this->idname				= 'sessionid';
+
+			$this->fields['useragent']['default']	= (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
+			$this->fields['location']['default']	= $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '');
 
 			if($identifier)
 			{

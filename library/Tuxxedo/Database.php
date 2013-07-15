@@ -81,6 +81,13 @@
 		protected $affected_rows		= 0;
 
 		/**
+		 * Whether or not debug mode is enabled
+		 *
+		 * @var		boolean
+		 */
+		protected $debug			= false;
+
+		/**
 		 * Whether the database connection still is delayed
 		 * or not
 		 *
@@ -123,7 +130,7 @@
 		/**
 		 * Default constructor for a new database instance
 		 *
-		 * @param	array				Database specific configuration array
+		 * @param	array				Configuration array, containing the 'application' and 'database' indices
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	If the database connection fails, a basic exception will be thrown
 		 */
@@ -134,8 +141,9 @@
 				throw new Exception\Basic('Cannot call base constructor directly from a non-initalized instance');
 			}
 
-			$this->configuration 	= $configuration;
-			$this->delayed		= $configuration['delay'];
+			$this->configuration 	= $configuration['database'];
+			$this->debug		= $configuration['application']['debug'];
+			$this->delayed		= $configuration['database']['delay'];
 			$this->registry		= Registry::init();
 
 			if(!$this->isDriverSupported())
@@ -143,7 +151,7 @@
 				throw new Exception\Basic('Unable to load database driver, one or more dependencies is missing');
 			}
 
-			if(!$configuration['delay'])
+			if(!$configuration['database']['delay'])
 			{
 				$this->connect();
 			}
@@ -190,7 +198,7 @@
 				throw new Exception\Basic('No database configuration found or no driver defined');
 			}
 
-			return(self::factory(\ucfirst(\strtolower($configuration['database']['driver'])), $configuration['database'], false));
+			return(self::factory(\ucfirst(\strtolower($configuration['database']['driver'])), $configuration, false));
 		}
 
 		/**

@@ -155,7 +155,7 @@
 			{
 				Registry::globals('error_reporting', true);
 
-				if(\TUXXEDO_DEBUG)
+				if($this->debug)
 				{
 					throw new Exception\Basic('Database error: %s', $e->getMessage());
 				}
