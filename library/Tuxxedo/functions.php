@@ -246,7 +246,7 @@
 			'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . PHP_EOL . 
 			'<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' . PHP_EOL . 
 			'<head>' . PHP_EOL . 
-			'<title>' . ($debug_mode ? 'Tuxxedo Engine' : 'Application') . ' Error</title>' . PHP_EOL . 
+			'<title>' . ($configuration['application']['debug'] ? 'Tuxxedo Engine' : 'Application') . ' Error</title>' . PHP_EOL . 
 			'<style type="text/css">' . PHP_EOL . 
 			'body { background-color: #E4F4FC; color: #3B7286; font-family: "Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif; font-size: 82%; margin: 0px 30px; }' . PHP_EOL . 
 			'code { font-family: Consolas, Monaco, \'Courier New\', Monospace; }' . PHP_EOL . 
@@ -280,10 +280,10 @@
 			'<body>' . PHP_EOL . 
 			'<div class="wrapper">' . PHP_EOL . 
 			($configuration['application']['debug'] && $buffer ? strip_tags($buffer) . PHP_EOL : '') . 
-			'<h1>' . ($debug_mode ? 'Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup>' : 'Application Error') . '</h1>' . PHP_EOL
+			'<h1>' . ($configuration['application']['debug'] ? 'Tuxxedo Engine Error <sup>v' . Version::SIMPLE . '</sup>' : 'Application Error') . '</h1>' . PHP_EOL
 			);
 
-		if($debug_mode)
+		if($configuration['application']['debug'])
 		{
 			echo(
 				'<div class="box">' . PHP_EOL . 
@@ -707,7 +707,7 @@
 
 		echo(
 			(!empty($buffer) ? $buffer . PHP_EOL : '') . 
-			($debug_mode ? 'Tuxxedo Engine Error' : 'Application Error') . PHP_EOL . 
+			($configuration['application']['debug'] ? 'Tuxxedo Engine Error' : 'Application Error') . PHP_EOL . 
 			PHP_EOL . 
 			PHP_EOL . 
 			$message . 
@@ -731,7 +731,7 @@
 				);
 		}
 
-		if($debug_mode)
+		if($configuration['application']['debug'])
 		{
 			echo(
 				'Application information' . PHP_EOL . 
