@@ -313,7 +313,7 @@
 				case('edit'):
 				{
 					$dm 	= Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC));
-					$source = htmlspecialchars($dm['source'], ENT_QUOTES);
+					$source = htmlspecialchars($dm['source'], ENT_QUOTES | ENT_IGNORE | ENT_SUBSTITUTE, 'UTF-8');
 				}
 				case('add'):
 				{
