@@ -736,12 +736,12 @@
 
 				if($new_identifier)
 				{
-					$sql .= '`' . $field . '` = ' . (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : 'NULL') : '\'' . $this->registry->db->escape($data) . '\'') . (--$n ? ', ' : '');
+					$sql .= '`' . $field . '` = ' . (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : (isset($this->fields[$field]['notnull']) && $this->fields[$field]['notnull'] ? '\'\'' : 'NULL')) : '\'' . $this->registry->db->escape($data) . '\'') . (--$n ? ', ' : '');
 				}
 				else
 				{
 					$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
-					$values .= (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : 'NULL') : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
+					$values .= (is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : (isset($this->fields[$field]['notnull']) && $this->fields[$field]['notnull'] ? '\'\'' : 'NULL')) : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
 				}
 			}
 
