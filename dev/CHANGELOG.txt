@@ -42,6 +42,7 @@
 	Added the \Tuxxedo\Datamanager::getDataStruct() method (Kalle)
 	Added the ability for 'header' and 'footer' templates to be customized, no longer requiring them to be called a specific name (Kalle)
 	Added the \Tuxxedo\Intl\Phrasegroup::getName() method (Kalle)
+	Added a new datamanager mechanic for preventing the auto insertion of 'NULL' on empty fields (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)

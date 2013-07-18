@@ -71,10 +71,12 @@
 							'source'		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
 												'validation'	=> self::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidSource')
+												'callback'	=> Array(__CLASS__, 'isValidSource'), 
+												'notnull'	=> true
 												), 
 							'compiledsource' 	=> Array(
-												'type'		=> self::FIELD_PROTECTED
+												'type'		=> self::FIELD_PROTECTED, 
+												'notnull'	=> true
 												), 
 							'defaultsource'		=> Array(
 												'type'		=> self::FIELD_OPTIONAL, 
