@@ -196,6 +196,20 @@
 		}
 
 		/**
+		 * Restarts a session
+		 *
+		 * This basically calls terminate and then start as a shorthand method 
+		 * call.
+		 *
+	 	 * @return	void			No value is returned
+		 */
+		public static function restart()
+		{
+			self::terminate();
+			self::start();
+		}
+
+		/**
 		 * Regenerates a new session ID, note that API's that utilizes the 
 		 * session ID must be manually notified of this update to not cause 
 		 * data mismatch

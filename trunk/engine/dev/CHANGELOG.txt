@@ -45,6 +45,7 @@
 	Added a new datamanager mechanic for preventing the auto insertion of 'NULL' on empty fields (Kalle)
 	Added new functions to the \Tuxxedo\Utilities class: (Kalle)
 	 - \Tuxxedo\Utilities::trimSql()
+	Added the \Tuxxedo\Session::restart() method (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)

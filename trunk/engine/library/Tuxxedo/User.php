@@ -139,6 +139,7 @@
 			if($this->sessiondm['rehash'])
 			{
 				Session::regenerate();
+				Session::restart();
 
 				$this->sessiondm->delete();
 
