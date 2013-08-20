@@ -21,6 +21,7 @@
 	use DevTools\Style;
 	use Tuxxedo\Input;
 	use Tuxxedo\Registry;
+	use Tuxxedo\Utilities;
 	use Tuxxedo\Version;
 
 
@@ -162,7 +163,7 @@
 		$session['__devtools_authenticated'] 	= false;
 		$session['__devtools_authmode']		= $session['__devtools_userid'] = 0;
 
-		tuxxedo_redirect('Logged out with success', './');
+		Utilities::redirect('Logged out with success', './');
 	}
 
 	if($session['__devtools_authmode'] && $session['__devtools_authmode'] != $configuration['devtools']['protective'])
@@ -194,7 +195,7 @@
 			$session['__devtools_authmode']		= $configuration['devtools']['protective'];
 			$session['__devtools_userid']		= (($uid = $devuser->getUserinfo()->id) !== false ? $uid : 0);
 
-			tuxxedo_header_redirect($_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
+			Utilities::headerRedirect($_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 		}
 		elseif(!$session['__devtools_authenticated'])
 		{

@@ -43,6 +43,8 @@
 	Added the ability for 'header' and 'footer' templates to be customized, no longer requiring them to be called a specific name (Kalle)
 	Added the \Tuxxedo\Intl\Phrasegroup::getName() method (Kalle)
 	Added a new datamanager mechanic for preventing the auto insertion of 'NULL' on empty fields (Kalle)
+	Added new functions to the \Tuxxedo\Utilities class: (Kalle)
+	 - \Tuxxedo\Utilities::trimSql()
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -71,6 +73,10 @@
 	Changed the name of style.defaultstyle to style.isdefault (Kalle)
 	Changed the name of language.default to language.isdefault (Kalle)
 	Changed the name of phrasegroup.language to phrasegroup.languageid (Kalle)
+	Changed the following procedural functions to live within a class; \Tuxxedo\Utilities: (Kalle)
+	 - tuxxedo_date() > \Tuxxedo\Utilities::date()
+	 - tuxxedo_redirect() > \Tuxxedo\Utilities::redirect()
+	 - tuxxedo_header_redirect() > \Tuxxedo\Utilities::headerRedirect()
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)

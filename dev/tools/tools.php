@@ -23,6 +23,7 @@
 	use Tuxxedo\Helper;
 	use Tuxxedo\Input;
 	use Tuxxedo\Template\Compiler;
+	use Tuxxedo\Utilities;
 
 	/**
 	 * Global templates
@@ -389,7 +390,7 @@
 					}
 				}
 
-				tuxxedo_redirect('Running operation \'' . strtolower($input->get('operation')) . '\' on table \'' . $row['Name'] . '\': ' . $result, './tools.php?do=status');
+				Utilities::redirect('Running operation \'' . strtolower($input->get('operation')) . '\' on table \'' . $row['Name'] . '\': ' . $result, './tools.php?do=status');
 			}
 			elseif(isset($_POST['submit']))
 			{
