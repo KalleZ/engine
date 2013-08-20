@@ -20,6 +20,7 @@
 	 */
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Input;
+	use Tuxxedo\Utilities;
 
 
 	/**
@@ -86,7 +87,7 @@
 
 						$dm->save();
 
-						tuxxedo_redirect(($action == 'edit' ? 'Edited option category' : 'Added option category'), './options.php');
+						Utilities::redirect(($action == 'edit' ? 'Edited option category' : 'Added option category'), './options.php');
 					}
 
 					eval(page('options_category_add_edit_form'));
@@ -100,7 +101,7 @@
 					{
 						$dm->delete();
 
-						tuxxedo_redirect('Deleted category', './options.php');
+						Utilities::redirect('Deleted category', './options.php');
 					}
 
 					$query = $db->equery('
@@ -149,7 +150,7 @@
 
 						$opt->save();
 
-						tuxxedo_redirect('Added option', './options.php');
+						Utilities::redirect('Added option', './options.php');
 					}
 					else
 					{
@@ -177,7 +178,7 @@
 
 						$opt->save();
 
-						tuxxedo_redirect('Edited option', './options.php');
+						Utilities::redirect('Edited option', './options.php');
 					}
 					else
 					{
@@ -194,7 +195,7 @@
 				{
 					Datamanager\Adapter::factory('option', $input->get('option'))->delete();
 
-					tuxxedo_redirect('Deleted option', './options.php');
+					Utilities::redirect('Deleted option', './options.php');
 				}
 				break;
 				case('reset'):
@@ -205,7 +206,7 @@
 					{
 						Datamanager\Adapter::factory('option', $option)->reset();
 
-						tuxxedo_redirect('Option reset to default value', './options.php');
+						Utilities::redirect('Option reset to default value', './options.php');
 					}
 					else
 					{
@@ -227,7 +228,7 @@
 							Datamanager\Adapter::factory('option', $opt[0])->reset();
 						}
 
-						tuxxedo_redirect('All options reset to their default value', './options.php');
+						Utilities::redirect('All options reset to their default value', './options.php');
 					}
 				}
 				break;

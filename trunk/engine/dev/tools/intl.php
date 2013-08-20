@@ -20,6 +20,7 @@
 	 */
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Input;
+	use Tuxxedo\Utilities;
 
 
 	/**
@@ -86,7 +87,7 @@
 				{
 					if($action == 'add' && isset($languagedm))
 					{
-						tuxxedo_header_redirect('./intl.php?do=language&action=add');
+						Utilities::headerRedirect('./intl.php?do=language&action=add');
 					}
 					elseif($action == 'edit' && !isset($languagedm))
 					{
@@ -114,7 +115,7 @@
 
 						$languagedm->save();
 
-						tuxxedo_redirect('Saved language with success', './intl.php?language=' . $languagedm['id'] . '&do=language&action=edit');
+						Utilities::redirect('Saved language with success', './intl.php?language=' . $languagedm['id'] . '&do=language&action=edit');
 					}
 					else
 					{
@@ -148,7 +149,7 @@
 
 					$languagedm->delete();
 
-					tuxxedo_redirect('Deleted language with success', './intl.php');
+					Utilities::redirect('Deleted language with success', './intl.php');
 				}
 				default:
 				{

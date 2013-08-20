@@ -21,6 +21,7 @@
 	use DevTools\User;
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Input;
+	use Tuxxedo\Utilities;
 
 
 	/**
@@ -122,7 +123,7 @@
 
 						$dm->save();
 
-						tuxxedo_redirect(($action == 'edit' ? 'Edited user' : 'Added user'), './users.php?do=user&action=search');
+						Utilities::redirect(($action == 'edit' ? 'Edited user' : 'Added user'), './users.php?do=user&action=search');
 					}
 
 					$usergroups_dropdown = '';
@@ -201,7 +202,7 @@
 
 						$dm->save();
 
-						tuxxedo_redirect('Updated permissions', './users.php?do=user&action=search');
+						Utilities::redirect('Updated permissions', './users.php?do=user&action=search');
 					}
 
 					$rows = '';
@@ -226,7 +227,7 @@
 					{
 						$dm->delete();
 
-						tuxxedo_redirect('Deleted user', './users.php?do=user&action=search');
+						Utilities::redirect('Deleted user', './users.php?do=user&action=search');
 					}
 
 					eval(page('users_delete'));
@@ -336,7 +337,7 @@
 
 						$dm->save();
 
-						tuxxedo_redirect(($action == 'edit' ? 'Edited usergroup' : 'Added usergroup'), './users.php?do=usergroup&action=list');
+						Utilities::redirect(($action == 'edit' ? 'Edited usergroup' : 'Added usergroup'), './users.php?do=usergroup&action=list');
 					}
 
 					eval(page('users_usergroup_add_edit_form'));
@@ -346,7 +347,7 @@
 				{
 					Datamanager\Adapter::factory('usergroup', $input->get('usergroup'))->delete();
 
-					tuxxedo_redirect('Deleted usergroup', './users.php?do=usergroup&action=list');
+					Utilities::redirect('Deleted usergroup', './users.php?do=usergroup&action=list');
 				}
 				break;
 				case('permissions'):
@@ -376,7 +377,7 @@
 
 						$dm->save();
 
-						tuxxedo_redirect('Updated permissions', './users.php?do=usergroup&action=list');
+						Utilities::redirect('Updated permissions', './users.php?do=usergroup&action=list');
 					}
 
 					$rows = '';
@@ -438,7 +439,7 @@
 
 						$dm->save();
 
-						tuxxedo_redirect(($action == 'edit' ? 'Edited permission' : 'Added permission'), './users.php?do=permission&action=list');
+						Utilities::redirect(($action == 'edit' ? 'Edited permission' : 'Added permission'), './users.php?do=permission&action=list');
 					}
 
 					eval(page('users_permission_add_edit_form'));
@@ -480,7 +481,7 @@
 
 						$dm->delete();
 
-						tuxxedo_redirect('Deleted permission', './users.php?do=permission&action=list');
+						Utilities::redirect('Deleted permission', './users.php?do=permission&action=list');
 					}
 
 					$users = $usergroups = '';

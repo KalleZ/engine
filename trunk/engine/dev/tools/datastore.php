@@ -19,6 +19,7 @@
 	 * Alasing rules
 	 */
 	use Tuxxedo\Helper;
+	use Tuxxedo\Utilities;
 
 
 	/**
@@ -67,7 +68,7 @@
 		{
 			Helper::factory('database')->truncate('datastore');
 
-			tuxxedo_redirect('Datastore truncated, the datastore is now empty and must be rebuilt before it can be used again', './datastore.php');
+			Utilities::redirect('Datastore truncated, the datastore is now empty and must be rebuilt before it can be used again', './datastore.php');
 		}
 		break;
 		case('dump'):

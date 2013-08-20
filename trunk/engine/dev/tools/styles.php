@@ -93,7 +93,7 @@
 				{
 					if($action == 'add' && isset($styledm))
 					{
-						tuxxedo_header_redirect('./styles.php?do=style&action=add');
+						Utilities::headerRedirect('./styles.php?do=style&action=add');
 					}
 					elseif($action == 'edit' && !isset($styledm))
 					{
@@ -120,7 +120,7 @@
 
 						$styledm->save();
 
-						tuxxedo_redirect('Saved style with success', './styles.php?style=' . $styledm['id'] . '&do=style&action=edit');
+						Utilities::redirect('Saved style with success', './styles.php?style=' . $styledm['id'] . '&do=style&action=edit');
 					}
 					else
 					{
@@ -154,7 +154,7 @@
 
 					$styledm->delete();
 
-					tuxxedo_redirect('Deleted style with success', './styles.php');
+					Utilities::redirect('Deleted style with success', './styles.php');
 				}
 				default:
 				{
@@ -300,14 +300,14 @@
 				{
 					Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC))->delete();
 
-					tuxxedo_redirect('Template deleted with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
+					Utilities::redirect('Template deleted with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}
 				break;
 				case('reset'):
 				{
 					Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC))->reset();
 
-					tuxxedo_redirect('Template reset to default with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
+					Utilities::redirect('Template reset to default with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}
 				break;
 				case('edit'):
@@ -355,10 +355,10 @@
 
 						if(isset($_POST['reload']))
 						{
-							tuxxedo_header_redirect('./styles.php?style=' . $styleid . '&do=templates&action=edit&id=' . $dm['id']);
+							Utilities::headerRedirect('./styles.php?style=' . $styleid . '&do=templates&action=edit&id=' . $dm['id']);
 						}
 
-						tuxxedo_redirect(($action == 'edit' ? 'Template edited with success' : 'Template added with success'), './styles.php?style=' . $styleid . '&do=templates&action=list');
+						Utilities::redirect(($action == 'edit' ? 'Template edited with success' : 'Template added with success'), './styles.php?style=' . $styleid . '&do=templates&action=list');
 					}
 
 					eval(page('templates_add_edit_form'));

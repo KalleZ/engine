@@ -8,6 +8,8 @@
 
 	Core
 	 - Implement trait support, and possible generators support if needed for backtraces
+	 - Move functions from \Tuxxedo\Utilities to \DevTools\*, page, headerRedirect, redirect, ...
+	 - Change parameter order on \Tuxxedo\Utilities::date() $timestamp <-> $format
 
 	DevTools
 	 - Add new the internationalization component

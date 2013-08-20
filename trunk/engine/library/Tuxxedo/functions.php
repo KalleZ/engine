@@ -21,6 +21,7 @@
 	use Tuxxedo\Debug;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
+	use Tuxxedo\Utilities;
 	use Tuxxedo\Version;
 
 
@@ -86,8 +87,7 @@
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
-		static $error_handler;
-		static $cli_mode;
+		static $error_handler, $cli_mode;
 
 		if(!Registry::globals('error_reporting') || !(error_reporting() & $level))
 		{
@@ -159,8 +159,7 @@
 	 */
 	function tuxxedo_handler($handler, $callback = NULL)
 	{
-		static $handlers;
-		static $references;
+		static $handlers, $references;
 
 		if($references === NULL)
 		{
@@ -323,7 +322,7 @@
 				'</tr>' . PHP_EOL
 				);
 
-			if(($date = tuxxedo_date(NULL, 'H:i:s j/n - Y (e)')))
+			if(($date = Utilities::date(NULL, 'H:i:s j/n - Y (e)')))
 			{
 				echo(
 					'<tr>' . PHP_EOL . 
@@ -752,7 +751,7 @@
 				str_pad('Script: ', 20, ' ') . tuxxedo_trim_path(realpath($_SERVER['SCRIPT_FILENAME'])) . PHP_EOL
 				);
 
-			if(($date = tuxxedo_date(NULL, 'H:i:s j/n - Y (e)')))
+			if(($date = Utilities::date(NULL, 'H:i:s j/n - Y (e)')))
 			{
 				echo(
 					str_pad('Timestamp: ', 20, ' ') . $date . PHP_EOL
@@ -868,7 +867,7 @@
 				{
 					echo(
 						'#' . ++$n . ':' . PHP_EOL . 
-						tuxxedo_trim_sql($query['sql']) . PHP_EOL
+						Utilities::trimSql($query['sql']) . PHP_EOL
 						);
 
 					if($query['trace'])
@@ -991,42 +990,6 @@
 	}
 
 	/**
-	 * Trims whitespace in SQL in a very basic way
-	 *
-	 * Trimming will strip all whitespace pre and post string, and indented 
-	 * whitespace thats not contained within a 'string', starting with ", ' or ` 
-	 * as delimiters
-	 *
-	 * @param	string				The SQL string to trim
-	 * @return	string				Returns the trimmed SQL string
-	 */
-	function tuxxedo_trim_sql($sql)
-	{
-		$ret = '';
-		$str = str_split($sql);
-
-		if(!$str)
-		{
-			return('');
-		}
-
-		foreach($str as $pos => $c)
-		{
-			$ret .= $c;
-
-			$len = strlen($ret);
-			$ret = rtrim($ret);
-
-			if($len > strlen($ret))
-			{
-				$ret .= ' ';
-			}
-		}
-
-		return(trim($ret));
-	}
-
-	/**
 	 * Shutdown handler
 	 *
 	 * @return	void				No value is returned
@@ -1109,32 +1072,6 @@
 	}
 
 	/**
-	 * Issues a redirect and terminates the script
-	 *
-	 * @param	string				The message to show to the user while redirecting
-	 * @param	string				The redirect location
-	 * @param	integer				Redirect timeout in seconds
-	 * @return	void				No value is returned
-	 */
-	function tuxxedo_redirect($message, $location, $timeout = 3)
-	{
-		eval(page('redirect'));
-		exit;
-	}
-
-	/**
-	 * Issues a redirect using headers and then terminates the script
-	 *
-	 * @param	string				The redirect location
-	 * @return	void				No value is returned
-	 */
-	function tuxxedo_header_redirect($location)
-	{
-		header('Location: ' . $location);
-		exit;
-	}
-
-	/**
 	 * Prints an error message using the current loaded 
 	 * theme and then terminates the script
 	 *
@@ -1177,41 +1114,6 @@
 
 		eval(page('error'));
 		exit;	
-	}
-
-	/**
-	 * Date format function
-	 *
-	 * @param	integer				The timestamp to format
-	 * @param	string				Optional format to use, defaults to the format defined within the options
-	 * @return	string				Returns the formatted date
-	 */
-	function tuxxedo_date($timestamp = NULL, $format = NULL)
-	{
-		$registry = Registry::init();
-
-		if(!$timestamp)
-		{
-			$timestamp = (defined('TIMENOW_UTC') ? TIMENOW_UTC : time());
-		}
-
-		if($format === NULL)
-		{
-			$format = $registry->datastore->options['date_format']['value'];
-		}
-
-		if(!$registry->datetime)
-		{
-			return(date($format, $timestamp));
-		}
-
-		$old_timestamp = $registry->datetime->getTimestamp();
-
-		$registry->datetime->setTimestamp($timestamp);
-		$format = $registry->datetime->format($format);
-		$registry->datetime->setTimestamp($old_timestamp);
-
-		return($format);
 	}
 
 	/**

@@ -20,6 +20,7 @@
 	 */
 	use DevTools\User;
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Utilities;
 
 
 	/**
@@ -98,15 +99,9 @@
 			{
 				case('single'):
 				{
-					if(($db->equery('
-								UPDATE 
-									`' . TUXXEDO_PREFIX . 'sessions` 
-								SET 
-									`rehash` = 1
-								WHERE 
-									`sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows())
+					if(($db->equery('UPDATE `' . TUXXEDO_PREFIX . 'sessions` SET `rehash` = 1 WHERE `sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows())
 					{
-						tuxxedo_redirect('Marked session for rehashing', './sessions.php');
+						Utilities::redirect('Marked session for rehashing', './sessions.php');
 					}
 
 					tuxxedo_error('Invalid session');
@@ -122,7 +117,7 @@
 							SET 
 								`rehash` = 1');
 
-					tuxxedo_redirect('Cleaned up all expired sessions and marked active ones for rehashing', './sessions.php');
+					Utilities::redirect('Cleaned up all expired sessions and marked active ones for rehashing', './sessions.php');
 				}
 				break;
 			}
@@ -141,7 +136,7 @@
 
 			$dm->save();
 
-			tuxxedo_redirect('Session marked as \'expired\'', './sessions.php');
+			Utilities::redirect('Session marked as \'expired\'', './sessions.php');
 		}
 		break;
 		case('cron'):
@@ -150,7 +145,7 @@
 
 			cleanup_cron($affected_rows);
 
-			tuxxedo_redirect('Executed cronjob, ' . $affected_rows . ' session(s) affected', './sessions.php');
+			Utilities::redirect('Executed cronjob, ' . $affected_rows . ' session(s) affected', './sessions.php');
 		}
 		break;
 		case('details'):
@@ -173,7 +168,7 @@
 			$registry->set('user', new User);
 
 			$session['expires']		= (($expires = ($session['lastactivity'] + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
-			$session['lastactivity'] 	= tuxxedo_date($session['lastactivity']);
+			$session['lastactivity'] 	= Utilities::date($session['lastactivity']);
 			$session['location'] 		= htmlspecialchars(html_entity_decode($session['location']));
 			$session['useragent'] 		= htmlspecialchars(html_entity_decode($session['useragent']));
 
@@ -200,7 +195,7 @@
 				}
 
 				$session->expires	= (($expires = ($session->lastactivity + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
-				$session->lastactivity 	= tuxxedo_date($session->lastactivity);
+				$session->lastactivity 	= Utilities::date($session->lastactivity);
 
 				eval('$userlist .= "' . $style->fetch('sessions_index_itembit') . '";');
 			}
