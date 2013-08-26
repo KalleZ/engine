@@ -23,6 +23,8 @@
 	   - Add the ability to parse <code> blocks correctly
 	   - Add the ability to show @todo
 	   - Add the ability to use @wip on all docblocks (file, namespace, class, interface, procedural functions)
+	   - Add the ability to pick up traits
+	   - Add the ability to pick up generators
 	 - check_dm_phrases.php
 	   - Add a check for obsolete and orphan phrases
 	 - sync_templates.php

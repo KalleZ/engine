@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Utilities\IO;
+	use Tuxxedo\Version;
 
 
 	/**
@@ -93,7 +94,8 @@
 				TemplateCache::$templates[$template] = file_get_contents('./apidump/templates/' . $template . '.raw');
 			}
 
-			$this->name = $template;
+			$this->name 			= $template;
+			$this->variables['version']	= Version::FULL;
 		}
 
 		/**
@@ -252,4 +254,27 @@
 
 		$toc->save($obj);
 	}
+
+	if(!$generated_tocs)
+	{
+		IO::text('Error: No generatable elements found for table of contents');
+		exit;
+	}
+
+	$bits		= '';
+	$toc 		= new Layout('toc');
+	$toc->name	= 'Table of contents';
+
+	foreach($generated_tocs as $gtoc)
+	{
+		$bit 		= new Template('toc_bit');
+		$bit->link	= $gtoc . '.html';
+		$bit->name	= ucfirst($gtoc);
+
+		$bits		.= (string) $bit;
+	}
+
+	$toc->toc = $bits;
+
+	$toc->save('index');
 ?>
