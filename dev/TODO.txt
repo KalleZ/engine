@@ -7,9 +7,8 @@
 	------------------------------------------------
 
 	Core
-	 - Implement trait support, and possible generators support if needed for backtraces
 	 - Move functions from \Tuxxedo\Utilities to \DevTools\*, page, headerRedirect, redirect, ...
-	 - Change parameter order on \Tuxxedo\Utilities::date() $timestamp <-> $format
+	 - Change parameter order on \Tuxxedo\Utilities::date() $timestamp <-> $format (or use 'datef()' ?)
 
 	DevTools
 	 - Add new the internationalization component
@@ -27,7 +26,7 @@
 
 	Internationalization
 	 - Add support for 'resetable' phrases
-	 - Phrases should use ids instead of named groups, which makes validation much easier
+	 - Phrases should use ids instead of named groups, which makes validation much easier, but dublicates cached data to some distinct
 
 	Datamanagers
 	 - Session
@@ -36,4 +35,3 @@
 	Bugs
 	 - Language
 	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same
-	 - Autoloader on case sensitive systems does not work, Helper, Style Storage, Datamanagers
