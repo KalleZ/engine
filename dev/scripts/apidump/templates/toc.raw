@@ -1,6 +1,6 @@
 {$header}
 
-<h2>{$name}</h2>
+<h3>{$name}</h3>
 <ul>
 	{$toc}
 </ul>
