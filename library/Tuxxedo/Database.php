@@ -176,7 +176,7 @@
 				}
 				catch(Exception\SQL $e)
 				{
-					\tuxxedo_doc_error($e);
+					\tuxxedo_basic_error($e);
 				}
 			}
 		}

@@ -171,7 +171,7 @@
 		 *
 		 * This is useful for when the options are updated here on the fly to reflect changes directly in the code
 		 *
-		 * @return	boolean				Returns true if the options were saved with success, otherwise false
+		 * @return	boolean				Returns true if the options were saved with success (or if nothing was changed), otherwise false
 		 */
 		public function save()
 		{

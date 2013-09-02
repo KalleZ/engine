@@ -39,7 +39,7 @@
 	/**
 	 * Cookie Jar, this is a basic OO wrapper for cookies, it shares 
 	 * the same globals as the session class, although they can be 
-	 * overridden using this interface.
+	 * overridden using this interface per 'set' call.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
@@ -114,7 +114,7 @@
 		 * @param	string			Cookie name
 		 * @param	mixed			Cookie value
 		 * @param	boolean			Whether to include the cookie prefix or not, defaults to true
-		 * @param	array			Options, if overridding any default ones
+		 * @param	array			Options, if overridding any default ones (Must contain: 'expires' (integer), 'path' (string), 'domain' (string) & 'secure' (boolean))
 		 * @return	void			No value is returned
 		 */
 		public static function set($name, $value, $prefix = true, Array $options = NULL)
