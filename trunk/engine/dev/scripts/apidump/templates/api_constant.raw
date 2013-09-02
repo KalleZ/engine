@@ -1,0 +1,49 @@
+{$header}
+
+<h3>{$name}</h3>
+<table>
+	<tr>
+		<td class="label">
+			Availability:</td>
+		<td>
+			Engine ...</td>
+	</tr>
+	<tr>
+		<td class="label">
+			Declared in:</td>
+		<td>
+			{$file}</td>
+	</tr>
+	<tr>
+		<td class="label">
+			Data type:</td>
+		<td>
+			{$datatype}</td>
+	</tr>
+	<tr>
+		<td class="label">
+			Namespace:</td>
+		<td>
+			{$namespace}</td>
+	</tr>
+</table>
+
+<h4>Description</h4>
+<p>
+	{$description}
+</p>
+
+<h4>Examples</h4>
+<p>
+	...
+</p>
+<p>
+	<pre>...</pre>
+</p>
+
+<h4>Links</h4>
+<p>
+	<a href="./constants.html">List of constants</a>
+</p>
+
+{$footer}

@@ -150,6 +150,22 @@
 		{
 			return(file_put_contents('./apidump/output/' . $file . '.html', $this->parse()));
 		}
+
+		/**
+		 * Saves the file using a generated hash
+		 *
+		 * Calls api_file_hash() and then Template::save(), meaning the 
+		 * parameters and return values will match that of those.
+		 *
+		 * @param	string			The file type ('file', 'constant', 'function', 'class' or 'interface')
+		 * @param	string			The name of the object (fx. for function: 'api_file_hash')
+		 * @param	string			The generated hash name (as a reference)
+		 * @return	boolean			Returns true if the file was saved with success, otherwise false
+		 */
+		public function hash($type, $name, &$hash = NULL)
+		{
+			return($this->save($hash = api_file_hash($type, $name)));
+		}
 	}
 
 	/**
@@ -180,6 +196,63 @@
 	}
 
 
+	/**
+	 * File hash
+	 *
+	 * Generates a file hash (filename) based on the name and type to 
+	 * avoid possible naming conflicts.
+	 *
+	 * Type can be either one of:
+	 *
+	 *   - file
+	 *   - constant
+	 *   - function
+	 *   - class
+	 *   - interface
+	 *
+	 * @param	string				The file type ('file', 'constant', 'function', 'class' or 'interface')
+	 * @param	string				The name of the object (fx. for function: 'api_file_hash')
+	 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
+	 */
+	function api_file_hash($type, $name)
+	{
+		static $rng, $lcache, $types;
+
+		if(!$rng)
+		{
+			$lcache	= Array();
+			$types	= Array('file', 'constant', 'function', 'class', 'interface');
+			$rng 	= function()
+			{
+				return(str_pad(mt_rand(0, 999999), 6, 0, STR_PAD_LEFT));
+			};
+		}
+
+		$type = strtolower($type);
+
+		if(!in_array($type, $types))
+		{
+			return(false);
+		}
+
+		do
+		{
+			$n = $rng();
+
+			if(!isset($lcache[$n]))
+			{
+				$lcache[$n] = Array(
+							$type, 
+							$name
+							);
+			}
+		}
+		while(!isset($lcache[$n]));
+
+		return($type . '-' . str_replace('_', '-', strtolower($name)) . '-' . $n);
+	}
+
+
 	$json = @json_decode(@file_get_contents('./apidump/engine_api.json'));
 
 	if(!$json)
@@ -198,6 +271,7 @@
 		{
 			foreach($struct->functions as $meta)
 			{
+// @__file
 				$functions[] = $meta;
 			}
 		}
@@ -206,6 +280,7 @@
 		{
 			foreach($struct->constants as $name => $meta)
 			{
+// @__file
 				$constants[] = array_merge(Array('name' => $name), (array) $meta);
 			}
 		}
@@ -219,6 +294,7 @@
 
 			foreach($struct->{$type} as $name => $meta)
 			{
+// @__file
 				${$type}[] = array_merge(Array('name' => $name), (array) $meta);
 			}
 		}
@@ -277,4 +353,31 @@
 	$toc->toc = $bits;
 
 	$toc->save('index');
+
+
+	foreach($generated_tocs as $type)
+	{
+		switch($type)
+		{
+			case('constants'):
+			{
+				foreach($constants as $const)
+				{
+					$tmp = new Layout('api_constant');
+/* HACK HACK HACK */
+					$tmp->hash('constant', $const['name']);
+				}
+			}
+			break;
+			default:
+			{
+/* HACK HACK HACK */
+				continue;
+
+				IO::text('Error: Unable to handle unknown type: ' . $type);
+				exit;
+			}
+			break;
+		}
+	}
 ?>
