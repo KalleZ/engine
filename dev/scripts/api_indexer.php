@@ -271,8 +271,7 @@
 		{
 			foreach($struct->functions as $meta)
 			{
-// @__file
-				$functions[] = $meta;
+				$functions[] = array_merge(Array('file' => $file), (array) $meta);
 			}
 		}
 
@@ -280,8 +279,7 @@
 		{
 			foreach($struct->constants as $name => $meta)
 			{
-// @__file
-				$constants[] = array_merge(Array('name' => $name), (array) $meta);
+				$constants[] = array_merge(Array('name' => $name, 'file' => $file), (array) $meta);
 			}
 		}
 
@@ -294,30 +292,101 @@
 
 			foreach($struct->{$type} as $name => $meta)
 			{
-// @__file
-				${$type}[] = array_merge(Array('name' => $name), (array) $meta);
+				${$type}[] = array_merge(Array('name' => $name, 'file' => $file), (array) $meta);
 			}
 		}
 	}
 
 	$generated_tocs = Array();
+	$obj_types	= Array('files', 'constants', 'functions', 'classes', 'interfaces');
 
-	foreach(Array('files', 'constants', 'functions', 'classes', 'interfaces') as $obj)
+	foreach($obj_types as $obj)
 	{
-		$obj_struct = ${$obj};
-
-		if(!sizeof($obj_struct))
+		if(!sizeof(${$obj}))
 		{
 			continue;
 		}
 
+		$generated_tocs[] = $obj;
+	}
+
+	if(!$generated_tocs)
+	{
+		IO::text('Error: No generatable elements found for table of contents');
+		exit;
+	}
+
+	$docblock = function(Array $meta, $tag)
+	{
+		if(strtolower($tag) == 'tags' || !isset($meta['docblock']) || !isset($meta['docblock']->{$tag}))
+		{
+			return('Undefined value');
+		}
+
+		return($meta['docblock']->{$tag});
+	};
+
+	$docblock_tag = function(Array $meta, $tag)
+	{
+		if(!isset($meta['docblock']) || !isset($meta['docblock']->tags) || !isset($meta['docblock']->tags->{$tag}))
+		{
+			return('Undefined value');
+		}
+
+		return($meta['docblock']->tags->{$tag});
+	};
+
+	foreach($generated_tocs as $type)
+	{
+		switch($type)
+		{
+			case('constants'):
+			{
+				$const_ptr = Array();
+
+				foreach($constants as $const => $meta)
+				{
+					$const_ptr[$const] = $meta['name'];
+				}
+
+				ksort($const_ptr);
+
+				foreach($const_ptr as $const => $name)
+				{
+					$meta = $constants[$const];
+
+					$template 		= new Layout('api_constant');
+					$template->name		= $name;
+					$template->file		= $meta['file'];
+					$template->datatype	= $docblock_tag($meta, 'var');
+					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+					$template->description	= $docblock($meta, 'description');
+
+					$template->hash('constant', $name);
+				}
+			}
+			break;
+			default:
+			{
+/* HACK HACK HACK */
+				continue;
+
+				IO::text('Error: Unable to handle unknown type: ' . $type);
+				exit;
+			}
+			break;
+		}
+	}
+
+	foreach($generated_tocs as $obj)
+	{
 		$toc		= new Layout('toc');
-		$toc->name	= $generated_tocs[] = $obj;
+		$toc->name	= $obj;
 		$bits		= '';
 
-		foreach($obj_struct as $data)
+		foreach(${$obj} as $data)
 		{
-			$name		= (is_scalar($data) ? $data : (is_array($data) && isset($data['name']) ? $data['name'] : $data->function));
+			$name		= (is_scalar($data) ? $data : (is_array($data) && isset($data['name']) ? $data['name'] : $data['function']));
 
 			$bit 		= new Template('toc_bit');
 			$bit->link	= '#';
@@ -329,12 +398,6 @@
 		$toc->toc = $bits;
 
 		$toc->save($obj);
-	}
-
-	if(!$generated_tocs)
-	{
-		IO::text('Error: No generatable elements found for table of contents');
-		exit;
 	}
 
 	$bits		= '';
@@ -353,31 +416,4 @@
 	$toc->toc = $bits;
 
 	$toc->save('index');
-
-
-	foreach($generated_tocs as $type)
-	{
-		switch($type)
-		{
-			case('constants'):
-			{
-				foreach($constants as $const)
-				{
-					$tmp = new Layout('api_constant');
-/* HACK HACK HACK */
-					$tmp->hash('constant', $const['name']);
-				}
-			}
-			break;
-			default:
-			{
-/* HACK HACK HACK */
-				continue;
-
-				IO::text('Error: Unable to handle unknown type: ' . $type);
-				exit;
-			}
-			break;
-		}
-	}
 ?>
