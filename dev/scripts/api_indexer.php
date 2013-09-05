@@ -111,6 +111,22 @@
 		}
 
 		/**
+		 * Property overloader, to get template variables
+		 *
+		 * @param	string			The name of the variable
+		 * @return	void			Returns the value of the variable
+		 */
+		public function __get($variable)
+		{
+			$variable = strtolower((string) $variable);
+
+			if(isset($this->variables[$variable]))
+			{
+				return($this->variables[$variable]);
+			}
+		}
+
+		/**
 		 * String conversation overloader
 		 *
 		 * @return	string			 Returns the parsed template
@@ -325,7 +341,11 @@
 	}
 
 
-	$json = @json_decode(@file_get_contents('./apidump/engine_api.json'));
+	IO::signature();
+	IO::headline('API Indexer', 1);
+
+	$cli	= IO::isCli();
+	$json 	= json_decode(file_get_contents('./apidump/engine_api.json'));
 
 	if(!$json)
 	{
@@ -333,7 +353,11 @@
 		exit;
 	}
 
+	IO::ul();
+	IO::li('Reading API dump...');
+
 	$hashreg	= new HashRegistry;
+	$count		= 0;
 	$files 		= $constants = $functions = $classes = $interfaces = Array();
 
 	foreach($json as $file => $struct)
@@ -369,6 +393,8 @@
 			foreach($struct->{$type} as $name => $meta)
 			{
 				${$type}[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash($type, $name, $file)), (array) $meta);
+
+				++$count;
 			}
 		}
 	}
@@ -388,6 +414,8 @@
 
 	if(!$generated_tocs)
 	{
+		IO::ul(IO::TAG_END);
+
 		IO::text('Error: No generatable elements found for table of contents');
 		exit;
 	}
@@ -412,24 +440,30 @@
 		return($meta['docblock']->tags->{$tag});
 	};
 
+	IO::li('Generating API pages...');
+
 	foreach($generated_tocs as $type)
 	{
+		IO::ul();
+		IO::li(ucfirst($type));
+		IO::ul();
+
+		$ptr = Array();
+
+		foreach(${$type} as $gtype => $meta)
+		{
+			$ptr[$gtype] = (isset($meta['function']) ? $meta['function'] : $meta['name']);
+		}
+
+		ksort($ptr);
+
 		switch($type)
 		{
 			case('constants'):
 			{
-				$const_ptr = Array();
-
-				foreach($constants as $const => $meta)
+				foreach($ptr as $const => $name)
 				{
-					$const_ptr[$const] = $meta['name'];
-				}
-
-				ksort($const_ptr);
-
-				foreach($const_ptr as $const => $name)
-				{
-					$meta = $constants[$const];
+					$meta 			= $constants[$const];
 
 					$template 		= new Layout('api_constant');
 					$template->name		= $name;
@@ -439,19 +473,48 @@
 					$template->description	= $docblock($meta, 'description');
 
 					$template->save($meta['hash']);
+
+					IO::li($name);
+				}
+			}
+			break;
+			case('functions'):
+			{
+/* @todo Description can be empty */
+/* @todo Prototype needs to be generated */
+/* @todo Fix the api_function template to properly display the description box */
+				foreach($ptr as $function => $name)
+				{
+					$meta 			= $functions[$function];
+
+					$template		= new Layout('api_function');
+					$template->name		= $name;
+					$template->file		= $meta['file'];
+					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+					$template->description	= $docblock($meta, 'description');
+
+					$template->save($meta['hash']);
+
+					IO::li($name);
 				}
 			}
 			break;
 			default:
 			{
-/* HACK HACK HACK */
-				continue;
+/* @todo Classes */
+/* @todo Interfaces */
+/* @todo Files */
+				goto end;
 
 				IO::text('Error: Unable to handle unknown type: ' . $type);
 				exit;
 			}
 			break;
 		}
+
+end:
+		IO::ul(IO::TAG_END);
+		IO::ul(IO::TAG_END);
 	}
 
 	foreach($generated_tocs as $obj)
@@ -476,6 +539,9 @@
 		$toc->save($obj);
 	}
 
+	IO::li('Generating table of contents');
+	IO::ul();
+
 	$bits		= '';
 	$toc 		= new Layout('toc');
 	$toc->name	= 'Table of contents';
@@ -487,9 +553,14 @@
 		$bit->name	= ucfirst($gtoc);
 
 		$bits		.= (string) $bit;
+
+		IO::li($bit->name);
 	}
 
 	$toc->toc = $bits;
 
 	$toc->save('index');
+
+	IO::ul(IO::TAG_END);
+	IO::ul(IO::TAG_END);
 ?>

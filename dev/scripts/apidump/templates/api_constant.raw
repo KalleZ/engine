@@ -8,9 +8,15 @@
 				<legend><strong>Meta information</strong></legend>
 				<table cellspacing="4" cellpadding="0">
 					<tr>
-						<td nowrap="nowrap">Availability:</td>
+						<td>Availability:</td>
 						<td class="value" style="width: 100%">
 							Engine ???
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							Global constant
 						</td>
 					</tr>
 					<tr>
@@ -26,7 +32,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap">Namespace:</td>
+						<td>Namespace:</td>
 						<td class="value" style="width: 100%">
 							{$namespace}
 						</td>

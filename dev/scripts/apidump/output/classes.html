@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Tuxxedo Engine API Documentation</title>
 
@@ -12,43 +12,40 @@
 			font-size:			82%;
 			margin:				30px 10% 0px 10%;
 		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
 		td
 		{
 			border: 			1px solid transparent;
 		}
 
-code { font-family: Consolas, Monaco, 'Courier New', Monospace; }
 fieldset { background-color: #C2EDFD; border: 0px; border-radius: 4px; }
 fieldset legend { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
 h1 { margin: 30px 0px -6px 0px; }
-h1 sup { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; font-size: 35%; padding: 1px 3px; }
 h2 { margin: 20px 0px 0px 0px; }
-h2 span { background-color: #C2EDFD; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }
 li, ul { margin: 0px; }
 table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }
 table tr td.value { background-color: #FFFFFF; border-radius: 4px; padding: 3px; }
 table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }
 table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
-table tr.strong td.empty { background-color: #FFFFFF; }
 .box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }
 .box.edge-title { border-top-left-radius: 0px; }
 .box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }
 .box .inner ul { padding: 3px 15px; }
 .box .outer { padding: 6px; }
-.content { margin: 15px 0px 10px 430px; }
 .infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
 .infobox td { padding-right: 5px; }
 .left-content { float: left; }
 .left-content fieldset { width: 400px; }
-.spacer { margin-bottom: 10px; }
-.wrapper { padding: 0px 50px; }
 		</style>
 	</head>
 	<body>
 
 <h3>classes</h3>
 <ul>
-	<li><a href=".html">\TemplateCache</a></li><li><a href=".html">\Template</a></li><li><a href=".html">\Layout</a></li><li><a href=".html">\DevTools\Session</a></li><li><a href=".html">\DevTools\Style</a></li><li><a href=".html">\DevTools\Style\Storage\DevTools</a></li><li><a href=".html">\DevTools\Test</a></li><li><a href=".html">\DevTools\User</a></li><li><a href=".html">\DevTools\Utilities\IO</a></li><li><a href=".html">\Tuxxedo\Bootstrap</a></li><li><a href=".html">\Tuxxedo\Cookie</a></li><li><a href=".html">\Tuxxedo\Database</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysql</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysql\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysqli</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysqli\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Pdo</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Pdo\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Sqlite</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Sqlite\Result</a></li><li><a href=".html">\Tuxxedo\Database\Result</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Datastore</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Language</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Option</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Optioncategory</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Permission</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Phrase</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Phrasegroup</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Session</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Style</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Template</a></li><li><a href=".html">\Tuxxedo\User</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Usergroup</a></li><li><a href=".html">\Tuxxedo\Datastore</a></li><li><a href=".html">\Tuxxedo\Debug\Backtrace</a></li><li><a href=".html">\Tuxxedo\Debug\Trace</a></li><li><a href=".html">\Tuxxedo\Debug\TraceFrame</a></li><li><a href=".html">\Tuxxedo\Design\Event</a></li><li><a href=".html">\Tuxxedo\Design\EventContext</a></li><li><a href=".html">\Tuxxedo\Design\InfoAccess</a></li><li><a href=".html">\Tuxxedo\Design\Iteratable</a></li><li><a href=".html">\Tuxxedo\Exception</a></li><li><a href=".html">\Tuxxedo\Exception\Basic</a></li><li><a href=".html">\Tuxxedo\Exception\BasicMulti</a></li><li><a href=".html">\Tuxxedo\Exception\MVC\InvalidAction</a></li><li><a href=".html">\Tuxxedo\Exception\MVC\InvalidController</a></li><li><a href=".html">\Tuxxedo\Exception\Multi</a></li><li><a href=".html">\Tuxxedo\Exception\SQL</a></li><li><a href=".html">\Tuxxedo\Exception\TemplateCompiler</a></li><li><a href=".html">\Tuxxedo\Exception\Translated</a></li><li><a href=".html">\Tuxxedo\Helper</a></li><li><a href=".html">\Tuxxedo\Helper\Database</a></li><li><a href=".html">\Tuxxedo\Helper\Timer</a></li><li><a href=".html">\Tuxxedo\Input</a></li><li><a href=".html">\Tuxxedo\Intl</a></li><li><a href=".html">\Tuxxedo\Intl\Phrasegroup</a></li><li><a href=".html">\Tuxxedo\Loader</a></li><li><a href=".html">\Tuxxedo\MVC\Controller</a></li><li><a href=".html">\Tuxxedo\MVC\Model</a></li><li><a href=".html">\Tuxxedo\MVC\Router</a></li><li><a href=".html">\Tuxxedo\MVC\Router\Uri</a></li><li><a href=".html">\Tuxxedo\MVC\View</a></li><li><a href=".html">\Tuxxedo\MVC\View\Layout</a></li><li><a href=".html">\Tuxxedo\Options</a></li><li><a href=".html">\Tuxxedo\Registry</a></li><li><a href=".html">\Tuxxedo\Session</a></li><li><a href=".html">\Tuxxedo\Style</a></li><li><a href=".html">\Tuxxedo\Style\Storage</a></li><li><a href=".html">\Tuxxedo\Style\Storage\Database</a></li><li><a href=".html">\Tuxxedo\Style\Storage\Filesystem</a></li><li><a href=".html">\Tuxxedo\Template</a></li><li><a href=".html">\Tuxxedo\Template\Compiler</a></li><li><a href=".html">\Tuxxedo\Template\Compiler\Dummy</a></li><li><a href=".html">\Tuxxedo\Template\Layout</a></li><li><a href=".html">\Tuxxedo\User</a></li><li><a href=".html">\Tuxxedo\Utilities</a></li><li><a href=".html">\Tuxxedo\Version</a></li>
+	<li><a href=".html">\TemplateCache</a></li><li><a href=".html">\Template</a></li><li><a href=".html">\Layout</a></li><li><a href=".html">\HashRegistry</a></li><li><a href=".html">\DevTools\Session</a></li><li><a href=".html">\DevTools\Style</a></li><li><a href=".html">\DevTools\Style\Storage\DevTools</a></li><li><a href=".html">\DevTools\Test</a></li><li><a href=".html">\DevTools\User</a></li><li><a href=".html">\DevTools\Utilities\IO</a></li><li><a href=".html">\Tuxxedo\Bootstrap</a></li><li><a href=".html">\Tuxxedo\Cookie</a></li><li><a href=".html">\Tuxxedo\Database</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysql</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysql\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysqli</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysqli\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Pdo</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Pdo\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Sqlite</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Sqlite\Result</a></li><li><a href=".html">\Tuxxedo\Database\Result</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Datastore</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Language</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Option</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Optioncategory</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Permission</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Phrase</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Phrasegroup</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Session</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Style</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Template</a></li><li><a href=".html">\Tuxxedo\User</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Usergroup</a></li><li><a href=".html">\Tuxxedo\Datastore</a></li><li><a href=".html">\Tuxxedo\Debug\Backtrace</a></li><li><a href=".html">\Tuxxedo\Debug\Trace</a></li><li><a href=".html">\Tuxxedo\Debug\TraceFrame</a></li><li><a href=".html">\Tuxxedo\Design\Event</a></li><li><a href=".html">\Tuxxedo\Design\EventContext</a></li><li><a href=".html">\Tuxxedo\Design\InfoAccess</a></li><li><a href=".html">\Tuxxedo\Design\Iteratable</a></li><li><a href=".html">\Tuxxedo\Exception</a></li><li><a href=".html">\Tuxxedo\Exception\Basic</a></li><li><a href=".html">\Tuxxedo\Exception\BasicMulti</a></li><li><a href=".html">\Tuxxedo\Exception\MVC\InvalidAction</a></li><li><a href=".html">\Tuxxedo\Exception\MVC\InvalidController</a></li><li><a href=".html">\Tuxxedo\Exception\Multi</a></li><li><a href=".html">\Tuxxedo\Exception\SQL</a></li><li><a href=".html">\Tuxxedo\Exception\TemplateCompiler</a></li><li><a href=".html">\Tuxxedo\Exception\Translated</a></li><li><a href=".html">\Tuxxedo\Helper</a></li><li><a href=".html">\Tuxxedo\Helper\Database</a></li><li><a href=".html">\Tuxxedo\Helper\Timer</a></li><li><a href=".html">\Tuxxedo\Input</a></li><li><a href=".html">\Tuxxedo\Intl</a></li><li><a href=".html">\Tuxxedo\Intl\Phrasegroup</a></li><li><a href=".html">\Tuxxedo\Loader</a></li><li><a href=".html">\Tuxxedo\MVC\Controller</a></li><li><a href=".html">\Tuxxedo\MVC\Model</a></li><li><a href=".html">\Tuxxedo\MVC\Router</a></li><li><a href=".html">\Tuxxedo\MVC\Router\Uri</a></li><li><a href=".html">\Tuxxedo\MVC\View</a></li><li><a href=".html">\Tuxxedo\MVC\View\Layout</a></li><li><a href=".html">\Tuxxedo\Options</a></li><li><a href=".html">\Tuxxedo\Registry</a></li><li><a href=".html">\Tuxxedo\Session</a></li><li><a href=".html">\Tuxxedo\Style</a></li><li><a href=".html">\Tuxxedo\Style\Storage</a></li><li><a href=".html">\Tuxxedo\Style\Storage\Database</a></li><li><a href=".html">\Tuxxedo\Style\Storage\Filesystem</a></li><li><a href=".html">\Tuxxedo\Template</a></li><li><a href=".html">\Tuxxedo\Template\Compiler</a></li><li><a href=".html">\Tuxxedo\Template\Compiler\Dummy</a></li><li><a href=".html">\Tuxxedo\Template\Layout</a></li><li><a href=".html">\Tuxxedo\User</a></li><li><a href=".html">\Tuxxedo\Utilities</a></li><li><a href=".html">\Tuxxedo\Version</a></li>
 </ul>
 
 		<p>
