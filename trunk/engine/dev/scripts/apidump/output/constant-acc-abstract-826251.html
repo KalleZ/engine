@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Tuxxedo Engine API Documentation</title>
 
@@ -12,36 +12,33 @@
 			font-size:			82%;
 			margin:				30px 10% 0px 10%;
 		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
 		td
 		{
 			border: 			1px solid transparent;
 		}
 
-code { font-family: Consolas, Monaco, 'Courier New', Monospace; }
 fieldset { background-color: #C2EDFD; border: 0px; border-radius: 4px; }
 fieldset legend { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
 h1 { margin: 30px 0px -6px 0px; }
-h1 sup { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; font-size: 35%; padding: 1px 3px; }
 h2 { margin: 20px 0px 0px 0px; }
-h2 span { background-color: #C2EDFD; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }
 li, ul { margin: 0px; }
 table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }
 table tr td.value { background-color: #FFFFFF; border-radius: 4px; padding: 3px; }
 table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }
 table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
-table tr.strong td.empty { background-color: #FFFFFF; }
 .box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }
 .box.edge-title { border-top-left-radius: 0px; }
 .box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }
 .box .inner ul { padding: 3px 15px; }
 .box .outer { padding: 6px; }
-.content { margin: 15px 0px 10px 430px; }
 .infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
 .infobox td { padding-right: 5px; }
 .left-content { float: left; }
 .left-content fieldset { width: 400px; }
-.spacer { margin-bottom: 10px; }
-.wrapper { padding: 0px 50px; }
 		</style>
 	</head>
 	<body>
@@ -54,9 +51,15 @@ table tr.strong td.empty { background-color: #FFFFFF; }
 				<legend><strong>Meta information</strong></legend>
 				<table cellspacing="4" cellpadding="0">
 					<tr>
-						<td nowrap="nowrap">Availability:</td>
+						<td>Availability:</td>
 						<td class="value" style="width: 100%">
 							Engine ???
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							Global constant
 						</td>
 					</tr>
 					<tr>
@@ -72,7 +75,7 @@ table tr.strong td.empty { background-color: #FFFFFF; }
 						</td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap">Namespace:</td>
+						<td>Namespace:</td>
 						<td class="value" style="width: 100%">
 							Global namespace
 						</td>
