@@ -1,0 +1,8 @@
+<h3>{$mtype}</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">{$type}</td>
+		<td class="strong">Description</td>
+	</tr>
+	{$content}
+</table>

@@ -250,7 +250,7 @@
 		/**
 		 * Gets a hash (or generates a new one)
 		 *
-		 * @param	string				The type ('file', 'constant', 'function', 'class' or 'interface')
+		 * @param	string				The type ('constant', 'function', 'class' or 'interface')
 		 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 		 * @param	string				The file of where the object exists (fx. 'library/Tuxxedo/Bootstrap.php'), this is case sensitive
 		 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
@@ -261,7 +261,7 @@
 
 			if(!$types)
 			{
-				$types	= Array('file', 'constant', 'function', 'class', 'interface');
+				$types	= Array('constant', 'function', 'class', 'interface');
 			}
 
 			$type = strtolower($type);
@@ -298,7 +298,7 @@
 	 * Generates a file hash (filename) based on the name and type to 
 	 * avoid possible naming conflicts.
 	 *
-	 * @param	string				The type ('file', 'constant', 'function', 'class' or 'interface')
+	 * @param	string				The type ('constant', 'function', 'class' or 'interface')
 	 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 	 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
 	 */
@@ -309,7 +309,7 @@
 		if(!$rng)
 		{
 			$lcache	= Array();
-			$types	= Array('file', 'constant', 'function', 'class', 'interface');
+			$types	= Array('constant', 'function', 'class', 'interface');
 			$rng 	= function()
 			{
 				return(str_pad(mt_rand(0, 999999), 6, 0, STR_PAD_LEFT));
@@ -337,7 +337,12 @@
 		}
 		while(!isset($lcache[$n]));
 
-		return($type . '-' . str_replace(Array('_', '.'), '-', strtolower($name)) . '-' . $n);
+		if($name{0} == '\\')
+		{
+			$name = substr($name, 1);
+		}
+
+		return($type . '-' . str_replace(Array('_', '.', '\\'), '-', strtolower($name)) . '-' . $n);
 	}
 
 
@@ -357,16 +362,10 @@
 	IO::li('Reading API dump...');
 
 	$hashreg	= new HashRegistry;
-	$count		= 0;
-	$files 		= $constants = $functions = $classes = $interfaces = Array();
+	$constants 	= $functions = $classes = $interfaces = Array();
 
 	foreach($json as $file => $struct)
 	{
-		$files[] = Array(
-					'name'	=> $file, 
-					'hash'	=> $hashreg->hash('file', substr($file, strrpos($file, '/') + 1, -4), $file)
-					);
-
 		if($struct->functions)
 		{
 			foreach($struct->functions as $meta)
@@ -383,7 +382,7 @@
 			}
 		}
 
-		foreach(Array('classes', 'interfaces') as $type)
+		foreach(Array('classes' => 'class', 'interfaces' => 'interface') as $type => $types)
 		{
 			if(!$struct->{$type})
 			{
@@ -392,15 +391,13 @@
 
 			foreach($struct->{$type} as $name => $meta)
 			{
-				${$type}[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash($type, $name, $file)), (array) $meta);
-
-				++$count;
+				${$type}[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash($types, $name, $file)), (array) $meta);
 			}
 		}
 	}
 
 	$generated_tocs = Array();
-	$obj_types	= Array('files', 'constants', 'functions', 'classes', 'interfaces');
+	$obj_types	= Array('constants', 'functions', 'classes', 'interfaces');
 
 	foreach($obj_types as $obj)
 	{
@@ -440,7 +437,64 @@
 		return($meta['docblock']->tags->{$tag});
 	};
 
+	$prototype = function($name, Array $meta)
+	{
+		$return = 'void';
+		$params = '';
+
+		if($meta['docblock'] && isset($meta['docblock']->tags))
+		{
+			if(isset($meta['docblock']->tags->param))
+			{
+				foreach($meta['docblock']->tags->param as $param)
+				{
+					$params .= $param[0] . ', ';
+				}
+
+				$params = rtrim($params, ', ');
+			}
+
+			if(isset($meta['docblock']->tags->return))
+			{
+				$return = $meta['docblock']->tags->return[0];
+			}
+		}
+
+		if(!empty($meta['namespace']))
+		{
+			$name = $meta['namespace'] . '\\' . $name;
+		}
+
+		return(sprintf('%s%s(%s)', $return, $name, $params));
+	};
+
+	$nl2br = function($string)
+	{
+		return(str_replace("\n\n", '<br />', str_replace(Array("\n\r", "\r\n", "\r"), "\n", $string)));
+	};
+
+	$mformat = function($name, $as)
+	{
+		if($as == 'properties')
+		{
+			return('$' . $name);
+		}
+
+		if($as == 'methods')
+		{
+			return($name . '()');
+		}
+
+		return($name);
+	};
+
 	IO::li('Generating API pages...');
+
+	$mtypes = Array(
+			'constants'	=> 'constant', 
+			'properties'	=> 'property', 
+			'methods'	=> 'method'
+			);
 
 	foreach($generated_tocs as $type)
 	{
@@ -448,14 +502,15 @@
 		IO::li(ucfirst($type));
 		IO::ul();
 
-		$ptr = Array();
+		${$type . '_ptr'} 	= Array();
+		$ptr 			= &${$type . '_ptr'};
 
 		foreach(${$type} as $gtype => $meta)
 		{
-			$ptr[$gtype] = (isset($meta['function']) ? $meta['function'] : $meta['name']);
+			${$type . '_ptr'}[$gtype] = (isset($meta['function']) ? $meta['function'] : $meta['name']);
 		}
 
-		ksort($ptr);
+		asort(${$type . '_ptr'});
 
 		switch($type)
 		{
@@ -470,7 +525,7 @@
 					$template->file		= $meta['file'];
 					$template->datatype	= $docblock_tag($meta, 'var');
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= $docblock($meta, 'description');
+					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
 
 					$template->save($meta['hash']);
 
@@ -480,18 +535,116 @@
 			break;
 			case('functions'):
 			{
-/* @todo Description can be empty */
-/* @todo Prototype needs to be generated */
-/* @todo Fix the api_function template to properly display the description box */
 				foreach($ptr as $function => $name)
 				{
 					$meta 			= $functions[$function];
+					$parameters		= $returns = '';
+
+					if(($p = $docblock_tag($meta, 'param')) !== 'Undefined value')
+					{
+						$pl		= '';
+						$parameters 	= new Template('parameters');
+
+						foreach($p as $pa)
+						{
+							$pt 			= new Template('parameter');
+							$pt->datatype 		= $pa[0];
+							$pt->description	= $pa[1];
+
+							$pl 			.= $pt;
+						}
+
+						$parameters->parameter_list = $pl;
+					}
+
+					if(($p = $docblock_tag($meta, 'return')) !== 'Undefined value')
+					{
+						$returns	= new Template('returns');
+						$returns->value	= $p[1];
+					}
 
 					$template		= new Layout('api_function');
+					$template->name		= $name . '()';
+					$template->file		= $meta['file'];
+					$template->prototype	= $prototype($name, $meta);
+					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
+					$template->parameters	= $parameters;
+					$template->returns	= $returns;
+
+					$template->save($meta['hash']);
+
+					IO::li($name);
+				}
+			}
+			break;
+			case('classes'):
+			case('interfaces'):
+			{
+/* @todo Generate constant files */
+/* @todo Generate property files */
+/* @todo Generate method files */
+/* @todo Generate a synopsis */
+/* @todo Display visibility in the meta information box */
+/* @todo Display parent class/interface in the meta information box */
+/* @todo Display the implemented interfaces in the meta information box */
+				$rtype = ($type == 'classes' ? 'class' : 'interface');
+
+				foreach($ptr as $obj_id => $name)
+				{
+					$meta 		= ${$type}[$obj_id];
+					$contents 	= '';
+
+					foreach(Array('constants', 'properties', 'methods') as $mtype)
+					{
+						if(!$meta[$mtype])
+						{
+							continue;
+						}
+
+						$content 	= '';
+						$mptr 		= Array();
+
+						foreach($meta[$mtype] as $m_id => $mmeta)
+						{
+							$mptr[$mmeta->{$mtypes[$mtype]}] = $m_id;
+						}
+
+						ksort($mptr);
+
+						foreach($mptr as $m_name => $m_id)
+						{
+							$tmeta			= $meta[$mtype][$m_id];
+
+							$template 		= new Template('obj_contents_bit');
+							$template->name		= $mformat($m_name, $mtype);
+							$template->link		= '';
+							$template->description	= (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');;
+
+							$content		.= $template;
+						}
+
+						$template 		= new Template('obj_contents');
+						$template->type		= ucfirst($mtypes[$mtype]);
+						$template->mtype	= ucfirst($mtype);
+						$template->content	= $content;
+
+						$contents		.= $template;
+					}
+
+					if(empty($contents))
+					{
+						$contents = 'None';
+					}
+
+					$template		= new Layout('api_object');
 					$template->name		= $name;
+					$template->type		= ucfirst($rtype);
+					$template->mtype	= $type;
 					$template->file		= $meta['file'];
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= $docblock($meta, 'description');
+					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
+					$template->contents 	= $contents;
 
 					$template->save($meta['hash']);
 
@@ -501,37 +654,34 @@
 			break;
 			default:
 			{
-/* @todo Classes */
-/* @todo Interfaces */
-/* @todo Files */
-				goto end;
-
 				IO::text('Error: Unable to handle unknown type: ' . $type);
 				exit;
 			}
 			break;
 		}
 
-end:
 		IO::ul(IO::TAG_END);
 		IO::ul(IO::TAG_END);
 	}
 
 	foreach($generated_tocs as $obj)
 	{
-		$toc		= new Layout('toc');
-		$toc->name	= $obj;
 		$bits		= '';
+		$toc		= new Layout('toc');
+		$toc->name	= ucfirst($obj);
+		$toc->seealso	= new Template('toc_seealso');
 
-		foreach(${$obj} as $data)
+		foreach(${$obj . '_ptr'} as $key => $name)
 		{
-			$name		= (is_scalar($data) ? $data : (is_array($data) && isset($data['name']) ? $data['name'] : $data['function']));
+			$data 			= ${$obj}[$key];
+			$name			= (is_scalar($data) ? $data : (is_array($data) && isset($data['name']) ? $data['name'] : $data['function']));
 
-			$bit 		= new Template('toc_bit');
-			$bit->link	= $data['hash'] . '.html';
-			$bit->name	= $name;
+			$bit 			= new Template('toc_bit');
+			$bit->link		= $data['hash'] . '.html';
+			$bit->name		= $name;
+			$bit->description	= (isset($data['docblock']) && isset($data['docblock']->description) ? substr($data['docblock']->description, 0, 100) . (strlen($data['docblock']->description) > 100 ? '...' : '') : 'No description available');
 
-			$bits 		.= (string) $bit;
+			$bits 			.= (string) $bit;
 		}
 
 		$toc->toc = $bits;
@@ -542,17 +692,26 @@ end:
 	IO::li('Generating table of contents');
 	IO::ul();
 
+	$descriptions	= Array(
+				'constants'	=> 'Global constants', 
+				'functions'	=> 'Procedural functions', 
+				'classes'	=> 'Class synopsises', 
+				'interfaces'	=> 'Interface structures'
+				);
+
 	$bits		= '';
 	$toc 		= new Layout('toc');
 	$toc->name	= 'Table of contents';
+	$toc->seealso	= '';
 
 	foreach($generated_tocs as $gtoc)
 	{
-		$bit 		= new Template('toc_bit');
-		$bit->link	= $gtoc . '.html';
-		$bit->name	= ucfirst($gtoc);
+		$bit 			= new Template('toc_bit');
+		$bit->link		= $gtoc . '.html';
+		$bit->name		= ucfirst($gtoc);
+		$bit->description	= $descriptions[$gtoc];
 
-		$bits		.= (string) $bit;
+		$bits			.= (string) $bit;
 
 		IO::li($bit->name);
 	}

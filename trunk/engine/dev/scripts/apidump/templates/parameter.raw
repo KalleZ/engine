@@ -1,0 +1,12 @@
+<br />
+
+<fieldset>
+	<legend><strong>{$datatype}</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				{$description}
+			</td>
+		</tr>
+	</table>
+</fieldset>

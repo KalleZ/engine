@@ -35,7 +35,7 @@
 
 
 	/**
-	 * Interface for dispatchable controller hooks
+	 * Interface for mapable models
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>

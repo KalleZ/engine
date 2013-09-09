@@ -4,6 +4,15 @@
 		<title>Tuxxedo Engine API Documentation</title>
 
 		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
 		body
 		{
 			background-color:		#E4F4FC;
@@ -16,40 +25,178 @@
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD; 
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+		li, ul
+		{
+			margin: 			0px;
+		}
 		td
 		{
 			border: 			1px solid transparent;
 		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
 
-fieldset { background-color: #C2EDFD; border: 0px; border-radius: 4px; }
-fieldset legend { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
-h1 { margin: 30px 0px -6px 0px; }
-h2 { margin: 20px 0px 0px 0px; }
-li, ul { margin: 0px; }
-table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }
-table tr td.value { background-color: #FFFFFF; border-radius: 4px; padding: 3px; }
-table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }
-table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
-.box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }
-.box.edge-title { border-top-left-radius: 0px; }
-.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }
-.box .inner ul { padding: 3px 15px; }
-.box .outer { padding: 6px; }
-.infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
-.infobox td { padding-right: 5px; }
-.left-content { float: left; }
-.left-content fieldset { width: 400px; }
+		.box 
+		{ 
+			background-color: 		#C2EDFD; 
+			border: 			3px solid #C2EDFD; 
+			border-radius: 			4px; 
+		}
+			.box.edge-title 
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+			.box .inner ul 
+			{ 
+				padding: 			3px 15px; 
+			}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 430px; 
+		}
+		.infobox
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 400px;
+			}
 		</style>
 	</head>
 	<body>
 
-<h3>interfaces</h3>
-<ul>
-	<li><a href=".html">\Tuxxedo\Database\Driver</a></li><li><a href=".html">\Tuxxedo\Database\Result\Specification</a></li><li><a href=".html">\Tuxxedo\Datamanager\Hooks\Cache</a></li><li><a href=".html">\Tuxxedo\Datamanager\Hooks\Resetable</a></li><li><a href=".html">\Tuxxedo\Datamanager\Hooks\Virtual</a></li><li><a href=".html">\Tuxxedo\Datamanager\Hooks\VirtualDispatcher</a></li><li><a href=".html">\Tuxxedo\Design\Invokable</a></li><li><a href=".html">\Tuxxedo\MVC\Controller\Dispatchable</a></li><li><a href=".html">\Tuxxedo\MVC\Model\Mapper</a></li>
-</ul>
+<h1>Interfaces</h1>
+<div class="box">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Name</td>
+				<td class="strong">Description</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-database-driver-176927.html">\Tuxxedo\Database\Driver</a></td>
+	<td nowrap="nowrap" style="width: 100%">Base database driver interface
+
+This defines the driver structure of which functions a driver
+mus...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-database-result-specification-843329.html">\Tuxxedo\Database\Result\Specification</a></td>
+	<td nowrap="nowrap" style="width: 100%">Base database driver result interface
+
+This defines the driver structure of which functions a driv...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-cache-412598.html">\Tuxxedo\Datamanager\Hooks\Cache</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datastore requirement for using the datamanager
+
+This interface is for datamanagers that interacts...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-resetable-168534.html">\Tuxxedo\Datamanager\Hooks\Resetable</a></td>
+	<td nowrap="nowrap" style="width: 100%">Resetable interface
+
+Resetable makes a datamanager able to reset a loaded
+data set into its defau...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-virtual-165377.html">\Tuxxedo\Datamanager\Hooks\Virtual</a></td>
+	<td nowrap="nowrap" style="width: 100%">Virtual field handler for using the datamanager
+
+This interface is for allowing virtual fields to...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-virtualdispatcher-503661.html">\Tuxxedo\Datamanager\Hooks\VirtualDispatcher</a></td>
+	<td nowrap="nowrap" style="width: 100%">Virtual field dispatcher
+
+This interface tells the datamanager API to dispatch virtual
+fields to ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-design-invokable-520120.html">\Tuxxedo\Design\Invokable</a></td>
+	<td nowrap="nowrap" style="width: 100%">Interface for requring the registry to pass certain information
+before the constructor is called.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-mvc-controller-dispatchable-622147.html">\Tuxxedo\MVC\Controller\Dispatchable</a></td>
+	<td nowrap="nowrap" style="width: 100%">Interface for dispatchable controller hooks</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-mvc-model-mapper-303627.html">\Tuxxedo\MVC\Model\Mapper</a></td>
+	<td nowrap="nowrap" style="width: 100%">Interface for mapable models</td>
+</tr>
+		</table>
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Alpha 3 (Experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
 		</p>
 	</body>
 </html>

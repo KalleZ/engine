@@ -4,6 +4,15 @@
 		<title>Tuxxedo Engine API Documentation</title>
 
 		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
 		body
 		{
 			background-color:		#E4F4FC;
@@ -16,40 +25,457 @@
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD; 
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+		li, ul
+		{
+			margin: 			0px;
+		}
 		td
 		{
 			border: 			1px solid transparent;
 		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
 
-fieldset { background-color: #C2EDFD; border: 0px; border-radius: 4px; }
-fieldset legend { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
-h1 { margin: 30px 0px -6px 0px; }
-h2 { margin: 20px 0px 0px 0px; }
-li, ul { margin: 0px; }
-table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }
-table tr td.value { background-color: #FFFFFF; border-radius: 4px; padding: 3px; }
-table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }
-table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
-.box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }
-.box.edge-title { border-top-left-radius: 0px; }
-.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }
-.box .inner ul { padding: 3px 15px; }
-.box .outer { padding: 6px; }
-.infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
-.infobox td { padding-right: 5px; }
-.left-content { float: left; }
-.left-content fieldset { width: 400px; }
+		.box 
+		{ 
+			background-color: 		#C2EDFD; 
+			border: 			3px solid #C2EDFD; 
+			border-radius: 			4px; 
+		}
+			.box.edge-title 
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+			.box .inner ul 
+			{ 
+				padding: 			3px 15px; 
+			}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 430px; 
+		}
+		.infobox
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 400px;
+			}
 		</style>
 	</head>
 	<body>
 
-<h3>classes</h3>
-<ul>
-	<li><a href=".html">\TemplateCache</a></li><li><a href=".html">\Template</a></li><li><a href=".html">\Layout</a></li><li><a href=".html">\HashRegistry</a></li><li><a href=".html">\DevTools\Session</a></li><li><a href=".html">\DevTools\Style</a></li><li><a href=".html">\DevTools\Style\Storage\DevTools</a></li><li><a href=".html">\DevTools\Test</a></li><li><a href=".html">\DevTools\User</a></li><li><a href=".html">\DevTools\Utilities\IO</a></li><li><a href=".html">\Tuxxedo\Bootstrap</a></li><li><a href=".html">\Tuxxedo\Cookie</a></li><li><a href=".html">\Tuxxedo\Database</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysql</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysql\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysqli</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Mysqli\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Pdo</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Pdo\Result</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Sqlite</a></li><li><a href=".html">\Tuxxedo\Database\Driver\Sqlite\Result</a></li><li><a href=".html">\Tuxxedo\Database\Result</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Datastore</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Language</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Option</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Optioncategory</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Permission</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Phrase</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Phrasegroup</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Session</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Style</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Template</a></li><li><a href=".html">\Tuxxedo\User</a></li><li><a href=".html">\Tuxxedo\Datamanager\Adapter\Usergroup</a></li><li><a href=".html">\Tuxxedo\Datastore</a></li><li><a href=".html">\Tuxxedo\Debug\Backtrace</a></li><li><a href=".html">\Tuxxedo\Debug\Trace</a></li><li><a href=".html">\Tuxxedo\Debug\TraceFrame</a></li><li><a href=".html">\Tuxxedo\Design\Event</a></li><li><a href=".html">\Tuxxedo\Design\EventContext</a></li><li><a href=".html">\Tuxxedo\Design\InfoAccess</a></li><li><a href=".html">\Tuxxedo\Design\Iteratable</a></li><li><a href=".html">\Tuxxedo\Exception</a></li><li><a href=".html">\Tuxxedo\Exception\Basic</a></li><li><a href=".html">\Tuxxedo\Exception\BasicMulti</a></li><li><a href=".html">\Tuxxedo\Exception\MVC\InvalidAction</a></li><li><a href=".html">\Tuxxedo\Exception\MVC\InvalidController</a></li><li><a href=".html">\Tuxxedo\Exception\Multi</a></li><li><a href=".html">\Tuxxedo\Exception\SQL</a></li><li><a href=".html">\Tuxxedo\Exception\TemplateCompiler</a></li><li><a href=".html">\Tuxxedo\Exception\Translated</a></li><li><a href=".html">\Tuxxedo\Helper</a></li><li><a href=".html">\Tuxxedo\Helper\Database</a></li><li><a href=".html">\Tuxxedo\Helper\Timer</a></li><li><a href=".html">\Tuxxedo\Input</a></li><li><a href=".html">\Tuxxedo\Intl</a></li><li><a href=".html">\Tuxxedo\Intl\Phrasegroup</a></li><li><a href=".html">\Tuxxedo\Loader</a></li><li><a href=".html">\Tuxxedo\MVC\Controller</a></li><li><a href=".html">\Tuxxedo\MVC\Model</a></li><li><a href=".html">\Tuxxedo\MVC\Router</a></li><li><a href=".html">\Tuxxedo\MVC\Router\Uri</a></li><li><a href=".html">\Tuxxedo\MVC\View</a></li><li><a href=".html">\Tuxxedo\MVC\View\Layout</a></li><li><a href=".html">\Tuxxedo\Options</a></li><li><a href=".html">\Tuxxedo\Registry</a></li><li><a href=".html">\Tuxxedo\Session</a></li><li><a href=".html">\Tuxxedo\Style</a></li><li><a href=".html">\Tuxxedo\Style\Storage</a></li><li><a href=".html">\Tuxxedo\Style\Storage\Database</a></li><li><a href=".html">\Tuxxedo\Style\Storage\Filesystem</a></li><li><a href=".html">\Tuxxedo\Template</a></li><li><a href=".html">\Tuxxedo\Template\Compiler</a></li><li><a href=".html">\Tuxxedo\Template\Compiler\Dummy</a></li><li><a href=".html">\Tuxxedo\Template\Layout</a></li><li><a href=".html">\Tuxxedo\User</a></li><li><a href=".html">\Tuxxedo\Utilities</a></li><li><a href=".html">\Tuxxedo\Version</a></li>
-</ul>
+<h1>Classes</h1>
+<div class="box">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Name</td>
+				<td class="strong">Description</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-session-844020.html">\DevTools\Session</a></td>
+	<td nowrap="nowrap" style="width: 100%">DevTools session interface override. This class overrides
+the options and 'bakes' them into the cla...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-style-013534.html">\DevTools\Style</a></td>
+	<td nowrap="nowrap" style="width: 100%">Development Tools styling class, this class overrides the
+default styling class so we can overload ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-style-storage-devtools-446012.html">\DevTools\Style\Storage\DevTools</a></td>
+	<td nowrap="nowrap" style="width: 100%">Development Tools style storage, this class overrides the
+default filesystem storage engine so we c...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-test-253436.html">\DevTools\Test</a></td>
+	<td nowrap="nowrap" style="width: 100%">Minor testing class, used for testing availability for
+various requirement checks</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-user-368843.html">\DevTools\User</a></td>
+	<td nowrap="nowrap" style="width: 100%">DevTools user class, this class is used to bypass some of the
+restrictions the core user class proh...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-utilities-io-386982.html">\DevTools\Utilities\IO</a></td>
+	<td nowrap="nowrap" style="width: 100%">Input/Output writer. This class is designed to make basic scripts
+work in CLI and in a browser with...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-hashregistry-092192.html">\HashRegistry</a></td>
+	<td nowrap="nowrap" style="width: 100%">Hash registry
+
+This class is a local cache for the hashes generated by the
+api_file_hash() functi...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-layout-633724.html">\Layout</a></td>
+	<td nowrap="nowrap" style="width: 100%">Layout class
+
+Layout wrapper class around the base template, see the
+constructor for more informa...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-template-865980.html">\Template</a></td>
+	<td nowrap="nowrap" style="width: 100%">Template class</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-templatecache-116077.html">\TemplateCache</a></td>
+	<td nowrap="nowrap" style="width: 100%">Template cache for templates</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-bootstrap-228806.html">\Tuxxedo\Bootstrap</a></td>
+	<td nowrap="nowrap" style="width: 100%">Bootstraper, this class works as an encapsulated and easier way
+to write working bootstrapers while...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-cookie-887076.html">\Tuxxedo\Cookie</a></td>
+	<td nowrap="nowrap" style="width: 100%">Cookie Jar, this is a basic OO wrapper for cookies, it shares
+the same globals as the session class...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-698504.html">\Tuxxedo\Database</a></td>
+	<td nowrap="nowrap" style="width: 100%">Abstract database class
+
+Every main driver class must extend this class in order to be loadable
+a...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-mysql-819857.html">\Tuxxedo\Database\Driver\Mysql</a></td>
+	<td nowrap="nowrap" style="width: 100%">MySQL driver for Tuxxedo Engine
+
+This driver enables access to a MySQL 3+ based database using
+th...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-mysql-result-061286.html">\Tuxxedo\Database\Driver\Mysql\Result</a></td>
+	<td nowrap="nowrap" style="width: 100%">MySQL result class for Tuxxedo
+
+This implements the result class for MySQL for Tuxxedo,
+this cont...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-mysqli-010134.html">\Tuxxedo\Database\Driver\Mysqli</a></td>
+	<td nowrap="nowrap" style="width: 100%">MySQL Improved driver for Tuxxedo Engine
+
+This driver enables access to a MySQL 4.1+ based databas...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-mysqli-result-761015.html">\Tuxxedo\Database\Driver\Mysqli\Result</a></td>
+	<td nowrap="nowrap" style="width: 100%">MySQL Improved result class for Tuxxedo
+
+This implements the result class for MySQL Improved for
+...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-pdo-655364.html">\Tuxxedo\Database\Driver\Pdo</a></td>
+	<td nowrap="nowrap" style="width: 100%">PDO abstraction driver for Tuxxedo Engine
+
+This driver lets you use PDO as backend instead of the ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-pdo-result-069652.html">\Tuxxedo\Database\Driver\Pdo\Result</a></td>
+	<td nowrap="nowrap" style="width: 100%">PDO abstraction result driver for Tuxxedo
+
+This implements the result class for PDO based subdrive...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-sqlite-171348.html">\Tuxxedo\Database\Driver\Sqlite</a></td>
+	<td nowrap="nowrap" style="width: 100%">Sqlite driver for Tuxxedo
+
+This driver enables access to a Sqlite 3+ based database using
+the sql...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-driver-sqlite-result-284849.html">\Tuxxedo\Database\Driver\Sqlite\Result</a></td>
+	<td nowrap="nowrap" style="width: 100%">SQLite result class for Tuxxedo
+
+This implements the result class for SQLite3 for
+Tuxxedo, this c...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-result-043103.html">\Tuxxedo\Database\Result</a></td>
+	<td nowrap="nowrap" style="width: 100%">Abstract database result class
+
+Every driver result class must extend this class in order to be lo...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-235095.html">\Tuxxedo\Datamanager\Adapter</a></td>
+	<td nowrap="nowrap" style="width: 100%">Abstract datamanager class
+
+Every datamanager class must extend this class in order to be loadable...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-datastore-392958.html">\Tuxxedo\Datamanager\Adapter\Datastore</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for datastore</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-language-009097.html">\Tuxxedo\Datamanager\Adapter\Language</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for languages</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-option-460104.html">\Tuxxedo\Datamanager\Adapter\Option</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for options</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-optioncategory-635957.html">\Tuxxedo\Datamanager\Adapter\Optioncategory</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for option categories</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-permission-370072.html">\Tuxxedo\Datamanager\Adapter\Permission</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for permissions</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-phrase-476840.html">\Tuxxedo\Datamanager\Adapter\Phrase</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for phrases</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-phrasegroup-979229.html">\Tuxxedo\Datamanager\Adapter\Phrasegroup</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for phrase groups</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-session-083472.html">\Tuxxedo\Datamanager\Adapter\Session</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for sessions</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-style-229415.html">\Tuxxedo\Datamanager\Adapter\Style</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for styles</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-template-637700.html">\Tuxxedo\Datamanager\Adapter\Template</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for templates</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-usergroup-990267.html">\Tuxxedo\Datamanager\Adapter\Usergroup</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for usergroups</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datastore-190196.html">\Tuxxedo\Datastore</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datastore cache, this enables datastore caching for
+databases. This assumes the datastore table and...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-debug-backtrace-546398.html">\Tuxxedo\Debug\Backtrace</a></td>
+	<td nowrap="nowrap" style="width: 100%">Debug backtrace class, this is a redesign of the old and infamous
+tuxxedo_debug_backtrace() functio...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-debug-trace-147813.html">\Tuxxedo\Debug\Trace</a></td>
+	<td nowrap="nowrap" style="width: 100%">Trace class, this records traces about calls priority to
+executing the upcoming code block and calc...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-debug-traceframe-411948.html">\Tuxxedo\Debug\TraceFrame</a></td>
+	<td nowrap="nowrap" style="width: 100%">Trace frame, this class is used together with the backtracing
+class, each frame returned is an inst...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-design-event-021044.html">\Tuxxedo\Design\Event</a></td>
+	<td nowrap="nowrap" style="width: 100%">Event class, this allows objects to register events and let
+other objects call events like a simple...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-design-eventcontext-419949.html">\Tuxxedo\Design\EventContext</a></td>
+	<td nowrap="nowrap" style="width: 100%">Event Context, this basically works like an \stdClass object but
+is registered for reflection and f...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-design-infoaccess-990822.html">\Tuxxedo\Design\InfoAccess</a></td>
+	<td nowrap="nowrap" style="width: 100%">Information access, enables the ability for classes
+to access their loaded information through the ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-design-iteratable-805889.html">\Tuxxedo\Design\Iteratable</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iteratable interface, this interface is simply just a
+combination of the built-in interfaces in PHP...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-766037.html">\Tuxxedo\Exception</a></td>
+	<td nowrap="nowrap" style="width: 100%">Default exception, mainly used for general errors. All
+Tuxxedo specific exceptions extend this exce...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-basic-011713.html">\Tuxxedo\Exception\Basic</a></td>
+	<td nowrap="nowrap" style="width: 100%">Basic exception type, this is used for errors that
+should act as fatal errors. If an exception of t...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-basicmulti-370359.html">\Tuxxedo\Exception\BasicMulti</a></td>
+	<td nowrap="nowrap" style="width: 100%">Basic Multi error exception
+
+Can throw multiple errors at the same time, and works like the 'Basic...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-mvc-invalidaction-482978.html">\Tuxxedo\Exception\MVC\InvalidAction</a></td>
+	<td nowrap="nowrap" style="width: 100%">Invalid action method</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-mvc-invalidcontroller-669633.html">\Tuxxedo\Exception\MVC\InvalidController</a></td>
+	<td nowrap="nowrap" style="width: 100%">Invalid controller</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-multi-541633.html">\Tuxxedo\Exception\Multi</a></td>
+	<td nowrap="nowrap" style="width: 100%">Multi exception, this exception is used to carry multiple data
+so it can be displayed when multiple...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-sql-524723.html">\Tuxxedo\Exception\SQL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Include check</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-templatecompiler-298124.html">\Tuxxedo\Exception\TemplateCompiler</a></td>
+	<td nowrap="nowrap" style="width: 100%">Template compiler exception, any compilation error will be
+of this exception type.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-translated-747519.html">\Tuxxedo\Exception\Translated</a></td>
+	<td nowrap="nowrap" style="width: 100%">Translated exception, this works like the standard
+UI exception except that it can format the messa...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-helper-309003.html">\Tuxxedo\Helper</a></td>
+	<td nowrap="nowrap" style="width: 100%">Helper loading interface</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-helper-database-477415.html">\Tuxxedo\Helper\Database</a></td>
+	<td nowrap="nowrap" style="width: 100%">Database utilities helper
+
+This helper assumes the 'db' key is registered to an instance of
+using...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-helper-timer-255888.html">\Tuxxedo\Helper\Timer</a></td>
+	<td nowrap="nowrap" style="width: 100%">Timer helper</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-input-962148.html">\Tuxxedo\Input</a></td>
+	<td nowrap="nowrap" style="width: 100%">Input filtering class, this class cleans data
+with magic quotes in mind. It will use the filter
+ex...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-intl-180743.html">\Tuxxedo\Intl</a></td>
+	<td nowrap="nowrap" style="width: 100%">Internationalization Interface
+
+This class deals with basic routines for internationalization
+sup...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-intl-phrasegroup-460838.html">\Tuxxedo\Intl\Phrasegroup</a></td>
+	<td nowrap="nowrap" style="width: 100%">Internationalization phrasegroup class
+
+Contains basic routines for working with single phrasegrou...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-loader-331799.html">\Tuxxedo\Loader</a></td>
+	<td nowrap="nowrap" style="width: 100%">Autoloader handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-controller-086625.html">\Tuxxedo\MVC\Controller</a></td>
+	<td nowrap="nowrap" style="width: 100%">The base controller class for the MVC components</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-model-311181.html">\Tuxxedo\MVC\Model</a></td>
+	<td nowrap="nowrap" style="width: 100%">Model class
+
+In a MVC application this would be extended to create logical models,
+that are popul...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-router-460952.html">\Tuxxedo\MVC\Router</a></td>
+	<td nowrap="nowrap" style="width: 100%">The router can detect from a range of sources the required controller and
+action to execute.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-router-uri-223764.html">\Tuxxedo\MVC\Router\Uri</a></td>
+	<td nowrap="nowrap" style="width: 100%">Uri based router interface.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-view-043296.html">\Tuxxedo\MVC\View</a></td>
+	<td nowrap="nowrap" style="width: 100%">The View class for MVC based components, this wraps around the
+existing style API.
+
+This class cu...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-view-layout-111614.html">\Tuxxedo\MVC\View\Layout</a></td>
+	<td nowrap="nowrap" style="width: 100%">View layout, this works as a wrapper to automatically enable
+layout mode. Layout mode cannot be dis...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-options-591730.html">\Tuxxedo\Options</a></td>
+	<td nowrap="nowrap" style="width: 100%">Options class, allows the options registry entry to allow
+usage of options as virtual properties an...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-registry-722435.html">\Tuxxedo\Registry</a></td>
+	<td nowrap="nowrap" style="width: 100%">Registry class, this acts as a mixed singleton/registry
+object.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-session-927521.html">\Tuxxedo\Session</a></td>
+	<td nowrap="nowrap" style="width: 100%">Session interface, this class is designed to be attached to
+classes that implements an interface ba...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-style-058769.html">\Tuxxedo\Style</a></td>
+	<td nowrap="nowrap" style="width: 100%">Styling API, this enables basic styling frontend for
+caching templates and fetching them for execut...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-style-storage-772852.html">\Tuxxedo\Style\Storage</a></td>
+	<td nowrap="nowrap" style="width: 100%">Interface for template storage engines</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-style-storage-database-132351.html">\Tuxxedo\Style\Storage\Database</a></td>
+	<td nowrap="nowrap" style="width: 100%">Style storage engine for database based templates</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-style-storage-filesystem-074753.html">\Tuxxedo\Style\Storage\Filesystem</a></td>
+	<td nowrap="nowrap" style="width: 100%">Style storage engine for file system based templates</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-template-399368.html">\Tuxxedo\Template</a></td>
+	<td nowrap="nowrap" style="width: 100%">Template class, this class serves as an object oriented way of creating
+templates, mainly designed ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-template-compiler-931602.html">\Tuxxedo\Template\Compiler</a></td>
+	<td nowrap="nowrap" style="width: 100%">Template compiler, this compiles raw template source
+code into php executable code with support for...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-template-compiler-dummy-934377.html">\Tuxxedo\Template\Compiler\Dummy</a></td>
+	<td nowrap="nowrap" style="width: 100%">Dummy compiler class, this is used for emulation within the
+test method to make sure object oriente...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-template-layout-309403.html">\Tuxxedo\Template\Layout</a></td>
+	<td nowrap="nowrap" style="width: 100%">Template layout, this is identical to the basic template class, except that
+it will wrap around the...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-user-858775.html">\Tuxxedo\User</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for users</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-user-106659.html">\Tuxxedo\User</a></td>
+	<td nowrap="nowrap" style="width: 100%">User session class, this class manages the current user
+session information and permission bitfield...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-utilities-352737.html">\Tuxxedo\Utilities</a></td>
+	<td nowrap="nowrap" style="width: 100%">Utilities class wrapper. This class wraps around the previously
+declared prodecural functions, whic...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-version-478317.html">\Tuxxedo\Version</a></td>
+	<td nowrap="nowrap" style="width: 100%">Versioning class, contains all of the Core versioning</td>
+</tr>
+		</table>
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Alpha 3 (Experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
 		</p>
 	</body>
 </html>

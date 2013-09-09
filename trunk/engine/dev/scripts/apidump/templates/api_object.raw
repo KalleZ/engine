@@ -1,0 +1,83 @@
+{$header}
+
+<h1>{$name}</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine ...
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							{$type}
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%">
+							{$file}
+						</td>
+					</tr>
+					<tr>
+						<td>Namespace:</td>
+						<td class="value" style="width: 100%">
+							{$namespace}
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				{$description}
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+<h2><span>Synopsis</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+			<legend><strong>Object Synopsis</strong></legend>
+			<table cellspacing="4" cellpadding="0" style="width: 100%;">
+				<tr> 
+					<td colspan="2" class="value" style="width: 100%">
+						<pre><code>{$synopsis}</code></pre>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+</div>
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		{$contents}
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			<li><a href="./{$mtype}.html">List of {$mtype}</a></li>
+		</ul>
+	</div>
+</div>
+
+{$footer}

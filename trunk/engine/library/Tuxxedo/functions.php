@@ -1,4 +1,4 @@
-<?php
+X<?php
 	/**
 	 * Tuxxedo Software Engine
 	 * =============================================================================
@@ -659,8 +659,7 @@
 	}
 
 	/**
-	 * Print a document error (startup) and halts script execution, this function 
-	 * is mostly a copy of tuxxedo_doc_error() thats optimized for viewing at CLI.
+	 * Print a document error (startup) and halts script execution for CLI.
 	 *
 	 * @param	mixed				The message to show, this can also be an exception
 	 * @return	void				No value is returned

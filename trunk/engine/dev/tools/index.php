@@ -24,6 +24,8 @@
 
 	/**
 	 * Set script name
+	 *
+	 * @var		string
 	 */
 	const SCRIPT_NAME	= 'index';
 

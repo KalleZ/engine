@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
+		body
+		{
+			background-color:		#E4F4FC;
+			color:				#3B7286;
+			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
+			margin:				30px 10% 0px 10%;
+		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD; 
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+		li, ul
+		{
+			margin: 			0px;
+		}
+		td
+		{
+			border: 			1px solid transparent;
+		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
+
+		.box 
+		{ 
+			background-color: 		#C2EDFD; 
+			border: 			3px solid #C2EDFD; 
+			border-radius: 			4px; 
+		}
+			.box.edge-title 
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+			.box .inner ul 
+			{ 
+				padding: 			3px 15px; 
+			}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 430px; 
+		}
+		.infobox
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 400px;
+			}
+		</style>
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Debug\TraceFrame</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine ...
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							Class
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%">
+							library/Tuxxedo/Debug/TraceFrame.php
+						</td>
+					</tr>
+					<tr>
+						<td>Namespace:</td>
+						<td class="value" style="width: 100%">
+							\Tuxxedo\Debug
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Trace frame, this class is used together with the backtracing
+class, each frame returned is an instance of this class.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+<h2><span>Synopsis</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+			<legend><strong>Object Synopsis</strong></legend>
+			<table cellspacing="4" cellpadding="0" style="width: 100%;">
+				<tr> 
+					<td colspan="2" class="value" style="width: 100%">
+						<pre><code>{$synopsis}</code></pre>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+</div>
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>Constants</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="">FLAG_CALLBACK</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Callback?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FLAG_EXCEPTION</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Exception?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FLAG_HANDLER</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Handler?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FLAG_INCLUDE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Include?</td>
+</tr>
+</table><h3>Properties</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="">$call</a></td>
+	<td nowrap="nowrap" style="width: 100%">Call, including prototype (without arguments)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$callargs</a></td>
+	<td nowrap="nowrap" style="width: 100%">Call, including prototype and argument list</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$current</a></td>
+	<td nowrap="nowrap" style="width: 100%">Whether or not this is the 'current' frame (the one that triggered the error)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$file</a></td>
+	<td nowrap="nowrap" style="width: 100%">File path (full path)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$flags</a></td>
+	<td nowrap="nowrap" style="width: 100%">Boolean flags</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$frame</a></td>
+	<td nowrap="nowrap" style="width: 100%">Frame id (the number of the frame in the trace)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$line</a></td>
+	<td nowrap="nowrap" style="width: 100%">Line number</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$notes</a></td>
+	<td nowrap="nowrap" style="width: 100%">Notes</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$reflection_call</a></td>
+	<td nowrap="nowrap" style="width: 100%">Reflection call, this is the 'call' version thats passed as the first parameter to each Reflection i...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$reflection_class</a></td>
+	<td nowrap="nowrap" style="width: 100%">Reflection class to call when using the getReflection() method</td>
+</tr>
+</table><h3>Methods</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor
+
+Constructs a new trace frame object</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getFlags()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the boolean flags bitfield</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getReflection()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a new reflection instance of this call</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">isCallback()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is a callback</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">isException()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is an exception</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">isHandler()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is a handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">isInclude()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is an include</td>
+</tr>
+</table>
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			<li><a href="./classes.html">List of classes</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
+		</p>
+	</body>
+</html>

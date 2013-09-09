@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
+		body
+		{
+			background-color:		#E4F4FC;
+			color:				#3B7286;
+			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
+			margin:				30px 10% 0px 10%;
+		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD; 
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+		li, ul
+		{
+			margin: 			0px;
+		}
+		td
+		{
+			border: 			1px solid transparent;
+		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
+
+		.box 
+		{ 
+			background-color: 		#C2EDFD; 
+			border: 			3px solid #C2EDFD; 
+			border-radius: 			4px; 
+		}
+			.box.edge-title 
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+			.box .inner ul 
+			{ 
+				padding: 			3px 15px; 
+			}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 430px; 
+		}
+		.infobox
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 400px;
+			}
+		</style>
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Datamanager\Adapter</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine ...
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							Class
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%">
+							library/Tuxxedo/Datamanager/Adapter.php
+						</td>
+					</tr>
+					<tr>
+						<td>Namespace:</td>
+						<td class="value" style="width: 100%">
+							\Tuxxedo\Datamanager
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Abstract datamanager class<br />Every datamanager class must extend this class in order to be loadable and to
+comply with the datamanager API. This also contains the factory method used
+to instanciate a new datamanager instance.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+<h2><span>Synopsis</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+			<legend><strong>Object Synopsis</strong></legend>
+			<table cellspacing="4" cellpadding="0" style="width: 100%;">
+				<tr> 
+					<td colspan="2" class="value" style="width: 100%">
+						<pre><code>{$synopsis}</code></pre>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+</div>
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>Constants</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="">CONTEXT_DELETE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, delete() context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">CONTEXT_NONE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, default context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">CONTEXT_SAVE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, save() context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">CONTEXT_VOID</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, void context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FIELD_OPTIONAL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is optional</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FIELD_PROTECTED</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is protected</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FIELD_REQUIRED</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is required</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">FIELD_VIRTUAL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is virtual</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">OPT_DEFAULT</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - default options</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">OPT_INTL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - internationalization (default enabled)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">OPT_INTL_AUTO</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - internationalization, load if available</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">OPT_LOAD_ONLY</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - insert as new record</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_BOOLEAN</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, boolean value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_CALLBACK</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, callback</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_EMAIL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, email value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_IDENTIFIER</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation option constant, identifier</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_NONE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, no validation</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_NUMERIC</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, numeric value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_STRING</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, string value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">VALIDATE_STRING_EMPTY</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation option constant, allow empty fields</td>
+</tr>
+</table><h3>Properties</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="">$context</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context for hooks, and adapters</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$data</a></td>
+	<td nowrap="nowrap" style="width: 100%">The original data if instanciated by an identifier</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$dmname</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager name, set by the datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$identifier</a></td>
+	<td nowrap="nowrap" style="width: 100%">Identifier, if any</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$identifier_data</a></td>
+	<td nowrap="nowrap" style="width: 100%">Cache data if the identifier is gonna be validated</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$idname</a></td>
+	<td nowrap="nowrap" style="width: 100%">Identifier name, set by the datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$invalid_fields</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of fields that had one or more errors and therefore
+could not be saved</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$iterator_position</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator position</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$loaded_datamanagers</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of loaded datamanagers used for caching in the
+special required cases where more than one driv...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$parent</a></td>
+	<td nowrap="nowrap" style="width: 100%">Whether this datamanager are called from another datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$registry</a></td>
+	<td nowrap="nowrap" style="width: 100%">Private instance to the Tuxxedo registry</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$reidentify</a></td>
+	<td nowrap="nowrap" style="width: 100%">Whether to re-identify the data when saving</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$shutdown_handlers</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of shutdown handlers to execute</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">$tablename</a></td>
+	<td nowrap="nowrap" style="width: 100%">Table name, set by the datamanager</td>
+</tr>
+</table><h3>Methods</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor for the current datamanager, this
+can be used to either create a datamanager based
+on ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">__destruct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Destructor for the current datamanager, this is
+reserved for shutdown handlers in parent datamanage...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">current()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - current</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">delete()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Deletes the data, within the database if an identifier was specified, else
+the current set data is ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">factory()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new datamanger instance</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">get()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a field</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getDataStruct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets default data to allocate the $data property internally</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getFields()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the fields this datamanager provides</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getInvalidFields()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a list over invalid fields, this is only populated
+if an attempt to saving a datamanager have ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getParent()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the parent datamanager pointer</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">getVirtualFields()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a list of virtual fields from the datamanager adapter</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">hooks()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Hooks executor
+
+This method executes hooks on a datamanager instance, this is cannot be
+called pu...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">init()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager initializer, this method initializes the default logic
+used across all datamanager adap...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">key()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - key</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">next()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - next</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">offsetGet()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'get' method so that default data is allocated
+when using the ArrayAccess...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">offsetSet()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'set' method so that its prohibited to
+set elements that doesn't exists</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">rewind()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - rewind</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">save()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Save method, attempts to validate and save the data
+into the database</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">setShutdownHandler()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Sets a shutdown handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">valid()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - valid</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="">validate()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation method, validates the supplied user data</td>
+</tr>
+</table>
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			<li><a href="./classes.html">List of classes</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
+		</p>
+	</body>
+</html>
