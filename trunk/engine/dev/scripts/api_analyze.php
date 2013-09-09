@@ -357,7 +357,7 @@
 	 */
 	function lexical_docblock_parse($dump, \stdClass $wip)
 	{
-		static $special_tags, $multi_tags;
+		static $special_tags, $multi_tags, $flag_tags;
 
 		if(!$special_tags)
 		{
@@ -373,6 +373,16 @@
 			$multi_tags	= Array(
 						'param'		=> 0, 
 						'throws'	=> 0
+						);
+
+			$flag_tags	= Array(
+						'ignore'	=> 0, 
+						'abstract'	=> 0, 
+						'private'	=> 0, 
+						'public'	=> 0, 
+						'protected'	=> 0, 
+						'final'		=> 0, 
+						'static'	=> 0
 						);
 		}
 
@@ -443,6 +453,16 @@
 				}
 
 				$tag = strtolower($split[0]);
+
+				if(!isset($split[1]))
+				{
+					if(isset($flag_tags[$tag]))
+					{
+						$docblock['tags'][$tag] = true;
+					}
+
+					continue;
+				}
 
 				unset($split[0]);
 
