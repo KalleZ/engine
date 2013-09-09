@@ -41,7 +41,7 @@
 
 
 	/**
-	 * MySQL result class for Tuxxedo
+	 * MySQL result class
 	 *
 	 * This implements the result class for MySQL for Tuxxedo, 
 	 * this contains methods to fetch, count result rows and 

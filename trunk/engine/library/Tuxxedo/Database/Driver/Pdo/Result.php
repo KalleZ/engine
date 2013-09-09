@@ -42,7 +42,7 @@
 
 
 	/**
-	 * PDO abstraction result driver for Tuxxedo
+	 * PDO abstraction result driver
 	 *
 	 * This implements the result class for PDO based subdrivers for 
 	 * Tuxxedo, this contains methods to fetch, count result rows and 

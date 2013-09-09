@@ -42,7 +42,7 @@
 
 
 	/**
-	 * SQLite result class for Tuxxedo
+	 * SQLite result class
 	 *
 	 * This implements the result class for SQLite3 for 
 	 * Tuxxedo, this contains methods to fetch, count result rows and 
