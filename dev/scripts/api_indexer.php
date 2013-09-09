@@ -584,16 +584,12 @@
 /* @todo Generate constant files */
 /* @todo Generate property files */
 /* @todo Generate method files */
-/* @todo Generate a synopsis */
-/* @todo Display visibility in the meta information box */
-/* @todo Display parent class/interface in the meta information box */
-/* @todo Display the implemented interfaces in the meta information box */
 				$rtype = ($type == 'classes' ? 'class' : 'interface');
 
 				foreach($ptr as $obj_id => $name)
 				{
 					$meta 		= ${$type}[$obj_id];
-					$contents 	= '';
+					$contents 	= $extendedinfo = '';
 
 					foreach(Array('constants', 'properties', 'methods') as $mtype)
 					{
@@ -632,6 +628,58 @@
 						$contents		.= $template;
 					}
 
+					if($meta['metadata']->abstract || $meta['metadata']->final)
+					{
+						$counter = 0;
+
+						foreach(Array('abstract', 'final') as $flag)
+						{
+							if(!$meta['metadata']->{$flag})
+							{
+								continue;
+							}
+
+							$template 		= new Template((!$counter ? 'obj_element' : 'obj_element_bit'));
+							$template->value	= $flag;
+
+							if(!$counter++)
+							{
+								$template->element = 'Flags';
+							}
+
+							$extendedinfo .= $template;
+						}
+					}
+
+					if($meta['extends'])
+					{
+						$template 		= new Template('obj_element');
+						$template->element	= 'Extends';
+						$template->value	= $meta['extends'];
+
+						$extendedinfo		.= $template;
+					}
+
+					if($meta['implements'])
+					{
+						asort($meta['implements']);
+
+						$counter = 0;
+
+						foreach($meta['implements'] as $iface)
+						{
+							$template 		= new Template((!$counter ? 'obj_element' : 'obj_element_bit'));
+							$template->value	= $iface;
+
+							if(!$counter++)
+							{
+								$template->element = 'Implements';
+							}
+
+							$extendedinfo .= $template;
+						}
+					}
+
 					if(empty($contents))
 					{
 						$contents = 'None';
@@ -645,6 +693,7 @@
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
 					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
 					$template->contents 	= $contents;
+					$template->extendedinfo	= $extendedinfo;
 
 					$template->save($meta['hash']);
 
@@ -681,7 +730,7 @@
 			$bit->name		= $name;
 			$bit->description	= (isset($data['docblock']) && isset($data['docblock']->description) ? substr($data['docblock']->description, 0, 100) . (strlen($data['docblock']->description) > 100 ? '...' : '') : 'No description available');
 
-			$bits 			.= (string) $bit;
+			$bits 			.= $bit;
 		}
 
 		$toc->toc = $bits;
@@ -711,7 +760,7 @@
 		$bit->name		= ucfirst($gtoc);
 		$bit->description	= $descriptions[$gtoc];
 
-		$bits			.= (string) $bit;
+		$bits			.= $bit;
 
 		IO::li($bit->name);
 	}

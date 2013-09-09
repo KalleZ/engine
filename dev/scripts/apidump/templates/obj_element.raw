@@ -1,0 +1,6 @@
+<tr>
+	<td>{$element}:</td>
+	<td class="value" style="width: 100%">
+		{$value}
+	</td>
+</tr>
