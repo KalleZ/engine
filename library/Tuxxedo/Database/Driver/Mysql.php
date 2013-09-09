@@ -46,7 +46,7 @@
 
 
 	/**
-	 * MySQL driver for Tuxxedo Engine
+	 * MySQL driver
 	 *
 	 * This driver enables access to a MySQL 3+ based database using 
 	 * the mysql database extension. If using MySQL 4.1+ the MySQLi 
