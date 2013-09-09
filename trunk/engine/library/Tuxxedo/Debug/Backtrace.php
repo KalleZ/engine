@@ -172,10 +172,8 @@
 				}
 
 				$flags		= 0;
-				$call		= $refcall = $refclass = '';
+				$call		= $refcall = $refclass = $file = $line = '';
 				$notes 		= (isset($t['type']) && $t['type'] == '::' ? Array('Static call') : Array());
-				$line		= 0;
-				$file		= '';
 
 				if(isset($t['function']))
 				{
@@ -264,7 +262,7 @@
 					$notes[] = 'Callback';
 				}
 
-				if(isset($t['line']))
+				if(isset($t['line']) && $t['line'])
 				{
 					$line = (integer) $t['line'];
 				}
