@@ -632,24 +632,22 @@
 							$content		.= $template;
 
 							$template		= new Layout($mtypes[$mtype][1]);
-							$template->name		= $m_name;
+							$template->name		= $mformat($m_name, $mtype);
 							$template->file		= $meta['file'];
 							$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
 							$template->description	= $desc;
 							$template->obj		= $meta['name'];
 							$template->obj_link	= $meta['hash'] . '.html';
+							$template->obj_type	= $type;
 
 /* @todo Generate property files */
 /* @todo Generate method files */
 							switch($mtype)
 							{
 								case('constants'):
-								{
-									$template->datatype = $docblock_tag((array) $tmeta, 'var');
-								}
-								break;
 								case('properties'):
 								{
+									$template->datatype = $docblock_tag((array) $tmeta, 'var');
 								}
 								break;
 								case('methods'):
