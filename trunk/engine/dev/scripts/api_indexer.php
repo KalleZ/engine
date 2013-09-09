@@ -465,7 +465,7 @@
 			$name = $meta['namespace'] . '\\' . $name;
 		}
 
-		return(sprintf('%s%s(%s)', $return, $name, $params));
+		return(sprintf('%s %s(%s)', $return, $name, $params));
 	};
 
 	$nl2br = function($string)
@@ -640,8 +640,6 @@
 							$template->obj_link	= $meta['hash'] . '.html';
 							$template->obj_type	= $type;
 
-/* @todo Generate property files */
-/* @todo Generate method files */
 							switch($mtype)
 							{
 								case('constants'):
@@ -652,6 +650,34 @@
 								break;
 								case('methods'):
 								{
+									$parameters = $returns = '';
+
+									if(($p = $docblock_tag((array) $tmeta, 'param')) !== 'Undefined value')
+									{
+										$pl		= '';
+										$parameters 	= new Template('parameters');
+
+										foreach($p as $pa)
+										{
+											$pt 			= new Template('parameter');
+											$pt->datatype 		= $pa[0];
+											$pt->description	= $pa[1];
+
+											$pl 			.= $pt;
+										}
+
+										$parameters->parameter_list = $pl;
+									}
+
+									if(($p = $docblock_tag((array) $tmeta, 'return')) !== 'Undefined value')
+									{
+										$returns	= new Template('returns');
+										$returns->value	= $p[1];
+									}
+
+									$template->prototype	= $prototype($m_name, (array) $tmeta);
+									$template->parameters 	= $parameters;
+									$template->returns	= $returns;
 								}
 								break;
 							}
