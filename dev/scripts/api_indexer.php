@@ -728,6 +728,12 @@
 						$contents = 'None';
 					}
 
+					if(strpos($name, '\\') !== false)
+					{
+						$name = explode('\\', $name);
+						$name = end($name);
+					}
+
 					$template		= new Layout('api_object');
 					$template->name		= $name;
 					$template->type		= ucfirst($rtype);
