@@ -599,9 +599,6 @@
 					$meta 		= ${$type}[$obj_id];
 					$contents 	= $extendedinfo = '';
 
-/* @todo Generate constant files */
-/* @todo Generate property files */
-/* @todo Generate method files */
 					foreach(Array('constants', 'properties', 'methods') as $mtype)
 					{
 						if(!$meta[$mtype])
@@ -629,12 +626,37 @@
 
 							$template 		= new Template('obj_contents_bit');
 							$template->name		= $mformat($m_name, $mtype);
-							$template->link		= '';
-							$template->description	= (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');;
+							$template->link		= $tmeta->hash . '.html';
+							$template->description	= $desc = (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');;
 
 							$content		.= $template;
 
 							$template		= new Layout($mtypes[$mtype][1]);
+							$template->name		= $m_name;
+							$template->file		= $meta['file'];
+							$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+							$template->description	= $desc;
+							$template->obj		= $meta['name'];
+							$template->obj_link	= $meta['hash'] . '.html';
+
+/* @todo Generate property files */
+/* @todo Generate method files */
+							switch($mtype)
+							{
+								case('constants'):
+								{
+									$template->datatype = $docblock_tag((array) $tmeta, 'var');
+								}
+								break;
+								case('properties'):
+								{
+								}
+								break;
+								case('methods'):
+								{
+								}
+								break;
+							}
 
 							$template->save($tmeta->hash);
 
