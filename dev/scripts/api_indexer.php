@@ -250,7 +250,7 @@
 		/**
 		 * Gets a hash (or generates a new one)
 		 *
-		 * @param	string				The type ('constant', 'function', 'class' or 'interface')
+		 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property' or 'method')
 		 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 		 * @param	string				The file of where the object exists (fx. 'library/Tuxxedo/Bootstrap.php'), this is case sensitive
 		 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
@@ -261,7 +261,7 @@
 
 			if(!$types)
 			{
-				$types	= Array('constant', 'function', 'class', 'interface');
+				$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method');
 			}
 
 			$type = strtolower($type);
@@ -298,7 +298,7 @@
 	 * Generates a file hash (filename) based on the name and type to 
 	 * avoid possible naming conflicts.
 	 *
-	 * @param	string				The type ('constant', 'function', 'class' or 'interface')
+	 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property' or 'method')
 	 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 	 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
 	 */
@@ -309,7 +309,7 @@
 		if(!$rng)
 		{
 			$lcache	= Array();
-			$types	= Array('constant', 'function', 'class', 'interface');
+			$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method');
 			$rng 	= function()
 			{
 				return(str_pad(mt_rand(0, 999999), 6, 0, STR_PAD_LEFT));
@@ -491,9 +491,18 @@
 	IO::li('Generating API pages...');
 
 	$mtypes = Array(
-			'constants'	=> 'constant', 
-			'properties'	=> 'property', 
-			'methods'	=> 'method'
+			'constants'	=> Array(
+							'constant', 
+							'api_obj_constant'
+							), 
+			'properties'	=> Array(
+							'property', 
+							'api_property'
+							), 
+			'methods'	=> Array(
+							'method', 
+							'api_method'
+							)
 			);
 
 	foreach($generated_tocs as $type)
@@ -581,16 +590,18 @@
 			case('classes'):
 			case('interfaces'):
 			{
-/* @todo Generate constant files */
-/* @todo Generate property files */
-/* @todo Generate method files */
 				$rtype = ($type == 'classes' ? 'class' : 'interface');
 
 				foreach($ptr as $obj_id => $name)
 				{
+					IO::li($name);
+
 					$meta 		= ${$type}[$obj_id];
 					$contents 	= $extendedinfo = '';
 
+/* @todo Generate constant files */
+/* @todo Generate property files */
+/* @todo Generate method files */
 					foreach(Array('constants', 'properties', 'methods') as $mtype)
 					{
 						if(!$meta[$mtype])
@@ -603,14 +614,18 @@
 
 						foreach($meta[$mtype] as $m_id => $mmeta)
 						{
-							$mptr[$mmeta->{$mtypes[$mtype]}] = $m_id;
+							$mptr[$mmeta->{$mtypes[$mtype][0]}] = $m_id;
 						}
 
 						ksort($mptr);
 
+						IO::li(ucfirst($mtype) . ':');
+						IO::ul();
+
 						foreach($mptr as $m_name => $m_id)
 						{
-							$tmeta			= $meta[$mtype][$m_id];
+							$tmeta			= &$meta[$mtype][$m_id];
+							$tmeta->hash		= $hashreg->hash($mtypes[$mtype][0], $m_name, $meta['file']);
 
 							$template 		= new Template('obj_contents_bit');
 							$template->name		= $mformat($m_name, $mtype);
@@ -618,10 +633,18 @@
 							$template->description	= (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');;
 
 							$content		.= $template;
+
+							$template		= new Layout($mtypes[$mtype][1]);
+
+							$template->save($tmeta->hash);
+
+							IO::li($m_name);
 						}
 
+						IO::ul(IO::TAG_END);
+
 						$template 		= new Template('obj_contents');
-						$template->type		= ucfirst($mtypes[$mtype]);
+						$template->type		= ucfirst($mtypes[$mtype][0]);
 						$template->mtype	= ucfirst($mtype);
 						$template->content	= $content;
 
@@ -696,8 +719,6 @@
 					$template->extendedinfo	= $extendedinfo;
 
 					$template->save($meta['hash']);
-
-					IO::li($name);
 				}
 			}
 			break;
