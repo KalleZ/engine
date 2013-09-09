@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
+		body
+		{
+			background-color:		#E4F4FC;
+			color:				#3B7286;
+			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
+			margin:				30px 10% 0px 10%;
+		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD; 
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+		li, ul
+		{
+			margin: 			0px;
+		}
+		td
+		{
+			border: 			1px solid transparent;
+		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
+
+		.box 
+		{ 
+			background-color: 		#C2EDFD; 
+			border: 			3px solid #C2EDFD; 
+			border-radius: 			4px; 
+		}
+			.box.edge-title 
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+			.box .inner ul 
+			{ 
+				padding: 			3px 15px; 
+			}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 430px; 
+		}
+		.infobox
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 400px;
+			}
+		</style>
+	</head>
+	<body>
+
+<h1>dispatcher()</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine ...
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							Method
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%">
+							library/Tuxxedo/MVC/Controller/Dispatchable.php
+						</td>
+					</tr>
+					<tr>
+						<td>Namespace:</td>
+						<td class="value" style="width: 100%">
+							\Tuxxedo\MVC\Controller
+						</td>
+					</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="interface-tuxxedo-mvc-controller-dispatchable-622147.html">\Tuxxedo\MVC\Controller\Dispatchable</a>
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<fieldset>
+				<legend>Prototype</legend>
+				<table cellspacing="4" cellpadding="0" style="width: 100%;">
+					<tr>
+						<td class="value" style="width: 100%">
+							void dispatcher(integer)
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+
+			<div class="infobox">
+				Controller dispatch hook, this hook is called for
+both pre and post dispatching and uses its only
+...
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			...
+		</div>
+		<br />
+
+<fieldset>
+	<legend><strong>integer</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The current dispatching state
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+<h2><span>Returns</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			No value is returned
+		</div>
+	</div>
+</div>
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+			<legend><strong>...</strong></legend>
+			<table cellspacing="4" cellpadding="0" style="width: 100%;">
+				<tr> 
+					<td colspan="2" class="value" style="width: 100%">
+						<pre><code>...</code></pre>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+</div>
+
+<h2><span>Version history</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Version</td>
+				<td class="strong">Notes</td>
+			</tr>
+			<tr class="row">
+				<td nowrap="nowrap">...</td>
+				<td nowrap="nowrap" style="width: 100%">...</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			<li><a href="interface-tuxxedo-mvc-controller-dispatchable-622147.html">\Tuxxedo\MVC\Controller\Dispatchable</a></li>
+			<li><a href="./interfaces.html">List of interfaces</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
+		</p>
+	</body>
+</html>

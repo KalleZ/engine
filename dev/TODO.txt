@@ -7,7 +7,6 @@
 	---------------------------------------------------
 
 	Finish implementing the API indexer
-	 - classes / interfaces
-	   - constants
-	   - properties
-	   - methods
+	 - Examples (<code>) in descriptions works very poorly
+	   - Should be stripped in "short" descriptions
+	   - Should be stripped in big descriptions and turned into an example for the class/interface/function/constant
