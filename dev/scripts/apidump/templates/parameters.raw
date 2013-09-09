@@ -1,0 +1,9 @@
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			...
+		</div>
+		{$parameter_list}
+	</div>
+</div>

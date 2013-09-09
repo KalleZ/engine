@@ -3,35 +3,11 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" Alpha 3
-	------------------------------------------------
+	Tuxxedo Engine 1.2.0 "Beloved" Beta 1
+	---------------------------------------------------
 
-	Core
-	 - Move functions from \Tuxxedo\Utilities to \DevTools\*, page, headerRedirect, redirect, ...
-	 - Change parameter order on \Tuxxedo\Utilities::date() $timestamp <-> $format (or use 'datef()' ?)
-
-	DevTools
-	 - Add new the internationalization component
-	   - Phrasegroup
-	     - Add
-	     - Edit
-	     - Delete
-	     - List
-	   - Phrase
-	     - Add
-	     - Edit
-	     - Delete
-	     - Reset
-	     - Search
-
-	Internationalization
-	 - Add support for 'resetable' phrases
-	 - Phrases should use ids instead of named groups, which makes validation much easier, but dublicates cached data to some distinct
-
-	Datamanagers
-	 - Session
-	  - Cleanup, remove the hacky part and make sure \Tuxxedo\User work
-
-	Bugs
-	 - Language
-	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same
+	Finish implementing the API indexer
+	 - classes / interfaces
+	   - constants
+	   - properties
+	   - methods

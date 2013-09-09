@@ -94,6 +94,8 @@
 	Fixed an issue in the style datamanager that would cause an incorrect sync to the datastore when re-collecting template ids (Kalle)
 	Fixed the session datamanager so that it will actually allocate the \Tuxxedo\Datamanager\Adapter::$data property if possible (Kalle)
 	Fixed an issue that would cause some components to not being able to be loaded on case sensitive file systems (Datamanagers, Helpers & Style storage)
+	Fixed a bug in api_analyze.php so that it will use the correct datatype + depth for parameters (Kalle)
+	Fixed a bug in api_analyze.php so that namespaces using curly braces will be correctly picked up (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)

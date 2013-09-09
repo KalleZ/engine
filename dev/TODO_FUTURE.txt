@@ -3,7 +3,8 @@
 	Tuxxedo Engine Future
 	---------------------
     
-	Require PHP 5.4 (Possibly Engine 1.3.0)
+	Require PHP 5.4/5.5 (Engine 1.3.0)
+	Codename for Engine 1.3.0; Intergalatic
 	Improve development tools
 	 - Implement usage of the pagination class in the DevTools (when Helper\Pagination is implemented)
 	 - Implement installation generators

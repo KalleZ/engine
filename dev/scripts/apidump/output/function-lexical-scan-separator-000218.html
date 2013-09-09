@@ -4,6 +4,15 @@
 		<title>Tuxxedo Engine API Documentation</title>
 
 		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
 		body
 		{
 			background-color:		#E4F4FC;
@@ -16,34 +25,112 @@
 		{
 			font-family:			Consolas, Monaco, 'Courier New', Monospace;
 		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD; 
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+		li, ul
+		{
+			margin: 			0px;
+		}
 		td
 		{
 			border: 			1px solid transparent;
 		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
 
-fieldset { background-color: #C2EDFD; border: 0px; border-radius: 4px; }
-fieldset legend { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
-h1 { margin: 30px 0px -6px 0px; }
-h2 { margin: 20px 0px 0px 0px; }
-li, ul { margin: 0px; }
-table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }
-table tr td.value { background-color: #FFFFFF; border-radius: 4px; padding: 3px; }
-table tr.row, table tr.row * { margin: 0px; padding: 2px 5px; }
-table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
-.box { background-color: #C2EDFD; border: 3px solid #C2EDFD; border-radius: 4px; }
-.box.edge-title { border-top-left-radius: 0px; }
-.box .inner { background-color: #FFFFFF; border-radius: 4px; padding: 6px; }
-.box .inner ul { padding: 3px 15px; }
-.box .outer { padding: 6px; }
-.infobox { background-color: #C2EDFD; border-radius: 4px; padding: 6px; }
-.infobox td { padding-right: 5px; }
-.left-content { float: left; }
-.left-content fieldset { width: 400px; }
+		.box 
+		{ 
+			background-color: 		#C2EDFD; 
+			border: 			3px solid #C2EDFD; 
+			border-radius: 			4px; 
+		}
+			.box.edge-title 
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+			.box .inner ul 
+			{ 
+				padding: 			3px 15px; 
+			}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 430px; 
+		}
+		.infobox
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 400px;
+			}
 		</style>
 	</head>
 	<body>
 
-<h1>lexical_scan_separator</h1>
+<h1>lexical_scan_separator()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -53,7 +140,7 @@ table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine ???
+							Engine ...
 						</td>
 					</tr>
 					<tr>
@@ -82,16 +169,94 @@ table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
 				<legend>Prototype</legend>
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
-						<td class="value" style="width: 100%"><code>{$prototype}</code></td>
+						<td class="value" style="width: 100%">
+							arraylexical_scan_separator(array, integer, integer|string, integer|string, boolean)
+						</td>
 					</tr>
 				</table>
 			</fieldset>
+			<br />
+
 			<div class="infobox">
 				Scans a statement and breaks it into an array based on a separator token
 			</div>
 			<br />
 		</div>
 		<div style="clear: left;"></div>
+	</div>
+</div>
+
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			...
+		</div>
+		<br />
+
+<fieldset>
+	<legend><strong>array</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The tokens copy array
+			</td>
+		</tr>
+	</table>
+</fieldset><br />
+
+<fieldset>
+	<legend><strong>integer</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The token start index
+			</td>
+		</tr>
+	</table>
+</fieldset><br />
+
+<fieldset>
+	<legend><strong>integer|string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The separator token
+			</td>
+		</tr>
+	</table>
+</fieldset><br />
+
+<fieldset>
+	<legend><strong>integer|string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The stop token, end of statement
+			</td>
+		</tr>
+	</table>
+</fieldset><br />
+
+<fieldset>
+	<legend><strong>boolean</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				Whether to skip whitespace tokens or not
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+<h2><span>Returns</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Returns an array with each part as a new value, like explode() and empty array on failure
+		</div>
 	</div>
 </div>
 
@@ -116,7 +281,7 @@ table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
 	<div class="inner">
 		<table style="width: 100%" cellspacing="2" cellpadding="0">
 			<tr class="head">
-				<td class="strong" nowrap="nowrap">Engine version</td>
+				<td class="strong" nowrap="nowrap">Version</td>
 				<td class="strong">Notes</td>
 			</tr>
 			<tr class="row">
@@ -137,7 +302,7 @@ table tr.strong td { background-color: #C2EDFD; border-radius: 4px; }
 </div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Alpha 3 (Experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
 		</p>
 	</body>
 </html>

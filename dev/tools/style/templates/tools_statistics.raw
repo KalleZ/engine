@@ -113,7 +113,9 @@
 <div class="box">
 	<p>
 		Note that images and other binary files such as SQLite databases are 
-		not included in any of the above statistics.
+		not included in any of the above statistics. If the above numbers 
+		displays a high amount of HTML, then it can be due to the self generated 
+		documentation available in the dev folder.
 
 <if expression="$ignored">
 		The following extensions are ignored when counting the above 

@@ -52,6 +52,8 @@
 
 	/**
 	 * Set script name
+	 *
+	 * @var		string
 	 */
 	const SCRIPT_NAME	= 'sessions';
 
@@ -75,6 +77,15 @@
 		tuxxedo_error('There is currently no active sessions', false);
 	}
 
+
+	/**
+	 * Cleanup cronjob
+	 *
+	 * Deletes all inactive sessions (only 'marked' as expired)
+	 *
+	 * @param	integer				Reference to the affected rows by this cronjob
+	 * @return	void				No value is returned
+	 */
 	function cleanup_cron(&$affected_rows = NULL)
 	{
 		global $registry;
