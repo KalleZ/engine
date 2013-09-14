@@ -417,11 +417,17 @@
 		exit;
 	}
 
-	$docblock = function(Array $meta, $tag)
+	$docblock = function(Array $meta, $tag, $strip_html = true)
 	{
-		if(strtolower($tag) == 'tags' || !isset($meta['docblock']) || !isset($meta['docblock']->{$tag}))
+		$tag = strtolower($tag);
+
+		if($tag == 'tags' || !isset($meta['docblock']) || !isset($meta['docblock']->{$tag}))
 		{
 			return('Undefined value');
+		}
+		elseif($tag == 'descriptions' && $strip_html)
+		{
+			return(strip_tags($meta['docblock']->{$tag}));
 		}
 
 		return($meta['docblock']->{$tag});
@@ -528,13 +534,14 @@
 				foreach($ptr as $const => $name)
 				{
 					$meta 			= $constants[$const];
+					$desc 			= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
 
 					$template 		= new Layout('api_constant');
 					$template->name		= $name;
 					$template->file		= $meta['file'];
 					$template->datatype	= $docblock_tag($meta, 'var');
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
+					$template->description	= $desc;
 
 					$template->save($meta['hash']);
 
@@ -639,6 +646,32 @@
 							$template->obj		= $meta['name'];
 							$template->obj_link	= $meta['hash'] . '.html';
 							$template->obj_type	= $type;
+
+							if(($mtype == 'properties' || $mtype == 'methods'))
+							{
+								$counter 	= 0;
+								$extendedinfo	= '';
+
+								foreach(Array('abstract', 'final', 'static', 'protected', 'private', 'public') as $flag)
+								{
+									if(!isset($tmeta->metadata->{$flag}) || !$tmeta->metadata->{$flag})
+									{
+										continue;
+									}
+
+									$mtemplate 		= new Template((!$counter ? 'obj_element' : 'obj_element_bit'));
+									$mtemplate->value	= $flag;
+
+									if(!$counter++)
+									{
+										$mtemplate->element = 'Flags';
+									}
+
+									$extendedinfo .= $mtemplate;
+								}
+
+								$template->extendedinfo = $extendedinfo;
+							}
 
 							switch($mtype)
 							{
