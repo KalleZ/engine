@@ -37,6 +37,7 @@
 							<a href="{$obj_link}">{$obj}</a>
 						</td>
 					</tr>
+					{$extendedinfo}
 				</table>
 			</fieldset>
 		</div>
