@@ -191,7 +191,27 @@
 
 			<div class="infobox">
 				Constructs a new internalizationized exception, meaning that the
-contents of this exception may be ...
+contents of this exception may be formatted for internationalized
+usage.
+
+If the internationalization object is not instanciated, then the
+message is used as a raw translation, if the translation parameter
+is specified then its formatted using a sprintf-alike syntax,
+example:
+
+try
+throw new Exception\Translated('You are not old enough to view this content, you must be %d years old', 'age_limit_x', 18);
+catch(Exception\Translated $e)
+echo $e->getMessage();
+
+If the translation method is specified and the component is not loaded, then
+formatting will be applied internally.
+
+Now if the internationalization component is loaded, then the above
+would have outputted the same, however internally it would lookup the
+phrase name 'age_limit_x' within the internationalization object, and
+find its translation phrase and format it like regular phrases are
+formatted with the {1}, {2}, {N} syntax.
 			</div>
 			<br />
 		</div>

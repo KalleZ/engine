@@ -197,7 +197,11 @@
 			<div class="infobox">
 				Gets an input variable, this uses argv in CLI and $_GET in web
 
-In CLI, arguments must be prefixed...
+In CLI, arguments must be prefixed with a hyphen ('-') and have
+a space (ASCII 0x20) or it will return the default value.
+
+
+echo IO::input('arg1') . ' ' . IO::input('arg2');
 			</div>
 			<br />
 		</div>
