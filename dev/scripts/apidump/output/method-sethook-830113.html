@@ -198,7 +198,11 @@
 				Hooks into the initilization code and runs a callback
 before the default code is executed.
 
-If th...
+If the callback returns true, then the flag will be marked
+as initialized, otherwise the default code is executed.
+
+To reset a hook, then simply pass NULL as the callback. This
+unregisters ALL hooks registered to that paticular flag.
 			</div>
 			<br />
 		</div>

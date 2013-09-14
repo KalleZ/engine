@@ -634,7 +634,7 @@
 							$template 		= new Template('obj_contents_bit');
 							$template->name		= $mformat($m_name, $mtype);
 							$template->link		= $tmeta->hash . '.html';
-							$template->description	= $desc = (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');;
+							$template->description	= (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');
 
 							$content		.= $template;
 

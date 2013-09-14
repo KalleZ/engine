@@ -191,7 +191,16 @@
 
 			<div class="infobox">
 				Registers a new instance and makes it accessable through
-the name defined by the first parameter in...
+the name defined by the first parameter in the global scope
+like the example below:
+
+use Tuxxedo\Registry;
+
+
+
+Note that the class must be a full path, and not an alias as
+the class is instanciated inside the registry, not the scope
+where custom aliasing rules may be defined.
 			</div>
 			<br />
 		</div>
