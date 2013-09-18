@@ -758,6 +758,8 @@
 						$contents		.= $template;
 					}
 
+					$extendedinfo = '';
+
 					if($meta['metadata']->abstract || $meta['metadata']->final)
 					{
 						$counter = 0;
