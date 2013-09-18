@@ -443,7 +443,7 @@
 		return($meta['docblock']->tags->{$tag});
 	};
 
-	$prototype = function($name, Array $meta)
+	$prototype = function($name, Array $meta, $prefix = '')
 	{
 		$return = 'void';
 		$params = '';
@@ -471,7 +471,12 @@
 			$name = $meta['namespace'] . '\\' . $name;
 		}
 
-		return(sprintf('%s %s(%s)', $return, $name, $params));
+		if(!empty($prefix))
+		{
+			$prefix = $prefix . '::';
+		}
+
+		return(sprintf('%s %s%s(%s)', $return, $prefix, $name, $params));
 	};
 
 	$nl2br = function($string)
@@ -492,6 +497,30 @@
 		}
 
 		return($name);
+	};
+
+	$desc = function(Array $meta, $strip_html = false) use($docblock)
+	{
+		$desc = $docblock($meta, 'description', $strip_html);
+
+		if(empty($desc))
+		{
+			return('No description available');
+		}
+
+		return($desc);
+	};
+
+	$desct = function(Array $meta, $strip_html = false) use($desc)
+	{
+		$d = $desc($meta, $strip_html);
+
+		if(strlen($d) > 100)
+		{
+			return(substr($d, 0, 100) . '...');
+		}
+
+		return($d);
 	};
 
 	IO::li('Generating API pages...');
@@ -534,14 +563,13 @@
 				foreach($ptr as $const => $name)
 				{
 					$meta 			= $constants[$const];
-					$desc 			= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
 
 					$template 		= new Layout('api_constant');
 					$template->name		= $name;
 					$template->file		= $meta['file'];
 					$template->datatype	= $docblock_tag($meta, 'var');
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= $desc;
+					$template->description	= $desc($meta);
 
 					$template->save($meta['hash']);
 
@@ -564,8 +592,8 @@
 						foreach($p as $pa)
 						{
 							$pt 			= new Template('parameter');
-							$pt->datatype 		= $pa[0];
-							$pt->description	= $pa[1];
+							$pt->datatype 		= htmlspecialchars($pa[0], ENT_QUOTES);
+							$pt->description	= htmlspecialchars($pa[1], ENT_QUOTES);
 
 							$pl 			.= $pt;
 						}
@@ -584,7 +612,7 @@
 					$template->file		= $meta['file'];
 					$template->prototype	= $prototype($name, $meta);
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
+					$template->description	= $desc($meta);
 					$template->parameters	= $parameters;
 					$template->returns	= $returns;
 
@@ -634,7 +662,7 @@
 							$template 		= new Template('obj_contents_bit');
 							$template->name		= $mformat($m_name, $mtype);
 							$template->link		= $tmeta->hash . '.html';
-							$template->description	= (($desc = $docblock((array) $tmeta, 'description')) !== '' ? substr($desc, 0, 100) . (strlen($desc) > 100 ? '...' : '') : 'No description available');
+							$template->description	= $desct((array) $tmeta);
 
 							$content		.= $template;
 
@@ -642,7 +670,7 @@
 							$template->name		= $mformat($m_name, $mtype);
 							$template->file		= $meta['file'];
 							$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-							$template->description	= $desc;
+							$template->description	= $desc((array) $tmeta);
 							$template->obj		= $meta['name'];
 							$template->obj_link	= $meta['hash'] . '.html';
 							$template->obj_type	= $type;
@@ -693,8 +721,8 @@
 										foreach($p as $pa)
 										{
 											$pt 			= new Template('parameter');
-											$pt->datatype 		= $pa[0];
-											$pt->description	= $pa[1];
+											$pt->datatype 		= htmlspecialchars($pa[0], ENT_QUOTES);
+											$pt->description	= htmlspecialchars($pa[1], ENT_QUOTES);
 
 											$pl 			.= $pt;
 										}
@@ -708,7 +736,7 @@
 										$returns->value	= $p[1];
 									}
 
-									$template->prototype	= $prototype($m_name, (array) $tmeta);
+									$template->prototype	= $prototype($m_name, (array) $tmeta, $name);
 									$template->parameters 	= $parameters;
 									$template->returns	= $returns;
 								}
@@ -799,7 +827,7 @@
 					$template->mtype	= $type;
 					$template->file		= $meta['file'];
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= (($desc = $docblock($meta, 'description')) !== '' ? $nl2br($desc) : 'No description available');
+					$template->description	= $nl2br($desc($meta));
 					$template->contents 	= $contents;
 					$template->extendedinfo	= $extendedinfo;
 
@@ -834,7 +862,7 @@
 			$bit 			= new Template('toc_bit');
 			$bit->link		= $data['hash'] . '.html';
 			$bit->name		= $name;
-			$bit->description	= (isset($data['docblock']) && isset($data['docblock']->description) ? substr($data['docblock']->description, 0, 100) . (strlen($data['docblock']->description) > 100 ? '...' : '') : 'No description available');
+			$bit->description	= $desct($data, true);
 
 			$bits 			.= $bit;
 		}
