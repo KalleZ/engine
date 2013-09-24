@@ -412,7 +412,7 @@
 				$line = ltrim(substr($line, 1));
 			}
 
-			if(empty($line) || !preg_match('#[a-zA-Z@]#Ui', $line{0}))
+			if(empty($line) || !preg_match('#[a-zA-Z@]#Ui', $line{0}) && $line{0} !== '<')
 			{
 				if(empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
 				{
