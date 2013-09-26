@@ -1,0 +1,6 @@
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		{$examples}
+	</div>
+</div>
