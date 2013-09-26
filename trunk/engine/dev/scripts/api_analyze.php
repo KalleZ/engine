@@ -391,6 +391,7 @@
 					'tags'		=> Array()
 					);
 
+		$incode		= false;
 		$dump 		= explode("\n", str_replace("\n\n", "\n", str_replace("\r", "\n", $dump)));
 		$lines		= sizeof($dump) - 1;
 
@@ -407,14 +408,21 @@
 
 			$line = trim($line);
 
-			if(isset($line{0}) && $line{0} == '*')
+			if(isset($line{0}))
 			{
-				$line = ltrim(substr($line, 1));
+				if($line{0} == '*')
+				{
+					$line = ltrim(substr($line, 1));
+				}
+				elseif($line{0} == '<')
+				{
+					$incode = !$incode;
+				}
 			}
 
-			if(empty($line) || !preg_match('#[a-zA-Z@]#Ui', $line{0}) && $line{0} !== '<')
+			if($incode || empty($line) || !preg_match('#[a-zA-Z@]#Ui', $line{0}) && $line{0} !== '<')
 			{
-				if(empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
+				if($incode || empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
 				{
 					$docblock['description'] .= PHP_EOL;
 				}

@@ -169,13 +169,7 @@
 			<div class="infobox">
 				Event class, this allows objects to register events and let
 other objects call events like a simple plugin interface.<br />
-use Tuxxedo\Design\Event;<br />class Test
-public function run()
-new Event('TestRun', $this);<br /><br />
-use Tuxxedo\Design\EventContext;<br />
-Event::register('TestRun', function(EventContext $ctx)
-echo 'Event hook called', \PHP_EOL;<br /><br />
-Since events are all named, this means that multiple components may
+</code><br />Since events are all named, this means that multiple components may
 share the same name.
 			</div>
 			<br />
@@ -213,8 +207,8 @@ registered callbacks</td>
 	<td nowrap="nowrap" style="width: 100%">Wrapper for the trigger method, this basically allows the
 syntax sugar to be possible:
 
-
-new Eve...</td>
+<code>
+...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-fire-283128.html">fire()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Event trigger</td>
@@ -226,6 +220,25 @@ new Eve...</td>
 	<td nowrap="nowrap" style="width: 100%">Unregisters all callbacks for an event</td>
 </tr>
 </table>
+	</div>
+</div>
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>Example #1</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">Event</span><span style="color: #007700">;<br /><br />class&nbsp;</span><span style="color: #0000BB">Test<br /></span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">run</span><span style="color: #007700">()<br />new&nbsp;</span><span style="color: #0000BB">Event</span><span style="color: #007700">(</span><span style="color: #DD0000">'TestRun'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">);<br /><br /><br /><br /><br />use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext</span><span style="color: #007700">;<br /><br /><br /></span><span style="color: #0000BB">Event</span><span style="color: #007700">::</span><span style="color: #0000BB">register</span><span style="color: #007700">(</span><span style="color: #DD0000">'TestRun'</span><span style="color: #007700">,&nbsp;function(</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;hook&nbsp;called'</span><span style="color: #007700">,&nbsp;\</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>
+			</td>
+		</tr>
+	</table>
+</fieldset>
 	</div>
 </div>
 

@@ -425,7 +425,7 @@
 		{
 			return('Undefined value');
 		}
-		elseif($tag == 'descriptions' && $strip_html)
+		elseif($tag == 'description' && $strip_html)
 		{
 			return(strip_tags($meta['docblock']->{$tag}));
 		}
@@ -499,13 +499,30 @@
 		return($name);
 	};
 
-	$desc = function(Array $meta, $strip_html = false) use($docblock)
+	$desc = function(Array $meta, $strip_html = false, Array &$examples = NULL) use($docblock)
 	{
 		$desc = $docblock($meta, 'description', $strip_html);
 
 		if(empty($desc))
 		{
 			return('No description available');
+		}
+
+		if(!$strip_html && $examples !== NULL && ($spos = strpos($desc, '<code>')) !== false)
+		{
+			$examples = Array();
+
+			do
+			{
+				if(($epos = strpos($desc, '</code>', $spos)) === false)
+				{
+					continue;
+				}
+
+				$examples[]	= '<?php' . PHP_EOL . PHP_EOL . trim(substr($desc, $spos + 6, $epos - $spos - 6)) . PHP_EOL . PHP_EOL . '?>';
+				$desc 		= substr_replace($desc, '', $spos, $epos - $spos);
+			}
+			while(($spos = strpos($desc, '<code>', ++$spos)) !== false);
 		}
 
 		return($desc);
@@ -521,6 +538,31 @@
 		}
 
 		return($d);
+	};
+
+	$examplecode = function(Array $examples)
+	{
+		if(!$examples)
+		{
+			return('');
+		}
+
+		$x	= 0;
+		$bits	= '';
+		$ex 	= new Template('examples');
+
+		foreach($examples as $example)
+		{
+			$template 	= new Template('example_bit');
+			$template->num	= ++$x;
+			$template->code	= highlight_string($example, true);
+
+			$bits		.= $template;
+		}
+
+		$ex->examples = $bits;
+
+		return($ex);
 	};
 
 	IO::li('Generating API pages...');
@@ -562,6 +604,7 @@
 			{
 				foreach($ptr as $const => $name)
 				{
+					$examples		= Array();
 					$meta 			= $constants[$const];
 
 					$template 		= new Layout('api_constant');
@@ -569,7 +612,8 @@
 					$template->file		= $meta['file'];
 					$template->datatype	= $docblock_tag($meta, 'var');
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= $desc($meta);
+					$template->description	= $desc($meta, false, $examples);
+					$template->examples	= $examplecode($examples);
 
 					$template->save($meta['hash']);
 
@@ -581,6 +625,7 @@
 			{
 				foreach($ptr as $function => $name)
 				{
+					$examples		= Array();
 					$meta 			= $functions[$function];
 					$parameters		= $returns = '';
 
@@ -612,7 +657,8 @@
 					$template->file		= $meta['file'];
 					$template->prototype	= $prototype($name, $meta);
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= $desc($meta);
+					$template->description	= $desc($meta, false, $examples);
+					$template->examples	= $examplecode($examples);
 					$template->parameters	= $parameters;
 					$template->returns	= $returns;
 
@@ -656,6 +702,7 @@
 
 						foreach($mptr as $m_name => $m_id)
 						{
+							$examples		= Array();
 							$tmeta			= &$meta[$mtype][$m_id];
 							$tmeta->hash		= $hashreg->hash($mtypes[$mtype][0], $m_name, $meta['file']);
 
@@ -670,12 +717,13 @@
 							$template->name		= $mformat($m_name, $mtype);
 							$template->file		= $meta['file'];
 							$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-							$template->description	= $desc((array) $tmeta);
+							$template->description	= $desc((array) $tmeta, false, $examples);
+							$template->examples	= $examplecode($examples);
 							$template->obj		= $meta['name'];
 							$template->obj_link	= $meta['hash'] . '.html';
 							$template->obj_type	= $type;
 
-							if(($mtype == 'properties' || $mtype == 'methods'))
+							if($mtype == 'properties' || $mtype == 'methods')
 							{
 								$counter 	= 0;
 								$extendedinfo	= '';
@@ -745,7 +793,7 @@
 
 							$template->save($tmeta->hash);
 
-							IO::li($m_name);
+							IO::li($template->name);
 						}
 
 						IO::ul(IO::TAG_END);
@@ -823,13 +871,16 @@
 						$name = end($name);
 					}
 
+					$examples		= Array();
+
 					$template		= new Layout('api_object');
 					$template->name		= $name;
 					$template->type		= ucfirst($rtype);
 					$template->mtype	= $type;
 					$template->file		= $meta['file'];
 					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
-					$template->description	= $nl2br($desc($meta));
+					$template->description	= $nl2br($desc($meta, false, $examples));
+					$template->examples	= $examplecode($examples);
 					$template->contents 	= $contents;
 					$template->extendedinfo	= $extendedinfo;
 

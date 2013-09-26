@@ -60,21 +60,7 @@
 
 {$returns}
 
-<h2><span>Examples</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<fieldset>
-			<legend><strong>...</strong></legend>
-			<table cellspacing="4" cellpadding="0" style="width: 100%;">
-				<tr> 
-					<td colspan="2" class="value" style="width: 100%">
-						<pre><code>...</code></pre>
-					</td>
-				</tr>
-			</table>
-		</fieldset>
-	</div>
-</div>
+{$examples}
 
 <h2><span>Version history</span></h2>
 <div class="box edge-title">
