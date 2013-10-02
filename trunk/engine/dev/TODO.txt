@@ -5,7 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Beta 1
 	---------------------------------------------------
-
-	Finish implementing the API indexer
-	 - Inline @see does not work (neither does the tag itself!)
-	 - Mark "/dev" && "/library/DevTools" as 'dev' in generated docs

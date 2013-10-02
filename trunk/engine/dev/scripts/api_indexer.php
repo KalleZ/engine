@@ -528,13 +528,26 @@
 		return($desc);
 	};
 
-	$desct = function(Array $meta, $strip_html = false) use($desc)
+	$desct = function(Array $meta) use($desc)
 	{
-		$d = $desc($meta, $strip_html);
+		$d = $desc($meta, false);
 
 		if(strlen($d) > 100)
 		{
-			return(substr($d, 0, 100) . '...');
+			$t = '';
+			$d = substr($d, 0, 100);
+
+			for($x = 0; $x < 100; ++$x)
+			{
+				if($d{$x} == '<')
+				{
+					break;
+				}
+
+				$t .= $d{$x};
+			}
+	
+			return($t . '...');
 		}
 
 		return($d);
@@ -680,6 +693,8 @@
 					$meta 		= ${$type}[$obj_id];
 					$contents 	= $extendedinfo = '';
 
+					IO::ul();
+
 					foreach(Array('constants', 'properties', 'methods') as $mtype)
 					{
 						if(!$meta[$mtype])
@@ -806,6 +821,8 @@
 						$contents		.= $template;
 					}
 
+					IO::ul(IO::TAG_END);
+
 					$extendedinfo = '';
 
 					if($meta['metadata']->abstract || $meta['metadata']->final)
@@ -915,7 +932,7 @@
 			$bit 			= new Template('toc_bit');
 			$bit->link		= $data['hash'] . '.html';
 			$bit->name		= $name;
-			$bit->description	= $desct($data, true);
+			$bit->description	= $desct($data);
 
 			$bits 			.= $bit;
 		}

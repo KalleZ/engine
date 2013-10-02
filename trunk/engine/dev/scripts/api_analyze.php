@@ -406,31 +406,17 @@
 				$line = substr($line, 0, -2);
 			}
 
-			$line = trim($line);
+			$oline 	= $line;
+			$line 	= trim($line);
 
-			if(isset($line{0}))
+			if(isset($line{0}) && $line{0} == '*')
 			{
-				if($line{0} == '*')
-				{
-					$line = ltrim(substr($line, 1));
-				}
-				elseif($line{0} == '<')
-				{
-					$incode = !$incode;
-				}
+				$line = ltrim(substr($line, 1));
 			}
 
-			if($incode || empty($line) || !preg_match('#[a-zA-Z@]#Ui', $line{0}) && $line{0} !== '<')
-			{
-				if($incode || empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
-				{
-					$docblock['description'] .= PHP_EOL;
-				}
+			$l = isset($line{0});
 
-				continue;
-			}
-
-			if($line{0} == '@')
+			if($l && $line{0} == '@')
 			{
 				$next		= true;
 				$current	= -1;
@@ -545,8 +531,49 @@
 					unset($parsed_split);
 				}
 			}
+			elseif($l && ($line{0} == '<' || $incode))
+			{
+				if($line{0} == '<')
+				{
+					$incode = !$incode;
+				}
+
+				$ptr	= 0;
+				$nline	= '';
+				$oline 	= substr(ltrim($oline), 1);
+
+				while(isset($oline{$ptr}))
+				{
+					if(preg_match('#[a-zA-Z]#Ui', $oline{$ptr}))
+					{
+						break;
+					}
+					elseif($oline{$ptr} == ' ')
+					{
+						++$ptr;
+
+						continue;
+					}
+
+					$nline .= $oline{$ptr++};
+				}
+
+				$nline .= substr($oline, $ptr);
+
+				$docblock['description'] .= $nline . PHP_EOL;
+			}
 			else
 			{
+				if(empty($line) || !preg_match('#[a-zA-Z]#Ui', $line{0}))
+				{
+					if(empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
+					{
+						$docblock['description'] .= PHP_EOL;
+					}
+
+					continue;
+				}
+
 				$docblock['description'] .= $line . PHP_EOL;
 			}
 		}
