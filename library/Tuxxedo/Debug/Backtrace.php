@@ -48,18 +48,17 @@
 	 * This implementation implements some helper methods on each trace 
 	 * instance to ease debugging even further.
 	 *
-	 * Example:
 	 * <code>
 	 * use Tuxxedo\Debug;
 	 *
 	 * foreach(new Debug\Backtrace as $trace)
 	 * {
-	 *         if(!$trace->isException())
-	 *	   {
-	 *	           continue;
-	 *	   }
+	 * 	if(!$trace->isException())
+	 *	{
+	 *		continue;
+	 *	}
 	 *
-	 *         ...
+	 * 	...
 	 * }
 	 * </code>
 	 *

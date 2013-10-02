@@ -135,7 +135,7 @@
 		public function getErrno();
 
 		/**
-		 * Get the last insert id from last executed SELECT statement
+		 * Get the last insert id from last executed INSERT statement
 		 *
 		 * @return	integer				Returns the last insert id, and boolean false on error
 		 */

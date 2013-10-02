@@ -175,8 +175,7 @@
 				Debug backtrace class, this is a redesign of the old and infamous
 tuxxedo_debug_backtrace() function. The class itself defines as an
 iterator.<br />This implementation implements some helper methods on each trace
-instance to ease debugging even further.<br />Example:
-</code>
+instance to ease debugging even further.<br /></code>
 			</div>
 			<br />
 		</div>
@@ -266,7 +265,7 @@ used prior to th...</td>
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
 				<code><span style="color: #000000">
-<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Debug</span><span style="color: #007700">;<br /><br />foreach(new&nbsp;</span><span style="color: #0000BB">Debug</span><span style="color: #007700">\</span><span style="color: #0000BB">Backtrace&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">)<br />if(!</span><span style="color: #0000BB">$trace</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isException</span><span style="color: #007700">())<br />continue;<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Debug</span><span style="color: #007700">;<br /><br />foreach(new&nbsp;</span><span style="color: #0000BB">Debug</span><span style="color: #007700">\</span><span style="color: #0000BB">Backtrace&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;if(!</span><span style="color: #0000BB">$trace</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isException</span><span style="color: #007700">())<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;...<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
 </span>
 </code>
 			</td>
