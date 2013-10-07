@@ -59,6 +59,7 @@
 		 * Usergroup identifier copy
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $usergroupid;
 
@@ -67,6 +68,7 @@
 		 * Whether or not to rehash the password
 		 *
 		 * @var		boolean
+		 * @since	1.2.0
 		 */
 		protected $rehash_password	= false;
 
@@ -74,6 +76,9 @@
 		 * Fields for validation of users
 		 *
 		 * @var		array
+		 *
+		 * @changelog	1.1.0			Changed the name of 'styleid' to 'style_id'
+		 * @changelog	1.1.0			Changed the name of 'languageid' to 'language_id'
 		 */
 		protected $fields		= Array(
 							'id'			=> Array(
@@ -186,6 +191,8 @@
 		 * @param	scalar			The information row name to set
 		 * @param	mixed			The information row value to set
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.2.0
 		 */
 		public function offsetSet($field, $value)
 		{
@@ -287,7 +294,7 @@
 				return(false);
 			}
 
-			if(!!self::isAvailableUserField($registry, 'email', $email))
+			if(!self::isAvailableUserField($registry, 'email', $email))
 			{
 				return(isset($dm->data['id']) && !empty($dm->data['id']));
 			}
@@ -328,6 +335,8 @@
 		 * @param	string				The field to check
 		 * @param	string				The value to check
 		 * @return	boolean				Returns true if the value exists, otherwise false
+		 *
+		 * @since	1.1.0
 		 */
 		protected static function isAvailableUserField(Registry $registry, $field, $value)
 		{
@@ -350,6 +359,8 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	integer				The language id
 		 * @return	boolean				True if the password is vald, otherwise false
+		 *
+		 * @since	1.1.0
 		 */
 		public static function isValidPassword(Adapter $dm, Registry $registry, $password = NULL)
 		{
@@ -370,6 +381,8 @@
 		 * Updates the number of users in the usergroup
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @since	1.1.0
 		 */
 		public function rebuild()
 		{

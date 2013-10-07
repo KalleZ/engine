@@ -47,12 +47,22 @@
 		}
 			h2 span
 			{
-				background-color: 		#C2EDFD; 
+				background-color: 		#C2EDFD;
 				border-top-left-radius: 	4px; 
 				border-top-right-radius: 	4px; 
 				padding: 			5px; 
 				padding-bottom: 		0px;
 			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
 		li, ul
 		{
 			margin: 			0px;
@@ -88,35 +98,59 @@
 			background-color: #FFFFFF; 
 		}
 
-		.box 
+		.box, .box-notice, .box-warning
 		{ 
-			background-color: 		#C2EDFD; 
-			border: 			3px solid #C2EDFD; 
-			border-radius: 			4px; 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
 		}
-			.box.edge-title 
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
 			{ 
 				border-top-left-radius: 	0px; 
 			}
-			.box .inner
+			.box .inner, .box-notice .inner, .box-warning .inner
 			{ 
 				background-color: 		#FFFFFF; 
 				border-radius: 			4px; 
 				padding: 			6px; 
 			}
-			.box .inner ul 
-			{ 
-				padding: 			3px 15px; 
-			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
 		.content 
 		{ 
-			margin: 			15px 0px 10px 430px; 
+			margin: 			15px 0px 10px 480px; 
 		}
-		.infobox
+		.infobox, .infobox-notice, .infobox-warning
 		{ 
 			background-color: 		#C2EDFD; 
 			border-radius: 			4px; 
 			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
 		}
 		.left-content
 		{
@@ -124,13 +158,22 @@
 		}
 			.left-content fieldset
 			{
-				width: 400px;
+				width: 450px;
 			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
 		</style>
 	</head>
 	<body>
 
-<h1>Style</h1>
+<h1>\DevTools\Style</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -140,31 +183,29 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine ...
+							Engine 1.0.0
 						</td>
 					</tr>
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							Class
+							<a href="./classes.html">Class</a>
 						</td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap">Declared in:</td>
-						<td class="value" style="width: 100%">
-							library/DevTools/Style.php
-						</td>
-					</tr>
-					<tr>
-						<td>Namespace:</td>
-						<td class="value" style="width: 100%">
-							\DevTools
-						</td>
-					</tr>
-					<tr>
-	<td>Extends:</td>
-	<td class="value" style="width: 100%">
-		\Tuxxedo\Style
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-devtools-892971.html">\DevTools</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/DevTools/Style.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedo-style-058769.html">\Tuxxedo\Style</a>
 	</td>
 </tr>
 				</table>
@@ -182,6 +223,17 @@ storage engines and use our own.
 	</div>
 </div>
 
+<h2><span class="notice">Notice</span></h2>
+<div class="box-notice edge-title">
+	<div class="inner">
+		<div class="infobox-notice">
+			This element is a part of the developmental code and is only available in builds that includes developmental related APIs!
+		</div>
+	</div>
+</div>
+
+
+
 <h2><span>Contents</span></h2>
 <div class="box edge-title">
 	<div class="inner">
@@ -197,13 +249,13 @@ storage engines and use our own.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="method---construct-238081.html">__construct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Constructs a new style object</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Constructs a new style object</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-getsidebarwidget-497537.html">getSidebarWidget()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets a sidebar widget template</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Gets a sidebar widget template</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-invoke-067205.html">invoke()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Magic method called when creating a new instance of the
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Magic method called when creating a new instance of the
 object from the registry</td>
 </tr>
 </table>
@@ -212,11 +264,17 @@ object from the registry</td>
 
 
 
+
+
+
+
 <h2><span>See also</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<ul>
+			
 			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
 </div>

@@ -52,6 +52,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @since		1.2.0
 	 */
 	class Utilities
 	{
@@ -99,42 +100,16 @@
 		}
 
 		/**
-		 * Redirect using a template
+		 * Date format shorthand method, uses current timestamp
 		 *
-		 * If the timeout is set to 0, then a header redirect will be 
-		 * issued instead, thrus no template rendered.
+		 * @param		string				Optional format to use, defaults to the 'date_format' option if available
+		 * @return		string				Returns the formatted date
 		 *
-		 * This function terminates the script.
-		 *
-		 * @param	string			The message to show to the user while redirecting
-		 * @param	string			The redirect location
-		 * @param	integer			The timeout in seconds (before redirecting)
-		 * @return	void			No value is returned
+		 * @since		1.2.0
 		 */
-		public static function redirect($message, $location, $timeout = 3)
+		public static function datef($format)
 		{
-			if(!$timeout)
-			{
-				header('Location: ' . $location);
-				exit;
-			}
-
-			eval(\page('redirect'));
-			exit;
-		}
-
-		/**
-		 * Redirect directly using a header call
-		 *
-		 * This function terminates the script.
-		 *
-		 * @param	string			The redirect location
-		 * @return	void			No value is returned
-		 */
-		public static function headerRedirect($location)
-		{
-			header('Location: ' . $location);
-			exit;
+			return(self::date(NULL, $format));
 		}
 
 		/**

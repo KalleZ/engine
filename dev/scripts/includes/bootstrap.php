@@ -22,11 +22,11 @@
 
 
 	/**
-	 * Sets the path to where the root script is, if the 
-	 * constant CWD is defined before including this file, 
-	 * then it will be used as root dir
+	 * Sets the path to where the root script is
 	 *
 	 * @var		string
+	 *
+	 * @since	1.1.0
 	 */
 	define('TUXXEDO_DIR', 		realpath(__DIR__ . '/../../..'));
 
@@ -34,6 +34,8 @@
 	 * Sets the library path
 	 *
 	 * @var		string
+	 *
+	 * @since	1.1.0
 	 */
 	define('TUXXEDO_LIBRARY', 	realpath(__DIR__ . '/../../..') . '/library');
 
@@ -61,6 +63,8 @@
 	 * Set the UTC time constant
 	 *
 	 * @var		integer
+	 *
+	 * @since	1.1.0
 	 */
 	define('TIMENOW_UTC', $datetime->getTimestamp());
 
@@ -68,6 +72,8 @@
 	 * Set database table prefix constant
 	 *
 	 * @var		string
+	 *
+	 * @since	1.1.0
 	 */
 	define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 ?>

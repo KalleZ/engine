@@ -56,6 +56,7 @@
 		 * Driver that caused this error
 		 *
 		 * @var		string
+		 * @since	1.1.0
 		 */
 		protected $driver;
 
@@ -68,6 +69,8 @@
 		 * @param	string			The error that occured
 		 * @param	integer			The associated error number for the error
 		 * @param	string			Optionally, an SQL state if the database driver supports it
+		 *
+		 * @changelog	1.1.0			Added the $driver parameter
 		 */
 		public function __construct($sql, $driver, $error, $errno, $sqlstate = NULL)
 		{
@@ -103,6 +106,8 @@
 		 * Gets the driver that caused this exception to trigger
 		 *
 		 * @return	string			Returns the driver name
+		 *
+		 * @since	1.1.0
 		 */
 		public function getDriver()
 		{

@@ -131,6 +131,8 @@
 		 *
 		 * @param	string			The registry object to unload
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function __unset($name)
 		{
@@ -145,6 +147,8 @@
 		 *
 		 * @param	string			The registry object to unload
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function unload($name)
 		{
@@ -218,6 +222,8 @@
 		 *
 		 * @param	string					The class to register, this supports the 'Invokable' interface
 		 * @return	object					Returns a reference to the created instance
+		 *
+		 * @since	1.1.0
 		 */
 		public function invoke($class)
 		{

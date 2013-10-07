@@ -47,12 +47,22 @@
 		}
 			h2 span
 			{
-				background-color: 		#C2EDFD; 
+				background-color: 		#C2EDFD;
 				border-top-left-radius: 	4px; 
 				border-top-right-radius: 	4px; 
 				padding: 			5px; 
 				padding-bottom: 		0px;
 			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
 		li, ul
 		{
 			margin: 			0px;
@@ -88,35 +98,59 @@
 			background-color: #FFFFFF; 
 		}
 
-		.box 
+		.box, .box-notice, .box-warning
 		{ 
-			background-color: 		#C2EDFD; 
-			border: 			3px solid #C2EDFD; 
-			border-radius: 			4px; 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
 		}
-			.box.edge-title 
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
 			{ 
 				border-top-left-radius: 	0px; 
 			}
-			.box .inner
+			.box .inner, .box-notice .inner, .box-warning .inner
 			{ 
 				background-color: 		#FFFFFF; 
 				border-radius: 			4px; 
 				padding: 			6px; 
 			}
-			.box .inner ul 
-			{ 
-				padding: 			3px 15px; 
-			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
 		.content 
 		{ 
-			margin: 			15px 0px 10px 430px; 
+			margin: 			15px 0px 10px 480px; 
 		}
-		.infobox
+		.infobox, .infobox-notice, .infobox-warning
 		{ 
 			background-color: 		#C2EDFD; 
 			border-radius: 			4px; 
 			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
 		}
 		.left-content
 		{
@@ -124,13 +158,22 @@
 		}
 			.left-content fieldset
 			{
-				width: 400px;
+				width: 450px;
 			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
 		</style>
 	</head>
 	<body>
 
-<h1>__construct()</h1>
+<h1>\Tuxxedo\Datamanager\Adapter\Optioncategory::__construct()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -140,7 +183,7 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine ...
+							Engine 1.1.0
 						</td>
 					</tr>
 					<tr>
@@ -151,16 +194,16 @@
 					</tr>
 					<tr>
 						<td nowrap="nowrap">Declared in:</td>
-						<td class="value" style="width: 100%">
+						<td class="value" style="width: 100%" nowrap="nowrap">
 							library/Tuxxedo/Datamanager/Adapter/Optioncategory.php
 						</td>
 					</tr>
 					<tr>
-						<td>Namespace:</td>
-						<td class="value" style="width: 100%">
-							\Tuxxedo\Datamanager\Adapter
-						</td>
-					</tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-datamanager-adapter-227193.html">\Tuxxedo\Datamanager\Adapter</a>
+	</td>
+</tr>
 					<tr>
 						<td>Object:</td>
 						<td class="value" style="width: 100%">
@@ -168,8 +211,8 @@
 						</td>
 					</tr>
 					<tr>
-	<td>Flags:</td>
-	<td class="value" style="width: 100%">
+	<td nowrap="nowrap">Modifiers:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
 		public
 	</td>
 </tr>
@@ -182,7 +225,7 @@
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
 						<td class="value" style="width: 100%">
-							void \Tuxxedo\Datamanager\Adapter\Optioncategory::__construct(\Tuxxedo\Registry, integer, integer, \Tuxxedo\Datamanager\Adapter)
+							void __construct(<a href="class-tuxxedo-registry-722435.html">\Tuxxedo\Registry</a>, integer, integer, <a href="class-tuxxedo-datamanager-adapter-235095.html">\Tuxxedo\Datamanager\Adapter</a>)
 						</td>
 					</tr>
 				</table>
@@ -198,16 +241,15 @@
 	</div>
 </div>
 
+
+
+
+
 <h2><span>Parameters</span></h2>
 <div class="box edge-title">
 	<div class="inner">
-		<div class="infobox">
-			...
-		</div>
-		<br />
-
-<fieldset>
-	<legend><strong>\Tuxxedo\Registry</strong></legend>
+		<fieldset>
+	<legend><strong><a href="class-tuxxedo-registry-722435.html">\Tuxxedo\Registry</a></strong></legend>
 	<table cellspacing="4" cellpadding="0" style="width: 100%;">
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
@@ -215,9 +257,7 @@
 			</td>
 		</tr>
 	</table>
-</fieldset><br />
-
-<fieldset>
+</fieldset><br /><fieldset>
 	<legend><strong>integer</strong></legend>
 	<table cellspacing="4" cellpadding="0" style="width: 100%;">
 		<tr> 
@@ -226,9 +266,7 @@
 			</td>
 		</tr>
 	</table>
-</fieldset><br />
-
-<fieldset>
+</fieldset><br /><fieldset>
 	<legend><strong>integer</strong></legend>
 	<table cellspacing="4" cellpadding="0" style="width: 100%;">
 		<tr> 
@@ -237,10 +275,8 @@
 			</td>
 		</tr>
 	</table>
-</fieldset><br />
-
-<fieldset>
-	<legend><strong>\Tuxxedo\Datamanager\Adapter</strong></legend>
+</fieldset><br /><fieldset>
+	<legend><strong><a href="class-tuxxedo-datamanager-adapter-235095.html">\Tuxxedo\Datamanager\Adapter</a></strong></legend>
 	<table cellspacing="4" cellpadding="0" style="width: 100%;">
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
@@ -254,30 +290,39 @@
 
 
 
-
-
-<h2><span>Version history</span></h2>
+<h2><span>Throws</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<table style="width: 100%" cellspacing="2" cellpadding="0">
 			<tr class="head">
-				<td class="strong" nowrap="nowrap">Version</td>
-				<td class="strong">Notes</td>
+				<td class="strong" nowrap="nowrap">Exception</td>
+				<td class="strong">Condition</td>
 			</tr>
 			<tr class="row">
-				<td nowrap="nowrap">...</td>
-				<td nowrap="nowrap" style="width: 100%">...</td>
-			</tr>
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-basic-011713.html">\Tuxxedo\Exception\Basic</a></td>
+	<td nowrap="nowrap" style="width: 100%">Throws an exception if the option category name is set and it failed to load for some reason</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-exception-sql-524723.html">\Tuxxedo\Exception\SQL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Throws a SQL exception if a database call fails</td>
+</tr>
 		</table>
 	</div>
 </div>
+
+
+
+
+
+
 
 <h2><span>See also</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<ul>
+			
 			<li><a href="class-tuxxedo-datamanager-adapter-optioncategory-635957.html">\Tuxxedo\Datamanager\Adapter\Optioncategory</a></li>
 			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
 </div>

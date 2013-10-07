@@ -43,6 +43,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.2.0
 	 */
 	class EventContext extends InfoAccess
 	{
@@ -55,7 +56,7 @@
 
 		/**
 		 * The external object instance (if any) from the context that 
-		 * triggered this event. If none context was supplied, then this 
+		 * triggered this event. If no context was supplied, then this 
 		 * is NULL
 		 *
 		 * @var		object

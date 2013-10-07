@@ -52,6 +52,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	class Result extends Database\Result
 	{
@@ -114,7 +115,7 @@
 		/**
 		 * Get the number of rows in the result
 		 *
-		 * @return	integer				Returns the number of rows in the result, and boolean false on error
+		 * @return	integer				Returns the number of rows in the result, or zero on error
 		 */
 		public function getNumRows()
 		{

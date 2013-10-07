@@ -48,6 +48,9 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		DevTools
+	 * @since		1.1.0
+	 *
+	 * @see			\Tuxxedo\Session
 	 */
 	class Session extends \Tuxxedo\Session
 	{

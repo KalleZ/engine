@@ -21,6 +21,7 @@
 	use Tuxxedo\Debug;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
+	use Tuxxedo\Template;
 	use Tuxxedo\Utilities;
 	use Tuxxedo\Version;
 
@@ -32,6 +33,8 @@
 	 *
 	 * @param	\Exception			The exception to handle
 	 * @return	void				No value is returned
+	 *
+	 * @changelog	1.2.0				This function is now CLI compatible
 	 */
 	function tuxxedo_exception_handler(\Exception $e)
 	{
@@ -48,11 +51,34 @@
 		}
 		elseif($e instanceof Exception\Multi)
 		{
-			tuxxedo_error_list(htmlspecialchars($e->getMessage(), ENT_QUOTES), $e->getData());
+			$template 		= new Template\Layout('error');
+			$template['message']	= htmlspecialchars($e->getMessage(), ENT_QUOTES);
+
+			if(($errors = $e->getData()))
+			{
+				$list = '';
+
+				foreach($errors as $error)
+				{
+					$bit 		= new Template('error_listbit');
+					$bit['error']	= $error;
+
+					$list		.= $bit;
+				}
+
+				$template['error_list'] = $list;
+			}
+
+			echo($template);
+			exit;
 		}
 		elseif($e instanceof Exception)
 		{
-			tuxxedo_error(htmlspecialchars($e->getMessage(), ENT_QUOTES));
+			$template 		= new Template\Layout('error');
+			$template['message']	= htmlspecialchars($e->getMessage(), ENT_QUOTES);
+
+			echo($template);
+			exit;
 		}
 
 		if(Registry::globals('error_reporting'))
@@ -84,6 +110,8 @@
 	 * @return	void				No value is returned
 	 *
 	 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on fatal error types
+	 *
+	 * @changelog	1.2.0				This function is now CLI compatible
 	 */
 	function tuxxedo_error_handler($level, $message, $file = NULL, $line = NULL)
 	{
@@ -156,6 +184,8 @@
 	 * @param	string				The handler to register, can be one of 'error', 'exception', 'shutdown' or 'autoload'
 	 * @param	callback			The callback to register to the handler
 	 * @return	callback			Returns a callback, if only the first parameter is set, may also return false on error in any case
+	 *
+	 * @since	1.1.0
 	 */
 	function tuxxedo_handler($handler, $callback = NULL)
 	{
@@ -198,6 +228,8 @@
 	 *
 	 * @param	mixed				The message to show, this can also be an exception
 	 * @return	void				No value is returned
+	 *
+	 * @changelog	1.2.0				This function now prints SQL query backtraces
 	 */
 	function tuxxedo_doc_error($e)
 	{
@@ -663,6 +695,8 @@
 	 *
 	 * @param	mixed				The message to show, this can also be an exception
 	 * @return	void				No value is returned
+	 *
+	 * @since	1.2.0
 	 */
 	function tuxxedo_cli_error($e)
 	{
@@ -924,6 +958,8 @@
 	 *
 	 * @param	mixed				The message to show, this can also be an exception
 	 * @return	void				No value is returned
+	 *
+	 * @since	1.2.0
 	 */
 	function tuxxedo_basic_error($e)
 	{
@@ -962,6 +998,8 @@
 	 *
 	 * @param	string				The path to trim
 	 * @return	string				The trimmed path
+	 *
+	 * @changelog	1.2.0				Removed the $debug_trim parameter
 	 */
 	function tuxxedo_trim_path($path)
 	{
@@ -992,6 +1030,8 @@
 	 * Shutdown handler
 	 *
 	 * @return	void				No value is returned
+	 *
+	 * @changelog	1.2.0				This function is now CLI compatible
 	 */
 	function tuxxedo_shutdown_handler()
 	{
@@ -1050,6 +1090,9 @@
 	 * @return	void				No value is returned
 	 *
 	 * @throws	mixed				Throws an exception until the errors have been cleared
+	 *
+	 * @changelog	1.2.0				The $exception parameter now defaults to NULL
+	 * @changelog	1.2.0				Added the $show_all parameter
 	 */
 	function tuxxedo_multi_error($format, Array $elements, $exception = NULL, $show_all = true)
 	{
@@ -1068,71 +1111,5 @@
 		}
 
 		throw new $exception($format, (string) reset($elements));
-	}
-
-	/**
-	 * Prints an error message using the current loaded 
-	 * theme and then terminates the script
-	 *
-	 * @param	string				The error message
-	 * @param	boolean				Whether to show the 'Go back' button or not
-	 * @return	void				No value is returned
-	 */
-	function tuxxedo_error($message, $go_back = true)
-	{
-		eval(page('error'));
-		exit;
-	}
-
-	/**
-	 * Prints an error message using the current loaded 
-	 * theme with an list of failed conditions which 
-	 * makes it suitable for multi exceptions, this 
-	 * function also terminates the script
-	 *
-	 * @param	string				The error message
-	 * @param	array				The list of errors to display
-	 * @param	boolean				Whether to show the 'Go back' button or not
-	 * @return	void				No value is returned
-	 */
-	function tuxxedo_error_list($message, Array $errors, $go_back = true)
-	{
-		$registry = Registry::init();
-
-		if(!$registry->style)
-		{
-			return('');
-		}
-
-		$error_list = '';
-
-		foreach($errors as $error)
-		{
-			eval('$error_list .= "' . $registry->style->fetch('error_listbit') . '";');
-		}
-
-		eval(page('error'));
-		exit;	
-	}
-
-	/**
-	 * Generates code to print a page
-	 *
-	 * @param	string				The template name to print
-	 * @return	void				No value is returned
-	 */
-	function page($template)
-	{
-		$registry = Registry::init();
-
-		if(!$registry->style)
-		{
-			return('');
-		}
-
-		return(
-			'global $header, $footer;' . 
-			'echo("' . $registry->style->fetch($template) . '");'
-			);
 	}
 ?>

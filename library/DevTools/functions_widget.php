@@ -27,10 +27,12 @@
 	/**
 	 * Widget hook function - datastore
 	 *
-	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\DevTools\Style		The Devtools style object
 	 * @param	\Tuxxedo\Registry	The registry reference
 	 * @param	string			The template name of the widget
 	 * @return	string			Returns the compiled sidebar widget
+	 *
+	 * @since	1.2.0
 	 */
 	function widget_hook_datastore(Style $style, Registry $registry, $widget)
 	{
@@ -62,10 +64,12 @@
 	/**
 	 * Widget hook function - styles
 	 *
-	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\DevTools\Style		The Devtools style object
 	 * @param	\Tuxxedo\Registry	The registry reference
 	 * @param	string			The template name of the widget
 	 * @return	string			Returns the compiled sidebar widget
+	 *
+	 * @since	1.1.0
 	 */
 	function widget_hook_styles(Style $style, Registry $registry, $widget)
 	{
@@ -93,10 +97,12 @@
 	/**
 	 * Widget hook function - intl
 	 *
-	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\DevTools\Style		The Devtools style object
 	 * @param	\Tuxxedo\Registry	The registry reference
 	 * @param	string			The template name of the widget
 	 * @return	string			Returns the compiled sidebar widget
+	 *
+	 * @since	1.2.0
 	 */
 	function widget_hook_intl(Style $style, Registry $registry, $widget)
 	{
@@ -124,10 +130,12 @@
 	/**
 	 * Widget hook function - sessions
 	 *
-	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\DevTools\Style		The Devtools style object
 	 * @param	\Tuxxedo\Registry	The registry reference
 	 * @param	string			The template name of the widget
 	 * @return	string			Returns the compiled sidebar widget
+	 *
+	 * @since	1.1.0
 	 */
 	function widget_hook_sessions(Style $style, Registry $registry, $widget)
 	{
@@ -145,21 +153,21 @@
 
 		if(isset($_POST['autorefresh']) && isset($refresh_values[$registry->input->post('autorefresh', Input::TYPE_NUMERIC)]))
 		{
-			$registry->cookie->set('__devtools_session_autorefresh', $registry->input->post('autorefresh', Input::TYPE_NUMERIC));
+			$registry->cookie->set('devtools_session_autorefresh', $registry->input->post('autorefresh', Input::TYPE_NUMERIC));
 		}
-		elseif(!isset($registry->cookie['__devtools_session_autorefresh']))
+		elseif(!isset($registry->cookie['devtools_session_autorefresh']))
 		{
-			$registry->cookie->set('__devtools_session_autorefresh', 0);
+			$registry->cookie->set('devtools_session_autorefresh', 0);
 		}
 
 		foreach($refresh_values as $value => $name)
 		{
-			$selected = ($registry->cookie['__devtools_session_autorefresh'] == $value);
+			$selected = ($registry->cookie['devtools_session_autorefresh'] == $value);
 
 			eval('$buffer .= "' . $style->fetch('option') . '";');
 		}
 
-		$refresh_timer = $registry->cookie['__devtools_session_autorefresh'];
+		$refresh_timer = $registry->cookie['devtools_session_autorefresh'];
 
 		eval('$sidebar = "' . $style->fetch($widget) . '";');
 
@@ -169,10 +177,12 @@
 	/**
 	 * Widget hook function - users
 	 *
-	 * @param	\Devtools\Style		The Devtools style object
+	 * @param	\DevTools\Style		The Devtools style object
 	 * @param	\Tuxxedo\Registry	The registry reference
 	 * @param	string			The template name of the widget
 	 * @return	string			Returns the compiled sidebar widget
+	 *
+	 * @since	1.1.0
 	 */
 	function widget_hook_users(Style $style, Registry $registry, $widget)
 	{

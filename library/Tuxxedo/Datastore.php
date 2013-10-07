@@ -86,6 +86,8 @@
 		 *
 		 * @param	string			The datastore element to get a reference of
 		 * @param	array			Returns a reference to an array for the element, or boolean false on error
+		 *
+		 * @since	1.2.0
 		 */
 		public function getRef($name, &$data)
 		{
@@ -128,6 +130,8 @@
 		 *
 		 * @param	string			The datastore element to unload
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function __unset($name)
 		{
@@ -142,6 +146,8 @@
 		 *
 		 * @param	string			The datastore element to free from cache
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function unload($name)
 		{
@@ -159,6 +165,8 @@
 		 * @return	boolean			True on success, otherwise false on error
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail
+		 *
+		 * @changelog	1.1.0			This method now internally uses datamanagers to save
 		 */
 		public function rebuild($name, Array $data = NULL)
 		{
@@ -206,7 +214,7 @@
 		 * @param	array			An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
 		 * @return	boolean			True on success, otherwise false
 		 *
-		 * @throws	\Tuxxedo\Exception	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
@@ -271,6 +279,8 @@
 		 *
 		 * @param	string				The datastore element to check
 		 * @return	boolean				Returns true if the element not is loaded, otherwise false
+		 *
+		 * @since	1.1.0
 		 */
 		protected function doCacheFilter($element)
 		{

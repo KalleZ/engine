@@ -77,6 +77,7 @@
 		 * List of loaded style engines
 		 *
 		 * @var		array
+		 * @since	1.1.0
 		 */
 		protected static $loaded_engines	= Array();
 

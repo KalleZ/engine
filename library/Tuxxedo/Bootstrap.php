@@ -52,6 +52,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	class Bootstrap
 	{
@@ -144,6 +145,7 @@
 		 * Holds the registered hooks
 		 *
 		 * @var		array
+		 * @since	1.2.0
 		 */
 		protected static $hooks		= Array();
 
@@ -162,6 +164,7 @@
 		 * Holds the various flags supported
 		 *
 		 * @var		array
+		 * @since	1.2.0
 		 */
 		protected static $flags		= Array(
 							self::FLAG_CORE, 
@@ -208,6 +211,8 @@
 		 * @param	callback		The loader callback
 		 * @param	string			The index of the preloadables, if any to send to the callback
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.2.0
 		 */
 		public static function setHook($flag, $callback, $preloadables = NULL)
 		{

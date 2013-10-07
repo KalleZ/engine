@@ -10,25 +10,13 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine ...
+							Engine {$since}
 						</td>
 					</tr>
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							{$type}
-						</td>
-					</tr>
-					<tr>
-						<td nowrap="nowrap">Declared in:</td>
-						<td class="value" style="width: 100%">
-							{$file}
-						</td>
-					</tr>
-					<tr>
-						<td>Namespace:</td>
-						<td class="value" style="width: 100%">
-							{$namespace}
+							<a href="./{$mtype}.html">{$type}</a>
 						</td>
 					</tr>
 					{$extendedinfo}
@@ -45,6 +33,10 @@
 	</div>
 </div>
 
+{$notices}
+
+{$warnings}
+
 <h2><span>Contents</span></h2>
 <div class="box edge-title">
 	<div class="inner">
@@ -58,11 +50,17 @@
 
 {$examples}
 
+{$todo}
+
+{$changelog}
+
 <h2><span>See also</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<ul>
+			{$seealso}
 			<li><a href="./{$mtype}.html">List of {$mtype}</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
 </div>

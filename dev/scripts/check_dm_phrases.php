@@ -28,15 +28,9 @@
 	require(__DIR__ . '/includes/bootstrap.php');
 
 
-	/**
-	 * Datamanager datapters directory
-	 *
-	 * @var		string
-	 */
-	define('ADAPTERS_DIR', realpath(__DIR__ . '/../..') . '/library/Tuxxedo/Datamanager/Adapter/');
+	$adapters_dir 	= realpath(__DIR__ . '/../..') . '/library/Tuxxedo/Datamanager/Adapter/';
 
-
-	$dm_fields = function($adapter)
+	$dm_fields 	= function($adapter)
 	{
 		$tempdm = Datamanager\Adapter::factory($adapter);
 
@@ -75,7 +69,7 @@
 		IO::headline($languagedata['title']);
 		IO::ul();
 
-		foreach(glob(ADAPTERS_DIR . '*.php') as $file)
+		foreach(glob($adapters_dir . '*.php') as $file)
 		{
 			$ul	= false;
 			$last 	= explode(DIRECTORY_SEPARATOR, realpath($file));
@@ -141,6 +135,6 @@
 	}
 	else
 	{
-		IO::text(IO::eol() . 'Perfect! There is no missing datamanger phrases');
+		IO::text(IO::eol() . 'Perfect! There is no missing datamanager phrases');
 	}
 ?>

@@ -48,6 +48,7 @@
 	 * @version             1.0
 	 * @package             Engine
 	 * @subpackage          DevTools
+	 * @since		1.1.0
 	 */
 	class IO
 	{
@@ -87,9 +88,11 @@
 		const STYLE_UNDERLINE 	= 4;
 
 		/**
-		 * Style mode constant - indicates a hidden 'dot' for \DevTools\Utilities\IO::li()
+		 * Style mode constant - indicates a hidden 'dot' for \DevTools\Utilities\IO::li() (cli)
 		 *
 		 * @var		integer
+		 *
+		 * @since	1.2.0
 		 */
 		const STYLE_HIDDEN_DOT	= 8;
 
@@ -145,7 +148,9 @@
 		 *
 		 * @param	string				The argument to get
 		 * @param	mixed				The default value used on error
-		 * @return	string				Returns the value as a string, and false if the argument was not found
+		 * @return	string				Returns the value as a string, and false if the argument was not found, arguments like `-test' returns true if no value is present for CLI
+	 	 *
+		 * @changelog	1.2.0				A value is no longer required for a CLI argument for it to be considered valid
 		 */
 		public static function input($argument, $default = false)
 		{
@@ -155,9 +160,13 @@
 
 				$key = \array_search('-' . $argument, $argv);
 
-				if($key === false || !isset($argv[$key + 1]))
+				if($key === false)
 				{
 					return($default);
+				}
+				elseif(!isset($argv[$key + 1]))
+				{
+					return(true);
 				}
 
 				return((string) $argv[$key + 1]);

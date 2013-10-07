@@ -52,7 +52,8 @@
 	 * @author		Ross Masters 		<ross@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
-	 * @subpackage		MVC
+	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	class Template extends Design\InfoAccess
 	{
@@ -88,6 +89,7 @@
 		 * Template name - header
 		 *
 		 * @var		string
+		 * @since	1.2.0
 		 */
 		public static $header_template	= 'header';
 
@@ -95,6 +97,7 @@
 		 * Template name - footer
 		 *
 		 * @var		string
+		 * @since	1.2.0
 		 */
 		public static $footer_template	= 'footer';
 
@@ -109,6 +112,7 @@
 		 * Holds the globally declared variables
 		 *
 		 * @var		array
+		 * @since	1.2.0
 		 */
 		protected static $globals	= Array();
 
@@ -150,6 +154,8 @@
 		 * @param	string				The name of the variable
 		 * @param	mixed				The value of the variable
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.2.0
 		 */
 		public static function globalSet($variable, $value)
 		{
@@ -161,6 +167,8 @@
 		 *
 		 * @param	string				The name of the variable
 		 * @return	mixed				Returns the variable value, and NULL on non existant variable
+		 *
+		 * @since	1.2.0
 		 */
 		public static function globalGet($variable)
 		{
@@ -175,6 +183,8 @@
 		 *
 		 * @param	string				The name of the variable
 		 * @return	boolean				Returns true if the variable exists otherwise false
+		 *
+		 * @since	1.2.0
 		 */
 		public static function globalExists($variable)
 		{
@@ -186,6 +196,8 @@
 		 *
 		 * @param	string				The name of the variable
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.2.0
 		 */
 		public static function globalUnset($variable)
 		{

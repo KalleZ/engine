@@ -52,6 +52,7 @@
 		 * events are triggered when overloading
 		 *
 		 * @var		string
+		 * @since	1.2.0
 		 */
 		protected $information_event	= '';
 
@@ -68,6 +69,8 @@
 		 *
 		 * @param	array|object		The information to import
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.2.0
 		 */
 		final public function import($information)
 		{
@@ -83,6 +86,8 @@
 		 * Exports the entire information in one go
 		 *
 		 * @return	array|object		Returns an object if the internal information is an object, otherwise an array
+		 *
+		 * @since	1.2.0
 		 */
 		public function export()
 		{
@@ -94,6 +99,8 @@
 		 *
 		 * @param	scalar			The information row name to check
 		 * @return	boolean			Returns true if the information is stored, otherwise false
+		 *
+		 * @changelog	1.2.0			This method can now trigger the '{$prefix}exists' event
 		 */
 		public function offsetExists($offset)
 		{
@@ -117,6 +124,8 @@
 		 * 
 		 * @param	scalar			The information row name to get
 		 * @return	mixed			Returns the information value, and NULL if the value wasn't found
+		 *
+		 * @changelog	1.2.0			This method can now trigger the '{$prefix}get' event
 		 */
 		public function offsetGet($offset)
 		{
@@ -143,6 +152,8 @@
 		 * @param	scalar			The information row name to set
 		 * @param	mixed			The new/update value for this row
 		 * @return	void			No value is returned
+		 *
+		 * @changelog	1.2.0			This method can now trigger the '{$prefix}set' event
 		 */
 		public function offsetSet($offset, $value)
 		{
@@ -169,6 +180,8 @@
 		 *
 		 * @param	scalar			The information row name to delete
 		 * @return	void			No value is returned
+		 *
+		 * @changelog	1.2.0			This method can now trigger the '{$prefix}unset' event
 		 */
 		public function offsetUnset($offset)
 		{

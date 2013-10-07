@@ -18,7 +18,9 @@
 	/**
 	 * Aliasing rules
 	 */
+	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Input;
 
 
@@ -57,6 +59,7 @@
 	 * Set script name
 	 *
 	 * @var		string
+	 * @since	1.1.0
 	 */
 	const SCRIPT_NAME 	= 'styles';
 
@@ -73,7 +76,7 @@
 	{
 		if(!isset($datastore->styleinfo[$styleid]))
 		{
-			tuxxedo_error('Invalid style');
+			throw new Exception('Invalid style');
 		}
 
 		$styledm 	= Datamanager\Adapter::factory('style', $styleid);
@@ -81,7 +84,7 @@
 	}
 	elseif(!$styleid && !empty($do) && $do != 'style' && $action != 'add')
 	{
-		tuxxedo_error('Invalid style');
+		throw new Exception('Invalid style');
 	}
 
 	switch($do)
@@ -99,7 +102,7 @@
 					}
 					elseif($action == 'edit' && !isset($styledm))
 					{
-						tuxxedo_error('Invalid style id');
+						throw new Exception('Invalid style id');
 					}
 					elseif(isset($_POST['submit']))
 					{
@@ -107,7 +110,7 @@
 						{
 							unset($styledm);
 
-							tuxxedo_error('Cannot disable default style when there only is one');
+							throw new Exception('Cannot disable default style when there only is one');
 						}
 						elseif($action == 'add')
 						{
@@ -147,11 +150,11 @@
 				{
 					if(!isset($styledm))
 					{
-						tuxxedo_error('Invalid style id');
+						throw new Exception('Invalid style id');
 					}
 					elseif($styledata['id'] == $options->style_id)
 					{
-						tuxxedo_error('Cannot delete the default style');
+						throw new Exception('Cannot delete the default style');
 					}
 
 					$styledm->delete();
@@ -160,7 +163,7 @@
 				}
 				default:
 				{
-					tuxxedo_error('Invalid style action');
+					throw new Exception('Invalid style action');
 				}
 			}
 		}
@@ -175,7 +178,7 @@
 
 					if(!$templateids || empty($templateids[0]))
 					{
-						tuxxedo_error('This style have no templates');
+						throw new Exception('This style have no templates');
 					}
 
 					$table = '';
@@ -368,7 +371,7 @@
 				break;
 				default:
 				{
-					tuxxedo_error('Invalid template action');
+					throw new Exception('Invalid template action');
 				}
 			}
 		}

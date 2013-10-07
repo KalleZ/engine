@@ -50,7 +50,7 @@
 	 * caching templates and fetching them for execution.
 	 *
 	 * To compile templates thats loadable through this class 
-	 * you should look at the {@link \Tuxxedo\Template\Compiler} 
+	 * you should look at the template compiler class.
 	 * class.
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
@@ -121,7 +121,7 @@
 		 * @param	array				An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
 		 * @return	boolean				Returns true on success otherwise false
 		 *
-		 * @throws	\Tuxxedo\Exception		Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\SQL		Throws an exception if the query should fail
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{
@@ -133,6 +133,8 @@
 		 *
 		 * @param	string				The name of the template
 		 * @return	boolean				Returns true if the template is loaded, otherwise false
+		 *
+		 * @since	1.1.0
 		 */
 		public function isLoaded($template)
 		{
@@ -163,6 +165,8 @@
 		 * @param	string				The name of the template to fetch
 		 * @param	boolean				Whether to activate the layout mode option of the template object
 		 * @return	\Tuxxedo\Template		Returns a template object containing the template
+		 *
+		 * @since	1.1.0
 		 */
 		public function template($template, $layout = false)
 		{
@@ -181,6 +185,8 @@
 		 *
 		 * @param	string|array			The name of the template(s) to remove from the cache
 		 * @return	boolean				Returns true on success and false on error
+		 *
+		 * @since	1.1.0
 		 */
 		public function unload($list)
 		{

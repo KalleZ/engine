@@ -1,0 +1,8 @@
+<h2><span class="notice">Notice</span></h2>
+<div class="box-notice edge-title">
+	<div class="inner">
+		<div class="infobox-notice">
+			{$notice}
+		</div>
+	</div>
+</div>

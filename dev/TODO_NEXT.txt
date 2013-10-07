@@ -4,10 +4,6 @@
 	Tuxxedo Engine 1.2.0 "Beloved" pre-gold
 	---------------------------------------
 
-	Core
-	 - Move functions from \Tuxxedo\Utilities to \DevTools\*, page, headerRedirect, redirect, ...
-	 - Change parameter order on \Tuxxedo\Utilities::date() $timestamp <-> $format (or use 'datef()' ?)
-
 	DevTools
 	 - Add new the internationalization component
 	   - Phrasegroup
@@ -21,37 +17,14 @@
 	     - Delete
 	     - Reset
 	     - Search
-	 - Change the authenticator code to be in a class rather than cluttering up the bootstraper
 	 - Change to use the \Tuxxedo\Bootstrap class to remove this clutter code in bootstrap.php
-
-	Dev
-	 - api_analyze.php
-	   - Add the ability to parse the actual prototypes (for parameter names and default values)
-	   - Add the ability to tell whether or not this function or method uses static data (metadata)
-	   - Add the ability to fetch file docblocks
-	   - Add the ability to fetch default values of properties, constants and class constants
-	   - Add the ability to show @todo
-	   - Add the ability to use @wip on all docblocks (file, namespace, class, interface, procedural functions)
-	   - Add the ability to pick up traits
-	   - Add the ability to pick up generators
-	 - api_indexer.php
-	   - Add the ability to report on obsolete files and other mismatches
-	 - check_dm_phrases.php
-	   - Add a check for obsolete and orphan phrases
-	 - sync_templates.php
-	   - Add support for all storage engines
 
 	Database
 	 - Make sure SQLite3 is fully functional
 
 	Internationalization
 	 - Add support for 'resetable' phrases
-	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
 	 - Phrases should use ids instead of named groups, which makes validation much easier, but dublicates cached data to some distinct
-
-	Datamanagers
-	 - Session
-	  - Cleanup, remove the hacky part and make sure \Tuxxedo\User work
 
 	Bugs
 	 - Language

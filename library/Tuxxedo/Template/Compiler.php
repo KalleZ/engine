@@ -89,6 +89,7 @@
 		 * Compiler option - Disable silent operator when running test()
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const OPT_VERBOSE_TEST			= 16;
 
@@ -96,6 +97,7 @@
 		 * Compiler option - parse <if> tags
 		 *
 		 * @var		integer
+		 * @since	1.2.0
 		 */
 		const OPT_PARSE_IF_TAGS			= 32;
 
@@ -118,6 +120,7 @@
 		 * Error reporting buffer
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $error_reporting;
 
@@ -125,6 +128,7 @@
 		 * The current compiler stack data
 		 *
 		 * @var		\stdClass
+		 * @since	1.1.0
 		 */
 		protected $stack_data;
 
@@ -176,6 +180,8 @@
 		 *
 		 * @param	integer			The compiler options, this is used for recursive code by the compiler, or by setting the default
 		 * @param	integer			The current compiler stack data, this is only used for recursive calls
+		 *
+		 * @changelog	1.1.0			Changed the second parameter to $stack_data
 		 */
 		public function __construct($options = -1, \stdClass $stack_data = NULL)
 		{
@@ -235,6 +241,8 @@
 		 *
 		 * @param	string			A function name to be allowed in expressions, notice that this have to be an existing function and not a method
 		 * @return	boolean			Returns true if success, and false if the function doesn't exists or already is loaded
+		 *
+		 * @changelog	1.2.0			This method no longer validates the input
 		 */
 		public function allowFunction($function)
 		{
@@ -246,6 +254,8 @@
 		 *
 		 * @param	string			A class instance name to be allowed in expressions, notice that this is the instance name of the variable, not the class itself
 		 * @return	boolean			Returns true if success, and false if already is loaded
+		 *
+		 * @changelog	1.2.0			This method no longer validates the input
 		 */
 		public function allowClass($class)
 		{
@@ -257,6 +267,8 @@
 		 *
 		 * @param	string			The closure expression name (to allow $closure, supply 'closure')
 		 * @return	boolean			Returns true if success, and false if already is loaded
+		 *
+		 * @changelog	1.2.0			This method no longer validates the input
 		 */
 		public function allowClosure($closure)
 		{
@@ -264,12 +276,14 @@
 		}
 
 		/**
-		 * Updates a internl symbol table
+		 * Updates a internal symbol table
 		 *
 		 * @param	string			The symbol table to update
 		 * @param	string			The symbol to be added
 		 * @param	integer			The symbol table bitfield
 		 * @return	boolean			Returns true if success, and false if the symbol already exists
+		 *
+		 * @since	1.2.0
 		 */
 		protected function symtable($symtable, $symbol, $bitfield)
 		{
@@ -293,9 +307,11 @@
 		/**
 		 * Compiles a template source
 		 *
-		 * @return	void			No value is returned
+		 * @return	void					No value is returned
 		 *
-		 * @throws	\Tuxxedo\Exception\TemplateCompiler
+		 * @throws	\Tuxxedo\Exception\TemplateCompiler	Throws a compiler exception in case of a syntax error
+		 *
+		 * @changelog	1.1.0					Exceptions are now way more expressive in terms of their messages by returning the stack data
 		 */
 		public function compile()
 		{
@@ -566,6 +582,8 @@
 		 * Gets the compiled source
 		 *
 		 * @return	string			Returns the compiled source from the last successful compilation and false on error
+		 *
+		 * @changelog	1.1.0			This method used to be called 'get()'
 		 */
 		public function getCompiledSource()
 		{
@@ -582,6 +600,8 @@
 		 *
 		 * @param	string			The new uncompiled source code
 		 * @return	void			No value is returned
+		 *
+		 * @changelog	1.1.0			This method used to be called 'set()'
 		 */
 		public function setSource($source)
 		{
@@ -593,6 +613,8 @@
 		 * Gets the uncompiled source code
 		 *
 	 	 * @return	string			Returns the uncompiled source code and false on error
+		 *
+		 * @since	1.1.0
 		 */
 		public function getSource()
 		{

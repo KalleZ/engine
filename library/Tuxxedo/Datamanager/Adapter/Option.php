@@ -51,6 +51,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	class Option extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{

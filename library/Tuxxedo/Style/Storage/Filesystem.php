@@ -64,9 +64,11 @@
 		/**
 		 * Constructs a new storage engine
 		 *
-	 	 * @param	Tuxxedo			The Tuxxedo object reference
-		 * @param	Tuxxedo\Style		Reference to the style object
+	 	 * @param	\Tuxxedo\Registry	The Tuxxedo object reference
+		 * @param	\Tuxxedo\Style		Reference to the style object
 		 * @param	object			Object reference to the templates data table
+		 *
+		 * @changelog	1.1.0			The 'templatesdir' style table row can now be used to define a custom template directory if present
 		 */
 		protected function __construct(Registry $registry, Style $style, \stdClass $templates)
 		{
@@ -85,7 +87,7 @@
 		 * @param	array			An array passed by reference, this contains all the elements that where loaded if referenced
 		 * @return	boolean			Returns true on success otherwise false
 		 *
-		 * @throws	Tuxxedo\Exception\SQL	Throws an exception if the query should fail
+		 * @throws	\Tuxxedo\Exception\SQL	Throws an exception if the query should fail
 		 */
 		public function cache(Array $templates, Array &$error_buffer = NULL)
 		{

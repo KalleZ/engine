@@ -57,7 +57,7 @@
 		/**
 		 * Get the number of rows in the result
 		 *
-		 * @return	integer			Returns the number of rows in the result, and 0 on error
+		 * @return	integer			Returns the number of rows in the result, or zero on error
 		 */
 		public function getNumRows();
 
@@ -95,6 +95,8 @@
 		 * to determine in what format the returned data should be in
 		 *
 		 * @return	array|object		Returns an object or array based on the fetching mode
+		 *
+		 * @since	1.1.0
 		 */
 		public function fetch();
 	}

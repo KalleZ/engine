@@ -96,6 +96,8 @@
 		 * @return	object				Object instance
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if an invalid (or not cached) language id was used
+		 *
+		 * @changelog	1.2.0				This method now tries to resolve the browsers Accept-Language and use that as a preference
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
@@ -356,6 +358,8 @@
 		 * Gets the browser language codes in priority
 		 *
 		 * @return	array			Returns an array with the language codes in priority from the user's browser, each code may be either 2 or 5 bytes long or NULL in case the HTTP_ACCEPT_LANGUAGE variable was not set
+		 *
+		 * @since	1.2.0
 		 */
 		public static function getISOCodes()
 		{
@@ -396,6 +400,8 @@
 		 *
 		 * @param	string|array			The name of the phrasegroup(s) to remove from the cache
 		 * @return	boolean				Returns true on success and false on error
+		 *
+		 * @since	1.2.0
 		 */
 		public function unload($list)
 		{

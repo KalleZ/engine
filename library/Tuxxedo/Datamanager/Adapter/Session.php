@@ -56,6 +56,8 @@
 		 * Fields for validation of session
 		 *
 		 * @var		array
+		 *
+		 * @changelog	1.2.0			Added the 'rehash' field
 		 */
 		protected $fields		= Array(
 							'sessionid'	=> Array(
@@ -94,6 +96,8 @@
 		 * @param	integer				Session identifier
 		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
+		 *
+		 * @changelog	1.2.0				User-Agent and Location is no longer manually set as the constants no longer exists but figured out on its own
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{

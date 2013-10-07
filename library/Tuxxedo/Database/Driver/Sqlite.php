@@ -55,6 +55,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	class Sqlite extends Database
 	{
@@ -76,11 +77,11 @@
 
 
 		/**
-		 * Returns if the current system supports the driver, if this 
+		 * Checks if the current system supports the driver, if this 
 		 * method isn't called, a driver may start not function properly 
 		 * on the system
 		 *
-		 * @return	boolean				True if dirver is supported, otherwise false
+		 * @return	boolean				True if driver is supported, otherwise false
 		 */
 		public function isDriverSupported()
 		{
@@ -92,29 +93,6 @@
 			}
 
 			return($supported);
-		}
-
-		/**
-		 * Get driver requirements, as an array that can be iterated to 
-		 * see which requirements that passes, and which that do not
-		 *
-		 * Each driver may return their own set of keys, but built-in 
-		 * drivers will remain consistent across each other
-		 *
-		 * @return	array				Returns an array containing elements of which requirements and their status
-		 */
-		public function getDriverRequirements()
-		{
-			static $requirements;
-
-			if(!$requirements)
-			{
-				$requirements = Array(
-							'extension'	=> \extension_loaded('sqlite3')
-							);
-			}
-
-			return($requirements);
 		}
 
 		/**

@@ -21,14 +21,12 @@
 	use DevTools\Style;
 	use Tuxxedo\Input;
 	use Tuxxedo\Registry;
-	use Tuxxedo\Utilities;
+	use Tuxxedo\Template;
 	use Tuxxedo\Version;
 
 
 	/**
-	 * Sets the path to where the root script is, if the 
-	 * constant CWD is defined before including this file, 
-	 * then it will be used as root dir
+	 * Sets the path to where the root script is
 	 *
 	 * @var		string
 	 */
@@ -101,9 +99,7 @@
 	$registry->register('datastore', '\Tuxxedo\Datastore');
 	$registry->register('cookie', '\Tuxxedo\Cookie');
 	$registry->register('session', '\DevTools\Session');
-	$registry->register('devuser', '\DevTools\User');
 
-	$registry->set('devuserinfo', $devuser->getUserinfo());
 	$registry->set('input', new Input);
 	$registry->set('style', new Style);
 
@@ -155,80 +151,15 @@
 
 	unset($widget_hook);
 
+	Template::globalSet('widget', $widget);
+	Template::globalSet('engine_version', $engine_version);
+
 	eval('$header = "' . $style->fetch('header') . '";');
 	eval('$footer = "' . $style->fetch('footer') . '";');
 
-	if($session['__devtools_authenticated'] && isset($_GET['logout']) && $_GET['logout'])
+	if($configuration['devtools']['protective'])
 	{
-		$session['__devtools_authenticated'] 	= false;
-		$session['__devtools_authmode']		= $session['__devtools_userid'] = 0;
-
-		Utilities::redirect('Logged out with success', './');
-	}
-
-	if($session['__devtools_authmode'] && $session['__devtools_authmode'] != $configuration['devtools']['protective'])
-	{
-		$session['__devtools_authenticated'] 	= false;
-		$session['__devtools_authmode']		= $session['__devtools_userid'] = 0;
-
-		unset($_POST['username']);
-		unset($_POST['password']);
-
-		eval('$header = "' . $style->fetch('header') . '";');
-		eval('$footer = "' . $style->fetch('footer') . '";');
-	}
-
-	if($configuration['devtools']['protective'] && !$session['__devtools_authenticated'])
-	{
-		if(SCRIPT_NAME == 'datastore')
-		{
-			$cache_buffer = Array();
-
-			$datastore->cache(Array('usergroups'), $cache_buffer) or tuxxedo_multi_error('Unable to load datastore elements', $cache_buffer);
-
-			unset($cache_buffer);
-		}
-
-		if($configuration['devtools']['protective'] == 1 && isset($_POST['password']) && $input->post('password') == $configuration['devtools']['password'] || $configuration['devtools']['protective'] == 2 && isset($_POST['username']) && isset($_POST['password']) && $devuser->login($input->post('username'), $input->post('password')) && $devuser->isGranted($configuration['devtools']['permissions']))
-		{
-			$session['__devtools_authenticated'] 	= true;
-			$session['__devtools_authmode']		= $configuration['devtools']['protective'];
-			$session['__devtools_userid']		= (($uid = $devuser->getUserinfo()->id) !== false ? $uid : 0);
-
-			Utilities::headerRedirect($_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
-		}
-		elseif(!$session['__devtools_authenticated'])
-		{
-			$query = $_SERVER['QUERY_STRING'];
-
-			if(!empty($query))
-			{
-				$url = '';
-
-				parse_str($query, $url);
-
-				if($url)
-				{
-					unset($url['logout']);
-
-					$query = '';
-
-					foreach($url as $parameter => $value)
-					{
-						$query .= $parameter . '=' . $value . '&';
-					}
-
-					$query = rtrim($query, '&');
-				}
-
-				$query = '?' . $query;
-			}
-
-			$self = htmlspecialchars($_SERVER['SCRIPT_NAME'] . $query_string, ENT_QUOTES);
-
-			eval(page('password'));
-			exit;
-		}
+		devtools_auth_handler();
 	}
 
 	$configuration['application']['debug'] = true;

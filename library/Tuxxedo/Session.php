@@ -71,6 +71,8 @@
 		 * The session options, such as prefix, path etc.
 		 *
 		 * @var		array
+		 *
+		 * @changelog	1.1.0			Added 'secure' for HTTPS enforcement
 		 */
 		protected static $options	= Array(
 							'expires'	=> 1800, 
@@ -88,6 +90,8 @@
 		 * @param	\Tuxxedo\Registry	The Registry reference
 		 * @param	array			The configuration array
 		 * @return	object			Object instance
+		 *
+		 * @changelog	1.2.0			This method no longer requires the datastore to be loaded to function
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
@@ -149,6 +153,8 @@
 		 * Starts a session
 		 *
 		 * @return	void			No value is returned
+		 *
+		 * @changelog	1.2.0			Removed the old CSRF code that was never fully implemented
 		 */
 		public static function start()
 		{
@@ -202,6 +208,8 @@
 		 * call.
 		 *
 	 	 * @return	void			No value is returned
+		 *
+		 * @since	1.2.0
 		 */
 		public static function restart()
 		{
@@ -210,12 +218,14 @@
 		}
 
 		/**
-		 * Regenerates a new session ID, note that API's that utilizes the 
+		 * Regenerates a new session ID, note that APIs that utilizes the 
 		 * session ID must be manually notified of this update to not cause 
 		 * data mismatch
 		 *
 		 * @param	boolean			Whether or not to keep the old session data
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public static function regenerate($stayalive = false)
 		{

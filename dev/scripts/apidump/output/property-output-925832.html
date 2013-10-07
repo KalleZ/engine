@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
+		body
+		{
+			background-color:		#E4F4FC;
+			color:				#3B7286;
+			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
+			margin:				30px 10% 0px 10%;
+		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD;
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
+		li, ul
+		{
+			margin: 			0px;
+		}
+		td
+		{
+			border: 			1px solid transparent;
+		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
+
+		.box, .box-notice, .box-warning
+		{ 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
+		}
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner, .box-notice .inner, .box-warning .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 480px; 
+		}
+		.infobox, .infobox-notice, .infobox-warning
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 450px;
+			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
+		</style>
+	</head>
+	<body>
+
+<h1>\HashRegistry::$output</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							Property
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%" nowrap="nowrap">
+							dev/scripts/api_indexer.php
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Data type:</td>
+						<td class="value" style="width: 100%">
+							string
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Global namespace
+	</td>
+</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-hashregistry-092192.html">\HashRegistry</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Modifiers:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		protected
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Output directory
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+<h2><span class="notice">Notice</span></h2>
+<div class="box-notice edge-title">
+	<div class="inner">
+		<div class="infobox-notice">
+			This element is a part of the developmental code and is only available in builds that includes developmental related APIs!
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="class-hashregistry-092192.html">\HashRegistry</a></li>
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
+		</p>
+	</body>
+</html>

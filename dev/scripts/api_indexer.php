@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Utilities\IO;
+	use Tuxxedo\Utilities;
 	use Tuxxedo\Version;
 
 
@@ -28,25 +29,6 @@
 	require(__DIR__ . '/includes/bootstrap.php');
 
 
-
-	/**
-	 * Template cache for templates
-	 *
-	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
-	 * @version		1.0
-	 * @package		Engine
-	 * @subpackage		Dev
-	 */
-	abstract class TemplateCache
-	{
-		/**
-		 * Holds the loaded templates
-		 *
-		 * @var		array
-		 */
-		protected static $templates		= Array();
-	}
-
 	/**
 	 * Template class
 	 *
@@ -54,8 +36,9 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Dev
+	 * @since		1.2.0
 	 */
-	class Template extends TemplateCache
+	class Template
 	{
 		/**
 		 * Name of the template currently loaded
@@ -65,11 +48,25 @@
 		protected $name;
 
 		/**
+		 * Output directory
+		 *
+		 * @var		string
+		 */
+		public static $outputdir		= '';
+
+		/**
 		 * Template variables
 		 *
 		 * @var		array
 		 */
 		protected $variables			= Array();
+
+		/**
+		 * Template cache
+		 *
+		 * @var		array
+		 */
+		protected static $templates		= Array();
 
 
 		/**
@@ -81,9 +78,16 @@
 		 */
 		public function __construct($template)
 		{
+			static $timenow;
+
+			if(!$timenow)
+			{
+				$timenow = Utilities::date(time(), 'H:i:s j/n-Y \U\T\C');
+			}
+
 			$template = strtolower($template);
 
-			if(!isset(TemplateCache::$templates[$template]))
+			if(!isset(self::$templates[$template]))
 			{
 				if(!is_file('./apidump/templates/' . $template . '.raw'))
 				{
@@ -91,11 +95,12 @@
 					exit;
 				}
 
-				TemplateCache::$templates[$template] = file_get_contents('./apidump/templates/' . $template . '.raw');
+				self::$templates[$template] = file_get_contents('./apidump/templates/' . $template . '.raw');
 			}
 
 			$this->name 			= $template;
 			$this->variables['version']	= Version::FULL;
+			$this->variables['time']	= $timenow;
 		}
 
 		/**
@@ -143,7 +148,7 @@
 		 */
 		public function parse()
 		{
-			$cache = TemplateCache::$templates[$this->name];
+			$cache = self::$templates[$this->name];
 
 			if($this->variables)
 			{
@@ -164,7 +169,7 @@
 		 */
 		public function save($file)
 		{
-			return(file_put_contents('./apidump/output/' . $file . '.html', $this->parse()));
+			return(file_put_contents(self::$outputdir . '/' . $file . '.html', $this->parse()));
 		}
 	}
 
@@ -178,6 +183,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Dev
+	 * @since		1.2.0
 	 */
 	class Layout extends Template
 	{
@@ -209,6 +215,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Dev
+	 * @since		1.2.0
 	 */
 	class HashRegistry
 	{
@@ -219,14 +226,25 @@
 		 */
 		protected $hashes;
 
+		/**
+		 * Output directory
+		 *
+		 * @var		string
+		 */
+		protected $output		= '';
+
 
 		/**
 		 * Constructor, this will attempt to see if the file 'api_hashes.json' 
 		 * exists within the output directory, and load it.
+		 *
+		 * @param	string			The output directory
 		 */
-		public function __construct()
+		public function __construct($outputdir)
 		{
-			if(is_file('./apidump/output/api_hashes.json') && ($json = json_decode(file_get_contents('./apidump/output/api_hashes.json'))) !== false)
+			$this->output = $outputdir;
+
+			if(is_file($outputdir . '/api_hashes.json') && ($json = json_decode(file_get_contents($outputdir . '/api_hashes.json'))) !== false)
 			{
 				$this->hashes = $json;
 			}
@@ -243,14 +261,14 @@
 		{
 			if($this->hashes)
 			{
-				file_put_contents('./apidump/output/api_hashes.json', json_encode($this->hashes));
+				file_put_contents($this->output . '/api_hashes.json', json_encode($this->hashes));
 			}
 		}
 
 		/**
 		 * Gets a hash (or generates a new one)
 		 *
-		 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property' or 'method')
+		 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property', 'method' or 'namespace'), note that class constants uses 'constant'
 		 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 		 * @param	string				The file of where the object exists (fx. 'library/Tuxxedo/Bootstrap.php'), this is case sensitive
 		 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
@@ -261,7 +279,7 @@
 
 			if(!$types)
 			{
-				$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method');
+				$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method', 'namespace');
 			}
 
 			$type = strtolower($type);
@@ -298,9 +316,11 @@
 	 * Generates a file hash (filename) based on the name and type to 
 	 * avoid possible naming conflicts.
 	 *
-	 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property' or 'method')
+	 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property', 'method' or 'namespace'), note that class constants uses 'constant'
 	 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 	 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
+	 *
+	 * @since	1.2.0
 	 */
 	function api_file_hash($type, $name)
 	{
@@ -309,7 +329,8 @@
 		if(!$rng)
 		{
 			$lcache	= Array();
-			$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method');
+			$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method', 'namespace');
+
 			$rng 	= function()
 			{
 				return(str_pad(mt_rand(0, 999999), 6, 0, STR_PAD_LEFT));
@@ -346,77 +367,6 @@
 	}
 
 
-	IO::signature();
-	IO::headline('API Indexer', 1);
-
-	$cli	= IO::isCli();
-	$json 	= json_decode(file_get_contents('./apidump/engine_api.json'));
-
-	if(!$json)
-	{
-		IO::text('Error: Unable to read Engine API from the exported JSON file');
-		exit;
-	}
-
-	IO::ul();
-	IO::li('Reading API dump...');
-
-	$hashreg	= new HashRegistry;
-	$constants 	= $functions = $classes = $interfaces = Array();
-
-	foreach($json as $file => $struct)
-	{
-		if($struct->functions)
-		{
-			foreach($struct->functions as $meta)
-			{
-				$functions[] = array_merge(Array('file' => $file, 'hash' => $hashreg->hash('function', $meta->function, $file)), (array) $meta);
-			}
-		}
-
-		if($struct->constants)
-		{
-			foreach($struct->constants as $name => $meta)
-			{
-				$constants[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash('constant', $name, $file)), (array) $meta);
-			}
-		}
-
-		foreach(Array('classes' => 'class', 'interfaces' => 'interface') as $type => $types)
-		{
-			if(!$struct->{$type})
-			{
-				continue;
-			}
-
-			foreach($struct->{$type} as $name => $meta)
-			{
-				${$type}[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash($types, $name, $file)), (array) $meta);
-			}
-		}
-	}
-
-	$generated_tocs = Array();
-	$obj_types	= Array('constants', 'functions', 'classes', 'interfaces');
-
-	foreach($obj_types as $obj)
-	{
-		if(!sizeof(${$obj}))
-		{
-			continue;
-		}
-
-		$generated_tocs[] = $obj;
-	}
-
-	if(!$generated_tocs)
-	{
-		IO::ul(IO::TAG_END);
-
-		IO::text('Error: No generatable elements found for table of contents');
-		exit;
-	}
-
 	$docblock = function(Array $meta, $tag, $strip_html = true)
 	{
 		$tag = strtolower($tag);
@@ -443,7 +393,66 @@
 		return($meta['docblock']->tags->{$tag});
 	};
 
-	$prototype = function($name, Array $meta, $prefix = '')
+	$hashlookup = function($ltype, $name)
+	{
+		static $types;
+
+		if(!$types)
+		{
+			$types = Array(
+					'class'		=> 'classes', 
+					'interface'	=> 'interfaces'
+					);
+		}
+
+		$ltype = explode('|', $ltype);
+
+		if(!$ltype)
+		{
+			return(false);
+		}
+
+		foreach($ltype as $type)
+		{
+			if(!isset($types[$type]))
+			{
+				continue;
+			}
+
+			$ptr = $GLOBALS[$types[$type]];
+
+			if(!$ptr)
+			{
+				continue;
+			}
+
+			foreach($ptr as $element)
+			{
+				if($element['name'] == $name)
+				{
+					return($element['hash']);
+				}
+			}
+		}
+
+		return(false);
+	};
+
+	$hashlink = function($datatype) use($hashlookup)
+	{
+		if(!($hash = $hashlookup('class|interface', $datatype)))
+		{
+			return($datatype);
+		}
+
+		$template		= new Template('link');
+		$template->link		= $hash . '.html';
+		$template->title	= $datatype;
+
+		return($template);
+	};
+
+	$prototype = function($name, Array $meta) use($hashlookup)
 	{
 		$return = 'void';
 		$params = '';
@@ -454,6 +463,23 @@
 			{
 				foreach($meta['docblock']->tags->param as $param)
 				{
+					if($param[0]{0} == '\\' || strpos($param[0], '\\') !== false)
+					{
+						if($param[0]{0} !== '\\')
+						{
+							$param[0] = '\\' . $param[0];
+						}
+
+						if(($p = $hashlookup('class|interface', $param[0])) !== false)
+						{
+							$link		= new Template('link');
+							$link->link	= $p . '.html';
+							$link->title	= $param[0];
+
+							$param[0]	= $link;
+						}
+					}
+
 					$params .= $param[0] . ', ';
 				}
 
@@ -471,12 +497,7 @@
 			$name = $meta['namespace'] . '\\' . $name;
 		}
 
-		if(!empty($prefix))
-		{
-			$prefix = $prefix . '::';
-		}
-
-		return(sprintf('%s %s%s(%s)', $return, $prefix, $name, $params));
+		return(sprintf('%s %s(%s)', $return, $name, $params));
 	};
 
 	$nl2br = function($string)
@@ -484,19 +505,21 @@
 		return(str_replace("\n\n", '<br />', str_replace(Array("\n\r", "\r\n", "\r"), "\n", $string)));
 	};
 
-	$mformat = function($name, $as)
+	$mformat = function($name, $as, $prefix = '')
 	{
+		$prefix = (!empty($prefix) ? $prefix . '::' : '');
+
 		if($as == 'properties')
 		{
-			return('$' . $name);
+			return($prefix . '$' . $name);
 		}
 
-		if($as == 'methods')
+		if($as == 'methods' || $as == 'functions')
 		{
-			return($name . '()');
+			return($prefix . $name . '()');
 		}
 
-		return($name);
+		return($prefix . $name);
 	};
 
 	$desc = function(Array $meta, $strip_html = false, Array &$examples = NULL) use($docblock)
@@ -530,7 +553,35 @@
 
 	$desct = function(Array $meta) use($desc)
 	{
-		$d = $desc($meta, false);
+		$tags	= '';
+		$d 	= $desc($meta, false);
+
+		if($meta['dev'])
+		{
+			$template	= new Template('tag');
+			$template->tag	= 'Dev';
+
+			$tags		= $template;
+		}
+
+		if(isset($meta['docblock']) && isset($meta['docblock']->tags))
+		{
+			if(isset($meta['docblock']->tags->todo))
+			{
+				$template	= new Template('tag');
+				$template->tag	= 'TODO';
+
+				$tags		.= $template;
+			}
+
+			if(isset($meta['docblock']->tags->wip))
+			{
+				$template	= new Template('tag');
+				$template->tag	= 'WIP';
+
+				$tags		.= $template;
+			}
+		}
 
 		if(strlen($d) > 100)
 		{
@@ -547,10 +598,10 @@
 				$t .= $d{$x};
 			}
 	
-			return($t . '...');
+			return($tags . $t . '...');
 		}
 
-		return($d);
+		return($tags . htmlentities($d));
 	};
 
 	$examplecode = function(Array $examples)
@@ -578,22 +629,316 @@
 		return($ex);
 	};
 
+	$nst = function($nsname)
+	{
+		$template 		= new Template('obj_element');
+		$template->element	= 'Namespace';
+
+		if(empty($nsname))
+		{
+			$template->value = 'Global namespace';
+
+			return($template);
+		}
+
+		global $nscache;
+
+		$link 			= new Template('link');
+		$link->link		= $nscache[$nsname]['meta']['hash'] . '.html';
+		$link->title		= $nsname;
+
+		$template->value 	= $link;
+
+		return($template);
+	};
+
+	$throws = function(Array $meta) use($docblock_tag, $hashlookup)
+	{
+		$t = $docblock_tag($meta, 'throws');
+
+		if($t == 'Undefined value')
+		{
+			return('');
+		}
+
+		$exceptions = '';
+
+		foreach($t as $e)
+		{
+			if(($hash = $hashlookup('class', $e[0])))
+			{
+				$link		= new Template('link');
+				$link->link	= $hash . '.html';
+				$link->title	= $e[0];
+			}
+
+			$template 		= new Template('throws_bit');
+			$template->exception	= (isset($link) ? $link : $e[0]);
+			$template->condition	= $e[1];
+
+			$exceptions		.= $template;
+
+			unset($link);
+		}
+		
+		$template 		= new Template('throws');
+		$template->exceptions	= $exceptions;
+
+		return($template);
+	};
+
+	$warnings = function(Array $meta) use($docblock_tag)
+	{
+		$tags = '';
+
+		if($docblock_tag($meta, 'wip') !== 'Undefined value')
+		{
+			$template		= new Template('warning');
+			$template->warning	= 'This element is currently marked as a \'work-in-progress\', its behavior may change without notice and it may otherwise not function at all!';
+
+			$tags			.= $template;
+		}
+
+		if($docblock_tag($meta, 'todo') !== 'Undefined value')
+		{
+			$template		= new Template('warning');
+			$template->warning	= 'This element is currently marked with one or more TODO items, meaning it may not be functioning or documented entirely!';
+
+			$tags			.= $template;
+		}
+
+		return($tags); 
+	};
+
+	$notices = function(Array $meta)
+	{
+		if(!$meta['dev'])
+		{
+			return('');
+		}
+
+		$template		= new Template('notice');
+		$template->notice	= 'This element is a part of the developmental code and is only available in builds that includes developmental related APIs!';
+
+		return($template);
+	};
+
+	$infobox = function(Array $meta, $tag, $name, $idname, $descname, \Closure $id_cb = NULL, \Closure $desc_cb = NULL) use($docblock_tag)
+	{
+		if(($t = $docblock_tag($meta, $tag)) === 'Undefined value')
+		{
+			return('');
+		}
+
+		$bits			= '';
+		$template		= new Template('infobox');
+		$template->name		= $name;
+		$template->id_name	= $idname;
+		$template->desc_name	= $descname;
+
+		foreach($t as $d)
+		{
+			if(!is_array($d))
+			{
+				$dc 	= Array();
+				$dc[0]	= 0;
+				$dc[1]	= $d;
+
+				$d	= $dc;
+			}
+
+			$bit		= new Template('infobox_bit');
+			$bit->id	= ($id_cb ? $id_cb($d[0]) : $d[0]);
+			$bit->desc	= ($desc_cb ? $desc_cb($d[1]) : $d[1]);
+
+			$bits		.= $bit;
+		}
+
+		$template->bits = $bits;
+
+		return($template);
+	};
+
+	$todo = function(Array $meta) use($infobox)
+	{
+		return($infobox($meta, 'todo', 'TODO', '#', 'Note', function($id)
+		{
+			static $counter;
+
+			if($counter === NULL)
+			{
+				$counter = 0;
+			}
+
+			return(++$counter);
+		}));
+	};
+
+	$changelog = function(Array $meta) use($infobox)
+	{
+		return($infobox($meta, 'changelog', 'Version history', 'Version', 'Note'));
+	};
+
+	$since = function(Array $meta, Array $rmeta = NULL) use($docblock_tag)
+	{
+		if(($s = $docblock_tag($meta, 'since')) === 'Undefined value')
+		{
+			if($rmeta && ($s = $docblock_tag($rmeta, 'since')) !== 'Undefined value')
+			{
+				return($s);
+			}
+
+			return('1.0.0');
+		}
+
+		return($s);
+	};
+
+	$seealso = function(Array $meta) use($docblock_tag, $hashlookup)
+	{
+		$s = $docblock_tag($meta, 'see');
+
+		if($s == 'Undefined value')
+		{
+			return('');
+		}
+
+		$bits = '';
+
+		foreach($s as $see)
+		{
+			$hash = $hashlookup('class|interface', $see);
+
+			if(!$hash)
+			{
+				continue;
+			}
+
+			$template		= new Template('seealso_link');
+			$template->link		= $hash . '.html';
+			$template->title	= $see;
+
+			$bits			.= $template;
+		}
+
+		return($bits);
+	};
+
+
+	date_default_timezone_set('UTC');
+
+	IO::signature();
+	IO::headline('API Indexer', 1);
+
+	$cli	= IO::isCli();
+	$nodev	= IO::input('nodev');
+	$output	= IO::input('outputdir');
+	$json 	= json_decode(file_get_contents('./apidump/engine_api.json'));
+
+	if(!is_dir($output))
+	{
+		$output = './apidump/output';
+	}
+
+	if(!$json)
+	{
+		IO::text('Error: Unable to read Engine API from the exported JSON file');
+		exit;
+	}
+
+	IO::ul();
+	IO::li('Reading API dump...');
+
+
+	Template::$outputdir 	= $output;
+	$hashreg		= new HashRegistry($output);
+	$constants 		= $functions = $classes = $interfaces = $namespaces = Array();
+
+	foreach($json as $file => $struct)
+	{
+		$isdev = (substr($file, 0, 3) == 'dev' || substr($file, 0, 11) == 'library/Dev');
+
+		if($nodev && $isdev)
+		{
+			continue;
+		}
+
+		if($struct->functions)
+		{
+			foreach($struct->functions as $meta)
+			{
+				$functions[] = array_merge(Array('file' => $file, 'hash' => $hashreg->hash('function', $meta->function, $file), 'dev' => $isdev), (array) $meta);
+			}
+		}
+
+		if($struct->constants)
+		{
+			foreach($struct->constants as $name => $meta)
+			{
+				$constants[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash('constant', $name, $file), 'dev' => $isdev), (array) $meta);
+			}
+		}
+
+		foreach(Array('classes' => 'class', 'interfaces' => 'interface') as $type => $types)
+		{
+			if(!$struct->{$type})
+			{
+				continue;
+			}
+
+			foreach($struct->{$type} as $name => $meta)
+			{
+				${$type}[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash($types, $name, $file), 'dev' => $isdev), (array) $meta);
+			}
+		}
+
+		if($struct->namespaces)
+		{
+			foreach($struct->namespaces as $name => $meta)
+			{
+				$namespaces[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash('namespace', $name, $file), 'dev' => $isdev), (array) $meta);
+			}
+		}
+	}
+
+	$generated_tocs = Array();
+	$obj_types	= Array('constants', 'functions', 'classes', 'interfaces', 'namespaces');
+
+	foreach($obj_types as $obj)
+	{
+		if(!sizeof(${$obj}))
+		{
+			continue;
+		}
+
+		$generated_tocs[] = $obj;
+	}
+
+	if(!$generated_tocs)
+	{
+		IO::ul(IO::TAG_END);
+
+		IO::text('Error: No generatable elements found for table of contents');
+		exit;
+	}
+
 	IO::li('Generating API pages...');
 
-	$mtypes = Array(
-			'constants'	=> Array(
-							'constant', 
-							'api_obj_constant'
-							), 
-			'properties'	=> Array(
-							'property', 
-							'api_property'
-							), 
-			'methods'	=> Array(
-							'method', 
-							'api_method'
-							)
-			);
+	$nscache	= Array();
+	$mtypes 	= Array(
+				'constants'	=> Array(
+								'constant', 
+								'api_obj_constant'
+								), 
+				'properties'	=> Array(
+								'property', 
+								'api_property'
+								), 
+				'methods'	=> Array(
+								'method', 
+								'api_method'
+								)
+				);
 
 	foreach($generated_tocs as $type)
 	{
@@ -606,7 +951,53 @@
 
 		foreach(${$type} as $gtype => $meta)
 		{
-			${$type . '_ptr'}[$gtype] = (isset($meta['function']) ? $meta['function'] : $meta['name']);
+			${$type . '_ptr'}[$gtype] = ($type == 'namespaces' ? $meta : (isset($meta['function']) ? $meta['function'] : $meta['name']));
+
+			if($type == 'namespaces')
+			{
+				if(!isset($nscache[$meta['name']]))
+				{
+					$nscache[$meta['name']] = Array(
+									'meta'		=> Array(), 
+									'constants'	=> Array(), 
+									'functions'	=> Array(), 
+									'classes'	=> Array(), 
+									'interfaces'	=> Array(), 
+									'files'		=> Array()
+									);
+				}
+
+				if(!$nscache[$meta['name']]['meta'])
+				{
+					$nscache[$meta['name']]['meta'] = $meta;
+				}
+
+				$nscache[$meta['name']]['files'][] = $meta['file'];
+			}
+			elseif(!empty($meta['namespace']))
+			{
+				if(!isset($nscache[$meta['namespace']]))
+				{
+					$nscache[$meta['namespace']] 	= Array(
+										'meta'		=> Array(), 
+										'constants'	=> Array(), 
+										'functions'	=> Array(), 
+										'classes'	=> Array(), 
+										'interfaces'	=> Array(), 
+										'files'		=> Array()
+										);
+				}
+
+				foreach($namespaces as $n)
+				{
+					if($n['name'] == $meta['namespace'])
+					{
+						$nscache[$meta['namespace']]['meta'] = $n;
+					}
+				}
+
+				$nscache[$meta['namespace']][$type][] = $gtype;
+			}
 		}
 
 		asort(${$type . '_ptr'});
@@ -623,10 +1014,16 @@
 					$template 		= new Layout('api_constant');
 					$template->name		= $name;
 					$template->file		= $meta['file'];
-					$template->datatype	= $docblock_tag($meta, 'var');
-					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+					$template->datatype	= $hashlink($docblock_tag($meta, 'var'));
+					$template->namespace	= $nst($meta['namespace']);
+					$template->since	= $since($meta);
 					$template->description	= $desc($meta, false, $examples);
+					$template->todo		= $todo($meta);
+					$template->changelog	= $changelog($meta);
+					$template->notices	= $notices($meta);
+					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
+					$template->seealso	= $seealso($meta);
 
 					$template->save($meta['hash']);
 
@@ -644,16 +1041,31 @@
 
 					if(($p = $docblock_tag($meta, 'param')) !== 'Undefined value')
 					{
+						$ps		= sizeof($p);
 						$pl		= '';
+						$sep		= new Template('parameter_separator');
 						$parameters 	= new Template('parameters');
 
 						foreach($p as $pa)
 						{
+							if($hash = $hashlookup('class|interface', $pa[0]))
+							{
+								$link		= new Template('link');
+								$link->link	= $hash . '.html';
+								$link->title	= htmlspecialchars($pa[0], ENT_QUOTES);
+
+								$pa[0]		= $link;
+							}
+							else
+							{
+								$pa[0] = htmlspecialchars($pa[0], ENT_QUOTES);
+							}
+
 							$pt 			= new Template('parameter');
-							$pt->datatype 		= htmlspecialchars($pa[0], ENT_QUOTES);
+							$pt->datatype 		= $pa[0];
 							$pt->description	= htmlspecialchars($pa[1], ENT_QUOTES);
 
-							$pl 			.= $pt;
+							$pl 			.= $pt . (--$ps ? $sep : '');
 						}
 
 						$parameters->parameter_list = $pl;
@@ -666,14 +1078,21 @@
 					}
 
 					$template		= new Layout('api_function');
-					$template->name		= $name . '()';
+					$template->name		= $mformat($name, $type);
 					$template->file		= $meta['file'];
 					$template->prototype	= $prototype($name, $meta);
-					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+					$template->namespace	= $nst($meta['namespace']);
+					$template->since	= $since($meta);
 					$template->description	= $desc($meta, false, $examples);
+					$template->todo		= $todo($meta);
+					$template->changelog	= $changelog($meta);
+					$template->notices	= $notices($meta);
+					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
+					$template->seealso	= $seealso($meta);
 					$template->parameters	= $parameters;
 					$template->returns	= $returns;
+					$template->throws	= $throws($meta);
 
 					$template->save($meta['hash']);
 
@@ -688,11 +1107,11 @@
 
 				foreach($ptr as $obj_id => $name)
 				{
-					IO::li($name);
 
 					$meta 		= ${$type}[$obj_id];
 					$contents 	= $extendedinfo = '';
 
+					IO::li($name);
 					IO::ul();
 
 					foreach(Array('constants', 'properties', 'methods') as $mtype)
@@ -717,9 +1136,15 @@
 
 						foreach($mptr as $m_name => $m_id)
 						{
-							$examples		= Array();
-							$tmeta			= &$meta[$mtype][$m_id];
-							$tmeta->hash		= $hashreg->hash($mtypes[$mtype][0], $m_name, $meta['file']);
+							$examples	= Array();
+							$tmeta		= &$meta[$mtype][$m_id];
+							$tmeta->hash	= $hashreg->hash($mtypes[$mtype][0], $m_name, $meta['file']);
+							$tmeta->dev	= $meta['dev'];
+
+							if(isset($meta['docblock']) && isset($meta['docblock']->tags) && isset($meta['docblock']->tags->wip))
+							{
+								$tmeta->docblock->tags->wip = true;
+							}
 
 							$template 		= new Template('obj_contents_bit');
 							$template->name		= $mformat($m_name, $mtype);
@@ -729,14 +1154,21 @@
 							$content		.= $template;
 
 							$template		= new Layout($mtypes[$mtype][1]);
-							$template->name		= $mformat($m_name, $mtype);
+							$template->name		= $mformat($m_name, $mtype, $name);
 							$template->file		= $meta['file'];
-							$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+							$template->namespace	= $nst($meta['namespace']);
+							$template->since	= $since((array) $tmeta, $meta);
 							$template->description	= $desc((array) $tmeta, false, $examples);
+							$template->todo		= $todo((array) $tmeta);
+							$template->changelog	= $changelog((array) $tmeta);
+							$template->notices	= $notices((array) $tmeta);
+							$template->warnings	= $warnings((array) $tmeta);
 							$template->examples	= $examplecode($examples);
+							$template->seealso	= $seealso((array) $tmeta);
 							$template->obj		= $meta['name'];
 							$template->obj_link	= $meta['hash'] . '.html';
-							$template->obj_type	= $type;
+							$template->obj_type	= ucfirst($rtype);
+							$template->obj_types	= $type;
 
 							if($mtype == 'properties' || $mtype == 'methods')
 							{
@@ -755,7 +1187,7 @@
 
 									if(!$counter++)
 									{
-										$mtemplate->element = 'Flags';
+										$mtemplate->element = 'Modifiers';
 									}
 
 									$extendedinfo .= $mtemplate;
@@ -769,7 +1201,7 @@
 								case('constants'):
 								case('properties'):
 								{
-									$template->datatype = $docblock_tag((array) $tmeta, 'var');
+									$template->datatype = $hashlink($docblock_tag((array) $tmeta, 'var'));
 								}
 								break;
 								case('methods'):
@@ -778,16 +1210,31 @@
 
 									if(($p = $docblock_tag((array) $tmeta, 'param')) !== 'Undefined value')
 									{
+										$ps		= sizeof($p);
 										$pl		= '';
+										$sep		= new Template('parameter_separator');
 										$parameters 	= new Template('parameters');
 
 										foreach($p as $pa)
 										{
+											if($hash = $hashlookup('class|interface', $pa[0]))
+											{
+												$link		= new Template('link');
+												$link->link	= $hash . '.html';
+												$link->title	= htmlspecialchars($pa[0], ENT_QUOTES);
+
+												$pa[0]		= $link;
+											}
+											else
+											{
+												$pa[0] = htmlspecialchars($pa[0], ENT_QUOTES);
+											}
+
 											$pt 			= new Template('parameter');
-											$pt->datatype 		= htmlspecialchars($pa[0], ENT_QUOTES);
+											$pt->datatype 		= $pa[0];
 											$pt->description	= htmlspecialchars($pa[1], ENT_QUOTES);
 
-											$pl 			.= $pt;
+											$pl 			.= $pt . (--$ps ? $sep : '');
 										}
 
 										$parameters->parameter_list = $pl;
@@ -799,16 +1246,17 @@
 										$returns->value	= $p[1];
 									}
 
-									$template->prototype	= $prototype($m_name, (array) $tmeta, $name);
+									$template->prototype	= $prototype($m_name, (array) $tmeta);
 									$template->parameters 	= $parameters;
 									$template->returns	= $returns;
+									$template->throws	= $throws((array) $tmeta);
 								}
 								break;
 							}
 
 							$template->save($tmeta->hash);
 
-							IO::li($template->name);
+							IO::li($mformat($m_name, $mtype));
 						}
 
 						IO::ul(IO::TAG_END);
@@ -823,7 +1271,13 @@
 
 					IO::ul(IO::TAG_END);
 
-					$extendedinfo = '';
+					$extendedinfo		= $nst($meta['namespace']);
+
+					$template		= new Template('obj_element');
+					$template->element	= 'Declared in';
+					$template->value	= $meta['file'];
+
+					$extendedinfo		.= $template;
 
 					if($meta['metadata']->abstract || $meta['metadata']->final)
 					{
@@ -841,7 +1295,7 @@
 
 							if(!$counter++)
 							{
-								$template->element = 'Flags';
+								$template->element = 'Modifiers';
 							}
 
 							$extendedinfo .= $template;
@@ -850,11 +1304,20 @@
 
 					if($meta['extends'])
 					{
+						if($hash = $hashlookup('class', $meta['extends']))
+						{
+							$link		= new Template('link');
+							$link->link	= $hash . '.html';
+							$link->title	= $meta['extends'];
+						}
+
 						$template 		= new Template('obj_element');
 						$template->element	= 'Extends';
-						$template->value	= $meta['extends'];
+						$template->value	= (isset($link) ? $link : $meta['extends']);
 
 						$extendedinfo		.= $template;
+
+						unset($link);
 					}
 
 					if($meta['implements'])
@@ -865,8 +1328,16 @@
 
 						foreach($meta['implements'] as $iface)
 						{
+							if($hash = $hashlookup('interface', $iface))
+							{
+
+								$link		= new Template('link');
+								$link->link	= $hash . '.html';
+								$link->title	= $iface;
+							}
+
 							$template 		= new Template((!$counter ? 'obj_element' : 'obj_element_bit'));
-							$template->value	= $iface;
+							$template->value	= (isset($link) ? $link : $iface);
 
 							if(!$counter++)
 							{
@@ -874,6 +1345,8 @@
 							}
 
 							$extendedinfo .= $template;
+
+							unset($link);
 						}
 					}
 
@@ -882,26 +1355,100 @@
 						$contents = 'None';
 					}
 
-					if(strpos($name, '\\') !== false)
-					{
-						$name = explode('\\', $name);
-						$name = end($name);
-					}
-
 					$examples		= Array();
 
 					$template		= new Layout('api_object');
 					$template->name		= $name;
 					$template->type		= ucfirst($rtype);
 					$template->mtype	= $type;
-					$template->file		= $meta['file'];
-					$template->namespace	= (empty($meta['namespace']) ? 'Global namespace' : $meta['namespace']);
+					$template->since	= $since($meta);
 					$template->description	= $nl2br($desc($meta, false, $examples));
+					$template->todo		= $todo($meta);
+					$template->changelog	= $changelog($meta);
+					$template->notices	= $notices($meta);
+					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
+					$template->seealso	= $seealso($meta);
 					$template->contents 	= $contents;
 					$template->extendedinfo	= $extendedinfo;
 
 					$template->save($meta['hash']);
+				}
+			}
+			break;
+			case('namespaces'):
+			{
+				asort($nscache);
+
+				foreach($nscache as $name => $meta)
+				{
+					IO::li($meta['meta']['name']);
+
+					$counter		= 0;
+					$extendedinfo		= $contents = '';
+					$examples		= Array();
+
+					$nstemp 		= new Layout('api_object');
+					$nstemp->name		= $meta['meta']['name'];
+					$nstemp->type		= 'Namespace';
+					$nstemp->mtype		= $type;
+					$nstemp->file		= $meta['meta']['file'];
+					$nstemp->extendedinfo	= '';
+					$nstemp->since		= $since($meta['meta']);
+					$nstemp->description	= $nl2br($desc($meta['meta'], false, $examples));
+					$nstemp->todo		= $todo($meta['meta']);
+					$nstemp->changelog	= $changelog($meta);
+					$nstemp->notices	= $notices($meta['meta']);
+					$nstemp->warnings	= $warnings($meta['meta']);
+					$nstemp->examples	= $examplecode($examples);
+					$nstemp->seealso	= $seealso($meta);
+
+					foreach($nscache[$meta['meta']['name']]['files'] as $file)
+					{
+						$template		= new Template((!$counter ? 'obj_element' : 'obj_element_bit'));
+						$template->value	= $file;
+
+						if(!$counter++)
+						{
+							$template->element = 'Declared in';
+						}
+
+						$extendedinfo .= $template;
+					}
+
+					$nstemp->extendedinfo = $extendedinfo;
+
+					foreach(Array('constant' => 'constants', 'function' => 'functions', 'class' => 'classes', 'interface' => 'interfaces') as $single => $plural)
+					{
+						if(!$nscache[$meta['meta']['name']][$plural])
+						{
+							continue;
+						}
+
+						$ocontent	= '';
+
+						$content 	= new Template('obj_contents');
+						$content->mtype	= ucfirst($plural);
+						$content->type	= ucfirst($single);
+
+						foreach($nscache[$meta['meta']['name']][$plural] as $gtype)
+						{
+
+							$template 		= new Template('obj_contents_bit');
+							$template->name		= ${$plural}[$gtype]['name'];
+							$template->link		= ${$plural}[$gtype]['hash'] . '.html';
+							$template->description	= $desct(${$plural}[$gtype]);
+
+							$ocontent		.= $template;
+						}
+
+						$content->content 	= $ocontent;
+						$contents 		.= $content;
+					}
+
+					$nstemp->contents = (empty($contents) ? 'None' : $contents);
+
+					$nstemp->save($meta['meta']['hash']);
 				}
 			}
 			break;
@@ -924,9 +1471,9 @@
 		$toc->name	= ucfirst($obj);
 		$toc->seealso	= new Template('toc_seealso');
 
-		foreach(${$obj . '_ptr'} as $key => $name)
+		foreach(($obj == 'namespaces' ? $nscache : ${$obj . '_ptr'}) as $key => $name)
 		{
-			$data 			= ${$obj}[$key];
+			$data 			= ($obj == 'namespaces' ? $nscache[$key]['meta'] : ${$obj}[$key]);
 			$name			= (is_scalar($data) ? $data : (is_array($data) && isset($data['name']) ? $data['name'] : $data['function']));
 
 			$bit 			= new Template('toc_bit');
@@ -949,7 +1496,8 @@
 				'constants'	=> 'Global constants', 
 				'functions'	=> 'Procedural functions', 
 				'classes'	=> 'Class synopsises', 
-				'interfaces'	=> 'Interface structures'
+				'interfaces'	=> 'Interface models', 
+				'namespaces'	=> 'Namespace structures'
 				);
 
 	$bits		= '';

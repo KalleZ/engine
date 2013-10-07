@@ -9,7 +9,7 @@
 		{$row['Data_length']} byte(s)
 	</td>
 	<td nowrap="nowrap">
-		<if expression="$row['Data_free']">{$row['Data_free']} byte(s)<else />&nbsp;</if>
+		<if expression="$row['Data_free']">{$row['Data_free']} byte<if expression="$row['Data_free'] > 1">s</if><else />&nbsp;</if>
 	</td>
 	<td nowrap="nowrap">
 		<select onchange="engine_tablestatus_handler(this, '{$row['Name']}');">

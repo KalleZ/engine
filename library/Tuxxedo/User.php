@@ -139,9 +139,8 @@
 			if($this->sessiondm['rehash'])
 			{
 				Session::regenerate();
-				Session::restart();
 
-				$this->sessiondm->delete();
+				$this->logout();
 
 				$this->sessiondm = Datamanager\Adapter::factory('session');
 			}
@@ -257,8 +256,7 @@
 
 			if($restart)
 			{
-				Session::terminate();
-				Session::start();
+				Session::restart();
 
 				$this->sessiondm = Datamanager\Adapter::factory('session', Session::$id);
 			}
@@ -448,6 +446,8 @@
 		 * Defines global constant values of datastore permissions
 		 *
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function setPermissionConstants()
 		{
@@ -462,6 +462,9 @@
 
 				if(!\defined('\\' . $name))
 				{
+					/**
+					 * @ignore
+					 */
 					\define($name, (integer) $bits);
 				}
 			}
@@ -497,6 +500,8 @@
 		 *
 		 * @param	integer			The number of bytes the salt should be, must be 8 or greater
 		 * @return	string			Returns the computed salt
+		 *
+		 * @changelog	1.1.0			This method will now properly change character casing instead of a fixed set of cased characters
 		 */
 		public static function getPasswordSalt($length = 8)
 		{

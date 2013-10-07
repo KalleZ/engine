@@ -51,6 +51,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		MVC
+	 * @since		1.2.0
 	 */
 	class Layout extends View
 	{

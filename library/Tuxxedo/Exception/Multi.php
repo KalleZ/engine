@@ -41,6 +41,8 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 *
+	 * @changelog		1.2.0			This exception used to be called 'FormData'
 	 */
 	class Multi extends \Tuxxedo\Exception
 	{
@@ -89,6 +91,8 @@
 		 * Gets all the data
 		 *
 		 * @return	array			Returns an array with all the data
+		 *
+		 * @changelog	1.2.0			Prior this method was called 'getFormData()'
 		 */
 		public function getData()
 		{

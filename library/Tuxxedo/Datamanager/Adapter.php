@@ -84,6 +84,7 @@
 		 * Indicates that a field is virtual
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const FIELD_VIRTUAL			= 4;
 
@@ -91,6 +92,7 @@
 		 * Context constant, default context
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const CONTEXT_NONE			= 1;
 
@@ -98,6 +100,7 @@
 		 * Context constant, save() context
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const CONTEXT_SAVE			= 2;
 
@@ -105,6 +108,7 @@
 		 * Context constant, delete() context
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const CONTEXT_DELETE			= 3;
 
@@ -112,6 +116,7 @@
 		 * Context constant, void context
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const CONTEXT_VOID			= 4;
 
@@ -119,6 +124,7 @@
 		 * Validation constant, no validation
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const VALIDATE_NONE			= 1;
 
@@ -161,6 +167,7 @@
 	 	 * Validation option constant, allow empty fields
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const VALIDATE_STRING_EMPTY		= 7;
 
@@ -168,6 +175,7 @@
 		 * Validation option constant, identifier
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const VALIDATE_IDENTIFIER		= 8;
 
@@ -175,6 +183,7 @@
 		 * Factory option constant - internationalization (default enabled)
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const OPT_INTL				= 1;
 
@@ -182,6 +191,7 @@
 		 * Factory option constant - insert as new record
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const OPT_LOAD_ONLY			= 2;
 
@@ -189,6 +199,7 @@
 		 * Factory option constant - internationalization, load if available
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const OPT_INTL_AUTO			= 4;
 
@@ -196,6 +207,7 @@
 		 * Factory option constant - default options
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const OPT_DEFAULT			= self::OPT_INTL_AUTO;
 
@@ -239,6 +251,7 @@
 		 * Whether to re-identify the data when saving
 		 *
 		 * @var		boolean
+		 * @since	1.1.0
 		 */
 		protected $reidentify 			= false;
  
@@ -246,6 +259,7 @@
 		 * Iterator position
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $iterator_position		= 0;
 
@@ -253,6 +267,7 @@
 		 * Whether this datamanager are called from another datamanager
 		 *
 		 * @var		\Tuxxedo\Datamanager\Adapter
+		 * @since	1.1.0
 		 */
 		protected $parent			= false;
 
@@ -260,6 +275,7 @@
 		 * Context for hooks, and adapters
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $context			= self::CONTEXT_NONE;
 
@@ -274,6 +290,7 @@
 		 * Cache data if the identifier is gonna be validated
 		 *
 		 * @var		array
+		 * @since	1.1.0
 		 */
 		protected $identifier_data		= Array();
 
@@ -281,6 +298,7 @@
 		 * List of shutdown handlers to execute
 		 *
 		 * @var		array
+		 * @since	1.1.0
 		 */
 		protected $shutdown_handlers		= Array();
 
@@ -314,12 +332,17 @@
 		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 *
 		 * @throws	\Tuxxedo\Exception		Throws an exception if the unique identifier sent to the datamanager was invalid
+		 *
+		 * @changelog	1.1.0				Added the $options parameter
+		 * @changelog	1.1.0				Added the $parent parameter
 		 */
 		abstract public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL);
 
 		/**
 		 * Destructor for the current datamanager, this is 
 		 * reserved for shutdown handlers in parent datamanagers.
+		 *
+		 * @since	1.1.0
 		 */
 		final public function __destruct()
 		{
@@ -338,6 +361,8 @@
 		 *
 		 * @param	scalar			The information row name to get
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function offsetGet($offset)
 		{
@@ -356,6 +381,8 @@
 		 * @param	scalar			The information row name to set
 		 * @param	mixed			The information row value to set
 		 * @return	void			No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function offsetSet($offset, $value)
 		{
@@ -375,6 +402,11 @@
 		 * @param	integer				Additional options to apply on the datamanager
 		 * @param	\Tuxxedo\Datamanager\Adapter	The parent datamanager if any
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
+		 *
+		 * @changelog	1.1.0				Added the $options parameter
+		 * @changelog	1.1.0				Added the $parent parameter
 		 */
 		final protected function init(Registry $registry, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
@@ -416,6 +448,9 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a datamanger should fail for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails when loading the datamanager
+		 *
+		 * @changelog	1.1.0				Added the $options parameter
+		 * @changelog	1.1.0				Added the $parent parameter
 		 */
 		final public static function factory($datamanager, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
 		{
@@ -468,6 +503,8 @@
 		 *
 		 * @param	boolean				Whether or not to check for populated data (defaults to true)
 		 * @return	array				Returns an array with field => value pairs, and empty array on none (if populated is set to off, all values are boolean true)
+		 *
+		 * @since	1.1.0
 		 */
 		public function getVirtualFields($populated = true)
 		{
@@ -518,6 +555,8 @@
 		 * @param	callback			A callback to execute
 		 * @param	array				Any additonal arguments the callback needs to execute properly
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function setShutdownHandler($handler, Array $arguments)
 		{
@@ -536,6 +575,9 @@
 		 * Validation method, validates the supplied user data 
 		 *
 		 * @return	boolean				Returns true if the data is valid, otherwise false
+		 *
+		 * @changelog	1.1.0				This method was rewritten from scratch and now handles more cases than before
+		 * @changelog	1.1.0				This method can now validate identifiers
 		 */
 		public function validate()
 		{
@@ -684,6 +726,9 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the query should fail
 		 * @throws	\Tuxxedo\Exception\Multi	Throws a multi exception if validation fails
+		 *
+		 * @changelog	1.1.0				Added the $execute_hooks parameter
+		 * @changelog	1.1.0				This method now generates queries for more cases based on the state of the identifier
 		 */
 		public function save($execute_hooks = true)
 		{
@@ -828,6 +873,8 @@
 		 * Gets the parent datamanager pointer
 		 *
 		 * @return	\Tuxxedo\Datamanager\Adapter	Returns a datamanager pointer to the parent object if any, false on root or error
+		 *
+		 * @since	1.1.0
 		 */
 		public function getParent()
 		{
@@ -838,6 +885,8 @@
 		 * Gets the fields this datamanager provides
 		 *
 		 * @return	array				Returns an array with the fields
+		 *
+		 * @since	1.1.0
 		 */
 		public function getFields()
 		{
@@ -848,6 +897,8 @@
 		 * Gets default data to allocate the $data property internally
 		 *
 		 * @return	array				Returns an array with the same structure as the $data property and false on error
+		 *
+		 * @since	1.2.0
 		 */
 		public function getDataStruct()
 		{
@@ -865,6 +916,8 @@
 		 * Iterator method - current
 		 * 
 		 * @return	mixed				Returns the current field
+		 *
+		 * @since	1.1.0
 		 */
 		public function current()
 		{
@@ -875,6 +928,8 @@
 		 * Iterator method - rewind
 		 *
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function rewind()
 		{
@@ -887,6 +942,8 @@
 		 * Iterator method - key
 		 *
 		 * @return	integer				Returns the currrent index
+		 *
+		 * @since	1.1.0
 		 */
 		public function key()
 		{
@@ -897,6 +954,8 @@
 		 * Iterator method - next
 		 *
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function next()
 		{
@@ -910,6 +969,8 @@
 		 * Iterator method - valid
 		 *
 		 * @return	boolean				Returns true if its possible to continue iterating, otherwise false is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function valid()
 		{
@@ -923,7 +984,9 @@
 		 * called publically.
 		 *
 		 * @param	\Tuxxedo\Datamanager\Adapter	The datamanager adapter instance to execute hooks on
-		 * @return	boolean				Returns true if all fields 
+		 * @return	boolean				Returns true if all fields
+		 *
+		 * @since	1.2.0
 		 */
 		protected function hooks(Adapter $self)
 		{

@@ -51,13 +51,15 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 *
+	 * @changelog		1.1.0			The casing of this class' namespace was changed to comply with the autoloader rules
 	 */
 	class Result extends Database\Result
 	{
 		/**
 		 * The result resource
 		 *
-		 * @var		mysqli_result
+		 * @var		\mysqli_result
 		 */
 		protected $result;
 
@@ -70,6 +72,8 @@
 		 * @param	mixed				A database result, this must be delivered from the driver it was created from
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
+		 *
+		 * @since	1.1.0
 		 */
 		public function __construct(Database $instance, $result)
 		{
@@ -105,7 +109,7 @@
 		/**
 		 * Get the number of rows in the result
 		 *
-		 * @return	integer				Returns the number of rows in the result, and boolean false on error
+		 * @return	integer				Returns the number of rows in the result, or zero on error
 		 */
 		public function getNumRows()
 		{
@@ -182,6 +186,8 @@
 		 * Iterator method - current
 		 *
 		 * @return	mixed				Returns the current result
+		 *
+		 * @since	1.1.0
 		 */
 		public function current()
 		{

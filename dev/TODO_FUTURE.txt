@@ -19,16 +19,30 @@
 	 - Implement a disallowed permission based system for users
 	 - Implement a user activation API
 
+	Improve internationalization	
+	 - Change the phrasegroup loader code up, so its possible to load phrases from other backends
+
+	Dev
+	 - api_analyze.php
+	   - Add the ability to parse the actual prototypes (for parameter names and default values)
+	   - Add the ability to tell whether or not this function or method uses static data (metadata)
+	   - Add the ability to parse inline docblock tags (like @see)
+	   - Add the ability to fetch file docblocks
+	   - Add the ability to fetch default values of properties, constants and class constants
+	   - Add the ability to pick up traits
+	 - api_indexer.php
+	   - Add the ability to report on obsolete files and other mismatches
+	 - check_dm_phrases.php
+	   - Add a check for obsolete and orphan phrases
+
 	Namespace procedural functions in the Tuxxedo namespace
-	Change the debug backtrace to be a class, where custom passes can be hooked into and put it in \Tuxxedo\Debug
 
 	Implement validators
-	Implement documentation generators for the google wiki unless we have setup a custom thing up somewhere
 	Implement XML Parsers
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement a form of Webservices handler backend that can be used to pull and push
 	 - Authentication support using Engine's authentication system
-	 - Map pull's in an object oriented way so they kinda work like SimpleXML objects, <error><code>123</code></error>: $api->error->code or similar
+	 - Map pulls in an object oriented way so they kinda work like SimpleXML objects, <error><code>123</code></error>: $api->error->code or similar
 
 	Helpers
 	 - Calendar

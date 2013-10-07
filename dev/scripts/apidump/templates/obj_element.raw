@@ -1,6 +1,6 @@
 <tr>
-	<td>{$element}:</td>
-	<td class="value" style="width: 100%">
+	<td nowrap="nowrap">{$element}:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
 		{$value}
 	</td>
 </tr>

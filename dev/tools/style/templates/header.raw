@@ -497,11 +497,8 @@
 					<li><a href="./users.php"<if expression="SCRIPT_NAME == 'users'"> class="current"</if>><span>Users &amp; Usergroups</span></a></li>
 					<li><a href="./sessions.php"<if expression="SCRIPT_NAME == 'sessions'"> class="current"</if>><span>Sessions</span></a></li>
 					<li><a href="./tools.php"<if expression="SCRIPT_NAME == 'tools'"> class="current"</if>><span>Tools</span></a></li>
-<if expression="isset($session) && $session['__devtools_authenticated']">
+<if expression="isset($session) && $session['devtools_authenticated']">
 					<li style="float: right;"><a href="./?logout=true"><span>Log out</span></a></li>
-<if expression="$configuration['devtools']['protective'] == 2">
-					<li style="float: right;"><a>Logged in as '{$devuserinfo->username}'</a></li>
-</if>
 </if>
 				</ul>
 				<div class="clear"></div>

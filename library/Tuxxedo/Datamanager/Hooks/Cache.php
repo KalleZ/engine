@@ -52,6 +52,8 @@
 		 * data was success, to rebuild the datastore cache
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @changelog	1.1.0				This method no longer takes any parameters
 		 */
 		public function rebuild();
 	}
