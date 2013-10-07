@@ -19,8 +19,9 @@
 	 * Aliasing rules
 	 */
 	use DevTools\User;
+	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
-	use Tuxxedo\Utilities;
+	use Tuxxedo\Exception;
 
 
 	/**
@@ -74,7 +75,7 @@
 
 	if(!$sessions || !$sessions->getNumRows())
 	{
-		tuxxedo_error('There is currently no active sessions', false);
+		throw new Exception('There is currently no active sessions', false);
 	}
 
 
@@ -85,6 +86,7 @@
 	 *
 	 * @param	integer				Reference to the affected rows by this cronjob
 	 * @return	void				No value is returned
+	 * @since	1.2.0
 	 */
 	function cleanup_cron(&$affected_rows = NULL)
 	{
@@ -102,6 +104,7 @@
 		}
 	}
 
+
 	switch(strtolower($input->get('do')))
 	{
 		case('rehash'):
@@ -115,7 +118,7 @@
 						Utilities::redirect('Marked session for rehashing', './sessions.php');
 					}
 
-					tuxxedo_error('Invalid session');
+					throw new Exception('Invalid session');
 				}
 				break;
 				default:
@@ -140,7 +143,7 @@
 
 			if(!$dm->export())
 			{
-				tuxxedo_error('Invalid session identifier');
+				throw new Exception('Invalid session identifier');
 			}
 
 			$dm['lastactivity'] = TIMENOW_UTC - $registry->options->cookie_expires - 1;
@@ -173,7 +176,7 @@
 
 			if(!isset($matched))
 			{
-				tuxxedo_error('Invalid session identifier');
+				throw new Exception('Invalid session identifier');
 			}
 
 			$registry->set('user', new User);

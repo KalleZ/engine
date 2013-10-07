@@ -55,6 +55,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.2.0
 	 */
 	class Options extends Design\InfoAccess implements Design\Invokable
 	{

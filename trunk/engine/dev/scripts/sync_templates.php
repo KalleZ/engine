@@ -27,16 +27,10 @@
 	require(__DIR__ . '/includes/bootstrap.php');
 
 
-	/**
-	 * Template directory path
-	 *
-	 * @var		string
-	 */
-	define('TEMPLATE_DIR', realpath(__DIR__ . '../../..') . '/styles/default/templates');
-
 	IO::signature();
 
-	$cli = IO::isCLI();
+	$template_dir 	= realpath(__DIR__ . '../../..') . '/styles/default/templates';
+	$cli 		= IO::isCLI();
 
 	if($cli || isset($_POST['sync']))
 	{
@@ -68,7 +62,7 @@
 
 		while($template = $templates->fetchAssoc())
 		{
-			file_put_contents(TEMPLATE_DIR . '/' . $template['title'] . '.tuxx', $template['compiledsource']);
+			file_put_contents($template_dir . '/' . $template['title'] . '.tuxx', $template['compiledsource']);
 
 			IO::li((!$cli ? $template['title'] . '... Success' : str_pad($template['title'] . '... ', 40, ' ') . 'success'));
 		}
@@ -90,9 +84,7 @@
 <h2>Template Synchronizer</h2>
 <p>
 	This tool synchronize the database based templates 
-	within their filesystem counterparts. It's intended 
-	for use until the development tools have built-in 
-	support for such a feature.
+	within their filesystem counterparts.
 </p>
 <form action="./sync_templates.php" method="post">
 	<input type="submit" name="sync" value="Synchronize" />

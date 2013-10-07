@@ -18,9 +18,10 @@
 	/**
 	 * Aliasing rules
 	 */
+	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Input;
-	use Tuxxedo\Utilities;
 
 
 	/**
@@ -37,6 +38,9 @@
 	$action_templates	= Array(
 					'language'		=> Array(
 										'language_add_edit_form'
+										), 
+					'phrasegroup'		=> Array(
+										'language_phrasegroup_list'
 										)
 					);
 
@@ -51,6 +55,7 @@
 	 * Set script name
 	 *
 	 * @var		string
+	 * @since	1.2.0
 	 */
 	const SCRIPT_NAME	= 'intl';
 
@@ -67,7 +72,7 @@
 	{
 		if(!isset($datastore->languages[$languageid]))
 		{
-			tuxxedo_error('Invalid language');
+			throw new Exception('Invalid language');
 		}
 
 		$languagedm 	= Datamanager\Adapter::factory('language', $languageid);
@@ -75,7 +80,7 @@
 	}
 	elseif(!$languageid && !empty($do) && $do != 'language' && $action != 'add')
 	{
-		tuxxedo_error('Invalid language');
+		throw new Exception('Invalid language');
 	}
 
 	switch($do)
@@ -93,7 +98,7 @@
 					}
 					elseif($action == 'edit' && !isset($languagedm))
 					{
-						tuxxedo_error('Invalid language id');
+						throw new Exception('Invalid language id');
 					}
 					elseif(isset($_POST['submit']))
 					{
@@ -101,7 +106,7 @@
 						{
 							unset($languagedm);
 
-							tuxxedo_error('Cannot disable default language when there only is one');
+							throw new Exception('Cannot disable default language when there only is one');
 						}
 						elseif($action == 'add')
 						{
@@ -142,11 +147,11 @@
 				{
 					if(!isset($languagedm))
 					{
-						tuxxedo_error('Invalid language id');
+						throw new Exception('Invalid language id');
 					}
 					elseif($languagedata['id'] == $options->language_id)
 					{
-						tuxxedo_error('Cannot delete the default language');
+						throw new Exception('Cannot delete the default language');
 					}
 
 					$languagedm->delete();
@@ -155,7 +160,23 @@
 				}
 				default:
 				{
-					tuxxedo_error('Invalid language action');
+					throw new Exception('Invalid language action');
+				}
+			}
+		}
+		break;
+		case('phrasegroup'):
+		{
+			switch($action)
+			{
+				case('list'):
+				{
+					eval(page('language_phrasegroup_list'));
+				}
+				break;
+				default:
+				{
+					throw new Exception('Invalid phrasegroup action');
 				}
 			}
 		}

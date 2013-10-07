@@ -51,6 +51,8 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 *
+	 * @changelog		1.2.0			This class now implements the 'VirtualDispatcher' hook
 	 */
 	class Usergroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
@@ -58,6 +60,9 @@
 		 * Fields for validation of usergroups
 		 *
 		 * @var		array
+		 * 
+		 * @changelog	1.2.0			Added the 'users' virtual field
+		 * @changelog	1.2.0			Removed the 'type' field
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
@@ -163,6 +168,8 @@
 		 *
 		 * @param	mixed				The value to handle
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @since	1.2.0
 		 */
 		public function virtualUsers($value)
 		{

@@ -45,6 +45,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @since		1.2.0
 	 */
 	class BasicMulti extends Basic
 	{

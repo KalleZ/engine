@@ -47,6 +47,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	abstract class Iteratable implements \Iterator, \Countable
 	{

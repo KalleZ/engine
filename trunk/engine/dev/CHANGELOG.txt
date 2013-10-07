@@ -5,10 +5,11 @@
 	Tuxxedo Engine 1.2.0 "Beloved"
 	------------------------------------------------
 
+	Added the documentation generator (Kalle)
 	Added the event handling subsystem (Kalle)
 	Added new and improved debugging mode: (Kalle)
 	 - SQL queries trace mode
-	 - Rewritten debug backtracing API
+	 - Rewritten debug backtracing API with more verbosity
 	Added new datamanagers: (Kalle)
 	 - Language
 	 - Phrase
@@ -22,11 +23,11 @@
 	Added a new theming to the default templates and tuxxedo_doc_error() based on the DevTools style (Kalle)
 	Added a language auto detection option for non logged in users based on the browser's ISO codes (Kalle)
 	Added two magic hooks for classes that extends the bootstraper: (Kalle)
-	 - preInit()
 	 - postInit()
+	 - preInit()
 	Added new methods to \Tuxxedo\Design\InfoAccess: (Kalle)
-	 - import()
 	 - export()
+	 - import()
 	Added support global template variables using \Tuxxedo\Template (Kalle)
 	Added \Tuxxedo\Template\Layout as a non MVC version of \Tuxxedo\MVC\View\Layout (Kalle)
 	Added the $show_all parameter to \tuxxedo_multi_error() (Kalle)
@@ -46,6 +47,15 @@
 	Added new functions to the \Tuxxedo\Utilities class: (Kalle)
 	 - \Tuxxedo\Utilities::trimSql()
 	Added the \Tuxxedo\Session::restart() method (Kalle)
+	Added new docblock tags to the allowance list: (Kalle)
+	 - @changelog
+	 - @ignore
+	 - @see
+	 - @since
+	 - @todo
+	 - @wip
+	Added @changelog and @since docblock tags around most of the core (Kalle)
+	Added \Tuxxedo\Utilities::datef() as a shorthand for \Tuxxedo\Utilities::date() without a timestamp (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -76,8 +86,12 @@
 	Changed the name of phrasegroup.language to phrasegroup.languageid (Kalle)
 	Changed the following procedural functions to live within a class; \Tuxxedo\Utilities: (Kalle)
 	 - tuxxedo_date() > \Tuxxedo\Utilities::date()
-	 - tuxxedo_redirect() > \Tuxxedo\Utilities::redirect()
-	 - tuxxedo_header_redirect() > \Tuxxedo\Utilities::headerRedirect()
+	 - tuxxedo_redirect() > \DevTools\Utilities::redirect()
+	 - tuxxedo_header_redirect() > \DevTools\Utilities::headerRedirect()
+	Changed \DevTools\Utilities\IO::input() to behave differently under CLI, parameters like `-test' (with no value) now returns true (Kalle)
+	Changed DevTools cookie and session variables to no longer be prefixed with '__' (Kalle)
+	Changed page() to be a part of \DevTools rather than \Tuxxedo (Kalle)
+	Changed tuxxedo_exception_handler() to internally use \Tuxxedo\Template\Layout and \Tuxxedo\Template for GUI errors (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
@@ -96,6 +110,8 @@
 	Fixed an issue that would cause some components to not being able to be loaded on case sensitive file systems (Datamanagers, Helpers & Style storage)
 	Fixed a bug in api_analyze.php so that it will use the correct datatype + depth for parameters (Kalle)
 	Fixed a bug in api_analyze.php so that namespaces using curly braces will be correctly picked up (Kalle)
+	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a  different name (Kalle)
+	Fixed a styling issue on the Options DevTools page if the virtual 'orphan' category was present (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)
@@ -120,7 +136,22 @@
 	Removed the $debug_trim parameter on tuxxedo_trim_path() (Kalle)
 	Removed the dependency on changing certain php.ini values (html_errors & magic_quotes_runtime) (Kalle)
 	Removed the $registry->configuration variable when initializing the bootstraper (Kalle)
-	Removed the page_print() function (Kalle)
+	Removed the 'work-in-progress' notices from api_analyze.php (Kalle)
+	Removed DevTools protective mode '2' (Kalle)
+	Removed the \Tuxxedo\Database\Driver::getDriverRequirements() method and from all drivers (Kalle)
+	Removed the 'final' restriction on the following methods: (Kalle)
+	 - \Tuxxedo\Database::invoke()
+	 - \Tuxxedo\Database::setShutdownQuery()
+	 - \Tuxxedo\Database::getNumQueries()
+	 - \Tuxxedo\Database::getQueries()
+	 - \Tuxxedo\MVC\Controller::setRouter()
+	 - \Tuxxedo\MVC\Controller::setLayout()
+	 - \Tuxxedo\MVC\Controller::SetView()
+	 - \Tuxxedo\MVC\Controller::dispatch()
+	Removed the following functions: (Kalle)
+	 - page_print()
+	 - tuxxedo_error()
+	 - tuxxedo_error_list()
 
 	Template changes:
 	 - Updated

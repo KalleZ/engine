@@ -148,6 +148,8 @@
 		 * @return	integer				Returns the number of rows, and false on error
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
+		 *
+		 * @changelog	1.2.0				Added the $where parameter
 		 */
 		public function count($table, $index = '*', Array $where = Array())
 		{

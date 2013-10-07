@@ -47,12 +47,22 @@
 		}
 			h2 span
 			{
-				background-color: 		#C2EDFD; 
+				background-color: 		#C2EDFD;
 				border-top-left-radius: 	4px; 
 				border-top-right-radius: 	4px; 
 				padding: 			5px; 
 				padding-bottom: 		0px;
 			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
 		li, ul
 		{
 			margin: 			0px;
@@ -88,35 +98,59 @@
 			background-color: #FFFFFF; 
 		}
 
-		.box 
+		.box, .box-notice, .box-warning
 		{ 
-			background-color: 		#C2EDFD; 
-			border: 			3px solid #C2EDFD; 
-			border-radius: 			4px; 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
 		}
-			.box.edge-title 
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
 			{ 
 				border-top-left-radius: 	0px; 
 			}
-			.box .inner
+			.box .inner, .box-notice .inner, .box-warning .inner
 			{ 
 				background-color: 		#FFFFFF; 
 				border-radius: 			4px; 
 				padding: 			6px; 
 			}
-			.box .inner ul 
-			{ 
-				padding: 			3px 15px; 
-			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
 		.content 
 		{ 
-			margin: 			15px 0px 10px 430px; 
+			margin: 			15px 0px 10px 480px; 
 		}
-		.infobox
+		.infobox, .infobox-notice, .infobox-warning
 		{ 
 			background-color: 		#C2EDFD; 
 			border-radius: 			4px; 
 			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
 		}
 		.left-content
 		{
@@ -124,8 +158,17 @@
 		}
 			.left-content fieldset
 			{
-				width: 400px;
+				width: 450px;
 			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
 		</style>
 	</head>
 	<body>
@@ -140,46 +183,47 @@
 			</tr>
 			<tr class="row">
 	<td nowrap="nowrap"><a href="class-devtools-session-844020.html">\DevTools\Session</a></td>
-	<td nowrap="nowrap" style="width: 100%">DevTools session interface override. This class overrides
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;DevTools session interface override. This class overrides
 the options and 'bakes' them into the cla...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-devtools-style-013534.html">\DevTools\Style</a></td>
-	<td nowrap="nowrap" style="width: 100%">Development Tools styling class, this class overrides the
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Development Tools styling class, this class overrides the
 default styling class so we can overload ...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-devtools-style-storage-devtools-446012.html">\DevTools\Style\Storage\DevTools</a></td>
-	<td nowrap="nowrap" style="width: 100%">Development Tools style storage, this class overrides the
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Development Tools style storage, this class overrides the
 default filesystem storage engine so we c...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-devtools-test-253436.html">\DevTools\Test</a></td>
-	<td nowrap="nowrap" style="width: 100%">Minor testing class, used for testing availability for
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Minor testing class, used for testing availability for
 various requirement checks</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-devtools-user-368843.html">\DevTools\User</a></td>
-	<td nowrap="nowrap" style="width: 100%">DevTools user class, this class is used to bypass some of the
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;DevTools user class, this class is used to bypass some of the
 restrictions the core user class proh...</td>
 </tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-devtools-utilities-612926.html">\DevTools\Utilities</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Utilities class wrapper. This class wraps around the previously
+declared prodecural functions, whic...</td>
+</tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-devtools-utilities-io-386982.html">\DevTools\Utilities\IO</a></td>
-	<td nowrap="nowrap" style="width: 100%">Input/Output writer. This class is designed to make basic scripts
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Input/Output writer. This class is designed to make basic scripts
 work in CLI and in a browser with...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-hashregistry-092192.html">\HashRegistry</a></td>
-	<td nowrap="nowrap" style="width: 100%">Hash registry
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Hash registry
 
 This class is a local cache for the hashes generated by the
 api_file_hash() functi...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-layout-633724.html">\Layout</a></td>
-	<td nowrap="nowrap" style="width: 100%">Layout class
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Layout class
 
 Layout wrapper class around the base template, see the
 constructor for more informa...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-template-865980.html">\Template</a></td>
-	<td nowrap="nowrap" style="width: 100%">Template class</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-templatecache-116077.html">\TemplateCache</a></td>
-	<td nowrap="nowrap" style="width: 100%">Template cache for templates</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Template class</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-bootstrap-228806.html">\Tuxxedo\Bootstrap</a></td>
 	<td nowrap="nowrap" style="width: 100%">Bootstraper, this class works as an encapsulated and easier way
@@ -269,10 +313,10 @@ Every datamanager class must extend this class in order to be loadable...</td>
 	<td nowrap="nowrap" style="width: 100%">Datamanager for permissions</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-phrase-476840.html">\Tuxxedo\Datamanager\Adapter\Phrase</a></td>
-	<td nowrap="nowrap" style="width: 100%">Datamanager for phrases</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">WIP</span>&nbsp;Datamanager for phrases</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-phrasegroup-979229.html">\Tuxxedo\Datamanager\Adapter\Phrasegroup</a></td>
-	<td nowrap="nowrap" style="width: 100%">Datamanager for phrase groups</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">WIP</span>&nbsp;Datamanager for phrase groups</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-session-083472.html">\Tuxxedo\Datamanager\Adapter\Session</a></td>
 	<td nowrap="nowrap" style="width: 100%">Datamanager for sessions</td>
@@ -282,6 +326,9 @@ Every datamanager class must extend this class in order to be loadable...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-template-637700.html">\Tuxxedo\Datamanager\Adapter\Template</a></td>
 	<td nowrap="nowrap" style="width: 100%">Datamanager for templates</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-user-601037.html">\Tuxxedo\Datamanager\Adapter\User</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager for users</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-datamanager-adapter-usergroup-990267.html">\Tuxxedo\Datamanager\Adapter\Usergroup</a></td>
 	<td nowrap="nowrap" style="width: 100%">Datamanager for usergroups</td>
@@ -301,6 +348,12 @@ executing the upcoming code block and calc...</td>
 	<td nowrap="nowrap"><a href="class-tuxxedo-debug-traceframe-411948.html">\Tuxxedo\Debug\TraceFrame</a></td>
 	<td nowrap="nowrap" style="width: 100%">Trace frame, this class is used together with the backtracing
 class, each frame returned is an inst...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedo-debug-tracker-250570.html">\Tuxxedo\Debug\Tracker</a></td>
+	<td nowrap="nowrap" style="width: 100%">Debug tracker class
+
+This class can be used to log variables data for debugging
+purposes, such as...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-design-event-021044.html">\Tuxxedo\Design\Event</a></td>
 	<td nowrap="nowrap" style="width: 100%">Event class, this allows objects to register events and let
@@ -366,8 +419,7 @@ using...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-input-962148.html">\Tuxxedo\Input</a></td>
 	<td nowrap="nowrap" style="width: 100%">Input filtering class, this class cleans data
-with magic quotes in mind. It will use the filter
-ex...</td>
+with magic quotes in mind</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-intl-180743.html">\Tuxxedo\Intl</a></td>
 	<td nowrap="nowrap" style="width: 100%">Internationalization Interface
@@ -449,9 +501,6 @@ test method to make sure object oriente...</td>
 	<td nowrap="nowrap"><a href="class-tuxxedo-template-layout-309403.html">\Tuxxedo\Template\Layout</a></td>
 	<td nowrap="nowrap" style="width: 100%">Template layout, this is identical to the basic template class, except that
 it will wrap around the...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedo-user-858775.html">\Tuxxedo\User</a></td>
-	<td nowrap="nowrap" style="width: 100%">Datamanager for users</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-user-106659.html">\Tuxxedo\User</a></td>
 	<td nowrap="nowrap" style="width: 100%">User session class, this class manages the current user

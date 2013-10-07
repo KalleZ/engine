@@ -32,8 +32,8 @@
 			{$categories}
 		</if>
 		<if expression="$orphan">
-			<tr class="header">
-				<td colspan="6" class="start-end-connected">
+			<tr class="heading header">
+				<td colspan="6" class="start end">
 					Orphan options
 				</td>
 			</tr>

@@ -20,10 +20,11 @@
 	 */
 	use DevTools\Test;
 	use DevTools\User;
+	use DevTools\Utilities;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Helper;
 	use Tuxxedo\Input;
 	use Tuxxedo\Template\Compiler;
-	use Tuxxedo\Utilities;
 
 	/**
 	 * Global templates
@@ -94,7 +95,7 @@
 
 			if(!$files)
 			{
-				tuxxedo_error('No source files found in the root directory');
+				throw new Exception('No source files found in the root directory');
 			}
 
 			$ignored	= Array(
@@ -350,7 +351,7 @@
 
 			if($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite')
 			{
-				tuxxedo_error('This tool is currently not available for SQLite');
+				throw new Exception('This tool is currently not available for SQLite');
 			}
 
 			$query = $dbhelper->getTables();
@@ -371,7 +372,7 @@
 
 				if(!isset($match))
 				{
-					tuxxedo_error('Invalid table');
+					throw new Exception('Invalid table');
 				}
 
 				switch(strtolower($input->get('operation')))
@@ -388,7 +389,7 @@
 					break;
 					default:
 					{
-						tuxxedo_error('Invalid operation');
+						throw new Exception('Invalid operation');
 					}
 				}
 
@@ -401,7 +402,7 @@
 
 				if(!$optimize && !$repair)
 				{
-					tuxxedo_error('No operation was selected');
+					throw new Exception('No operation was selected');
 				}
 
 				$tablelist = '';
@@ -444,7 +445,7 @@
 		{
 			if(!$configuration)
 			{
-				tuxxedo_error('No sections found in the configuration file');
+				throw new Exception('No sections found in the configuration file');
 			}
 
 			$sections = '';

@@ -44,14 +44,15 @@
 
 	/**
 	 * Input filtering class, this class cleans data 
-	 * with magic quotes in mind. It will use the filter 
-	 * extension if its available or use its own filtering 
-	 * functions to emulate it.
+	 * with magic quotes in mind
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 *
+	 * @changelog		1.1.0			Prior this class was named 'Filter'
+	 * @changelog		1.1.0			The 'filter' PHP extension which previously was optional is now required
 	 */
 	class Input
 	{
@@ -88,6 +89,8 @@
 		 * of the input without any type of santizing
 		 *
 		 * @var		integer
+		 *
+		 * @changelog	1.1.0			Prior this constant was named 'INPUT_OPT_RAW'
 		 */
 		const OPT_RAW				= 1;
 
@@ -98,6 +101,8 @@
 		 * done by the data filter
 		 *
 		 * @var		integer
+		 *
+		 * @changelog	1.1.0			Prior this constant was named 'INPUT_OPT_ARRAY'
 		 */
 		const OPT_ARRAY				= 2;
 
@@ -154,7 +159,7 @@
 		}
 
 		/**
-		 * Private filter method used by the GPC methods 
+		 * Protected filter method used by the GPC(U) methods 
 		 * to filter data.
 		 *
 		 * @param	integer			Where the data to filter is coming from (1 = GET, 2 = POST, 3 = COOKIE & 4 = User)

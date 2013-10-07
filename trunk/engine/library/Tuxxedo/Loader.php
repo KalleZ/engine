@@ -57,6 +57,7 @@
 		 * Loader mode - Default
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const MODE_DEFAULT		= 1;
 
@@ -64,6 +65,7 @@
 		 * Loader mode - PSR-0
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const MODE_PSR0			= 2;
 
@@ -72,6 +74,7 @@
 		 * Loader mode
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		public static $mode		= self::MODE_DEFAULT;
 
@@ -82,7 +85,7 @@
 		 *
 		 * This value is ignored in the following loader modes:
 		 *
-		 * PSR-0
+		 *  - PSR-0
 		 *
 		 * @var		string
 		 */
@@ -100,6 +103,7 @@
 		 * Custom routing definitions
 		 *
 		 * @var		array
+		 * @since	1.1.0
 		 */
 		protected static $routes	= Array(
 							'path'		=> Array(), 
@@ -113,6 +117,8 @@
 		 *
 		 * @param	integer				The loader mode; one of the MODE_* class constants
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public static function mode($new)
 		{
@@ -127,6 +133,8 @@
 		 * @param	string				The class separator, defaults to a backslash
 		 * @param	string				The root path to load from
 		 * @return	void				No value is returned
+		 *
+		 * @changelog	1.2.0				This method now only supports defining one route at a time
 		 */
 		public static function routeAsPath($path, $separator = NULL, $root = NULL)
 		{
@@ -143,6 +151,8 @@
 		 * @param	string				The regular expression to match (without delimiters and modifiers)
 		 * @param	string				The matching formatting, including separators if any
 		 * @return	void				No value is returned
+		 *
+		 * @changelog	1.2.0				This method now only supports defining one route at a time
 		 */
 		public static function routeAsRegex($regex, $replacement)
 		{
@@ -157,6 +167,8 @@
 		 * @param	string				The matching part, this can be a full name or a partial string
 		 * @param	callback			The callback to route to
 		 * @return	void				No value is returned
+		 *
+		 * @changelog	1.2.0				This method now only supports defining one route at a time
 		 */
 		public static function routeAsCallback($match, $callback)
 		{
@@ -312,6 +324,8 @@
 		 *
 		 * @param	string				The class or interface to check
 		 * @return	boolean				True if exists and false otherwise
+		 *
+		 * @since	1.1.0
 		 */
 		public static function exists($name)
 		{

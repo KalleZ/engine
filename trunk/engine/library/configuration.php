@@ -334,7 +334,6 @@
 		 *
 		 * 0) Disabled, no password protection
 		 * 1) Enabled, requires a single password
-		 * 2) Enabled, required a user of the site to log in
 		 *
 		 * For more in-depth configuration of each of these modes 
 		 * when enabled, see below options.
@@ -348,26 +347,6 @@
 		 * value of '1' (single password).
 		 */
 		'password'	=> '', 
-
-		/**
-		 * Permissions
-		 *
-		 * This only applies if the protective mode is set to the 
-		 * value of '2' (user log in).
-		 *
-		 * This must be the bit value bitwise AND'd together in 
-		 * order to allow the user to log in, if this value is '0' 
-		 * then no one may be able to log in. '1' means people 
-		 * with the built-in permission 'PERMISSION_ADMINISTRATOR'.
-		 *
-		 * To generate the bits to allow a log in you can use the 
-		 * permission constants like:
-		 *
-		 * <code>
-		 * echo PERMISSION_CUSTOM | PERMISSION_ANOTHER_CUSTOM;
-		 * </code>
-		 */
-		'permissions'	=> 1, 
 
 		/**
 		 * Database path

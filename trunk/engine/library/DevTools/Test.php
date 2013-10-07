@@ -131,6 +131,8 @@
 		 * Gets the option flags assigned for this test
 		 *
 		 * @return      integer			Returns the option flags assigned for this test
+		 *
+		 * @since	1.2.0
 		 */
 		public function getOptions()
 		{

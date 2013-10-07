@@ -57,6 +57,9 @@
 		 * Fields for validation of styles
 		 *
 		 * @var		array
+		 *
+		 * @changelog	1.2.0			Renamed 'default' to 'isdefault'
+		 * @changelog	1.1.0			Added the 'inherit' field
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
@@ -218,6 +221,8 @@
 		 *
 		 * @param	mixed				The value to handle
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @since	1.1.0
 		 */
 		public function virtualInherit($value)
 		{

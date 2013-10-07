@@ -26,6 +26,8 @@
 	 *
 	 * @param	string			The current option category, if any
 	 * @return	string			Returns the markup code for the option categories
+	 *
+	 * @since	1.1.0
 	 */
 	function options_categories_dropdown($current = NULL)
 	{
@@ -51,6 +53,8 @@
 	 *
 	 * @param	array			The options to categorize, uses the key as option name, and value as an array where an index named 'category' must exists
 	 * @return	array			Returns the categorized array
+	 *
+	 * @since	1.1.0
 	 */
 	function options_categorize(Array $options)
 	{
@@ -83,6 +87,8 @@
 	 * @param	string			The option value
 	 * @param	boolean			Whether to escape HTML characters for string values
 	 * @return	string			Returns a string containing the datatype and its value and 'unknown' on error
+	 *
+	 * @since	1.1.0
 	 */
 	function var_dump_option($type, $value, $htmlize = true)
 	{
@@ -121,6 +127,8 @@
 	 * @param	string			The one character option type: b, i etc.
 	 * @param	string			The value to convert
 	 * @return	string			Converts the value into the desired type, and string for unknown types
+	 *
+	 * @since	1.1.0
 	 */
 	function var_typecast_option($type, $value)
 	{

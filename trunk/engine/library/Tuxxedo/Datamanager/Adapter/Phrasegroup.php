@@ -51,6 +51,9 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.2.0
+	 *
+	 * @wip
 	 */
 	class Phrasegroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{

@@ -50,6 +50,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.2.0
 	 */
 	class Language extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
@@ -165,6 +166,8 @@
 		 * the parent class in cases when the save method was success
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @todo	This code does not handle deletion of phrasegroups and phrases properly
 		 */
 		public function rebuild()
 		{

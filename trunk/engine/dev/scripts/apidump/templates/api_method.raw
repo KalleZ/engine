@@ -10,7 +10,7 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine ...
+							Engine {$since}
 						</td>
 					</tr>
 					<tr>
@@ -21,16 +21,11 @@
 					</tr>
 					<tr>
 						<td nowrap="nowrap">Declared in:</td>
-						<td class="value" style="width: 100%">
+						<td class="value" style="width: 100%" nowrap="nowrap">
 							{$file}
 						</td>
 					</tr>
-					<tr>
-						<td>Namespace:</td>
-						<td class="value" style="width: 100%">
-							{$namespace}
-						</td>
-					</tr>
+					{$namespace}
 					<tr>
 						<td>Object:</td>
 						<td class="value" style="width: 100%">
@@ -63,34 +58,30 @@
 	</div>
 </div>
 
+{$notices}
+
+{$warnings}
+
 {$parameters}
 
 {$returns}
 
+{$throws}
+
 {$examples}
 
-<h2><span>Version history</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<table style="width: 100%" cellspacing="2" cellpadding="0">
-			<tr class="head">
-				<td class="strong" nowrap="nowrap">Version</td>
-				<td class="strong">Notes</td>
-			</tr>
-			<tr class="row">
-				<td nowrap="nowrap">...</td>
-				<td nowrap="nowrap" style="width: 100%">...</td>
-			</tr>
-		</table>
-	</div>
-</div>
+{$todo}
+
+{$changelog}
 
 <h2><span>See also</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<ul>
+			{$seealso}
 			<li><a href="{$obj_link}">{$obj}</a></li>
-			<li><a href="./{$obj_type}.html">List of {$obj_type}</a></li>
+			<li><a href="./{$obj_types}.html">List of {$obj_types}</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
 </div>

@@ -47,12 +47,22 @@
 		}
 			h2 span
 			{
-				background-color: 		#C2EDFD; 
+				background-color: 		#C2EDFD;
 				border-top-left-radius: 	4px; 
 				border-top-right-radius: 	4px; 
 				padding: 			5px; 
 				padding-bottom: 		0px;
 			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
 		li, ul
 		{
 			margin: 			0px;
@@ -88,35 +98,59 @@
 			background-color: #FFFFFF; 
 		}
 
-		.box 
+		.box, .box-notice, .box-warning
 		{ 
-			background-color: 		#C2EDFD; 
-			border: 			3px solid #C2EDFD; 
-			border-radius: 			4px; 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
 		}
-			.box.edge-title 
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
 			{ 
 				border-top-left-radius: 	0px; 
 			}
-			.box .inner
+			.box .inner, .box-notice .inner, .box-warning .inner
 			{ 
 				background-color: 		#FFFFFF; 
 				border-radius: 			4px; 
 				padding: 			6px; 
 			}
-			.box .inner ul 
-			{ 
-				padding: 			3px 15px; 
-			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
 		.content 
 		{ 
-			margin: 			15px 0px 10px 430px; 
+			margin: 			15px 0px 10px 480px; 
 		}
-		.infobox
+		.infobox, .infobox-notice, .infobox-warning
 		{ 
 			background-color: 		#C2EDFD; 
 			border-radius: 			4px; 
 			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
 		}
 		.left-content
 		{
@@ -124,8 +158,17 @@
 		}
 			.left-content fieldset
 			{
-				width: 400px;
+				width: 450px;
 			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
 		</style>
 	</head>
 	<body>
@@ -140,57 +183,65 @@
 			</tr>
 			<tr class="row">
 	<td nowrap="nowrap"><a href="function-analyze-698033.html">analyze</a></td>
-	<td nowrap="nowrap" style="width: 100%">Fetches all analyzable files into one huge array</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Fetches all analyzable files into one huge array</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-cleanup-cron-931669.html">cleanup_cron</a></td>
-	<td nowrap="nowrap" style="width: 100%">Cleanup cronjob
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Cleanup cronjob
 
 Deletes all inactive sessions (only 'marked' as expired)</td>
 </tr><tr class="row">
+	<td nowrap="nowrap"><a href="function-devtools-auth-handler-359874.html">devtools_auth_handler</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Authentication handler
+
+This function handles all perspectives of the DevTools authentication (bot...</td>
+</tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-devtools-exception-handler-020145.html">devtools_exception_handler</a></td>
-	<td nowrap="nowrap" style="width: 100%">Extended exception handler</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Extended exception handler</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-dump-metadata-650537.html">dump_metadata</a></td>
-	<td nowrap="nowrap" style="width: 100%">Dumps metadata for printf arguments</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Dumps metadata for printf arguments</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-docblock-517081.html">lexical_docblock</a></td>
-	<td nowrap="nowrap" style="width: 100%">Lexical docblock scanner</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Lexical docblock scanner</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-docblock-parse-057054.html">lexical_docblock_parse</a></td>
-	<td nowrap="nowrap" style="width: 100%">Lexical docblock parser</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Lexical docblock parser</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-next-index-425253.html">lexical_next_index</a></td>
-	<td nowrap="nowrap" style="width: 100%">Finds the next lexical token index</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Finds the next lexical token index</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-scan-031864.html">lexical_scan</a></td>
-	<td nowrap="nowrap" style="width: 100%">Scans from the current pointer until the first match token match</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Scans from the current pointer until the first match token match</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-scan-concat-341031.html">lexical_scan_concat</a></td>
-	<td nowrap="nowrap" style="width: 100%">Scans and concates the matched tokens into a string</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Scans and concates the matched tokens into a string</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-scan-extends-implements-465432.html">lexical_scan_extends_implements</a></td>
-	<td nowrap="nowrap" style="width: 100%">Lexical scan extends and implements tokens to find their children</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Lexical scan extends and implements tokens to find their children</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-lexical-scan-separator-000218.html">lexical_scan_separator</a></td>
-	<td nowrap="nowrap" style="width: 100%">Scans a statement and breaks it into an array based on a separator token</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Scans a statement and breaks it into an array based on a separator token</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-options-categories-dropdown-052052.html">options_categories_dropdown</a></td>
-	<td nowrap="nowrap" style="width: 100%">Generates the markup for the available option categories</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Generates the markup for the available option categories</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-options-categorize-714246.html">options_categorize</a></td>
-	<td nowrap="nowrap" style="width: 100%">Categorizes the a list of options</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Categorizes the a list of options</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="function-page-836048.html">page</a></td>
-	<td nowrap="nowrap" style="width: 100%">Generates code to print a page</td>
+	<td nowrap="nowrap"><a href="function-page-640522.html">page</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Generates code to print a page</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-recursive-glob-022596.html">recursive_glob</a></td>
-	<td nowrap="nowrap" style="width: 100%">A recursive glob function</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;A recursive glob function</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="function-resolve-namespace-107944.html">resolve_namespace</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Resolves a namespace based on the datamap stack</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-resolve-namespace-alias-927067.html">resolve_namespace_alias</a></td>
-	<td nowrap="nowrap" style="width: 100%">Resolves a class object to its full namespaced path</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Resolves a class object to its full namespaced path</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-test-login-105906.html">test_login</a></td>
-	<td nowrap="nowrap" style="width: 100%">Tests a log in without interfering with the current session</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Tests a log in without interfering with the current session</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-tuxxedo-basic-error-572179.html">tuxxedo_basic_error</a></td>
 	<td nowrap="nowrap" style="width: 100%">Basic error, this function picks the CLI handler for CLI mode
@@ -202,18 +253,9 @@ and web otherwise for formatting to p...</td>
 	<td nowrap="nowrap"><a href="function-tuxxedo-doc-error-242370.html">tuxxedo_doc_error</a></td>
 	<td nowrap="nowrap" style="width: 100%">Print a document error (startup) and halts script execution</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="function-tuxxedo-error-769343.html">tuxxedo_error</a></td>
-	<td nowrap="nowrap" style="width: 100%">Prints an error message using the current loaded
-theme and then terminates the script</td>
-</tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-tuxxedo-error-handler-378371.html">tuxxedo_error_handler</a></td>
 	<td nowrap="nowrap" style="width: 100%">Error handler, this handles general errors from php. If
 the script should error non fatal errors su...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="function-tuxxedo-error-list-240548.html">tuxxedo_error_list</a></td>
-	<td nowrap="nowrap" style="width: 100%">Prints an error message using the current loaded
-theme with an list of failed conditions which
-mak...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-tuxxedo-errorf-553319.html">tuxxedo_errorf</a></td>
 	<td nowrap="nowrap" style="width: 100%">Formattable error, this function is SAPI aware and will
@@ -240,26 +282,26 @@ functions, calli...</td>
 of the application</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-var-dump-option-660319.html">var_dump_option</a></td>
-	<td nowrap="nowrap" style="width: 100%">Returns a var_dump() a-like syntax for an option
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Returns a var_dump() a-like syntax for an option
 and its datatype</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-var-typecast-option-062168.html">var_typecast_option</a></td>
-	<td nowrap="nowrap" style="width: 100%">Converts a value to an option type</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Converts a value to an option type</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-widget-hook-datastore-071978.html">widget_hook_datastore</a></td>
-	<td nowrap="nowrap" style="width: 100%">Widget hook function - datastore</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Widget hook function - datastore</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-widget-hook-intl-362285.html">widget_hook_intl</a></td>
-	<td nowrap="nowrap" style="width: 100%">Widget hook function - intl</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Widget hook function - intl</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-widget-hook-sessions-099819.html">widget_hook_sessions</a></td>
-	<td nowrap="nowrap" style="width: 100%">Widget hook function - sessions</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Widget hook function - sessions</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-widget-hook-styles-624122.html">widget_hook_styles</a></td>
-	<td nowrap="nowrap" style="width: 100%">Widget hook function - styles</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Widget hook function - styles</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="function-widget-hook-users-843219.html">widget_hook_users</a></td>
-	<td nowrap="nowrap" style="width: 100%">Widget hook function - users</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Widget hook function - users</td>
 </tr>
 		</table>
 	</div>

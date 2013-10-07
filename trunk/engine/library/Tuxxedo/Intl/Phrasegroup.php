@@ -49,6 +49,8 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 *
+	 * @changelog		1.2.0			This class now implements the InfoAccess pattern
 	 */
 	class Phrasegroup extends Design\InfoAccess
 	{
@@ -56,6 +58,7 @@
 		 * Phrase group name
 		 *
 		 * @var		string
+		 * @since	1.2.0
 		 */
 		protected $phrasegroup;
 
@@ -85,6 +88,8 @@
 		 * Gets the phrasegroup name for this object
 		 *
 		 * @return	string				Returns the phrasegroup name
+		 *
+		 * @since	1.2.0
 		 */
 		public function getName()
 		{

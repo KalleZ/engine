@@ -51,6 +51,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.1.0
 	 */
 	class Optioncategory extends Adapter implements Hooks\Cache
 	{

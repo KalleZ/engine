@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<style type="text/css">
+		a
+		{
+			color:				#3B7286;
+			text-decoration:		underline;
+		}
+			a:hover
+			{
+				color:				#000000;
+			}
+		body
+		{
+			background-color:		#E4F4FC;
+			color:				#3B7286;
+			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
+			font-size:			82%;
+			margin:				30px 10% 0px 10%;
+		}
+		code
+		{
+			font-family:			Consolas, Monaco, 'Courier New', Monospace;
+		}
+		fieldset
+		{
+			background-color: 		#C2EDFD;
+			border: 			0px;
+			border-radius:			4px;
+		}
+			fieldset legend
+			{
+				background-color: 		#C2EDFD; 
+				border-radius: 			4px; 
+				padding: 			6px;
+			}
+		h1
+		{
+			margin: 			30px 0px -6px 0px;
+		}
+		h2
+		{
+			margin: 			20px 0px 0px 0px;
+		}
+			h2 span
+			{
+				background-color: 		#C2EDFD;
+				border-top-left-radius: 	4px; 
+				border-top-right-radius: 	4px; 
+				padding: 			5px; 
+				padding-bottom: 		0px;
+			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
+		li, ul
+		{
+			margin: 			0px;
+		}
+		td
+		{
+			border: 			1px solid transparent;
+		}
+			td.value 
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			3px; 
+			}
+		tr.head td
+		{
+			background-color: 		#C2EDFD; 
+			padding: 			5px; 
+			border-radius: 			4px; 
+		}
+		tr.row, tr.row *
+		{ 
+			margin: 			0px; 
+			padding: 			2px 5px; 
+		}
+		tr.strong td 
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+		}
+		tr.strong td.empty 
+		{ 
+			background-color: #FFFFFF; 
+		}
+
+		.box, .box-notice, .box-warning
+		{ 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
+		}
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
+			{ 
+				border-top-left-radius: 	0px; 
+			}
+			.box .inner, .box-notice .inner, .box-warning .inner
+			{ 
+				background-color: 		#FFFFFF; 
+				border-radius: 			4px; 
+				padding: 			6px; 
+			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
+		.content 
+		{ 
+			margin: 			15px 0px 10px 480px; 
+		}
+		.infobox, .infobox-notice, .infobox-warning
+		{ 
+			background-color: 		#C2EDFD; 
+			border-radius: 			4px; 
+			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
+		}
+		.left-content
+		{
+			float: left;
+		}
+			.left-content fieldset
+			{
+				width: 450px;
+			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
+		</style>
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Debug\Tracker</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-debug-210245.html">\Tuxxedo\Debug</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Debug/Tracker.php
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Debug tracker class<br />This class can be used to log variables data for debugging
+purposes, such as iterations which can be useful for writing
+generators and other types of parsers to confirm states, but
+it is not limited to such.<br /></code>
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>Properties</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-callback-hook-143956.html">$callback_hook</a></td>
+	<td nowrap="nowrap" style="width: 100%">Callback hook</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-log-data-184903.html">$log_data</a></td>
+	<td nowrap="nowrap" style="width: 100%">Log data</td>
+</tr>
+</table><h3>Methods</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-277881.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor
+
+Constructs a new tracker object</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-end-843202.html">end()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Ends the tracker, ultimately calling the registered
+callback which will have the stored log data pa...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-log-891194.html">log()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Log data for a specific state/iteration</td>
+</tr>
+</table>
+	</div>
+</div>
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>Example #1</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Debug</span><span style="color: #007700">;<br /><br />class&nbsp;</span><span style="color: #0000BB">Test<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;protected&nbsp;</span><span style="color: #0000BB">$iterations&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">0</span><span style="color: #007700">;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;protected&nbsp;</span><span style="color: #0000BB">$tracker</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">tracker&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Debug</span><span style="color: #007700">\</span><span style="color: #0000BB">Tracker</span><span style="color: #007700">(function(</span><span style="color: #0000BB">$log_data</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">printf</span><span style="color: #007700">(</span><span style="color: #DD0000">'The&nbsp;log&nbsp;was&nbsp;called&nbsp;%d&nbsp;time(s)%s%s'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">sizeof</span><span style="color: #007700">(</span><span style="color: #0000BB">$log_data</span><span style="color: #007700">),&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(</span><span style="color: #0000BB">$log_data</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;foreach(</span><span style="color: #0000BB">$log_data</span><span style="color: #007700">)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$log_data</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">__destruct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">tracker</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">end</span><span style="color: #007700">();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;function&nbsp;</span><span style="color: #0000BB">iterator</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">tracker</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">log</span><span style="color: #007700">(Array(</span><span style="color: #DD0000">'iterations'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;++</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">iterations</span><span style="color: #007700">));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #0000BB">$test&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Test</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$test</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">iterator</span><span style="color: #007700">();&nbsp;</span><span style="color: #FF8000">//&nbsp;Test::$iterations=1<br /></span><span style="color: #0000BB">$test</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">iterator</span><span style="color: #007700">();&nbsp;</span><span style="color: #FF8000">//&nbsp;Test::$iterations=2<br /><br /></span><span style="color: #007700">for(</span><span style="color: #0000BB">$x&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">0</span><span style="color: #007700">;&nbsp;</span><span style="color: #0000BB">$x&nbsp;</span><span style="color: #007700">&lt;&nbsp;</span><span style="color: #0000BB">40</span><span style="color: #007700">;&nbsp;++</span><span style="color: #0000BB">$x</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$test</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">iterator</span><span style="color: #007700">();&nbsp;</span><span style="color: #FF8000">//&nbsp;Test::$iterations=N<br /></span><span style="color: #007700">}<br /><br />unset(</span><span style="color: #0000BB">$test</span><span style="color: #007700">);<br /><br /></span><span style="color: #FF8000">//The&nbsp;log&nbsp;was&nbsp;called&nbsp;42&nbsp;time(s)<br />//<br />//...<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Beta 1 (Experimental).</em>
+		</p>
+	</body>
+</html>

@@ -1,0 +1,4 @@
+<tr class="row">
+	<td nowrap="nowrap">{$exception}</td>
+	<td nowrap="nowrap" style="width: 100%">{$condition}</td>
+</tr>

@@ -55,6 +55,8 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 *
+	 * @changelog		1.1.0			This class now implements the Iteratable design pattern
 	 */
 	abstract class Result extends Design\Iteratable implements Result\Specification
 	{
@@ -62,6 +64,7 @@
 		 * Fetch mode constant - row
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const FETCH_ROW			= 1;
 
@@ -69,6 +72,7 @@
 		 * Fetch mode constant - array
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const FETCH_ARRAY		= 2;
 
@@ -76,6 +80,7 @@
 		 * Fetch mode constant - assoc
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const FETCH_ASSOC		= 3;
 
@@ -83,6 +88,7 @@
 		 * Fetch mode constant - object
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		const FETCH_OBJECT		= 4;
 
@@ -112,6 +118,7 @@
 		 * Current iterator position
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $position		= 0;
 
@@ -119,6 +126,7 @@
 		 * Fetch mode
 		 *
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $fetch_mode		= self::FETCH_ARRAY;
 
@@ -126,6 +134,7 @@
 		 * Iterator data for drivers that need to emulate the iterator functionality
 		 *
 		 * @var		array
+		 * @since	1.1.0
 		 */
 		protected $iterator_data	= Array();
 
@@ -169,6 +178,8 @@
 		 *
 		 * @param	integer				One of the FETCH_* constants
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function setFetchType($mode)
 		{
@@ -182,6 +193,8 @@
 		 * Checks whenever the result is freed or not
 		 *
 		 * @return	boolean				Returns true if the result is freed from memory, otherwise false
+		 *
+		 * @changelog	1.1.0				Prior this method was a part of the result interface
 		 */
 		public function isFreed()
 		{
@@ -192,6 +205,8 @@
 		 * Iterator method - key
 		 *
 		 * @return	integer				Returns the numeric position of the current row in the resultset
+		 *
+		 * @since	1.1.0
 		 */
 		public function key()
 		{
@@ -202,6 +217,8 @@
 		 * Iterator method - next
 		 *
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function next()
 		{
@@ -212,6 +229,8 @@
 		 * Iterator method - rewind
 		 *
 		 * @return	void				No value is returned
+		 *
+		 * @since	1.1.0
 		 */
 		public function rewind()
 		{
@@ -222,6 +241,8 @@
 		 * Iterator method - valid
 		 *
 		 * @return	boolean				Returns true if its still possible to continue iterating
+		 *
+		 * @since	1.1.0
 		 */
 		public function valid()
 		{
@@ -232,6 +253,8 @@
 		 * Iterator method - current
 		 *
 		 * @return	mixed				Returns the current result
+		 *
+		 * @since	1.1.0
 		 */
 		public function current()
 		{
@@ -252,6 +275,8 @@
 		 * </pre>
 		 *
 		 * @return	integer			Returns the number of rows in the result, and 0 on error
+		 *
+		 * @since	1.1.0
 		 */
 		public function count()
 		{
@@ -263,6 +288,8 @@
 		 * to determine in what format the returned data should be in
 		 *
 		 * @return	array|object		Returns an object or array based on the fetching mode
+		 *
+		 * @since	1.1.0
 		 */
 		public function fetch()
 		{

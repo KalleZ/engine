@@ -57,7 +57,7 @@
 	 *		// $this, which will populate EventContext::$extern
 	 *		new Event('TestRun', $this);
 	 *
-	 * 		// or by calling: Event::trigger(...)
+	 * 		// or by calling: Event::fire(...)
 	 *
 	 * 		// ...
 	 *	}
@@ -74,7 +74,7 @@
 	 *
 	 *	Event::register('TestRun', function(EventContext $ctx)
 	 *	{
-	 *		echo 'Event hook called', \PHP_EOL;
+	 *		echo 'Event hook called';
 	 * 	});
 	 *
 	 *	// ...
@@ -94,6 +94,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.2.0
 	 */
 	class Event
 	{

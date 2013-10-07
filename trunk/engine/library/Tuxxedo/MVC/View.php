@@ -53,6 +53,8 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		MVC
+	 *
+	 * @changelog		1.1.0			This is now an alias of \Tuxxedo\Template
 	 */
 	class View extends Template
 	{

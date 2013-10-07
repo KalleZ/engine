@@ -18,9 +18,10 @@
 	/**
 	 * Aliasing rules
 	 */
+	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Input;
-	use Tuxxedo\Utilities;
 
 
 	/**
@@ -129,7 +130,7 @@
 				break;
 				default:
 				{
-					tuxxedo_error('Invalid action');
+					throw new Exception('Invalid action');
 				}
 				break;
 			}
@@ -222,7 +223,7 @@
 
 						if(!$query || !$query->getNumRows())
 						{
-							tuxxedo_error('No options found');
+							throw new Exception('No options found');
 						}
 
 						while($opt = $query->fetchRow())
@@ -246,7 +247,7 @@
 
 					if(!$query || !$query->getNumRows())
 					{
-						tuxxedo_error('No options to display. Add one from the sidebar');
+						throw new Exception('No options to display. Add one from the sidebar');
 					}
 
 					$reminder	= false;

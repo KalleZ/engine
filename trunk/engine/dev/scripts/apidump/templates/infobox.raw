@@ -1,0 +1,12 @@
+<h2><span>{$name}</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong center">{$id_name}</td>
+				<td class="strong">{$desc_name}</td>
+			</tr>
+			{$bits}
+		</table>
+	</div>
+</div>

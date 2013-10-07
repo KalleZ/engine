@@ -1,0 +1,12 @@
+<h2><span>Throws</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Exception</td>
+				<td class="strong">Condition</td>
+			</tr>
+			{$exceptions}
+		</table>
+	</div>
+</div>

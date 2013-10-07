@@ -61,6 +61,7 @@
 		 * Private instance to the Tuxxedo registry
 		 *
 		 * @var		\Tuxxedo\Registry
+		 * @since	1.2.0
 		 */
 		protected $registry;
 
@@ -77,6 +78,7 @@
 		 * data in the database
 		 * 
 		 * @var		integer
+		 * @since	1.1.0
 		 */
 		protected $affected_rows		= 0;
 
@@ -84,6 +86,7 @@
 		 * Whether or not debug mode is enabled
 		 *
 		 * @var		boolean
+		 * @since	1.2.0
 		 */
 		protected $debug			= false;
 
@@ -210,7 +213,7 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if loading of a driver should fail for some reason
 		 */
-		final public static function factory($driver, Array $configuration)
+		public static function factory($driver, Array $configuration)
 		{
 			$class = (\strpos($driver, '\\') === false ? '\Tuxxedo\Database\Driver\\' : '') . $driver;
 
@@ -236,6 +239,8 @@
 		 *
 		 * @param	string			The value from the configuration array to fetch
 		 * @return	string			Returns the value from the database configuration array, and false on error
+		 *
+		 * @since	1.1.0
 		 */
 		public function cfg($value)
 		{
@@ -277,6 +282,10 @@
 		 * data in the database
 		 *
 		 * @return	integer			Returns the affected rows
+		 *
+		 * @since	1.1.0
+		 *
+		 * @changelog	1.1.0			This method is no longer a part of the driver interface
 		 */
 		public function getAffectedRows()
 		{
@@ -289,7 +298,7 @@
 		 * @param	string			The SQL string to execute
 		 * @return	void			No value is returned
 		 */
-		final public function setShutdownQuery($sql)
+		public function setShutdownQuery($sql)
 		{
 			if(\func_num_args() > 1)
 			{
@@ -304,7 +313,7 @@
 		 *
 		 * @return	integer			Number of queries executed
 		 */
-		final public function getNumQueries()
+		public function getNumQueries()
 		{
 			return(\sizeof($this->queries));
 		}
@@ -314,7 +323,7 @@
 		 *
 		 * @return	array			A list of executed SQL queries
 		 */
-		final public function getQueries()
+		public function getQueries()
 		{
 			return($this->queries);
 		}

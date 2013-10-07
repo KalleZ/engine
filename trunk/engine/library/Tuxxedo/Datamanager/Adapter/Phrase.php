@@ -50,6 +50,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 * @since		1.2.0
 	 *
 	 * @wip
 	 */

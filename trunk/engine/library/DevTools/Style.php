@@ -58,8 +58,11 @@
 		public function __construct()
 		{
 			$this->registry		= Registry::init();
-			$this->information 	= Array('templatesdir' => './style/templates/');
 			$this->templates	= new \stdClass;
+			$this->information 	= Array(
+							'templatesdir' => './style/templates/'
+							);
+
 			$this->storage		= Storage::factory($this->registry, $this, 'filesystem', $this->templates, true);
 		}
 
@@ -87,7 +90,7 @@
 		{
 			global $configuration;
 
-			$script = ($configuration['devtools']['protective'] && !Registry::init()->session['__devtools_authenticated'] ? 'index' : \SCRIPT_NAME);
+			$script = ($configuration['devtools']['protective'] && !Registry::init()->session['devtools_authenticated'] ? 'index' : \SCRIPT_NAME);
 			$widget = 'widget_' . $script;
 
 			if(!$this->cache(Array($widget)))

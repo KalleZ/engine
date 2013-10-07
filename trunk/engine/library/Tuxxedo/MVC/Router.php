@@ -111,6 +111,8 @@
 		 * default names
 		 *
 		 * @param	string						The application prefix (namespace), e.g. \Application\Controllers\, must end with a \
+		 *
+		 * @changelog	1.2.0						The $prefix parameter can now be used to define a controller from another namespace
 		 */
 		public function __construct($prefix = NULL)
 		{
@@ -137,6 +139,8 @@
 		 * @return	array						Returns a multi dimentional array with preloadable data
 		 *
 		 * @throws	\Tuxxedo\Exception\MVC\InvalidController	Throws an invalid controller exception if the controller could not be loaded
+		 *
+		 * @since	1.2.0
 		 */
 		public function getPreloadables()
 		{
@@ -212,6 +216,8 @@
 		 * Gets all parameters
 		 *
 		 * @return	array						Returns all the parameters defined
+		 *
+		 * @since	1.1.0
 		 */
 		public function getParameters()
 		{
@@ -258,6 +264,8 @@
 		 * @return	\Tuxxedo\MVC\Controller				Returns a new controller instance
 		 *
 		 * @throws	\Tuxxedo\Exception\MVC\InvalidController	Throws an invalid controller exception if the controller could not be loaded
+		 *
+		 * @since	1.2.0
 		 */
 		public function __invoke()
 		{

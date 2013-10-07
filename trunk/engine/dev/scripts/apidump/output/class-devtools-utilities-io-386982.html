@@ -47,12 +47,22 @@
 		}
 			h2 span
 			{
-				background-color: 		#C2EDFD; 
+				background-color: 		#C2EDFD;
 				border-top-left-radius: 	4px; 
 				border-top-right-radius: 	4px; 
 				padding: 			5px; 
 				padding-bottom: 		0px;
 			}
+				h2 span.notice
+				{
+					background-color:		#3B7286;
+					color:				#FFFFFF;
+				}
+				h2 span.warning
+				{
+					background-color: 		#9B0500;
+					color:				#FFFFFF;
+				}
 		li, ul
 		{
 			margin: 			0px;
@@ -88,35 +98,59 @@
 			background-color: #FFFFFF; 
 		}
 
-		.box 
+		.box, .box-notice, .box-warning
 		{ 
-			background-color: 		#C2EDFD; 
-			border: 			3px solid #C2EDFD; 
-			border-radius: 			4px; 
+			background-color: 		#C2EDFD;
+			border: 			3px solid #C2EDFD;
+			border-radius: 			4px;
 		}
-			.box.edge-title 
+			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
 			{ 
 				border-top-left-radius: 	0px; 
 			}
-			.box .inner
+			.box .inner, .box-notice .inner, .box-warning .inner
 			{ 
 				background-color: 		#FFFFFF; 
 				border-radius: 			4px; 
 				padding: 			6px; 
 			}
-			.box .inner ul 
-			{ 
-				padding: 			3px 15px; 
-			}
+				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
+				{ 
+					padding: 			3px 15px; 
+				}
+		.box-notice
+		{
+			background-color:		#3B7286;
+			border:				3px solid #3B7286;
+		}
+		.box-warning
+		{
+			background-color:		#9B0500;
+			border: 			3px solid #9B0500;
+		}
+		.center
+		{
+			text-align:			center;
+		}
 		.content 
 		{ 
-			margin: 			15px 0px 10px 430px; 
+			margin: 			15px 0px 10px 480px; 
 		}
-		.infobox
+		.infobox, .infobox-notice, .infobox-warning
 		{ 
 			background-color: 		#C2EDFD; 
 			border-radius: 			4px; 
 			padding: 			6px; 
+		}
+		.infobox-notice
+		{
+			background-color:		#3B7286;
+			color:				#FFFFFF;
+		}
+		.infobox-warning
+		{
+			background-color:		#9B0500;
+			color:				#FFFFFF;
 		}
 		.left-content
 		{
@@ -124,13 +158,22 @@
 		}
 			.left-content fieldset
 			{
-				width: 400px;
+				width: 450px;
 			}
+		.tag
+		{
+			background-color: 		#3B7286;
+			border-radius: 			4px;
+			color: 				#FFFFFF;
+			font-size: 			80%;
+			margin-right:			5px;
+			padding: 			1px 3px;
+		}
 		</style>
 	</head>
 	<body>
 
-<h1>IO</h1>
+<h1>\DevTools\Utilities\IO</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -140,28 +183,26 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine ...
+							Engine 1.1.0
 						</td>
 					</tr>
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							Class
+							<a href="./classes.html">Class</a>
 						</td>
 					</tr>
 					<tr>
-						<td nowrap="nowrap">Declared in:</td>
-						<td class="value" style="width: 100%">
-							library/DevTools/Utilities/IO.php
-						</td>
-					</tr>
-					<tr>
-						<td>Namespace:</td>
-						<td class="value" style="width: 100%">
-							\DevTools\Utilities
-						</td>
-					</tr>
-					
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-devtools-utilities-670999.html">\DevTools\Utilities</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/DevTools/Utilities/IO.php
+	</td>
+</tr>
 				</table>
 			</fieldset>
 		</div>
@@ -176,6 +217,17 @@ constructs.
 		<div style="clear: left;"></div>
 	</div>
 </div>
+
+<h2><span class="notice">Notice</span></h2>
+<div class="box-notice edge-title">
+	<div class="inner">
+		<div class="infobox-notice">
+			This element is a part of the developmental code and is only available in builds that includes developmental related APIs!
+		</div>
+	</div>
+</div>
+
+
 
 <h2><span>Contents</span></h2>
 <div class="box edge-title">
@@ -192,22 +244,22 @@ constructs.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="constant-style-bold-002738.html">STYLE_BOLD</a></td>
-	<td nowrap="nowrap" style="width: 100%">Style mode constant - indicates bold text (web)</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Style mode constant - indicates bold text (web)</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="constant-style-hidden-dot-086697.html">STYLE_HIDDEN_DOT</a></td>
-	<td nowrap="nowrap" style="width: 100%">Style mode constant - indicates a hidden 'dot' for \DevTools\Utilities\IO::li()</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Style mode constant - indicates a hidden 'dot' for \DevTools\Utilities\IO::li() (cli)</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="constant-style-italic-644705.html">STYLE_ITALIC</a></td>
-	<td nowrap="nowrap" style="width: 100%">Style mode constant - indicates italic text (web)</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Style mode constant - indicates italic text (web)</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="constant-style-underline-851404.html">STYLE_UNDERLINE</a></td>
-	<td nowrap="nowrap" style="width: 100%">Style mode constant - indicates underlined text (web)</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Style mode constant - indicates underlined text (web)</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="constant-tag-end-691091.html">TAG_END</a></td>
-	<td nowrap="nowrap" style="width: 100%">Tag mode constant - indicates end of a tag</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Tag mode constant - indicates end of a tag</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="constant-tag-start-385495.html">TAG_START</a></td>
-	<td nowrap="nowrap" style="width: 100%">Tag mode constant - indicates start of a tag</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Tag mode constant - indicates start of a tag</td>
 </tr>
 </table><h3>Properties</h3>
 <table style="width: 100%" cellspacing="2" cellpadding="0">
@@ -217,7 +269,7 @@ constructs.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="property-depth-508456.html">$depth</a></td>
-	<td nowrap="nowrap" style="width: 100%">Nesting level of block elements</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Nesting level of block elements</td>
 </tr>
 </table><h3>Methods</h3>
 <table style="width: 100%" cellspacing="2" cellpadding="0">
@@ -227,36 +279,36 @@ constructs.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="method-eol-620313.html">eol()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Repeats an end of line character</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Repeats an end of line character</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-error-250149.html">error()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Prints a serve error message</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Prints a serve error message</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-headline-629228.html">headline()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Writes a headline</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Writes a headline</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-input-431674.html">input()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets an input variable, this uses argv in CLI and $_GET in web
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Gets an input variable, this uses argv in CLI and $_GET in web
 
 In CLI, arguments must be prefixed...</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-iscli-378393.html">isCli()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Checks if the script is running using a console</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Checks if the script is running using a console</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-li-972380.html">li()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Writes a list item, optionally using a style</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Writes a list item, optionally using a style</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-signature-669374.html">signature()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Engine signature line</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Engine signature line</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-style-484590.html">style()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Styles a text string</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Styles a text string</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-text-889800.html">text()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Writes a text string, optionally using a style</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Writes a text string, optionally using a style</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-ul-620877.html">ul()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Starts or end writing an unordered list</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Starts or end writing an unordered list</td>
 </tr>
 </table>
 	</div>
@@ -264,11 +316,17 @@ In CLI, arguments must be prefixed...</td>
 
 
 
+
+
+
+
 <h2><span>See also</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<ul>
+			
 			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
 </div>

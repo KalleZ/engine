@@ -19,9 +19,9 @@
 	 * Alasing rules
 	 */
 	use DevTools\User;
+	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Input;
-	use Tuxxedo\Utilities;
 
 
 	/**
@@ -79,6 +79,7 @@
 	 * Set script name
 	 *
 	 * @var		string
+	 * @since	1.1.0
 	 */
 	const SCRIPT_NAME	= 'users';
 
@@ -180,7 +181,7 @@
 				{
 					if(!$datastore->permissions)
 					{
-						tuxxedo_error('No permissions currently exists');
+						throw new Exception('No permissions currently exists');
 					}
 
 					$dm 	= Datamanager\Adapter::factory('user', $input->get('user'));
@@ -285,7 +286,7 @@
 
 						if(!$query || !$query->getNumRows())
 						{
-							tuxxedo_error('Search return zero results');
+							throw new Exception('Search return zero results');
 						}
 
 						$table 		= '';
@@ -312,7 +313,7 @@
 				break;
 				default:
 				{
-					tuxxedo_error('Invalid action');
+					throw new Exception('Invalid action');
 				}
 				break;
 			}
@@ -356,7 +357,7 @@
 				{
 					if(!$datastore->permissions)
 					{
-						tuxxedo_error('No permissions currently exists');
+						throw new Exception('No permissions currently exists');
 					}
 
 					$dm = Datamanager\Adapter::factory('usergroup', $input->get('usergroup'));
@@ -398,7 +399,7 @@
 				{
 					if(!$datastore->usergroups)
 					{
-						tuxxedo_error('No usergroups currently exists');
+						throw new Exception('No usergroups currently exists');
 					}
 
 					$rows = '';
@@ -413,7 +414,7 @@
 				break;
 				default:
 				{
-					tuxxedo_error('Invalid action');
+					throw new Exception('Invalid action');
 				}
 				break;
 			}
@@ -451,7 +452,7 @@
 				{
 					if(!$datastore->permissions)
 					{
-						tuxxedo_error('No permissions currently exists');
+						throw new Exception('No permissions currently exists');
 					}
 
 					$dm = Datamanager\Adapter::factory('permission', $input->get('permission'));
@@ -531,7 +532,7 @@
 				{
 					if(!$datastore->permissions)
 					{
-						tuxxedo_error('No permissions currently exists');
+						throw new Exception('No permissions currently exists');
 					}
 
 					$rows = '';
@@ -548,7 +549,7 @@
 				{
 					if(!$datastore->permissions)
 					{
-						tuxxedo_error('No permissions currently exists');
+						throw new Exception('No permissions currently exists');
 					}
 
 					if(isset($_POST['submituser']) || isset($_POST['submitusergroup']))
@@ -559,7 +560,7 @@
 
 							if(!$userinfo)
 							{
-								tuxxedo_error('Invalid user');
+								throw new Exception('Invalid user');
 							}
 
 							$groupinfo = $user->getUserGroupInfo($userinfo->usergroupid);
@@ -571,7 +572,7 @@
 
 						if(!$groupinfo)
 						{
-							tuxxedo_error('Invalid usergroup');
+							throw new Exception('Invalid usergroup');
 						}
 
 						$rows = '';
@@ -621,7 +622,7 @@
 				break;
 				default:
 				{
-					tuxxedo_error('Invalid action');
+					throw new Exception('Invalid action');
 				}
 				break;
 			}

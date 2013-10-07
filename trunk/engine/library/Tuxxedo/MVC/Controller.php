@@ -98,8 +98,11 @@
 		 *
 		 * @param	\Tuxxedo\Router			Router object used
 		 * @return	void				No value is returned
+		 * 
+		 * @changelog	1.2.0				Any router can be passed to this method, prior only 'Uri' could be passed
+		 * @changelog	1.2.0				Removed the 'final' modifier from this method
 		 */
-		final public function setRouter(Router $router)
+		public function setRouter(Router $router)
 		{
 			$this->router = $router;
 		}
@@ -109,8 +112,10 @@
 		 *
 		 * @param	\Tuxxedo\MVC\View		Layout template
 		 * @return	void				No value is returned
+		 * 
+		 * @changelog	1.2.0				Removed the 'final' modifier from this method
 		 */
-		final public function setLayout(View $layout)
+		public function setLayout(View $layout)
 		{
 			$layout->setLayout(true);
 
@@ -122,8 +127,10 @@
 		 *
 		 * @param	\Tuxxedo\MVC\View		View template for the current action
 		 * @return	void				No value is returned
+		 * 
+		 * @changelog	1.2.0				Removed the 'final' modifier from this method
 		 */
-		final public function setView(View $view)
+		public function setView(View $view)
 		{
 			$this->view = $view;
 		}
@@ -135,8 +142,10 @@
 		 *
 		 * @throws	\Tuxxedo\Exception			If the controller does not exists
 		 * @throws	\Tuxxedo\Exception\MVC\InvalidAction	If the action method does not exists
+		 * 
+		 * @changelog	1.2.0					Removed the 'final' modifier from this method
 		 */
-		final public function dispatch()
+		public function dispatch()
 		{
 			if($this instanceof Controller\Dispatchable)
 			{

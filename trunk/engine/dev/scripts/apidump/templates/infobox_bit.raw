@@ -1,0 +1,4 @@
+<tr class="row">
+	<td nowrap="nowrap">{$id}</td>
+	<td nowrap="nowrap" style="width: 100%">{$desc}</td>
+</tr>

@@ -52,6 +52,8 @@
 		 * Constructor, sets the standardized exception message
 		 *
 		 * @param	\Exception				The previous exception if any
+		 *
+		 * @changelog	1.1.0					This method now supports previous exceptions ($previous parameter)
 		 */
 		public function __construct(\Exception $previous = NULL)
 		{

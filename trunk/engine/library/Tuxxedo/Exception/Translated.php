@@ -47,6 +47,7 @@
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
+	 * @since		1.1.0
 	 */
 	class Translated extends \Tuxxedo\Exception
 	{

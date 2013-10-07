@@ -18,8 +18,9 @@
 	/**
 	 * Alasing rules
 	 */
+	use DevTools\Utilities;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Helper;
-	use Tuxxedo\Utilities;
 
 
 	/**
@@ -84,7 +85,7 @@
 
 			if(!$ds || !$ds->getNumRows())
 			{
-				tuxxedo_error('No datastore elements to show');
+				throw new Exception('No datastore elements to show');
 			}
 
 			$rows = '';

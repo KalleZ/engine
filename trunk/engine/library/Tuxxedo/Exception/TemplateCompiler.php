@@ -46,6 +46,7 @@
 		 * Exception type - None
 		 *
 		 * @var		integer
+		 * @since	1.2.0
 		 */
 		const TYPE_NONE			= 0;
 
@@ -53,6 +54,7 @@
 		 * Exception type - Condition
 		 *
 		 * @var		integer
+		 * @since	1.2.0
 		 */
 		const TYPE_CONDITION		= 1;
 
@@ -60,6 +62,7 @@
 		 * Exception type - Phrase
 		 *
 		 * @var		integer
+		 * @since	1.2.0
 		 */
 		const TYPE_PHRASE		= 2;
 
@@ -77,6 +80,8 @@
 		 *
 		 * @param	string			The error message
 		 * @param	\stdClass		The current compiler stack data
+		 *
+		 * @changelog	1.1.0			Added the $stack_data parameter
 		 */
 		public function __construct($message, \stdClass $stack_data = NULL)
 		{
@@ -96,6 +101,8 @@
 		 * Fetches the compiler stack data
 		 *
 		 * @return	\stdClass		Returns the compiler stack data, and NULL if non was available
+		 *
+		 * @since	1.1.0
 		 */
 		public function getStackData()
 		{

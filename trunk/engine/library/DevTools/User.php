@@ -50,6 +50,10 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		DevTools
+	 *
+	 * @since		1.1.0
+	 *
+	 * @see			\Tuxxedo\User
 	 */
 	class User extends \Tuxxedo\User
 	{
@@ -62,9 +66,9 @@
 			$this->userinfo 	= $this->usergroupinfo = new \stdClass;
 			$this->information	= $this->userinfo;
 
-			if($this->registry->session['__devtools_userid'])
+			if($this->registry->session['devtools_userid'])
 			{
-				$this->userinfo 		= $this->getUserinfo($this->registry->session['__devtools_userid']);
+				$this->userinfo 		= $this->getUserinfo($this->registry->session['devtools_userid']);
 				$this->userinfo->permissions	= (integer) $this->userinfo->permissions;
 			}
 
