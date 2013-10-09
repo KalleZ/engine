@@ -54,7 +54,7 @@
 	 *
 	 * @wip
 	 */
-	class Phrase extends Adapter implements Hooks\Cache
+	class Phrase extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
 		 * Fields for validation of phrases
@@ -215,6 +215,22 @@
 			}
 
 			return(true);
+		}
+
+		/**
+		 * Resets the data to its default values while keeping the 
+		 * identifier intact
+		 *
+		 * @return	boolean				Returns true on successful reset, otherwise false
+		 */
+		public function reset()
+		{
+			if(($this->options & self::OPT_LOAD_ONLY) || $this->identifier === NULL)
+			{
+				// ...
+			}
+
+			// ...
 		}
 	}
 ?>

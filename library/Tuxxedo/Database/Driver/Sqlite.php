@@ -45,7 +45,7 @@
 
 
 	/**
-	 * Sqlite driver
+	 * SQLite driver
 	 *
 	 * This driver enables access to a Sqlite 3+ based database using 
 	 * the sqlite3 database extension. Engine does not in any way support 

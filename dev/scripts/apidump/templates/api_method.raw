@@ -16,7 +16,7 @@
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							Method
+							<a href="{$obj_link}#methods">Method</a>
 						</td>
 					</tr>
 					<tr>

@@ -225,7 +225,7 @@
 					{
 						if(\in_array($lcfunction, self::$includes))
 						{
-							$flags 		|= TraceFrame::FLAG_INCLUDE;
+							$flags 		= TraceFrame::FLAG_INCLUDE;
 							$call		= $t['function'];
 							$notes[] 	= 'Include';
 						}

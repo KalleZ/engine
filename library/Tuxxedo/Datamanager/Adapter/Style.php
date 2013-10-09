@@ -58,7 +58,7 @@
 		 *
 		 * @var		array
 		 *
-		 * @changelog	1.2.0			Renamed 'default' to 'isdefault'
+		 * @changelog	1.2.0			Renamed 'defaultstyle' to 'isdefault'
 		 * @changelog	1.1.0			Added the 'inherit' field
 		 */
 		protected $fields		= Array(

@@ -16,7 +16,7 @@
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							{$obj_type} constant
+							<a href="{$obj_link}#constants">{$obj_type} constant</a>
 						</td>
 					</tr>
 					<tr>

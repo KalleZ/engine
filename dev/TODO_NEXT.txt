@@ -21,11 +21,3 @@
 
 	Database
 	 - Make sure SQLite3 is fully functional
-
-	Internationalization
-	 - Add support for 'resetable' phrases
-	 - Phrases should use ids instead of named groups, which makes validation much easier, but dublicates cached data to some distinct
-
-	Bugs
-	 - Language
-	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same

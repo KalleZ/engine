@@ -3,5 +3,15 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" Beta 1
+	Tuxxedo Engine 1.2.0 "Beloved" Beta 2
 	---------------------------------------------------
+
+	Datamanagers
+	 - Language
+	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same
+	 - Missing phrases
+	  - dm_session_rehash
+
+	Internationalization
+	 - Add support for 'resetable' phrases
+	 - Phrases should use ids instead of named groups, which makes validation much easier, but dublicates cached data to some distinct

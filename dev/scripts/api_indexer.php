@@ -55,6 +55,13 @@
 		public static $outputdir		= '';
 
 		/**
+		 * Template directory
+		 *
+		 * @var		string
+		 */
+		public static $templatedir		= '';
+
+		/**
 		 * Template variables
 		 *
 		 * @var		array
@@ -89,13 +96,13 @@
 
 			if(!isset(self::$templates[$template]))
 			{
-				if(!is_file('./apidump/templates/' . $template . '.raw'))
+				if(!is_file(self::$templatedir . '/' . $template . '.raw'))
 				{
 					IO::text('Error: Template file does not exists (' . $template . '.raw)');
 					exit;
 				}
 
-				self::$templates[$template] = file_get_contents('./apidump/templates/' . $template . '.raw');
+				self::$templates[$template] = file_get_contents(self::$templatedir . '/' . $template . '.raw');
 			}
 
 			$this->name 			= $template;
@@ -268,7 +275,7 @@
 		/**
 		 * Gets a hash (or generates a new one)
 		 *
-		 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property', 'method' or 'namespace'), note that class constants uses 'constant'
+		 * @param	string				The type ('constant', 'function', 'class', 'interface', 'trait', 'property', 'method' or 'namespace'), note that class constants uses 'constant'
 		 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 		 * @param	string				The file of where the object exists (fx. 'library/Tuxxedo/Bootstrap.php'), this is case sensitive
 		 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
@@ -279,7 +286,7 @@
 
 			if(!$types)
 			{
-				$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method', 'namespace');
+				$types	= Array('constant', 'function', 'class', 'interface', 'trait', 'property', 'method', 'namespace');
 			}
 
 			$type = strtolower($type);
@@ -316,7 +323,7 @@
 	 * Generates a file hash (filename) based on the name and type to 
 	 * avoid possible naming conflicts.
 	 *
-	 * @param	string				The type ('constant', 'function', 'class', 'interface', 'property', 'method' or 'namespace'), note that class constants uses 'constant'
+	 * @param	string				The type ('constant', 'function', 'class', 'interface', 'trait', 'property', 'method' or 'namespace'), note that class constants uses 'constant'
 	 * @param	string				The name of the object (fx. for function: 'api_file_hash')
 	 * @return	string				Returns a file name without an extension (fx. 'constant-tuxxedo-library-123456') or false on failure
 	 *
@@ -329,7 +336,7 @@
 		if(!$rng)
 		{
 			$lcache	= Array();
-			$types	= Array('constant', 'function', 'class', 'interface', 'property', 'method', 'namespace');
+			$types	= Array('constant', 'function', 'class', 'interface', 'trait', 'property', 'method', 'namespace');
 
 			$rng 	= function()
 			{
@@ -401,7 +408,8 @@
 		{
 			$types = Array(
 					'class'		=> 'classes', 
-					'interface'	=> 'interfaces'
+					'interface'	=> 'interfaces', 
+					'trait'		=> 'traits'
 					);
 		}
 
@@ -440,7 +448,7 @@
 
 	$hashlink = function($datatype) use($hashlookup)
 	{
-		if(!($hash = $hashlookup('class|interface', $datatype)))
+		if(!($hash = $hashlookup('class|interface|trait', $datatype)))
 		{
 			return($datatype);
 		}
@@ -470,7 +478,7 @@
 							$param[0] = '\\' . $param[0];
 						}
 
-						if(($p = $hashlookup('class|interface', $param[0])) !== false)
+						if(($p = $hashlookup('class|interface|trait', $param[0])) !== false)
 						{
 							$link		= new Template('link');
 							$link->link	= $p . '.html';
@@ -807,7 +815,7 @@
 
 		foreach($s as $see)
 		{
-			$hash = $hashlookup('class|interface', $see);
+			$hash = $hashlookup('class|interface|trait', $see);
 
 			if(!$hash)
 			{
@@ -830,15 +838,12 @@
 	IO::signature();
 	IO::headline('API Indexer', 1);
 
+	$warns	= Array();
 	$cli	= IO::isCli();
 	$nodev	= IO::input('nodev');
 	$output	= IO::input('outputdir');
+	$tmpdir	= IO::input('templatedir');
 	$json 	= json_decode(file_get_contents('./apidump/engine_api.json'));
-
-	if(!is_dir($output))
-	{
-		$output = './apidump/output';
-	}
 
 	if(!$json)
 	{
@@ -846,13 +851,34 @@
 		exit;
 	}
 
+	if(!is_dir($output))
+	{
+		if($output !== false)
+		{
+			$warns[] = 'Invalid output directory, using default (./apidump/templates)';
+		}
+
+		$output = './apidump/output';
+	}
+
+	if(!is_dir($tmpdir))
+	{
+		if($tmpdir !== false)
+		{
+			$warns[] = 'Invalid template directory, using default (./apidump/templates)';
+		}
+
+		$tmpdir = './apidump/templates';
+	}
+
 	IO::ul();
 	IO::li('Reading API dump...');
 
 
 	Template::$outputdir 	= $output;
+	Template::$templatedir	= $tmpdir;
 	$hashreg		= new HashRegistry($output);
-	$constants 		= $functions = $classes = $interfaces = $namespaces = Array();
+	$constants 		= $functions = $classes = $interfaces = $traits = $namespaces = Array();
 
 	foreach($json as $file => $struct)
 	{
@@ -879,7 +905,7 @@
 			}
 		}
 
-		foreach(Array('classes' => 'class', 'interfaces' => 'interface') as $type => $types)
+		foreach(Array('classes' => 'class', 'interfaces' => 'interface', 'traits' => 'trait') as $type => $types)
 		{
 			if(!$struct->{$type})
 			{
@@ -902,7 +928,7 @@
 	}
 
 	$generated_tocs = Array();
-	$obj_types	= Array('constants', 'functions', 'classes', 'interfaces', 'namespaces');
+	$obj_types	= Array('constants', 'functions', 'classes', 'interfaces', 'traits', 'namespaces');
 
 	foreach($obj_types as $obj)
 	{
@@ -963,6 +989,7 @@
 									'functions'	=> Array(), 
 									'classes'	=> Array(), 
 									'interfaces'	=> Array(), 
+									'traits'	=> Array(), 
 									'files'		=> Array()
 									);
 				}
@@ -984,6 +1011,7 @@
 										'functions'	=> Array(), 
 										'classes'	=> Array(), 
 										'interfaces'	=> Array(), 
+										'traits'	=> Array(), 
 										'files'		=> Array()
 										);
 				}
@@ -1048,7 +1076,7 @@
 
 						foreach($p as $pa)
 						{
-							if($hash = $hashlookup('class|interface', $pa[0]))
+							if($hash = $hashlookup('class|interface|trait', $pa[0]))
 							{
 								$link		= new Template('link');
 								$link->link	= $hash . '.html';
@@ -1102,8 +1130,9 @@
 			break;
 			case('classes'):
 			case('interfaces'):
+			case('traits'):
 			{
-				$rtype = ($type == 'classes' ? 'class' : 'interface');
+				$rtype = ($type == 'classes' ? 'class' : ($type == 'interfaces' ? 'interface' : 'trait'));
 
 				foreach($ptr as $obj_id => $name)
 				{
@@ -1217,7 +1246,7 @@
 
 										foreach($p as $pa)
 										{
-											if($hash = $hashlookup('class|interface', $pa[0]))
+											if($hash = $hashlookup('class|interface|trait', $pa[0]))
 											{
 												$link		= new Template('link');
 												$link->link	= $hash . '.html';
@@ -1264,6 +1293,7 @@
 						$template 		= new Template('obj_contents');
 						$template->type		= ucfirst($mtypes[$mtype][0]);
 						$template->mtype	= ucfirst($mtype);
+						$template->lcmtype	= strtolower($mtype);
 						$template->content	= $content;
 
 						$contents		.= $template;
@@ -1304,7 +1334,7 @@
 
 					if($meta['extends'])
 					{
-						if($hash = $hashlookup('class', $meta['extends']))
+						if($hash = $hashlookup('class|interface|trait', $meta['extends']))
 						{
 							$link		= new Template('link');
 							$link->link	= $hash . '.html';
@@ -1418,7 +1448,7 @@
 
 					$nstemp->extendedinfo = $extendedinfo;
 
-					foreach(Array('constant' => 'constants', 'function' => 'functions', 'class' => 'classes', 'interface' => 'interfaces') as $single => $plural)
+					foreach(Array('constant' => 'constants', 'function' => 'functions', 'class' => 'classes', 'interface' => 'interfaces', 'trait' => 'traits') as $single => $plural)
 					{
 						if(!$nscache[$meta['meta']['name']][$plural])
 						{
@@ -1497,6 +1527,7 @@
 				'functions'	=> 'Procedural functions', 
 				'classes'	=> 'Class synopsises', 
 				'interfaces'	=> 'Interface models', 
+				'traits'	=> 'Trait definitions', 
 				'namespaces'	=> 'Namespace structures'
 				);
 
@@ -1523,4 +1554,17 @@
 
 	IO::ul(IO::TAG_END);
 	IO::ul(IO::TAG_END);
+
+	if($warns)
+	{
+		IO::headline('WARNING');
+		IO::ul();
+
+		foreach($warns as $w)
+		{
+			IO::li($w);
+		}
+
+		IO::ul(IO::TAG_END);
+	}
 ?>
