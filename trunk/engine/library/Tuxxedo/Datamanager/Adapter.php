@@ -460,7 +460,7 @@
 			{
 				if($options & self::OPT_INTL && !$registry->intl)
 				{
-					throw new Exception\Basic('Internationalization is not instanciated for form data phrases');
+					throw new Exception\Basic('Internationalization is not instanciated for datamanager phrases');
 				}
 
 				if($registry->intl && !$registry->intl->cache(Array('datamanagers')))
@@ -479,7 +479,7 @@
 
 			if(!\is_subclass_of($class, __CLASS__))
 			{
-				throw new Exception\Basic('Corrupt datamanager driver, driver class does not follow the driver specification');
+				throw new Exception\Basic('Corrupt datamanager adapter, adapter class does not follow the driver specification');
 			}
 
 			self::$loaded_datamanagers[] = $datamanager;
@@ -984,7 +984,7 @@
 		 * called publically.
 		 *
 		 * @param	\Tuxxedo\Datamanager\Adapter	The datamanager adapter instance to execute hooks on
-		 * @return	boolean				Returns true if all fields
+		 * @return	boolean				Returns true if all fields passed through the hooks flawlessly
 		 *
 		 * @since	1.2.0
 		 */

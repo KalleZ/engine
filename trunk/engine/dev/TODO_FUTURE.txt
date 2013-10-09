@@ -29,7 +29,6 @@
 	   - Add the ability to parse inline docblock tags (like @see)
 	   - Add the ability to fetch file docblocks
 	   - Add the ability to fetch default values of properties, constants and class constants
-	   - Add the ability to pick up traits
 	 - api_indexer.php
 	   - Add the ability to report on obsolete files and other mismatches
 	 - check_dm_phrases.php

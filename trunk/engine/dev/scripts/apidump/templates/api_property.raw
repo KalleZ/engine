@@ -16,7 +16,7 @@
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							Property
+							<a href="{$obj_link}#properties">Property</a>
 						</td>
 					</tr>
 					<tr>

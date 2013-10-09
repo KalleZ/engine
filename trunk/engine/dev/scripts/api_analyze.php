@@ -709,7 +709,7 @@
 	$statistics->elements			= 0;
 	$statistics->counter			= new stdClass;
 	$statistics->counter->namespaces	= Array();
-	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
+	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->traits = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
 
 	IO::signature();
 	IO::headline('Lexical API analyze', 1);
@@ -750,6 +750,7 @@
 						'aliases'	=> Array(), 
 						'classes'	=> Array(), 
 						'interfaces'	=> Array(), 
+						'traits'	=> Array(), 
 						'constants'	=> Array(), 
 						'functions'	=> Array()
 						);
@@ -835,6 +836,7 @@
 				break;
 				case(T_INTERFACE):
 				case(T_CLASS):
+				case(355):
 				{
 					if(($name = lexical_scan($tokens_copy, $index, T_STRING)) == false)
 					{
@@ -858,8 +860,8 @@
 					$name 					= resolve_namespace_alias(key($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $name);
 
 					$context->current 			= $token[0];
-					$context->type				= $type = ($token[0] == T_CLASS ? 'class' : 'interface');
-					$context->type_multiple			= $type_multiple = ($token[0] == T_CLASS ? 'classes' : 'interfaces');
+					$context->type				= $type = ($token[0] == T_CLASS ? 'class' : ($token[0] == T_INTERFACE ? 'interface' : 'trait'));
+					$context->type_multiple			= $type_multiple = ($token[0] == T_CLASS ? 'classes' : ($token[0] == T_INTERFACE ? 'interfaces' : 'traits'));
 					$context->{$type} 			= $name;
 
 					$extends				= lexical_scan_extends_implements($tokens_copy, $index, T_EXTENDS, Array(T_IMPLEMENTS, '{'));
@@ -937,7 +939,7 @@
 
 					$function = $function[0];
 
-					if($context->current == T_CLASS || $context->current == T_INTERFACE)
+					if($context->current == T_CLASS || $context->current == T_INTERFACE || $context->current == 355)
 					{
 						$name											= $context->{$context->type} . '::' . $function . '()';
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] 	= Array(
@@ -1292,7 +1294,7 @@
 	IO::li('Total number of scanned elements: ' . $statistics->elements, IO::STYLE_BOLD);
 	IO::ul();
 
-	foreach(Array('constants', 'functions', 'namespaces', 'aliases', 'classes', 'interfaces', 'object_constants', 'properties', 'methods') as $element)
+	foreach(Array('constants', 'functions', 'namespaces', 'aliases', 'classes', 'interfaces', 'traits', 'object_constants', 'properties', 'methods') as $element)
 	{
 		IO::li(ucfirst(str_replace('_', ' ', $element)) . ': ' . $statistics->counter->{$element});
 	}

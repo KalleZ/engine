@@ -73,8 +73,6 @@
 	 */
 	function widget_hook_styles(Style $style, Registry $registry, $widget)
 	{
-		$style->cache(Array($widget));
-
 		$buffer 	= '';
 		$styleid	= $registry->input->get('style', Input::TYPE_NUMERIC);
 
@@ -106,8 +104,6 @@
 	 */
 	function widget_hook_intl(Style $style, Registry $registry, $widget)
 	{
-		$style->cache(Array($widget));
-
 		$buffer 	= '';
 		$languageid	= $registry->input->get('language', Input::TYPE_NUMERIC);
 
@@ -139,8 +135,6 @@
 	 */
 	function widget_hook_sessions(Style $style, Registry $registry, $widget)
 	{
-		$style->cache(Array($widget));
-
 		$buffer		= '';
 		$refresh_values = Array(
 					0	=> 'Disabled', 
