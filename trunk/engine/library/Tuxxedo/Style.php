@@ -101,13 +101,11 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			$options	= $registry->options;
-			$styledata 	= $registry->datastore->styleinfo;
-			$styleid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->style_id !== NULL && $registry->userinfo->style_id != $options->style_id ? $registry->userinfo->style_id : $options->style_id) : 0);
+			$styleid = ($registry->options ? (isset($registry->userinfo->id) && $registry->userinfo->style_id !== NULL && $registry->userinfo->style_id != $registry->options->style_id ? $registry->userinfo->style_id : $registry->options->style_id) : 0);
 
-			if($styleid && isset($styledata[$styleid]))
+			if(isset($registry->datastore->styleinfo[$styleid]))
 			{
-				return(new self($styledata[$styleid]));
+				return(new self($registry->datastore->styleinfo[$styleid]));
 			}
 
 			throw new Exception\Basic('Invalid style id');

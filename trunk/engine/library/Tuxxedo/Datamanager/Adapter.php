@@ -356,6 +356,29 @@
 		}
 
 		/**
+		 * Clonable hook
+		 *
+		 * Magic __clone() method, this method will internally reset the state of a 
+		 * datamanager.
+		 *
+		 * @return	void				No value is returned
+		 *
+		 * @since	1.2.0
+		 */
+		public function __clone()
+		{
+			$this->identfier 	= NULL;
+			$this->reidentify	= false;
+			$this->context		= self::CONTEXT_NONE;
+			$this->options		|= self::OPT_LOAD_ONLY;
+
+			if(isset($this->data[$this->idname]))
+			{
+				unset($this->data[$this->idname]);
+			}
+		}
+
+		/**
 		 * Overloads the info access 'get' method so that default data is allocated 
 		 * when using the ArrayAccess accessor
 		 *

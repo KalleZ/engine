@@ -9,52 +9,49 @@
 		{
 			font-family: 		\"Helvetica Neue\", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
 		}
-		a
-		{
-			color:			#021420;
-			font-weight:		bold;
-		}
 		body
 		{
 			background-color: 	#021420;
 			font-size: 		82%;
 			color: 			#3B7286;
-			padding: 		0px 30px;
 		}
 		h1
 		{
 			color: 			#FFFFFF;
+			font-size:		40px;
+			margin-bottom:		0px;
 		}
-		input, .link-button
+		h1, h2, .middle div
 		{
-			background-color:	#EAEAEA;
-			border:			0px;
-			border-radius: 		4px;
-			padding:		3px 10px;
+			text-align:		center;
 		}
-			input[type=password], input[type=text]
+		h2
+		{
+			font-size:		14px;
+		}
+			h2 ul
 			{
-				background-color:	#FFFFFF;
-				border:			1px solid #EAEAEA;
+				text-align:		left;
 			}
-		.box
+		.middle
 		{
-			background-color: 	#D2D2D2;
-			border: 		3px solid #D2D2D2;
-			border-radius: 		4px;
+			left:			50%;
+			margin:			-150px 0px 0px -220px;
+			position:		absolute;
+			top:			50%;
+			width:			440px;
 		}
-			.box .inner
+			.middle a
 			{
-				background-color: 	#FFFFFF;
-				border-radius: 		4px;
-				padding: 		6px;
+				border-bottom:		1px solid transparent;
+				color:			#FFFFFF;
+				margin-right:		10px;
+				text-decoration:	none;
 			}
-		.wrapper
-		{
-			margin:			0px auto;
-			width:			80%;
-		}
+				.middle a:hover
+				{
+					border-bottom:		1px solid #3B7286;
+				}
 		</style>
 	</head>
 	<body>
-		<div class=\"wrapper\">

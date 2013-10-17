@@ -51,8 +51,6 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 * @since		1.2.0
-	 *
-	 * @wip
 	 */
 	class Phrase extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
@@ -63,7 +61,8 @@
 		 */
 		protected $fields		= Array(
 							'id'			=> Array(
-												'type'		=> self::FIELD_PROTECTED
+												'type'		=> self::FIELD_PROTECTED, 
+												'validation'	=> self::VALIDATE_IDENTIFIER
 												), 
 							'title'			=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
@@ -211,7 +210,16 @@
 					return(false);
 				}
 
-				Adapter::factory('phrasegroup', $pid->fetchObject()->id)->save();
+				foreach($pid as $p)
+				{
+					try
+					{
+						Adapter::factory('phrasegroup', $p['id'])->save();
+					}
+					catch(Exception $e)
+					{
+					}
+				}
 			}
 
 			return(true);
@@ -222,6 +230,9 @@
 		 * identifier intact
 		 *
 		 * @return	boolean				Returns true on successful reset, otherwise false
+		 *
+	 	 * @todo	Implement
+		 * @wip
 		 */
 		public function reset()
 		{

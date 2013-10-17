@@ -569,7 +569,7 @@
 				}
 			}
 
-			if($this->options & self::OPT_NO_INTERPOLATED_CALLS && strpos($src, '{${') !== false)
+			if(($this->options & self::OPT_NO_INTERPOLATED_CALLS) && strpos($src, '{${') !== false)
 			{
 				throw new Exception\TemplateCompiler('Interpolated function calls are not allowed');
 			}

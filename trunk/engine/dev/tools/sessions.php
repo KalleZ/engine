@@ -22,6 +22,7 @@
 	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Utilities as CoreUtilities;
 
 
 	/**
@@ -182,7 +183,7 @@
 			$registry->set('user', new User);
 
 			$session['expires']		= (($expires = ($session['lastactivity'] + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
-			$session['lastactivity'] 	= Utilities::date($session['lastactivity']);
+			$session['lastactivity'] 	= CoreUtilities::date($session['lastactivity']);
 			$session['location'] 		= htmlspecialchars(html_entity_decode($session['location']));
 			$session['useragent'] 		= htmlspecialchars(html_entity_decode($session['useragent']));
 
@@ -209,7 +210,7 @@
 				}
 
 				$session->expires	= (($expires = ($session->lastactivity + $options->cookie_expires)) < TIMENOW_UTC ? 'Expired' : sprintf('%d second(s)', $expires - TIMENOW_UTC));
-				$session->lastactivity 	= Utilities::date($session->lastactivity);
+				$session->lastactivity 	= CoreUtilities::date($session->lastactivity);
 
 				eval('$userlist .= "' . $style->fetch('sessions_index_itembit') . '";');
 			}

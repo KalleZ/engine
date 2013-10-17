@@ -19,7 +19,6 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Utilities\IO;
-	use Tuxxedo\Utilities;
 	use Tuxxedo\Version;
 
 
@@ -85,13 +84,6 @@
 		 */
 		public function __construct($template)
 		{
-			static $timenow;
-
-			if(!$timenow)
-			{
-				$timenow = Utilities::date(time(), 'H:i:s j/n-Y \U\T\C');
-			}
-
 			$template = strtolower($template);
 
 			if(!isset(self::$templates[$template]))
@@ -107,7 +99,6 @@
 
 			$this->name 			= $template;
 			$this->variables['version']	= Version::FULL;
-			$this->variables['time']	= $timenow;
 		}
 
 		/**
@@ -833,21 +824,20 @@
 	};
 
 
-	date_default_timezone_set('UTC');
-
 	IO::signature();
 	IO::headline('API Indexer', 1);
 
 	$warns	= Array();
 	$cli	= IO::isCli();
 	$nodev	= IO::input('nodev');
+	$inputf = IO::input('inputfile');
 	$output	= IO::input('outputdir');
 	$tmpdir	= IO::input('templatedir');
-	$json 	= json_decode(file_get_contents('./apidump/engine_api.json'));
+	$json 	= json_decode(file_get_contents(($inputf ? $inputf : './apidump/engine_api.json')));
 
 	if(!$json)
 	{
-		IO::text('Error: Unable to read Engine API from the exported JSON file');
+		IO::text('Error: Unable to read API from the exported JSON file');
 		exit;
 	}
 
@@ -884,7 +874,7 @@
 	{
 		$isdev = (substr($file, 0, 3) == 'dev' || substr($file, 0, 11) == 'library/Dev');
 
-		if($nodev && $isdev)
+		if(($nodev && $isdev) || $file == '.tuxxedo')
 		{
 			continue;
 		}

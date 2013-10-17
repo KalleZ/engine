@@ -351,7 +351,7 @@
 
 			if($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite')
 			{
-				throw new Exception('This tool is currently not available for SQLite');
+				throw new Exception('This tool is not available for SQLite');
 			}
 
 			$query = $dbhelper->getTables();
