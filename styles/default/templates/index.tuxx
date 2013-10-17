@@ -1,29 +1,14 @@
 {$header}
 
-<h1>Tuxxedo Engine</h1>
-<div class=\"box\">
-	<div class=\"inner\">
-		Thank you for choosing Tuxxedo Engine, version {$version} is installed 
-		and ready to use.
+<div class=\"middle\">
+	<h1>Tuxxedo Engine</h1>
+	<h2>Version {$version}</h2>
 
-		<p>
-			To begin developing, head over to the DevTools component, this component 
-			is as the name sounds, designed to ease development of Engine based 
-			applications. If you are interested in how Engine is developed, head over to 
-			our blog and our project site.
-		</p>
-
-		<p>
-			Remember to checkout the 'configuration.php' file, to define the application 
-			variables. Debugging mode can also be enabled/disabled here. The debug mode 
-			should always be enabled when working on a development server to give to 
-			more expressive error messages, and always turned off when the application 
-			is deployed to production servers.
-		</p>
-
-		<a class=\"link-button\" href=\"./dev/tools/\">DevTools</a> 
-		<a class=\"link-button\" href=\"http://www.tuxxedo.net/devblog/\">Blog</a> 
-		<a class=\"link-button\" href=\"http://code.google.com/p/tuxxedo\">Project</a>
+	<div>
+		<a href=\"./dev/tools/\">DevTools</a>
+		<a href=\"./dev/scripts/apidump/output/\">API Docs</a>
+		<a href=\"http://www.tuxxedo.net/devblog/\">Blog</a>
+		<a href=\"http://code.google.com/p/tuxxedo\">Project</a>
 	</div>
 </div>
 

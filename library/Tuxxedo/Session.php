@@ -95,7 +95,7 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			if(($options = $registry->options))
+			if(($options = $registry->options) !== false)
 			{
 				self::$options = Array(
 							'expires'	=> $options->cookie_expires, 

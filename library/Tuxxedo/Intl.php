@@ -103,7 +103,7 @@
 		{
 			static $iso_to_language;
 
-			if(!$iso_to_language)
+			if($registry->options && $registry->options->language_autodetect && !$iso_to_language)
 			{
 				$iso_to_language = function() use($registry)
 				{
@@ -138,14 +138,12 @@
 				};
 			}
 
-			$options	= $registry->options;
-			$languagedata 	= $registry->datastore->languages;
-			$languageid	= ($options && $options->language_autodetect ? $iso_to_language() : ($options ? $options->language_id : 0));
-			$languageid	= ($options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $languageid ? $registry->userinfo->language_id : $languageid) : $languageid);
+			$languageid	= ($registry->options && $registry->options->language_autodetect ? $iso_to_language() : ($registry->options ? $registry->options->language_id : 0));
+			$languageid	= ($registry->options ? (isset($registry->userinfo->id) && $registry->userinfo->language_id !== NULL && $registry->userinfo->language_id != $languageid ? $registry->userinfo->language_id : $languageid) : $languageid);
 
-			if($languageid && isset($languagedata[$languageid]))
+			if(isset($registry->datastore->languages[$languageid]))
 			{
-				return(new self($languagedata[$languageid]));
+				return(new self($registry->datastore->languages[$languageid]));
 			}
 
 			throw new Exception\Basic('Invalid language id');
@@ -420,8 +418,6 @@
 					}
 				}
 
-				$this->registry->set('phrase', $this->getPhrases());
-
 				return(true);
 			}
 			elseif(!isset($this->phrases[$list]))
@@ -430,8 +426,6 @@
 			}
 
 			unset($this->phrases[$list]);
-
-			$this->registry->set('phrase', $this->getPhrases());
 
 			return(true);
 		}

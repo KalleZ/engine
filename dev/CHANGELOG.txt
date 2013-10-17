@@ -16,6 +16,7 @@
 	 - Phrasegroup
 	Added new helpers: (Kalle)
 	 - Timer
+	Added support for cloning datamanagers (Kalle)
 	Added the \Tuxxedo\Options class, so that $registry->options also work with categories (Kalle)
 	Added \Tuxxedo\MVC\Controller::getPreloadables() to get preloadable data for controllers (Kalle)
 	Added \Tuxxedo\Intl::getISOCodes() to get the browser request language based on ISO codes (Kalle)
@@ -56,6 +57,7 @@
 	 - @wip
 	Added @changelog and @since docblock tags around most of the core (Kalle)
 	Added \Tuxxedo\Utilities::datef() as a shorthand for \Tuxxedo\Utilities::date() without a timestamp (Kalle)
+	Added a magic '.tuxxedo' file to engine_api.json, this contains meta information about the JSON format for readers (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -111,6 +113,7 @@
 	Fixed a bug in api_analyze.php so that it will use the correct datatype + depth for parameters (Kalle)
 	Fixed a bug in api_analyze.php so that namespaces using curly braces will be correctly picked up (Kalle)
 	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a  different name (Kalle)
+	Fixed a bug in api_analyze.php so that properties declared with 'var' are considered 'public' (Kalle)
 	Fixed a styling issue on the Options DevTools page if the virtual 'orphan' category was present (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
@@ -138,7 +141,7 @@
 	Removed the $registry->configuration variable when initializing the bootstraper (Kalle)
 	Removed the 'work-in-progress' notices from api_analyze.php (Kalle)
 	Removed DevTools protective mode '2' (Kalle)
-	Removed the \Tuxxedo\Database\Driver::getDriverRequirements() method and from all drivers (Kalle)
+	Removed the \Tuxxedo\Database\Driver::getDriverRequirements() method from all drivers (Kalle)
 	Removed the 'final' restriction on the following methods: (Kalle)
 	 - \Tuxxedo\Database::invoke()
 	 - \Tuxxedo\Database::setShutdownQuery()
@@ -306,10 +309,10 @@
 	Fixed isFreed() to return the correct return value for all drivers (Kalle)
 	Fixed some dublicate phrases in the SQL files (Kalle)
 	Fixed datamanagers to work correctly when changing the identifier to not leave a dublicate copy (Kalle)
-	Fixed E_RECOVERABLE_ERROR's not to show full path in some rare cases (Kalle)
+	Fixed E_RECOVERABLE_ERROR errors not to show full path in some rare cases (Kalle)
 	Fixed a bug in the template that datamanger that wouldn't delete the template on the file system (Kalle)
 	Fixed the Input class to correctly return arrays when OPT_ARRAY is used (Kalle)
-	Fixed a case sensitive issue with the 'allow*' methods in the template compiler (Kalle)
+	Fixed a case sensitive issue with the 'allow*()' methods in the template compiler (Kalle)
 
 	Removed the /dev/extra folder, as the bootstraper is long outdated and not maintained (Kalle)
 	Removed the /dev/api/dumps folder, as dumps are now directly dumped into /dev/api/ (Kalle)

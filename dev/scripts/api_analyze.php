@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Utilities\IO;
+	use Tuxxedo\Version;
 
 
 	/**
@@ -701,7 +702,12 @@
 	$engine_path				= realpath(__DIR__ . '/../../');
 	$cli					= IO::isCli();
 	$files 					= analyze($engine_path);
-	$datamap				= Array();
+	$datamap				= Array(
+							'.tuxxedo'	=> Array(
+											'version'	=> 1, 
+											'generator'	=> 'Tuxxedo Engine ' . Version::FULL
+											)
+							);
 
 	$statistics				= new stdClass;
 	$statistics->no_docblock		= 0;
@@ -1215,6 +1221,7 @@
 					IO::li(sprintf('PROPERTY (%s) %s', $property, dump_metadata($metadata['metadata'])));
 				}
 				break;
+				case(T_VAR):
 				case(T_PUBLIC):
 				{
 					$context->modifiers |= ACC_PUBLIC;

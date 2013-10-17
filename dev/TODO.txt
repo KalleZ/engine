@@ -8,10 +8,7 @@
 
 	Datamanagers
 	 - Language
-	  - Delete does not remove phrasegroups, may also include phrases too as the code fragment is the same
-	 - Missing phrases
-	  - dm_session_rehash
+	  - Delete does not remove phrasegroups (phrases work!)
 
 	Internationalization
 	 - Add support for 'resetable' phrases
-	 - Phrases should use ids instead of named groups, which makes validation much easier, but dublicates cached data to some distinct

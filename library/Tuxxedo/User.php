@@ -140,9 +140,7 @@
 			{
 				Session::regenerate();
 
-				$this->logout();
-
-				$this->sessiondm = Datamanager\Adapter::factory('session');
+				$this->logout(true);
 			}
 
 			if($autodetect && ($userid = Session::get('userid')) !== false && !empty($userid) && ($userinfo = $this->getUserInfo($userid, 'id', self::OPT_SESSION)) !== false && $userinfo->password == Session::get('password'))

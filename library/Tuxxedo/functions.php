@@ -143,11 +143,11 @@
 		{
 			$error_handler(($cli_mode ? 'Fatal error: ' : '<strong>Fatal error:</strong> ') . $message);
 		}
-		elseif($level & E_NOTICE || $level & E_USER_NOTICE)
+		elseif(($level & E_NOTICE) || ($level & E_USER_NOTICE))
 		{
 			$prefix = '<strong>Notice:</strong> ';
 		}
-		elseif($level & E_DEPRECATED || $level & E_USER_DEPRECATED)
+		elseif(($level & E_DEPRECATED) || ($level & E_USER_DEPRECATED))
 		{
 			$prefix = '<strong>Deprecated:</strong> ';
 		}
@@ -158,7 +158,7 @@
 
 		if($cli_mode)
 		{
-			$message = strip_tags($prefix) . $message;
+			$prefix = strip_tags($prefix);
 		}
 
 		if($file !== NULL && $line !== NULL)
@@ -168,7 +168,7 @@
 
 		$errors = (array) Registry::globals('errors');
 
-		array_push($errors, $message);
+		array_push($errors, $prefix . $message);
 
 		Registry::globals('errors', $errors);
 	}
@@ -1035,19 +1035,22 @@
 	 */
 	function tuxxedo_shutdown_handler()
 	{
+$q = Registry::init();
+if($q->db){ $q = $q->db->getQueries(); }
+if(is_array($q) && $q){ echo '<ul>'; foreach($q as $x => $s){ echo '<li>#' . $x . ' - ' . htmlspecialchars($s['sql']) . '</li>'; } echo '</ul>'; }
 		$configuration	= Registry::getConfiguration();
 		$output 	= (ob_get_length() ? ob_get_clean() : '');
 
 		if($configuration['application']['debug'] && $output && substr(ltrim($output), 0, 11) == 'Fatal error')
 		{
-			$error = trim(substr_replace($output, '<strong>Fatal error</strong>', 0, 12));
+			$error = trim(substr_replace($output, (PHP_SAPI == 'cli' ? 'Fatal error' : '<strong>Fatal error</strong>'), 0, 12));
 
 			if(($spos = strpos($error, TUXXEDO_DIR)) !== false)
 			{
 				$error = substr_replace($error, tuxxedo_trim_path(substr($error, $spos, $epos = strrpos($error, ' on line') - $spos)), $spos, $epos);
 			}
 
-			tuxxedo_doc_error($error);
+			tuxxedo_basic_error($error);
 		}
 
 		$errors = Registry::globals('errors');

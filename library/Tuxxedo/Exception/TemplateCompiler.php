@@ -58,14 +58,6 @@
 		 */
 		const TYPE_CONDITION		= 1;
 
-		/**
-		 * Exception type - Phrase
-		 *
-		 * @var		integer
-		 * @since	1.2.0
-		 */
-		const TYPE_PHRASE		= 2;
-
 
 		/**
 		 * Compiler stack data

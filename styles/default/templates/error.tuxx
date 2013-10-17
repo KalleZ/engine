@@ -1,8 +1,8 @@
 {$header}
 
-<h1>Error</h1>
-<div class=\"box\">
-	<div class=\"inner\">
+<div class=\"middle\">
+	<h1>Error</h1>
+	<h2>
 		{$message}
 
 		" . ((isset($error_list)) ? ("
@@ -10,17 +10,13 @@
 			{$error_list}
 		</ul>
 		") : '') . "
-	</div>
-</div>
+	</h2>
 
-" . ((isset($go_back) && $go_back) ? ("
-<br />
-
-<div class=\"box\">
-	<div class=\"inner\">
-		<input type=\"button\" onclick=\"history.back(-1);\" value=\"Go back\" />
+	" . ((isset($go_back) && $go_back) ? ("
+	<div>
+		<a href=\"#\" onclick=\"history.back(-1); return(false);\">Go back</a>
 	</div>
+	") : '') . "
 </div>
-") : '') . "
 
 {$footer}
