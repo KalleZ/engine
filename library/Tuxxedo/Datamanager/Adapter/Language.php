@@ -191,7 +191,7 @@
 			}
 			elseif($this->context == self::CONTEXT_DELETE)
 			{
-				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
+				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
 
 				foreach(Array('phrasegroup' => 'phrasegroups', 'phrase' => 'phrases') as $singular => $plural)
 				{
