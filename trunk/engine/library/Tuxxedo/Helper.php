@@ -33,7 +33,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
 
@@ -80,7 +79,7 @@
 		 * @param	boolean				Whether to register this helper in the registry
 		 * @return	object				Returns a helper handle object reference
 		 *
-		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid helpers
+		 * @changelog	1.2.0				This method no longer throws a basic exception on invalid handles as its handled by the autoloader
 		 */ 
 		final public static function factory($helper, $register = false)
 		{
@@ -103,10 +102,6 @@
 				}
 
 				return($ref);
-			}
-			elseif(!\class_exists($class))
-			{
-				throw new Exception\Basic('Invalid helper handle specified');
 			}
 
 			self::$loaded_helpers[$helper] 	= true;

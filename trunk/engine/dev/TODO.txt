@@ -12,3 +12,6 @@
 
 	Internationalization
 	 - Add support for 'resetable' phrases
+
+	DevTools
+	 - Datastore does not properly cache phrasegroups because they don't specify an id

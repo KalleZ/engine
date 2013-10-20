@@ -63,7 +63,6 @@
 		 */
 		protected $usergroupid;
 
-
 		/**
 		 * Whether or not to rehash the password
 		 *
@@ -71,6 +70,7 @@
 		 * @since	1.2.0
 		 */
 		protected $rehash_password	= false;
+
 
 		/**
 		 * Fields for validation of users
