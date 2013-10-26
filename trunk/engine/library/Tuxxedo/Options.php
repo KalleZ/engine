@@ -158,12 +158,11 @@
 			}
 
 			$old_value 		= $this->options[$option];
+			$this->changed		= true;
 			$this->options[$option] = Array(
 							'category'	=> $this->categories[$option], 
 							'value'		=> $value
 							);
-			$this->changed		= true;
-
 			return($old_value);
 		}
 

@@ -33,6 +33,8 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Datastore;
+	use Tuxxedo\LocalCache;
 	use Tuxxedo\Registry;
 
 
@@ -251,6 +253,8 @@
 		 * @param	integer			The bootstraper mode
 		 * @param	integer			The loader flags, this only have an effect on custom bootstraper mode
 		 * @return	void			No value is returned
+		 *
+		 * @changelog	1.2.0			The FLAG_DATABASE now also loads the 'LocalCache' component
 		 */
 		public static function init($mode = self::MODE_NORMAL, $flags = NULL)
 		{
@@ -321,6 +325,7 @@
 				tuxxedo_handler('shutdown', 'tuxxedo_shutdown_handler');
 				tuxxedo_handler('autoload', '\Tuxxedo\Loader::load');
 
+
 				/**
 				 * Set database table prefix constant
 				 *
@@ -333,7 +338,6 @@
 
 				Registry::globals('error_reporting', 	true);
 				Registry::globals('errors', 		Array());
-
 
 				if($configuration['application']['debug'] && $configuration['debug']['trace'])
 				{
@@ -388,11 +392,12 @@
 			if($flags & self::FLAG_DATABASE)
 			{
 				$registry->register('db', '\Tuxxedo\Database');
+				$registry->set('lcache', new LocalCache);
 			}
 
 			if($flags & self::FLAG_DATASTORE)
 			{
-				$registry->register('datastore', '\Tuxxedo\Datastore');
+				$registry->set('datastore', new Datastore);
 
 				if(self::$preloadables['datastore'])
 				{

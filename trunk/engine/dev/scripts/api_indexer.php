@@ -876,6 +876,11 @@
 
 		if(($nodev && $isdev) || $file == '.tuxxedo')
 		{
+			if($file == '.tuxxedo' && $struct->version !== 2)
+			{
+				IO::error('The API must be format must be version 2, detected version: ' . $struct->version);
+			}
+
 			continue;
 		}
 

@@ -433,7 +433,7 @@
 
 		$docblock 	= Array(
 					'description'	=> '', 
-					'tags'		=> Array()
+					'tags'		=> new stdClass
 					);
 
 		$incode		= false;
@@ -497,7 +497,7 @@
 				{
 					if(isset($flag_tags[$tag]))
 					{
-						$docblock['tags'][$tag] = true;
+						$docblock['tags']->{$tag} = true;
 					}
 
 					continue;
@@ -505,9 +505,9 @@
 
 				unset($split[0]);
 
-				if(!isset($docblock['tags'][$tag]))
+				if(!isset($docblock['tags']->{$tag}))
 				{
-					$docblock['tags'][$tag] = Array();
+					$docblock['tags']->{$tag} = Array();
 				}
 
 				if(isset($special_tags[$tag]))
@@ -562,13 +562,13 @@
 					$split = $split[1];
 				}
 
-				if(isset($multi_tags[$tag]) || (is_array($docblock['tags'][$tag]) && $docblock['tags'][$tag]))
+				if(isset($multi_tags[$tag]) || (is_array($docblock['tags']->{$tag}) && $docblock['tags']->{$tag}))
 				{
-					$docblock['tags'][$tag][] = (isset($parsed_split) ? $parsed_split : $split);
+					$docblock['tags']->{$tag}[] = (isset($parsed_split) ? $parsed_split : $split);
 				}
 				else
 				{
-					$docblock['tags'][$tag] = (isset($parsed_split) ? $parsed_split : $split);
+					$docblock['tags']->{$tag} = (isset($parsed_split) ? $parsed_split : $split);
 				}
 
 				if(isset($parsed_split))
@@ -611,7 +611,7 @@
 			{
 				if(empty($line) || !preg_match('#[a-zA-Z]#Ui', $line{0}))
 				{
-					if(empty($line) && !empty($docblock['description']) && !sizeof($docblock['tags']))
+					if(empty($line) && !empty($docblock['description']) && !sizeof(get_object_vars($docblock['tags'])))
 					{
 						$docblock['description'] .= PHP_EOL;
 					}
@@ -627,7 +627,7 @@
 		{
 			$docblock['description'] = rtrim($docblock['description']);
 		}
-		elseif(empty($docblock['description']) && !sizeof($docblock['tags']))
+		elseif(empty($docblock['description']) && !sizeof(get_object_vars($docblock['tags'])))
 		{
 			return(false);
 		}
@@ -704,7 +704,7 @@
 	$files 					= analyze($engine_path);
 	$datamap				= Array(
 							'.tuxxedo'	=> Array(
-											'version'	=> 1, 
+											'version'	=> 2, 
 											'generator'	=> 'Tuxxedo Engine ' . Version::FULL
 											)
 							);
@@ -778,7 +778,7 @@
 
 					$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
-					if(isset($docblock['tags']) && isset($docblock['tags']['ignore']))
+					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
 						continue;
 					}
@@ -856,7 +856,7 @@
 
 					$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
-					if(isset($docblock['tags']) && isset($docblock['tags']['ignore']))
+					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
 						continue;
 					}
@@ -938,7 +938,7 @@
 
 					$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
-					if(isset($docblock['tags']) && isset($docblock['tags']['ignore']))
+					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
 						continue;
 					}
@@ -1065,7 +1065,7 @@
 
 						$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
-						if(isset($docblock['tags']) && isset($docblock['tags']['ignore']))
+						if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 						{
 							continue;
 						}
@@ -1108,7 +1108,7 @@
 
 					$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
-					if(isset($docblock['tags']) && isset($docblock['tags']['ignore']))
+					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
 						continue;
 					}
@@ -1181,7 +1181,7 @@
 
 					$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
-					if(isset($docblock['tags']) && isset($docblock['tags']['ignore']))
+					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
 						continue;
 					}

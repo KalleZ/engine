@@ -155,6 +155,7 @@
 	 - page_print()
 	 - tuxxedo_error()
 	 - tuxxedo_error_list()
+	Removed the exception that could be thrown when creating new helpers (Kalle)
 
 	Template changes:
 	 - Updated
