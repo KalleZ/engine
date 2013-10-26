@@ -58,8 +58,8 @@
 	}
 
 	Bootstrap::setPreloadables('datastore', (!isset($precache) ? $default_precache_datastore : array_unique(array_merge($default_precache_datastore, (array) $precache))));
-	Bootstrap::setPreloadables('templates', (!isset($templates) ? $default_precache_templates : array_merge($default_precache_templates, (array) $templates)));
-	Bootstrap::setPreloadables('phrasegroups', (!isset($phrasegroups) ? $default_precache_phrasegroups : array_merge($default_precache_phrasegroups, (array) $phrasegroups)));
+	Bootstrap::setPreloadables('templates', (!isset($templates) ? $default_precache_templates : array_unique(array_merge($default_precache_templates, (array) $templates))));
+	Bootstrap::setPreloadables('phrasegroups', (!isset($phrasegroups) ? $default_precache_phrasegroups : array_unique(array_merge($default_precache_phrasegroups, (array) $phrasegroups))));
 
 
 	/**

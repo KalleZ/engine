@@ -33,7 +33,7 @@
 	\defined('\TUXXEDO_LIBRARY') or exit;
 
 
-	/*
+	/**
 	 * SQL Exception
 	 *
 	 * Exception designed to carry error information from a failed 

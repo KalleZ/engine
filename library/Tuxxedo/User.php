@@ -171,12 +171,10 @@
 		 */
 		public function __destruct()
 		{
-			if(!($this->sessiondm instanceof Datamanager\Adapter))
+			if($this->sessiondm instanceof Datamanager\Adapter)
 			{
-				return;
+				$this->sessiondm->save();
 			}
-
-			$this->sessiondm->save();
 
 			$this->registry->db->query('
 							DELETE FROM 
