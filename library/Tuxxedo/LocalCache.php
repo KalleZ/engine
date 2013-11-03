@@ -284,7 +284,7 @@
 				return(false);
 			}
 
-			reset($this->cache[$entry]);
+			\reset($this->cache[$entry]);
 
 			$x		= 0;
 			$retval 	= Array();
@@ -341,9 +341,9 @@
 
 			if(\sizeof($entries) == 1)
 			{
-				reset($entries);
+				\reset($entries);
 
-				$entries = current($entries);
+				$entries = \current($entries);
 			}
 
 			return($entries);
@@ -396,9 +396,9 @@
 
 			if(\sizeof($entries) == 1)
 			{
-				reset($entries);
+				\reset($entries);
 
-				$entries = current($entries);
+				$entries = \current($entries);
 			}
 
 			return($entries);
