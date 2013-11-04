@@ -251,5 +251,27 @@
 
 			return($this->instance->equery('REPAIR TABLE `%s`', $table)->fetchObject()->Msg_text);
 		}
+
+		/**
+		 * Gets all columns in from a table
+		 *
+		 * @param	string				The table name
+		 * @return	array				Returns an array with all the column names for that table
+		 *
+		 * @todo	Implement
+		 *
+		 * @since	1.2.0
+		 */
+		public function getColumns($table)
+		{
+			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			{
+				$sql = 'PRAGMA table_info(' . $this->instance->escape($table) . ')';
+			}
+			else
+			{
+				$sql = 'SHOW COLUMNS FROM `' . $this->instance->escape($table) . '`';
+			}
+		}
 	}
 ?>

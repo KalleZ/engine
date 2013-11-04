@@ -173,7 +173,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Helper\Database</h1>
+<h1>\Tuxxedo\Helper\Database::getColumns()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -183,13 +183,19 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine 1.0.0
+							Engine 1.2.0
 						</td>
 					</tr>
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							<a href="./classes.html">Class</a>
+							<a href="class-tuxxedo-helper-database-477415.html#methods">Method</a>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%" nowrap="nowrap">
+							library/Tuxxedo/Helper/Database.php
 						</td>
 					</tr>
 					<tr>
@@ -197,23 +203,37 @@
 	<td class="value" style="width: 100%" nowrap="nowrap">
 		<a href="namespace-tuxxedo-helper-467151.html">\Tuxxedo\Helper</a>
 	</td>
-</tr><tr>
-	<td nowrap="nowrap">Declared in:</td>
+</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedo-helper-database-477415.html">\Tuxxedo\Helper\Database</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Modifiers:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Helper/Database.php
+		public
 	</td>
 </tr>
 				</table>
 			</fieldset>
 		</div>
 		<div class="content">
+			<fieldset>
+				<legend>Prototype</legend>
+				<table cellspacing="4" cellpadding="0" style="width: 100%;">
+					<tr>
+						<td class="value" style="width: 100%">
+							array getColumns(string)
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+
 			<div class="infobox">
-				Database utilities helper<br />This helper assumes the 'db' key is registered to an instance of
-using the 'setInstance' method.<br />Parameters used by this class are sent directly as a part of the
-generated SQL query. Only parameters that specifically says so are
-escaped using the database escaping mechanism assigned to the
-database registry instance.<br />Note that some drivers may not be fully supported, in paticular
-SQLite is not supported by some of the table operational methods.
+				Gets all columns in from a table
 			</div>
 			<br />
 		</div>
@@ -223,81 +243,59 @@ SQLite is not supported by some of the table operational methods.
 
 
 
+<h2><span class="warning">Warning</span></h2>
+<div class="box-warning edge-title">
+	<div class="inner">
+		<div class="infobox-warning">
+			This element is currently marked with one or more TODO items, meaning it may not be functioning or documented entirely!
+		</div>
+	</div>
+</div>
 
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The table name
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
 
-<h2><span>Contents</span></h2>
+<h2><span>Returns</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<div class="infobox">
-			Table of contents
+			Returns an array with all the column names for that table
 		</div>
-
-		<h3>
-	Properties
-	<a name="properties"></a>
-</h3>
-<table style="width: 100%" cellspacing="2" cellpadding="0">
-	<tr class="head">
-		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
-		<td class="strong">Description</td>
-	</tr>
-	<tr class="row">
-	<td nowrap="nowrap"><a href="property-driver-011415.html">$driver</a></td>
-	<td nowrap="nowrap" style="width: 100%">Database driver</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-instance-473810.html">$instance</a></td>
-	<td nowrap="nowrap" style="width: 100%">Database instance</td>
-</tr>
-</table><h3>
-	Methods
-	<a name="methods"></a>
-</h3>
-<table style="width: 100%" cellspacing="2" cellpadding="0">
-	<tr class="head">
-		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
-		<td class="strong">Description</td>
-	</tr>
-	<tr class="row">
-	<td nowrap="nowrap"><a href="method---construct-822630.html">__construct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Constructs the database helper</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-count-390368.html">count()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Counts the number of rows in a table</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-getcolumns-449210.html">getColumns()</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">TODO</span>&nbsp;Gets all columns in from a table</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-getdriver-144750.html">getDriver()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets the canonical driver name</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-gettables-881378.html">getTables()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets all table within a database
-
-Unsupported drivers are:</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-setinstance-979431.html">setInstance()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Sets a new instance of a database object</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-tableoptimize-733107.html">tableOptimize()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Table operation - optimize
-
-Unsupported drivers are:</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-tablerepair-092832.html">tableRepair()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Table operation - repair
-
-Unsupported drivers are:</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-truncate-930907.html">truncate()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Truncates a database table</td>
-</tr>
-</table>
 	</div>
 </div>
 
 
 
 
+
+<h2><span>TODO</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong center">#</td>
+				<td class="strong">Note</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap">1</td>
+	<td nowrap="nowrap" style="width: 100%">Implement</td>
+</tr>
+		</table>
+	</div>
+</div>
 
 
 
@@ -306,6 +304,7 @@ Unsupported drivers are:</td>
 	<div class="inner">
 		<ul>
 			
+			<li><a href="class-tuxxedo-helper-database-477415.html">\Tuxxedo\Helper\Database</a></li>
 			<li><a href="./classes.html">List of classes</a></li>
 			<li><a href="./index.html">Table of contents</a></li>
 		</ul>

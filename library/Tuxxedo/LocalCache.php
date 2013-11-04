@@ -172,7 +172,7 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if a query should fail
 		 *
-		 * @todo	This method is only mysql compatible, we should use the database helper for 'show columns' for proper sqlite support here too
+		 * @todo	Make use of \Tuxxedo\Helper\Database::getColumns() once it is fully implemented
 		 */
 		public function load($table, Array $conditions = Array(), $alias = NULL, $add_table_prefix = true)
 		{
