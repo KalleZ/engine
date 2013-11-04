@@ -172,7 +172,7 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if a query should fail
 		 *
-		 * @todo	Use SQL 'LIKE'
+		 * @todo	This method is only mysql compatible, we should use the database helper for 'show columns' for proper sqlite support here too
 		 */
 		public function load($table, Array $conditions = Array(), $alias = NULL, $add_table_prefix = true)
 		{
@@ -222,15 +222,10 @@
 
 					$added = true;
 
-					$sql .= '`' . $column . '` = \'' . \str_replace('*', '%', $this->db->escape($value)) . '\' ';
+					$sql .= '`' . $column . '` LIKE \'' . \str_replace('*', '%', $this->db->escape($value)) . '\' AND ';
 				}
 
-				if(!$added)
-				{
-					$sql = \substr($sql, -6);
-				}
-
-				$sql = \rtrim($sql);
+				$sql = \rtrim(\substr($sql, (!$added ? -6 : -5)));
 			}
 
 			$entries = $this->db->query($sql);
