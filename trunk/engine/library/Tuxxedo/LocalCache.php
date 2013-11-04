@@ -80,7 +80,7 @@
 	 * // Internally the following is executed
 	 * //
 	 * //   1) SHOW COLUMNS FROM `books`
-	 * //   2) SELECT * FROM `books` WHERE `title` 'PHP%'
+	 * //   2) SELECT * FROM `books` WHERE `title` LIKE 'PHP%'
 	 * $lcache->load('books', Array('title' => 'PHP*'));
 	 *
 	 * // Find the number of records loaded into cache
@@ -171,6 +171,8 @@
 		 * @return	boolean				Returns true if the entries was loaded, otherwise false. True can also be returned if none entries was loaded
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if a query should fail
+		 *
+		 * @todo	Use SQL 'LIKE'
 		 */
 		public function load($table, Array $conditions = Array(), $alias = NULL, $add_table_prefix = true)
 		{
