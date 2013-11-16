@@ -173,9 +173,10 @@
 	 * @param	array				The tokens copy array
 	 * @param	integer				The token start index
 	 * @param	integer|string			The token to find
+	 * @param	array				The stop tokens to break scanning
 	 * @return	integer				Returns the token index found token, and false on failure
 	 */
-	function lexical_next_index(Array $tokens, $start_index, $token)
+	function lexical_next_index(Array $tokens, $start_index, $token, Array $stop_tokens = NULL)
 	{
 		$inc = 0;
 
@@ -183,6 +184,11 @@
 		{
 			$token_data = $tokens[$start_index + $inc - 1];
 			$token_data = (is_array($token_data) ? $token_data[0] : $token_data);
+
+			if($stop_tokens && in_array($token_data, $stop_tokens))
+			{
+				return(false);
+			}
 
 			if($token_data == $token)
 			{
@@ -326,7 +332,7 @@
 		$inc 			= 0;
 		$buffer			= '';
 		$matched_tokens		= Array();
-		$start_index		= lexical_next_index($tokens, $start_index, $start_token);
+		$start_index		= lexical_next_index($tokens, $start_index, $start_token, $stop_tokens);
 
 		if($start_index === false)
 		{
