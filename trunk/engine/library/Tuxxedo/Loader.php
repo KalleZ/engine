@@ -237,8 +237,7 @@
 				{
 					if(\strpos($name, self::$separator) !== false)
 					{
-						$ptr 	= \strrpos($name, '\\');
-						$name	= \str_replace('\\', \DIRECTORY_SEPARATOR, \substr($name, 0, $ptr) . \str_replace('_', \DIRECTORY_SEPARATOR, \substr($name, $ptr)));
+						$name = \str_replace('\\', \DIRECTORY_SEPARATOR, \substr($name, 0, ($ptr = \strrpos($name, '\\'))) . \str_replace('_', \DIRECTORY_SEPARATOR, \substr($name, $ptr)));
 					}
 				}
 				break;
