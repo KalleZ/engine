@@ -81,7 +81,7 @@
 
 			$this->instance	= $instance;
 
-			while($row = $result->fetchArray())
+			while($row = $result->fetchArray(\SQLITE3_ASSOC))
 			{
 				$this->iterator_data[] = $row;
 			}
