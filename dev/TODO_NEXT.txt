@@ -10,7 +10,6 @@
 	     - Add
 	     - Edit
 	     - Delete
-	     - List
 	   - Phrase
 	     - Add
 	     - Edit

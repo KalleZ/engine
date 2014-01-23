@@ -1,0 +1,15 @@
+<tr>
+	<td nowrap=\"nowrap\" style=\"width: 100%;\">
+		{$name}
+	</td>
+	<td>
+		{$pgroup['phrases']}
+	</td>
+	<td nowrap=\"nowrap\">
+		<select onchange=\"engine_phrasegroup_handler(this, {$languageid}, {$pgroup['id']});\">
+			<option></option>
+			<option value=\"edit\">Edit</option>
+			<option value=\"delete\">Delete</option>
+		</select>
+	</td>
+</tr>
