@@ -17,4 +17,3 @@
 	     - Delete
 	     - Reset
 	     - Search
-	 - Change to use the \Tuxxedo\Bootstrap class to remove this clutter code in bootstrap.php

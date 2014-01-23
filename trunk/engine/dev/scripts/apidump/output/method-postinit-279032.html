@@ -173,7 +173,7 @@
 	</head>
 	<body>
 
-<h1>\DevTools</h1>
+<h1>\DevTools\Bootstrap::postInit()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -183,53 +183,62 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine 1.0.0
+							Engine 1.2.0
 						</td>
 					</tr>
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							<a href="./namespaces.html">Namespace</a>
+							<a href="class-devtools-bootstrap-852602.html#methods">Method</a>
 						</td>
 					</tr>
 					<tr>
-	<td nowrap="nowrap">Declared in:</td>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%" nowrap="nowrap">
+							library/DevTools/Bootstrap.php
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/DevTools/Bootstrap.php
+		<a href="namespace-devtools-892971.html">\DevTools</a>
+	</td>
+</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-devtools-bootstrap-852602.html">\DevTools\Bootstrap</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Modifiers:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		static
 	</td>
 </tr><tr>
 	<td>&nbsp;</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/DevTools/Session.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/DevTools/Style.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/DevTools/Test.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/DevTools/User.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/DevTools/Utilities.php
+		public
 	</td>
 </tr>
 				</table>
 			</fieldset>
 		</div>
 		<div class="content">
+			<fieldset>
+				<legend>Prototype</legend>
+				<table cellspacing="4" cellpadding="0" style="width: 100%;">
+					<tr>
+						<td class="value" style="width: 100%">
+							void postInit(<a href="class-tuxxedo-registry-722435.html">\Tuxxedo\Registry</a>)
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+
 			<div class="infobox">
-				Developmental Tools namespace. This namespace is for all development
-tool related routines, as used by /dev/tools.
+				Post initializer
 			</div>
 			<br />
 		</div>
@@ -246,52 +255,41 @@ tool related routines, as used by /dev/tools.
 	</div>
 </div>
 
+<h2><span class="warning">Warning</span></h2>
+<div class="box-warning edge-title">
+	<div class="inner">
+		<div class="infobox-warning">
+			This element is currently marked as a 'work-in-progress', its behavior may change without notice and it may otherwise not function at all!
+		</div>
+	</div>
+</div>
 
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong><a href="class-tuxxedo-registry-722435.html">\Tuxxedo\Registry</a></strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The Tuxxedo registry object
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
 
-<h2><span>Contents</span></h2>
+<h2><span>Returns</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<div class="infobox">
-			Table of contents
+			No value is returned
 		</div>
-
-		<h3>
-	Classes
-	<a name="{$lcmtype}"></a>
-</h3>
-<table style="width: 100%" cellspacing="2" cellpadding="0">
-	<tr class="head">
-		<td class="strong" nowrap="nowrap" style="width: 20%;">Class</td>
-		<td class="strong">Description</td>
-	</tr>
-	<tr class="row">
-	<td nowrap="nowrap"><a href="class-devtools-bootstrap-852602.html">\DevTools\Bootstrap</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;<span class="tag">WIP</span>&nbsp;Development Tools bootstraper, this integrates itself with the
-global bootstraper by using its hook...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-devtools-session-844020.html">\DevTools\Session</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;DevTools session interface override. This class overrides
-the options and 'bakes' them into the cla...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-devtools-style-013534.html">\DevTools\Style</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Development Tools styling class, this class overrides the
-default styling class so we can overload ...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-devtools-test-253436.html">\DevTools\Test</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Minor testing class, used for testing availability for
-various requirement checks</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-devtools-user-368843.html">\DevTools\User</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;DevTools user class, this class is used to bypass some of the
-restrictions the core user class proh...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-devtools-utilities-612926.html">\DevTools\Utilities</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Dev</span>&nbsp;Utilities class wrapper. This class wraps around the previously
-declared prodecural functions, whic...</td>
-</tr>
-</table>
 	</div>
 </div>
+
+
 
 
 
@@ -304,7 +302,8 @@ declared prodecural functions, whic...</td>
 	<div class="inner">
 		<ul>
 			
-			<li><a href="./namespaces.html">List of namespaces</a></li>
+			<li><a href="class-devtools-bootstrap-852602.html">\DevTools\Bootstrap</a></li>
+			<li><a href="./classes.html">List of classes</a></li>
 			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
