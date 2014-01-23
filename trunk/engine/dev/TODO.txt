@@ -15,7 +15,6 @@
 
 	DevTools
 	 - Datastore does not properly cache phrasegroups because they don't specify an id
-	 - Datastore is not correctly loaded using the new bootstraper code
 
 	Core
 	 - Analyze and implement usage of LocalCache around the code base
