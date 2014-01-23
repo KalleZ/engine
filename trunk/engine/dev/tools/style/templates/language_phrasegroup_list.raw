@@ -1,0 +1,22 @@
+{$header}
+
+<div class="box">
+	<h4>Phrasegroups</h4>
+
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td class="start" style="width: 100%;">
+				Name
+			</td>
+			<td style="width: 20%;">
+				Phrases
+			</td>
+			<td class="end">
+				&nbsp;
+			</td>
+		</tr>
+		{$rows}
+	</table>
+</div>
+
+{$footer}

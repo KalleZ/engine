@@ -40,6 +40,7 @@
 										'language_add_edit_form'
 										), 
 					'phrasegroup'		=> Array(
+										'language_phrasegroup_itembit', 
 										'language_phrasegroup_list'
 										)
 					);
@@ -171,6 +172,18 @@
 			{
 				case('list'):
 				{
+					if(!$datastore->phrasegroups)
+					{
+						throw new Exception('No phrasegroups currently exists');
+					}
+
+					$rows = '';
+
+					foreach($datastore->phrasegroups as $name => $pgroup)
+					{
+						eval('$rows .= "' . $style->fetch('language_phrasegroup_itembit') . '";');
+					}
+
 					eval(page('language_phrasegroup_list'));
 				}
 				break;
