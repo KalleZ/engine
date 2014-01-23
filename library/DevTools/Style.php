@@ -63,7 +63,7 @@
 							'templatesdir' => './style/templates/'
 							);
 
-			$this->storage		= Storage::factory($this->registry, $this, 'filesystem', $this->templates, true);
+			$this->storage		= Storage::factory($this->registry, $this, '\DevTools\Style\Storage\DevTools', $this->templates, true);
 		}
 
 

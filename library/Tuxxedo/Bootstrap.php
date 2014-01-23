@@ -320,10 +320,10 @@
 				require(\TUXXEDO_LIBRARY . '/Tuxxedo/Loader.php');
 				require(\TUXXEDO_LIBRARY . '/Tuxxedo/functions.php');
 
-				tuxxedo_handler('exception', 'tuxxedo_exception_handler');
-				tuxxedo_handler('error', 'tuxxedo_error_handler');
-				tuxxedo_handler('shutdown', 'tuxxedo_shutdown_handler');
-				tuxxedo_handler('autoload', '\Tuxxedo\Loader::load');
+				\tuxxedo_handler('exception', '\tuxxedo_exception_handler');
+				\tuxxedo_handler('error', '\tuxxedo_error_handler');
+				\tuxxedo_handler('shutdown', '\tuxxedo_shutdown_handler');
+				\tuxxedo_handler('autoload', '\Tuxxedo\Loader::load');
 
 
 				/**
@@ -331,7 +331,7 @@
 				 *
 				 * @var		string
 				 */
-				define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
+				\define('TUXXEDO_PREFIX', $configuration['database']['prefix']);
 
 
 				$registry = Registry::init($configuration);
@@ -360,7 +360,7 @@
 
 					foreach($hooks as $hook)
 					{
-						if(\call_user_func($hook['callback'], $registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL)) && $flag != self::FLAG_CORE)
+						if(\call_user_func_array($hook['callback'], Array($registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL), &$configuration)) && $flag != self::FLAG_CORE)
 						{
 							$flags &= ~$flag;
 
@@ -370,6 +370,8 @@
 
 					unset(self::$hooks[$flag]);
 				}
+
+				$registry = Registry::init($configuration);
 			}
 
 			if($flags & self::FLAG_DATE)
@@ -379,7 +381,7 @@
 				 *
 				 * @var		integer
 				 */
-				define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? (integer) $_SERVER['REQUEST_TIME'] : \time());
+				\define('TIMENOW_UTC', isset($_SERVER['REQUEST_TIME']) ? (integer) $_SERVER['REQUEST_TIME'] : \time());
 
 
 				if(!($flags & self::FLAG_USER))
@@ -392,7 +394,6 @@
 			if($flags & self::FLAG_DATABASE)
 			{
 				$registry->register('db', '\Tuxxedo\Database');
-				$registry->set('lcache', new LocalCache);
 			}
 
 			if($flags & self::FLAG_DATASTORE)
