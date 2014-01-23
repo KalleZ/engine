@@ -158,6 +158,7 @@
 	 - tuxxedo_error()
 	 - tuxxedo_error_list()
 	Removed the exception that could be thrown when creating new helpers (Kalle)
+	Removed the clutter code in the bootstraper and re-implemented it using the \Tuxxedo\Bootstraper hooks (Kalle)
 
 	Template changes:
 	 - Updated
