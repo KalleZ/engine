@@ -144,7 +144,7 @@
 		 *
 		 * Drivers marked with (*) requires a sub driver to be defined
 		 */
-		'driver' 	=> 'mysqli', 
+		'driver' 	=> 'sqlite', 
 
 		/**
 		 * Sub driver
@@ -281,7 +281,7 @@
 		 * absolute path here, then you can ignore the additional 
 		 * path in the 'devtools' section below.
 		 */
-		'database'	=> 'tuxxedo', 
+		'database'	=> 'C:\Webserver\www\engine\dev\sql\bin\tuxxedo.sqlite3', 
 
 		/**
 		 * Database user

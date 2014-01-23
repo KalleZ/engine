@@ -171,11 +171,16 @@
 		 * @return	boolean				Returns true if the entries was loaded, otherwise false. True can also be returned if none entries was loaded
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if a query should fail
-		 *
-		 * @todo	Make use of \Tuxxedo\Helper\Database::getColumns() once it is fully implemented
 		 */
 		public function load($table, Array $conditions = Array(), $alias = NULL, $add_table_prefix = true)
 		{
+			static $dbh;
+
+			if(!$dbh)
+			{
+				$dbh = Helper::factory('database');
+			}
+
 			if($alias === NULL)
 			{
 				$alias = $table;
@@ -188,23 +193,8 @@
 				unset($this->cache[$alias]);
 			}
 
-			$columns = $this->db->query('SHOW COLUMNS FROM `%s`', ($add_table_prefix ? \TUXXEDO_PREFIX : '') . $table);
-
-			if(!$columns || !$columns->getNumRows())
-			{
-				return(false);
-			}
-
-			$fields = Array();
-
-			foreach($columns as $column)
-			{
-				$fields[] = \strtolower($column['Field']);
-			}
-
-			$columns->free();
-
-			$sql = 'SELECT * FROM `' . ($add_table_prefix ? \TUXXEDO_PREFIX : '') . $table . '`';
+			$fields = $dbh->getColumns(($add_table_prefix ? \TUXXEDO_PREFIX : '') . $table);
+			$sql 	= 'SELECT * FROM `' . ($add_table_prefix ? \TUXXEDO_PREFIX : '') . $table . '`';
 
 			if($conditions)
 			{
@@ -220,12 +210,15 @@
 						continue;
 					}
 
+					if($added)
+					{
+						$sql .= ' AND ';
+					}
+
 					$added = true;
 
-					$sql .= '`' . $column . '` LIKE \'' . \str_replace('*', '%', $this->db->escape($value)) . '\' AND ';
+					$sql .= '`' . $column . '` LIKE \'' . \str_replace('*', '%', $this->db->escape($value)) . '\'';
 				}
-
-				$sql = \rtrim(\substr($sql, (!$added ? -6 : -5)));
 			}
 
 			$entries = $this->db->query($sql);

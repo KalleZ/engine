@@ -58,6 +58,7 @@
 	Added @changelog and @since docblock tags around most of the core (Kalle)
 	Added \Tuxxedo\Utilities::datef() as a shorthand for \Tuxxedo\Utilities::date() without a timestamp (Kalle)
 	Added a magic '.tuxxedo' file to engine_api.json, this contains meta information about the JSON format for readers (Kalle)
+	Added \Tuxxedo\Helper\Database::getColumns() (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
@@ -115,6 +116,7 @@
 	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a  different name (Kalle)
 	Fixed a bug in api_analyze.php so that properties declared with 'var' are considered 'public' (Kalle)
 	Fixed a styling issue on the Options DevTools page if the virtual 'orphan' category was present (Kalle)
+	Fixed a bug in the SQLite database driver, causing dublicate data to be allocated (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)

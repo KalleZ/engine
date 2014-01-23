@@ -258,20 +258,36 @@
 		 * @param	string				The table name
 		 * @return	array				Returns an array with all the column names for that table
 		 *
-		 * @todo	Implement
-		 *
 		 * @since	1.2.0
 		 */
 		public function getColumns($table)
 		{
 			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
 			{
-				$sql = 'PRAGMA table_info(' . $this->instance->escape($table) . ')';
+				$sql 	= 'PRAGMA table_info(' . $this->instance->escape($table) . ')';
+				$field	= 'name';
 			}
 			else
 			{
-				$sql = 'SHOW COLUMNS FROM `' . $this->instance->escape($table) . '`';
+				$sql 	= 'SHOW COLUMNS FROM `' . $this->instance->escape($table) . '`';
+				$field 	= 'Field';
 			}
+
+			$columns = $this->instance->query($sql);
+
+			if(!$columns || !$columns->getNumRows())
+			{
+				return(false);
+			}
+
+			$retval = Array();
+
+			foreach($columns as $column)
+			{
+				$retval[] = $column[$field];
+			}
+
+			return($retval);
 		}
 	}
 ?>
