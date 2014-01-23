@@ -40,6 +40,7 @@
 										'language_add_edit_form'
 										), 
 					'phrasegroup'		=> Array(
+										'language_phrasegroup_add_edit_form', 
 										'language_phrasegroup_itembit', 
 										'language_phrasegroup_list'
 										)
@@ -170,6 +171,30 @@
 		{
 			switch($action)
 			{
+				case('edit'):
+				{
+					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
+				}
+				case('add'):
+				{
+					if(isset($_POST['submit']))
+					{
+						if(!isset($dm))
+						{
+							$dm 			= Datamanager\Adapter::factory('phrasegroup');
+							$dm['languageid']	= $languageid;
+						}
+
+						$dm['title'] = $input->post('name');
+
+						$dm->save();
+
+						Utilities::redirect(($action == 'edit' ? 'Edited phrasegroup' : 'Added phrasegroup'), './intl.php?language=' . $languageid . '&do=phrasegroup&action=list');
+					}
+
+					eval(page('language_phrasegroup_add_edit_form'));
+				}
+				break;
 				case('list'):
 				{
 					if(!$datastore->phrasegroups)
