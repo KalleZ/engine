@@ -1,18 +1,5 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" pre-gold
+	Tuxxedo Engine ???
 	---------------------------------------
-
-	DevTools
-	 - Add new the internationalization component
-	   - Phrasegroup
-	     - Add
-	     - Edit
-	     - Delete
-	   - Phrase
-	     - Add
-	     - Edit
-	     - Delete
-	     - Reset
-	     - Search
