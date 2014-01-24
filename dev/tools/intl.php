@@ -272,6 +272,129 @@
 			}
 		}
 		break;
+		case('phrase'):
+		{
+			switch($action)
+			{
+				case('edit'):
+				{
+					$dm = Datamanager\Adapter::factory('phrase', $input->get('id'));
+
+					if($dm['languageid'] != $languageid)
+					{
+						Utilities::headerRedirect('./intl.php?language=' . $dm['languageid'] . '&do=phrase&action=edit&id=' . $dm['id']);
+					}
+				}
+				case('add'):
+				{
+					if(isset($_POST['submit']))
+					{
+						if(!isset($dm))
+						{
+							$dm 			= Datamanager\Adapter::factory('phrasegroup');
+							$dm['languageid']	= $languageid;
+						}
+
+						$dm['title'] 		= $input->post('name');
+						$dm['phrasegroup']	= $input->post('phrasegroup');
+						$dm['translation']	= $input->post('translation');
+
+						$dm->save();
+
+						Utilities::redirect(($action == 'edit' ? 'Edited phrase' : 'Added phrase'), './intl.php?language=' . $languageid . '&do=phrase&action=list');
+					}
+
+					$phrasegroups_dropdown 	= '';
+
+					$query			= $db->equery('
+										SELECT 
+											`id`, 
+											`title`
+										FROM 
+											`' . TUXXEDO_PREFIX . 'phrasegroups` 
+										WHERE 
+											`languageid` = %d
+										ORDER BY 
+											`title` 
+										ASC', $languageid);
+
+					if(!$query || !$query->getNumRows())
+					{
+						throw new Exception('No phrasegroups currently exists, one must exist to add a phrase');
+					}
+
+					foreach($query as $row)
+					{
+						$value		= $row['id'];
+						$name 		= $row['title'];
+						$selected 	= (isset($dm) && $name == $dm['phrasegroup']);
+
+						eval('$phrasegroups_dropdown .= "' . $style->fetch('option') . '";');
+					}
+
+					$query->free();
+
+					eval(page('language_phrase_add_edit_form'));
+				}
+				break;
+				case('delete'):
+				{
+					$dm = Datamanager\Adapter::factory('phrase', $input->get('id'));
+
+					if($dm['languageid'] != $languageid)
+					{
+						Utilities::headerRedirect('./intl.php?language=' . $dm['languageid'] . '&do=phrase&action=delete&id=' . $dm['id']);
+					}
+
+					if(isset($_POST['confirmdelete']))
+					{
+						$dm->delete();
+
+						Utilities::redirect('Deleted phrase', './intl.php?language=' . $dm['languageid'] . '&do=phrase&action=list');
+					}
+
+					eval(page('language_phrase_delete'));
+				}
+				break;
+				case('list'):
+				{
+					$query = $db->equery('
+								SELECT 
+									`id`, 
+									`title`, 
+									`phrasegroup`
+								FROM 
+									`' . TUXXEDO_PREFIX . 'phrases` 
+								WHERE 
+									`languageid` = %d
+								ORDER BY 
+									`id`
+								ASC', $languageid);
+
+					if($query && $query->getNumRows())
+					{
+						$rows = '';
+
+						foreach($query as $row)
+						{
+							eval('$rows .= "' . $style->fetch('language_phrase_list_itembit') . '";');
+						}
+
+						eval(page('language_phrase_list'));
+					}
+					else
+					{
+						throw new Exception('No phrases currently exists');
+					}
+				}
+				break;
+				default:
+				{
+					throw new Exception('Invalid phrase action');
+				}
+			}
+		}
+		break;
 		default:
 		{
 			eval(page('intl_index'));

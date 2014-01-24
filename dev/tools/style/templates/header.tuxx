@@ -94,6 +94,16 @@
 			this.location = './users.php?do=permission&action=' + select.options[select.selectedIndex].value + '&permission=' + permission;
 		}
 
+		function engine_phrase_handler(select, languageid, id)
+		{
+			if(!select.options[select.selectedIndex].value)
+			{
+				return;
+			}
+
+			this.location = './intl.php?language=' + languageid + '&do=phrase&action=' + select.options[select.selectedIndex].value + '&id=' + id;
+		}
+
 		function engine_phrasegroup_handler(select, languageid, id)
 		{
 			if(!select.options[select.selectedIndex].value)

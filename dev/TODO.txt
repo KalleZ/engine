@@ -18,9 +18,6 @@
 	DevTools
 	 - Add new the internationalization component
 	   - Phrase
-	     - Add
-	     - Edit
-	     - Delete
 	     - Reset
 	     - Search
 	 - Datastore does not properly cache phrasegroups because they don't specify an id
