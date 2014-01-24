@@ -45,6 +45,12 @@
 										'language_phrasegroup_delete_itembit', 
 										'language_phrasegroup_itembit', 
 										'language_phrasegroup_list'
+										), 
+					'phrase'		=> Array(
+										'language_phrase_add_edit_form', 
+										'language_phrase_delete', 
+										'language_phrase_list', 
+										'language_phrase_list_itembit'
 										)
 					);
 
@@ -253,7 +259,7 @@
 
 					foreach($datastore->phrasegroups as $name => $pgroup)
 					{
-						eval('$rows .= "' . $style->fetch('language_phrasegroup_itembit') . '";');
+						eval('$rows .= "' . $style->fetch('language_phrasegroup_list_itembit') . '";');
 					}
 
 					eval(page('language_phrasegroup_list'));

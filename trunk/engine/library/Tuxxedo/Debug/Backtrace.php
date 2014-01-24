@@ -244,7 +244,7 @@
 				}
 				else
 				{
-					$call 		= $callargs = 'Main()';
+					$call 		= $callargs = 'Main';
 					$notes[] 	= 'Called from main scope';
 				}
 
@@ -252,7 +252,8 @@
 				{
 					if(isset($is_closure) && $is_closure !== false)
 					{
-						$notes[] = 'Closure';
+						$call		= '{$closure}';
+						$notes[] 	= 'Closure';
 					}
 					else
 					{

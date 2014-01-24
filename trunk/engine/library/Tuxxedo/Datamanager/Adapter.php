@@ -382,17 +382,25 @@
 		 * Overloads the info access 'get' method so that default data is allocated 
 		 * when using the ArrayAccess accessor
 		 *
-		 * @param	scalar			The information row name to get
-		 * @return	void			No value is returned
+		 * @param	scalar				The information row name to get
+		 * @return	void				No value is returned
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on invalid properties
 		 *
 		 * @since	1.1.0
 		 */
 		public function offsetGet($offset)
 		{
+			if(!isset($this->fields[$offset]))
+			{
+				throw new Exception\Basic('Tried to access invalid datamanager property');
+			}
+
 			if(!isset($this->information[$offset]))
 			{
 				$this->information[$offset] = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
 			}
+
 
 			return($this->information[$offset]);
 		}
