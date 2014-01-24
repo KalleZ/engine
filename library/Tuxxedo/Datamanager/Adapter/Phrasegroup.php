@@ -117,8 +117,9 @@
 					return;
 				}
 
-				$this->data 		= $phrasegroup->fetchAssoc();
-				$this->identifier 	= $identifier;
+				$this->data 			= $phrasegroup->fetchAssoc();
+				$this->data['languageid']	= (integer) $this->data['languageid'];
+				$this->identifier 		= $identifier;
 
 				$phrasegroup->free();
 			}

@@ -1,0 +1,29 @@
+{$header}
+
+<div class="box">
+	<h4>Confirm delete</h4>
+
+	<p>
+		When deleting a phrasegroup, all phrases within it will also 
+		be deleted that is specific to this language.
+	</p>
+
+<if expression="isset($list)">
+	<br />
+	<p>
+		The following phrases are currently assigned to this phrasegroup:
+	</p>
+
+	<ul>
+		{$list}
+	</ul>
+</if>
+</div>
+
+<form action="./intl.php?language={$languageid}&do=phrasegroup&action=delete&id={$dm['id']}" method="post">
+<div class="box">
+	<input type="submit" name="confirmdelete" value="Delete '{$dm['title']}'" />
+</div>
+</form>
+
+{$footer}
