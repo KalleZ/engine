@@ -95,6 +95,7 @@
 	Changed DevTools cookie and session variables to no longer be prefixed with '__' (Kalle)
 	Changed page() to be a part of \DevTools rather than \Tuxxedo (Kalle)
 	Changed tuxxedo_exception_handler() to internally use \Tuxxedo\Template\Layout and \Tuxxedo\Template for GUI errors (Kalle)
+	Changed \Tuxxedo\Datamanager\Adapter::offsetGet() to report an error on invalid property access (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
