@@ -17,8 +17,6 @@
 
 	DevTools
 	 - Add new the internationalization component
-	   - Phrasegroup
-	     - Delete
 	   - Phrase
 	     - Add
 	     - Edit

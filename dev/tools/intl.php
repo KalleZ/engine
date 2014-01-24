@@ -177,15 +177,10 @@
 				{
 					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
 
-var_dump($dm['languageid'] != $languageid, $dm['languageid'], $languageid);
-					if($dm['langaugeid'] != $languageid)
+					if($dm['languageid'] != $languageid)
 					{
-var_dump($dm['languageid'] != $languageid, $dm['languageid'], $languageid);
-exit;
-/* ??? */
 						Utilities::headerRedirect('./intl.php?language=' . $dm['languageid'] . '&do=phrasegroup&action=edit&id=' . $dm['id']);
 					}
-exit;
 				}
 				case('add'):
 				{
@@ -211,11 +206,8 @@ exit;
 				{
 					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
 
-					if($dm['langaugeid'] != $languageid)
+					if($dm['languageid'] != $languageid)
 					{
-var_dump($dm['languageid'], $languageid);
-exit;
-/* ??? */
 						Utilities::headerRedirect('./intl.php?language=' . $dm['languageid'] . '&do=phrasegroup&action=delete&id=' . $dm['id']);
 					}
 
