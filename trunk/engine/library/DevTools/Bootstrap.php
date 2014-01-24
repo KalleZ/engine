@@ -53,8 +53,6 @@
 	 * @package		Engine
 	 * @subpackage		DevTools
 	 * @since		1.2.0
-	 *
-	 * @wip
 	 */
 	class Bootstrap extends \Tuxxedo\Bootstrap
 	{

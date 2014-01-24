@@ -41,6 +41,8 @@
 										), 
 					'phrasegroup'		=> Array(
 										'language_phrasegroup_add_edit_form', 
+										'language_phrasegroup_delete', 
+										'language_phrasegroup_delete_itembit', 
 										'language_phrasegroup_itembit', 
 										'language_phrasegroup_list'
 										)
@@ -174,6 +176,16 @@
 				case('edit'):
 				{
 					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
+
+var_dump($dm['languageid'] != $languageid, $dm['languageid'], $languageid);
+					if($dm['langaugeid'] != $languageid)
+					{
+var_dump($dm['languageid'] != $languageid, $dm['languageid'], $languageid);
+exit;
+/* ??? */
+						Utilities::headerRedirect('./intl.php?language=' . $dm['languageid'] . '&do=phrasegroup&action=edit&id=' . $dm['id']);
+					}
+exit;
 				}
 				case('add'):
 				{
@@ -193,6 +205,49 @@
 					}
 
 					eval(page('language_phrasegroup_add_edit_form'));
+				}
+				break;
+				case('delete'):
+				{
+					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
+
+					if($dm['langaugeid'] != $languageid)
+					{
+var_dump($dm['languageid'], $languageid);
+exit;
+/* ??? */
+						Utilities::headerRedirect('./intl.php?language=' . $dm['languageid'] . '&do=phrasegroup&action=delete&id=' . $dm['id']);
+					}
+
+					if(isset($_POST['confirmdelete']))
+					{
+						$dm->delete();
+
+						Utilities::redirect('Deleted phrasegroup', './intl.php?language=' . $dm['languageid'] . '&do=phrasegroup&action=list');
+					}
+
+					$query = $db->equery('
+								SELECT 
+									`id`, 
+									`title` 
+								FROM 
+									`' . TUXXEDO_PREFIX . 'phrases` 
+								WHERE 
+										`languageid` = %d
+									AND 
+										`phrasegroup` = \'%s\'', $languageid, $dm['title']);
+
+					if($query && $query->getNumRows())
+					{
+						$list = '';
+
+						foreach($query as $row)
+						{
+							eval('$list .= "' . $style->fetch('language_phrasegroup_delete_itembit') . '";');
+						}
+					}
+
+					eval(page('language_phrasegroup_delete'));
 				}
 				break;
 				case('list'):

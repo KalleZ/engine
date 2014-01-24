@@ -1,0 +1,1 @@
+<li><a href="./intl.php?language={$languageid}&do=phrase&action=edit&id={$row['id']}">{$row['title']}</a></li>
