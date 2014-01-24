@@ -146,12 +146,11 @@
 				$debug_args = (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
 			}
 
-			$exception_handler 	= \strtolower(\tuxxedo_handler('exception'));
 			$handlers		= Array(
-							$exception_handler				=> 'Exception handler', 
-							\strtolower(\tuxxedo_handler('shutdown'))	=> 'Shutdown handler', 
-							\strtolower(\tuxxedo_handler('error'))		=> 'Error handler', 
-							\strtolower(\tuxxedo_handler('autoload'))	=> 'Auto loader'
+							$exception_handler = \strtolower(\tuxxedo_handler('exception'))	=> 'Exception handler', 
+							\strtolower(\tuxxedo_handler('shutdown'))			=> 'Shutdown handler', 
+							\strtolower(\tuxxedo_handler('error'))				=> 'Error handler', 
+							\strtolower(\tuxxedo_handler('autoload'))			=> 'Auto loader'
 							);
 
 			$stack 	= Array();
