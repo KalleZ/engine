@@ -19,6 +19,7 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Bootstrap;
+	use Tuxxedo\Registry;
 	use Tuxxedo\Template;
 
 
@@ -76,6 +77,8 @@
 	{
 		Bootstrap::init(Bootstrap::MODE_CUSTOM, Bootstrap::FLAG_DATE | Bootstrap::FLAG_DATABASE | Bootstrap::FLAG_DATASTORE | Bootstrap::FLAG_OPTIONS);
 	}
+
+	$registry = Registry::init();
 
 	/**
 	 * Header and footer templates for the main site
