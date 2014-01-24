@@ -1,0 +1,19 @@
+{$header}
+
+<form action=\"./intl.php?language={$languageid}&do=phrase&action=delete&id={$dm['id']}\" method=\"post\">
+<div class=\"box\">
+	<h4>Confirm delete</h4>
+
+	<p>
+		When deleting a phrase will cause any place that this phrase is used to be blank and 
+		may cause some user interface actions from being usable at all, so make sure any 
+		reference to this phrase is gone before deleting it.
+	</p>
+</div>
+
+<div class=\"box\">
+	<input type=\"submit\" name=\"confirmdelete\" value=\"Delete '{$dm['title']}'\" />
+</div>
+</form>
+
+{$footer}
