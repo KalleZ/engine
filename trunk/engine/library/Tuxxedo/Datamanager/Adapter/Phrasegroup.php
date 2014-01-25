@@ -52,8 +52,6 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 * @since		1.2.0
-	 *
-	 * @wip
 	 */
 	class Phrasegroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
@@ -168,6 +166,8 @@
 		 * the parent class in cases when the save method was success
 		 *
 		 * @return	boolean				Returns true if the datastore was updated with success, otherwise false
+		 *
+		 * @todo	Needs a little more work for fetching the old name, probably something we need to add in the core datamanager adapter
 		 */
 		public function rebuild()
 		{
@@ -176,67 +176,75 @@
 				$datastore = Array();
 			}
 
-			$id 		= (isset($this->data['title']) ? $this->data['title'] : $this->identifier);
-			$old_group	= '';
-			$new_group	= '';
+			$id		= (isset($this->data['title']) ? $this->data['title'] : $this->identifier);
+			$languageid	= $this->data['languageid'];
+			$ptr 		= (isset($datastore[$languageid]) ? &$datastore[$languageid] : NULL);
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == self::CONTEXT_DELETE && $ptr && isset($ptr[$id]))
 			{
-				if(isset($this->data['title']))
+				unset($ptr[$id]);
+
+				if(!$ptr)
 				{
-					foreach($datastore as $key => $value)
-					{
-						if($value == $id)
-						{
-							unset($datastore[$key]);
-
-							break;
-						}
-					}
-
-					$old_group = $id;
+					unset($ptr);
 				}
-
-				$datastore[] = $new_group = $this->data['title'];
 			}
-			elseif($this->context == self::CONTEXT_DELETE && \in_array($id, $datastore))
+			elseif($this->context == self::CONTEXT_SAVE)
 			{
-				$new_group = '';
-				$old_group = $id;
-
-				foreach($datastore as $key => $value)
+				if($ptr && isset($ptr[$id]))
 				{
-					if($value == $id)
-					{
-						unset($datastore[$key]);
-
-						break;
-					}
+					unset($ptr);
 				}
+
+				if(!isset($datastore[$languageid]))
+				{
+					$datastore[$languageid] = Array();
+					$ptr			= &$datastore[$languageid];
+				}
+
+				$query		= $this->registry->db->equery('
+										SELECT 
+											COUNT(`id`) as \'phrases\' 
+										FROM 
+											`' . \TUXXEDO_PREFIX . 'phrases` 
+										WHERE 
+											`phrasegroup` = \'%s\'', $id);
+
+				$ptr[$id] 	= Array(
+							'id'		=> $id, 
+							'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)
+							);
 			}
 			else
 			{
-				return(false);
+				return(true);
 			}
+/*
+			$groups = $this->registry->db->equery('
+								SELECT 
+									`id` 
+								FROM 
+									`' . \TUXXEDO_PREFIX . 'phrases` 
+								WHERE 
+										`phrasegroup` = \'%s\'
+									AND 
+										`languageid` = %d', $this->registry->db->escape($old_group), $languageid);
+*/
+$groups = false;
 
-			if(!empty($old_group))
+			if($groups && $groups->getNumRows())
 			{
-				$groups = $this->registry->db->equery('
-									SELECT 
-										`id` 
-									FROM 
-										`' . \TUXXEDO_PREFIX . 'phrases` 
-									WHERE 
-											`phrasegroup` = \'%s\'
-										AND 
-											`languageid` = %d', $this->registry->db->escape($old_group), $this->registry->db->escape($this->data['language']));
-
-				if($groups && $groups->getNumRows())
+				foreach($groups as $row)
 				{
-					foreach($groups as $row)
+					$dm = Adapter::factory('phrase', $row['id']);
+
+					if($this->context == self::CONTEXT_DELETE)
 					{
-						$dm 			= Adapter::factory('phrase', $row['id']);
-						$dm['phrasegroup']	= $new_group;
+						$dm->delete();
+					}
+					else
+					{
+						$dm['phrasegroup'] = $id;
 
 						$dm->save();
 					}
