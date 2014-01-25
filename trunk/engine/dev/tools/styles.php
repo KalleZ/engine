@@ -310,7 +310,12 @@
 				break;
 				case('reset'):
 				{
-					Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC))->reset();
+					$dm = Datamanager\Adapter::factory('template', $input->get('id', Input::TYPE_NUMERIC));
+
+					if($dm['changed'])
+					{
+						$dm->reset();
+					}
 
 					Utilities::redirect('Template reset to default with success', './styles.php?style=' . $styleid . '&do=templates&action=list');
 				}

@@ -268,9 +268,21 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The username to check
 		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
+		 *
+		 * @since	1.2.0				This method now requires a username to be at least 3 characters and no longer than 32 characters big
 		 */
 		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
 		{
+			if($username)
+			{
+				$len = \strlen($username);
+
+				if($len < 3 || $len > 32)
+				{
+					return(false);
+				}
+			}
+
 			if(!!self::isAvailableUserField($registry, 'username', $username))
 			{
 				return(isset($dm->data['id']) && !empty($dm->data['id']));
@@ -294,7 +306,7 @@
 				return(false);
 			}
 
-			if(!self::isAvailableUserField($registry, 'email', $email))
+			if(!!self::isAvailableUserField($registry, 'email', $email))
 			{
 				return(isset($dm->data['id']) && !empty($dm->data['id']));
 			}
@@ -386,9 +398,13 @@
 		 */
 		public function rebuild()
 		{
-			if(!isset($this['usergroupid']) || !$this->usergroupid || $this['usergroupid'] == $this->usergroupid || !isset($this->registry->datastore->usergroups[$this['usergroupid']]) || !isset($this->registry->datastore->usergroups[$this->usergroupid]))
+			if(!isset($this['usergroupid']) || !$this->usergroupid || !isset($this->registry->datastore->usergroups[$this['usergroupid']]) || !isset($this->registry->datastore->usergroups[$this->usergroupid]))
 			{
 				return(false);
+			}
+			elseif($this['usergroupid'] == $this->usergroupid)
+			{
+				return(true);
 			}
 
 			$usergroups = $this->registry->datastore->usergroups;
