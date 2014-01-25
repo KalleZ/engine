@@ -21,6 +21,7 @@
 	use DevTools\User;
 	use DevTools\Utilities;
 	use Tuxxedo\Datamanager;
+	use Tuxxedo\Exception;
 	use Tuxxedo\Input;
 
 
@@ -286,7 +287,7 @@
 
 						if(!$query || !$query->getNumRows())
 						{
-							throw new Exception('Search return zero results');
+							throw new Exception('Search returned zero results');
 						}
 
 						$table 		= '';
