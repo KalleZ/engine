@@ -35,6 +35,7 @@
 	use Tuxxedo\Datamanager\Adapter;
 	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Helper;
 	use Tuxxedo\Registry;
 
 
@@ -62,20 +63,20 @@
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
-											'type'		=> self::FIELD_PROTECTED
+											'type'		=> parent::FIELD_PROTECTED
 											), 
 							'title'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidPhrasegroupTitle')
 											), 
 							'languageid'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidLanguageId')
 											), 
 							'phrases'	=> Array(
-											'type'		=> self::FIELD_VIRTUAL
+											'type'		=> parent::FIELD_VIRTUAL
 											)
 							);
 
@@ -91,7 +92,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the phrase group title is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'phrasegroup';
 			$this->tablename	= \TUXXEDO_PREFIX . 'phrasegroups';
@@ -180,7 +181,7 @@
 			$languageid	= $this->data['languageid'];
 			$ptr 		= (isset($datastore[$languageid]) ? &$datastore[$languageid] : NULL);
 
-			if($this->context == self::CONTEXT_DELETE && $ptr && isset($ptr[$id]))
+			if($this->context == parent::CONTEXT_DELETE && $ptr && isset($ptr[$id]))
 			{
 				unset($ptr[$id]);
 
@@ -189,7 +190,7 @@
 					unset($ptr);
 				}
 			}
-			elseif($this->context == self::CONTEXT_SAVE)
+			elseif($this->context == parent::CONTEXT_SAVE)
 			{
 				if($ptr && isset($ptr[$id]))
 				{
@@ -236,7 +237,7 @@
 				{
 					$dm = Adapter::factory('phrase', $row['id']);
 
-					if($this->context == self::CONTEXT_DELETE)
+					if($this->context == parent::CONTEXT_DELETE)
 					{
 						$dm->delete();
 					}

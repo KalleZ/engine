@@ -63,27 +63,27 @@
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
-											'type'		=> self::FIELD_PROTECTED
+											'type'		=> parent::FIELD_PROTECTED
 											), 
 							'name'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'developer'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'styledir' 	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'isdefault'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_BOOLEAN, 
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_BOOLEAN, 
 											'default'	=> false
 											), 
 							'inherit'	=> Array(
-											'type'		=> self::FIELD_VIRTUAL
+											'type'		=> parent::FIELD_VIRTUAL
 											)
 							);
 
@@ -99,7 +99,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the style id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'style';
 			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
@@ -148,7 +148,7 @@
 				$datastore = Array();
 			}
 
-			if($this->context == self::CONTEXT_DELETE)
+			if($this->context == parent::CONTEXT_DELETE)
 			{
 				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
 
@@ -162,7 +162,7 @@
 					Datamanager\Adapter::factory('template', $id, $this->options)->delete();
 				}
 			}
-			elseif($this->context == self::CONTEXT_SAVE)
+			elseif($this->context == parent::CONTEXT_SAVE)
 			{
 				$virtual		= $this->data;
 				$virtual['templateids']	= '';
@@ -233,7 +233,7 @@
 
 			foreach(\explode(',', $this->registry->datastore->styleinfo[$value]['templateids']) as $id)
 			{
-				$template 		= Adapter::factory('template', $id, self::OPT_LOAD_ONLY, $this);
+				$template 		= Adapter::factory('template', $id, parent::OPT_LOAD_ONLY, $this);
 				$template['styleid'] 	= $this->data['id'];
 				$template['changed']	= 0;
 				$template['revision']	= 1;

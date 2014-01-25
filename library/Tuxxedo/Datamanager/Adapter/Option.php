@@ -62,31 +62,31 @@
 		 */
 		protected $fields		= Array(
 							'option'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_IDENTIFIER
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_IDENTIFIER
 											), 
 							'value'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING_EMPTY
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING_EMPTY
 											), 
 							'defaultvalue'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidDefaultValue')
 											), 
 							'type'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidType'), 
 											'default'	=> 's'
 											),
 							'category'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidCategory')
 											), 
 							'newdefault' 	=> Array(
-											'type'		=> self::FIELD_VIRTUAL
+											'type'		=> parent::FIELD_VIRTUAL
 											)
 							);
 
@@ -102,7 +102,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the option name is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'option';
 			$this->tablename	= \TUXXEDO_PREFIX . 'options';
@@ -232,7 +232,7 @@
 		 */
 		public function rebuild()
 		{
-			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->options[$this['option']]))
+			if($this->context == parent::CONTEXT_DELETE && !isset($this->registry->datastore->options[$this['option']]))
 			{
 				return(true);
 			}
@@ -241,7 +241,7 @@
 
 			unset($options[$this['option']]);
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_SAVE)
 			{
 				$options[$this['option']] = Array(
 									'category'	=> $this->data['category'], 
@@ -260,7 +260,7 @@
 		 */
 		public function reset()
 		{
-			if($this->options & self::OPT_LOAD_ONLY || $this->identifier === NULL)
+			if($this->options & parent::OPT_LOAD_ONLY || $this->identifier === NULL)
 			{
 				return(false);
 			}

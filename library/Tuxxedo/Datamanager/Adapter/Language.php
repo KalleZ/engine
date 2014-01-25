@@ -61,32 +61,32 @@
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
-											'type'		=> self::FIELD_PROTECTED
+											'type'		=> parent::FIELD_PROTECTED
 											), 
 							'title'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'developer'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'isotitle' 	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidIsotitle')
 											), 
 							'isdefault'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_BOOLEAN, 
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_BOOLEAN, 
 											'default'	=> false
 											), 
 							'charset'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'inherit'	=> Array(
-											'type'		=> self::FIELD_VIRTUAL
+											'type'		=> parent::FIELD_VIRTUAL
 											)
 							);
 
@@ -102,7 +102,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the language id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'language';
 			$this->tablename	= \TUXXEDO_PREFIX . 'languages';
@@ -179,7 +179,7 @@
 				$datastore = Array();
 			}
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_SAVE)
 			{
 				$tmp = $this->data;
 
@@ -187,7 +187,7 @@
 
 				$datastore[$this->data['id']] = $tmp;
 			}
-			elseif($this->context == self::CONTEXT_DELETE)
+			elseif($this->context == parent::CONTEXT_DELETE)
 			{
 				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
 
@@ -266,7 +266,7 @@
 
 			foreach($phrasegroups as $pgroup)
 			{
-				$dm 			= Adapter::factory('phrasegroup', $pgroup['id'], self::OPT_LOAD_ONLY, $this);
+				$dm 			= Adapter::factory('phrasegroup', $pgroup['id'], parent::OPT_LOAD_ONLY, $this);
 				$dm['languageid'] 	= $this->data['id'];
 
 				if(!$dm->save())
@@ -291,7 +291,7 @@
 
 				foreach($phrases as $phrase)
 				{
-					$dm 			= Adapter::factory('phrase', $phrase['id'], self::OPT_LOAD_ONLY, $this);
+					$dm 			= Adapter::factory('phrase', $phrase['id'], parent::OPT_LOAD_ONLY, $this);
 					$dm['languageid']	= $this->data['id'];
 
 					if(!$dm->save())

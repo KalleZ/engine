@@ -126,7 +126,7 @@
 		 */
 		public function __construct(\Exception $e = NULL)
 		{
-			$this->frames 		= self::getTrace($e);
+			$this->frames 		= $this->getTrace($e);
 			$this->framesnum	= \sizeof($this->frames);
 		}
 

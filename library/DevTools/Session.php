@@ -64,7 +64,7 @@
 		 */
 		public static function invoke(Registry $registry, Array $configuration = NULL)
 		{
-			self::start();
+			parent::start();
 		}
 	}
 ?>

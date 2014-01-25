@@ -149,7 +149,7 @@
 		{
 			if($this instanceof Controller\Dispatchable)
 			{
-				$this->dispatcher(self::DISPATCH_PRE);
+				$this->dispatcher(Controller\Dispatchable::DISPATCH_PRE);
 			}
 
 			$action		= \strtolower($this->router->getAction());
@@ -167,7 +167,7 @@
 
 			if($this instanceof Controller\Dispatchable)
 			{
-				$this->dispatcher(self::DISPATCH_POST);
+				$this->dispatcher(Controller\Dispatchable::DISPATCH_POST);
 			}
 
 			if($this->layout || $this->view)

@@ -61,29 +61,29 @@
 		 */
 		protected $fields		= Array(
 							'sessionid'	=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'userid'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_NUMERIC
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_NUMERIC
 											), 
 							'location'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING_EMPTY
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_STRING_EMPTY
 											), 
 							'useragent' 	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_STRING_EMPTY
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_STRING_EMPTY
 											), 
 							'lastactivity'	=> Array(
-											'type'		=> self::FIELD_PROTECTED, 
-											'validation'	=> self::VALIDATE_NUMERIC, 
+											'type'		=> parent::FIELD_PROTECTED, 
+											'validation'	=> parent::VALIDATE_NUMERIC, 
 											'default'	=> \TIMENOW_UTC
 											), 
 							'rehash'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_BOOLEAN, 
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_BOOLEAN, 
 											'default'	=> 0
 											)
 							);
@@ -99,7 +99,7 @@
 		 *
 		 * @changelog	1.2.0				User-Agent and Location is no longer manually set as the constants no longer exists but figured out on its own
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname				= 'session';
 			$this->tablename			= \TUXXEDO_PREFIX . 'sessions';

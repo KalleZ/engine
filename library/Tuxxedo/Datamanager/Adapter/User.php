@@ -82,59 +82,60 @@
 		 */
 		protected $fields		= Array(
 							'id'			=> Array(
-												'type'		=> self::FIELD_PROTECTED
+												'type'		=> parent::FIELD_PROTECTED
 												), 
 							'username'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidUsername')
 												), 
 							'email'			=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidEmail')
 												), 
 							'name'			=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_STRING_EMPTY, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_STRING_EMPTY, 
 												'default'	=> ''
 												), 
 							'password'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidPassword')
 												), 
 							'usergroupid'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidUsergroup')
 												), 
 							'salt'			=> Array(
-												'type'		=> self::FIELD_PROTECTED
+												'type'		=> parent::FIELD_PROTECTED
 												), 
 							'style_id'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidStyleId')
 												), 
 							'language_id'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidLanguageId')
 												), 
 							'timezone'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidTimezone')
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
+												'callback'	=> Array(__CLASS__, 'isValidTimezone'), 
+												'parameters'	=> Array()
 												), 
 							'timezone_offset'	=> Array(
-												'type'		=> self::FIELD_PROTECTED, 
+												'type'		=> parent::FIELD_PROTECTED, 
 												'default'	=> 0
 												), 
 
 							'permissions'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_NUMERIC, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_NUMERIC, 
 												'default'	=> 0
 												)
 							);
@@ -151,7 +152,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the user id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'user';
 			$this->tablename	= \TUXXEDO_PREFIX . 'users';
@@ -233,7 +234,7 @@
 		 */
 		public static function isValidTimezone(Adapter $dm, Registry $registry, $timezone = NULL)
 		{
-			if($timezone === NULL && (($dm->options & self::OPT_LOAD_ONLY) || !$dm->identifier))
+			if($timezone === NULL && (($dm->options & parent::OPT_LOAD_ONLY) || !$dm->identifier))
 			{
 				$timezone = 'UTC';
 			}
@@ -270,7 +271,7 @@
 				}
 			}
 
-			if(!!self::isAvailableUserField($registry, 'username', $username))
+			if(!self::isAvailableUserField($registry, 'username', $username))
 			{
 				return(isset($dm->data['id']) && !empty($dm->data['id']));
 			}
@@ -293,7 +294,7 @@
 				return(false);
 			}
 
-			if(!!self::isAvailableUserField($registry, 'email', $email))
+			if(!self::isAvailableUserField($registry, 'email', $email))
 			{
 				return(isset($dm->data['id']) && !empty($dm->data['id']));
 			}
@@ -333,9 +334,11 @@
 		 * @param	\Tuxxedo\Registry		The Registry reference
 		 * @param	string				The field to check
 		 * @param	string				The value to check
-		 * @return	boolean				Returns true if the value exists, otherwise false
+		 * @return	boolean				Returns false if the value exists, otherwise true
 		 *
 		 * @since	1.1.0
+		 *
+		 * @changelog	1.2.0				The return value is now negated
 		 */
 		protected static function isAvailableUserField(Registry $registry, $field, $value)
 		{
@@ -348,7 +351,7 @@
 								`%s` = \'%s\' 
 							LIMIT 1', $field, $value);
 
-			return($query && $query->getNumRows());
+			return(!($query && $query->getNumRows()));
 		}
 
 		/**
@@ -368,7 +371,7 @@
 				$dm->data['salt'] 	= UserAPI::getPasswordSalt();
 				$dm->data['password']	= UserAPI::getPasswordHash($password, $dm->data['salt']);
 			}
-			elseif(($dm->options & self::OPT_LOAD_ONLY) || !$dm->identifier)
+			elseif(($dm->options & parent::OPT_LOAD_ONLY) || !$dm->identifier)
 			{
 				return(false);
 			}
@@ -396,11 +399,11 @@
 
 			$usergroups = $this->registry->datastore->usergroups;
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_SAVE)
 			{
 				++$usergroups[$this['usergroupid']]['users'];
 			}
-			elseif($this->context == self::CONTEXT_DELETE)
+			elseif($this->context == parent::CONTEXT_DELETE)
 			{
 				--$usergroups[$this->usergroupid]['users'];
 			}

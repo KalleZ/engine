@@ -61,35 +61,35 @@
 		 */
 		protected $fields		= Array(
 							'id'			=> Array(
-												'type'		=> self::FIELD_PROTECTED, 
-												'validation'	=> self::VALIDATE_IDENTIFIER
+												'type'		=> parent::FIELD_PROTECTED, 
+												'validation'	=> parent::VALIDATE_IDENTIFIER
 												), 
 							'title'			=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidPhraseTitle')
 												), 
 							'translation'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_STRING
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_STRING
 												), 
 							'defaulttranslation'	=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_STRING
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_STRING
 												),
 							'changed'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_BOOLEAN, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_BOOLEAN, 
 												'default'	=> false
 												),  
 							'languageid' 		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidLanguageId')
 												), 
 							'phrasegroup'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidPhrasegroup')
 												)
 							);
@@ -106,7 +106,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the phrase id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'phrase';
 			$this->tablename	= \TUXXEDO_PREFIX . 'phrases';
@@ -204,7 +204,7 @@
 		 */
 		public function rebuild()
 		{
-			if($this->context == self::CONTEXT_DELETE || $this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_DELETE || $this->context == parent::CONTEXT_SAVE)
 			{
 				$pid = $this->registry->db->query('
 									SELECT 
@@ -236,7 +236,7 @@
 		 */
 		public function reset()
 		{
-			if(($this->options & self::OPT_LOAD_ONLY) || $this->identifier === NULL)
+			if(($this->options & parent::OPT_LOAD_ONLY) || $this->identifier === NULL)
 			{
 				return(false);
 			}

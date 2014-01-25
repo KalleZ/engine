@@ -62,40 +62,40 @@
 		 */
 		protected $fields		= Array(
 							'id'			=> Array(
-												'type'		=> self::FIELD_PROTECTED
+												'type'		=> parent::FIELD_PROTECTED
 												), 
 							'title'			=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidTemplateTitle')
 												), 
 							'source'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidSource'), 
 												'notnull'	=> true
 												), 
 							'compiledsource' 	=> Array(
-												'type'		=> self::FIELD_PROTECTED, 
+												'type'		=> parent::FIELD_PROTECTED, 
 												'notnull'	=> true
 												), 
 							'defaultsource'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_STRING_EMPTY
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_STRING_EMPTY
 												), 
 							'styleid'		=> Array(
-												'type'		=> self::FIELD_REQUIRED, 
-												'validation'	=> self::VALIDATE_CALLBACK, 
+												'type'		=> parent::FIELD_REQUIRED, 
+												'validation'	=> parent::VALIDATE_CALLBACK, 
 												'callback'	=> Array(__CLASS__, 'isValidStyleId')
 												), 
 							'changed'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_BOOLEAN, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_BOOLEAN, 
 												'default'	=> false
 												), 
 							'revision'		=> Array(
-												'type'		=> self::FIELD_OPTIONAL, 
-												'validation'	=> self::VALIDATE_NUMERIC, 
+												'type'		=> parent::FIELD_OPTIONAL, 
+												'validation'	=> parent::VALIDATE_NUMERIC, 
 												'default'	=> 0
 												)
 							);
@@ -112,7 +112,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the template id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'template';
 			$this->tablename	= \TUXXEDO_PREFIX . 'templates';
@@ -251,7 +251,7 @@
 			$styleinfo 	= $this->registry->datastore->styleinfo;
 			$template 	= \TUXXEDO_DIR . '/styles/' . $styleinfo[$this['styleid']]['styledir'] . '/templates/' . $this['title'] . '.tuxx';
 
-			if($this->context == self::CONTEXT_DELETE)
+			if($this->context == parent::CONTEXT_DELETE)
 			{
 				if(\is_file($template) && !@\unlink($template))
 				{
@@ -274,7 +274,7 @@
 
 				return($this->registry->datastore->rebuild('styleinfo', $styleinfo));
 			}
-			elseif($this->context == self::CONTEXT_SAVE)
+			elseif($this->context == parent::CONTEXT_SAVE)
 			{
 				if(!@\file_put_contents($template, $this['compiledsource']))
 				{
@@ -311,7 +311,7 @@
 		 */
 		public function reset()
 		{
-			if(($this->options & self::OPT_LOAD_ONLY) || $this->identifier === NULL)
+			if(($this->options & parent::OPT_LOAD_ONLY) || $this->identifier === NULL)
 			{
 				return(false);
 			}
@@ -328,7 +328,7 @@
 				$compiler->setSource($this->data['defaultsource']);
 				$compiler->compile();
 
-				$style = Adapter::factory('style', $this->data['styleid'], self::OPT_LOAD_ONLY);
+				$style = Adapter::factory('style', $this->data['styleid'], parent::OPT_LOAD_ONLY);
 
 				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this->data['title'] . '.tuxx', $compiler->getCompiledSource()))
 				{

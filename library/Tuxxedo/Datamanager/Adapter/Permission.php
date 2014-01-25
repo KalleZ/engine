@@ -62,12 +62,12 @@
 		 */
 		protected $fields		= Array(
 							'name'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_IDENTIFIER
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_IDENTIFIER
 											), 
 							'bits'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_NUMERIC
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_NUMERIC
 											)
 							);
 
@@ -83,7 +83,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the permission name is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'permission';
 			$this->tablename	= \TUXXEDO_PREFIX . 'permissions';
@@ -123,7 +123,7 @@
 		 */
 		public function rebuild()
 		{
-			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->permissions[$this->data['name']]))
+			if($this->context == parent::CONTEXT_DELETE && !isset($this->registry->datastore->permissions[$this->data['name']]))
 			{
 				return(true);
 			}
@@ -132,7 +132,7 @@
 
 			unset($permissions[$this['name']]);
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_SAVE)
 			{
 				$permissions[$this['name']] = (integer) $this['bits'];
 			}
