@@ -1,0 +1,61 @@
+{$header}
+
+<form action="./intl.php?language={$languageid}&do=phrase&action=search" method="post">
+	<div class="box">
+		<h4>Search phrases</h4>
+
+		<table cellspacing="0" cellpadding="0">
+			<tr>
+				<td style="width: 30%;">
+					Search field:</td>
+				<td>
+					<select name="query_field">
+					{$fields_dropdown}
+					</select></td>
+			</tr>
+			<tr>
+				<td>
+					Search phrase:</td>
+				<td>
+					<input type="text" name="query"<if expression="isset($safe_query)"> value="{$safe_query}"</if> /></td>
+			</tr>
+		</table>
+	</div>
+	<div class="box">
+		<input type="submit" name="submit" value="Search" />
+	</div>
+</form>
+
+<if expression="isset($table)">
+<div class="box">
+	<h4>Search results</h4>
+
+	<p>
+		{$matches} phrase(s) matched your search criteria
+	</p>
+
+	<br />
+	<table cellspacing="0" cellpadding="0">
+		<tr class="heading">
+			<td class="start">
+				#
+			</td>
+			<td>
+				Title
+			</td>
+			<td>
+				Changed
+			</td>
+			<td>
+				Phrasegroup
+			</td>
+			<td class="end">
+				&nbsp;
+			</td>
+		</tr>
+		{$table}
+	</table>
+</div>
+</if>
+
+{$footer}

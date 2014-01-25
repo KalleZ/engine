@@ -10,6 +10,7 @@
 			<option></option>
 			<option value="edit">Edit</option>
 			<option value="delete">Delete</option>
+			<if expression="$row['changed']"><option value="reset">Reset</option></if>
 		</select>
 	</td>
 </tr>
