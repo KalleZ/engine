@@ -219,7 +219,7 @@
 			{
 				return(true);
 			}
-/*
+
 			$groups = $this->registry->db->equery('
 								SELECT 
 									`id` 
@@ -228,9 +228,7 @@
 								WHERE 
 										`phrasegroup` = \'%s\'
 									AND 
-										`languageid` = %d', $this->registry->db->escape($old_group), $languageid);
-*/
-$groups = false;
+										`languageid` = %d', (isset($this->original_data['title']) ? $this->original_data['title'] : $id), $languageid);
 
 			if($groups && $groups->getNumRows())
 			{
