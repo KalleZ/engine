@@ -62,8 +62,8 @@
 		 */
 		protected $fields		= Array(
 							'name'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_IDENTIFIER
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_IDENTIFIER
 											)
 							);
 
@@ -79,7 +79,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the option category name is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'optioncategory';
 			$this->tablename	= \TUXXEDO_PREFIX . 'optioncategories';
@@ -128,7 +128,7 @@
 			$old_category	= '';
 			$new_category	= '';
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_SAVE)
 			{
 				if(isset($this->data['name']))
 				{
@@ -147,7 +147,7 @@
 
 				$datastore[] = $new_category = $this->data['name'];
 			}
-			elseif($this->context == self::CONTEXT_DELETE && \in_array($id, $datastore))
+			elseif($this->context == parent::CONTEXT_DELETE && \in_array($id, $datastore))
 			{
 				$new_category = '';
 				$old_category = $id;

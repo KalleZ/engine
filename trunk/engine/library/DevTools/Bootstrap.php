@@ -86,7 +86,7 @@
 
 					unset($cache_buffer);
 
-					self::$preloadables['templates'] = Array();
+					parent::$preloadables['templates'] = Array();
 				}
 			}, 'templates');
 

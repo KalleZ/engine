@@ -35,6 +35,7 @@
 	use Tuxxedo\Datamanager\Adapter;
 	use Tuxxedo\Datamanager\Hooks;
 	use Tuxxedo\Exception;
+	use Tuxxedo\Helper;
 	use Tuxxedo\Registry;
 
 
@@ -66,19 +67,19 @@
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
-											'type'		=> self::FIELD_PROTECTED
+											'type'		=> parent::FIELD_PROTECTED
 											), 
 							'title'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_STRING
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
 											), 
 							'permissions'	=> Array(
-											'type'		=> self::FIELD_OPTIONAL, 
-											'validation'	=> self::VALIDATE_NUMERIC, 
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_NUMERIC, 
 											'default'	=> 0
 											), 
 							'users'		=> Array(
-											'type'		=> self::FIELD_VIRTUAL
+											'type'		=> parent::FIELD_VIRTUAL
 											)
 							);
 
@@ -94,7 +95,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the usergroup id is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'usergroup';
 			$this->tablename	= \TUXXEDO_PREFIX . 'usergroups';
@@ -133,7 +134,7 @@
 		 */
 		public function rebuild()
 		{
-			if($this->context == self::CONTEXT_DELETE && !isset($this->registry->datastore->usergroups[$this->data['id']]))
+			if($this->context == parent::CONTEXT_DELETE && !isset($this->registry->datastore->usergroups[$this->data['id']]))
 			{
 				return(true);
 			}
@@ -142,7 +143,7 @@
 
 			unset($usergroups[$this['id']]);
 
-			if($this->context == self::CONTEXT_SAVE)
+			if($this->context == parent::CONTEXT_SAVE)
 			{
 				$virtual	= $this->data;
 				$query 		= $this->registry->db->query('

@@ -61,12 +61,12 @@
 		 */
 		protected $fields		= Array(
 							'name'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_IDENTIFIER
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_IDENTIFIER
 											), 
 							'data'		=> Array(
-											'type'		=> self::FIELD_REQUIRED, 
-											'validation'	=> self::VALIDATE_CALLBACK, 
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
 											'callback'	=> Array(__CLASS__, 'isValidDatastoreData')
 											)
 							);
@@ -83,7 +83,7 @@
 		 * @throws	\Tuxxedo\Exception\Basic	Throws an exception if the datastore name is set and it failed to load for some reason
 		 * @throws	\Tuxxedo\Exception\SQL		Throws a SQL exception if a database call fails
 		 */
-		public function __construct(Registry $registry, $identifier = NULL, $options = self::OPT_DEFAULT, Adapter $parent = NULL)
+		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
 			$this->dmname		= 'datastore';
 			$this->tablename	= \TUXXEDO_PREFIX . 'datastore';
