@@ -204,7 +204,7 @@
 		 */
 		public function rebuild()
 		{
-			if($this->context == self::CONTEXT_DELETE)
+			if($this->context == self::CONTEXT_DELETE || $this->context == self::CONTEXT_SAVE)
 			{
 				$pid = $this->registry->db->query('
 									SELECT 
