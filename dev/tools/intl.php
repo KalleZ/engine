@@ -250,14 +250,14 @@
 				break;
 				case('list'):
 				{
-					if(!$datastore->phrasegroups)
+					if(!$datastore->phrasegroups[$languageid])
 					{
 						throw new Exception('No phrasegroups currently exists');
 					}
 
 					$rows = '';
 
-					foreach($datastore->phrasegroups as $name => $pgroup)
+					foreach($datastore->phrasegroups[$languageid] as $name => $pgroup)
 					{
 						eval('$rows .= "' . $style->fetch('language_phrasegroup_list_itembit') . '";');
 					}

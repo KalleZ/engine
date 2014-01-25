@@ -180,10 +180,16 @@
 																`' . TUXXEDO_PREFIX . 'phrases` 
 															WHERE 
 																`phrasegroup` = \'%s\'', $s['title']);
-										$current[$s['title']] 	= Array(
-														'id'		=> $s['id'], 
-														'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)
-														);
+
+										if(!isset($current[$s['languageid']]))
+										{
+											$current[$s['languageid']] = Array();
+										}
+
+										$current[$s['languageid']][$s['title']] = Array(
+																'id'		=> $s['id'], 
+																'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)
+																);
 
 										unset($query);
 									}
