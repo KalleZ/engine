@@ -287,6 +287,14 @@
 		protected $data				= Array();
 
 		/**
+		 * The original data of each modified field, should it differ from $data
+		 *
+		 * @var		array
+		 * @since	1.2.0
+		 */
+		protected $original_data		= Array();
+
+		/**
 		 * Cache data if the identifier is gonna be validated
 		 *
 		 * @var		array
@@ -420,6 +428,11 @@
 			if(!isset($this->fields[$offset]))
 			{
 				throw new Exception('Cannot define value for non existing field \'%s\'', $offset);
+			}
+
+			if(isset($this->information[$offset]) && $value != $this->information[$offset])
+			{
+				$this->original_data[$offset] = $value;
 			}
 
 			$this->information[$offset] = $value;

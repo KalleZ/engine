@@ -60,6 +60,7 @@
 	Added \Tuxxedo\Utilities::datef() as a shorthand for \Tuxxedo\Utilities::date() without a timestamp (Kalle)
 	Added a magic '.tuxxedo' file to engine_api.json, this contains meta information about the JSON format for readers (Kalle)
 	Added \Tuxxedo\Helper\Database::getColumns() (Kalle)
+	Added the posibility for datamanager adapters to retain the original data if modified from the outside API internally (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
