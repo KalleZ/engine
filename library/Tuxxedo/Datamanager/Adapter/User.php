@@ -196,19 +196,6 @@
 		 */
 		public function offsetSet($field, $value)
 		{
-			$this->set($field, $value);
-		}
-
-		/**
-		 * Overloads the set method, so we can catch timezones and password
-		 * if updated so the validator passes
-		 *
-		 * @param	string				The field to update
-		 * @param	mixed				The field value
-		 * @return	void				No value is returned
-		 */
-		public function set($field, $value)
-		{
 			$field = \strtolower($field);
 
 			if($field == 'timezone_offset')
