@@ -1035,9 +1035,6 @@
 	 */
 	function tuxxedo_shutdown_handler()
 	{
-$q = Registry::init();
-if($q->db){ $q = $q->db->getQueries(); }
-if(is_array($q) && $q){ echo '<ul>'; foreach($q as $x => $s){ echo '<li>#' . $x . ' - ' . htmlspecialchars($s['sql']) . '</li>'; } echo '</ul>'; }
 		$configuration	= Registry::getConfiguration();
 		$output 	= (ob_get_length() ? ob_get_clean() : '');
 
