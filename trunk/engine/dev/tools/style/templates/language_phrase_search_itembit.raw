@@ -1,0 +1,22 @@
+<tr>
+	<td>
+		{$phrase['id']}
+	</td>
+	<td nowrap="nowrap" style="width: 100%;">
+		{$phrase['title']}
+	</td>
+	<td nowrap="nowrap">
+		<if expression="$phrase['changed']">Yes<else />No</if>
+	</td>
+	<td>
+		{$phrase['phrasegroup']}
+	</td>
+	<td nowrap="nowrap">
+		<select onchange="engine_phrase_handler(this, {$languageid}, {$phrase['id']});">
+			<option></option>
+			<option value="edit">Edit</option>
+			<option value="delete">Delete</option>
+			<if expression="$phrase['changed']"><option value="reset">Reset</option></if>
+		</select>
+	</td>
+</tr>

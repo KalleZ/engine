@@ -50,7 +50,9 @@
 										'language_phrase_add_edit_form', 
 										'language_phrase_delete', 
 										'language_phrase_list', 
-										'language_phrase_list_itembit'
+										'language_phrase_list_itembit', 
+										'language_phrase_search', 
+										'language_phrase_search_itembit'
 										)
 					);
 
@@ -368,12 +370,84 @@
 					Utilities::redirect('Phrase reset to default with success', './intl.php?language=' . $languageid . '&do=phrase&action=list');
 				}
 				break;
+				case('search'):
+				{
+					$fields = array_filter(Datamanager\Adapter::factory('phrase')->getFields(), function($field)
+					{
+						static $hidden_fields;
+
+						if(!$hidden_fields)
+						{
+							$hidden_fields = Array(
+										'id'
+										);
+						}
+
+						return(!in_array($field, $hidden_fields));
+					});
+
+					$fields_dropdown = '';
+
+					if(isset($_POST['submit']) && isset($_POST['query']) && $_POST['query'] && isset($_POST['query_field']) && in_array((string) $_POST['query_field'], $fields))
+					{
+						$safe_query	= htmlspecialchars($input->post('query'), ENT_QUOTES);
+						$query 		= str_replace(Array('*', '%'), Array('%', '\%'), $input->post('query'));
+						$stripped_query	= str_replace('*', '', $query);
+
+						if($query{0} != '*')
+						{
+							$query = '%' . $query;
+						}
+
+						if(($length = strlen($query)) !== false && $query{$length - 1} != '*')
+						{
+							$query .= '%';
+						}
+
+						$query = $db->equery('
+									SELECT 
+										`id`, 
+										`title`, 
+										`changed`, 
+										`phrasegroup`
+									FROM 
+										`' . TUXXEDO_PREFIX . 'phrases` 
+									WHERE 
+										`%s` LIKE \'%s\'', $input->post('query_field'), $query);
+
+
+						if(!$query || !$query->getNumRows())
+						{
+							throw new Exception('Search returned zero results');
+						}
+
+						$table 		= '';
+						$matches	= $query->getNumRows();
+
+						while($phrase = $query->fetchArray())
+						{
+							eval('$table .= "' . $style->fetch('language_phrase_search_itembit') . '";');
+						}
+					}
+
+					foreach($fields as $value)
+					{
+						$name 		= ucfirst($value);
+						$selected	= (isset($safe_query) && $value == (string) $_POST['query_field']);
+
+						eval('$fields_dropdown .= "' . $style->fetch('option') . '";');
+					}
+
+					eval(page('language_phrase_search'));
+				}
+				break;
 				case('list'):
 				{
 					$query = $db->equery('
 								SELECT 
 									`id`, 
 									`title`, 
+									`changed`, 
 									`phrasegroup`
 								FROM 
 									`' . TUXXEDO_PREFIX . 'phrases` 

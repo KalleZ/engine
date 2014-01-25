@@ -9,8 +9,3 @@
 	Datamanagers
 	 - Language
 	  - Delete does not remove phrasegroups (phrases work!)
-
-	DevTools
-	 - Add new the internationalization component
-	   - Phrase
-	     - Search
