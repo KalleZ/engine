@@ -5,7 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Beta 2
 	---------------------------------------------------
-
-	Datamanagers
-	 - Language
-	  - Delete does not remove phrasegroups (phrases work!)
