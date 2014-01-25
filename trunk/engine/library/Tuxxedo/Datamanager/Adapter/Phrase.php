@@ -212,13 +212,7 @@
 
 				foreach($pid as $p)
 				{
-					try
-					{
-						Adapter::factory('phrasegroup', $p['id'])->save();
-					}
-					catch(Exception $e)
-					{
-					}
+					Adapter::factory('phrasegroup', $p['id'])->save();
 				}
 			}
 

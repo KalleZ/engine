@@ -439,7 +439,7 @@
 		 */
 		private function doPhrasegroupFilter($phrasegroup)
 		{
-			return(isset($this->registry->datastore->phrasegroups[$phrasegroup]) && $this->registry->datastore->phrasegroups[$phrasegroup]['phrases']);
+			return(isset($this->registry->datastore->phrasegroups[$this['id']][$phrasegroup]) && $this->registry->datastore->phrasegroups[$this['id']][$phrasegroup]['phrases']);
 		}
 	}
 ?>
