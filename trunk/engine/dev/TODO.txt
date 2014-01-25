@@ -9,8 +9,6 @@
 	Datamanagers
 	 - Language
 	  - Delete does not remove phrasegroups (phrases work!)
-	 - Phrasegroup
-	  - Add does incorrectly invalidate 'id'
 
 	Internationalization
 	 - Add support for 'resetable' phrases
@@ -20,7 +18,3 @@
 	   - Phrase
 	     - Reset
 	     - Search
-	 - Datastore does not properly cache phrasegroups because they don't specify an id
-
-	Core
-	 - Analyze and implement usage of LocalCache around the code base

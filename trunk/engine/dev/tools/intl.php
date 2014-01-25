@@ -43,7 +43,7 @@
 										'language_phrasegroup_add_edit_form', 
 										'language_phrasegroup_delete', 
 										'language_phrasegroup_delete_itembit', 
-										'language_phrasegroup_itembit', 
+										'language_phrasegroup_list_itembit', 
 										'language_phrasegroup_list'
 										), 
 					'phrase'		=> Array(

@@ -64,8 +64,7 @@
 		 */
 		protected $fields		= Array(
 							'id'		=> Array(
-											'type'		=> self::FIELD_PROTECTED, 
-											'validation'	=> self::VALIDATE_IDENTIFIER
+											'type'		=> self::FIELD_PROTECTED
 											), 
 							'title'		=> Array(
 											'type'		=> self::FIELD_REQUIRED, 
