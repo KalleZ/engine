@@ -16,6 +16,7 @@
 	 - Phrasegroup
 	Added new helpers: (Kalle)
 	 - Timer
+	Added the new internationalization DevTools tool (Kalle)
 	Added support for cloning datamanagers (Kalle)
 	Added the \Tuxxedo\Options class, so that $registry->options also work with categories (Kalle)
 	Added \Tuxxedo\MVC\Controller::getPreloadables() to get preloadable data for controllers (Kalle)

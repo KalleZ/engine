@@ -325,12 +325,12 @@
 
 			try
 			{
-				$compiler->setSource($this['defaultsource']);
+				$compiler->setSource($this->data['defaultsource']);
 				$compiler->compile();
 
-				$style = Adapter::factory('style', $this['styleid'], self::OPT_LOAD_ONLY);
+				$style = Adapter::factory('style', $this->data['styleid'], self::OPT_LOAD_ONLY);
 
-				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this['title'] . '.tuxx', $compiler->getCompiledSource()))
+				if(!@\file_put_contents(\TUXXEDO_DIR . '/styles/' . $style['styledir'] . '/templates/' . $this->data['title'] . '.tuxx', $compiler->getCompiledSource()))
 				{
 					throw new Exception\Basic('Failed to open a file pointer to the template file');
 				}
@@ -340,9 +340,9 @@
 				return(false);
 			}
 
-			$this['source'] 	= $this['defaultsource'];
-			$this['compiledsource']	= $compiler->getCompiledSource();
-			$this['changed']	= false;
+			$this->data['source'] 		= $this->data['defaultsource'];
+			$this->data['compiledsource']	= $compiler->getCompiledSource();
+			$this->data['changed']		= false;
 
 			return($this->save());
 		}

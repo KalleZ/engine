@@ -73,6 +73,15 @@
 												'type'		=> self::FIELD_REQUIRED, 
 												'validation'	=> self::VALIDATE_STRING
 												), 
+							'defaulttranslation'	=> Array(
+												'type'		=> self::FIELD_OPTIONAL, 
+												'validation'	=> self::VALIDATE_STRING
+												),
+							'changed'		=> Array(
+												'type'		=> self::FIELD_OPTIONAL, 
+												'validation'	=> self::VALIDATE_BOOLEAN, 
+												'default'	=> false
+												),  
 							'languageid' 		=> Array(
 												'type'		=> self::FIELD_REQUIRED, 
 												'validation'	=> self::VALIDATE_CALLBACK, 
@@ -224,18 +233,18 @@
 		 * identifier intact
 		 *
 		 * @return	boolean				Returns true on successful reset, otherwise false
-		 *
-	 	 * @todo	Implement
-		 * @wip
 		 */
 		public function reset()
 		{
 			if(($this->options & self::OPT_LOAD_ONLY) || $this->identifier === NULL)
 			{
-				// ...
+				return(false);
 			}
 
-			// ...
+			$this->data['changed']		= false;
+			$this->data['translation'] 	= $this->data['defaulttranslation'];
+
+			return($this->save());
 		}
 	}
 ?>
