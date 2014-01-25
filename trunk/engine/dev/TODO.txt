@@ -10,11 +10,7 @@
 	 - Language
 	  - Delete does not remove phrasegroups (phrases work!)
 
-	Internationalization
-	 - Add support for 'resetable' phrases
-
 	DevTools
 	 - Add new the internationalization component
 	   - Phrase
-	     - Reset
 	     - Search

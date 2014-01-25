@@ -181,7 +181,7 @@
 			{
 				case('edit'):
 				{
-					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
+					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id', Input::TYPE_NUMERIC));
 
 					if($dm['languageid'] != $languageid)
 					{
@@ -210,7 +210,7 @@
 				break;
 				case('delete'):
 				{
-					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id'));
+					$dm = Datamanager\Adapter::factory('phrasegroup', $input->get('id', Input::TYPE_NUMERIC));
 
 					if($dm['languageid'] != $languageid)
 					{
@@ -278,7 +278,7 @@
 			{
 				case('edit'):
 				{
-					$dm = Datamanager\Adapter::factory('phrase', $input->get('id'));
+					$dm = Datamanager\Adapter::factory('phrase', $input->get('id', Input::TYPE_NUMERIC));
 
 					if($dm['languageid'] != $languageid)
 					{
@@ -339,7 +339,7 @@
 				break;
 				case('delete'):
 				{
-					$dm = Datamanager\Adapter::factory('phrase', $input->get('id'));
+					$dm = Datamanager\Adapter::factory('phrase', $input->get('id', Input::TYPE_NUMERIC));
 
 					if($dm['languageid'] != $languageid)
 					{
@@ -354,6 +354,18 @@
 					}
 
 					eval(page('language_phrase_delete'));
+				}
+				break;
+				case('reset'):
+				{
+					$dm = Datamanager\Adapter::factory('phrase', $input->get('id', Input::TYPE_NUMERIC));
+
+					if($dm['changed'])
+					{
+						$dm->reset();
+					}
+
+					Utilities::redirect('Phrase reset to default with success', './intl.php?language=' . $languageid . '&do=phrase&action=list');
 				}
 				break;
 				case('list'):
