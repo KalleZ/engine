@@ -103,7 +103,7 @@
 		{
 			static $iso_to_language;
 
-			if($registry->options && $registry->options->language_autodetect && !$iso_to_language)
+			if(!$iso_to_language && $registry->options && $registry->options->language_autodetect)
 			{
 				$iso_to_language = function() use($registry)
 				{
