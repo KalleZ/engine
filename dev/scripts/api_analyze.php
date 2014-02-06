@@ -775,6 +775,11 @@
 
 			switch($token[0])
 			{
+				case(T_HALT_COMPILER):
+				{
+					break 2;
+				}
+				break;
 				case(T_NAMESPACE):
 				{
 					if(($name = lexical_scan_concat($tokens_copy, $index, ';')) == false && ($name = lexical_scan_concat($tokens_copy, $index, '{')))
@@ -1325,6 +1330,11 @@
 		}
 
 		IO::ul(IO::TAG_END);
+	}
+
+	if(isset($token) && $token[0] == T_HALT_COMPILER)
+	{
+		IO::li('Note, halted analyze as a __halt_compiler() instruction was encountered');
 	}
 
 	IO::ul(IO::TAG_END);

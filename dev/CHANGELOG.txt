@@ -99,6 +99,7 @@
 	Changed tuxxedo_exception_handler() to internally use \Tuxxedo\Template\Layout and \Tuxxedo\Template for GUI errors (Kalle)
 	Changed \Tuxxedo\Datamanager\Adapter::offsetGet() to report an error on invalid property access (Kalle)
 	Changed \Tuxxedo\Datamanager\Adapter\User::isAvailableUserField()'s return value to be negated (Kalle)
+	Changed api_analyze.php to stop analyzing when it hits a __halt_compiler() instruction (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
