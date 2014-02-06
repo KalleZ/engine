@@ -48,15 +48,6 @@
 	abstract class InfoAccess implements \ArrayAccess
 	{
 		/**
-		 * Information event prefix, if this have a value then 
-		 * events are triggered when overloading
-		 *
-		 * @var		string
-		 * @since	1.2.0
-		 */
-		protected $information_event	= '';
-
-		/**
 		 * Information array
 		 * 
 		 * @var		array|object
@@ -99,18 +90,9 @@
 		 *
 		 * @param	scalar			The information row name to check
 		 * @return	boolean			Returns true if the information is stored, otherwise false
-		 *
-		 * @changelog	1.2.0			This method can now trigger the '{$prefix}exists' event
 		 */
 		public function offsetExists($offset)
 		{
-			if($this->information_event)
-			{
-				Event::fire($this->information_event . 'exists', $this, Array(
-												'offset' => $offset
-												));
-			}
-
 			if(\is_object($this->information))
 			{
 				return(isset($this->information->{$offset}));
@@ -124,26 +106,15 @@
 		 * 
 		 * @param	scalar			The information row name to get
 		 * @return	mixed			Returns the information value, and NULL if the value wasn't found
-		 *
-		 * @changelog	1.2.0			This method can now trigger the '{$prefix}get' event
 		 */
 		public function offsetGet($offset)
 		{
-			if($this->information_event)
-			{
-				Event::fire($this->information_event . 'get', $this, Array(
-												'offset' => $offset
-												));
-			}
-
 			if(\is_object($this->information))
 			{
 				return($this->information->{$offset});
 			}
-			else
-			{
-				return($this->information[$offset]);
-			}
+
+			return($this->information[$offset]);
 		}
 
 		/**
@@ -152,19 +123,9 @@
 		 * @param	scalar			The information row name to set
 		 * @param	mixed			The new/update value for this row
 		 * @return	void			No value is returned
-		 *
-		 * @changelog	1.2.0			This method can now trigger the '{$prefix}set' event
 		 */
 		public function offsetSet($offset, $value)
 		{
-			if($this->information_event)
-			{
-				Event::fire($this->information_event . 'set', $this, Array(
-												'offset' 	=> $offset, 
-												'value'		=> $value
-												));
-			}
-
 			if(\is_object($this->information))
 			{
 				$this->information->{$offset} = $value;
@@ -180,18 +141,9 @@
 		 *
 		 * @param	scalar			The information row name to delete
 		 * @return	void			No value is returned
-		 *
-		 * @changelog	1.2.0			This method can now trigger the '{$prefix}unset' event
 		 */
 		public function offsetUnset($offset)
 		{
-			if($this->information_event)
-			{
-				Event::fire($this->information_event . 'unset', $this, Array(
-												'offset' => $offset
-												));
-			}
-
 			if(\is_object($this->information))
 			{
 				unset($this->information->{$offset});
