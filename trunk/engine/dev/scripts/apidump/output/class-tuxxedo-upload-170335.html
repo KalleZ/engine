@@ -173,72 +173,128 @@
 	</head>
 	<body>
 
-<h1>Interfaces</h1>
+<h1>\Tuxxedo\Upload</h1>
 <div class="box">
 	<div class="inner">
-		<table style="width: 100%" cellspacing="2" cellpadding="0">
-			<tr class="head">
-				<td class="strong" nowrap="nowrap">Name</td>
-				<td class="strong">Description</td>
-			</tr>
-			<tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-database-driver-176927.html">\Tuxxedo\Database\Driver</a></td>
-	<td nowrap="nowrap" style="width: 100%">Base database driver interface
-
-This defines the driver structure of which functions a driver
-mus...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-database-result-specification-843329.html">\Tuxxedo\Database\Result\Specification</a></td>
-	<td nowrap="nowrap" style="width: 100%">Base database driver result interface
-
-This defines the driver structure of which functions a driv...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-cache-412598.html">\Tuxxedo\Datamanager\Hooks\Cache</a></td>
-	<td nowrap="nowrap" style="width: 100%">Datastore requirement for using the datamanager
-
-This interface is for datamanagers that interacts...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-resetable-168534.html">\Tuxxedo\Datamanager\Hooks\Resetable</a></td>
-	<td nowrap="nowrap" style="width: 100%">Resetable interface
-
-Resetable makes a datamanager able to reset a loaded
-data set into its defau...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-virtual-165377.html">\Tuxxedo\Datamanager\Hooks\Virtual</a></td>
-	<td nowrap="nowrap" style="width: 100%">Virtual field handler for using the datamanager
-
-This interface is for allowing virtual fields to...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-datamanager-hooks-virtualdispatcher-503661.html">\Tuxxedo\Datamanager\Hooks\VirtualDispatcher</a></td>
-	<td nowrap="nowrap" style="width: 100%">Virtual field dispatcher
-
-This interface tells the datamanager API to dispatch virtual
-fields to ...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-design-invokable-520120.html">\Tuxxedo\Design\Invokable</a></td>
-	<td nowrap="nowrap" style="width: 100%">Interface for requring the registry to pass certain information
-before the constructor is called.</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-mvc-controller-dispatchable-622147.html">\Tuxxedo\MVC\Controller\Dispatchable</a></td>
-	<td nowrap="nowrap" style="width: 100%">Interface for dispatchable controller hooks</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-mvc-model-mapper-303627.html">\Tuxxedo\MVC\Model\Mapper</a></td>
-	<td nowrap="nowrap" style="width: 100%">Interface for mapable models</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-upload-backend-527615.html">\Tuxxedo\Upload\Backend</a></td>
-	<td nowrap="nowrap" style="width: 100%">Upload backend interface
-
-This interface declares a structured design for how backends must be
-im...</td>
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-900452.html">\Tuxxedo</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Upload.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedo-design-infoaccess-990822.html">\Tuxxedo\Design\InfoAccess</a>
+	</td>
 </tr>
-		</table>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Upload API<br />This class allows to queue multiple files to upload files, files
+can be uploaded using different backends. By default the following
+are provided:<br />
+Custom handlers can be used and will be loaded Just-In-Time as an
+the queue reaches that file to be uploaded.<br />Filters can be used to filter out files during the upload process,
+and can also be used to filter out files of specific types, for
+example only allow upload of images, file renaming and so on.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
 	</div>
 </div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-queue-710485.html">$queue</a></td>
+	<td nowrap="nowrap" style="width: 100%">Upload queue</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-valid-backends-004681.html">$valid_backends</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of valid backends</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-899961.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new upload object</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method---invoke-877267.html">__invoke()</a></td>
+	<td nowrap="nowrap" style="width: 100%">No description available</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-queue-348798.html">queue()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Queues a new object for upload</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-unqueue-080504.html">unqueue()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Unqueues an object</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-upload-168665.html">upload()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Invokes the uploading process, and clearing the queue after</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
 
 <h2><span>See also</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
 			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>
