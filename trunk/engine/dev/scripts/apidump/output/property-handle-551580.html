@@ -173,7 +173,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Upload\Backend\Post::process()</h1>
+<h1>\Tuxxedo\Upload\Backend\Post::$handle</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -189,13 +189,19 @@
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							<a href="class-tuxxedo-upload-backend-post-550935.html#methods">Method</a>
+							<a href="class-tuxxedo-upload-backend-post-550935.html#properties">Property</a>
 						</td>
 					</tr>
 					<tr>
 						<td nowrap="nowrap">Declared in:</td>
 						<td class="value" style="width: 100%" nowrap="nowrap">
 							library/Tuxxedo/Upload/Backend/Post.php
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Data type:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedo-upload-170335.html">\Tuxxedo\Upload</a>
 						</td>
 					</tr>
 					<tr>
@@ -213,27 +219,16 @@
 					<tr>
 	<td nowrap="nowrap">Modifiers:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		public
+		protected
 	</td>
 </tr>
 				</table>
 			</fieldset>
 		</div>
 		<div class="content">
-			<fieldset>
-				<legend>Prototype</legend>
-				<table cellspacing="4" cellpadding="0" style="width: 100%;">
-					<tr>
-						<td class="value" style="width: 100%">
-							boolean process(string)
-						</td>
-					</tr>
-				</table>
-			</fieldset>
-			<br />
-
 			<div class="infobox">
-				Tells the backend to process this input and initiate the transfer
+				Upload handle that loaded in this backend, to reference options
+and the like.
 			</div>
 			<br />
 		</div>
@@ -242,33 +237,6 @@
 </div>
 
 
-
-
-
-<h2><span>Parameters</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<fieldset>
-	<legend><strong>string</strong></legend>
-	<table cellspacing="4" cellpadding="0" style="width: 100%;">
-		<tr> 
-			<td colspan="2" class="value" style="width: 100%">
-				The input specific to this backend
-			</td>
-		</tr>
-	</table>
-</fieldset>
-	</div>
-</div>
-
-<h2><span>Returns</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<div class="infobox">
-			Returns true if the transfer was a success, otherwise false (failed hooks and the like)
-		</div>
-	</div>
-</div>
 
 
 

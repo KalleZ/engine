@@ -59,6 +59,13 @@
 		 */
 		protected $handle;
 
+		/**
+		 * Fileinfo handle
+		 *
+		 * @var		resource
+		 */
+		protected static $finfo;
+
 
 		/**
 		 * Constructor
@@ -68,6 +75,11 @@
 		public function __construct(Upload $handle)
 		{
 			$this->handle = $handle;
+
+			if(self::$finfo === NULL && \extension_loaded('fileinfo'))
+			{
+				self::$finfo = \finfo_open(\FILEINFO_MIME_TYPE);
+			}
 		}
 
 		/**
@@ -78,12 +90,33 @@
 		 */
 		public function process($input)
 		{
-			if(!$_FILES || !isset($_FILES[$input]) || !isset($_FILES[$input]['tmp_name']) && !\is_array($_FILES[$input]['tmp_name']))
+			if(!$_FILES || !isset($_FILES[$input]) || !isset($_FILES[$input]['tmp_name']) || \is_array($_FILES[$input]['tmp_name']))
 			{
 				return(false);
 			}
 
-			var_dump($this->handle->export());
+			$desc = new Upload\Descriptor;
+
+			if($_FILES[$input]['size'] < 1 || $_FILES[$input]['size'] > $this->handle['size_limit'])
+			{
+				$desc->error = self::ERR_SIZE;
+
+				return($desc);
+			}
+/*
+			elseif(self::$finfo && \finfo_file(self::$finfo, $_FILES[$input]['tmp_name']))
+			{
+				$desc->error = self::ERR_MIME_FINFO;
+			}
+*/
+			elseif(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $this->handle['directory'] . $_FILES[$input]['name']))
+			{
+				$desc->error = self::ERR_CANT_WRITE;
+
+				return($desc);
+			}
+
+			return($desc);
 		}
 	}
 ?>
