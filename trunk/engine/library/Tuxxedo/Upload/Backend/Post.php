@@ -52,15 +52,38 @@
 	class Post implements Upload\Backend
 	{
 		/**
+		 * Upload handle that loaded in this backend, to reference options 
+		 * and the like.
+		 *
+		 * @var		\Tuxxedo\Upload
+		 */
+		protected $handle;
+
+
+		/**
+		 * Constructor
+		 *
+		 * @param	\Tuxxedo\Upload			The upload handle that initiated this backend
+		 */
+		public function __construct(Upload $handle)
+		{
+			$this->handle = $handle;
+		}
+
+		/**
 		 * Tells the backend to process this input and initiate the transfer 
 		 *
 		 * @param	string				The input specific to this backend
 		 * @return	boolean				Returns true if the transfer was a success, otherwise false (failed hooks and the like)
-		 *
-		 * @throws	\Tuxxedo\Exception\Upload	Throws an upload exception if something critical fails
 		 */
 		public function process($input)
 		{
+			if(!$_FILES || !isset($_FILES[$input]) || !isset($_FILES[$input]['tmp_name']) && !\is_array($_FILES[$input]['tmp_name']))
+			{
+				return(false);
+			}
+
+			var_dump($this->handle->export());
 		}
 	}
 ?>
