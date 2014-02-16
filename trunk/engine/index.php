@@ -36,7 +36,32 @@
 	 */
 	require('./library/bootstrap.php');
 
+use Tuxxedo\Upload;
 
+if(isset($_POST['send']))
+{
+	$u = new Upload;
+	$u->queue('post', 'fileselector1');
+	$u->queue('post', 'fileselector2');
+	$status = $u->upload();
+
+	var_dump($status);
+}
+else
+{
+	$u = Array('size_limit' => 10485760);
+}
+?>
+<form enctype="multipart/form-data" action="<?php echo(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES)); ?>" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo($u['size_limit']); ?>" />
+    Send this file: <input name="fileselector1" type="file" /> <br />
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo($u['size_limit']); ?>" />
+    Send this file: <input name="fileselector2" type="file" /> <br />
+    <input type="submit" name="send" value="Send File" />
+</form>
+<?php
+
+exit;
 	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success

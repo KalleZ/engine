@@ -50,6 +50,7 @@
 	 * are provided:
 	 *
  	 *  - post		Uploads from a HTTP POST form request
+	 *  - url		Uploads from a HTTP URL
 	 *
 	 * Custom handlers can be used and will be loaded Just-In-Time as an 
 	 * the queue reaches that file to be uploaded.
@@ -79,7 +80,8 @@
 		 * @var			array
 		 */
 		protected static $valid_backends	= Array(
-								'post'		=> true
+								'post'		=> true, 
+								'url'		=> true
 								);
 
 
@@ -98,8 +100,8 @@
 		/**
 		 * Queues a new object for upload
 		 *
-		 * @param	string				The protocol to use as backend for this upload transfer ('post' for HTML forms)
-		 * @param	string				The field name (<input type="file" name="XXX" /> name for 'post')
+		 * @param	string				The protocol to use as backend for this upload transfer ('post' for HTML forms, 'url' for URLs)
+		 * @param	string				The field name (<input type="file" name="XXX" /> name for 'post', 'http://www.domain.tld/file.ext' for 'url')
 		 * @param	string				Optionally the name identifier if this item might be unqueued at a later point
 		 * @return	void				No value is returned
 		 */
@@ -185,10 +187,7 @@
 
 			foreach($this->queue as $index => $obj)
 			{
-				$transfer = $factory($obj[0]);
-
-// @todo use \Tuxxedo\Upload\Descriptor
-				$status[$index] = $transfer->process($obj[1]);
+				$status[$index] = $factory($obj[0])->process($obj[1]);
 			}
 
 			return($status);
@@ -198,8 +197,6 @@
 		 * __invoke() alias for invoking the uploading process
 		 *
 		 * @return	array				Returns an array with a list of status codes, false in case of a general failure
-		 *
-		 * @throws	\Tuxxedo\Exception\Upload	Throws an uploading exception in case of a failed upload
 		 */
 		public function __invoke()
 		{
