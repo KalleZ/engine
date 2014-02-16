@@ -144,10 +144,9 @@
 		/**
 		 * Invokes the uploading process, and clearing the queue after
 		 *
-		 * @return	array				Returns an array with a list of status codes, false in case of a general failure
+		 * @return	array				Returns an array with a list of status descriptors
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception on corrupted backends
-		 * @throws	\Tuxxedo\Exception\Upload	Throws an uploading exception in case of a failed upload
 		 */
 		public function upload()
 		{
@@ -166,7 +165,7 @@
 						return($handlers[$backend]);
 					}
 
-					$temp = new $class($this);
+					$temp = new $class($this_ptr);
 
 					if(!($temp instanceof Upload\Backend))
 					{
@@ -188,6 +187,7 @@
 			{
 				$transfer = $factory($obj[0]);
 
+// @todo use \Tuxxedo\Upload\Descriptor
 				$status[$index] = $transfer->process($obj[1]);
 			}
 

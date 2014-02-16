@@ -52,8 +52,6 @@
 		 *
 		 * @param	string				The input specific to this backend
 		 * @return	boolean				Returns true if the transfer was a success, otherwise false (failed hooks and the like)
-		 *
-		 * @throws	\Tuxxedo\Exception\Upload	Throws an upload exception if something critical fails
 		 */
 		public function process($input);
 	}
