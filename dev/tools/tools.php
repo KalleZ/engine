@@ -240,6 +240,7 @@
 						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('spl')), 
 						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('filter')), 
 						'json'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('json')), 
+						'fileinfo'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('fileinfo')), 
 						'tokenizer'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('tokenizer')), 
 						'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysql')), 
 						'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysqli')), 
