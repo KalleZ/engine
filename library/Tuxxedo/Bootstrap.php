@@ -254,7 +254,7 @@
 		 * @param	integer			The loader flags, this only have an effect on custom bootstraper mode
 		 * @return	void			No value is returned
 		 *
-		 * @changelog	1.2.0			The FLAG_DATABASE now also loads the 'LocalCache' component
+		 * @changelog	1.2.0			After a hook is executed, the preloadables is no longer unset, but reset to an array
 		 */
 		public static function init($mode = self::MODE_NORMAL, $flags = NULL)
 		{
@@ -364,7 +364,7 @@
 						{
 							$flags &= ~$flag;
 
-							unset(self::$preloadables[$preloadables]);
+							self::$preloadables[$preloadables] = Array();
 						}
 					}
 

@@ -85,8 +85,6 @@
 					$registry->style->cache($preloadables, $cache_buffer) or \tuxxedo_multi_error('Unable to load templates', $cache_buffer);
 
 					unset($cache_buffer);
-
-					parent::$preloadables['templates'] = Array();
 				}
 			}, 'templates');
 
