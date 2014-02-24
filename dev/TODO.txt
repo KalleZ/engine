@@ -3,5 +3,8 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" Beta 2
+	Tuxxedo Engine 1.2.0 "Beloved" Beta 3
 	---------------------------------------------------
+
+	Implement the upload system
+	Make use of the short array syntax since PHP 5.4.0 is required now

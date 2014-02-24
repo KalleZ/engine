@@ -173,7 +173,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Design</h1>
+<h1>\Tuxxedo\Design\EventHandler::getEvents()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -183,54 +183,57 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine 1.0.0
+							Engine 1.2.0
 						</td>
 					</tr>
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							<a href="./namespaces.html">Namespace</a>
+							<a href="class-tuxxedo-design-eventhandler-159733.html#methods">Method</a>
 						</td>
 					</tr>
 					<tr>
-	<td nowrap="nowrap">Declared in:</td>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%" nowrap="nowrap">
+							library/Tuxxedo/Design/EventHandler.php
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Design/EventCaller.php
+		<a href="namespace-tuxxedo-design-483817.html">\Tuxxedo\Design</a>
 	</td>
-</tr><tr>
-	<td>&nbsp;</td>
+</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedo-design-eventhandler-159733.html">\Tuxxedo\Design\EventHandler</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Modifiers:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Design/EventContext.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Design/EventHandler.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Design/InfoAccess.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Design/Invokable.php
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Design/Iteratable.php
+		public
 	</td>
 </tr>
 				</table>
 			</fieldset>
 		</div>
 		<div class="content">
+			<fieldset>
+				<legend>Prototype</legend>
+				<table cellspacing="4" cellpadding="0" style="width: 100%;">
+					<tr>
+						<td class="value" style="width: 100%">
+							array getEvents()
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+
 			<div class="infobox">
-				Design namespace. This namespace is meant for abstract concepts and
-in most cases simply just interfaces that in someway structures the
-general design used in the core components.
+				Gets all the events valid for this event handler
 			</div>
 			<br />
 		</div>
@@ -242,69 +245,18 @@ general design used in the core components.
 
 
 
-<h2><span>Contents</span></h2>
+
+
+<h2><span>Returns</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<div class="infobox">
-			Table of contents
+			Returns an array with all the events for this event handler
 		</div>
-
-		<h3>
-	Classes
-	<a name="{$lcmtype}"></a>
-</h3>
-<table style="width: 100%" cellspacing="2" cellpadding="0">
-	<tr class="head">
-		<td class="strong" nowrap="nowrap" style="width: 20%;">Class</td>
-		<td class="strong">Description</td>
-	</tr>
-	<tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedo-design-eventcontext-419949.html">\Tuxxedo\Design\EventContext</a></td>
-	<td nowrap="nowrap" style="width: 100%">Event Context, this basically works like an \stdClass object but
-is registered for reflection and f...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedo-design-eventhandler-159733.html">\Tuxxedo\Design\EventHandler</a></td>
-	<td nowrap="nowrap" style="width: 100%">Event Handler class, this is the internal firing mechanism
-that works together with the EventCaller...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedo-design-infoaccess-990822.html">\Tuxxedo\Design\InfoAccess</a></td>
-	<td nowrap="nowrap" style="width: 100%">Information access, enables the ability for classes
-to access their loaded information through the ...</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedo-design-iteratable-805889.html">\Tuxxedo\Design\Iteratable</a></td>
-	<td nowrap="nowrap" style="width: 100%">Iteratable interface, this interface is simply just a
-combination of the built-in interfaces in PHP...</td>
-</tr>
-</table><h3>
-	Interfaces
-	<a name="{$lcmtype}"></a>
-</h3>
-<table style="width: 100%" cellspacing="2" cellpadding="0">
-	<tr class="head">
-		<td class="strong" nowrap="nowrap" style="width: 20%;">Interface</td>
-		<td class="strong">Description</td>
-	</tr>
-	<tr class="row">
-	<td nowrap="nowrap"><a href="interface-tuxxedo-design-invokable-520120.html">\Tuxxedo\Design\Invokable</a></td>
-	<td nowrap="nowrap" style="width: 100%">Interface for requring the registry to pass certain information
-before the constructor is called.</td>
-</tr>
-</table><h3>
-	Traits
-	<a name="{$lcmtype}"></a>
-</h3>
-<table style="width: 100%" cellspacing="2" cellpadding="0">
-	<tr class="head">
-		<td class="strong" nowrap="nowrap" style="width: 20%;">Trait</td>
-		<td class="strong">Description</td>
-	</tr>
-	<tr class="row">
-	<td nowrap="nowrap"><a href="trait-tuxxedo-design-eventcaller-944035.html">\Tuxxedo\Design\EventCaller</a></td>
-	<td nowrap="nowrap" style="width: 100%">Implements event calling hooks for a class</td>
-</tr>
-</table>
 	</div>
 </div>
+
+
 
 
 
@@ -317,7 +269,8 @@ before the constructor is called.</td>
 	<div class="inner">
 		<ul>
 			
-			<li><a href="./namespaces.html">List of namespaces</a></li>
+			<li><a href="class-tuxxedo-design-eventhandler-159733.html">\Tuxxedo\Design\EventHandler</a></li>
+			<li><a href="./classes.html">List of classes</a></li>
 			<li><a href="./index.html">Table of contents</a></li>
 		</ul>
 	</div>

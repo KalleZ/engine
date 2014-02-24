@@ -173,7 +173,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Design\Event::fire()</h1>
+<h1>\Tuxxedo\Design\EventHandler::unregister()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -189,13 +189,13 @@
 					<tr>
 						<td>Type:</td>
 						<td class="value" style="width: 100%">
-							<a href="class-tuxxedo-design-event-021044.html#methods">Method</a>
+							<a href="class-tuxxedo-design-eventhandler-159733.html#methods">Method</a>
 						</td>
 					</tr>
 					<tr>
 						<td nowrap="nowrap">Declared in:</td>
 						<td class="value" style="width: 100%" nowrap="nowrap">
-							library/Tuxxedo/Design/Event.php
+							library/Tuxxedo/Design/EventHandler.php
 						</td>
 					</tr>
 					<tr>
@@ -207,16 +207,11 @@
 					<tr>
 						<td>Object:</td>
 						<td class="value" style="width: 100%">
-							<a href="class-tuxxedo-design-event-021044.html">\Tuxxedo\Design\Event</a>
+							<a href="class-tuxxedo-design-eventhandler-159733.html">\Tuxxedo\Design\EventHandler</a>
 						</td>
 					</tr>
 					<tr>
 	<td nowrap="nowrap">Modifiers:</td>
-	<td class="value" style="width: 100%" nowrap="nowrap">
-		static
-	</td>
-</tr><tr>
-	<td>&nbsp;</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
 		public
 	</td>
@@ -230,7 +225,7 @@
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
 						<td class="value" style="width: 100%">
-							void fire(string, object, array)
+							void unregister(string)
 						</td>
 					</tr>
 				</table>
@@ -238,7 +233,7 @@
 			<br />
 
 			<div class="infobox">
-				Event trigger
+				Unregisters all callbacks for a specific event
 			</div>
 			<br />
 		</div>
@@ -258,25 +253,7 @@
 	<table cellspacing="4" cellpadding="0" style="width: 100%;">
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
-				The event to trigger
-			</td>
-		</tr>
-	</table>
-</fieldset><br /><fieldset>
-	<legend><strong>object</strong></legend>
-	<table cellspacing="4" cellpadding="0" style="width: 100%;">
-		<tr> 
-			<td colspan="2" class="value" style="width: 100%">
-				The $this instance if called inside a method
-			</td>
-		</tr>
-	</table>
-</fieldset><br /><fieldset>
-	<legend><strong>array</strong></legend>
-	<table cellspacing="4" cellpadding="0" style="width: 100%;">
-		<tr> 
-			<td colspan="2" class="value" style="width: 100%">
-				Additional arguments that maybe useful for the callbacks
+				The event name
 			</td>
 		</tr>
 	</table>
@@ -284,14 +261,7 @@
 	</div>
 </div>
 
-<h2><span>Returns</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<div class="infobox">
-			No value is returned
-		</div>
-	</div>
-</div>
+
 
 
 
@@ -306,7 +276,7 @@
 	<div class="inner">
 		<ul>
 			
-			<li><a href="class-tuxxedo-design-event-021044.html">\Tuxxedo\Design\Event</a></li>
+			<li><a href="class-tuxxedo-design-eventhandler-159733.html">\Tuxxedo\Design\EventHandler</a></li>
 			<li><a href="./classes.html">List of classes</a></li>
 			<li><a href="./index.html">Table of contents</a></li>
 		</ul>

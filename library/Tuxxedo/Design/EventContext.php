@@ -59,8 +59,15 @@
 		 * triggered this event. If no context was supplied, then this 
 		 * is NULL
 		 *
-		 * @var		object
+		 * @var		object|null
 		 */
 		public $extern;
+
+		/**
+		 * The arguments passed to the callback from the callee (if any)
+		 *
+		 * @var		array|null
+		 */
+		public $args;
 	}
 ?>

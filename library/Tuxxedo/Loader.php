@@ -319,16 +319,18 @@
 		}
 
 		/**
-		 * Check whether a class or interface exists without attempting to autoload them
+		 * Check whether a class, interface or trait exists without attempting to autoload them
 		 *
 		 * @param	string				The class or interface to check
 		 * @return	boolean				True if exists and false otherwise
 		 *
 		 * @since	1.1.0
+		 *
+		 * @changelog	1.2.0				This method now also checks for traits
 		 */
 		public static function exists($name)
 		{
-			return(\class_exists($name, false) || \interface_exists($name, false));
+			return(\class_exists($name, false) || \interface_exists($name, false) || \trait_exists($name, false));
 		}
 	}
 ?>
