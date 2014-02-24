@@ -5,6 +5,7 @@
 	Tuxxedo Engine 1.2.0 "Beloved"
 	------------------------------------------------
 
+	Added the requirement of PHP 5.4.0+ (Kalle)
 	Added the documentation generator (Kalle)
 	Added the event handling subsystem (Kalle)
 	Added new and improved debugging mode: (Kalle)
@@ -61,6 +62,7 @@
 	Added a magic '.tuxxedo' file to engine_api.json, this contains meta information about the JSON format for readers (Kalle)
 	Added \Tuxxedo\Helper\Database::getColumns() (Kalle)
 	Added the posibility for datamanager adapters to retain the original data if modified from the outside API internally (Kalle)
+	Added traits to the allowance of items being autoloadable (Kalle)
 
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)

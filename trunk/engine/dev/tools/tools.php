@@ -236,7 +236,7 @@
 		{
 			$results 	= '';
 			$tests 		= Array(
-						'PHP 5.3.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.3.0', PHP_VERSION)), 
+						'PHP 5.4.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.4.0', PHP_VERSION)), 
 						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('spl')), 
 						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('filter')), 
 						'json'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('json')), 
