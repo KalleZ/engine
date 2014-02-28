@@ -68,21 +68,34 @@
 	class Upload extends Design\InfoAccess
 	{
 		/**
+		 * Event caller trait
+		 */
+		use Design\EventCaller;
+
+
+		/**
+		 * The event handler
+		 *
+		 * @var			\Tuxxedo\Design\EventHandler
+		 */
+		protected $event_handler;
+
+		/**
 		 * Upload queue
 		 *
 		 * @var			array
 		 */
-		protected $queue			= Array();
+		protected $queue			= [];
 
 		/**
 		 * List of valid backends
 		 *
 		 * @var			array
 		 */
-		protected static $valid_backends	= Array(
+		protected static $valid_backends	= [
 								'post'		=> true, 
 								'url'		=> true
-								);
+								];
 
 
 		/**
@@ -90,11 +103,13 @@
 		 */
 		public function __construct()
 		{
-			$this->information = Array(
-							'size_limit'	=> 10485760, 
-							'directory'	=> './', 
-							'resolve_mime'	=> true
-							);
+			$this->setEventHandler($this->event_handler = new Design\EventHandler(['process']);
+
+			$this->information = [
+						'size_limit'	=> 10485760, 
+						'directory'	=> './', 
+						'resolve_mime'	=> true
+						];
 		}
 
 		/**
@@ -114,10 +129,10 @@
 				return;
 			}
 
-			$struct = Array(
+			$struct = [
 					$backend, 
 					$input
-					);
+					];
 
 			if($name !== NULL)
 			{
@@ -183,7 +198,7 @@
 				return(false);
 			}
 
-			$status = Array();
+			$status = [];
 
 			foreach($this->queue as $index => $obj)
 			{
