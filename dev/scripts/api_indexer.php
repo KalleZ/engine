@@ -1345,28 +1345,32 @@
 						unset($link);
 					}
 
-					if($meta['implements'])
+					foreach(Array(Array('implements', 'interface', 'Implements'), Array('reuses', 'trait', 'Reuses')) as $mdata)
 					{
-						asort($meta['implements']);
+						if(!$meta[$mdata[0]])
+						{
+							continue;
+						}
+
+						asort($meta[$mdata[0]]);
 
 						$counter = 0;
 
-						foreach($meta['implements'] as $iface)
+						foreach($meta[$mdata[0]] as $metavalue)
 						{
-							if($hash = $hashlookup('interface', $iface))
+							if($hash = $hashlookup($mdata[1], $metavalue))
 							{
-
 								$link		= new Template('link');
 								$link->link	= $hash . '.html';
-								$link->title	= $iface;
+								$link->title	= $metavalue;
 							}
 
 							$template 		= new Template((!$counter ? 'obj_element' : 'obj_element_bit'));
-							$template->value	= (isset($link) ? $link : $iface);
+							$template->value	= (isset($link) ? $link : $metavalue);
 
 							if(!$counter++)
 							{
-								$template->element = 'Implements';
+								$template->element = $mdata[2];
 							}
 
 							$extendedinfo .= $template;

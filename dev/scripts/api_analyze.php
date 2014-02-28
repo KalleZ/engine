@@ -721,7 +721,7 @@
 	$statistics->elements			= 0;
 	$statistics->counter			= new stdClass;
 	$statistics->counter->namespaces	= Array();
-	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->traits = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
+	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->reuses = 0; $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->traits = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
 
 	IO::signature();
 	IO::headline('Lexical API analyze', 1);
@@ -836,6 +836,23 @@
 						continue;
 					}
 
+					if($context->current == T_CLASS || $context->current == T_INTERFACE || $context->current == T_TRAIT)
+					{
+						++$statistics->elements;
+						++$statistics->counter->reuses;
+
+						$datamap[$file][$context->type_multiple][$context->{$context->type}]['reuses'][] = $aliases[0] = resolve_namespace_alias(key($datamap[$file]['namespaces']), $datamap[$file]['aliases'], $alias[0], 1);
+
+						if($alias[0]{0} != '\\')
+						{
+							$alias[0] = '\\' . $alias[0];
+						}
+
+						IO::li(sprintf('REUSES (%s)', $alias[0]));
+
+						continue;
+					}
+
 					if($alias[0]{0} != '\\')
 					{
 						$alias[0] = '\\' . $alias[0];
@@ -853,7 +870,7 @@
 				break;
 				case(T_INTERFACE):
 				case(T_CLASS):
-				case(355):
+				case(T_TRAIT):
 				{
 					if(($name = lexical_scan($tokens_copy, $index, T_STRING)) == false)
 					{
@@ -894,6 +911,7 @@
 					}
 
 					$datamap[$file][$type_multiple][$name]	= Array(
+											'reuses'	=> Array(), 
 											'constants'	=> Array(), 
 											'properties'	=> Array(), 
 											'methods'	=> Array(), 
@@ -956,7 +974,7 @@
 
 					$function = $function[0];
 
-					if($context->current == T_CLASS || $context->current == T_INTERFACE || $context->current == 355)
+					if($context->current == T_CLASS || $context->current == T_INTERFACE || $context->current == T_TRAIT)
 					{
 						$name											= $context->{$context->type} . '::' . $function . '()';
 						$datamap[$file][$context->type_multiple][$context->{$context->type}]['methods'][] 	= Array(
@@ -1312,7 +1330,7 @@
 	IO::li('Total number of scanned elements: ' . $statistics->elements, IO::STYLE_BOLD);
 	IO::ul();
 
-	foreach(Array('constants', 'functions', 'namespaces', 'aliases', 'classes', 'interfaces', 'traits', 'object_constants', 'properties', 'methods') as $element)
+	foreach(Array('constants', 'functions', 'namespaces', 'aliases', 'reuses', 'classes', 'interfaces', 'traits', 'object_constants', 'properties', 'methods') as $element)
 	{
 		IO::li(ucfirst(str_replace('_', ' ', $element)) . ': ' . $statistics->counter->{$element});
 	}
