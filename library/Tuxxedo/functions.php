@@ -193,12 +193,12 @@
 
 		if($references === NULL)
 		{
-			$references 	= Array(
+			$references 	= [
 						'error'		=> 'set_error_handler', 
 						'exception'	=> 'set_exception_handler', 
 						'shutdown'	=> 'register_shutdown_function', 
 						'autoload'	=> 'spl_autoload_register'
-						);
+						];
 		}
 
 		$handler = strtolower($handler);
@@ -263,7 +263,7 @@
 		}
 		elseif($exception_sql)
 		{
-			$message = ($configuration['application']['debug'] ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
+			$message = ($configuration['application']['debug'] ? str_replace(["\r", "\n"], '', $e->getMessage()) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -461,7 +461,7 @@
 						);
 				}
 
-				Registry::globals('errors', Array());
+				Registry::globals('errors', []);
 			}
 
 			if($exception_sql)
@@ -471,7 +471,7 @@
 					'<legend><strong>SQL</strong></legend>' . PHP_EOL .
 					'<table cellspacing="4" cellpadding="0" style="width: 100%;">' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
-					'<td colspan="2" class="value" style="width: 100%"><code>' . str_replace(Array("\r", "\n"), '', $e->getSQL()) . '</code></td>' . PHP_EOL . 
+					'<td colspan="2" class="value" style="width: 100%"><code>' . str_replace(["\r", "\n"], '', $e->getSQL()) . '</code></td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL . 
 					'</table>' . PHP_EOL . 
 					'</fieldset>' . PHP_EOL
@@ -730,7 +730,7 @@
 		}
 		elseif($exception_sql)
 		{
-			$message = ($configuration['application']['debug'] ? str_replace(Array("\r", "\n"), '', $e->getMessage()) : 'An error occured while querying the database');
+			$message = ($configuration['application']['debug'] ? str_replace(["\r", "\n"], '', $e->getMessage()) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -844,7 +844,7 @@
 						);
 				}
 
-				Registry::globals('errors', Array());
+				Registry::globals('errors', []);
 			}
 
 			if($exception_sql)
@@ -854,7 +854,7 @@
 					PHP_EOL . 
 					'SQL' . PHP_EOL . 
 					'---' . PHP_EOL . 
-					str_replace(Array("\r", "\n"), '', $e->getSQL()) . PHP_EOL
+					str_replace(["\r", "\n"], '', $e->getSQL()) . PHP_EOL
 					);
 			}
 
@@ -1016,14 +1016,14 @@
 			$lib = realpath(TUXXEDO_LIBRARY);
 		}
 
-		$trimmed = (strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, $dir) !== false ? str_replace(Array('/', '\\', $dir), DIRECTORY_SEPARATOR, $path) : ($path{1} != ':' && $path{2} != '\\' ? DIRECTORY_SEPARATOR : '') . ltrim($path, DIRECTORY_SEPARATOR));
+		$trimmed = (strpos($path, '/') !== false || strpos($path, '\\') !== false || strpos($path, $dir) !== false ? str_replace(['/', '\\', $dir], DIRECTORY_SEPARATOR, $path) : ($path{1} != ':' && $path{2} != '\\' ? DIRECTORY_SEPARATOR : '') . ltrim($path, DIRECTORY_SEPARATOR));
 
 		if($trimmed == $path)
 		{
 			$trimmed = str_replace((($ptr = strrpos($lib, DIRECTORY_SEPARATOR)) !== false ? substr($lib, 0, $ptr) : $lib), '', $trimmed);
 		}
 
-		return(str_replace(Array('\\\\', '//'), Array('\\', '/'), $trimmed));
+		return(str_replace(['\\\\', '//'], ['\\', '/'], $trimmed));
 	}
 
 	/**

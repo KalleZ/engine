@@ -29,7 +29,6 @@
 
 
 	$adapters_dir 	= realpath(__DIR__ . '/../..') . '/library/Tuxxedo/Datamanager/Adapter/';
-
 	$dm_fields 	= function($adapter)
 	{
 		$tempdm = Datamanager\Adapter::factory($adapter);
@@ -47,16 +46,11 @@
 		}));
 	};
 
-	$phrase_name = function($adapter, $field)
-	{
-		return('dm_' . strtolower($adapter . '_' . $field));
-	};
-
 
 	$registry->register('db', '\Tuxxedo\Database');
-	$registry->register('datastore', '\Tuxxedo\Datastore')->cache(Array('languages', 'options', 'phrasegroups'));
+	$registry->register('datastore', '\Tuxxedo\Datastore')->cache(['languages', 'options', 'phrasegroups']);
 	$registry->register('options', '\Tuxxedo\Options');
-	$registry->register('intl', '\Tuxxedo\Intl')->cache(Array('datamanagers'));
+	$registry->register('intl', '\Tuxxedo\Intl')->cache(['datamanagers']);
 
 	$intldm = $intl->getPhrasegroup('datamanagers');
 
@@ -81,13 +75,13 @@
 
 			foreach($fields as $field)
 			{
-				$phrase = $phrase_name($last, $field);
+				$phrase = 'dm_' . strtolower($last . '_' . $field);
 
 				if(!isset($intldm[$phrase]))
 				{
 					if(!isset($missing[$languagedata['title']]))
 					{
-						$missing[$languagedata['title']] = Array();
+						$missing[$languagedata['title']] = [];
 					}
 
 					if(!$ul)

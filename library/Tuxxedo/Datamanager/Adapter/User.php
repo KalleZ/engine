@@ -80,65 +80,65 @@
 		 * @changelog	1.1.0			Changed the name of 'styleid' to 'style_id'
 		 * @changelog	1.1.0			Changed the name of 'languageid' to 'language_id'
 		 */
-		protected $fields		= Array(
-							'id'			=> Array(
-												'type'		=> parent::FIELD_PROTECTED
-												), 
-							'username'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidUsername')
-												), 
-							'email'			=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidEmail')
-												), 
-							'name'			=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_STRING_EMPTY, 
-												'default'	=> ''
-												), 
-							'password'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidPassword')
-												), 
-							'usergroupid'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidUsergroup')
-												), 
-							'salt'			=> Array(
-												'type'		=> parent::FIELD_PROTECTED
-												), 
-							'style_id'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidStyleId')
-												), 
-							'language_id'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidLanguageId')
-												), 
-							'timezone'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidTimezone'), 
-												'parameters'	=> Array()
-												), 
-							'timezone_offset'	=> Array(
-												'type'		=> parent::FIELD_PROTECTED, 
-												'default'	=> 0
-												), 
+		protected $fields		= [
+							'id'			=> [
+											'type'		=> parent::FIELD_PROTECTED
+											], 
+							'username'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidUsername']
+											], 
+							'email'			=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidEmail']
+											], 
+							'name'			=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_STRING_EMPTY, 
+											'default'	=> ''
+											], 
+							'password'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidPassword']
+											], 
+							'usergroupid'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidUsergroup']
+											], 
+							'salt'			=> [
+											'type'		=> parent::FIELD_PROTECTED
+											], 
+							'style_id'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidStyleId']
+											], 
+							'language_id'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidLanguageId']
+											], 
+							'timezone'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidTimezone'], 
+											'parameters'	=> []
+											], 
+							'timezone_offset'	=> [
+											'type'		=> parent::FIELD_PROTECTED, 
+											'default'	=> 0
+											], 
 
-							'permissions'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_NUMERIC, 
-												'default'	=> 0
-												)
-							);
+							'permissions'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_NUMERIC, 
+											'default'	=> 0
+											]
+							];
 
 
 		/**
@@ -177,7 +177,7 @@
 				$this->data['permissions']			= (integer) $this->data['permissions'];
 				$this->usergroupid				= (integer) $this->data['usergroupid'];
 				$this->identifier 				= $identifier;
-				$this->fields['timezone_offset']['parameters']	= Array($this->data['timezone']);
+				$this->fields['timezone_offset']['parameters']	= [$this->data['timezone']];
 
 				$user->free();
 			}
@@ -201,7 +201,7 @@
 
 			if($field == 'timezone_offset')
 			{
-				$this->fields['timezone']['parameters'] = Array($value);
+				$this->fields['timezone']['parameters'] = [$value];
 			}
 			elseif($field == 'password')
 			{

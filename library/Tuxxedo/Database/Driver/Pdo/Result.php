@@ -153,7 +153,7 @@
 				return(false);
 			}
 
-			$row		= Array();
+			$row		= [];
 			$void_keys 	= \range(0, \sizeof($this->iterator_data[$this->position]) - 1);
 
 			foreach($this->iterator_data[$this->position] as $key => $value)

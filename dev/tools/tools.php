@@ -29,51 +29,51 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'tools_index'
-					);
+					];
 
 	/**
 	 * Action templates
 	 */
-	$action_templates	= Array(
-					'statistics'		=> Array(
-										'tools_statistics', 
-										'tools_statistics_itembit'
-										), 
-					'password'		=> Array(
-										'tools_password'
-										), 
-					'requirements'		=> Array(
-										'tools_requirements', 
-										'tools_requirements_itembit'
-										), 
-					'compiler'		=> Array(
-										'tools_compiler'
-										), 
-					'authentication'	=> Array(
-										'tools_authentication'
-										), 
-					'status'		=> Array(
-										'tools_status', 
-										'tools_status_itembit', 
-										'tools_status_all', 
-										'tools_status_all_itembit'
-										), 
-					'configuration'		=> Array(
-										'tools_configuration', 
-										'tools_configuration_section', 
-										'tools_configuration_section_itembit'
-										)
-					);
+	$action_templates	= [
+					'statistics'		=> [
+									'tools_statistics', 
+									'tools_statistics_itembit'
+									], 
+					'password'		=> [
+									'tools_password'
+									], 
+					'requirements'		=> [
+									'tools_requirements', 
+									'tools_requirements_itembit'
+									], 
+					'compiler'		=> [
+									'tools_compiler'
+									], 
+					'authentication'	=> [
+									'tools_authentication'
+									], 
+					'status'		=> [
+									'tools_status', 
+									'tools_status_itembit', 
+									'tools_status_all', 
+									'tools_status_all_itembit'
+									], 
+					'configuration'		=> [
+									'tools_configuration', 
+									'tools_configuration_section', 
+									'tools_configuration_section_itembit'
+									]
+					];
 
 	/**
 	 * Precache datastore elements
 	 */
-	$precache 		= Array(
+	$precache 		= [
 					'permissions', 
 					'usergroups'
-					);
+					];
 
 	/**
 	 * Set script name
@@ -98,30 +98,30 @@
 				throw new Exception('No source files found in the root directory');
 			}
 
-			$ignored	= Array(
+			$ignored	= [
 						'json', 
 						'png', 
 						'sqlite3', 
 						'txt', 
 						'tuxx'
-						);
+						];
 
-			$statistics 	= Array(
-						'lines'		=> Array(), 
-						'size'		=> Array(), 
-						'files'		=> Array(), 
-						'total'		=> Array(
-										'files'		=> 0, 
-										'lines'		=> 0, 
-										'size'		=> 0, 
-										'blanks'	=> 0
-										), 
-						'extensions'	=> Array(
-										'php'		=> Array(
-														'tokens'	=> 0
-													)
-										)
-						);
+			$statistics 	= [
+						'lines'		=> [], 
+						'size'		=> [], 
+						'files'		=> [], 
+						'total'		=> [
+									'files'		=> 0, 
+									'lines'		=> 0, 
+									'size'		=> 0, 
+									'blanks'	=> 0
+									], 
+						'extensions'	=> [
+									'php'		=> [
+												'tokens'	=> 0
+												]
+									]
+						];
 
 			foreach($files as $path)
 			{
@@ -151,9 +151,9 @@
 
 				if(!isset($statistics['extensions'][$extension]))
 				{
-					$statistics['extensions'][$extension] 	= Array(
+					$statistics['extensions'][$extension] 	= [
 											'blanks'	=> 0
-											);
+											];
 				}
 				elseif(!isset($statistics['extensions'][$extension]['blanks']))
 				{
@@ -206,13 +206,13 @@
 			$statistics['total']['extensions']	= sizeof(array_keys($statistics['files']));
 			$ignored				= '.' . implode(', .', $ignored);
 
-			$avg					= Array(
+			$avg					= [
 									'lines_per_file'	=> round($statistics['total']['lines'] / $statistics['total']['files']), 
 									'bytes_per_line'	=> round($statistics['total']['size'] / $statistics['total']['lines']), 
 									'blanks_per_file'	=> round($statistics['total']['blanks'] / $statistics['total']['files']), 
 									'tokens_per_line'	=> round($statistics['extensions']['php']['tokens'] / $statistics['lines']['php']), 
 									'tokens_per_file'	=> round($statistics['extensions']['php']['tokens'] / $statistics['files']['php'])
-									);
+									];
 
 			eval(page('tools_statistics'));
 		}
@@ -235,22 +235,22 @@
 		case('requirements'):
 		{
 			$results 	= '';
-			$tests 		= Array(
-						'PHP 5.4.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, Array('5.4.0', PHP_VERSION)), 
-						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('spl')), 
-						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, Array('filter')), 
-						'json'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('json')), 
-						'OpenSSL'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('openssl')), 
-						'fileinfo'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('fileinfo')), 
-						'tokenizer'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('tokenizer')), 
-						'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysql')), 
-						'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('mysqli')), 
-						'sqlite3'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('sqlite3')), 
-						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo')), 
-						'pdo_mysql'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo_mysql')), 
-						'pdo_sqlite'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, Array('pdo_sqlite')), 
-						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, Array('realpath'))
-						);
+			$tests 		= [
+						'PHP 5.4.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, ['5.4.0', PHP_VERSION]), 
+						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, ['spl']), 
+						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, ['filter']), 
+						'json'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['json']), 
+						'OpenSSL'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['openssl']), 
+						'fileinfo'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['fileinfo']), 
+						'tokenizer'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['tokenizer']), 
+						'mysql'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['mysql']), 
+						'mysqli'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['mysqli']), 
+						'sqlite3'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['sqlite3']), 
+						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['pdo']), 
+						'pdo_mysql'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['pdo_mysql']), 
+						'pdo_sqlite'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['pdo_sqlite']), 
+						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, ['realpath'])
+						];
 
 			$failed = false;
 
@@ -279,12 +279,12 @@
 				$opts		= 0;
 				$source 	= htmlspecialchars($src);
 				$compiler	= new Compiler;
-				$compiler_opts	= Array(
+				$compiler_opts	= [
 							'opt_function_limit'		=> Compiler::OPT_NO_FUNCTION_CALL_LIMIT, 
 							'opt_class_limit'		=> Compiler::OPT_NO_CLASS_CALL_LIMIT, 
 							'opt_closure_limit'		=> Compiler::OPT_NO_CLOSURE_CALL_LIMIT, 
 							'opt_interpolated_limit'	=> Compiler::OPT_NO_INTERPOLATED_CALLS
-							);
+							];
 
 				foreach($compiler_opts as $field => $bitfield)
 				{
@@ -294,7 +294,7 @@
 					}
 				}
 
-				foreach(Array('function', 'class', 'closure') as $data)
+				foreach(['function', 'class', 'closure'] as $data)
 				{
 					if(!isset($_POST['opt_data_' . $data]) || empty($_POST['opt_data_' . $data]))
 					{
@@ -304,7 +304,7 @@
 					$raw 				= array_map('trim', explode(',', $_POST['opt_data_' . $data]));
 					${'predefined_' . $data} 	= htmlspecialchars(implode(',', $raw), ENT_QUOTES);
 
-					array_map(Array($compiler, 'allow' . $data), $raw);
+					array_map([$compiler, 'allow' . $data], $raw);
 				}
 
 				if(!isset($_POST['verbose_test']))
@@ -338,7 +338,7 @@
 		break;
 		case('authentication'):
 		{
-			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), Array('id', 'username', 'email')))
+			if(isset($_POST['progress']) && in_array($input->post('identifier_field'), ['id', 'username', 'email']))
 			{
 				$logged_in = test_login($input->post('identifier'), $input->post('password'), $input->post('identifier_field'));
 			}
@@ -358,7 +358,7 @@
 
 			$query = $dbhelper->getTables();
 
-			if(isset($_GET['table']) && isset($_GET['operation']) && in_array(strtolower($input->get('operation')), Array('optimize', 'repair')))
+			if(isset($_GET['table']) && isset($_GET['operation']) && in_array(strtolower($input->get('operation')), ['optimize', 'repair']))
 			{
 				$table = strtolower($input->get('table'));
 
@@ -461,9 +461,7 @@
 				{
 					foreach($directives as $name => $value)
 					{
-						$lname = strtolower($name);
-
-						if(($lname == 'password' || $lname == 'database' && ($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite' || $section == 'devtools')) && !$configuration['devtools']['protective'])
+						if(($name == 'password' || $name == 'database' && ($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite' || $section == 'devtools')) && !$configuration['devtools']['protective'])
 						{
 							$value = '"********"';
 						}

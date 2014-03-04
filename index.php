@@ -25,10 +25,10 @@
 	/**
 	 * Precache templates
 	 */
-	$templates = Array(
-				/* Index page */
-				'index'
-				);
+	$templates = [
+			/* Index page */
+			'index'
+			];
 
 
 	/**
@@ -49,7 +49,7 @@ if(isset($_POST['send']))
 }
 else
 {
-	$u = Array('size_limit' => 10485760);
+	$u = ['size_limit' => 10485760];
 }
 ?>
 <form enctype="multipart/form-data" action="<?php echo(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES)); ?>" method="POST">
@@ -61,12 +61,10 @@ else
 </form>
 <?php
 
-exit;
+//exit;
 	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
-	echo new Layout('index', Array(
-					'version' => Version::FULL
-					));
+	echo new Layout('index', ['version' => Version::FULL]);
 ?>

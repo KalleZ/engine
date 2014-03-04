@@ -54,7 +54,7 @@
 	$registry = Registry::init($configuration);
 
 	Registry::globals('error_reporting', 	true);
-	Registry::globals('errors', 		Array());
+	Registry::globals('errors', 		[]);
 
 	$registry->set('timezone', new DateTimeZone('UTC'));
 	$registry->set('datetime', new DateTime('now', $timezone));

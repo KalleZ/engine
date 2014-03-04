@@ -90,30 +90,30 @@
 		 *
 		 * @var		array
 		 */
-		protected $frames		= Array();
+		protected $frames		= [];
 
 		/**
 		 * Meta information - includes
 		 *
 		 * @var 	array
 		 */
-		protected static $includes	= Array(
+		protected static $includes	= [
 							'require', 
 							'require_once', 
 							'include', 
 							'include_once'
-							);
+							];
 
 		/**
 		 * Meta information - callbacks
 		 *
 		 * @var		array
 		 */
-		protected static $callbacks	= Array(
+		protected static $callbacks	= [
 							'array_map', 
 							'call_user_func', 
 							'call_user_func_array'
-							);
+							];
 
 
 		/**
@@ -139,22 +139,15 @@
 		 */
 		public function getTrace(\Exception $e = NULL, $skip_frames = 2)
 		{
-			static $debug_args;
-
-			if(!$debug_args)
-			{
-				$debug_args = (\defined('DEBUG_BACKTRACE_PROVIDE_OBJECT') ? \DEBUG_BACKTRACE_PROVIDE_OBJECT : true);
-			}
-
-			$handlers		= Array(
+			$handlers		= [
 							$exception_handler = \strtolower(\tuxxedo_handler('exception'))	=> 'Exception handler', 
 							\strtolower(\tuxxedo_handler('shutdown'))			=> 'Shutdown handler', 
 							\strtolower(\tuxxedo_handler('error'))				=> 'Error handler', 
 							\strtolower(\tuxxedo_handler('autoload'))			=> 'Auto loader'
-							);
+							];
 
-			$stack 	= Array();
-			$bt	= \debug_backtrace($debug_args);
+			$stack 	= [];
+			$bt	= \debug_backtrace(\DEBUG_BACKTRACE_PROVIDE_OBJECT);
 
 			if($e)
 			{
@@ -173,7 +166,7 @@
 
 				$flags		= 0;
 				$call		= $refcall = $refclass = $file = $line = '';
-				$notes 		= (isset($t['type']) && $t['type'] == '::' ? Array('Static call') : Array());
+				$notes 		= (isset($t['type']) && $t['type'] == '::' ? ['Static call'] : []);
 
 				if(isset($t['function']))
 				{
@@ -283,7 +276,7 @@
 				$trace 			= new TraceFrame($refclass, $flags);
 				$trace->frame		= $lx++;
 				$trace->call		= $call . '()';
-				$trace->callargs	= $call . (isset($t['args']) && $t['args'] ? '(' . \join(', ', \array_map(Array(__CLASS__, 'getArgTypeData'), $t['args'])) . ')' : '()');
+				$trace->callargs	= $call . (isset($t['args']) && $t['args'] ? '(' . \join(', ', \array_map([__CLASS__, 'getArgTypeData'], $t['args'])) . ')' : '()');
 				$trace->reflection_call	= $refcall;
 				$trace->current		= (($n - $skip_frames - 1) == $x++);
 				$trace->line		= $line;
@@ -325,16 +318,16 @@
 		 */
 		protected static function getCallVariants(Array $trace)
 		{
-			$variants = Array(
-						$trace['class'] . '::' . $trace['function'], 
-						'\\' . $trace['class'] . '::' . $trace['function'], 
-						Array($trace['class'], $trace['function']), 
-						Array('\\' . $trace['class'], $trace['function'])
-						);
+			$variants = [
+					$trace['class'] . '::' . $trace['function'], 
+					'\\' . $trace['class'] . '::' . $trace['function'], 
+					[$trace['class'], $trace['function']], 
+					['\\' . $trace['class'], $trace['function']]
+					];
 
 			if(isset($trace['object']))
 			{
-				$variants[] = Array($trace['object'], $trace['function']);
+				$variants[] = [$trace['object'], $trace['function']];
 			}
 
 			return($variants);

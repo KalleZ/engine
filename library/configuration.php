@@ -25,12 +25,12 @@
 	 * should not be stored in the database so its editable 
 	 * through the control panel.
 	 */
-	$configuration = Array(
+	$configuration = [
 
 	/**
 	 * Application configuration
 	 */
-	'application' => Array(
+	'application' => [
 
 		/**
 		 * Name
@@ -76,12 +76,12 @@
 	/**
 	 * End application configuration
 	 */
-	), 
+	], 
 
 	/**
 	 * Debug configuration
 	 */
-	'debug' => Array(
+	'debug' => [
 
 		/**
 		 * Trace mode
@@ -121,12 +121,12 @@
 	/**
 	 * End debug configuration
 	 */
-	), 
+	], 
 
 	/**
 	 * Database configuration
 	 */
-	'database' => Array(
+	'database' => [
 
 		/**
 		 * Driver
@@ -320,12 +320,12 @@
 	/**
 	 * End database configuration
 	 */
-	), 
+	], 
 
 	/**
 	 * Development Tools configuration
 	 */
-	'devtools' => Array(
+	'devtools' => [
 
 		/**
 		 * Protective mode
@@ -360,10 +360,10 @@
 	/**
 	 * End Development Tools configuration
 	 */
-	)
+	]
 
 	/**
 	 * End configuration
 	 */
-	);
+	];
 ?>

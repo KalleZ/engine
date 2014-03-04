@@ -149,18 +149,18 @@
 		 * @var		array
 		 * @since	1.2.0
 		 */
-		protected static $hooks		= Array();
+		protected static $hooks		= [];
 
 		/**
 		 * Holds the elements that should be preloaded
 		 *
 		 * @var		array
 		 */
-		protected static $preloadables	= Array(
-							'datastore'	=> Array(), 
-							'phrasegroups'	=> Array(), 
-							'templates'	=> Array()
-							);
+		protected static $preloadables	= [
+							'datastore'	=> [], 
+							'phrasegroups'	=> [], 
+							'templates'	=> []
+							];
 
 		/**
 		 * Holds the various flags supported
@@ -168,7 +168,7 @@
 		 * @var		array
 		 * @since	1.2.0
 		 */
-		protected static $flags		= Array(
+		protected static $flags		= [
 							self::FLAG_CORE, 
 							self::FLAG_DATE, 
 							self::FLAG_DATABASE, 
@@ -177,7 +177,7 @@
 							self::FLAG_OPTIONS, 
 							self::FLAG_STYLE, 
 							self::FLAG_USER
-							);
+							];
 
 
 		/**
@@ -237,13 +237,13 @@
 
 			if(!isset(self::$hooks[$flag]))
 			{
-				self::$hooks[$flag] = Array();
+				self::$hooks[$flag] = [];
 			}
 
-			self::$hooks[$flag][] = Array(
+			self::$hooks[$flag][] = [
 							'callback'	=> $callback, 
 							'preloadables'	=> (isset(self::$preloadables[$preloadables]) ? $preloadables : NULL)
-							);
+							];
 		}
 
 		/**
@@ -337,7 +337,7 @@
 				$registry = Registry::init($configuration);
 
 				Registry::globals('error_reporting', 	true);
-				Registry::globals('errors', 		Array());
+				Registry::globals('errors', 		[]);
 
 				if($configuration['application']['debug'] && $configuration['debug']['trace'])
 				{
@@ -360,11 +360,11 @@
 
 					foreach($hooks as $hook)
 					{
-						if(\call_user_func_array($hook['callback'], Array($registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL), &$configuration)) && $flag != self::FLAG_CORE)
+						if(\call_user_func_array($hook['callback'], [$registry, (($preloadables = $hook['preloadables']) ? self::$preloadables[$hook['preloadables']] : NULL), &$configuration]) && $flag != self::FLAG_CORE)
 						{
 							$flags &= ~$flag;
 
-							self::$preloadables[$preloadables] = Array();
+							self::$preloadables[$preloadables] = [];
 						}
 					}
 
@@ -402,13 +402,13 @@
 
 				if(self::$preloadables['datastore'])
 				{
-					$cache_buffer = Array();
+					$cache_buffer = [];
 
 					$registry->datastore->cache(self::$preloadables['datastore'], $cache_buffer) or \tuxxedo_multi_error('Unable to load datastore elements', $cache_buffer);
 
 					unset($cache_buffer);
 
-					self::$preloadables['datastore'] = Array();
+					self::$preloadables['datastore'] = [];
 				}
 			}
 
@@ -437,13 +437,13 @@
 
 				if(self::$preloadables['templates'])
 				{
-					$cache_buffer = Array();
+					$cache_buffer = [];
 
 					$registry->style->cache(self::$preloadables['templates'], $cache_buffer) or \tuxxedo_multi_error('Unable to load templates', $cache_buffer);
 
 					unset($cache_buffer);
 
-					self::$preloadables['templates'] = Array();
+					self::$preloadables['templates'] = [];
 				}
 			}
 
@@ -453,13 +453,13 @@
 
 				if(self::$preloadables['phrasegroups'])
 				{
-					$cache_buffer = Array();
+					$cache_buffer = [];
 
 					$registry->intl->cache(self::$preloadables['phrasegroups'], $cache_buffer) or \tuxxedo_multi_error('Unable to load phrase groups', $cache_buffer);
 
 					unset($cache_buffer);
 
-					self::$preloadables['phrasegroups'] = Array();
+					self::$preloadables['phrasegroups'] = [];
 				}
 			}
 

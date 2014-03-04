@@ -65,23 +65,23 @@
 		 * @changelog	1.2.0			Added the 'users' virtual field
 		 * @changelog	1.2.0			Removed the 'type' field
 		 */
-		protected $fields		= Array(
-							'id'		=> Array(
-											'type'		=> parent::FIELD_PROTECTED
-											), 
-							'title'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'permissions'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_NUMERIC, 
-											'default'	=> 0
-											), 
-							'users'		=> Array(
-											'type'		=> parent::FIELD_VIRTUAL
-											)
-							);
+		protected $fields		= [
+							'id'		=> [
+										'type'		=> parent::FIELD_PROTECTED
+										], 
+							'title'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'permissions'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_NUMERIC, 
+										'default'	=> 0
+										], 
+							'users'		=> [
+										'type'		=> parent::FIELD_VIRTUAL
+										]
+							];
 
 
 		/**
@@ -180,9 +180,7 @@
 			}
 
 			$usergroups 			= $this->registry->datastore->usergroups;
-			$usergroups[$value]['users'] 	= Helper::factory('database')->count('users', Array(
-														'usergroupid' => $value
-														));
+			$usergroups[$value]['users'] 	= Helper::factory('database')->count('users', ['usergroupid' => $value]);
 
 			return($this->registry->datastore->rebuild('usergroups', $usergroups));
 		}

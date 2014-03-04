@@ -37,7 +37,7 @@
 		$registry->register('db', '\Tuxxedo\Database');
 		$registry->register('datastore', '\Tuxxedo\Datastore');
 
-		$datastore->cache(Array('options'));
+		$datastore->cache(['options']);
 
 		$templates = $db->query('
 						SELECT 

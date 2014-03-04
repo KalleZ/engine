@@ -38,6 +38,10 @@
 	/**
 	 * Implements event calling hooks for a class
 	 *
+	 * Note, if the class that reuses this trait defines its own magic 
+	 * '__get' and '__set' methods, then they must be called 
+	 * manually to continuesly allow the event callbacks to be assigned.
+	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
@@ -64,6 +68,17 @@
 		final protected function setEventHandler(EventHandler $event_handler)
 		{
 			$this->eh_ptr = $event_handler;
+		}
+
+		/**
+		 * Gets the event handler instance currently assigned to this event caller
+		 * trait
+		 *
+		 * @return	\Tuxxedo\Design\EventHandler	Returns the event handler instance if any, otherwise false
+		 */
+		final protected function getEventHandler()
+		{
+			return(($this->eh_ptr ? $this->eh_ptr : false));
 		}
 
 		/**

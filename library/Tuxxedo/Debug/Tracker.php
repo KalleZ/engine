@@ -81,7 +81,7 @@
 	 *
 	 * 		public function iterator()
 	 *		{
-	 *			$this->tracker->log(Array('iterations' => ++$this->iterations));
+	 *			$this->tracker->log(['iterations' => ++$this->iterations]);
 	 *		}
 	 * }
 	 *
@@ -122,7 +122,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $log_data		= Array();
+		protected $log_data		= [];
 
 
 		/**

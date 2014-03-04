@@ -317,10 +317,10 @@
 			$query = $this->link->query($sql);
 			Registry::globals('error_reporting', true);
 
-			$sql = Array(
-					'sql'	=> $sql, 
-					'trace'	=> false
-					);
+			$sql = [
+				'sql'	=> $sql, 
+				'trace'	=> false
+				];
 
 			if($this->registry->trace)
 			{

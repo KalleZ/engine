@@ -136,7 +136,7 @@
 		 * @var		array
 		 * @since	1.1.0
 		 */
-		protected $iterator_data	= Array();
+		protected $iterator_data	= [];
 
 
 		/**

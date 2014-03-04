@@ -59,7 +59,7 @@
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_helpers	= Array();
+		protected static $loaded_helpers	= [];
 
 
 		/**

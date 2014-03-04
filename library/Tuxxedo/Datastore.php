@@ -69,7 +69,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $cache	= Array();
+		protected $cache	= [];
 
 
 		/**
@@ -218,7 +218,7 @@
 		 */
 		public function cache(Array $elements, Array &$error_buffer = NULL)
 		{
-			$elements = \array_filter($elements, Array($this, 'doCacheFilter'));
+			$elements = \array_filter($elements, [$this, 'doCacheFilter']);
 
 			if(!$elements)
 			{
@@ -236,7 +236,7 @@
 									IN
 									(
 										\'%s\'
-									);', \join('\', \'', \array_map(Array($this->registry->db, 'escape'), $elements)));
+									);', \join('\', \'', \array_map([$this->registry->db, 'escape'], $elements)));
 
 			if($result === false)
 			{
@@ -248,7 +248,7 @@
 				return(false);
 			}
 
-			$loaded = Array();
+			$loaded = [];
 
 			while($row = $result->fetchAssoc())
 			{

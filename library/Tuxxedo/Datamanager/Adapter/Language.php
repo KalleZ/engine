@@ -59,36 +59,36 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'id'		=> Array(
-											'type'		=> parent::FIELD_PROTECTED
-											), 
-							'title'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'developer'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'isotitle' 	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidIsotitle')
-											), 
-							'isdefault'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_BOOLEAN, 
-											'default'	=> false
-											), 
-							'charset'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'inherit'	=> Array(
-											'type'		=> parent::FIELD_VIRTUAL
-											)
-							);
+		protected $fields		= [
+							'id'		=> [
+										'type'		=> parent::FIELD_PROTECTED
+										], 
+							'title'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'developer'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'isotitle' 	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidIsotitle']
+										], 
+							'isdefault'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_BOOLEAN, 
+										'default'	=> false
+										], 
+							'charset'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'inherit'	=> [
+										'type'		=> parent::FIELD_VIRTUAL
+										]
+							];
 
 
 		/**
@@ -176,7 +176,7 @@
 
 			if(($datastore = $this->registry->datastore->languages) === false)
 			{
-				$datastore = Array();
+				$datastore = [];
 			}
 
 			if($this->context == parent::CONTEXT_SAVE)
@@ -191,7 +191,7 @@
 			{
 				unset($datastore[(integer) ($this->data['id'] ? $this->data['id'] : $this->identifier)]);
 
-				foreach(Array('phrasegroup' => 'phrasegroups', 'phrase' => 'phrases') as $singular => $plural)
+				foreach(['phrasegroup' => 'phrasegroups', 'phrase' => 'phrases'] as $singular => $plural)
 				{
 					$query = $this->registry->db->query('
 										SELECT 

@@ -27,32 +27,32 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'option', 
 					'options_add_edit_form', 
 					'options_category', 
 					'options_category_itembit', 
 					'options_index'
-					);
+					];
 
 	/**
 	 * Action templates
 	 */
-	$action_templates	= Array(
-					'categories'	=> Array(
-									'options_category_add_edit_form', 
-									'options_category_delete', 
-									'options_category_delete_itembit'
-									)
-					);
+	$action_templates	= [
+					'categories'	=> [
+								'options_category_add_edit_form', 
+								'options_category_delete', 
+								'options_category_delete_itembit'
+								]
+					];
 
 	/**
 	 * Precache datastore elements
 	 */
-	$precache 		= Array(
+	$precache 		= [
 					'optioncategories', 
 					'options'
-					);
+					];
 
 	/**
 	 * Set script name
@@ -251,9 +251,7 @@
 					}
 
 					$reminder	= false;
-					$found		= Array();
-					$options	= Array();
-					$orphan		= Array();
+					$found		= $options = $orphan = [];
 
 					while($opt = $query->fetchAssoc())
 					{

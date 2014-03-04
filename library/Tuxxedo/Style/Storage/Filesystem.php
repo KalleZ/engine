@@ -96,7 +96,7 @@
 				return(false);
 			}
 
-			$loaded = Array();
+			$loaded = [];
 
 			foreach($templates as $title)
 			{

@@ -48,9 +48,9 @@
 	/**
 	 * Preloadables
 	 */
-	$default_precache_datastore 	= Array('options', 'optioncategories', 'styleinfo', 'usergroups', 'languages', 'phrasegroups', 'permissions');
-	$default_precache_templates 	= Array('header', 'footer', 'error', 'error_listbit', 'redirect');
-	$default_precache_phrasegroups	= Array('global');
+	$default_precache_datastore 	= ['options', 'optioncategories', 'styleinfo', 'usergroups', 'languages', 'phrasegroups', 'permissions'];
+	$default_precache_templates 	= ['header', 'footer', 'error', 'error_listbit', 'redirect'];
+	$default_precache_phrasegroups	= ['global'];
 
 	if(isset($action_templates) && isset($_GET['do']) && isset($action_templates[(string) $_GET['do']]))
 	{

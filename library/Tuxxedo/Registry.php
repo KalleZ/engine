@@ -65,14 +65,14 @@
 		 *
 		 * @var		array
 		 */
-		private $configuration		= Array();
+		private $configuration		= [];
 
 		/**
 		 * Holds an array of the instances registered
 		 *
 		 * @var		array
 		 */
-		private $instances		= Array();
+		private $instances		= [];
 
 
 		/**
@@ -81,7 +81,7 @@
 		 *
 		 * @var		array
 		 */
-		private $globals		= Array();
+		private $globals		= [];
 
 
 		/**
@@ -233,7 +233,7 @@
 			}
 			elseif(($ifaces = \class_implements($class, true)) !== false && isset($ifaces['Tuxxedo\Design\Invokable']))
 			{
-				$instance = \call_user_func(Array($class, 'invoke'), $this, $this->configuration);
+				$instance = \call_user_func([$class, 'invoke'], $this, $this->configuration);
 
 				if(\is_object($class) && !\is_object($instance))
 				{

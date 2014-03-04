@@ -65,14 +65,14 @@
 		 *
 		 * @var		array
 		 */
-		protected $variables			= Array();
+		protected $variables			= [];
 
 		/**
 		 * Template cache
 		 *
 		 * @var		array
 		 */
-		protected static $templates		= Array();
+		protected static $templates		= [];
 
 
 		/**
@@ -277,7 +277,7 @@
 
 			if(!$types)
 			{
-				$types	= Array('constant', 'function', 'class', 'interface', 'trait', 'property', 'method', 'namespace');
+				$types	= ['constant', 'function', 'class', 'interface', 'trait', 'property', 'method', 'namespace'];
 			}
 
 			$type = strtolower($type);
@@ -326,8 +326,8 @@
 
 		if(!$rng)
 		{
-			$lcache	= Array();
-			$types	= Array('constant', 'function', 'class', 'interface', 'trait', 'property', 'method', 'namespace');
+			$lcache	= [];
+			$types	= ['constant', 'function', 'class', 'interface', 'trait', 'property', 'method', 'namespace'];
 
 			$rng 	= function()
 			{
@@ -348,10 +348,10 @@
 
 			if(!isset($lcache[$n]))
 			{
-				$lcache[$n] = Array(
-							$type, 
-							$name
-							);
+				$lcache[$n] = [
+						$type, 
+						$name
+						];
 			}
 		}
 		while(!isset($lcache[$n]));
@@ -361,7 +361,7 @@
 			$name = substr($name, 1);
 		}
 
-		return($type . '-' . str_replace(Array('_', '.', '\\'), '-', strtolower($name)) . '-' . $n);
+		return($type . '-' . str_replace(['_', '.', '\\'], '-', strtolower($name)) . '-' . $n);
 	}
 
 
@@ -397,11 +397,11 @@
 
 		if(!$types)
 		{
-			$types = Array(
+			$types = [
 					'class'		=> 'classes', 
 					'interface'	=> 'interfaces', 
 					'trait'		=> 'traits'
-					);
+					];
 		}
 
 		$ltype = explode('|', $ltype);
@@ -488,6 +488,15 @@
 			if(isset($meta['docblock']->tags->return))
 			{
 				$return = $meta['docblock']->tags->return[0];
+
+				if(($p = $hashlookup('class|interface|trait', $return)) !== false)
+				{
+					$link		= new Template('link');
+					$link->link	= $p . '.html';
+					$link->title	= $return;
+
+					$return		= $link;
+				}
 			}
 		}
 
@@ -501,7 +510,7 @@
 
 	$nl2br = function($string)
 	{
-		return(str_replace("\n\n", '<br />', str_replace(Array("\n\r", "\r\n", "\r"), "\n", $string)));
+		return(str_replace("\n\n", '<br />', str_replace(["\n\r", "\r\n", "\r"], "\n", $string)));
 	};
 
 	$mformat = function($name, $as, $prefix = '')
@@ -532,7 +541,7 @@
 
 		if(!$strip_html && $examples !== NULL && ($spos = strpos($desc, '<code>')) !== false)
 		{
-			$examples = Array();
+			$examples = [];
 
 			do
 			{
@@ -739,7 +748,7 @@
 		{
 			if(!is_array($d))
 			{
-				$dc 	= Array();
+				$dc 	= [];
 				$dc[0]	= 0;
 				$dc[1]	= $d;
 
@@ -823,11 +832,18 @@
 		return($bits);
 	};
 
+	$resource = function($file)
+	{
+		global $output, $tmpdir;
+
+		return(@copy($tmpdir . '/' . $file, $output . '/' . $file));
+	};
+
 
 	IO::signature();
 	IO::headline('API Indexer', 1);
 
-	$warns	= Array();
+	$warns	= [];
 	$cli	= IO::isCli();
 	$nodev	= IO::input('nodev');
 	$inputf = IO::input('inputfile');
@@ -868,7 +884,7 @@
 	Template::$outputdir 	= $output;
 	Template::$templatedir	= $tmpdir;
 	$hashreg		= new HashRegistry($output);
-	$constants 		= $functions = $classes = $interfaces = $traits = $namespaces = Array();
+	$constants 		= $functions = $classes = $interfaces = $traits = $namespaces = [];
 
 	foreach($json as $file => $struct)
 	{
@@ -888,7 +904,7 @@
 		{
 			foreach($struct->functions as $meta)
 			{
-				$functions[] = array_merge(Array('file' => $file, 'hash' => $hashreg->hash('function', $meta->function, $file), 'dev' => $isdev), (array) $meta);
+				$functions[] = array_merge(['file' => $file, 'hash' => $hashreg->hash('function', $meta->function, $file), 'dev' => $isdev], (array) $meta);
 			}
 		}
 
@@ -896,11 +912,11 @@
 		{
 			foreach($struct->constants as $name => $meta)
 			{
-				$constants[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash('constant', $name, $file), 'dev' => $isdev), (array) $meta);
+				$constants[] = array_merge(['name' => $name, 'file' => $file, 'hash' => $hashreg->hash('constant', $name, $file), 'dev' => $isdev], (array) $meta);
 			}
 		}
 
-		foreach(Array('classes' => 'class', 'interfaces' => 'interface', 'traits' => 'trait') as $type => $types)
+		foreach(['classes' => 'class', 'interfaces' => 'interface', 'traits' => 'trait'] as $type => $types)
 		{
 			if(!$struct->{$type})
 			{
@@ -909,7 +925,7 @@
 
 			foreach($struct->{$type} as $name => $meta)
 			{
-				${$type}[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash($types, $name, $file), 'dev' => $isdev), (array) $meta);
+				${$type}[] = array_merge(['name' => $name, 'file' => $file, 'hash' => $hashreg->hash($types, $name, $file), 'dev' => $isdev], (array) $meta);
 			}
 		}
 
@@ -917,13 +933,13 @@
 		{
 			foreach($struct->namespaces as $name => $meta)
 			{
-				$namespaces[] = array_merge(Array('name' => $name, 'file' => $file, 'hash' => $hashreg->hash('namespace', $name, $file), 'dev' => $isdev), (array) $meta);
+				$namespaces[] = array_merge(['name' => $name, 'file' => $file, 'hash' => $hashreg->hash('namespace', $name, $file), 'dev' => $isdev], (array) $meta);
 			}
 		}
 	}
 
-	$generated_tocs = Array();
-	$obj_types	= Array('constants', 'functions', 'classes', 'interfaces', 'traits', 'namespaces');
+	$generated_tocs = [];
+	$obj_types	= ['constants', 'functions', 'classes', 'interfaces', 'traits', 'namespaces'];
 
 	foreach($obj_types as $obj)
 	{
@@ -945,21 +961,21 @@
 
 	IO::li('Generating API pages...');
 
-	$nscache	= Array();
-	$mtypes 	= Array(
-				'constants'	=> Array(
-								'constant', 
-								'api_obj_constant'
-								), 
-				'properties'	=> Array(
-								'property', 
-								'api_property'
-								), 
-				'methods'	=> Array(
-								'method', 
-								'api_method'
-								)
-				);
+	$nscache	= [];
+	$mtypes 	= [
+				'constants'	=> [
+							'constant', 
+							'api_obj_constant'
+							], 
+				'properties'	=> [
+							'property', 
+							'api_property'
+							], 
+				'methods'	=> [
+							'method', 
+							'api_method'
+							]
+				];
 
 	foreach($generated_tocs as $type)
 	{
@@ -967,7 +983,7 @@
 		IO::li(ucfirst($type));
 		IO::ul();
 
-		${$type . '_ptr'} 	= Array();
+		${$type . '_ptr'} 	= [];
 		$ptr 			= &${$type . '_ptr'};
 
 		foreach(${$type} as $gtype => $meta)
@@ -978,15 +994,15 @@
 			{
 				if(!isset($nscache[$meta['name']]))
 				{
-					$nscache[$meta['name']] = Array(
-									'meta'		=> Array(), 
-									'constants'	=> Array(), 
-									'functions'	=> Array(), 
-									'classes'	=> Array(), 
-									'interfaces'	=> Array(), 
-									'traits'	=> Array(), 
-									'files'		=> Array()
-									);
+					$nscache[$meta['name']] = [
+									'meta'		=> [], 
+									'constants'	=> [], 
+									'functions'	=> [], 
+									'classes'	=> [], 
+									'interfaces'	=> [], 
+									'traits'	=> [], 
+									'files'		=> []
+									];
 				}
 
 				if(!$nscache[$meta['name']]['meta'])
@@ -1000,15 +1016,15 @@
 			{
 				if(!isset($nscache[$meta['namespace']]))
 				{
-					$nscache[$meta['namespace']] 	= Array(
-										'meta'		=> Array(), 
-										'constants'	=> Array(), 
-										'functions'	=> Array(), 
-										'classes'	=> Array(), 
-										'interfaces'	=> Array(), 
-										'traits'	=> Array(), 
-										'files'		=> Array()
-										);
+					$nscache[$meta['namespace']] 	= [
+										'meta'		=> [], 
+										'constants'	=> [], 
+										'functions'	=> [], 
+										'classes'	=> [], 
+										'interfaces'	=> [], 
+										'traits'	=> [], 
+										'files'		=> []
+										];
 				}
 
 				foreach($namespaces as $n)
@@ -1031,7 +1047,7 @@
 			{
 				foreach($ptr as $const => $name)
 				{
-					$examples		= Array();
+					$examples		= [];
 					$meta 			= $constants[$const];
 
 					$template 		= new Layout('api_constant');
@@ -1058,7 +1074,7 @@
 			{
 				foreach($ptr as $function => $name)
 				{
-					$examples		= Array();
+					$examples		= [];
 					$meta 			= $functions[$function];
 					$parameters		= $returns = '';
 
@@ -1138,7 +1154,7 @@
 					IO::li($name);
 					IO::ul();
 
-					foreach(Array('constants', 'properties', 'methods') as $mtype)
+					foreach(['constants', 'properties', 'methods'] as $mtype)
 					{
 						if(!$meta[$mtype])
 						{
@@ -1146,7 +1162,7 @@
 						}
 
 						$content 	= '';
-						$mptr 		= Array();
+						$mptr 		= [];
 
 						foreach($meta[$mtype] as $m_id => $mmeta)
 						{
@@ -1160,7 +1176,7 @@
 
 						foreach($mptr as $m_name => $m_id)
 						{
-							$examples	= Array();
+							$examples	= [];
 							$tmeta		= &$meta[$mtype][$m_id];
 							$tmeta->hash	= $hashreg->hash($mtypes[$mtype][0], $m_name, $meta['file']);
 							$tmeta->dev	= $meta['dev'];
@@ -1199,7 +1215,7 @@
 								$counter 	= 0;
 								$extendedinfo	= '';
 
-								foreach(Array('abstract', 'final', 'static', 'protected', 'private', 'public') as $flag)
+								foreach(['abstract', 'final', 'static', 'protected', 'private', 'public'] as $flag)
 								{
 									if(!isset($tmeta->metadata->{$flag}) || !$tmeta->metadata->{$flag})
 									{
@@ -1308,7 +1324,7 @@
 					{
 						$counter = 0;
 
-						foreach(Array('abstract', 'final') as $flag)
+						foreach(['abstract', 'final'] as $flag)
 						{
 							if(!$meta['metadata']->{$flag})
 							{
@@ -1345,7 +1361,7 @@
 						unset($link);
 					}
 
-					foreach(Array(Array('implements', 'interface', 'Implements'), Array('reuses', 'trait', 'Reuses')) as $mdata)
+					foreach([['implements', 'interface', 'Implements'], ['reuses', 'trait', 'Reuses']] as $mdata)
 					{
 						if(!$meta[$mdata[0]])
 						{
@@ -1384,7 +1400,7 @@
 						$contents = 'None';
 					}
 
-					$examples		= Array();
+					$examples		= [];
 
 					$template		= new Layout('api_object');
 					$template->name		= $name;
@@ -1415,7 +1431,7 @@
 
 					$counter		= 0;
 					$extendedinfo		= $contents = '';
-					$examples		= Array();
+					$examples		= [];
 
 					$nstemp 		= new Layout('api_object');
 					$nstemp->name		= $meta['meta']['name'];
@@ -1447,7 +1463,7 @@
 
 					$nstemp->extendedinfo = $extendedinfo;
 
-					foreach(Array('constant' => 'constants', 'function' => 'functions', 'class' => 'classes', 'interface' => 'interfaces', 'trait' => 'traits') as $single => $plural)
+					foreach(['constant' => 'constants', 'function' => 'functions', 'class' => 'classes', 'interface' => 'interfaces', 'trait' => 'traits'] as $single => $plural)
 					{
 						if(!$nscache[$meta['meta']['name']][$plural])
 						{
@@ -1493,6 +1509,8 @@
 		IO::ul(IO::TAG_END);
 	}
 
+	IO::li('Generating table of contents');
+
 	foreach($generated_tocs as $obj)
 	{
 		$bits		= '';
@@ -1518,17 +1536,16 @@
 		$toc->save($obj);
 	}
 
-	IO::li('Generating table of contents');
 	IO::ul();
 
-	$descriptions	= Array(
+	$descriptions	= [
 				'constants'	=> 'Global constants', 
 				'functions'	=> 'Procedural functions', 
 				'classes'	=> 'Class synopsises', 
 				'interfaces'	=> 'Interface models', 
 				'traits'	=> 'Trait definitions', 
 				'namespaces'	=> 'Namespace structures'
-				);
+				];
 
 	$bits		= '';
 	$toc 		= new Layout('toc');
@@ -1552,7 +1569,67 @@
 	$toc->save('index');
 
 	IO::ul(IO::TAG_END);
+	IO::li('Copying resources');
+	IO::ul();
+
+	foreach(['style.css'] as $rsrc)
+	{
+		IO::li($rsrc);
+
+		if(!$resource($rsrc))
+		{
+			$warns[] = 'Could not copy resource \'' . $rsrc . '\'';
+		}
+	}
+
 	IO::ul(IO::TAG_END);
+	IO::ul(IO::TAG_END);
+
+	unset($hashreg);
+
+	$json = json_decode(file_get_contents($output . '/api_hashes.json'));
+
+	foreach($json as $type)
+	{
+		if(!$type)
+		{
+			continue;
+		}
+
+		foreach($type as $index => $container)
+		{
+			if(!$container)
+			{
+				unset($type->{$index});
+
+				continue;
+			}
+
+			foreach($container as $name => $file)
+			{
+				if(!is_file($output . '/' . $file . '.html'))
+				{
+					unset($container->{$name});
+				}
+			}
+
+			if(!$container)
+			{
+				unset($type->{$index});
+
+				continue;
+			}
+		}
+
+		if(!$type)
+		{
+			continue;
+		}
+
+		$json->{$index} = $type;
+	}
+
+	file_put_contents($output . '/api_hashes.json', json_encode($json));
 
 	if($warns)
 	{

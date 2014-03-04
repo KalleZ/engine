@@ -106,7 +106,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $variables		= Array();
+		protected $variables		= [];
 
 		/**
 		 * Holds the globally declared variables
@@ -114,7 +114,7 @@
 		 * @var		array
 		 * @since	1.2.0
 		 */
-		protected static $globals	= Array();
+		protected static $globals	= [];
 
 
 		/**
@@ -237,7 +237,7 @@
 
 			if(!$this->registry->style->isLoaded($this->name))
 			{
-				$this->registry->style->cache(Array($this->name)) or \tuxxedo_errorf('Unable to load template \'%s\'', $this->name);
+				$this->registry->style->cache([$this->name]) or \tuxxedo_errorf('Unable to load template \'%s\'', $this->name);
 			}
 
 			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');

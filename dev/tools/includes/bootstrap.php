@@ -43,9 +43,9 @@
 	require(TUXXEDO_LIBRARY . '/Tuxxedo/Bootstrap.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/Bootstrap.php');
 
-	$default_precache 	= Array('languages', 'options', 'phrasegroups', 'usergroups');
-	$default_phrasegroups	= Array('global');
-	$default_templates 	= Array('header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit');
+	$default_precache 	= ['languages', 'options', 'phrasegroups', 'usergroups'];
+	$default_phrasegroups	= ['global'];
+	$default_templates 	= ['header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit'];
 
 	Bootstrap::setPreloadables('datastore', (!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)));
 	Bootstrap::setPreloadables('phrasegroups', (!isset($phrasegroups) ? $default_phrasegroups : array_merge($default_phrasegroups, (array) $phrasegroups)));

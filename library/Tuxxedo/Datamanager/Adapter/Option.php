@@ -60,35 +60,35 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'option'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_IDENTIFIER
-											), 
-							'value'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING_EMPTY
-											), 
-							'defaultvalue'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidDefaultValue')
-											), 
-							'type'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidType'), 
-											'default'	=> 's'
-											),
-							'category'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidCategory')
-											), 
-							'newdefault' 	=> Array(
-											'type'		=> parent::FIELD_VIRTUAL
-											)
-							);
+		protected $fields		= [
+							'option'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_IDENTIFIER
+										], 
+							'value'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING_EMPTY
+										], 
+							'defaultvalue'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidDefaultValue']
+										], 
+							'type'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidType'], 
+										'default'	=> 's'
+										],
+							'category'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidCategory']
+										], 
+							'newdefault' 	=> [
+										'type'		=> parent::FIELD_VIRTUAL
+										]
+							];
 
 
 		/**
@@ -181,7 +181,7 @@
 
 			if(!$types)
 			{
-				$types = Array('b', 'i', 's');
+				$types = ['b', 'i', 's'];
 			}
 
 			if(($retval = \in_array(\strtolower($dm['type']{0}), $types)) !== false)
@@ -243,10 +243,10 @@
 
 			if($this->context == parent::CONTEXT_SAVE)
 			{
-				$options[$this['option']] = Array(
-									'category'	=> $this->data['category'], 
-									'value'		=> $this->data['value']
-									);
+				$options[$this['option']] = [
+								'category'	=> $this->data['category'], 
+								'value'		=> $this->data['value']
+								];
 			}
 
 			return($this->registry->datastore->rebuild('options', $options));

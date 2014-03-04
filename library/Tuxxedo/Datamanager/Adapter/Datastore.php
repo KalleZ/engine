@@ -59,17 +59,17 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'name'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_IDENTIFIER
-											), 
-							'data'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidDatastoreData')
-											)
-							);
+		protected $fields		= [
+							'name'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_IDENTIFIER
+										], 
+							'data'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidDatastoreData']
+										]
+							];
 
 
 		/**

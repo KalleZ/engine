@@ -54,13 +54,13 @@
 		 *
 		 * @var		array
 		 */
-		protected static $options	= Array(
+		protected static $options	= [
 							'expires'	=> 1800, 
 							'prefix'	=> '', 
 							'domain'	=> '', 
 							'path'		=> '', 
 							'secure'	=> false
-							);
+							];
 
 
 		/**
@@ -78,13 +78,13 @@
 				return;
 			}
 
-			self::$options = Array(
+			self::$options = [
 						'expires'	=> $options->cookie_expires, 
 						'prefix'	=> $options->cookie_prefix, 
 						'domain'	=> $options->cookie_domain, 
 						'path'		=> $options->cookie_path, 
 						'secure'	=> $options->cookie_secure
-						);
+						];
 		}
 
 		/**

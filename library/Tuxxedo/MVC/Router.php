@@ -103,7 +103,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $parameters			= Array();
+		protected $parameters			= [];
 
 
 		/**
@@ -145,11 +145,11 @@
 		public function getPreloadables()
 		{
 			$controller	= $this->route();
-			$preloadables 	= Array();
+			$preloadables 	= [];
 
-			foreach(Array('datastore', 'views', 'actionviews', 'phrasegroups') as $preloadable)
+			foreach(['datastore', 'views', 'actionviews', 'phrasegroups'] as $preloadable)
 			{
-				$preloadables[$preloadable] = (isset($controller->{$preloadable}) ? (array) $controller->{$preloadable} : Array());
+				$preloadables[$preloadable] = (isset($controller->{$preloadable}) ? (array) $controller->{$preloadable} : []);
 			}
 
 			if(!empty($this->action) && isset($controller->actionviews) && isset($controller->actionviews[$this->action]))

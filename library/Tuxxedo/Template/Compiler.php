@@ -147,7 +147,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $functions			= Array(
+		protected $functions			= [
 								'and'		=> true, 
 								'or'		=> true, 
 								'xor'		=> true, 
@@ -158,21 +158,21 @@
 								'isset'		=> true, 
 								'sizeof'	=> true, 
 								'count'		=> true
-								);
+								];
 
 		/**
 		 * The default class instances to allow in expressions
 		 *
 		 * @var		array
 		 */
-		protected $classes			= Array();
+		protected $classes			= [];
 
 		/**
 		 * The default closures to allow in expressions
 		 *
 		 * @var		array
 		 */
-		protected $closures			= Array();
+		protected $closures			= [];
 
 
 		/**
@@ -328,26 +328,26 @@
 
 			if(!$tokens)
 			{
-				$tokens 	= Array(
+				$tokens 	= [
 							'if_start'	=> '<if expression=', 
 							'if_end'	=> '</if>', 
 							'else'		=> '<else />'
-							);
+							];
 
-				$token_lengths	= Array(
+				$token_lengths	= [
 							'if_start'	=> 15, 
 							'if_end'	=> 5
-							);
+							];
 			}
 
-			$ptr = Array(
+			$ptr = [
 					'if_open'		=> -1,
 					'if_close'		=> -1, 
 					'recursive_if'		=> -1, 
 					'else'			=> -1, 
 					'else_bytes'		=> -1, 
 					'conditions'		=> -1
-					);
+					];
 
 			if(\strpos($src, '"') !== false)
 			{
@@ -534,7 +534,7 @@
 
 			$this->stack_data->type = Exception\TemplateCompiler::TYPE_NONE;
 
-			foreach(Array('\t', '\r', '\n', '\x', '\0', '\\\\', '\\\'', '\v') as $s)
+			foreach(['\t', '\r', '\n', '\x', '\0', '\\\\', '\\\'', '\v'] as $s)
 			{
 				$ptr = $pos = 0;
 

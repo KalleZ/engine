@@ -61,24 +61,24 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'id'		=> Array(
-											'type'		=> parent::FIELD_PROTECTED
-											), 
-							'title'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidPhrasegroupTitle')
-											), 
-							'languageid'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_CALLBACK, 
-											'callback'	=> Array(__CLASS__, 'isValidLanguageId')
-											), 
-							'phrases'	=> Array(
-											'type'		=> parent::FIELD_VIRTUAL
-											)
-							);
+		protected $fields		= [
+							'id'		=> [
+										'type'		=> parent::FIELD_PROTECTED
+										], 
+							'title'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidPhrasegroupTitle']
+										], 
+							'languageid'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_CALLBACK, 
+										'callback'	=> [__CLASS__, 'isValidLanguageId']
+										], 
+							'phrases'	=> [
+										'type'		=> parent::FIELD_VIRTUAL
+										]
+							];
 
 
 		/**
@@ -174,7 +174,7 @@
 		{
 			if(($datastore = $this->registry->datastore->phrasegroups) === false)
 			{
-				$datastore = Array();
+				$datastore = [];
 			}
 
 			$id		= (isset($this->data['title']) ? $this->data['title'] : $this->identifier);
@@ -199,7 +199,7 @@
 
 				if(!isset($datastore[$languageid]))
 				{
-					$datastore[$languageid] = Array();
+					$datastore[$languageid] = [];
 					$ptr			= &$datastore[$languageid];
 				}
 
@@ -211,10 +211,10 @@
 										WHERE 
 											`phrasegroup` = \'%s\'', $id);
 
-				$ptr[$id] 	= Array(
+				$ptr[$id] 	= [
 							'id'		=> $id, 
 							'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)
-							);
+							];
 			}
 			else
 			{
@@ -268,10 +268,10 @@
 			}
 
 			$phrasegroups 				= $this->registry->datastore->phrasegroups;
-			$phrasegroups[$value]['phrases'] 	= Helper::factory('database')->count('phrases', Array(
+			$phrasegroups[$value]['phrases'] 	= Helper::factory('database')->count('phrases', [
 															'phrasegroup' 	=> $value, 
 															'languageid'	=> $this->data['languageid']
-															));
+															]);
 
 			return($this->registry->datastore->rebuild('phrasegroups', $phrasegroups));
 		}

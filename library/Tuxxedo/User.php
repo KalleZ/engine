@@ -122,7 +122,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $cache	= Array();
+		protected $cache	= [];
 
 
 		/**

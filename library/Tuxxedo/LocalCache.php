@@ -81,7 +81,7 @@
 	 * //
 	 * //   1) SHOW COLUMNS FROM `books`
 	 * //   2) SELECT * FROM `books` WHERE `title` LIKE 'PHP%'
-	 * $lcache->load('books', Array('title' => 'PHP*'));
+	 * $lcache->load('books', ['title' => 'PHP*']);
 	 *
 	 * // Find the number of records loaded into cache
 	 * printf('There is currently %d book(s) matching \'PHP*\' loaded', $lcache->getNum('books'));
@@ -91,11 +91,11 @@
 	 * //
 	 * // If this book is loaded into cache, then the records 
 	 * // that matches the id of 42 is returned
-	 * $book = $lcache->findSpecific('books', Array('id' => 42));
+	 * $book = $lcache->findSpecific('books', ['id' => 42]);
 	 *
 	 * // We can also get all the books loaded, but we only want the 
 	 * // title of each
-	 * $books = $lcache->find('books', Array('title'));
+	 * $books = $lcache->find('books', ['title']);
 	 *
 	 * // List them
 	 * echo '<ul>';
@@ -134,7 +134,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $cache	= Array();
+		protected $cache	= [];
 
 
 		/**
@@ -172,7 +172,7 @@
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if a query should fail
 		 */
-		public function load($table, Array $conditions = Array(), $alias = NULL, $add_table_prefix = true)
+		public function load($table, Array $conditions = [], $alias = NULL, $add_table_prefix = true)
 		{
 			static $dbh;
 
@@ -228,7 +228,7 @@
 				return(true);
 			}
 
-			$this->cache[$alias] = Array();
+			$this->cache[$alias] = [];
 
 			foreach($entries as $entry)
 			{
@@ -277,7 +277,7 @@
 			\reset($this->cache[$entry]);
 
 			$x		= 0;
-			$retval 	= Array();
+			$retval 	= [];
 			$cfields	= \array_keys(\current($this->cache[$entry]));
 
 			foreach($this->cache[$entry] as $row)
@@ -290,7 +290,7 @@
 				}
 
 				$added		= false;
-				$retval[$x] 	= Array();
+				$retval[$x] 	= [];
 
 				foreach($fields as $field)
 				{

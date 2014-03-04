@@ -54,7 +54,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $errors		= Array();
+		protected $errors		= [];
 
 
 		/**

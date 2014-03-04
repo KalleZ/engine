@@ -28,29 +28,29 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'sessions_index', 
 					'sessions_index_itembit', 
 					'option'
-					);
+					];
 
 
 	/**
 	 * Action templates
 	 */
-	$action_templates	= Array(
-					'details'	=> Array(
-									'session_details'
-									)
-					);
+	$action_templates	= [
+					'details'	=> [
+								'session_details'
+								]
+					];
 
 
 	/**
 	 * Precache datastore elements
 	 */
-	$precache 		= Array(
+	$precache 		= [
 					'usergroups'
-					);
+					];
 
 	/**
 	 * Set script name

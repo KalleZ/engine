@@ -80,7 +80,7 @@
 
 				if($preloadables)
 				{
-					$cache_buffer = Array();
+					$cache_buffer = [];
 
 					$registry->style->cache($preloadables, $cache_buffer) or \tuxxedo_multi_error('Unable to load templates', $cache_buffer);
 

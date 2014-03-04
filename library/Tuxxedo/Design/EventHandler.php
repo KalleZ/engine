@@ -69,7 +69,6 @@
 	 *	// Method test #1
 	 *	public function test1()
 	 *	{
-	 *
 	 *		$this->event_handler->fire('test1');
 	 *	}
 	 *
