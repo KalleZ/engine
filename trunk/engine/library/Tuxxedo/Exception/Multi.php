@@ -51,7 +51,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $data		= Array();
+		protected $data		= [];
 
 
 		/**

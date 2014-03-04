@@ -27,41 +27,41 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'intl_index', 
 					'option'
-					);
+					];
 
 	/**
 	 * Action templates
 	 */
-	$action_templates	= Array(
-					'language'		=> Array(
-										'language_add_edit_form'
-										), 
-					'phrasegroup'		=> Array(
-										'language_phrasegroup_add_edit_form', 
-										'language_phrasegroup_delete', 
-										'language_phrasegroup_delete_itembit', 
-										'language_phrasegroup_list_itembit', 
-										'language_phrasegroup_list'
-										), 
-					'phrase'		=> Array(
-										'language_phrase_add_edit_form', 
-										'language_phrase_delete', 
-										'language_phrase_list', 
-										'language_phrase_list_itembit', 
-										'language_phrase_search', 
-										'language_phrase_search_itembit'
-										)
-					);
+	$action_templates	= [
+					'language'		=> [
+									'language_add_edit_form'
+									], 
+					'phrasegroup'		=> [
+									'language_phrasegroup_add_edit_form', 
+									'language_phrasegroup_delete', 
+									'language_phrasegroup_delete_itembit', 
+									'language_phrasegroup_list_itembit', 
+									'language_phrasegroup_list'
+									], 
+					'phrase'		=> [
+									'language_phrase_add_edit_form', 
+									'language_phrase_delete', 
+									'language_phrase_list', 
+									'language_phrase_list_itembit', 
+									'language_phrase_search', 
+									'language_phrase_search_itembit'
+									]
+					];
 
 	/**
 	 * Precache datastore elements
 	 */
-	$precache 		= Array(
+	$precache 		= [
 					'languages'
-					);
+					];
 
 	/**
 	 * Set script name
@@ -378,9 +378,9 @@
 
 						if(!$hidden_fields)
 						{
-							$hidden_fields = Array(
+							$hidden_fields = [
 										'id'
-										);
+										];
 						}
 
 						return(!in_array($field, $hidden_fields));
@@ -391,7 +391,7 @@
 					if(isset($_POST['submit']) && isset($_POST['query']) && $_POST['query'] && isset($_POST['query_field']) && in_array((string) $_POST['query_field'], $fields))
 					{
 						$safe_query	= htmlspecialchars($input->post('query'), ENT_QUOTES);
-						$query 		= str_replace(Array('*', '%'), Array('%', '\%'), $input->post('query'));
+						$query 		= str_replace(['*', '%'], ['%', '\%'], $input->post('query'));
 						$stripped_query	= str_replace('*', '', $query);
 
 						if($query{0} != '*')

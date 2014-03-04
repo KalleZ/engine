@@ -27,33 +27,33 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'option', 
 					'styles_index'
-					);
+					];
 
 	/**
 	 * Action templates
 	 */
-	$action_templates	= Array(
-					'style'		=> Array(
-									'styles_add_edit_form'
-									), 
-					'templates'	=> Array(
-									'templates_add_edit_form', 
-									'templates_list', 
-									'templates_list_itembit', 
-									'templates_search', 
-									'templates_search_itembit'
-									)
-					);
+	$action_templates	= [
+					'style'		=> [
+								'styles_add_edit_form'
+								], 
+					'templates'	=> [
+								'templates_add_edit_form', 
+								'templates_list', 
+								'templates_list_itembit', 
+								'templates_search', 
+								'templates_search_itembit'
+								]
+					];
 
 	/**
 	 * Precache datastore elements
 	 */
-	$precache 		= Array(
+	$precache 		= [
 					'styleinfo'
-					);
+					];
 
 	/**
 	 * Set script name

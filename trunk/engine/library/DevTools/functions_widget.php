@@ -136,14 +136,14 @@
 	function widget_hook_sessions(Style $style, Registry $registry, $widget)
 	{
 		$buffer		= '';
-		$refresh_values = Array(
+		$refresh_values = [
 					0	=> 'Disabled', 
 					5	=> '5 Seconds', 
 					10	=> '10 Seconds', 
 					15	=> '15 Seconds', 
 					30	=> '30 Seconds', 
 					60	=> '1 Minute'
-					);
+					];
 
 		if(isset($_POST['autorefresh']) && isset($refresh_values[$registry->input->post('autorefresh', Input::TYPE_NUMERIC)]))
 		{

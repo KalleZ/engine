@@ -60,45 +60,45 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'id'			=> Array(
-												'type'		=> parent::FIELD_PROTECTED
-												), 
-							'title'			=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidTemplateTitle')
-												), 
-							'source'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidSource'), 
-												'notnull'	=> true
-												), 
-							'compiledsource' 	=> Array(
-												'type'		=> parent::FIELD_PROTECTED, 
-												'notnull'	=> true
-												), 
-							'defaultsource'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_STRING_EMPTY
-												), 
-							'styleid'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidStyleId')
-												), 
-							'changed'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_BOOLEAN, 
-												'default'	=> false
-												), 
-							'revision'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_NUMERIC, 
-												'default'	=> 0
-												)
-							);
+		protected $fields		= [
+							'id'			=> [
+											'type'		=> parent::FIELD_PROTECTED
+											], 
+							'title'			=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidTemplateTitle']
+											], 
+							'source'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidSource'], 
+											'notnull'	=> true
+											], 
+							'compiledsource' 	=> [
+											'type'		=> parent::FIELD_PROTECTED, 
+											'notnull'	=> true
+											], 
+							'defaultsource'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_STRING_EMPTY
+											], 
+							'styleid'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidStyleId']
+											], 
+							'changed'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_BOOLEAN, 
+											'default'	=> false
+											], 
+							'revision'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_NUMERIC, 
+											'default'	=> 0
+											]
+							];
 
 
 		/**
@@ -178,7 +178,7 @@
 				{
 					if(!isset($cached[$row['styleid']]))
 					{
-						$cached[$row['styleid']] = Array();
+						$cached[$row['styleid']] = [];
 					}
 
 					$cached[$row['styleid']][] = \strtolower($row['title']);

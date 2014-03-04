@@ -59,7 +59,7 @@
 	function options_categorize(Array $options)
 	{
 		$optcategories 	= Registry::init()->datastore->optioncategories;
-		$categories	= array_fill_keys($optcategories, Array());
+		$categories	= array_fill_keys($optcategories, []);
 
 		foreach($options as $name => $data)
 		{

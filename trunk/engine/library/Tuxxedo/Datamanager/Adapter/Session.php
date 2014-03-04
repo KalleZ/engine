@@ -59,34 +59,34 @@
 		 *
 		 * @changelog	1.2.0			Added the 'rehash' field
 		 */
-		protected $fields		= Array(
-							'sessionid'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'userid'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_NUMERIC
-											), 
-							'location'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_STRING_EMPTY
-											), 
-							'useragent' 	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_STRING_EMPTY
-											), 
-							'lastactivity'	=> Array(
-											'type'		=> parent::FIELD_PROTECTED, 
-											'validation'	=> parent::VALIDATE_NUMERIC, 
-											'default'	=> \TIMENOW_UTC
-											), 
-							'rehash'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_BOOLEAN, 
-											'default'	=> 0
-											)
-							);
+		protected $fields		= [
+							'sessionid'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'userid'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_NUMERIC
+										], 
+							'location'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_STRING_EMPTY
+										], 
+							'useragent' 	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_STRING_EMPTY
+										], 
+							'lastactivity'	=> [
+										'type'		=> parent::FIELD_PROTECTED, 
+										'validation'	=> parent::VALIDATE_NUMERIC, 
+										'default'	=> \TIMENOW_UTC
+										], 
+							'rehash'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_BOOLEAN, 
+										'default'	=> 0
+										]
+							];
 
 
 		/**

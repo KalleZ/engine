@@ -158,11 +158,11 @@
 
 			try
 			{
-				$link = new \PDO($dsn, $this->configuration['username'], $this->configuration['password'], Array(
-																	\PDO::ATTR_ERRMODE	=> \PDO::ERRMODE_EXCEPTION, 
-																	\PDO::ATTR_PERSISTENT 	=> $this->configuration['persistent'], 
-																	\PDO::ATTR_TIMEOUT	=> $this->configuration['timeout']
-																));
+				$link = new \PDO($dsn, $this->configuration['username'], $this->configuration['password'], [
+																\PDO::ATTR_ERRMODE	=> \PDO::ERRMODE_EXCEPTION, 
+																\PDO::ATTR_PERSISTENT 	=> $this->configuration['persistent'], 
+																\PDO::ATTR_TIMEOUT	=> $this->configuration['timeout']
+																]);
 			}
 			catch(\PDOException $e)
 			{
@@ -369,10 +369,10 @@
 				throw new Exception\SQL($sql, self::DRIVER_NAME, $e->getMessage(), $e->getCode());
 			}
 
-			$sql = Array(
-					'sql'	=> $sql, 
-					'trace'	=> false
-					);
+			$sql = [
+				'sql'	=> $sql, 
+				'trace'	=> false
+				];
 
 			if($this->registry->trace)
 			{

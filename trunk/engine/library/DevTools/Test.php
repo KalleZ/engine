@@ -92,7 +92,7 @@
 		 *
 		 * @var         array
 		 */
-		protected $argv         = Array();
+		protected $argv         = [];
 
 
 		/**

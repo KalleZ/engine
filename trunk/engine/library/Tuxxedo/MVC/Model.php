@@ -63,7 +63,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $methods	= Array();
+		protected $methods	= [];
 
 
 		/**
@@ -92,7 +92,7 @@
 
 			if($this->methods && \in_array($method, $this->methods))
 			{
-				return(\call_user_func_array(Array($this, $this->methods[$method]), $arguments));
+				return(\call_user_func_array([$this, $this->methods[$method]], $arguments));
 			}
 
 			$prefix 	= \substr($method, 0, 3);

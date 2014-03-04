@@ -59,10 +59,7 @@
 		{
 			$this->registry		= Registry::init();
 			$this->templates	= new \stdClass;
-			$this->information 	= Array(
-							'templatesdir' => './style/templates/'
-							);
-
+			$this->information 	= ['templatesdir' => './style/templates/'];
 			$this->storage		= Storage::factory($this->registry, $this, '\DevTools\Style\Storage\DevTools', $this->templates, true);
 		}
 
@@ -93,7 +90,7 @@
 			$script = ($configuration['devtools']['protective'] && !Registry::init()->session['devtools_authenticated'] ? 'index' : \SCRIPT_NAME);
 			$widget = 'widget_' . $script;
 
-			if(!$this->cache(Array($widget)))
+			if(!$this->cache([$widget]))
 			{
 				return(false);
 			}

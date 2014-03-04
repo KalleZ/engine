@@ -284,7 +284,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $data				= Array();
+		protected $data				= [];
 
 		/**
 		 * The original data of each modified field, should it differ from $data
@@ -292,7 +292,7 @@
 		 * @var		array
 		 * @since	1.2.0
 		 */
-		protected $original_data		= Array();
+		protected $original_data		= [];
 
 		/**
 		 * Cache data if the identifier is gonna be validated
@@ -300,7 +300,7 @@
 		 * @var		array
 		 * @since	1.1.0
 		 */
-		protected $identifier_data		= Array();
+		protected $identifier_data		= [];
 
 		/**
 		 * List of shutdown handlers to execute
@@ -308,7 +308,7 @@
 		 * @var		array
 		 * @since	1.1.0
 		 */
-		protected $shutdown_handlers		= Array();
+		protected $shutdown_handlers		= [];
 
 		/**
 		 * List of fields that had one or more errors and therefore 
@@ -316,7 +316,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $invalid_fields		= Array();
+		protected $invalid_fields		= [];
 
 		/**
 		 * List of loaded datamanagers used for caching in the 
@@ -325,7 +325,7 @@
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_datamanagers 	= Array();
+		protected static $loaded_datamanagers 	= [];
 
 
 		/**
@@ -507,7 +507,7 @@
 					throw new Exception\Basic('Internationalization is not instanciated for datamanager phrases');
 				}
 
-				if($registry->intl && !$registry->intl->cache(Array('datamanagers')))
+				if($registry->intl && !$registry->intl->cache(['datamanagers']))
 				{
 					throw new Exception\Basic('Unable to cache datamanager phrases');
 				}
@@ -554,10 +554,10 @@
 		{
 			if(!$this->fields)
 			{
-				return(Array());
+				return([]);
 			}
 
-			$fields = Array();
+			$fields = [];
 
 			foreach($this->fields as $name => $props)
 			{
@@ -609,10 +609,10 @@
 				return;
 			}
 
-			$this->shutdown_handlers[] = Array(
-								'handler'	=> $handler, 
-								'arguments'	=> $arguments
-								);
+			$this->shutdown_handlers[] = [
+							'handler'	=> $handler, 
+							'arguments'	=> $arguments
+							];
 		}
 
 		/**
@@ -625,7 +625,7 @@
 		 */
 		public function validate()
 		{
-			$this->invalid_fields = Array();
+			$this->invalid_fields = [];
 
 			foreach($this->fields as $field => $props)
 			{
@@ -644,7 +644,7 @@
 					$props['validation'] = 0;
 				}
 
-				if($props['validation'] && !\in_array($props['validation'], Array(self::VALIDATE_STRING, self::VALIDATE_STRING_EMPTY, self::VALIDATE_BOOLEAN, self::VALIDATE_CALLBACK)) && $props['type'] != self::FIELD_PROTECTED && !isset($this->data[$field]))
+				if($props['validation'] && !\in_array($props['validation'], [self::VALIDATE_STRING, self::VALIDATE_STRING_EMPTY, self::VALIDATE_BOOLEAN, self::VALIDATE_CALLBACK]) && $props['type'] != self::FIELD_PROTECTED && !isset($this->data[$field]))
 				{
 					$this->invalid_fields[] = $field;
 
@@ -786,7 +786,7 @@
 			if(!$this->validate())
 			{
 				$intl		= $this->registry->intl && ($this->options & (self::OPT_INTL | self::OPT_INTL_AUTO));
-				$multidata 	= Array();
+				$multidata 	= [];
 
 				foreach($this->invalid_fields as $field)
 				{
@@ -799,7 +799,7 @@
 			}
 
 			$values		= '';
-			$virtual	= ($this->identifier !== NULL ? \array_merge(Array($this->idname => $this->identifier), $this->data) : $this->data);
+			$virtual	= ($this->identifier !== NULL ? \array_merge([$this->idname => $this->identifier], $this->data) : $this->data);
 			$virtual_fields	= $this->getVirtualFields();
 			$n 		= \sizeof($virtual);
 
@@ -865,7 +865,7 @@
 					return($result);
 				}
 
-				$this->parent->setShutdownHandler(Array($this, 'hooks'), Array($this));
+				$this->parent->setShutdownHandler([$this, 'hooks'], [$this]);
 			}
 
 			$this->context = self::CONTEXT_NONE;
@@ -888,7 +888,7 @@
 				return(false);
 			}
 
-			$this->invalid_fields = Array();
+			$this->invalid_fields = [];
 
 			if($this->identifier === NULL && !($this->options & self::OPT_LOAD_ONLY))
 			{
@@ -946,7 +946,7 @@
 		 */
 		public function getDataStruct()
 		{
-			$data = Array();
+			$data = [];
 
 			foreach($this->fields as $name => $props)
 			{

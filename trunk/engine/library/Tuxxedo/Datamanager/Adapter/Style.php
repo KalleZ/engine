@@ -61,31 +61,31 @@
 		 * @changelog	1.2.0			Renamed 'defaultstyle' to 'isdefault'
 		 * @changelog	1.1.0			Added the 'inherit' field
 		 */
-		protected $fields		= Array(
-							'id'		=> Array(
-											'type'		=> parent::FIELD_PROTECTED
-											), 
-							'name'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'developer'	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'styledir' 	=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_STRING
-											), 
-							'isdefault'	=> Array(
-											'type'		=> parent::FIELD_OPTIONAL, 
-											'validation'	=> parent::VALIDATE_BOOLEAN, 
-											'default'	=> false
-											), 
-							'inherit'	=> Array(
-											'type'		=> parent::FIELD_VIRTUAL
-											)
-							);
+		protected $fields		= [
+							'id'		=> [
+										'type'		=> parent::FIELD_PROTECTED
+										], 
+							'name'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'developer'	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'styledir' 	=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_STRING
+										], 
+							'isdefault'	=> [
+										'type'		=> parent::FIELD_OPTIONAL, 
+										'validation'	=> parent::VALIDATE_BOOLEAN, 
+										'default'	=> false
+										], 
+							'inherit'	=> [
+										'type'		=> parent::FIELD_VIRTUAL
+										]
+							];
 
 
 		/**
@@ -145,7 +145,7 @@
 
 			if(($datastore = $this->registry->datastore->styleinfo) === false)
 			{
-				$datastore = Array();
+				$datastore = [];
 			}
 
 			if($this->context == parent::CONTEXT_DELETE)
@@ -179,7 +179,7 @@
 
 				if($templates && $templates->getNumRows())
 				{
-					$ids = Array();
+					$ids = [];
 
 					while($row = $templates->fetchRow())
 					{

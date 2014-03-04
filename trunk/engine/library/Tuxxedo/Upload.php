@@ -172,7 +172,7 @@
 			if($handlers === NULL)
 			{
 				$this_ptr	= $this;
-				$handlers 	= Array();
+				$handlers 	= [];
 				$factory	= function($backend) use($this_ptr, $handlers)
 				{
 					$class = '\Tuxxedo\Upload\Backend\\' . \ucfirst(\strtolower($backend));
@@ -228,7 +228,7 @@
 
 		if(!$allowed_types)
 		{
-			$allowed_types = Array('image/png', 'image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg');
+			$allowed_types = ['image/png', 'image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg'];
 		}
 
 		return(in_array($file->type, $allowed_types));

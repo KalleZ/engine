@@ -105,11 +105,11 @@
 		 * @var		array
 		 * @since	1.1.0
 		 */
-		protected static $routes	= Array(
-							'path'		=> Array(), 
-							'regex'		=> Array(), 
-							'callback'	=> Array()
-							);
+		protected static $routes	= [
+							'path'		=> [], 
+							'regex'		=> [], 
+							'callback'	=> []
+							];
 
 
 		/**
@@ -138,10 +138,10 @@
 		 */
 		public static function routeAsPath($path, $separator = NULL, $root = NULL)
 		{
-			self::$routes['path'][$path] = Array(
-								'separator'	=> ($separator !== NULL ? $separator : self::$separator), 
-								'root'		=> ($root !== NULL ? $root : self::$root)
-								);
+			self::$routes['path'][$path] = [
+							'separator'	=> ($separator !== NULL ? $separator : self::$separator), 
+							'root'		=> ($root !== NULL ? $root : self::$root)
+							];
 		}
 
 		/**
@@ -295,7 +295,7 @@
 					throw new Exception\Basic('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \tuxxedo_trim_path($path));
 				}
 
-				\tuxxedo_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, \tuxxedo_trim_path($path)));
+				\tuxxedo_errorf('Unable to find object file for \'%s\' (assumed to be: \'%s\')', $name, \str_replace(['\\', '/'], \DIRECTORY_SEPARATOR, \tuxxedo_trim_path($path)));
 			}
 
 			require($path);
@@ -312,7 +312,7 @@
 					throw new Exception\Basic('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
 				}
 
-				\tuxxedo_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, \str_replace(Array('\\', '/'), \DIRECTORY_SEPARATOR, $path));
+				\tuxxedo_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, \str_replace(['\\', '/'], \DIRECTORY_SEPARATOR, $path));
 			}
 
 			return(true);

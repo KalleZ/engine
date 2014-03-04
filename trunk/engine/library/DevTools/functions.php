@@ -53,7 +53,7 @@
 			return(false);
 		}
 
-		$return_value 	= Array();
+		$return_value 	= [];
 
 		foreach($glob as $entry)
 		{

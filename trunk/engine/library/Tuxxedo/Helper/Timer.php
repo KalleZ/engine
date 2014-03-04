@@ -56,7 +56,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $timers	= Array();
+		protected $timers	= [];
 
 
 		/**

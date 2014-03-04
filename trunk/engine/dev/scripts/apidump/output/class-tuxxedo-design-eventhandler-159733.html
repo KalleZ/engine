@@ -3,173 +3,7 @@
 	<head>
 		<title>Tuxxedo Engine API Documentation</title>
 
-		<style type="text/css">
-		a
-		{
-			color:				#3B7286;
-			text-decoration:		underline;
-		}
-			a:hover
-			{
-				color:				#000000;
-			}
-		body
-		{
-			background-color:		#E4F4FC;
-			color:				#3B7286;
-			font-family:			"Helvetica Neue", Helvetica, Trebuchet MS, Verdana, Tahoma, Arial, sans-serif;
-			font-size:			82%;
-			margin:				30px 10% 0px 10%;
-		}
-		code
-		{
-			font-family:			Consolas, Monaco, 'Courier New', Monospace;
-		}
-		fieldset
-		{
-			background-color: 		#C2EDFD;
-			border: 			0px;
-			border-radius:			4px;
-		}
-			fieldset legend
-			{
-				background-color: 		#C2EDFD; 
-				border-radius: 			4px; 
-				padding: 			6px;
-			}
-		h1
-		{
-			margin: 			30px 0px -6px 0px;
-		}
-		h2
-		{
-			margin: 			20px 0px 0px 0px;
-		}
-			h2 span
-			{
-				background-color: 		#C2EDFD;
-				border-top-left-radius: 	4px; 
-				border-top-right-radius: 	4px; 
-				padding: 			5px; 
-				padding-bottom: 		0px;
-			}
-				h2 span.notice
-				{
-					background-color:		#3B7286;
-					color:				#FFFFFF;
-				}
-				h2 span.warning
-				{
-					background-color: 		#A9272C;
-					color:				#FFFFFF;
-				}
-		li, ul
-		{
-			margin: 			0px;
-		}
-		td
-		{
-			border: 			1px solid transparent;
-		}
-			td.value 
-			{ 
-				background-color: 		#FFFFFF; 
-				border-radius: 			4px; 
-				padding: 			3px; 
-			}
-		tr.head td
-		{
-			background-color: 		#C2EDFD; 
-			padding: 			5px; 
-			border-radius: 			4px; 
-		}
-		tr.row, tr.row *
-		{ 
-			margin: 			0px; 
-			padding: 			2px 5px; 
-		}
-		tr.strong td 
-		{ 
-			background-color: 		#C2EDFD; 
-			border-radius: 			4px; 
-		}
-		tr.strong td.empty 
-		{ 
-			background-color: #FFFFFF; 
-		}
-
-		.box, .box-notice, .box-warning
-		{ 
-			background-color: 		#C2EDFD;
-			border: 			3px solid #C2EDFD;
-			border-radius: 			4px;
-		}
-			.box.edge-title, .box-notice.edge-title, .box-warning.edge-title
-			{ 
-				border-top-left-radius: 	0px; 
-			}
-			.box .inner, .box-notice .inner, .box-warning .inner
-			{ 
-				background-color: 		#FFFFFF; 
-				border-radius: 			4px; 
-				padding: 			6px; 
-			}
-				.box .inner ul, .box.notice .inner ul, .box-warning .inner ul
-				{ 
-					padding: 			3px 15px; 
-				}
-		.box-notice
-		{
-			background-color:		#3B7286;
-			border:				3px solid #3B7286;
-		}
-		.box-warning
-		{
-			background-color:		#A9272C;
-			border: 			3px solid #A9272C;
-		}
-		.center
-		{
-			text-align:			center;
-		}
-		.content 
-		{ 
-			margin: 			15px 0px 10px 480px; 
-		}
-		.infobox, .infobox-notice, .infobox-warning
-		{ 
-			background-color: 		#C2EDFD; 
-			border-radius: 			4px; 
-			padding: 			6px; 
-		}
-		.infobox-notice
-		{
-			background-color:		#3B7286;
-			color:				#FFFFFF;
-		}
-		.infobox-warning
-		{
-			background-color:		#A9272C;
-			color:				#FFFFFF;
-		}
-		.left-content
-		{
-			float: left;
-		}
-			.left-content fieldset
-			{
-				width: 450px;
-			}
-		.tag
-		{
-			background-color: 		#3B7286;
-			border-radius: 			4px;
-			color: 				#FFFFFF;
-			font-size: 			80%;
-			margin-right:			5px;
-			padding: 			1px 3px;
-		}
-		</style>
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
 	</head>
 	<body>
 
@@ -292,7 +126,7 @@ Be aware that event callbacks may throw exceptions</td>
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
 				<code><span style="color: #000000">
-<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Design</span><span style="color: #007700">;<br /><br />class&nbsp;</span><span style="color: #0000BB">Component<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Trait&nbsp;which&nbsp;implements&nbsp;the&nbsp;hooks&nbsp;for&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;//event&nbsp;registrations<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventCaller</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Holds&nbsp;the&nbsp;event&nbsp;handler&nbsp;instance<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">protected&nbsp;</span><span style="color: #0000BB">$event_handler</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Constructor,&nbsp;this&nbsp;loads&nbsp;in&nbsp;the&nbsp;event&nbsp;handling&nbsp;sub<br />&nbsp;&nbsp;&nbsp;&nbsp;//system&nbsp;and&nbsp;registers&nbsp;the&nbsp;events<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;[</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">]));<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Method&nbsp;test&nbsp;#1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">test1</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fire</span><span style="color: #007700">(</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Method&nbsp;test&nbsp;#2<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">test2</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fire</span><span style="color: #007700">(</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">());<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #FF8000">//Create&nbsp;the&nbsp;new&nbsp;component&nbsp;instance<br /></span><span style="color: #0000BB">$component&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Component</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">//Register&nbsp;callbacks&nbsp;for&nbsp;the&nbsp;events<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">onTest1&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;called'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />};<br /><br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">onTest2&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;called'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Additional&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;this&nbsp;callback:'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">args</span><span style="color: #007700">);<br />};<br /><br /></span><span style="color: #FF8000">//Execute<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">test1</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">test2</span><span style="color: #007700">(</span><span style="color: #DD0000">'Hello'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'World'</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Design</span><span style="color: #007700">;<br /><br />class&nbsp;</span><span style="color: #0000BB">Component<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Trait&nbsp;which&nbsp;implements&nbsp;the&nbsp;hooks&nbsp;for&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;//event&nbsp;registrations<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventCaller</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Holds&nbsp;the&nbsp;event&nbsp;handler&nbsp;instance<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">protected&nbsp;</span><span style="color: #0000BB">$event_handler</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Constructor,&nbsp;this&nbsp;loads&nbsp;in&nbsp;the&nbsp;event&nbsp;handling&nbsp;sub<br />&nbsp;&nbsp;&nbsp;&nbsp;//system&nbsp;and&nbsp;registers&nbsp;the&nbsp;events<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;[</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">]));<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Method&nbsp;test&nbsp;#1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">test1</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fire</span><span style="color: #007700">(</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Method&nbsp;test&nbsp;#2<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">test2</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fire</span><span style="color: #007700">(</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">());<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #FF8000">//Create&nbsp;the&nbsp;new&nbsp;component&nbsp;instance<br /></span><span style="color: #0000BB">$component&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Component</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">//Register&nbsp;callbacks&nbsp;for&nbsp;the&nbsp;events<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">onTest1&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;called'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />};<br /><br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">onTest2&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;called'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Additional&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;this&nbsp;callback:'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">args</span><span style="color: #007700">);<br />};<br /><br /></span><span style="color: #FF8000">//Execute<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">test1</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">test2</span><span style="color: #007700">(</span><span style="color: #DD0000">'Hello'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'World'</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span>
 </span>
 </code>
 			</td>

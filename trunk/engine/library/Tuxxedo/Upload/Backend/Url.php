@@ -70,9 +70,9 @@
 		 *
 		 * @var		array
 		 */
-		protected static $protocols		= Array(
+		protected static $protocols		= [
 								'http'
-								);
+								];
 
 
 		/**

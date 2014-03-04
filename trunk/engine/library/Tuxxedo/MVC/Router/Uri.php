@@ -139,7 +139,7 @@
 
 			$this->controller 	= (isset($controller) && ($controller = self::canonical($controller, self::TYPE_CONTROLLER)) ? $controller : self::$default_controller);
 			$this->action		= (isset($action) && ($action = self::canonical($action, self::TYPE_ACTION)) ? $action : self::$default_action);
-			$this->parameters	= (isset($parameters) ? $parameters : Array());
+			$this->parameters	= (isset($parameters) ? $parameters : []);
 		}
 
 		/**

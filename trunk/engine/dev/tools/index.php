@@ -18,9 +18,9 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'index'
-					);
+					];
 
 	/**
 	 * Set script name

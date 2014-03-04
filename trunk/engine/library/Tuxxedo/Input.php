@@ -174,17 +174,17 @@
 
 			if(!$sources)
 			{
-				$sources 	= Array(
+				$sources 	= [
 							\INPUT_GET, 
 							\INPUT_POST, 
 							\INPUT_COOKIE
-							);
+							];
 
-				$flags_map	= Array(
+				$flags_map	= [
 							self::TYPE_NUMERIC	=> \FILTER_VALIDATE_INT, 
 							self::TYPE_EMAIL	=> \FILTER_VALIDATE_EMAIL, 
 							self::TYPE_BOOLEAN	=> \FILTER_VALIDATE_BOOLEAN
-							);
+							];
 			}
 
 			if($source != 4 && (!isset($sources[$source - 1])))

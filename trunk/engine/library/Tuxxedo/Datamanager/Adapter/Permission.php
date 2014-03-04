@@ -60,16 +60,16 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'name'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_IDENTIFIER
-											), 
-							'bits'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_NUMERIC
-											)
-							);
+		protected $fields		= [
+							'name'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_IDENTIFIER
+										], 
+							'bits'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_NUMERIC
+										]
+							];
 
 
 		/**

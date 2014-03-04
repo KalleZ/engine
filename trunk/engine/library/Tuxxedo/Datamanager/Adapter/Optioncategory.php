@@ -60,12 +60,12 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'name'		=> Array(
-											'type'		=> parent::FIELD_REQUIRED, 
-											'validation'	=> parent::VALIDATE_IDENTIFIER
-											)
-							);
+		protected $fields		= [
+							'name'		=> [
+										'type'		=> parent::FIELD_REQUIRED, 
+										'validation'	=> parent::VALIDATE_IDENTIFIER
+										]
+							];
 
 
 		/**
@@ -121,7 +121,7 @@
 		{
 			if(($datastore = $this->registry->datastore->optioncategories) === false)
 			{
-				$datastore = Array();
+				$datastore = [];
 			}
 
 			$id 		= (isset($this->data['name']) ? $this->data['name'] : $this->identifier);

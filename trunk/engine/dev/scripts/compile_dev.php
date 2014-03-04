@@ -29,9 +29,9 @@
 	require(__DIR__ . '/includes/bootstrap.php');
 
 
-	$locations = Array(
-				'Tuxxedo Engine DevTools' 	=> '/tools/style/templates/'
-				);
+	$locations = [
+			'Tuxxedo Engine DevTools' => '/tools/style/templates/'
+			];
 
 	IO::signature();
 

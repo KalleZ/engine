@@ -71,7 +71,7 @@
 		 *
 		 * @var		Array
 		 */
-		protected $phrases	= Array();
+		protected $phrases	= [];
 
 
 		/**
@@ -84,7 +84,7 @@
 			$this->registry		= Registry::init();
 			$this->information 	= $languageinfo;
 
-			$this->registry->set('phrase', Array());
+			$this->registry->set('phrase', []);
 		}
 
 		/**
@@ -118,7 +118,7 @@
 
 					if(!$map)
 					{
-						$map = Array();
+						$map = [];
 
 						foreach($registry->datastore->languages as $id => $lang)
 						{
@@ -161,7 +161,7 @@
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{
-			if(!$phrasegroups || !($phrasegroups = \array_filter($phrasegroups, Array($this, 'doPhrasegroupFilter'))))
+			if(!$phrasegroups || !($phrasegroups = \array_filter($phrasegroups, [$this, 'doPhrasegroupFilter'])))
 			{
 				return(false);
 			}
@@ -179,7 +179,7 @@
 										`phrasegroup` IN (
 											\'%s\'
 										);', 
-								$this['id'], join('\', \'', \array_map(Array($this->registry->db, 'escape'), $phrasegroups)));
+								$this['id'], join('\', \'', \array_map([$this->registry->db, 'escape'], $phrasegroups)));
 
 			if($result && !$result->getNumRows())
 			{
@@ -199,7 +199,7 @@
 			{
 				if(!isset($this->phrases[$row['phrasegroup']]))
 				{
-					$this->phrases[$row['phrasegroup']] = Array();
+					$this->phrases[$row['phrasegroup']] = [];
 				}
 
 				$this->phrases[$row['phrasegroup']][$row['title']] = $row['translation'];
@@ -331,10 +331,10 @@
 		{
 			if(!$this->phrases)
 			{
-				return(Array());
+				return([]);
 			}
 
-			$phrases = Array();
+			$phrases = [];
 
 			foreach($this->phrases as $group_phrases)
 			{
@@ -370,7 +370,7 @@
  
 			if($codes === NULL)
 			{
-				$codes = Array();
+				$codes = [];
 
 				foreach(\explode(';', $_SERVER['HTTP_ACCEPT_LANGUAGE']) as $part)
 				{

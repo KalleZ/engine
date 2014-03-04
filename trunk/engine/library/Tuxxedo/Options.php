@@ -72,14 +72,14 @@
 		 *
 		 * @var		array
 		 */
-		protected $options			= Array();
+		protected $options			= [];
 
 		/**
 		 * Holds a list of options and their categories
 		 *
 		 * @var		array
 		 */
-		protected $categories			= Array();
+		protected $categories			= [];
 
 
 		/**
@@ -89,7 +89,7 @@
 		 */
 		public function __construct(Registry $registry)
 		{
-			$categories = Array();
+			$categories = [];
 
 			$registry->datastore->getRef('options', $this->options);
 			$registry->datastore->getRef('optioncategories', $categories);
@@ -159,10 +159,10 @@
 
 			$old_value 		= $this->options[$option];
 			$this->changed		= true;
-			$this->options[$option] = Array(
+			$this->options[$option] = [
 							'category'	=> $this->categories[$option], 
 							'value'		=> $value
-							);
+							];
 			return($old_value);
 		}
 

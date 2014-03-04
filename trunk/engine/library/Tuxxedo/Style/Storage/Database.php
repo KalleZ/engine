@@ -97,7 +97,7 @@
 										`title` IN (
 											\'%s\'
 										);', 
-								$this->style['id'], \join('\', \'', \array_map(Array($this->registry->db, 'escape'), $templates)));
+								$this->style['id'], \join('\', \'', \array_map([$this->registry->db, 'escape'], $templates)));
 
 			if($result === false || !$result->getNumRows())
 			{
@@ -109,7 +109,7 @@
 				return(false);
 			}
 
-			$loaded = Array();
+			$loaded = [];
 
 			foreach($result as $row)
 			{

@@ -151,7 +151,7 @@
 		 *
 		 * @changelog	1.2.0				Added the $where parameter
 		 */
-		public function count($table, $index = '*', Array $where = Array())
+		public function count($table, $index = '*', Array $where = [])
 		{
 			if($index != '*')
 			{
@@ -280,7 +280,7 @@
 				return(false);
 			}
 
-			$retval = Array();
+			$retval = [];
 
 			foreach($columns as $column)
 			{

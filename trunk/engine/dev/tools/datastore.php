@@ -26,20 +26,20 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'datastore_rebuild', 
 					'datastore_rebuild_itembit'
-					);
+					];
 
 	/**
 	 * Action templates
 	 */
-	$action_templates 	= Array(
-					'dump'		=> Array(
-									'datastore_dump', 
-									'datastore_dump_itembit'
-									)
-					);
+	$action_templates 	= [
+					'dump'		=> [
+								'datastore_dump', 
+								'datastore_dump_itembit'
+								]
+					];
 
 	/**
 	 * Set script name
@@ -54,16 +54,16 @@
 	require('./includes/bootstrap.php');
 	require(TUXXEDO_LIBRARY . '/DevTools/functions_options.php');
 
-	$indices = Array(
-				'languages'		=> 'id', 
-				'optioncategories'	=> 'name', 
-				'options'		=> 'option', 
-				'permissions'		=> 'name', 
-				'phrasegroups'		=> 'id', 
-				'styleinfo'		=> 'id', 
-				'usergroups'		=> 'id', 
-				'timezones'		=> NULL
-				);
+	$indices = [
+			'languages'		=> 'id', 
+			'optioncategories'	=> 'name', 
+			'options'		=> 'option', 
+			'permissions'		=> 'name', 
+			'phrasegroups'		=> 'id', 
+			'styleinfo'		=> 'id', 
+			'usergroups'		=> 'id', 
+			'timezones'		=> NULL
+			];
 
 	switch(strtolower($input->get('do')))
 	{
@@ -114,7 +114,7 @@
 			{
 				$cache_items 	= '';
 				$corrupt_warn	= false;
-				$tables 	= Array(
+				$tables 	= [
 							'languages'		=> 'languages', 
 							'optioncategories'	=> 'optioncategories', 
 							'options'		=> 'options', 
@@ -123,12 +123,12 @@
 							'styleinfo'		=> 'styles', 
 							'usergroups'		=> 'usergroups', 
 							'timezones'		=> NULL
-							);
+							];
 
 				foreach(array_keys($tables) as $element)
 				{
 					$sucess		= false;
-					$current 	= Array();
+					$current 	= [];
 
 					switch($element)
 					{
@@ -165,10 +165,10 @@
 									break;
 									case('options'):
 									{
-										$current[$s['option']] = Array(
+										$current[$s['option']] = [
 														'category'	=> $s['category'],
 														'value'		=> var_typecast_option(strtolower($s['type']{0}), $s['value'])
-														);
+														];
 									}
 									break;
 									case('phrasegroups'):
@@ -183,13 +183,13 @@
 
 										if(!isset($current[$s['languageid']]))
 										{
-											$current[$s['languageid']] = Array();
+											$current[$s['languageid']] = [];
 										}
 
-										$current[$s['languageid']][$s['title']] = Array(
+										$current[$s['languageid']][$s['title']] = [
 																'id'		=> $s['id'], 
 																'phrases'	=> ($query && $query->getNumRows() ? (integer) $query->fetchObject()->phrases : 0)
-																);
+																];
 
 										unset($query);
 									}
@@ -230,7 +230,7 @@
 
 							if($element == 'styleinfo' && !empty($styleid))
 							{
-								$ids 	= Array();
+								$ids 	= [];
 								$p 	= $db->query('
 											SELECT 
 												`id` 

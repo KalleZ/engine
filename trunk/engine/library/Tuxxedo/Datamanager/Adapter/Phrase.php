@@ -59,40 +59,40 @@
 		 *
 		 * @var		array
 		 */
-		protected $fields		= Array(
-							'id'			=> Array(
-												'type'		=> parent::FIELD_PROTECTED, 
-												'validation'	=> parent::VALIDATE_IDENTIFIER
-												), 
-							'title'			=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidPhraseTitle')
-												), 
-							'translation'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_STRING
-												), 
-							'defaulttranslation'	=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_STRING
-												),
-							'changed'		=> Array(
-												'type'		=> parent::FIELD_OPTIONAL, 
-												'validation'	=> parent::VALIDATE_BOOLEAN, 
-												'default'	=> false
-												),  
-							'languageid' 		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidLanguageId')
-												), 
-							'phrasegroup'		=> Array(
-												'type'		=> parent::FIELD_REQUIRED, 
-												'validation'	=> parent::VALIDATE_CALLBACK, 
-												'callback'	=> Array(__CLASS__, 'isValidPhrasegroup')
-												)
-							);
+		protected $fields		= [
+							'id'			=> [
+											'type'		=> parent::FIELD_PROTECTED, 
+											'validation'	=> parent::VALIDATE_IDENTIFIER
+											], 
+							'title'			=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidPhraseTitle']
+											], 
+							'translation'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_STRING
+											], 
+							'defaulttranslation'	=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_STRING
+											],
+							'changed'		=> [
+											'type'		=> parent::FIELD_OPTIONAL, 
+											'validation'	=> parent::VALIDATE_BOOLEAN, 
+											'default'	=> false
+											],  
+							'languageid' 		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidLanguageId']
+											], 
+							'phrasegroup'		=> [
+											'type'		=> parent::FIELD_REQUIRED, 
+											'validation'	=> parent::VALIDATE_CALLBACK, 
+											'callback'	=> [__CLASS__, 'isValidPhrasegroup']
+											]
+							];
 
 
 		/**

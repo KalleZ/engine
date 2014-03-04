@@ -74,13 +74,13 @@
 		 *
 		 * @changelog	1.1.0			Added 'secure' for HTTPS enforcement
 		 */
-		protected static $options	= Array(
+		protected static $options	= [
 							'expires'	=> 1800, 
 							'prefix'	=> '', 
 							'domain'	=> '', 
 							'path'		=> '', 
 							'secure'	=> false
-							);
+							];
 
 
 		/**
@@ -97,13 +97,13 @@
 		{
 			if(($options = $registry->options) !== false)
 			{
-				self::$options = Array(
+				self::$options = [
 							'expires'	=> $options->cookie_expires, 
 							'prefix'	=> $options->cookie_prefix, 
 							'domain'	=> $options->cookie_domain, 
 							'path'		=> $options->cookie_path, 
 							'secure'	=> $options->cookie_secure
-							);
+							];
 			}
 
 			self::start();

@@ -332,10 +332,10 @@
 				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->lastErrorMsg(), $this->link->lastErrorCode());
 			}
 
-			$sql = Array(
-					'sql'	=> $sql, 
-					'trace'	=> false
-					);
+			$sql = [
+				'sql'	=> $sql, 
+				'trace'	=> false
+				];
 
 			if($this->registry->trace)
 			{

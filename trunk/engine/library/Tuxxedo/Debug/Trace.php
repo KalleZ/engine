@@ -78,7 +78,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $frames	= Array();
+		protected $frames	= [];
 
 
 		/**
@@ -102,12 +102,10 @@
 		 */
 		public function end()
 		{
-			$configuration = Registry::init()->getConfiguration();
-
-			return(Array(
-					'timer'		=> \round($this->timer->stop('Debug tracer'), $configuration['debug']['precision']), 
+			return([
+					'timer'		=> \round($this->timer->stop('Debug tracer'), Registry::init()->getConfiguration()['debug']['precision']), 
 					'frames'	=> $this->frames
-					));
+					]);
 		}
 	}
 ?>

@@ -28,52 +28,52 @@
 	/**
 	 * Global templates
 	 */
-	$templates 		= Array(
+	$templates 		= [
 					'option', 
 					'users_index'
-					);
+					];
 
-	$action_templates	= Array(
-					'user'		=> Array(
-									'users_add_edit_form', 
-									'users_delete', 
-									'users_edit_permissions', 
-									'users_edit_permissions_itembit', 
-									'users_search', 
-									'users_search_itembit'
-									), 
+	$action_templates	= [
+					'user'		=> [
+								'users_add_edit_form', 
+								'users_delete', 
+								'users_edit_permissions', 
+								'users_edit_permissions_itembit', 
+								'users_search', 
+								'users_search_itembit'
+								], 
 
-					'usergroup'	=> Array(
-									'users_usergroup_add_edit_form', 
-									'users_usergroup_list', 
-									'users_usergroup_list_itembit', 
-									'users_usergroup_permission', 
-									'users_usergroup_permission_itembit'
-									),
+					'usergroup'	=> [
+								'users_usergroup_add_edit_form', 
+								'users_usergroup_list', 
+								'users_usergroup_list_itembit', 
+								'users_usergroup_permission', 
+								'users_usergroup_permission_itembit'
+								],
 
-					'permission'	=> Array(
-									'users_permission_add_edit_form', 
-									'users_permission_delete', 
-									'users_permission_delete_itembit', 
-									'users_permission_list', 
-									'users_permission_list_itembit', 
-									'users_permission_tree_index', 
-									'users_permission_tree_view', 
-									'users_permission_tree_view_itembit'
-									)
-					);
+					'permission'	=> [
+								'users_permission_add_edit_form', 
+								'users_permission_delete', 
+								'users_permission_delete_itembit', 
+								'users_permission_list', 
+								'users_permission_list_itembit', 
+								'users_permission_tree_index', 
+								'users_permission_tree_view', 
+								'users_permission_tree_view_itembit'
+								]
+					];
 
 
 	/**
 	 * Precache datastore elements
 	 */
-	$precache 		= Array(
+	$precache 		= [
 					'languages', 
 					'permissions', 
 					'styleinfo', 
 					'timezones', 
 					'usergroups'
-					);
+					];
 
 
 	/**
@@ -143,7 +143,7 @@
 						}
 					}
 
-					foreach(Array('styles' => Array('styleinfo', 'name', 'style_id'), 'languages' => Array('languages', 'title', 'language_id')) as $item => $info)
+					foreach(['styles' => ['styleinfo', 'name', 'style_id'], 'languages' => ['languages', 'title', 'language_id']] as $item => $info)
 					{
 						${$item . '_dropdown'} = '';
 
@@ -245,11 +245,11 @@
 
 						if(!$hidden_fields)
 						{
-							$hidden_fields = Array(
+							$hidden_fields = [
 										'id', 
 										'password', 
 										'salt'
-										);
+										];
 						}
 
 						return(!in_array($field, $hidden_fields));
@@ -260,7 +260,7 @@
 					if(isset($_POST['submit']) && isset($_POST['query']) && $_POST['query'] && isset($_POST['query_field']) && in_array((string) $_POST['query_field'], $fields))
 					{
 						$safe_query	= htmlspecialchars($input->post('query'), ENT_QUOTES);
-						$query 		= str_replace(Array('*', '%'), Array('%', '\%'), $input->post('query'));
+						$query 		= str_replace(['*', '%'], ['%', '\%'], $input->post('query'));
 						$stripped_query	= str_replace('*', '', $query);
 
 						if($query{0} != '*')
@@ -303,7 +303,7 @@
 
 					foreach($fields as $value)
 					{
-						$name 		= ucfirst(str_replace(Array('_', 'usergroupid'), Array(' ', 'usergroup id'), $value));
+						$name 		= ucfirst(str_replace(['_', 'usergroupid'], [' ', 'usergroup id'], $value));
 						$selected	= (isset($safe_query) && $value == (string) $_POST['query_field']);
 
 						eval('$fields_dropdown .= "' . $style->fetch('option') . '";');
@@ -462,7 +462,7 @@
 					{
 						if(isset($_POST['deleteperm']))
 						{
-							foreach(Array('user', 'usergroup') as $type)
+							foreach(['user', 'usergroup'] as $type)
 							{
 								if(!isset($_POST['deleteperm'][$type]) || !$_POST['deleteperm'][$type])
 								{
@@ -557,7 +557,7 @@
 					{
 						if(isset($_POST['submituser']))
 						{
-							$userinfo = $user->getUserInfo($input->post('useridentifier'), in_array(strtolower($input->post('identifiertype')), Array('id', 'username', 'email')) ? $input->post('identifiertype') : 'username');
+							$userinfo = $user->getUserInfo($input->post('useridentifier'), in_array(strtolower($input->post('identifiertype')), ['id', 'username', 'email']) ? $input->post('identifiertype') : 'username');
 
 							if(!$userinfo)
 							{

@@ -103,14 +103,14 @@
 		 *
 		 * @var		array
 		 */
-		protected $queries			= Array();
+		protected $queries			= [];
 
 		/**
 		 * Database specific configuration array
 		 *
 		 * @var		array
 		 */
-		protected $configuration		= Array();
+		protected $configuration		= [];
 
 		/**
 		 * List of shutdown queries that will be executed 
@@ -118,7 +118,7 @@
 		 *
 		 * @var		array
 		 */
-		protected $shutdown_queries		= Array();
+		protected $shutdown_queries		= [];
 
 		/**
 		 * List of loaded drivers used for caching in the 
@@ -127,7 +127,7 @@
 		 *
 		 * @var		array
 		 */
-		protected static $loaded_drivers 	= Array();
+		protected static $loaded_drivers 	= [];
 
 
 		/**
@@ -268,7 +268,7 @@
 				$args = \func_get_args();
 				\array_shift($args);
 
-				$args = \array_map(Array($this, 'escape'), $args);
+				$args = \array_map([$this, 'escape'], $args);
 				\array_unshift($args, $sql);
 
 				$sql = \call_user_func_array('\sprintf', $args);
