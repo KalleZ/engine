@@ -103,7 +103,7 @@
 		 */
 		public function __construct()
 		{
-			$this->setEventHandler($this->event_handler = new Design\EventHandler(['process']);
+			$this->setEventHandler($this->event_handler = new Design\EventHandler($this, ['process']));
 
 			$this->information = [
 						'size_limit'	=> 10485760, 
@@ -218,21 +218,4 @@
 			return($this->upload());
 		}
 	}
-
-
-	__halt_compiler();
-
-	$upload->addFilter('mimecheck', function(stdClass $file)
-	{
-		static $allowed_types;
-
-		if(!$allowed_types)
-		{
-			$allowed_types = ['image/png', 'image/gif', 'image/jpeg', 'image/jpg', 'image/pjpeg'];
-		}
-
-		return(in_array($file->type, $allowed_types));
-	});
-
-	$upload->removeFilter('mimecheck');
 ?>

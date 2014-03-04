@@ -235,7 +235,7 @@
 		 */
 		public function fire($event, Array $args = NULL)
 		{
-			if(!\in_array($event, $this->events) || !$this->event_callbacks[$event])
+			if(!\in_array($event, $this->events) || !isset($this->event_callbacks[$event]))
 			{
 				return;
 			}

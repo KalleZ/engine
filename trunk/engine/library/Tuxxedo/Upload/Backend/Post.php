@@ -95,26 +95,29 @@
 				return(false);
 			}
 
-			$desc = new Upload\Descriptor;
+			$desc 		= new Upload\Descriptor;
+			$desc->error	= Upload\Descriptor::ERR_NONE;
 
 			if($_FILES[$input]['size'] < 1 || $_FILES[$input]['size'] > $this->handle['size_limit'])
 			{
-				$desc->error = self::ERR_SIZE;
+				$desc->error = Upload\Descriptor::ERR_SIZE;
 
 				return($desc);
 			}
-/*
-			elseif(self::$finfo && \finfo_file(self::$finfo, $_FILES[$input]['tmp_name']))
+			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && !\finfo_file(self::$finfo, $_FILES[$input]['tmp_name']))
 			{
-				$desc->error = self::ERR_MIME_FINFO;
+// @TODO We need the retval from finfo_file() here
+var_dump(self::$finfo, $this->handke['resolve_mime'], finfo_file(self::$finfo, $_FILES[$input]['tmp_name']));
+				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
 			}
-*/
 			elseif(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $this->handle['directory'] . $_FILES[$input]['name']))
 			{
-				$desc->error = self::ERR_CANT_WRITE;
+				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
 
 				return($desc);
 			}
+
+			$this->handle->getEventHandler()->fire('process', [$desc]);
 
 			return($desc);
 		}
