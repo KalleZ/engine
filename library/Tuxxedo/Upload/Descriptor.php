@@ -71,6 +71,20 @@
 		 */
 		const ERR_CANT_WRITE		= 2;
 
+		/**
+		 * Upload error constant - Fileinfo failed (extension not available, or unable to resolve)
+		 *
+		 * @var		integer
+		 */
+		const ERR_MIME_FINFO		= 3;
+
+		/**
+		 * Upload error constant - Custom (caused by event callbacks)
+		 *
+		 * @var		integer
+		 */
+		const ERR_CUSTOM		= 4;
+
 
 		/**
 		 * Error code (defaults to none)
