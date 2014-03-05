@@ -38,9 +38,10 @@
 
 use Tuxxedo\Upload;
 
+$u = new Upload;
+
 if(isset($_POST['send']))
 {
-	$u = new Upload;
 	$u->queue('post', 'fileselector1', 'image');
 	$u->queue('post', 'fileselector2');
 	$status = $u->upload();
@@ -49,10 +50,7 @@ if(isset($_POST['send']))
 	var_dump($status);
 	echo '</pre>';
 }
-else
-{
-	$u = ['size_limit' => 10485760];
-}
+
 ?>
 <form enctype="multipart/form-data" action="<?php echo(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES)); ?>" method="POST">
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo($u['size_limit']); ?>" />
