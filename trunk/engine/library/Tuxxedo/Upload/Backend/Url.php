@@ -144,6 +144,16 @@
 		}
 
 		/**
+		 * Gets the allowed protocols
+		 *
+		 * @return	array				Returns the list of allowed protocols (may be an empty array)
+		 */
+		public static function getProtocols()
+		{
+			return(\array_keys(self::$protocols));
+		}
+
+		/**
 		 * Tells the backend to process this input and initiate the transfer 
 		 *
 		 * @param	string				The input specific to this backend
