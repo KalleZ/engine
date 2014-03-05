@@ -127,5 +127,20 @@
 		 * @var		string
 		 */
 		public $extension;
+
+		/**
+		 * File MIME type, this may be fake
+		 *
+		 * @var		string
+		 */
+		public $mime;
+
+		/**
+		 * Real MIME type, this is false by default and will only have a value if 
+		 * the 'resolve_mime' option was on in the upload handle
+		 *
+		 * @var		boolean|string
+		 */
+		public $real_mime		= false;
 	}
 ?>

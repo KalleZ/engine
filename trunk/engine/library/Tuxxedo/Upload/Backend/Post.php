@@ -30,6 +30,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Design;
 	use Tuxxedo\Upload;
 
 
@@ -114,6 +115,8 @@
 			$ext			= \array_pop($split);
 			$desc->filename		= ($filename !== NULL ? $filename : \join('.', $split));
 			$desc->extension	= ($extension !== NULL ? $extension : $ext);
+			$desc->mime		= $_FILES[$input]['type'];
+			$desc->real_mime	= false;
 
 			unset($ext, $split);
 
@@ -140,12 +143,8 @@
 
 				return($desc);
 			}
-			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && !\finfo_file(self::$finfo, $_FILES[$input]['tmp_name']))
+			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $_FILES[$input]['tmp_name'])) === false)
 			{
-
-// @TODO We need the retval from finfo_file() here
-var_dump(self::$finfo, $this->handke['resolve_mime'], finfo_file(self::$finfo, $_FILES[$input]['tmp_name']));
-
 				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
 
 				return($desc);
@@ -156,7 +155,20 @@ var_dump(self::$finfo, $this->handke['resolve_mime'], finfo_file(self::$finfo, $
 
 				return($desc);
 			}
-			elseif(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $new_filename))
+
+			if(isset($real_mime))
+			{
+				$desc->real_mime = $real_mime;
+			}
+
+			$this->event_handler->fire('process', [$desc]);
+
+			if($desc->error != Upload\Descriptor::ERR_NONE)
+			{
+				return($desc);
+			}
+
+			if(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $new_filename))
 			{
 				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
 

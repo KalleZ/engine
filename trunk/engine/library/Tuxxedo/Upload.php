@@ -103,7 +103,7 @@
 		 */
 		public function __construct()
 		{
-			$this->setEventHandler($this->event_handler = new Design\EventHandler($this, ['preprocess', 'postprocess']));
+			$this->setEventHandler($this->event_handler = new Design\EventHandler($this, ['preprocess', 'process', 'postprocess']));
 
 			$this->information = [
 						'size_limit'		=> 10485760, 
