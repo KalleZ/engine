@@ -60,6 +60,13 @@
 		protected $handle;
 
 		/**
+		 * Event handler, associated with the upload handle
+		 *
+		 * @var		\Tuxxedo\Design\EventHandler
+		 */
+		protected $event_handler;
+
+		/**
 		 * Fileinfo handle
 		 *
 		 * @var		resource
@@ -71,10 +78,12 @@
 		 * Constructor
 		 *
 		 * @param	\Tuxxedo\Upload			The upload handle that initiated this backend
+		 * @param	\Tuxxedo\Design\EventHandler	The event handler associated with the upload handle
 		 */
-		public function __construct(Upload $handle)
+		public function __construct(Upload $handle, Design\EventHandler $eh_ptr)
 		{
-			$this->handle = $handle;
+			$this->handle 		= $handle;
+			$this->event_handler	= $eh_ptr;
 
 			if(self::$finfo === NULL && \extension_loaded('fileinfo'))
 			{
@@ -115,7 +124,7 @@
 				return($desc);
 			}
 
-			$this->handle->getEventHandler()->fire('preprocess', [$desc]);
+			$this->event_handler->fire('preprocess', [$desc]);
 
 			$new_filename = $this->handle['directory'] . $desc->filename . (!empty($desc->extension) ? '.' . $desc->extension : '');
 
@@ -154,7 +163,7 @@ var_dump(self::$finfo, $this->handke['resolve_mime'], finfo_file(self::$finfo, $
 				return($desc);
 			}
 
-			$this->handle->getEventHandler()->fire('postprocess', [$desc]);
+			$this->event_handler->fire('postprocess', [$desc]);
 
 			return($desc);
 		}

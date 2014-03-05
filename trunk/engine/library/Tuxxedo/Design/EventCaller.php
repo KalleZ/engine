@@ -76,7 +76,7 @@
 		 *
 		 * @return	\Tuxxedo\Design\EventHandler	Returns the event handler instance if any, otherwise false
 		 */
-		final public function getEventHandler()
+		final protected function getEventHandler()
 		{
 			return(($this->eh_ptr ? $this->eh_ptr : false));
 		}

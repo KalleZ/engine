@@ -187,7 +187,7 @@
 						return($handlers[$backend]);
 					}
 
-					$temp = new $class($this_ptr);
+					$temp = new $class($this_ptr, $this_ptr->event_handler);
 
 					if(!($temp instanceof Upload\Backend))
 					{

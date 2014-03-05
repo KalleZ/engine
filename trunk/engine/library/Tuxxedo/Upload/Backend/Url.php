@@ -59,6 +59,13 @@
 		protected $handle;
 
 		/**
+		 * Event handler, associated with the upload handle
+		 *
+		 * @var		\Tuxxedo\Design\EventHandler
+		 */
+		protected $event_handler;
+
+		/**
 		 * Fileinfo handle
 		 *
 		 * @var		resource
@@ -79,12 +86,14 @@
 		 * Constructor
 		 *
 		 * @param	\Tuxxedo\Upload			The upload handle that initiated this backend
+		 * @param	\Tuxxedo\Design\EventHandler	The event handler associated with the upload handle
 		 */
-		public function __construct(Upload $handle)
+		public function __construct(Upload $handle, Design\EventHandler $eh_ptr)
 		{
 			static $first_time;
 
-			$this->handle = $handle;
+			$this->handle 		= $handle;
+			$this->event_handler	= $eh_ptr;
 
 			if($first_time === NULL)
 			{
@@ -138,6 +147,8 @@
 		 * Tells the backend to process this input and initiate the transfer 
 		 *
 		 * @param	string				The input specific to this backend
+		 * @param	string				Optionally the file name the file should have, pass NULL to retain the original filename
+		 * @param	string				Optionally the extension the file should have (for example: 'jpg'), pass NULL to retain the original extension
 		 * @return	boolean				Returns true if the transfer was a success, otherwise false (failed hooks and the like)
 		 */
 		public function process($input)
