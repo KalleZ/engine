@@ -43,7 +43,8 @@ $u = new Upload;
 if(isset($_POST['send']))
 {
 	$u->queue('post', 'fileselector1', 'image');
-	$u->queue('post', 'fileselector2');
+	$u->queue('url', $_POST['fileselector2']);
+
 	$status = $u->upload();
 
 	echo '<pre>';
@@ -55,8 +56,7 @@ if(isset($_POST['send']))
 <form enctype="multipart/form-data" action="<?php echo(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES)); ?>" method="POST">
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo($u['size_limit']); ?>" />
     Send this file: <input name="fileselector1" type="file" /> <br />
-    <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo($u['size_limit']); ?>" />
-    Send this file: <input name="fileselector2" type="file" /> <br />
+    Send this file: <input name="fileselector2" type="text" /> <br />
     <input type="submit" name="send" value="Send File" />
 </form>
 <?php

@@ -103,7 +103,9 @@
 		public function process($input, $filename = NULL, $extension = NULL)
 		{
 			$desc 		= new Upload\Descriptor;
+			$desc->backend	= 'post';
 			$desc->error	= Upload\Descriptor::ERR_NONE;
+
 			if(!$_FILES || !isset($_FILES[$input]) || !isset($_FILES[$input]['tmp_name']) || \is_array($_FILES[$input]['tmp_name']) || empty($_FILES[$input]['tmp_name']))
 			{
 				$desc->error = Upload\Descriptor::ERR_UNKNOWN;
@@ -143,15 +145,15 @@
 
 				return($desc);
 			}
-			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $_FILES[$input]['tmp_name'])) === false)
-			{
-				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
-
-				return($desc);
-			}
 			elseif(!$this->handle['allow_override'] && \is_file($new_filename))
 			{
 				$desc->error = Upload\Descriptor::ERR_OVERRIDE;
+
+				return($desc);
+			}
+			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $_FILES[$input]['tmp_name'])) === false)
+			{
+				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
 
 				return($desc);
 			}
