@@ -79,7 +79,7 @@
 		 * @var		array
 		 */
 		protected static $protocols		= [
-								'http'
+								'http' => true
 								];
 
 
@@ -168,15 +168,14 @@
 			$desc->backend	= 'url';
 			$desc->error	= Upload\Descriptor::ERR_NONE;
 
-// @TODO this needs some work to parse out the port number since we are gonna use fsockopen()
-
-			if(empty($input) || ($sock = fsockopen($input)) === false)
+			if(empty($input) || ($sock = @fopen($input, 'rb')) === false)
 			{
 				$desc->error = Upload\Descriptor::ERR_UNKNOWN;
 
 				return($desc);
 			}
 
+			$size = 0;
 			$type = '';
 			$meta = stream_get_meta_data($sock);
 
@@ -189,13 +188,16 @@
 
 			foreach($meta['wrapper_data'] as $data)
 			{
-				$data = \explode(':', $data);
+				$data 		= \explode(':', $data);
+				$data[0]	= \strtolower($data[0]);
 
-				if(\strtolower($data[0]) == 'content-type')
+				if($data[0] == 'content-type')
 				{
 					$type = \trim($data[1]);
-
-					break;
+				}
+				elseif($data[0] == 'content-length')
+				{
+					$size = (integer) $data[1];
 				}
 			}
 
@@ -228,17 +230,9 @@
 
 				return($desc);
 			}
-
-/*
-			elseif($_FILES[$input]['size'] < 1 || $_FILES[$input]['size'] > $this->handle['size_limit'])
+			elseif($size < 1 || $size > $this->handle['size_limit'])
 			{
 				$desc->error = Upload\Descriptor::ERR_SIZE;
-
-				return($desc);
-			}
-			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $_FILES[$input]['tmp_name'])) === false)
-			{
-				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
 
 				return($desc);
 			}
@@ -248,6 +242,23 @@
 
 				return($desc);
 			}
+
+/*
+			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $_FILES[$input]['tmp_name'])) === false)
+			{
+				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
+
+				return($desc);
+			}
+
+			if(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $new_filename))
+			{
+				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
+
+				return($desc);
+			}
+
+*/
 
 			if(isset($real_mime))
 			{
@@ -261,14 +272,6 @@
 				return($desc);
 			}
 
-			if(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $new_filename))
-			{
-				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
-
-				return($desc);
-			}
-
-*/
 			$this->event_handler->fire('postprocess', [$desc]);
 
 			fclose($sock);
