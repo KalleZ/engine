@@ -99,6 +99,13 @@
 		 */
 		const ERR_NAMING		= 6;
 
+		/**
+		 * Upload error constant - File override (if 'allow_override' is false and naming matches)
+		 *
+		 * @var		integer
+		 */
+		const ERR_OVERRIDE		= 7;
+
 
 		/**
 		 * Error code (defaults to none)

@@ -117,14 +117,15 @@
 
 			$this->handle->getEventHandler()->fire('preprocess', [$desc]);
 
+			$new_filename = $this->handle['directory'] . $desc->filename . (!empty($desc->extension) ? '.' . $desc->extension : '');
+
 			if(\strpos($desc->filename, '/') !== false || \strpos($desc->filename, '\\') !== false)
 			{
 				$desc->error = Upload\Descriptor::ERR_NAMING;
 
 				return($desc);
 			}
-
-			if($_FILES[$input]['size'] < 1 || $_FILES[$input]['size'] > $this->handle['size_limit'])
+			elseif($_FILES[$input]['size'] < 1 || $_FILES[$input]['size'] > $this->handle['size_limit'])
 			{
 				$desc->error = Upload\Descriptor::ERR_SIZE;
 
@@ -140,7 +141,13 @@ var_dump(self::$finfo, $this->handke['resolve_mime'], finfo_file(self::$finfo, $
 
 				return($desc);
 			}
-			elseif(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $this->handle['directory'] . $desc->filename . (!empty($desc->extension) ? '.' . $desc->extension : '')))
+			elseif(!$this->handle['allow_override'] && \is_file($new_filename))
+			{
+				$desc->error = Upload\Descriptor::ERR_OVERRIDE;
+
+				return($desc);
+			}
+			elseif(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $new_filename))
 			{
 				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
 

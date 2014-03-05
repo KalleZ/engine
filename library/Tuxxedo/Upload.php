@@ -106,9 +106,10 @@
 			$this->setEventHandler($this->event_handler = new Design\EventHandler($this, ['preprocess', 'postprocess']));
 
 			$this->information = [
-						'size_limit'	=> 10485760, 
-						'directory'	=> './', 
-						'resolve_mime'	=> true
+						'size_limit'		=> 10485760, 
+						'directory'		=> './', 
+						'resolve_mime'		=> true, 
+						'allow_override'	=> false
 						];
 		}
 
