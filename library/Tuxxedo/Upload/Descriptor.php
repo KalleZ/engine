@@ -58,32 +58,46 @@
 		const ERR_NONE			= 0;
 
 		/**
+		 * Upload error constant - Unknown (like no input etc)
+		 *
+		 * @var		integer
+		 */
+		const ERR_UNKNOWN		= 1;
+
+		/**
 		 * Upload error constant - Size exceeded
 		 *
 		 * @var		integer
 		 */
-		const ERR_SIZE			= 1;
+		const ERR_SIZE			= 2;
 
 		/**
 		 * Upload error constant - Cannot write (or move the uploaded file)
 		 *
 		 * @var		integer
 		 */
-		const ERR_CANT_WRITE		= 2;
+		const ERR_CANT_WRITE		= 3;
 
 		/**
 		 * Upload error constant - Fileinfo failed (extension not available, or unable to resolve)
 		 *
 		 * @var		integer
 		 */
-		const ERR_MIME_FINFO		= 3;
+		const ERR_MIME_FINFO		= 4;
 
 		/**
 		 * Upload error constant - Custom (caused by event callbacks)
 		 *
 		 * @var		integer
 		 */
-		const ERR_CUSTOM		= 4;
+		const ERR_CUSTOM		= 5;
+
+		/**
+		 * Upload error constant - Naming (could not determine name if filename or extension was missing in the original file)
+		 *
+		 * @var		integer
+		 */
+		const ERR_NAMING		= 6;
 
 
 		/**
@@ -92,5 +106,19 @@
 		 * @var		integer
 		 */
 		public $error			= self::ERR_NONE;
+
+		/**
+		 * Filename without the extension
+		 *
+		 * @var		string
+		 */
+		public $filename;
+
+		/**
+		 * File extension (may be empty) and does not contain the initial dot
+		 *
+		 * @var		string
+		 */
+		public $extension;
 	}
 ?>

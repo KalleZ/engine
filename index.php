@@ -41,11 +41,13 @@ use Tuxxedo\Upload;
 if(isset($_POST['send']))
 {
 	$u = new Upload;
-	$u->queue('post', 'fileselector1');
+	$u->queue('post', 'fileselector1', 'image');
 	$u->queue('post', 'fileselector2');
 	$status = $u->upload();
 
+	echo '<pre>';
 	var_dump($status);
+	echo '</pre>';
 }
 else
 {
