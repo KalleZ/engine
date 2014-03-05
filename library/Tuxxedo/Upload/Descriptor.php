@@ -142,5 +142,20 @@
 		 * @var		boolean|string
 		 */
 		public $real_mime		= false;
+
+		/**
+		 * External resource, some backends, like the 'url' may supply the socket 
+		 * here
+		 *
+		 * @var		mixed
+		 */
+		public $rsrc			= false;
+
+		/**
+		 * The backend type for this descriptor
+		 *
+		 * @var		string
+		 */
+		public $backend;
 	}
 ?>
