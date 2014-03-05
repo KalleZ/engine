@@ -103,7 +103,7 @@
 		 */
 		public function __construct()
 		{
-			$this->setEventHandler($this->event_handler = new Design\EventHandler($this, ['process']));
+			$this->setEventHandler($this->event_handler = new Design\EventHandler($this, ['preprocess', 'postprocess']));
 
 			$this->information = [
 						'size_limit'	=> 10485760, 
@@ -117,10 +117,12 @@
 		 *
 		 * @param	string				The protocol to use as backend for this upload transfer ('post' for HTML forms, 'url' for URLs)
 		 * @param	string				The field name (<input type="file" name="XXX" /> name for 'post', 'http://www.domain.tld/file.ext' for 'url')
+		 * @param	string				Optionally the file name the file should have, pass NULL to retain the original filename
+		 * @param	string				Optionally the extension the file should have (for example: 'jpg'), pass NULL to retain the original extension
 		 * @param	string				Optionally the name identifier if this item might be unqueued at a later point
 		 * @return	void				No value is returned
 		 */
-		public function queue($backend, $input, $name = NULL)
+		public function queue($backend, $input, $filename = NULL, $extension = NULL, $name = NULL)
 		{
 			$backend = \strtolower($backend);
 
@@ -131,7 +133,9 @@
 
 			$struct = [
 					$backend, 
-					$input
+					$input, 
+					$filename, 
+					$extension
 					];
 
 			if($name !== NULL)
@@ -202,7 +206,7 @@
 
 			foreach($this->queue as $index => $obj)
 			{
-				$status[$index] = $factory($obj[0])->process($obj[1]);
+				$status[$index] = $factory($obj[0])->process($obj[1], $obj[2], $obj[3]);
 			}
 
 			return($status);

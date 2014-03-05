@@ -59,7 +59,7 @@
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
 						<td class="value" style="width: 100%">
-							boolean process(string)
+							boolean process(string, string, string)
 						</td>
 					</tr>
 				</table>
@@ -88,6 +88,24 @@
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
 				The input specific to this backend
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				Optionally the file name the file should have, pass NULL to retain the original filename
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				Optionally the extension the file should have (for example: &#039;jpg&#039;), pass NULL to retain the original extension
 			</td>
 		</tr>
 	</table>

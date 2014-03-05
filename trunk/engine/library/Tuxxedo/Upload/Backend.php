@@ -51,8 +51,10 @@
 		 * Tells the backend to process this input and initiate the transfer 
 		 *
 		 * @param	string				The input specific to this backend
+		 * @param	string				Optionally the file name the file should have, pass NULL to retain the original filename
+		 * @param	string				Optionally the extension the file should have (for example: 'jpg'), pass NULL to retain the original extension
 		 * @return	boolean				Returns true if the transfer was a success, otherwise false (failed hooks and the like)
 		 */
-		public function process($input);
+		public function process($input, $filename = NULL, $extension = NULL);
 	}
 ?>
