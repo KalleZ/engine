@@ -3,5 +3,5 @@
 
 
 
-	Tuxxedo Engine 1.2.0 "Beloved" Beta 3
-	---------------------------------------------------
+	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1
+	--------------------------------------------------
