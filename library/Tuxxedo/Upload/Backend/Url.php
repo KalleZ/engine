@@ -52,6 +52,23 @@
 	class Url implements Upload\Backend
 	{
 		/**
+		 * Interal value for how much to read per block when saving the 
+		 * file
+		 *
+		 * @var		integer
+		 */
+		const WRITE_BLOCK_SIZE		= 4096;
+
+		/**
+		 * Internal value for how many naming attempts that can be performed 
+		 * before giving up
+		 *
+		 * @var		integer
+		 */
+		const WRITE_MAX_ATTEMPTS	= 1000;
+
+
+		/**
 		 * Upload handle that loaded in this backend, to reference options 
 		 * and the like.
 		 *
@@ -243,22 +260,52 @@
 				return($desc);
 			}
 
-/*
-			elseif(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $_FILES[$input]['tmp_name'])) === false)
-			{
-				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
+			$temp_dir = sys_get_temp_dir();
 
-				return($desc);
-			}
-
-			if(!@\move_uploaded_file($_FILES[$input]['tmp_name'], $new_filename))
+			if(!\is_writable($temp_dir))
 			{
 				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
 
 				return($desc);
 			}
 
-*/
+			$i 		= 0;
+			$can_write	= false;
+			$temp_file	= $new_filename . '.temp-';
+
+			do
+			{
+				if(!\is_file($temp_file . $i))
+				{
+					$can_write = true;
+
+					break;
+				}
+			}
+			while($i++ < self::WRITE_MAX_ATTEMPTS);
+
+			if(!$can_write || ($fp = @\fopen($temp_file . $i, 'wb+')) === false)
+			{
+				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
+
+				return($desc);
+			}
+
+			while(!\feof($sock))
+			{
+				\fwrite($fp, fread($sock, self::WRITE_BLOCK_SIZE));
+			}
+
+			fclose($fp);
+
+			if(!self::$finfo && $this->handle['resolve_mime'] || self::$finfo && ($real_mime = \finfo_file(self::$finfo, $temp_file . $i)) === false)
+			{
+				@unlink($temp_file . $i);
+
+				$desc->error = Upload\Descriptor::ERR_MIME_FINFO;
+
+				return($desc);
+			}
 
 			if(isset($real_mime))
 			{
@@ -269,6 +316,15 @@
 
 			if($desc->error != Upload\Descriptor::ERR_NONE)
 			{
+				@unlink($temp_file . $i);
+
+				return($desc);
+			}
+
+			if(!@rename($temp_file . $i, $new_filename))
+			{
+				$desc->error = Upload\Descriptor::ERR_CANT_WRITE;
+
 				return($desc);
 			}
 

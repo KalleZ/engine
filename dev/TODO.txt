@@ -5,5 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Beta 3
 	---------------------------------------------------
-
-	Implement the upload system
