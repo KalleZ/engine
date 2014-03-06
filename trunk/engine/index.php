@@ -43,7 +43,7 @@ $u = new Upload;
 if(isset($_POST['send']))
 {
 	$u->queue('post', 'fileselector1', 'image');
-	$u->queue('url', $_POST['fileselector2']);
+	$u->queue('url', $_POST['fileselector2'], 'image');
 
 	$status = $u->upload();
 
