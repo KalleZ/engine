@@ -321,7 +321,7 @@
 		/**
 		 * Check whether a class, interface or trait exists without attempting to autoload them
 		 *
-		 * @param	string				The class or interface to check
+		 * @param	string				The class, interface or trait to check
 		 * @return	boolean				True if exists and false otherwise
 		 *
 		 * @since	1.1.0
