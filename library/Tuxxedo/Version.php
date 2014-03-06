@@ -172,6 +172,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Beloved" Beta 3 (experimental)';
+		const FULL			= '1.2.0 "Beloved" Beta 3';
 	}
 ?>
