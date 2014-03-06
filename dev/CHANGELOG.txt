@@ -7,6 +7,7 @@
 
 	Added the requirement of PHP 5.4.0+ (Kalle)
 	Added the documentation generator (Kalle)
+	Added the uploading API (Kalle)
 	Added the event handling subsystem (Kalle)
 	Added new and improved debugging mode: (Kalle)
 	 - SQL queries trace mode
