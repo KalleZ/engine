@@ -134,7 +134,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Beta';
+		const PREVIEW_TYPE		= 'Release Candidate';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -142,7 +142,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 3;
+		const PREVIEW_NUMBER		= 1;
 
 		/**
 		 * Development codename, this value is always the same for each 
@@ -172,6 +172,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Beloved" Beta 3';
+		const FULL			= '1.2.0 "Beloved" Release Candidate 1 (experimental)';
 	}
 ?>
