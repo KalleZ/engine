@@ -75,7 +75,7 @@
 	}
 	else
 	{
-		Bootstrap::init(Bootstrap::MODE_CUSTOM, Bootstrap::FLAG_DATE | Bootstrap::FLAG_DATABASE | Bootstrap::FLAG_DATASTORE | Bootstrap::FLAG_OPTIONS);
+		Bootstrap::init(Bootstrap::MODE_CUSTOM, Bootstrap::FLAG_DATE | Bootstrap::FLAG_DATABASE | Bootstrap::FLAG_OPTIONS);
 	}
 
 	$registry = Registry::init();
