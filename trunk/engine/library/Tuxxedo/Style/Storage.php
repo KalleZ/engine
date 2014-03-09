@@ -117,7 +117,7 @@
 		 */ 
 		final public static function factory(Registry $registry, Style $style, $engine, \stdClass $templates)
 		{
-			$class = (\strpos($engine, '\\') === false ? '\Tuxxedo\Style\Storage\\' : '') . \ucfirst(\strtolower($engine));
+			$class = (\strpos($engine, '\\') === false ? '\Tuxxedo\Style\Storage\\' : '') . \ucfirst($engine);
 
 			if(isset(self::$loaded_engines[$engine]))
 			{
