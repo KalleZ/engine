@@ -47,7 +47,6 @@
 	$default_phrasegroups	= ['global'];
 	$default_templates 	= ['header', 'footer', 'error', 'redirect', 'multierror', 'multierror_itembit'];
 
-	Bootstrap::setPreloadables('datastore', (!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)));
 	Bootstrap::setPreloadables('phrasegroups', (!isset($phrasegroups) ? $default_phrasegroups : array_merge($default_phrasegroups, (array) $phrasegroups)));
 
 
@@ -71,11 +70,12 @@
 	 */
 	if(SCRIPT_NAME != 'datastore')
 	{
+		Bootstrap::setPreloadables('datastore', (!isset($precache) ? $default_precache : array_merge($default_precache, (array) $precache)));
 		Bootstrap::init(Bootstrap::MODE_CUSTOM, Bootstrap::FLAG_DATE | Bootstrap::FLAG_DATABASE | Bootstrap::FLAG_DATASTORE | Bootstrap::FLAG_OPTIONS | Bootstrap::FLAG_INTL);
 	}
 	else
 	{
-		Bootstrap::init(Bootstrap::MODE_CUSTOM, Bootstrap::FLAG_DATE | Bootstrap::FLAG_DATABASE | Bootstrap::FLAG_OPTIONS);
+		Bootstrap::init(Bootstrap::MODE_CUSTOM, Bootstrap::FLAG_DATE | Bootstrap::FLAG_DATABASE | Bootstrap::FLAG_DATASTORE | Bootstrap::FLAG_OPTIONS);
 	}
 
 	$registry = Registry::init();
