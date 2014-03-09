@@ -12,6 +12,7 @@
 	Added new and improved debugging mode: (Kalle)
 	 - SQL queries trace mode
 	 - Rewritten debug backtracing API with more verbosity
+	 - Tracker
 	Added new datamanagers: (Kalle)
 	 - Language
 	 - Phrase

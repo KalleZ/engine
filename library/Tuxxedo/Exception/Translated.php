@@ -83,7 +83,7 @@
 		 *
 		 * @param	string			The untranslated message, in case of the internationalization library was not loaded
 		 * @param	string			The translation phrase
-		 * @param	mixed			Optionally translation phrase replacement or parameter 1, 2, N
+		 * @param	mixed			Optionally translation phrase replacement or parameter 1, 2, N, ...
 		 */
 		public function __construct($message, $translation = NULL)
 		{

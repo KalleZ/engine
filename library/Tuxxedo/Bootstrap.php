@@ -43,7 +43,7 @@
 	 */
 	\defined('\TUXXEDO_LIBRARY') or exit;
 
-	
+
 	/**
 	 * Bootstraper, this class works as an encapsulated and easier way 
 	 * to write working bootstrapers while also not having to remember 
