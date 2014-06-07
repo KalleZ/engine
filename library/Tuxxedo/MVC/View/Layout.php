@@ -63,7 +63,7 @@
 		 */
 		public function __construct($name, Array $variables = NULL)
 		{
-			$this->registry		= Registry::init();
+			$this->style		= Registry::init()->style;
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
 			$this->layout		= true;
