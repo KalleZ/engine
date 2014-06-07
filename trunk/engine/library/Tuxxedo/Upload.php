@@ -172,14 +172,20 @@
 		 */
 		public function upload()
 		{
-			static $handlers, $factory;
+			static $factory;
 
-			if($handlers === NULL)
+			if($factory === NULL)
 			{
 				$this_ptr	= $this;
-				$handlers 	= [];
-				$factory	= function($backend) use($this_ptr, $handlers)
+				$factory	= function($backend) use($this_ptr)
 				{
+					static $handlers;
+
+					if($handlers === NULL)
+					{
+						$handlers = [];
+					}
+
 					$class = '\Tuxxedo\Upload\Backend\\' . \ucfirst(\strtolower($backend));
 
 					if(isset($handlers[$backend]))

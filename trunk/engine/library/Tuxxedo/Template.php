@@ -58,11 +58,12 @@
 	class Template extends Design\InfoAccess
 	{
 		/**
-		 * Private instance to the Tuxxedo registry
+		 * The style object registered in the registry
 		 *
-		 * @var		\Tuxxedo\Registry
+		 * @var		\Tuxxedo\Style
+		 * @since	1.2.0
 		 */
-		protected $registry;
+		protected $style;
 
 		/**
 		 * The name of the template to load
@@ -126,7 +127,7 @@
 		 */
 		public function __construct($name, $layout = false, Array $variables = NULL)
 		{
-			$this->registry		= Registry::init();
+			$this->style		= Registry::init()->style;
 			$this->name 		= (string) $name;
 			$this->information	= &$this->variables;
 			$this->layout		= (boolean) $layout;
@@ -235,12 +236,12 @@
 				$this->buffer = '';
 			}
 
-			if(!$this->registry->style->isLoaded($this->name))
+			if(!$this->style->isLoaded($this->name))
 			{
-				$this->registry->style->cache([$this->name]) or \tuxxedo_errorf('Unable to load template \'%s\'', $this->name);
+				$this->style->cache([$this->name]) or \tuxxedo_errorf('Unable to load template \'%s\'', $this->name);
 			}
 
-			eval('$this->buffer = "' . $this->registry->style->fetch($this->name) . '";');
+			eval('$this->buffer = "' . $this->style->fetch($this->name) . '";');
 
 			if($this->layout)
 			{

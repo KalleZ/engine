@@ -247,6 +247,7 @@
 		$buffer		= ob_get_clean();
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
+		$exception_xml	= $exception && $e instanceof Exception\Xml;
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
@@ -406,6 +407,44 @@
 						'</tr>' . PHP_EOL
 						);
 				}
+			}
+
+			if($exception_xml)
+			{
+				echo(
+					'<tr>' . PHP_EOL . 
+					'<td colspan="2">&nbsp;</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
+
+				if(($parser = $e->getParser()) !== '')
+				{
+					echo(
+						'<tr>' . PHP_EOL . 
+						'<td nowrap="nowrap">XML parser:</td>' . PHP_EOL . 
+						'<td class="value" style="width: 100%">' . $parser . '</td>' . PHP_EOL . 
+						'</tr>' . PHP_EOL
+						);
+				}
+
+				echo(
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getCode() . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL .
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Depth:</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getLevel() . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL .
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Column:</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getColumn() . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL .
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Line:</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getXmlLine() . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL
+					);
 			}
 
 			echo(
@@ -714,6 +753,7 @@
 		$buffer		= ob_get_clean();
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
+		$exception_xml	= $exception && $e instanceof Exception\Xml;
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
@@ -820,6 +860,27 @@
 						str_pad('SQL State: ', 20, ' ') . $sqlstate . PHP_EOL
 						);
 				}
+			}
+
+			if($exception_xml)
+			{
+				echo(
+					PHP_EOL
+					);
+
+				if(($parser = $e->getParser()) !== false)
+				{
+					echo(
+						str_pad('XML parser: ', 20, ' ') . $parser . PHP_EOL
+						);
+				}
+
+				echo(
+					str_pad('Error code: ', 20, ' ') . $e->getCode() . PHP_EOL . 
+					str_pad('Depth: ', 20, ' ') . $e->getLevel() . PHP_EOL . 
+					str_pad('Column: ', 20, ' ') . $e->getColumn() . PHP_EOL . 
+					str_pad('Line: ', 20, ' ') . $e->getXmlLine() . PHP_EOL
+					);
 			}
 
 			if($configuration['application']['debug'] && $errors)
