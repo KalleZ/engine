@@ -34,7 +34,6 @@
 	   - Add a check for obsolete and orphan phrases
 
 	Implement validators
-	Implement XML/JSON Parsers
 	Implement a temporary memory storage, with backends for APC etc.
 	Implement a form of Webservices handler backend that can be used to pull and push
 	 - Authentication support using Engine's authentication system
