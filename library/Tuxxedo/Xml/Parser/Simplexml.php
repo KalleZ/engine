@@ -80,7 +80,7 @@
 
 			$sxe = @\simplexml_load_string($input);
 
-			if(!$sxe)
+			if($sxe === false)
 			{
 				throw new Exception\Xml('simplexml');
 			}
