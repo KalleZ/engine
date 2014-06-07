@@ -5,3 +5,10 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1
 	--------------------------------------------------
+
+	Implement XML Parsers
+	 - Finish implementation of \Tuxxedo\Xml\Tree::asXML()
+	 - Implement missing XML parsers
+	   - XMLReader
+	   - DOM
+	   - XML
