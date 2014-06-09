@@ -7,7 +7,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Exception\Basic</h1>
+<h1>\Tuxxedo\Xml\Parser\Dom</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -17,7 +17,7 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine 1.0.0
+							Engine 1.2.0
 						</td>
 					</tr>
 					<tr>
@@ -29,17 +29,17 @@
 					<tr>
 	<td nowrap="nowrap">Namespace:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		<a href="namespace-tuxxedo-exception-903830.html">\Tuxxedo\Exception</a>
+		<a href="namespace-tuxxedo-xml-parser-368180.html">\Tuxxedo\Xml\Parser</a>
 	</td>
 </tr><tr>
 	<td nowrap="nowrap">Declared in:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Exception/Basic.php
+		library/Tuxxedo/Xml/Parser/Dom.php
 	</td>
 </tr><tr>
 	<td nowrap="nowrap">Extends:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		<a href="class-tuxxedo-exception-766037.html">\Tuxxedo\Exception</a>
+		<a href="class-tuxxedo-xml-parser-simplexml-681310.html">\Tuxxedo\Xml\Parser\Simplexml</a>
 	</td>
 </tr>
 				</table>
@@ -47,10 +47,9 @@
 		</div>
 		<div class="content">
 			<div class="infobox">
-				Basic exception type, this is used for errors that
-should act as fatal errors. If an exception of this
-is caught by the default exception handler it will
-terminate the execution.
+				DOM parser interface.<br />This interface extends the SimpleXML parser as it will use that for
+node convertion in case that this is manually set as an internal
+parser and SimpleXML is available.
 			</div>
 			<br />
 		</div>
@@ -69,7 +68,26 @@ terminate the execution.
 			Table of contents
 		</div>
 
-		None
+		<h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-080763.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new DOM parser object</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-doconvertdomnode-559884.html">doConvertDOMNode()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Converts a node to a tree recursively</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-parse-268340.html">parse()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parses an XML string</td>
+</tr>
+</table>
 	</div>
 </div>
 
