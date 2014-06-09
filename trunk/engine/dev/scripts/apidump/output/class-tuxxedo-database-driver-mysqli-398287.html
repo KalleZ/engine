@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Database\Driver\Mysqli</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.0.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-database-driver-596408.html">\Tuxxedo\Database\Driver</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Database/Driver/Mysqli.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedo-database-105230.html">\Tuxxedo\Database</a>
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				MySQL Improved driver<br />This driver enables access to a MySQL 4.1+ based database using
+the mysqli database extension.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-driver-name-249390.html">DRIVER_NAME</a></td>
+	<td nowrap="nowrap" style="width: 100%">Driver name</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-link-727396.html">$link</a></td>
+	<td nowrap="nowrap" style="width: 100%">Link pointer, this contains the internal link
+to the database from the driver</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method-close-698232.html">close()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Close a database connection</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-connect-312180.html">connect()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Connect to a database, if no connection isn't already
+active</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-escape-924461.html">escape()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Escape a piece of data using the database specific
+escape method</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-geterrno-624986.html">getErrno()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Get the error number from the last occured error</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-geterror-832135.html">getError()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Get the error message from the last occured error
+error</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getinsertid-956042.html">getInsertId()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Get the last insert id from last executed INSERT statement</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isconnected-542606.html">isConnected()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if a connection is active</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isdriversupported-484377.html">isDriverSupported()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if the current system supports the driver, if this
+method isn't called, a driver may start n...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-islink-416352.html">isLink()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if a variable is a connection of the same type
+as the one used by the driver</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-ispersistent-179604.html">isPersistent()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if the current connection is persistent</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isresult-895015.html">isResult()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if a variable is a result of the same type as
+the one used by the driver</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-query-870000.html">query()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Executes a query and returns the result on SELECT
+statements</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Version history</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong center">Version</td>
+				<td class="strong">Note</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap">1.1.0</td>
+	<td nowrap="nowrap" style="width: 100%">The casing of this class was changed to comply with the autoloader rules</td>
+</tr>
+		</table>
+	</div>
+</div>
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+		</p>
+	</body>
+</html>

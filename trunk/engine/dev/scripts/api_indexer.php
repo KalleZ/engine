@@ -913,9 +913,9 @@
 
 		if(($nodev && $isdev) || $file == '.tuxxedo')
 		{
-			if($file == '.tuxxedo' && $struct->version !== 2)
+			if($file == '.tuxxedo' && $struct->version !== 2 && $struct->version !== 3)
 			{
-				IO::error('The API must be format must be version 2, detected version: ' . $struct->version);
+				IO::error('The API must be format must be version 2 or 3, detected version: ' . $struct->version);
 			}
 
 			continue;

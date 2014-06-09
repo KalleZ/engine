@@ -710,7 +710,8 @@
 	$files 					= analyze($engine_path);
 	$datamap				= [
 							'.tuxxedo'	=> [
-										'version'	=> 2, 
+										'version'	=> 3, 
+										'timestamp'	=> TIMENOW_UTC, 
 										'generator'	=> 'Tuxxedo Engine ' . Version::FULL
 										]
 							];

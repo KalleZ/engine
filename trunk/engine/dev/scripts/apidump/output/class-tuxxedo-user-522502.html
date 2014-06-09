@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\User</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.0.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-855931.html">\Tuxxedo</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/User.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedo-design-infoaccess-626456.html">\Tuxxedo\Design\InfoAccess</a>
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				User session class, this class manages the current user
+session information and permission bitfields.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-cache-796768.html">OPT_CACHE</a></td>
+	<td nowrap="nowrap" style="width: 100%">User info constant, cache the user information within
+the class to save a query if trying to query ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-current-only-452629.html">OPT_CURRENT_ONLY</a></td>
+	<td nowrap="nowrap" style="width: 100%">User info constant, return a reference to the current
+stored information, no matter if a user is lo...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-session-661168.html">OPT_SESSION</a></td>
+	<td nowrap="nowrap" style="width: 100%">User info constant, also get session information if
+available</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-cache-442187.html">$cache</a></td>
+	<td nowrap="nowrap" style="width: 100%">Cached userinfo, for calls to get user information
+about a specific user</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-registry-774432.html">$registry</a></td>
+	<td nowrap="nowrap" style="width: 100%">Private instance to the Tuxxedo registry</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-session-623289.html">$session</a></td>
+	<td nowrap="nowrap" style="width: 100%">User session</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-sessiondm-694876.html">$sessiondm</a></td>
+	<td nowrap="nowrap" style="width: 100%">User session datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-usergroupinfo-782540.html">$usergroupinfo</a></td>
+	<td nowrap="nowrap" style="width: 100%">Usergroup information</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-userinfo-394464.html">$userinfo</a></td>
+	<td nowrap="nowrap" style="width: 100%">User information</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-940862.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor, instanciates a new user session.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method---destruct-264193.html">__destruct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Destructor, executes the cleanup queries etc.</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getpasswordhash-331824.html">getPasswordHash()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Hashes a password using a salt</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getpasswordsalt-437541.html">getPasswordSalt()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Generates a salt for using with password hashing</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getusergroupinfo-619552.html">getUserGroupInfo()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Get usergroup information about the current user's group
+or a customed defined based on the usergro...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getuserinfo-412249.html">getUserInfo()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Fetch user data about a specific user</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isgranted-132576.html">isGranted()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether the user's permissions can access a
+certain feature. Note that this checks for the u...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isgroupgranted-226953.html">isGroupGranted()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether the user's usergroup permissions can
+access a certain feature. Note that this checks...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isloggedin-035979.html">isLoggedIn()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether this session have a user logon or not</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-ismemberof-572157.html">isMemberOf()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether the user id a member of a
+specific usergroup. This only checks for the
+primary user...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isvalidpassword-899652.html">isValidPassword()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if a password matches with its hash value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-login-267126.html">login()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Authenticates a user. If a user is currently logged in, then it
+will be logged out and the session ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-logout-158709.html">logout()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Log the current logged in user out</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-setpermissionconstants-337415.html">setPermissionConstants()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Defines global constant values of datastore permissions</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+		</p>
+	</body>
+</html>
