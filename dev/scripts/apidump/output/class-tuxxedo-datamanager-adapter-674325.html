@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Datamanager\Adapter</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.0.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-datamanager-967799.html">\Tuxxedo\Datamanager</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Datamanager/Adapter.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Modifiers:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		abstract
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedo-design-infoaccess-626456.html">\Tuxxedo\Design\InfoAccess</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Implements:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		\Iterator
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Abstract datamanager class<br />Every datamanager class must extend this class in order to be loadable and to
+comply with the datamanager API. This also contains the factory method used
+to instanciate a new datamanager instance.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-context-delete-000101.html">CONTEXT_DELETE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, delete() context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-context-none-142234.html">CONTEXT_NONE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, default context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-context-save-967762.html">CONTEXT_SAVE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, save() context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-context-void-389383.html">CONTEXT_VOID</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context constant, void context</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-field-optional-788840.html">FIELD_OPTIONAL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is optional</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-field-protected-103693.html">FIELD_PROTECTED</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is protected</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-field-required-018849.html">FIELD_REQUIRED</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is required</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-field-virtual-649373.html">FIELD_VIRTUAL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Indicates that a field is virtual</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-default-180588.html">OPT_DEFAULT</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - default options</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-intl-637011.html">OPT_INTL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - internationalization (default enabled)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-intl-auto-687554.html">OPT_INTL_AUTO</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - internationalization, load if available</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-opt-load-only-133394.html">OPT_LOAD_ONLY</a></td>
+	<td nowrap="nowrap" style="width: 100%">Factory option constant - insert as new record</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-boolean-635172.html">VALIDATE_BOOLEAN</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, boolean value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-callback-523241.html">VALIDATE_CALLBACK</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, callback</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-email-095420.html">VALIDATE_EMAIL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, email value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-identifier-275912.html">VALIDATE_IDENTIFIER</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation option constant, identifier</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-none-942823.html">VALIDATE_NONE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, no validation</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-numeric-334920.html">VALIDATE_NUMERIC</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, numeric value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-string-749998.html">VALIDATE_STRING</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation constant, string value</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-validate-string-empty-339004.html">VALIDATE_STRING_EMPTY</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation option constant, allow empty fields</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-context-760644.html">$context</a></td>
+	<td nowrap="nowrap" style="width: 100%">Context for hooks, and adapters</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-data-879772.html">$data</a></td>
+	<td nowrap="nowrap" style="width: 100%">The original data if instanciated by an identifier</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-dmname-475299.html">$dmname</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager name, set by the datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-identifier-785614.html">$identifier</a></td>
+	<td nowrap="nowrap" style="width: 100%">Identifier, if any</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-identifier-data-709912.html">$identifier_data</a></td>
+	<td nowrap="nowrap" style="width: 100%">Cache data if the identifier is gonna be validated</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-idname-122852.html">$idname</a></td>
+	<td nowrap="nowrap" style="width: 100%">Identifier name, set by the datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-invalid-fields-696396.html">$invalid_fields</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of fields that had one or more errors and therefore
+could not be saved</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-iterator-position-214214.html">$iterator_position</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator position</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-loaded-datamanagers-023797.html">$loaded_datamanagers</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of loaded datamanagers used for caching in the
+special required cases where more than one driv...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-original-data-216554.html">$original_data</a></td>
+	<td nowrap="nowrap" style="width: 100%">The original data of each modified field, should it differ from $data</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-parent-231490.html">$parent</a></td>
+	<td nowrap="nowrap" style="width: 100%">Whether this datamanager are called from another datamanager</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-registry-507006.html">$registry</a></td>
+	<td nowrap="nowrap" style="width: 100%">Private instance to the Tuxxedo registry</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-reidentify-102949.html">$reidentify</a></td>
+	<td nowrap="nowrap" style="width: 100%">Whether to re-identify the data when saving</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-shutdown-handlers-854386.html">$shutdown_handlers</a></td>
+	<td nowrap="nowrap" style="width: 100%">List of shutdown handlers to execute</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-tablename-335814.html">$tablename</a></td>
+	<td nowrap="nowrap" style="width: 100%">Table name, set by the datamanager</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---clone-424367.html">__clone()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Clonable hook
+
+Magic __clone() method, this method will internally reset the state of a
+datamanag...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-083524.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor for the current datamanager, this
+can be used to either create a datamanager based
+on ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method---destruct-834396.html">__destruct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Destructor for the current datamanager, this is
+reserved for shutdown handlers in parent datamanage...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-current-996342.html">current()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - current</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-delete-180832.html">delete()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Deletes the data, within the database if an identifier was specified, else
+the current set data is ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-factory-357182.html">factory()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new datamanger instance</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-get-956149.html">get()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a field</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getdatastruct-230594.html">getDataStruct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets default data to allocate the $data property internally</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getfields-116109.html">getFields()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the fields this datamanager provides</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getinvalidfields-787986.html">getInvalidFields()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a list over invalid fields, this is only populated
+if an attempt to saving a datamanager have ...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getparent-808503.html">getParent()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the parent datamanager pointer</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getvirtualfields-644537.html">getVirtualFields()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a list of virtual fields from the datamanager adapter</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-hooks-658346.html">hooks()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Hooks executor
+
+This method executes hooks on a datamanager instance, this is cannot be
+called pu...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-init-659835.html">init()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Datamanager initializer, this method initializes the default logic
+used across all datamanager adap...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-key-158218.html">key()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - key</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-next-354576.html">next()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - next</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-offsetget-708942.html">offsetGet()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'get' method so that default data is allocated
+when using the ArrayAccess...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-offsetset-057293.html">offsetSet()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'set' method so that its prohibited to
+set elements that doesn't exists</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-rewind-190194.html">rewind()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - rewind</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-save-570508.html">save()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Save method, attempts to validate and save the data
+into the database</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-setshutdownhandler-613553.html">setShutdownHandler()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Sets a shutdown handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-valid-720383.html">valid()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - valid</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-validate-057703.html">validate()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Validation method, validates the supplied user data</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+		</p>
+	</body>
+</html>

@@ -414,6 +414,10 @@
 				echo(
 					'<tr>' . PHP_EOL . 
 					'<td colspan="2">&nbsp;</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL . 
+					'<tr>' . PHP_EOL . 
+					'<td nowrap="nowrap">Library:</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getType(true) . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
 
@@ -431,11 +435,20 @@
 					'<tr>' . PHP_EOL . 
 					'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
 					'<td class="value" style="width: 100%">' . $e->getCode() . '</td>' . PHP_EOL . 
-					'</tr>' . PHP_EOL .
-					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap">Depth:</td>' . PHP_EOL . 
-					'<td class="value" style="width: 100%">' . $e->getLevel() . '</td>' . PHP_EOL . 
-					'</tr>' . PHP_EOL .
+					'</tr>' . PHP_EOL
+					);
+
+				if(($depth = $e->getLevel()) !== false)
+				{
+					echo(
+						'<tr>' . PHP_EOL . 
+						'<td nowrap="nowrap">Depth:</td>' . PHP_EOL . 
+						'<td class="value" style="width: 100%">' . $depth . '</td>' . PHP_EOL . 
+						'</tr>' . PHP_EOL
+						);
+				}
+
+				echo(
 					'<tr>' . PHP_EOL . 
 					'<td nowrap="nowrap">Column:</td>' . PHP_EOL . 
 					'<td class="value" style="width: 100%">' . $e->getColumn() . '</td>' . PHP_EOL . 
@@ -865,7 +878,8 @@
 			if($exception_xml)
 			{
 				echo(
-					PHP_EOL
+					PHP_EOL . 
+					str_pad('Library: ', 20, ' ') . $e->getType(true) . PHP_EOL
 					);
 
 				if(($parser = $e->getParser()) !== false)
@@ -876,8 +890,17 @@
 				}
 
 				echo(
-					str_pad('Error code: ', 20, ' ') . $e->getCode() . PHP_EOL . 
-					str_pad('Depth: ', 20, ' ') . $e->getLevel() . PHP_EOL . 
+					str_pad('Error code: ', 20, ' ') . $e->getCode() . PHP_EOL
+					);
+
+				if(($depth = $e->getLevel()) !== false)
+				{
+					echo(
+						str_pad('Depth: ', 20, ' ') . $depth . PHP_EOL
+						);
+				}
+
+				echo(
 					str_pad('Column: ', 20, ' ') . $e->getColumn() . PHP_EOL . 
 					str_pad('Line: ', 20, ' ') . $e->getXmlLine() . PHP_EOL
 					);

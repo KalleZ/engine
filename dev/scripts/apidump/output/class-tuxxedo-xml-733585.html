@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Xml</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-855931.html">\Tuxxedo</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Xml.php
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				XML Parser for Engine, this class works as a factory for a generic
+xml parsing. By default the internal parser will use the following
+fallbacks:<br />
+A selected parser can be choosen if desired using the setInternalParser()
+method. The returned XML will be returned in a Tree structure, which is
+common for all backends.<br />Parsers may change the internal values of the LibXML configuration during
+parsing to either get better debuggable information or other reasons.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-parser-dom-676247.html">PARSER_DOM</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parser constant - DOM</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-parser-expat-778799.html">PARSER_EXPAT</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parser constant - EXPAT</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-parser-simplexml-324262.html">PARSER_SIMPLEXML</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parser constant - SimpleXML</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-parser-xmlreader-971061.html">PARSER_XMLREADER</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parser constant - XMLReader</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-read-block-size-762459.html">READ_BLOCK_SIZE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Internal value for how many bytes to read at a time</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-internal-parser-620266.html">$internal_parser</a></td>
+	<td nowrap="nowrap" style="width: 100%">Internal parser to use</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-764543.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new XML parser, this will auto determine the parser to use
+unless disabled, if disable...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-factory-694421.html">factory()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Internal factory method, this creates and returns a new XML parser object
+based on the internal par...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-parsefile-791916.html">parseFile()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parses a file</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-parsestream-372410.html">parseStream()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parses a stream
+
+This will internally reset the internal file pointer to position 0
+and start rea...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-parsestring-583193.html">parseString()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Parses a string</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-setautointernalparser-739427.html">setAutoInternalParser()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Sets the internal parser to auto decide</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-setinternalparser-558374.html">setInternalParser()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Sets the internal parser</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+		</p>
+	</body>
+</html>

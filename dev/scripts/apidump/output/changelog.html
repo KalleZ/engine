@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>Changelog</h1>
+<div class="box">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Name</td>
+				<td class="strong">Change description</td>
+			</tr>
+			<h2><span>1.2.0 "Beloved" Release Candidate 1 (experimental)</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap" style="width: 20%;">Object</td>
+				<td class="strong">Change description</td>
+			</tr>
+			<tr>
+	<td nowrap="nowrap">tuxxedo_doc_error():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This function now prints SQL query backtraces
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">tuxxedo_error_handler():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This function is now CLI compatible
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">tuxxedo_exception_handler():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This function is now CLI compatible
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">tuxxedo_multi_error():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The $exception parameter now defaults to NULL
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $show_all parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">tuxxedo_shutdown_handler():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This function is now CLI compatible
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">tuxxedo_trim_path():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the $debug_trim parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\DevTools\Utilities\IO::input():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		A value is no longer required for a CLI argument for it to be considered valid
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Bootstrap::init():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		After a hook is executed, the preloadables is no longer unset, but reset to an array
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\Session::$fields:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the 'rehash' field
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\Session::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		User-Agent and Location is no longer manually set as the constants no longer exists but figured out on its own
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\Style::$fields:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Renamed 'defaultstyle' to 'isdefault'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\User::isAvailableUserField():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The return value is now negated
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\Usergroup::$fields:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the 'users' virtual field
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the 'type' field
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\Usergroup:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This class now implements the 'VirtualDispatcher' hook
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Exception\Multi::getData():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Prior this method was called 'getFormData()'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Exception\Multi:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This exception used to be called 'FormData'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Helper::factory():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method no longer throws a basic exception on invalid handles as its handled by the autoloader
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Helper\Database::count():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $where parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Intl::invoke():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now tries to resolve the browsers Accept-Language and use that as a preference
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Intl\Phrasegroup:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This class now implements the InfoAccess pattern
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Loader::exists():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now also checks for traits
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Loader::routeAsCallback():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now only supports defining one route at a time
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Loader::routeAsPath():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now only supports defining one route at a time
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Loader::routeAsRegex():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now only supports defining one route at a time
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\MVC\Controller::dispatch():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the 'final' modifier from this method
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\MVC\Controller::setLayout():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the 'final' modifier from this method
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\MVC\Controller::setRouter():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Any router can be passed to this method, prior only 'Uri' could be passed
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the 'final' modifier from this method
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\MVC\Controller::setView():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the 'final' modifier from this method
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\MVC\Router::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The $prefix parameter can now be used to define a controller from another namespace
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Session::invoke():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method no longer requires the datastore to be loaded to function
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Session::start():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the old CSRF code that was never fully implemented
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::allowClass():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method no longer validates the input
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::allowClosure():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method no longer validates the input
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::allowFunction():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method no longer validates the input
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Removed the 'getDriverRequirements()' method
+	</td>
+</tr>
+		</table>
+	</div>
+</div><h2><span>1.2.0 "Beloved" Release Candidate 1 (experimental)</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap" style="width: 20%;">Object</td>
+				<td class="strong">Change description</td>
+			</tr>
+			<tr>
+	<td nowrap="nowrap">\Tuxxedo\Database::getAffectedRows():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method is no longer a part of the driver interface
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver\Mysql:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The casing of this class was changed to comply with the autoloader rules
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver\Mysql\Result:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The casing of this class' namespace was changed to comply with the autoloader rules
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver\Mysqli:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The casing of this class was changed to comply with the autoloader rules
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver\Mysqli\Result:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The casing of this class' namespace was changed to comply with the autoloader rules
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver\Pdo:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The casing of this class was changed to comply with the autoloader rules
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This class now works flawlessly with SQLite
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Driver\Pdo\Result:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The casing of this class' namespace was changed to comply with the autoloader rules
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Result::isFreed():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Prior this method was a part of the result interface
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Database\Result:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This class now implements the Iteratable design pattern
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $options parameter
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $parent parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter::factory():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $options parameter
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $parent parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter::init():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $options parameter
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $parent parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter::save():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $execute_hooks parameter
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now generates queries for more cases based on the state of the identifier
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter::validate():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method was rewritten from scratch and now handles more cases than before
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method can now validate identifiers
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\Style::$fields:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the 'inherit' field
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Adapter\User::$fields:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Changed the name of 'styleid' to 'style_id'
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Changed the name of 'languageid' to 'language_id'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datastore::rebuild():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now internally uses datamanagers to save
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Exception\MVC\InvalidAction::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now supports previous exceptions ($previous parameter)
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Exception\MVC\InvalidController::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method now supports previous exceptions ($previous parameter)
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Exception\SQL::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $driver parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Exception\TemplateCompiler::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added the $stack_data parameter
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Input::OPT_ARRAY:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Prior this constant was named 'INPUT_OPT_ARRAY'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Input::OPT_RAW:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Prior this constant was named 'INPUT_OPT_RAW'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Input:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Prior this class was named 'Filter'
+	</td>
+</tr><tr>
+	<td>&nbsp;</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The 'filter' PHP extension which previously was optional is now required
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\MVC\View:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This is now an alias of \Tuxxedo\Template
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Session::$options:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Added 'secure' for HTTPS enforcement
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Style\Storage\Filesystem::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		The 'templatesdir' style table row can now be used to define a custom template directory if present
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::__construct():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Changed the second parameter to $stack_data
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::compile():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		Exceptions are now way more expressive in terms of their messages by returning the stack data
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::getCompiledSource():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method used to be called 'get()'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Template\Compiler::setSource():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method used to be called 'set()'
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\User::getPasswordSalt():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method will now properly change character casing instead of a fixed set of cased characters
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">\Tuxxedo\Datamanager\Hooks\Cache::rebuild():</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		This method no longer takes any parameters
+	</td>
+</tr>
+		</table>
+	</div>
+</div>
+		</table>
+	</div>
+</div>
+
+{$seealso}
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+		</p>
+	</body>
+</html>
