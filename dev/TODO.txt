@@ -10,5 +10,6 @@
 	 - Finish implementation of \Tuxxedo\Xml\Tree::asXML()
 	 - Implement missing XML parsers
 	   - XMLReader
-	   - DOM
 	   - XML
+
+	Implement the @changelog pages in api_indexer.php

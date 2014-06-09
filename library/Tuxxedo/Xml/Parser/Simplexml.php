@@ -42,8 +42,7 @@
 
 	
 	/**
-	 * XML Parser that works as an interface for all the parsers, this also contains 
-	 * the ability to load up any parser.
+	 * SimpleXML parser interface.
 	 *
 	 * @author		Kalle Sommer Nielsen 	<kalle@tuxxedo.net>
 	 * @version		1.0

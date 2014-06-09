@@ -1,0 +1,18 @@
+{$header}
+
+<h1>Changelog</h1>
+<div class="box">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Name</td>
+				<td class="strong">Change description</td>
+			</tr>
+			{$toc}
+		</table>
+	</div>
+</div>
+
+{$seealso}
+
+{$footer}

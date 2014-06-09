@@ -365,6 +365,9 @@
 	}
 
 
+	$toc_cl = [];
+
+
 	$docblock = function(Array $meta, $tag, $strip_html = true)
 	{
 		$tag = strtolower($tag);
@@ -782,8 +785,26 @@
 		}));
 	};
 
-	$changelog = function(Array $meta) use($infobox)
+	$changelog = function(Array $meta, $name = '') use($infobox, &$toc_cl, $docblock_tag)
 	{
+		if(!empty($name) && ($vh = $docblock_tag($meta, 'changelog')) !== 'Undefined value')
+		{
+			foreach($vh as $vho)
+			{
+				if(!isset($toc_cl[$vho[0]]))
+				{
+					$toc_cl[$vho[0]] = [];
+				}
+
+				if(!isset($toc_cl[$vho[0]][$name]))
+				{
+					$toc_cl[$vho[0]][$name] = [];
+				}
+
+				$toc_cl[$vho[0]][$name][] = $vho[1];
+			}
+		}
+
 		return($infobox($meta, 'changelog', 'Version history', 'Version', 'Note'));
 	};
 
@@ -1058,7 +1079,7 @@
 					$template->since	= $since($meta);
 					$template->description	= $desc($meta, false, $examples);
 					$template->todo		= $todo($meta);
-					$template->changelog	= $changelog($meta);
+					$template->changelog	= $changelog($meta, $name);
 					$template->notices	= $notices($meta);
 					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
@@ -1124,7 +1145,7 @@
 					$template->since	= $since($meta);
 					$template->description	= $desc($meta, false, $examples);
 					$template->todo		= $todo($meta);
-					$template->changelog	= $changelog($meta);
+					$template->changelog	= $changelog($meta, $template->name);
 					$template->notices	= $notices($meta);
 					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
@@ -1200,7 +1221,7 @@
 							$template->since	= $since((array) $tmeta, $meta);
 							$template->description	= $desc((array) $tmeta, false, $examples);
 							$template->todo		= $todo((array) $tmeta);
-							$template->changelog	= $changelog((array) $tmeta);
+							$template->changelog	= $changelog((array) $tmeta, $template->name);
 							$template->notices	= $notices((array) $tmeta);
 							$template->warnings	= $warnings((array) $tmeta);
 							$template->examples	= $examplecode($examples);
@@ -1409,7 +1430,7 @@
 					$template->since	= $since($meta);
 					$template->description	= $nl2br($desc($meta, false, $examples));
 					$template->todo		= $todo($meta);
-					$template->changelog	= $changelog($meta);
+					$template->changelog	= $changelog($meta, $name);
 					$template->notices	= $notices($meta);
 					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
@@ -1442,7 +1463,7 @@
 					$nstemp->since		= $since($meta['meta']);
 					$nstemp->description	= $nl2br($desc($meta['meta'], false, $examples));
 					$nstemp->todo		= $todo($meta['meta']);
-					$nstemp->changelog	= $changelog($meta);
+					$nstemp->changelog	= $changelog($meta, $meta['meta']['name']);
 					$nstemp->notices	= $notices($meta['meta']);
 					$nstemp->warnings	= $warnings($meta['meta']);
 					$nstemp->examples	= $examplecode($examples);
@@ -1564,9 +1585,75 @@
 		IO::li($bit->name);
 	}
 
-	$toc->toc = $bits;
+	$bit			= new Template('toc_bit');
+	$bit->link		= 'changelog.html';
+	$bit->name		= 'Changelog';
+	$bit->description	= 'List of changes during previous versions';
+
+	$toc->toc 		= $bits . $bit;
 
 	$toc->save('index');
+	IO::li('Changelog');
+
+	$cl = new Layout('changelog');
+
+	if($toc_cl)
+	{
+		$toc = '';
+
+		foreach($toc_cl as $version => $changes)
+		{
+			if(!$changes)
+			{
+				continue;
+			}
+
+			$vt 	= new Template('changelog_version');
+			$vth	= '';
+
+			foreach($changes as $obj => $obj_changes)
+			{
+				if(!$obj_changes)
+				{
+					continue;
+				}
+
+				$checked = false;
+
+				foreach($obj_changes as $change)
+				{
+					$ct = new Template('obj_element' . ($checked ? '_bit' : ''));
+
+					if(!$checked)
+					{
+						$ct->element = $obj;
+					}
+
+					$ct->value	= $change;
+					$checked 	= true;
+
+					$vth		.= $ct;
+				}
+			}
+
+			if(!empty($vth))
+			{
+				$vt->content 	= $vth;
+				$toc		.= $vt;
+			}
+		}
+
+		$cl->toc = $toc;
+	}
+	else
+	{
+		$nt		= new Template('notice');
+		$nt->notice	= 'No changelog tags found';
+
+		$cl->toc 	= $nt;
+	}
+
+	$cl->save('changelog');
 
 	IO::ul(IO::TAG_END);
 	IO::li('Copying resources');
