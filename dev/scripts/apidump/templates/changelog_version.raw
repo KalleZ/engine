@@ -1,4 +1,4 @@
-<h2><span>{$version}</span></h2>
+<h2><span>{$change_version}</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<table style="width: 100%" cellspacing="2" cellpadding="0">

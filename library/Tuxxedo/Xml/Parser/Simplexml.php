@@ -129,7 +129,7 @@
 				$nnodes[$n] = (\sizeof($nptr) == 1) ? $nptr[0] : $nptr;
 			}
 
-			return(new Xml\Tree($node->getName(), (string) $node, (isset($attributes) ? $attributes : NULL), $nnodes));
+			return(new Xml\Tree($node->getName(), (string) $node, (isset($attributes) ? $attributes : NULL), ($nnodes ? $nnodes : NULL)));
 		}
 	}
 ?>

@@ -80,6 +80,10 @@ exceptions may not express the same sort of information as others.
 	<tr class="row">
 	<td nowrap="nowrap"><a href="property-parser-914289.html">$parser</a></td>
 	<td nowrap="nowrap" style="width: 100%">Holds the parser resource instance</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-stack-data-396682.html">$stack_data</a></td>
+	<td nowrap="nowrap" style="width: 100%">Holds the stack data used to be shared between
+the recursive parser calls</td>
 </tr>
 </table><h3>
 	Methods
@@ -97,8 +101,12 @@ exceptions may not express the same sort of information as others.
 	<td nowrap="nowrap"><a href="method---destruct-009708.html">__destruct()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Destructs the parser resource</td>
 </tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-doparsestart-975508.html">doParseStart()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Handles the start of parsing a tag (creates the stack data for
+the current tag for use with the the...</td>
+</tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-parse-848669.html">parse()</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">TODO</span>&nbsp;Parses an XML string</td>
+	<td nowrap="nowrap" style="width: 100%">Parses an XML string</td>
 </tr>
 </table>
 	</div>

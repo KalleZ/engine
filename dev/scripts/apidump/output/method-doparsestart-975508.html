@@ -7,7 +7,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Xml\Parser\Expat::parse()</h1>
+<h1>\Tuxxedo\Xml\Parser\Expat::doParseStart()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -47,7 +47,7 @@
 					<tr>
 	<td nowrap="nowrap">Modifiers:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		public
+		protected
 	</td>
 </tr>
 				</table>
@@ -59,7 +59,7 @@
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
 						<td class="value" style="width: 100%">
-							void parse(string)
+							void doParseStart(resource, string, array)
 						</td>
 					</tr>
 				</table>
@@ -67,7 +67,8 @@
 			<br />
 
 			<div class="infobox">
-				Parses an XML string
+				Handles the start of parsing a tag (creates the stack data for
+the current tag for use with the the character data parser)
 			</div>
 			<br />
 		</div>
@@ -83,11 +84,29 @@
 <div class="box edge-title">
 	<div class="inner">
 		<fieldset>
+	<legend><strong>resource</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The XML parser resource
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
 	<legend><strong>string</strong></legend>
 	<table cellspacing="4" cellpadding="0" style="width: 100%;">
 		<tr> 
 			<td colspan="2" class="value" style="width: 100%">
-				The XML to parse
+				The tag name
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
+	<legend><strong>array</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				Optionally the attributes in key value pairs
 			</td>
 		</tr>
 	</table>
@@ -95,23 +114,16 @@
 	</div>
 </div>
 
-
-
-<h2><span>Throws</span></h2>
+<h2><span>Returns</span></h2>
 <div class="box edge-title">
 	<div class="inner">
-		<table style="width: 100%" cellspacing="2" cellpadding="0">
-			<tr class="head">
-				<td class="strong" nowrap="nowrap">Exception</td>
-				<td class="strong">Condition</td>
-			</tr>
-			<tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedo-exception-xml-547982.html">\Tuxxedo\Exception\Xml</a></td>
-	<td nowrap="nowrap" style="width: 100%">Throws an XML exception if parsing fails for some reason</td>
-</tr>
-		</table>
+		<div class="infobox">
+			No value is returned
+		</div>
 	</div>
 </div>
+
+
 
 
 

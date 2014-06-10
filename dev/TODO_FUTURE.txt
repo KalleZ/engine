@@ -30,6 +30,7 @@
 	   - Add the ability to fetch default values of properties, constants and class constants
 	 - api_indexer.php
 	   - Add the ability to report on obsolete files and other mismatches
+	   - Add the ability to see child / parent namespaces on such pages
 	 - check_dm_phrases.php
 	   - Add a check for obsolete and orphan phrases
 

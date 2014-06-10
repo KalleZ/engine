@@ -1,0 +1,4 @@
+<tr class="row">
+	<td nowrap="nowrap">&nbsp;</td>
+	<td style="width: 100%">{$value}</td>
+</tr>

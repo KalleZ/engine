@@ -785,7 +785,7 @@
 		}));
 	};
 
-	$changelog = function(Array $meta, $name = '') use($infobox, &$toc_cl, $docblock_tag)
+	$changelog = function(Array $meta, $name = '', $name_hash = '') use($infobox, &$toc_cl, $docblock_tag)
 	{
 		if(!empty($name) && ($vh = $docblock_tag($meta, 'changelog')) !== 'Undefined value')
 		{
@@ -798,10 +798,13 @@
 
 				if(!isset($toc_cl[$vho[0]][$name]))
 				{
-					$toc_cl[$vho[0]][$name] = [];
+					$toc_cl[$vho[0]][$name] = [
+									'hash'		=> $name_hash, 
+									'changes'	=> []
+									];
 				}
 
-				$toc_cl[$vho[0]][$name][] = $vho[1];
+				$toc_cl[$vho[0]][$name]['changes'][] = $vho[1];
 			}
 		}
 
@@ -1079,7 +1082,7 @@
 					$template->since	= $since($meta);
 					$template->description	= $desc($meta, false, $examples);
 					$template->todo		= $todo($meta);
-					$template->changelog	= $changelog($meta, $name);
+					$template->changelog	= $changelog($meta, $name, $meta['hash']);
 					$template->notices	= $notices($meta);
 					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
@@ -1145,7 +1148,7 @@
 					$template->since	= $since($meta);
 					$template->description	= $desc($meta, false, $examples);
 					$template->todo		= $todo($meta);
-					$template->changelog	= $changelog($meta, $template->name);
+					$template->changelog	= $changelog($meta, $template->name, $meta['hash']);
 					$template->notices	= $notices($meta);
 					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
@@ -1221,7 +1224,7 @@
 							$template->since	= $since((array) $tmeta, $meta);
 							$template->description	= $desc((array) $tmeta, false, $examples);
 							$template->todo		= $todo((array) $tmeta);
-							$template->changelog	= $changelog((array) $tmeta, $template->name);
+							$template->changelog	= $changelog((array) $tmeta, $template->name, $tmeta->hash);
 							$template->notices	= $notices((array) $tmeta);
 							$template->warnings	= $warnings((array) $tmeta);
 							$template->examples	= $examplecode($examples);
@@ -1430,7 +1433,7 @@
 					$template->since	= $since($meta);
 					$template->description	= $nl2br($desc($meta, false, $examples));
 					$template->todo		= $todo($meta);
-					$template->changelog	= $changelog($meta, $name);
+					$template->changelog	= $changelog($meta, $name, $meta['hash']);
 					$template->notices	= $notices($meta);
 					$template->warnings	= $warnings($meta);
 					$template->examples	= $examplecode($examples);
@@ -1463,7 +1466,7 @@
 					$nstemp->since		= $since($meta['meta']);
 					$nstemp->description	= $nl2br($desc($meta['meta'], false, $examples));
 					$nstemp->todo		= $todo($meta['meta']);
-					$nstemp->changelog	= $changelog($meta, $meta['meta']['name']);
+					$nstemp->changelog	= $changelog($meta, $meta['meta']['name'], $meta['meta']['hash']);
 					$nstemp->notices	= $notices($meta['meta']);
 					$nstemp->warnings	= $warnings($meta['meta']);
 					$nstemp->examples	= $examplecode($examples);
@@ -1608,25 +1611,30 @@
 				continue;
 			}
 
-			$vt 	= new Template('changelog_version');
-			$vth	= '';
+			$vt 			= new Template('changelog_version');
+			$vt->change_version	= $version;
+			$vth			= '';
 
-			foreach($changes as $obj => $obj_changes)
+			foreach($changes as $obj => $obj_c)
 			{
-				if(!$obj_changes)
+				if(!$obj_c['changes'])
 				{
 					continue;
 				}
 
 				$checked = false;
 
-				foreach($obj_changes as $change)
+				foreach($obj_c['changes'] as $change)
 				{
-					$ct = new Template('obj_element' . ($checked ? '_bit' : ''));
+					$ct = new Template('changelog_version_bit' . ($checked ? '_sep' : ''));
 
 					if(!$checked)
 					{
-						$ct->element = $obj;
+						$obj_l		= new Template('link');
+						$obj_l->link	= $obj_c['hash'] . '.html';
+						$obj_l->title	= $obj;
+
+						$ct->element 	= $obj_l;
 					}
 
 					$ct->value	= $change;

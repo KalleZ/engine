@@ -1,18 +1,17 @@
 {$header}
 
 <h1>Changelog</h1>
-<div class="box">
+
+{$toc}
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
 	<div class="inner">
-		<table style="width: 100%" cellspacing="2" cellpadding="0">
-			<tr class="head">
-				<td class="strong" nowrap="nowrap">Name</td>
-				<td class="strong">Change description</td>
-			</tr>
-			{$toc}
-		</table>
+		<ul>
+			<li><a href="./index.html">Table of contents</a></li>
+			<li><a href="./news.html">New APIs by version</a></li>
+		</ul>
 	</div>
 </div>
-
-{$seealso}
 
 {$footer}
