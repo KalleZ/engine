@@ -9,6 +9,11 @@
 	Added the documentation generator (Kalle)
 	Added the uploading API (Kalle)
 	Added the event handling subsystem (Kalle)
+	Added XML parsers and related APIs with fallback backends for: (Kalle)
+	 - SimpleXML
+	 - XMLReader
+	 - DOM
+	 - XML (EXPAT)
 	Added new and improved debugging mode: (Kalle)
 	 - SQL queries trace mode
 	 - Rewritten debug backtracing API with more verbosity

@@ -12,4 +12,4 @@
 	   - XMLReader
 	   - XML
 
-	Implement the @changelog pages in api_indexer.php
+	Implement the @since news.html page to work as a counterpart for changelog.html
