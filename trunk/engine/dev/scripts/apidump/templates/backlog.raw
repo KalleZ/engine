@@ -1,6 +1,6 @@
 {$header}
 
-<h1>Changelog</h1>
+<h1>{$title}</h1>
 
 {$toc}
 
@@ -9,7 +9,7 @@
 	<div class="inner">
 		<ul>
 			<li><a href="./index.html">Table of contents</a></li>
-			<li><a href="./news.html">New APIs by version</a></li>
+			{$seealso}
 		</ul>
 	</div>
 </div>
