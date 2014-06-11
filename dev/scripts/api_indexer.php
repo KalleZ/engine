@@ -365,7 +365,7 @@
 	}
 
 
-	$toc_cl = [];
+	$toc_cl = $toc_news = [];
 
 
 	$docblock = function(Array $meta, $tag, $strip_html = true)
@@ -440,9 +440,9 @@
 		return(false);
 	};
 
-	$hashlink = function($datatype) use($hashlookup)
+	$hashlink = function($datatype, $type = 'class|interface|trait') use($hashlookup)
 	{
-		if(!($hash = $hashlookup('class|interface|trait', $datatype)))
+		if(!($hash = $hashlookup($type, $datatype)))
 		{
 			return($datatype);
 		}
@@ -454,7 +454,7 @@
 		return($template);
 	};
 
-	$prototype = function($name, Array $meta) use($hashlookup)
+	$prototype = function($name, Array $meta) use($hashlink)
 	{
 		$return = 'void';
 		$params = '';
@@ -472,14 +472,7 @@
 							$param[0] = '\\' . $param[0];
 						}
 
-						if(($p = $hashlookup('class|interface|trait', $param[0])) !== false)
-						{
-							$link		= new Template('link');
-							$link->link	= $p . '.html';
-							$link->title	= $param[0];
-
-							$param[0]	= $link;
-						}
+						$param[0] = $hashlink($param[0]);
 					}
 
 					$params .= $param[0] . ', ';
@@ -490,16 +483,7 @@
 
 			if(isset($meta['docblock']->tags->return))
 			{
-				$return = $meta['docblock']->tags->return[0];
-
-				if(($p = $hashlookup('class|interface|trait', $return)) !== false)
-				{
-					$link		= new Template('link');
-					$link->link	= $p . '.html';
-					$link->title	= $return;
-
-					$return		= $link;
-				}
+				$return = $hashlink($meta['docblock']->tags->return[0]);
 			}
 		}
 
@@ -811,7 +795,7 @@
 		return($infobox($meta, 'changelog', 'Version history', 'Version', 'Note'));
 	};
 
-	$since = function(Array $meta, Array $rmeta = NULL) use($docblock_tag)
+	$since = function(Array $meta, Array $rmeta = NULL, $name = '', $name_hash = '') use($docblock_tag, &$toc_news)
 	{
 		if(($s = $docblock_tag($meta, 'since')) === 'Undefined value')
 		{
@@ -821,6 +805,19 @@
 			}
 
 			return('1.0.0');
+		}
+
+		if(!empty($name))
+		{
+			if(!isset($toc_news[$s]))
+			{
+				$toc_news[$s] = [];
+			}
+
+			$toc_news[$s][] = [
+						'name'	=> $name, 
+						'hash'	=> $name_hash
+						];
 		}
 
 		return($s);
@@ -1079,7 +1076,7 @@
 					$template->file		= $meta['file'];
 					$template->datatype	= $hashlink($docblock_tag($meta, 'var'));
 					$template->namespace	= $nst($meta['namespace']);
-					$template->since	= $since($meta);
+					$template->since	= $since($meta, NULL, $name, $meta['hash']);
 					$template->description	= $desc($meta, false, $examples);
 					$template->todo		= $todo($meta);
 					$template->changelog	= $changelog($meta, $name, $meta['hash']);
@@ -1145,7 +1142,7 @@
 					$template->file		= $meta['file'];
 					$template->prototype	= $prototype($name, $meta);
 					$template->namespace	= $nst($meta['namespace']);
-					$template->since	= $since($meta);
+					$template->since	= $since($meta, NULL, $template->name, $meta['hash']);
 					$template->description	= $desc($meta, false, $examples);
 					$template->todo		= $todo($meta);
 					$template->changelog	= $changelog($meta, $template->name, $meta['hash']);
@@ -1221,7 +1218,7 @@
 							$template->name		= $mformat($m_name, $mtype, $name);
 							$template->file		= $meta['file'];
 							$template->namespace	= $nst($meta['namespace']);
-							$template->since	= $since((array) $tmeta, $meta);
+							$template->since	= $since((array) $tmeta, $meta, $template->name, $tmeta->hash);
 							$template->description	= $desc((array) $tmeta, false, $examples);
 							$template->todo		= $todo((array) $tmeta);
 							$template->changelog	= $changelog((array) $tmeta, $template->name, $tmeta->hash);
@@ -1430,7 +1427,7 @@
 					$template->name		= $name;
 					$template->type		= ucfirst($rtype);
 					$template->mtype	= $type;
-					$template->since	= $since($meta);
+					$template->since	= $since($meta, NULL, $name, $meta['hash']);
 					$template->description	= $nl2br($desc($meta, false, $examples));
 					$template->todo		= $todo($meta);
 					$template->changelog	= $changelog($meta, $name, $meta['hash']);
@@ -1463,7 +1460,7 @@
 					$nstemp->mtype		= $type;
 					$nstemp->file		= $meta['meta']['file'];
 					$nstemp->extendedinfo	= '';
-					$nstemp->since		= $since($meta['meta']);
+					$nstemp->since		= $since($meta['meta'], NULL, $meta['meta']['name'], $meta['meta']['hash']);
 					$nstemp->description	= $nl2br($desc($meta['meta'], false, $examples));
 					$nstemp->todo		= $todo($meta['meta']);
 					$nstemp->changelog	= $changelog($meta, $meta['meta']['name'], $meta['meta']['hash']);
@@ -1588,17 +1585,25 @@
 		IO::li($bit->name);
 	}
 
-	$bit			= new Template('toc_bit');
-	$bit->link		= 'changelog.html';
-	$bit->name		= 'Changelog';
-	$bit->description	= 'List of changes during previous versions';
+	foreach([['Changelog', 'changelog.html', 'List of changes in previous versions'], ['News', 'news.html', 'List of introduced functionality in previous versions']] as $backlog)
+	{
+		$bit			= new Template('toc_bit');
+		$bit->link		= $backlog[1]; 
+		$bit->name		= $backlog[0];
+		$bit->description	= $backlog[2];
 
-	$toc->toc 		= $bits . $bit;
+		$bits			.= $bit;
+	}
+
+	$toc->toc = $bits;
 
 	$toc->save('index');
 	IO::li('Changelog');
 
-	$cl = new Layout('changelog');
+	$cl 		= new Layout('backlog');
+	$cl->title	= 'Changelog';
+
+	/* @todo implement $seealso */
 
 	if($toc_cl)
 	{
@@ -1611,7 +1616,7 @@
 				continue;
 			}
 
-			$vt 			= new Template('changelog_version');
+			$vt 			= new Template('backlog_version');
 			$vt->change_version	= $version;
 			$vth			= '';
 
@@ -1626,7 +1631,7 @@
 
 				foreach($obj_c['changes'] as $change)
 				{
-					$ct = new Template('changelog_version_bit' . ($checked ? '_sep' : ''));
+					$ct = new Template('backlog_version_bit' . ($checked ? '_sep' : ''));
 
 					if(!$checked)
 					{
@@ -1662,6 +1667,14 @@
 	}
 
 	$cl->save('changelog');
+
+	$cl		= new Layout('backlog');
+	$cl->title	= 'News';
+
+	/* @todo implement news.html */
+
+	$cl->save('news');
+	IO::li('News');
 
 	IO::ul(IO::TAG_END);
 	IO::li('Copying resources');

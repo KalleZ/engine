@@ -257,7 +257,7 @@
 		 * @param	string				The username to check
 		 * @return	boolean				Returns true if the username is free to be taken, otherwise false
 		 *
-		 * @since	1.2.0				This method now requires a username to be at least 3 characters and no longer than 32 characters big
+		 * @changelog	1.2.0				This method now requires a username to be at least 3 characters and no longer than 32 characters big
 		 */
 		public static function isValidUsername(Adapter $dm, Registry $registry, $username = NULL)
 		{

@@ -72,7 +72,8 @@
 		protected $stack_data		= [
 							'depth'		=> 0, 
 							'tree'		=> NULL, 
-							'current'	=> NULL
+							'current'	=> NULL, 
+							'last'		=> NULL
 							];
 
 
@@ -167,7 +168,10 @@
 		 */
 		protected function doParseEnd($parser, $name)
 		{
-			printf('END TAG: %s DEPTH: %d<br>' . PHP_EOL, $name, $this->stack_data['depth']);
+			if($this->stack_data['depth'])
+			{
+				$this->tree
+			}
 
 			--$this->stack_data['depth'];
 		}
