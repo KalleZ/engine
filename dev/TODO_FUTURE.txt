@@ -13,6 +13,11 @@
 	   - Add the ability to export/import languages
 	   - Change forms to use CSRF protection
 
+	Implement XML Parsers
+	 - Implement missing XML parsers
+	   - XMLReader
+	   - XML
+
 	Improve the user component
 	 - Implement a "Remember me?" API
 	 - Implement a disallowed permission based system for users

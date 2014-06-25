@@ -4,7 +4,7 @@
 		<table style="width: 100%" cellspacing="2" cellpadding="0">
 			<tr class="head">
 				<td class="strong" nowrap="nowrap" style="width: 20%;">Object</td>
-				<td class="strong">Change description</td>
+				<td class="strong">{$description}</td>
 			</tr>
 			{$content}
 		</table>

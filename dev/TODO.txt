@@ -5,11 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1
 	--------------------------------------------------
-
-	Implement XML Parsers
-	 - Finish implementation of \Tuxxedo\Xml\Tree::asXML()
-	 - Implement missing XML parsers
-	   - XMLReader
-	   - XML
-
-	Implement the @since news.html page to work as a counterpart for changelog.html
