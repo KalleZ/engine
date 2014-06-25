@@ -49,9 +49,7 @@
 	 * fallbacks:
 	 *
 	 *   > simplexml
-	 *   > xmlreader
 	 *   > dom
-	 *   > expat (xml)
 	 *
 	 * A selected parser can be choosen if desired using the setInternalParser() 
 	 * method. The returned XML will be returned in a Tree structure, which is 
@@ -76,25 +74,11 @@
 		const PARSER_SIMPLEXML		= 1;
 
 		/**
-		 * Parser constant - XMLReader
-		 *
-		 * @var		integer
-		 */
-		const PARSER_XMLREADER		= 2;
-
-		/**
 		 * Parser constant - DOM
 		 *
 		 * @var		integer
 		 */
-		const PARSER_DOM		= 3;
-
-		/**
-		 * Parser constant - EXPAT
-		 *
-		 * @var		integer
-		 */
-		const PARSER_EXPAT		= 4;
+		const PARSER_DOM		= 2;
 
 		/**
 		 * Internal value for how many bytes to read at a time
@@ -150,9 +134,7 @@
 
 				$refs 	= [
 						self::PARSER_SIMPLEXML	=> 'Simplexml', 
-						self::PARSER_XMLREADER	=> 'Xmlreader', 
-						self::PARSER_DOM	=> 'Dom', 
-						self::PARSER_EXPAT	=> 'Expat'
+						self::PARSER_DOM	=> 'Dom'
 						];
 			}
 
@@ -197,17 +179,9 @@
 			{
 				$this->internal_parser = self::PARSER_SIMPLEXML;
 			}
-			elseif(\extension_loaded('xmlreader'))
-			{
-				$this->internal_parser = self::PARSER_XMLREADER;
-			}
 			elseif(\extension_loaded('dom'))
 			{
 				$this->internal_parser = self::PARSER_DOM;
-			}
-			elseif(\extension_loaded('xml'))
-			{
-				$this->internal_parser = self::PARSER_EXPAT;
 			}
 			else
 			{
