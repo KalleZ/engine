@@ -56,6 +56,34 @@
 	class User extends Adapter implements Hooks\Cache
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'user';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'users';
+
+
+		/**
 		 * Usergroup identifier copy
 		 *
 		 * @var		integer
@@ -154,10 +182,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'user';
-			$this->tablename	= \TUXXEDO_PREFIX . 'users';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$user = $registry->db->query('
@@ -388,11 +412,11 @@
 		 */
 		public function rebuild()
 		{
-			if(!isset($this['usergroupid']) || !$this->usergroupid || !isset($this->registry->datastore->usergroups[$this['usergroupid']]) || !isset($this->registry->datastore->usergroups[$this->usergroupid]))
+			if(!isset($this->information['usergroupid']) || !$this->usergroupid || !isset($this->registry->datastore->usergroups[$this->information['usergroupid']]) || !isset($this->registry->datastore->usergroups[$this->usergroupid]))
 			{
 				return(false);
 			}
-			elseif($this['usergroupid'] == $this->usergroupid)
+			elseif($this->information['usergroupid'] == $this->usergroupid)
 			{
 				return(true);
 			}
@@ -401,7 +425,7 @@
 
 			if($this->context == parent::CONTEXT_SAVE)
 			{
-				++$usergroups[$this['usergroupid']]['users'];
+				++$usergroups[$this->information['usergroupid']]['users'];
 			}
 			elseif($this->context == parent::CONTEXT_DELETE)
 			{

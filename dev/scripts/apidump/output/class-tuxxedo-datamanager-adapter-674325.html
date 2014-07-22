@@ -159,51 +159,40 @@ to instanciate a new datamanager instance.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="property-context-760644.html">$context</a></td>
-	<td nowrap="nowrap" style="width: 100%">Context for hooks, and adapters</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Context for hooks, and adapters</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-data-879772.html">$data</a></td>
-	<td nowrap="nowrap" style="width: 100%">The original data if instanciated by an identifier</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-dmname-475299.html">$dmname</a></td>
-	<td nowrap="nowrap" style="width: 100%">Datamanager name, set by the datamanager</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The original data if instanciated by an identifier</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-identifier-785614.html">$identifier</a></td>
-	<td nowrap="nowrap" style="width: 100%">Identifier, if any</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Identifier, if any</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-identifier-data-709912.html">$identifier_data</a></td>
-	<td nowrap="nowrap" style="width: 100%">Cache data if the identifier is gonna be validated</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-idname-122852.html">$idname</a></td>
-	<td nowrap="nowrap" style="width: 100%">Identifier name, set by the datamanager</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Cache data if the identifier is gonna be validated</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-invalid-fields-696396.html">$invalid_fields</a></td>
-	<td nowrap="nowrap" style="width: 100%">List of fields that had one or more errors and therefore
-could not be saved</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;List of fields that had one or more errors and therefore</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-iterator-position-214214.html">$iterator_position</a></td>
-	<td nowrap="nowrap" style="width: 100%">Iterator position</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Iterator position</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-loaded-datamanagers-023797.html">$loaded_datamanagers</a></td>
-	<td nowrap="nowrap" style="width: 100%">List of loaded datamanagers used for caching in the
-special required cases where more than one driv...</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;List of loaded datamanagers used for caching in the</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-original-data-216554.html">$original_data</a></td>
-	<td nowrap="nowrap" style="width: 100%">The original data of each modified field, should it differ from $data</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The original data of each modified field, should it differ from $data</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-parent-231490.html">$parent</a></td>
-	<td nowrap="nowrap" style="width: 100%">Whether this datamanager are called from another datamanager</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Whether this datamanager are called from another datamanager</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-registry-507006.html">$registry</a></td>
-	<td nowrap="nowrap" style="width: 100%">Private instance to the Tuxxedo registry</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Private instance to the Tuxxedo registry</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-reidentify-102949.html">$reidentify</a></td>
-	<td nowrap="nowrap" style="width: 100%">Whether to re-identify the data when saving</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Whether to re-identify the data when saving</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-shutdown-handlers-854386.html">$shutdown_handlers</a></td>
-	<td nowrap="nowrap" style="width: 100%">List of shutdown handlers to execute</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-tablename-335814.html">$tablename</a></td>
-	<td nowrap="nowrap" style="width: 100%">Table name, set by the datamanager</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;List of shutdown handlers to execute</td>
 </tr>
 </table><h3>
 	Methods
@@ -216,29 +205,22 @@ special required cases where more than one driv...</td>
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="method---clone-424367.html">__clone()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Clonable hook
-
-Magic __clone() method, this method will internally reset the state of a
-datamanag...</td>
+	<td nowrap="nowrap" style="width: 100%">Clonable hook</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---construct-083524.html">__construct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Constructor for the current datamanager, this
-can be used to either create a datamanager based
-on ...</td>
+	<td nowrap="nowrap" style="width: 100%">Constructor for the current datamanager, this</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---destruct-834396.html">__destruct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Destructor for the current datamanager, this is
-reserved for shutdown handlers in parent datamanage...</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;Destructor for the current datamanager, this is</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-current-996342.html">current()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Iterator method - current</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-delete-180832.html">delete()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Deletes the data, within the database if an identifier was specified, else
-the current set data is ...</td>
+	<td nowrap="nowrap" style="width: 100%">Deletes the data, within the database if an identifier was specified, else</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-factory-357182.html">factory()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Constructs a new datamanger instance</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;<span class="tag">Static</span>&nbsp;Constructs a new datamanger instance</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-get-956149.html">get()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Gets a field</td>
@@ -250,8 +232,7 @@ the current set data is ...</td>
 	<td nowrap="nowrap" style="width: 100%">Gets the fields this datamanager provides</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-getinvalidfields-787986.html">getInvalidFields()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets a list over invalid fields, this is only populated
-if an attempt to saving a datamanager have ...</td>
+	<td nowrap="nowrap" style="width: 100%">Gets a list over invalid fields, this is only populated</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-getparent-808503.html">getParent()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Gets the parent datamanager pointer</td>
@@ -260,14 +241,10 @@ if an attempt to saving a datamanager have ...</td>
 	<td nowrap="nowrap" style="width: 100%">Gets a list of virtual fields from the datamanager adapter</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-hooks-658346.html">hooks()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Hooks executor
-
-This method executes hooks on a datamanager instance, this is cannot be
-called pu...</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Hooks executor</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-init-659835.html">init()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Datamanager initializer, this method initializes the default logic
-used across all datamanager adap...</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;<span class="tag">Protected</span>&nbsp;Datamanager initializer, this method initializes the default logic</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-key-158218.html">key()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Iterator method - key</td>
@@ -276,19 +253,16 @@ used across all datamanager adap...</td>
 	<td nowrap="nowrap" style="width: 100%">Iterator method - next</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-offsetget-708942.html">offsetGet()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'get' method so that default data is allocated
-when using the ArrayAccess...</td>
+	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'get' method so that default data is allocated</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-offsetset-057293.html">offsetSet()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'set' method so that its prohibited to
-set elements that doesn't exists</td>
+	<td nowrap="nowrap" style="width: 100%">Overloads the info access 'set' method so that its prohibited to</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-rewind-190194.html">rewind()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Iterator method - rewind</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-save-570508.html">save()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Save method, attempts to validate and save the data
-into the database</td>
+	<td nowrap="nowrap" style="width: 100%">Save method, attempts to validate and save the data</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-setshutdownhandler-613553.html">setShutdownHandler()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Sets a shutdown handler</td>
@@ -321,7 +295,7 @@ into the database</td>
 </div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental).</em>
 		</p>
 	</body>
 </html>

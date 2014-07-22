@@ -79,7 +79,7 @@
 		{
 			if($stack_data && isset($stack_data->type) && $stack_data->type != self::TYPE_NONE)
 			{
-				parent::__construct('%s at %s #%d', $message, ($stack_data->type == self::TYPE_CONDITION ? 'condition' : 'phrase'), $stack_data->conditions);
+				parent::__construct('%s at %s #%d', $message, ($stack_data->type == self::TYPE_CONDITION ? 'condition' : 'unknown struct'), $stack_data->conditions);
 			}
 			else
 			{

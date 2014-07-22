@@ -60,15 +60,6 @@
 
 
 		/**
-		 * Dummy constructor
-		 *
-		 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
-		 */
-		public function __construct(Registry $registry)
-		{
-		}
-
-		/**
 		 * Starts a timer
 		 *
 		 * @param	string				The name of the timer

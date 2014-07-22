@@ -77,7 +77,7 @@
 		/**
 		 * Constructs a new internationalization object
 		 *
-		 * @param	array			The language data to use
+		 * @param	array				The language data to use
 		 */
 		public function __construct(Array $languageinfo)
 		{
@@ -179,7 +179,7 @@
 										`phrasegroup` IN (
 											\'%s\'
 										);', 
-								$this['id'], join('\', \'', \array_map([$this->registry->db, 'escape'], $phrasegroups)));
+								$this->information['id'], join('\', \'', \array_map([$this->registry->db, 'escape'], $phrasegroups)));
 
 			if($result && !$result->getNumRows())
 			{
@@ -213,9 +213,11 @@
 		/**
 		 * Gets all phrases from a specific phrasegroup
 		 *
-		 * @param	string			The phrasegroup to get
-		 * @param	boolean			Whether to return a new phrasegroup object or just an array
-		 * @return	mixed			Depending on the value of second parameter, an object or array is returned. False is returned on faliure
+		 * @param	string				The phrasegroup to get
+		 * @param	boolean				Whether to return a new phrasegroup object (default true) or just an array
+		 * @return	mixed				Depending on the value of second parameter, an object or array is returned. False is returned on faliure
+		 *
+		 * @throw	\Tuxxedo\Exception\Basic	Throws a basic exception if the second parameter is set to return an object and the phrasegroup fails to load
 		 */
 		public function getPhrasegroup($phrasegroup, $object = true)
 		{
@@ -235,7 +237,7 @@
 		/**
 		 * Gets all phrasegroups
 		 *
-		 * @return	array			Returns an array with all loaded phrasegroups, false is returned if no phrasegroups is loaded.
+		 * @return	array				Returns an array with all loaded phrasegroups, false is returned if no phrasegroups is loaded.
 		 */
 		public function getPhrasegroups()
 		{
@@ -250,9 +252,9 @@
 		/**
 		 * Finds a phrase
 		 *
-		 * @param	string			The phrase to find
-		 * @param	string			Optionally search in a specific phrasegroup, defaults to search in all
-		 * @return	string			Returns a phrases translation, false is returned on failure
+		 * @param	string				The phrase to find
+		 * @param	string				Optionally search in a specific phrasegroup, defaults to search in all
+		 * @return	string				Returns a phrases translation, false is returned on failure
 		 */
 		public function find($phrase, $phrasegroup = NULL)
 		{
@@ -287,10 +289,19 @@
 		/**
 		 * Format a translation string
 		 *
-		 * @param	string		  The phrase to perform replacements on
-		 * @param	scalar		  Replacement string #1
-		 * @param	scalar		  Replacement string #n
-		 * @return	string		  Returns the formatted translation string
+		 * Translation strings uses the following format:
+		 * <code>
+		 * // Phrase 'greeting' = "Hej {1}, hvordan går det?";
+		 *
+		 * echo $intl->format('greeting', 'Madeleine');
+		 *
+		 * // 'Hej Madeleine, hvordan går det?'
+		 * </code>
+		 *
+		 * @param	string		 	 	The phrase to perform replacements on
+		 * @param	scalar		  		Replacement string #1
+		 * @param	scalar		  		Replacement string #n
+		 * @return	string		  		Returns the formatted translation string
 		 */
 		public function format()
 		{
@@ -325,7 +336,7 @@
 		 * limitation you must fetch the phrasegroup in which the phrase 
 		 * belongs and fetch it from there
 		 *
-		 * @return	array			Returns an array containing all loaded phrases and empty array if no phrases are loaded
+		 * @return	array				Returns an array containing all loaded phrases and empty array if no phrases are loaded
 		 */
 		public function getPhrases()
 		{
@@ -355,7 +366,7 @@
 		/**
 		 * Gets the browser language codes in priority
 		 *
-		 * @return	array			Returns an array with the language codes in priority from the user's browser, each code may be either 2 or 5 bytes long or NULL in case the HTTP_ACCEPT_LANGUAGE variable was not set
+		 * @return	array				Returns an array with the language codes in priority from the user's browser, each code may be either 2 or 5 bytes long or NULL in case the HTTP_ACCEPT_LANGUAGE variable was not set
 		 *
 		 * @since	1.2.0
 		 */
@@ -434,12 +445,12 @@
 		 * Filter callback for checking if a phrasegroup have any 
 		 * phrases
 		 *
-		 * @param	string			The phrasegroup to check
-		 * @return	boolean			True if is one or more phrases in that phrasegroup, false if none
+		 * @param	string				The phrasegroup to check
+		 * @return	boolean				True if is one or more phrases in that phrasegroup, false if none
 		 */
 		private function doPhrasegroupFilter($phrasegroup)
 		{
-			return(isset($this->registry->datastore->phrasegroups[$this['id']][$phrasegroup]) && $this->registry->datastore->phrasegroups[$this['id']][$phrasegroup]['phrases']);
+			return(isset($this->registry->datastore->phrasegroups[$this->information['id']][$phrasegroup]) && $this->registry->datastore->phrasegroups[$this->information['id']][$phrasegroup]['phrases']);
 		}
 	}
 ?>

@@ -378,10 +378,10 @@
 		}
 		elseif($tag == 'description' && $strip_html)
 		{
-			return(strip_tags($meta['docblock']->{$tag}));
+			return(utf8_decode(strip_tags($meta['docblock']->{$tag})));
 		}
 
-		return($meta['docblock']->{$tag});
+		return(utf8_decode($meta['docblock']->{$tag}));
 	};
 
 	$docblock_tag = function(Array $meta, $tag)
@@ -543,18 +543,22 @@
 				}
 
 				$examples[]	= '<?php' . PHP_EOL . PHP_EOL . trim(substr($desc, $spos + 6, $epos - $spos - 6)) . PHP_EOL . PHP_EOL . '?>';
-				$desc 		= substr_replace($desc, '', $spos, $epos - $spos);
+				$desc 		= substr_replace($desc, '', $spos, $epos - $spos + 7);
 			}
-			while(($spos = strpos($desc, '<code>', ++$spos)) !== false);
+			while(isset($desc{$spos + 1}) && ($spos = strpos($desc, '<code>', ++$spos)) !== false);
 		}
 
-		return($desc);
+		return(htmlspecialchars($desc, ENT_NOQUOTES, 'ISO-8859-1'));
 	};
 
-	$desct = function(Array $meta) use($desc)
+	$tags = function(Array $meta, $text)
 	{
 		$tags	= '';
-		$d 	= $desc($meta, false);
+
+		if(($pos = strpos($text, "\n")) !== false)
+		{
+			$text = substr($text, 0, $pos);
+		}
 
 		if($meta['dev'])
 		{
@@ -564,7 +568,7 @@
 			$tags		= $template;
 		}
 
-		if(isset($meta['docblock']) && isset($meta['docblock']->tags))
+		if(isset($meta['docblock']) && isset($meta['docblock']->tags) && (isset($meta['docblock']->tags->todo) || isset($meta['docblock']->tags->wip)))
 		{
 			if(isset($meta['docblock']->tags->todo))
 			{
@@ -583,25 +587,41 @@
 			}
 		}
 
-		if(strlen($d) > 100)
+		foreach(['final', 'private', 'protected', 'static'] as $modifier)
 		{
-			$t = '';
-			$d = substr($d, 0, 100);
+			if($meta['metadata']->{$modifier})
+			{
+				$template	= new Template('tag');
+				$template->tag	= ucfirst($modifier);
+
+				$tags		.= $template;
+			}
+		}
+
+		if(strlen($text) > 100)
+		{
+			$t 	= '';
+			$text 	= substr($text, 0, 100);
 
 			for($x = 0; $x < 100; ++$x)
 			{
-				if($d{$x} == '<')
+				if($text{$x} == '<')
 				{
 					break;
 				}
 
-				$t .= $d{$x};
+				$t .= $text{$x};
 			}
 	
 			return($tags . $t . '...');
 		}
 
-		return($tags . htmlentities($d));
+		return($tags . htmlentities($text));
+	};
+
+	$desct = function(Array $meta) use($desc, $tags)
+	{
+		return($tags($meta, $desc($meta, false)));
 	};
 
 	$examplecode = function(Array $examples)
@@ -783,7 +803,8 @@
 				{
 					$toc_cl[$vho[0]][$name] = [
 									'hash'		=> $name_hash, 
-									'changes'	=> []
+									'changes'	=> [], 
+									'meta'		=> $meta
 									];
 				}
 
@@ -816,7 +837,8 @@
 			$toc_news[$s][] = [
 						'name'	=> $name, 
 						'hash'	=> $name_hash, 
-						'type'	=> $name_type
+						'type'	=> $name_type, 
+						'meta'	=> $meta
 						];
 		}
 
@@ -1272,8 +1294,8 @@
 
 									if(($p = $docblock_tag((array) $tmeta, 'param')) !== 'Undefined value')
 									{
-										$ps		= sizeof($p);
 										$pl		= '';
+										$ps		= sizeof($p);
 										$sep		= new Template('parameter_separator');
 										$parameters 	= new Template('parameters');
 
@@ -1626,6 +1648,8 @@
 
 		$toc = '';
 
+		krsort($toc_r);
+
 		foreach($toc_r as $version => $changes)
 		{
 			if(!$changes)
@@ -1661,7 +1685,7 @@
 
 							if(!$checked)
 							{
-								$ct->element = $link($obj_c['hash'] . '.html', $obj);
+								$ct->element = $tags($obj_c['meta'], '') . $link($obj_c['hash'] . '.html', $obj);
 							}
 
 							$ct->value	= $change;
@@ -1680,7 +1704,7 @@
 
 						$ct 		= new Template('backlog_version_bit');
 						$ct->element	= $link($obj_c['hash'] . '.html', $obj_c['name']);
-						$ct->value	= $obj_c['type'];
+						$ct->value	= $tags($obj_c['meta'], $obj_c['type']);
 
 						$vth		.= $ct;
 					}

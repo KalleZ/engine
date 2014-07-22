@@ -296,6 +296,7 @@
 		 * Sets a new query to execute at shutdown
 		 *
 		 * @param	string			The SQL string to execute
+		 * @param	mixed			Genetic parameter for formatting, if two or more parameters are passed to the method, the sql will be formatted using sprintf
 		 * @return	void			No value is returned
 		 */
 		public function setShutdownQuery($sql)

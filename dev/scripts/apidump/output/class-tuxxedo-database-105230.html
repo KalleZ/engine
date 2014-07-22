@@ -89,37 +89,31 @@ the factory method used to instanciate a new database driver instance.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="property-affected-rows-140215.html">$affected_rows</a></td>
-	<td nowrap="nowrap" style="width: 100%">Affected rows by last successful query that changed
-data in the database</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Affected rows by last successful query that changed</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-configuration-616094.html">$configuration</a></td>
-	<td nowrap="nowrap" style="width: 100%">Database specific configuration array</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database specific configuration array</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-debug-375279.html">$debug</a></td>
-	<td nowrap="nowrap" style="width: 100%">Whether or not debug mode is enabled</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Whether or not debug mode is enabled</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-delayed-643484.html">$delayed</a></td>
-	<td nowrap="nowrap" style="width: 100%">Whether the database connection still is delayed
-or not</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Whether the database connection still is delayed</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-link-730190.html">$link</a></td>
-	<td nowrap="nowrap" style="width: 100%">Link pointer, this contains the internal link
-to the database from the driver</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Link pointer, this contains the internal link</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-loaded-drivers-765358.html">$loaded_drivers</a></td>
-	<td nowrap="nowrap" style="width: 100%">List of loaded drivers used for caching in the
-special required cases where more than one driver
-h...</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;List of loaded drivers used for caching in the</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-queries-549074.html">$queries</a></td>
-	<td nowrap="nowrap" style="width: 100%">List of executed queries during execution</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;List of executed queries during execution</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-registry-268292.html">$registry</a></td>
-	<td nowrap="nowrap" style="width: 100%">Private instance to the Tuxxedo registry</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Private instance to the Tuxxedo registry</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-shutdown-queries-662454.html">$shutdown_queries</a></td>
-	<td nowrap="nowrap" style="width: 100%">List of shutdown queries that will be executed
-when then destructor is called</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;List of shutdown queries that will be executed</td>
 </tr>
 </table><h3>
 	Methods
@@ -135,8 +129,7 @@ when then destructor is called</td>
 	<td nowrap="nowrap" style="width: 100%">Default constructor for a new database instance</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---destruct-279948.html">__destruct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Default destructor, this simply closes a database connection
-and executes any registered shutdown q...</td>
+	<td nowrap="nowrap" style="width: 100%">Default destructor, this simply closes a database connection</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-cfg-448388.html">cfg()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Returns a configuration value</td>
@@ -145,11 +138,10 @@ and executes any registered shutdown q...</td>
 	<td nowrap="nowrap" style="width: 100%">Escape all arguments set to the query, prior to formatting</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-factory-928492.html">factory()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Constructs a new database instance</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Constructs a new database instance</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-getaffectedrows-521668.html">getAffectedRows()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets the affected rows by last successful query that changed
-data in the database</td>
+	<td nowrap="nowrap" style="width: 100%">Gets the affected rows by last successful query that changed</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-getnumqueries-266955.html">getNumQueries()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Gets the number of queries executed during this request</td>
@@ -158,8 +150,7 @@ data in the database</td>
 	<td nowrap="nowrap" style="width: 100%">Gets the executed queries during this request</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-invoke-456991.html">invoke()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Magic method called when creating a new instance of the
-object from the registry</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;<span class="tag">Static</span>&nbsp;Magic method called when creating a new instance of the</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-setshutdownquery-348159.html">setShutdownQuery()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Sets a new query to execute at shutdown</td>
@@ -186,7 +177,7 @@ object from the registry</td>
 </div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental).</em>
 		</p>
 	</body>
 </html>

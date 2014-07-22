@@ -223,7 +223,7 @@
 		 */
 		public function getReflection()
 		{
-			$class = $this->reflection_class;
+			$class = &$this->reflection_class;
 
 			if(!$class)
 			{

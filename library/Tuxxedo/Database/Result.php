@@ -56,9 +56,10 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 *
+	 * @changelog		1.2.0			The iteratable pattern is no longer a class, but an interface
 	 * @changelog		1.1.0			This class now implements the Iteratable design pattern
 	 */
-	abstract class Result extends Design\Iteratable implements Result\Specification
+	abstract class Result implements Design\Iteratable, Result\Specification
 	{
 		/**
 		 * Fetch mode constant - row

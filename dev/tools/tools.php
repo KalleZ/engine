@@ -249,12 +249,12 @@
 						'pdo'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['pdo']), 
 						'pdo_mysql'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['pdo_mysql']), 
 						'pdo_sqlite'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['pdo_sqlite']), 
-						'xml'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['xml']), 
 						'dom'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['dom']), 
-						'xmlreader'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['xmlreader']), 
 						'simplexml'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['simplexml']), 
 						'glob()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, ['glob']), 
-						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, ['realpath'])
+						'realpath()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, ['realpath']), 
+						'utf8_encode()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, ['utf8_encode']), 
+						'utf8_decode()'	=> new Test(Test::OPT_FUNCTION | Test::OPT_REQUIRED, ['utf8_decode'])
 						];
 
 			$failed = false;
@@ -263,7 +263,7 @@
 			{
 				$required = $test->isRequired();
 
-				if(($passed = $test->test()) === false)
+				if(($passed = $test->test()) === false && $required)
 				{
 					$failed = true;
 				}

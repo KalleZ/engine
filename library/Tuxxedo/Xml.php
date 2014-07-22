@@ -249,7 +249,7 @@
 
 			while(!\feof($stream))
 			{
-				$xml .= fread($stream, self::READ_BLOCK_SIZE);
+				$xml .= \fread($stream, self::READ_BLOCK_SIZE);
 			}
 
 			return($this->factory()->parse($xml));

@@ -153,7 +153,7 @@
 			}
 			else
 			{
-				$dsn = \sprintf('%s:host=%s;dbname=%s;%s%s%s', ($prefix = $this->configuration['dsnprefix'] ? $prefix : $this->configuration['subdriver']), $this->configuration['hostname'], $this->configuration['database'], $port, $unix_socket, $configuration['dsnsuffix']);
+				$dsn = \sprintf('%s:host=%s;dbname=%s;%s%s%s', ($this->configuration['dsnprefix'] ? $this->configuration['dsnprefix'] : $this->configuration['subdriver']), $this->configuration['hostname'], $this->configuration['database'], $port, $unix_socket, $configuration['dsnsuffix']);
 			}
 
 			try

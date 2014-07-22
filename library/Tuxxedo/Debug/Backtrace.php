@@ -69,7 +69,7 @@
 	 * @subpackage		Library
 	 * @since		1.2.0
 	 */
-	class Backtrace extends Design\Iteratable
+	class Backtrace implements Design\Iteratable
 	{
 		/**
 		 * Stack pointer position
@@ -287,9 +287,9 @@
 
 				if($flags & TraceFrame::FLAG_EXCEPTION)
 				{
-					end($stack);
+					\end($stack);
 
-					$index			= key($stack);
+					$index			= \key($stack);
 
 					$etrace 		= new TraceFrame('ReflectionClass', TraceFrame::FLAG_EXCEPTION);
 					$etrace->frame		= $lx++;

@@ -176,8 +176,7 @@
 
 			if($factory === NULL)
 			{
-				$this_ptr	= $this;
-				$factory	= function($backend) use($this_ptr)
+				$factory = function($backend)
 				{
 					static $handlers;
 
@@ -193,7 +192,7 @@
 						return($handlers[$backend]);
 					}
 
-					$temp = new $class($this_ptr, $this_ptr->event_handler);
+					$temp = new $class($this, $this->event_handler);
 
 					if(!($temp instanceof Upload\Backend))
 					{
@@ -202,6 +201,8 @@
 
 					return($handlers[$backend] = $temp);
 				};
+
+				$factory->bindTo($this);
 			}
 
 			if(!$this->queue)

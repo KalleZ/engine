@@ -55,14 +55,6 @@
 	abstract class Helper
 	{
 		/**
-		 * Contains the loaded helpers
-		 *
-		 * @var		array
-		 */
-		protected static $loaded_helpers	= [];
-
-
-		/**
 		 * Constructs a new helper
 		 *
 	 	 * @param	\Tuxxedo\Registry		The Tuxxedo object reference
@@ -72,14 +64,26 @@
 		/**
 		 * Factory method for loading a new helper
 		 *
-		 * When loading multiple helpers and set them to register in the registry, then 
-		 * the last registered one will override the old one in the registry
+		 * If loading the same type of helper more than once and choose to register it within 
+		 * the registry, then the hold one will be overrridden and it will be available as:
+		 *
+		 * <code>
+		 * use Tuxxedo\Helper;
+		 *
+		 * Helper::factory('timer', true);
+		 *
+		 * $registry->timer->start('Test');
+		 *
+		 * Helper::factory('timer', true);
+		 *
+		 * $registry->timer->stop('Test'); // Error, does not exists anymore
+		 * </code>
 		 *
 		 * @param	string				The helper handle to instanciate
 		 * @param	boolean				Whether to register this helper in the registry
 		 * @return	object				Returns a helper handle object reference
 		 *
-		 * @changelog	1.2.0				This method no longer throws a basic exception on invalid handles as its handled by the autoloader
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the helper is not a child of this class
 		 */ 
 		final public static function factory($helper, $register = false)
 		{
@@ -90,22 +94,8 @@
 				$registry = Registry::init();
 			}
 
-			$class = (\strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . \ucfirst(\strtolower($helper));
-
-			if(isset(self::$loaded_helpers[$helper]))
-			{
-				$ref = new $class($registry);
-
-				if($register)
-				{
-					$registry->register($helper, $ref);
-				}
-
-				return($ref);
-			}
-
-			self::$loaded_helpers[$helper] 	= true;
-			$ref 				= new $class($registry);
+			$class 	= (\strpos($helper, '\\') === false ? '\Tuxxedo\Helper\\' : '') . \ucfirst(\strtolower($helper));
+			$ref 	= new $class($registry);
 
 			if($register)
 			{

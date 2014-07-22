@@ -55,6 +55,28 @@
 	class Phrase extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 */
+		const DM_NAME			= 'phrase';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 */
+		const TABLE_NAME		= 'phrases';
+
+
+		/**
 		 * Fields for validation of phrases
 		 *
 		 * @var		array
@@ -108,10 +130,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'phrase';
-			$this->tablename	= \TUXXEDO_PREFIX . 'phrases';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$phrase = $registry->db->query('

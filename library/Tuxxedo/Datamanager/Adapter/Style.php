@@ -54,6 +54,34 @@
 	class Style extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'style';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'styles';
+
+
+		/**
 		 * Fields for validation of styles
 		 *
 		 * @var		array
@@ -101,10 +129,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'style';
-			$this->tablename	= \TUXXEDO_PREFIX . 'styles';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$style = $registry->db->query('
@@ -150,9 +174,9 @@
 
 			if($this->context == parent::CONTEXT_DELETE)
 			{
-				unset($datastore[(integer) ($this['id'] ? $this['id'] : $this->identifier)]);
+				unset($datastore[(integer) ($this->information['id'] ? $this->information['id'] : $this->identifier)]);
 
-				foreach(\explode(',', $this->registry->datastore->styleinfo[$this['id']]['templateids']) as $id)
+				foreach(\explode(',', $this->registry->datastore->styleinfo[$this->information['id']]['templateids']) as $id)
 				{
 					if(empty($id))
 					{

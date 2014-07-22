@@ -56,6 +56,34 @@
 	class Permission extends Adapter implements Hooks\Cache
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'permission';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'name';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'permissions';
+
+
+		/**
 		 * Fields for validation of permissions
 		 *
 		 * @var		array
@@ -85,10 +113,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'permission';
-			$this->tablename	= \TUXXEDO_PREFIX . 'permissions';
-			$this->idname		= 'name';
-
 			if($identifier !== NULL)
 			{
 				$permission = $registry->db->equery('
@@ -130,11 +154,11 @@
 
 			$permissions = $this->registry->datastore->permissions;
 
-			unset($permissions[$this['name']]);
+			unset($permissions[$this->information['name']]);
 
 			if($this->context == parent::CONTEXT_SAVE)
 			{
-				$permissions[$this['name']] = (integer) $this['bits'];
+				$permissions[$this->information['name']] = (integer) $this->information['bits'];
 			}
 
 			return($this->registry->datastore->rebuild('permissions', $permissions));

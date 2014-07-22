@@ -63,7 +63,7 @@
 		 *
 		 * @since	1.2.0
 		 */
-		final public function import($information)
+		public function import($information)
 		{
 			if(!\is_object($information) && !\is_array($information))
 			{

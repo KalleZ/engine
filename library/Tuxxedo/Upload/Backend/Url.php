@@ -221,6 +221,7 @@
 			$split			= \explode('/', \str_replace('\\', '/', $input));
 			$split			= \explode('.', end($split));
 			$ext			= \array_pop($split);
+
 			$desc->filename		= ($filename !== NULL ? $filename : \join('.', $split));
 			$desc->extension	= ($extension !== NULL ? $extension : $ext);
 			$desc->mime		= $type;

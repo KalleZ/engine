@@ -43,8 +43,8 @@
 
 
 	/**
-	 * Input filtering class, this class cleans data 
-	 * with magic quotes in mind
+	 * Input filtering class, this class cleans data from 
+	 * the user using the filter extension
 	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0

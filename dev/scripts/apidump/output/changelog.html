@@ -39,28 +39,31 @@
 	<td nowrap="nowrap"><a href="function-tuxxedo-trim-path-567367.html">tuxxedo_trim_path()</a></td>
 	<td style="width: 100%">Removed the $debug_trim parameter</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-input-016037.html">\DevTools\Utilities\IO::input()</a></td>
+	<td nowrap="nowrap"><span class="tag">Dev</span>&nbsp;<span class="tag">Static</span>&nbsp;<a href="method-input-016037.html">\DevTools\Utilities\IO::input()</a></td>
 	<td style="width: 100%">A value is no longer required for a CLI argument for it to be considered valid</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-init-684201.html">\Tuxxedo\Bootstrap::init()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-init-684201.html">\Tuxxedo\Bootstrap::init()</a></td>
 	<td style="width: 100%">After a hook is executed, the preloadables is no longer unset, but reset to an array</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-fields-661125.html">\Tuxxedo\Datamanager\Adapter\Session::$fields</a></td>
+	<td nowrap="nowrap"><a href="class-tuxxedo-database-result-813950.html">\Tuxxedo\Database\Result</a></td>
+	<td style="width: 100%">The iteratable pattern is no longer a class, but an interface</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<a href="property-fields-661125.html">\Tuxxedo\Datamanager\Adapter\Session::$fields</a></td>
 	<td style="width: 100%">Added the 'rehash' field</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---construct-993529.html">\Tuxxedo\Datamanager\Adapter\Session::__construct()</a></td>
 	<td style="width: 100%">User-Agent and Location is no longer manually set as the constants no longer exists but figured out on its own</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-fields-394761.html">\Tuxxedo\Datamanager\Adapter\Style::$fields</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<a href="property-fields-394761.html">\Tuxxedo\Datamanager\Adapter\Style::$fields</a></td>
 	<td style="width: 100%">Renamed 'defaultstyle' to 'isdefault'</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-isavailableuserfield-134144.html">\Tuxxedo\Datamanager\Adapter\User::isAvailableUserField()</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;<a href="method-isavailableuserfield-134144.html">\Tuxxedo\Datamanager\Adapter\User::isAvailableUserField()</a></td>
 	<td style="width: 100%">The return value is now negated</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-isvalidusername-090252.html">\Tuxxedo\Datamanager\Adapter\User::isValidUsername()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-isvalidusername-090252.html">\Tuxxedo\Datamanager\Adapter\User::isValidUsername()</a></td>
 	<td style="width: 100%">This method now requires a username to be at least 3 characters and no longer than 32 characters big</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-fields-155527.html">\Tuxxedo\Datamanager\Adapter\Usergroup::$fields</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<a href="property-fields-155527.html">\Tuxxedo\Datamanager\Adapter\Usergroup::$fields</a></td>
 	<td style="width: 100%">Added the 'users' virtual field</td>
 </tr><tr class="row">
 	<td nowrap="nowrap">&nbsp;</td>
@@ -75,28 +78,28 @@
 	<td nowrap="nowrap"><a href="class-tuxxedo-exception-multi-125565.html">\Tuxxedo\Exception\Multi</a></td>
 	<td style="width: 100%">This exception used to be called 'FormData'</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-factory-849438.html">\Tuxxedo\Helper::factory()</a></td>
-	<td style="width: 100%">This method no longer throws a basic exception on invalid handles as its handled by the autoloader</td>
-</tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-count-703063.html">\Tuxxedo\Helper\Database::count()</a></td>
 	<td style="width: 100%">Added the $where parameter</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-invoke-323615.html">\Tuxxedo\Intl::invoke()</a></td>
+	<td nowrap="nowrap"><a href="class-tuxxedo-helper-database-024334.html">\Tuxxedo\Helper\Database</a></td>
+	<td style="width: 100%">This class now escapes all input unlike before where only some were escaped</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-invoke-323615.html">\Tuxxedo\Intl::invoke()</a></td>
 	<td style="width: 100%">This method now tries to resolve the browsers Accept-Language and use that as a preference</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedo-intl-phrasegroup-544103.html">\Tuxxedo\Intl\Phrasegroup</a></td>
 	<td style="width: 100%">This class now implements the InfoAccess pattern</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-exists-064809.html">\Tuxxedo\Loader::exists()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-exists-064809.html">\Tuxxedo\Loader::exists()</a></td>
 	<td style="width: 100%">This method now also checks for traits</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-routeascallback-579061.html">\Tuxxedo\Loader::routeAsCallback()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-routeascallback-579061.html">\Tuxxedo\Loader::routeAsCallback()</a></td>
 	<td style="width: 100%">This method now only supports defining one route at a time</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-routeaspath-702233.html">\Tuxxedo\Loader::routeAsPath()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-routeaspath-702233.html">\Tuxxedo\Loader::routeAsPath()</a></td>
 	<td style="width: 100%">This method now only supports defining one route at a time</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-routeasregex-237655.html">\Tuxxedo\Loader::routeAsRegex()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-routeasregex-237655.html">\Tuxxedo\Loader::routeAsRegex()</a></td>
 	<td style="width: 100%">This method now only supports defining one route at a time</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-dispatch-917111.html">\Tuxxedo\MVC\Controller::dispatch()</a></td>
@@ -117,10 +120,10 @@
 	<td nowrap="nowrap"><a href="method---construct-297347.html">\Tuxxedo\MVC\Router::__construct()</a></td>
 	<td style="width: 100%">The $prefix parameter can now be used to define a controller from another namespace</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-invoke-481835.html">\Tuxxedo\Session::invoke()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-invoke-481835.html">\Tuxxedo\Session::invoke()</a></td>
 	<td style="width: 100%">This method no longer requires the datastore to be loaded to function</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-start-685044.html">\Tuxxedo\Session::start()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-start-685044.html">\Tuxxedo\Session::start()</a></td>
 	<td style="width: 100%">Removed the old CSRF code that was never fully implemented</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-allowclass-973075.html">\Tuxxedo\Template\Compiler::allowClass()</a></td>
@@ -134,6 +137,9 @@
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="interface-tuxxedo-database-driver-031503.html">\Tuxxedo\Database\Driver</a></td>
 	<td style="width: 100%">Removed the 'getDriverRequirements()' method</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="interface-tuxxedo-design-iteratable-027473.html">\Tuxxedo\Design\Iteratable</a></td>
+	<td style="width: 100%">This is no longer a class but an interface</td>
 </tr>
 		</table>
 	</div>
@@ -182,13 +188,13 @@
 	<td nowrap="nowrap">&nbsp;</td>
 	<td style="width: 100%">Added the $parent parameter</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-factory-357182.html">\Tuxxedo\Datamanager\Adapter::factory()</a></td>
+	<td nowrap="nowrap"><span class="tag">Final</span>&nbsp;<span class="tag">Static</span>&nbsp;<a href="method-factory-357182.html">\Tuxxedo\Datamanager\Adapter::factory()</a></td>
 	<td style="width: 100%">Added the $options parameter</td>
 </tr><tr class="row">
 	<td nowrap="nowrap">&nbsp;</td>
 	<td style="width: 100%">Added the $parent parameter</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-init-659835.html">\Tuxxedo\Datamanager\Adapter::init()</a></td>
+	<td nowrap="nowrap"><span class="tag">Final</span>&nbsp;<span class="tag">Protected</span>&nbsp;<a href="method-init-659835.html">\Tuxxedo\Datamanager\Adapter::init()</a></td>
 	<td style="width: 100%">Added the $options parameter</td>
 </tr><tr class="row">
 	<td nowrap="nowrap">&nbsp;</td>
@@ -206,10 +212,10 @@
 	<td nowrap="nowrap">&nbsp;</td>
 	<td style="width: 100%">This method can now validate identifiers</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-fields-394761.html">\Tuxxedo\Datamanager\Adapter\Style::$fields</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<a href="property-fields-394761.html">\Tuxxedo\Datamanager\Adapter\Style::$fields</a></td>
 	<td style="width: 100%">Added the 'inherit' field</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-fields-212929.html">\Tuxxedo\Datamanager\Adapter\User::$fields</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<a href="property-fields-212929.html">\Tuxxedo\Datamanager\Adapter\User::$fields</a></td>
 	<td style="width: 100%">Changed the name of 'styleid' to 'style_id'</td>
 </tr><tr class="row">
 	<td nowrap="nowrap">&nbsp;</td>
@@ -245,10 +251,10 @@
 	<td nowrap="nowrap"><a href="class-tuxxedo-mvc-view-521685.html">\Tuxxedo\MVC\View</a></td>
 	<td style="width: 100%">This is now an alias of \Tuxxedo\Template</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-options-817074.html">\Tuxxedo\Session::$options</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;<a href="property-options-817074.html">\Tuxxedo\Session::$options</a></td>
 	<td style="width: 100%">Added 'secure' for HTTPS enforcement</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method---construct-702439.html">\Tuxxedo\Style\Storage\Filesystem::__construct()</a></td>
+	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<a href="method---construct-702439.html">\Tuxxedo\Style\Storage\Filesystem::__construct()</a></td>
 	<td style="width: 100%">The 'templatesdir' style table row can now be used to define a custom template directory if present</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---construct-804183.html">\Tuxxedo\Template\Compiler::__construct()</a></td>
@@ -263,7 +269,7 @@
 	<td nowrap="nowrap"><a href="method-setsource-729335.html">\Tuxxedo\Template\Compiler::setSource()</a></td>
 	<td style="width: 100%">This method used to be called 'set()'</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-getpasswordsalt-437541.html">\Tuxxedo\User::getPasswordSalt()</a></td>
+	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-getpasswordsalt-437541.html">\Tuxxedo\User::getPasswordSalt()</a></td>
 	<td style="width: 100%">This method will now properly change character casing instead of a fixed set of cased characters</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-rebuild-145032.html">\Tuxxedo\Datamanager\Hooks\Cache::rebuild()</a></td>
@@ -284,7 +290,7 @@
 </div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental).</em>
 		</p>
 	</body>
 </html>

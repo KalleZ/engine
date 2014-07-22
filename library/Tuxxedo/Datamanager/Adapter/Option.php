@@ -56,6 +56,34 @@
 	class Option extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'option';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'option';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'options';
+
+
+		/**
 		 * Fields for validation of options
 		 *
 		 * @var		array
@@ -104,10 +132,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'option';
-			$this->tablename	= \TUXXEDO_PREFIX . 'options';
-			$this->idname		= 'option';
-
 			if($identifier !== NULL)
 			{
 				$option = $registry->db->equery('
@@ -232,18 +256,18 @@
 		 */
 		public function rebuild()
 		{
-			if($this->context == parent::CONTEXT_DELETE && !isset($this->registry->datastore->options[$this['option']]))
+			if($this->context == parent::CONTEXT_DELETE && !isset($this->registry->datastore->options[$this->information['option']]))
 			{
 				return(true);
 			}
 
 			$options = $this->registry->datastore->options;
 
-			unset($options[$this['option']]);
+			unset($options[$this->information['option']]);
 
 			if($this->context == parent::CONTEXT_SAVE)
 			{
-				$options[$this['option']] = [
+				$options[$this->information['option']] = [
 								'category'	=> $this->data['category'], 
 								'value'		=> $this->data['value']
 								];
@@ -265,7 +289,7 @@
 				return(false);
 			}
 
-			$this['value'] = $this['defaultvalue'];
+			$this->information['value'] = $this->information['defaultvalue'];
 
 			return($this->save());
 		}
