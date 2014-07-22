@@ -167,12 +167,11 @@
 		 * @param	string				The table name
 		 * @param	array				An array of conditions to load specific entries or limit them
 		 * @param	string				The alias if any (defaults to the table name if NULL)
-		 * @param	boolean				Whether or not to add the configuration database table prefix (defaults to true)
 		 * @return	boolean				Returns true if the entries was loaded, otherwise false. True can also be returned if none entries was loaded
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if a query should fail
 		 */
-		public function load($table, Array $conditions = [], $alias = NULL, $add_table_prefix = true)
+		public function load($table, Array $conditions = [], $alias = NULL)
 		{
 			static $dbh;
 
@@ -180,6 +179,8 @@
 			{
 				$dbh = Helper::factory('database');
 			}
+
+			$dbh->setInstance($this->db);
 
 			if($alias === NULL)
 			{
@@ -193,8 +194,8 @@
 				unset($this->cache[$alias]);
 			}
 
-			$fields = $dbh->getColumns(($add_table_prefix ? \TUXXEDO_PREFIX : '') . $table);
-			$sql 	= 'SELECT * FROM `' . ($add_table_prefix ? \TUXXEDO_PREFIX : '') . $table . '`';
+			$fields = $dbh->getColumns(\TUXXEDO_PREFIX . $table);
+			$sql 	= 'SELECT * FROM `' . \TUXXEDO_PREFIX . $table . '`';
 
 			if($conditions)
 			{

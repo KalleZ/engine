@@ -73,17 +73,16 @@ object.
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="property-configuration-539610.html">$configuration</a></td>
-	<td nowrap="nowrap" style="width: 100%">Holds the configuration array</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Private</span>&nbsp;Holds the configuration array</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-globals-664025.html">$globals</a></td>
-	<td nowrap="nowrap" style="width: 100%">Holds the list of global variables across
-Engine</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Private</span>&nbsp;Holds the list of global variables across</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-instance-973274.html">$instance</a></td>
-	<td nowrap="nowrap" style="width: 100%">Holds the main instance</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Private</span>&nbsp;<span class="tag">Static</span>&nbsp;Holds the main instance</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-instances-666048.html">$instances</a></td>
-	<td nowrap="nowrap" style="width: 100%">Holds an array of the instances registered</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Private</span>&nbsp;Holds an array of the instances registered</td>
 </tr>
 </table><h3>
 	Methods
@@ -96,14 +95,13 @@ Engine</td>
 	</tr>
 	<tr class="row">
 	<td nowrap="nowrap"><a href="method---clone-472913.html">__clone()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Disable the ability to clone the object</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;<span class="tag">Private</span>&nbsp;Disable the ability to clone the object</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---construct-933290.html">__construct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Disable the ability to construct the object</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;<span class="tag">Private</span>&nbsp;Disable the ability to construct the object</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---get-325020.html">__get()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Magic get method, this handles overloading of registered
-instances</td>
+	<td nowrap="nowrap" style="width: 100%">Magic get method, this handles overloading of registered</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---isset-010583.html">__isset()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Allows the usage of isset() on registry objects</td>
@@ -112,34 +110,28 @@ instances</td>
 	<td nowrap="nowrap" style="width: 100%">Allows the usge of unset() on registry objects</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-get-416948.html">get()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets a registered object instance</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Gets a registered object instance</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-getconfiguration-660448.html">getConfiguration()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets the configuration array</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Gets the configuration array</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-globals-215256.html">globals()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Sets or gets a new global</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Sets or gets a new global</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-init-935632.html">init()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Initializes a new object instance, this implements the
-singleton pattern and can be called from any...</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Final</span>&nbsp;<span class="tag">Static</span>&nbsp;Initializes a new object instance, this implements the</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-invoke-737742.html">invoke()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Invokes a class, calling its preloading method if available
-and then returns the instance object</td>
+	<td nowrap="nowrap" style="width: 100%">Invokes a class, calling its preloading method if available</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-register-137676.html">register()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Registers a new instance and makes it accessable through
-the name defined by the first parameter in...</td>
+	<td nowrap="nowrap" style="width: 100%">Registers a new instance and makes it accessable through</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-set-442166.html">set()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Sets a new reference in the registry</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-symtable-003404.html">symtable()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Sets or gets a new value in a symbol table</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-unload-434636.html">unload()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Unloads a registry object</td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Sets or gets a new value in a symbol table</td>
 </tr>
 </table>
 	</div>
@@ -163,7 +155,7 @@ the name defined by the first parameter in...</td>
 </div>
 
 		<p>
-			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 1 (experimental).</em>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental).</em>
 		</p>
 	</body>
 </html>

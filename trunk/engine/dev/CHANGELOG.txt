@@ -11,9 +11,7 @@
 	Added the event handling subsystem (Kalle)
 	Added XML parsers and related APIs with fallback backends for: (Kalle)
 	 - SimpleXML
-	 - XMLReader
 	 - DOM
-	 - XML (EXPAT)
 	Added new and improved debugging mode: (Kalle)
 	 - SQL queries trace mode
 	 - Rewritten debug backtracing API with more verbosity
@@ -94,7 +92,7 @@
 	Changed api_analyze.php to show the number of unique namespaces rather than total declarations in the statistics summary (Kalle)
 	Changed the method name '\Tuxxedo\Intl::filter()' to '\Tuxxedo\Intl::doPhrasegroupFilter()' (Kalle)
 	Changed the method name '\Tuxxedo\Datastore::filter()' to '\Tuxxedo\Datastore::doCacheFilter()' (Kalle)
-	Changed the API dump to only be exported as json, and relocated it to /dev/scripts/api/engine_api.json, causing the JSON extension to be available for api_analyze.php to function (Kalle)
+	Changed the API dump to only be exported as json, and relocated it to /dev/scripts/api/engine_api.json, causing the JSON extension to be required for api_analyze.php to function (Kalle)
 	Changed the name of style.defaultstyle to style.isdefault (Kalle)
 	Changed the name of language.default to language.isdefault (Kalle)
 	Changed the name of phrasegroup.language to phrasegroup.languageid (Kalle)
@@ -110,6 +108,11 @@
 	Changed \Tuxxedo\Datamanager\Adapter\User::isAvailableUserField()'s return value to be negated (Kalle)
 	Changed api_analyze.php to stop analyzing when it hits a __halt_compiler() instruction (Kalle)
 	Changed \Tuxxedo\Bootstrap::init() to no longer unset() preloadables, but reset it to an empty array (Kalle)
+	Changed the datamanager API to use class constants over properties since that data only is readonly. This means that a  these are: (Kalle)
+	 - \Tuxxedo\Datamanager\Adapter::$dmname > \Tuxxedo\Datamanager\Adapter\*::DM_NAME
+	 - \Tuxxedo\Datamanager\Adapter::$idname > \Tuxxedo\Datamanager\Adapter\*::ID_NAME
+	 - \Tuxxedo\Datamanager\Adapter::$tablename > \Tuxxedo\Datamanager\Adapter\*::TABLE_NAME
+	Changed the iteratable class to be an interface (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)
@@ -128,10 +131,12 @@
 	Fixed an issue that would cause some components to not being able to be loaded on case sensitive file systems (Datamanagers, Helpers & Style storage)
 	Fixed a bug in api_analyze.php so that it will use the correct datatype + depth for parameters (Kalle)
 	Fixed a bug in api_analyze.php so that namespaces using curly braces will be correctly picked up (Kalle)
-	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a  different name (Kalle)
+	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a different name (Kalle)
 	Fixed a bug in api_analyze.php so that properties declared with 'var' are considered 'public' (Kalle)
+	Fixed a bug in api_analyze.php so that docblock descriptions are correctly covered to UTF-8 (Kalle)
 	Fixed a styling issue on the Options DevTools page if the virtual 'orphan' category was present (Kalle)
 	Fixed a bug in the SQLite database driver, causing dublicate data to be allocated (Kalle)
+	Fixed a bug in the DevTools requirement check, causing a warning if an optional requirement is not present to mark it as a mandatory requirement was not met (Kalle)
 
 	Removed the optional requirement on getopt() (Kalle)
 	Removed the magic 'acl' property from controllers (Kalle)
@@ -173,7 +178,8 @@
 	 - tuxxedo_error()
 	 - tuxxedo_error_list()
 	Removed the exception that could be thrown when creating new helpers (Kalle)
-	Removed the clutter code in the bootstraper and re-implemented it using the \Tuxxedo\Bootstraper hooks (Kalle)
+	Removed the clutter code in the bootstraper and re-implemented it using the \Tuxxedo\Bootstraper hooks (Kalle)7
+	Removed \Tuxxedo\Registry::unload() (use \Tuxxedo\Registry::__unset()) (Kalle)
 
 	Template changes:
 	 - Updated

@@ -53,6 +53,34 @@
 	class Session extends Adapter
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'session';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'sessionid';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'sessions';
+
+
+		/**
 		 * Fields for validation of session
 		 *
 		 * @var		array
@@ -101,10 +129,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname				= 'session';
-			$this->tablename			= \TUXXEDO_PREFIX . 'sessions';
-			$this->idname				= 'sessionid';
-
 			$this->fields['useragent']['default']	= (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '');
 			$this->fields['location']['default']	= $_SERVER['SCRIPT_NAME'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '');
 

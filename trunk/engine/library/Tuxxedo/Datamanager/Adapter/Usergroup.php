@@ -58,6 +58,34 @@
 	class Usergroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'usergroup';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'usergroups';
+
+
+		/**
 		 * Fields for validation of usergroups
 		 *
 		 * @var		array
@@ -97,10 +125,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'usergroup';
-			$this->tablename	= \TUXXEDO_PREFIX . 'usergroups';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$usergroup = $registry->db->query('
@@ -141,7 +165,7 @@
 
 			$usergroups = $this->registry->datastore->usergroups;
 
-			unset($usergroups[$this['id']]);
+			unset($usergroups[$this->information['id']]);
 
 			if($this->context == parent::CONTEXT_SAVE)
 			{
@@ -152,10 +176,10 @@
 										FROM 
 											`' . \TUXXEDO_PREFIX . 'users` 
 										WHERE 
-											`usergroupid` = %d', $this['id']);
+											`usergroupid` = %d', $this->information['id']);
 
 				$virtual['users']		= ($query && $query->getNumRows() ? (integer) $query->fetchObject()->count : 0);
-				$usergroups[$this['id']] 	= $virtual;
+				$usergroups[$this->information['id']] 	= $virtual;
 			}
 
 			\ksort($usergroups);

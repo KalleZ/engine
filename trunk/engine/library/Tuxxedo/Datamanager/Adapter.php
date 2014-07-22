@@ -220,27 +220,6 @@
 		protected $registry;
 
 		/**
-		 * Datamanager name, set by the datamanager
-		 *
-		 * @var		string
-		 */
-		protected $dmname;
-
-		/**
-		 * Table name, set by the datamanager
-		 *
-		 * @var		array
-		 */
-		protected $tablename;
-
-		/**
-		 * Identifier name, set by the datamanager
-		 *
-		 * @var		array
-		 */
-		protected $idname;
-
-		/**
 		 * Identifier, if any
 		 *
 		 * @var		array
@@ -380,9 +359,9 @@
 			$this->context		= self::CONTEXT_NONE;
 			$this->options		|= self::OPT_LOAD_ONLY;
 
-			if(isset($this->data[$this->idname]))
+			if(isset($this->data[static::ID_NAME]))
 			{
-				unset($this->data[$this->idname]);
+				unset($this->data[static::ID_NAME]);
 			}
 		}
 
@@ -461,22 +440,22 @@
 
 			if($options & self::OPT_LOAD_ONLY)
 			{
-				$this->identifier = $this->fields[$this->idname]['value'] = NULL;
+				$this->identifier = $this->fields[static::ID_NAME]['value'] = NULL;
 			}
 
-			if(isset($this->fields[$this->idname]['validation']) && $this->fields[$this->idname]['validation'] == self::VALIDATE_IDENTIFIER)
+			if(isset($this->fields[static::ID_NAME]['validation']) && $this->fields[static::ID_NAME]['validation'] == self::VALIDATE_IDENTIFIER)
 			{
 				$query = $registry->db->query('
 								SELECT 
 									`%s` 
 								FROM 
-									`%s`', $this->idname, $this->tablename);
+									`%s`', static::ID_NAME, \TUXXEEDO_PREFIX . static::TABLE_NAME);
 
 				if($query && $query->getNumRows())
 				{
 					foreach($query as $row)
 					{
-						$this->identifier_cache[] = $row[$this->idname];
+						$this->identifier_cache[] = $row[static::ID_NAME];
 					}
 				}
 			}
@@ -790,7 +769,7 @@
 
 				foreach($this->invalid_fields as $field)
 				{
-					$multidata[$field] = ($intl && ($phrase = $this->registry->intl->find('dm_' . $this->dmname . '_' . $field, 'datamanagers')) !== false ? $phrase : $field);
+					$multidata[$field] = ($intl && ($phrase = $this->registry->intl->find('dm_' . static::DM_NAME . '_' . $field, 'datamanagers')) !== false ? $phrase : $field);
 				}
 
 				$this->context = self::CONTEXT_NONE;
@@ -799,7 +778,7 @@
 			}
 
 			$values		= '';
-			$virtual	= ($this->identifier !== NULL ? \array_merge([$this->idname => $this->identifier], $this->data) : $this->data);
+			$virtual	= ($this->identifier !== NULL ? \array_merge([static::ID_NAME => $this->identifier], $this->data) : $this->data);
 			$virtual_fields	= $this->getVirtualFields();
 			$n 		= \sizeof($virtual);
 
@@ -808,14 +787,14 @@
 				$n -= \sizeof($virtual_fields);
 			}
 
-			$new_identifier = isset($this->data[$this->idname]) && !$this->reidentify;
-			$sql		= ($new_identifier ? 'UPDATE `' . $this->tablename . '` SET ' : (($this->options & self::OPT_LOAD_ONLY) ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . $this->tablename . '` (');
+			$new_identifier = isset($this->data[static::ID_NAME]) && !$this->reidentify;
+			$sql		= ($new_identifier ? 'UPDATE `' . \TUXXEDO_PREFIX . static::TABLE_NAME . '` SET ' : (($this->options & self::OPT_LOAD_ONLY) ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . \TUXXEDO_PREFIX . static::TABLE_NAME . '` (');
 
 			foreach($virtual as $field => $data)
 			{
-				if(($field == $this->idname && ($this->options & self::OPT_LOAD_ONLY)) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
+				if(($field == static::ID_NAME && ($this->options & self::OPT_LOAD_ONLY)) || isset($this->fields[$field]['type']) && $this->fields[$field]['type'] == self::FIELD_VIRTUAL)
 				{
-					if($field == $this->idname && ($this->options & self::OPT_LOAD_ONLY))
+					if($field == static::ID_NAME && ($this->options & self::OPT_LOAD_ONLY))
 					{
 						--$n;
 					}
@@ -836,7 +815,7 @@
 
 			if($new_identifier)
 			{
-				$sql .= ' WHERE `' . $this->idname . '` = \'' . $this->registry->db->escape($this->identifier) . '\'';
+				$sql .= ' WHERE `' . static::ID_NAME . '` = \'' . $this->registry->db->escape($this->identifier) . '\'';
 			}
 			else
 			{
@@ -852,7 +831,7 @@
 
 			if(($new_id = $this->registry->db->getInsertId()))
 			{
-				$this->data[$this->idname] = $new_id;
+				$this->data[static::ID_NAME] = $new_id;
 			}
 
 			if($execute_hooks)
@@ -908,9 +887,9 @@
 
 			return($this->registry->db->equery('
 								DELETE FROM 
-									`' . $this->tablename . '`
+									`' . \TUXXEDO_PREFIX . static::TABLE_NAME . '`
 								WHERE 
-									`' . $this->idname . '` = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[$this->idname] : $this->identifier)));
+									`' . static::ID_NAME . '` = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[static::ID_NAME] : $this->identifier)));
 		}
 
 		/**
@@ -1034,7 +1013,7 @@
 		 */
 		protected function hooks(Adapter $self)
 		{
-			if(($self instanceof Hooks\Cache && !$self->rebuild()))
+			if(($self instanceof Hooks\Cache) && !$self->rebuild())
 			{
 				return(false);
 			}

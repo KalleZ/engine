@@ -56,6 +56,34 @@
 	class Template extends Adapter implements Hooks\Cache, Hooks\Resetable
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'template';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'templates';
+
+
+		/**
 		 * Fields for validation of templates
 		 *
 		 * @var		array
@@ -114,10 +142,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'template';
-			$this->tablename	= \TUXXEDO_PREFIX . 'templates';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$template = $registry->db->query('
@@ -249,7 +273,7 @@
 		public function rebuild()
 		{
 			$styleinfo 	= $this->registry->datastore->styleinfo;
-			$template 	= \TUXXEDO_DIR . '/styles/' . $styleinfo[$this['styleid']]['styledir'] . '/templates/' . $this['title'] . '.tuxx';
+			$template 	= \TUXXEDO_DIR . '/styles/' . $styleinfo[$this->information['styleid']]['styledir'] . '/templates/' . $this->information['title'] . '.tuxx';
 
 			if($this->context == parent::CONTEXT_DELETE)
 			{
@@ -258,11 +282,11 @@
 					return(false);
 				}
 
-				$ids = \explode(',', $styleinfo[$this['styleid']]['templateids']);
+				$ids = \explode(',', $styleinfo[$this->information['styleid']]['templateids']);
 
 				foreach($ids as $index => $id)
 				{
-					if($id == $this['id'])
+					if($id == $this->information['id'])
 					{
 						unset($ids[$index]);
 
@@ -270,20 +294,20 @@
 					}
 				}
 
-				$styleinfo[$this['styleid']]['templateids'] = \trim(\implode(',', $ids), ',');
+				$styleinfo[$this->information['styleid']]['templateids'] = \trim(\implode(',', $ids), ',');
 
 				return($this->registry->datastore->rebuild('styleinfo', $styleinfo));
 			}
 			elseif($this->context == parent::CONTEXT_SAVE)
 			{
-				if(!@\file_put_contents($template, $this['compiledsource']))
+				if(!@\file_put_contents($template, $this->information['compiledsource']))
 				{
 					return(false);
 				}
 
-				if(empty($styleinfo[$this['styleid']]['templateids']))
+				if(empty($styleinfo[$this->information['styleid']]['templateids']))
 				{
-					$styleinfo[$this['styleid']]['templateids'] = $this->data['id'];
+					$styleinfo[$this->information['styleid']]['templateids'] = $this->data['id'];
 				}
 				else
 				{

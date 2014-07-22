@@ -638,6 +638,8 @@
 			return(false);
 		}
 
+		$docblock['description'] = utf8_encode($docblock['description']);
+
 		return($docblock);
 	}
 

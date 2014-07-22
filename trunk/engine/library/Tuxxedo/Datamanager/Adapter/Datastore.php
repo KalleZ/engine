@@ -55,6 +55,34 @@
 	class Datastore extends Adapter
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'datastore';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'name';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'datastore';
+
+
+		/**
 		 * Fields for validation of datastore elements
 		 *
 		 * @var		array
@@ -85,10 +113,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'datastore';
-			$this->tablename	= \TUXXEDO_PREFIX . 'datastore';
-			$this->idname		= 'name';
-
 			if($identifier !== NULL)
 			{
 				$element = $registry->db->equery('

@@ -169,7 +169,7 @@
 		 */
 		public function end()
 		{
-			call_user_func($this->callback_hook, $this->log_data);
+			\call_user_func($this->callback_hook, $this->log_data);
 		}
 	}
 ?>

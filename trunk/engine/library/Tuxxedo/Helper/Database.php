@@ -47,11 +47,6 @@
 	 * \Tuxxedo\Database for usage, if not then it can be manually set 
 	 * using the 'setInstance' method.
 	 *
-	 * Parameters used by this class are sent directly as a part of the 
-	 * generated SQL query. Only parameters that specifically says so are 
-	 * escaped using the database escaping mechanism assigned to the 
-	 * database registry instance.
-	 *
 	 * Note that some drivers may not be fully supported, in paticular 
 	 * SQLite is not supported by some of the table operational methods.
 	 *
@@ -59,6 +54,8 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 *
+	 * @changelog		1.2.0				This class now escapes all input unlike before where only some were escaped
 	 */
 	class Database
 	{
@@ -155,7 +152,7 @@
 		{
 			if($index != '*')
 			{
-				$index = '`' . $index . '`';
+				$index = '`' . $this->instance->escape($index) . '`';
 			}
 
 			$whereclaus = '';
@@ -175,7 +172,7 @@
 									COUNT(%s) as \'total\' 
 								FROM 
 									`%s`
-								%s', $index, $table, $whereclause);
+								%s', $index, $this->instance->escape($table), $whereclause);
 
 			if(!$query || !$query->getNumRows())
 			{

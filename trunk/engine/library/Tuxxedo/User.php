@@ -347,7 +347,7 @@
 		 * or a customed defined based on the usergroup id
 		 *
 		 * @param	integer			The usergroup id to check, if NULL is passed then the current logged in usergroup is returned
-		 * @return	object			Returns a standard object with the relevant usergroup information if found, otherwise false is returned
+		 * @return	\stdClass		Returns a standard object with the relevant usergroup information if found, otherwise false is returned
 		 */
 		public function getUserGroupInfo($id = NULL)
 		{

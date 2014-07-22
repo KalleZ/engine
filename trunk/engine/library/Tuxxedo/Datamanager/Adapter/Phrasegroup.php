@@ -57,6 +57,28 @@
 	class Phrasegroup extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 */
+		const DM_NAME			= 'phrasegroup';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 */
+		const TABLE_NAME		= 'phrasegroups';
+
+
+		/**
 		 * Fields for validation of phrase groups
 		 *
 		 * @var		array
@@ -94,10 +116,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'phrasegroup';
-			$this->tablename	= \TUXXEDO_PREFIX . 'phrasegroups';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$phrasegroup = $registry->db->equery('

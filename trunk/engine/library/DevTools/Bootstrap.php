@@ -64,8 +64,8 @@
 		 */
 		public static function preInit($flags)
 		{
-			require(TUXXEDO_LIBRARY . '/DevTools/functions.php');
-			require(TUXXEDO_LIBRARY . '/DevTools/functions_widget.php');
+			require(\TUXXEDO_LIBRARY . '/DevTools/functions.php');
+			require(\TUXXEDO_LIBRARY . '/DevTools/functions_widget.php');
 
 			parent::setHook(parent::FLAG_CORE, function(Registry $registry, Array $preloadables = NULL, &$configuration = NULL)
 			{
@@ -90,8 +90,8 @@
 
 			parent::setHook(parent::FLAG_DATABASE, function(Registry $registry, Array $preloadables = NULL, &$configuration = NULL)
 			{
-				$db_driver	= strtolower($configuration['database']['driver']);
-				$db_subdriver	= strtolower($configuration['database']['subdriver']);
+				$db_driver	= \strtolower($configuration['database']['driver']);
+				$db_subdriver	= \strtolower($configuration['database']['subdriver']);
 
 				if(($db_driver == 'sqlite' || ($db_driver == 'pdo' && $db_subdriver == 'sqlite')) && !empty($configuration['devtools']['database']))
 				{

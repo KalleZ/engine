@@ -56,6 +56,34 @@
 	class Optioncategory extends Adapter implements Hooks\Cache
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const DM_NAME			= 'optioncategory';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const ID_NAME			= 'name';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 *
+		 * @since	1.2.0
+		 */
+		const TABLE_NAME		= 'optioncategories';
+
+
+		/**
 		 * Fields for validation of option categories
 		 *
 		 * @var		array
@@ -81,10 +109,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'optioncategory';
-			$this->tablename	= \TUXXEDO_PREFIX . 'optioncategories';
-			$this->idname		= 'name';
-
 			if($identifier !== NULL)
 			{
 				$category = $registry->db->equery('

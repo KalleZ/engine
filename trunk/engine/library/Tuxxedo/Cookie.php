@@ -120,7 +120,7 @@
 		 */
 		public static function set($name, $value, $prefix = true, Array $options = NULL)
 		{
-			$options = ($options ? array_merge(self::$options, $options) : self::$options);
+			$options = ($options ? \array_merge(self::$options, $options) : self::$options);
 
 			if($prefix)
 			{
@@ -129,7 +129,7 @@
 
 			$_COOKIE[$name] = $value;
 
-			setcookie($name, $value, \TIMENOW_UTC + $options['expires'], $options['path'], $options['domain'], $options['secure'], true);
+			\setcookie($name, $value, \TIMENOW_UTC + $options['expires'], $options['path'], $options['domain'], $options['secure'], true);
 		}
 
 		/**
@@ -181,7 +181,7 @@
 			{
 				unset($_COOKIE[self::$options['prefix'] . $offset]);
 
-				setcookie(self::$options['prefix'] . $offset, '', \TIMENOW_UTC - 604800, self::$options['path'], self::$options['domain'], self::$options['secure'], true);
+				\setcookie(self::$options['prefix'] . $offset, '', \TIMENOW_UTC - 604800, self::$options['path'], self::$options['domain'], self::$options['secure'], true);
 			}
 		}
 	}

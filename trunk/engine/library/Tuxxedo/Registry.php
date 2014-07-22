@@ -143,19 +143,6 @@
 		}
 
 		/**
-		 * Unloads a registry object
-		 *
-		 * @param	string			The registry object to unload
-		 * @return	void			No value is returned
-		 *
-		 * @since	1.1.0
-		 */
-		public function unload($name)
-		{
-			self::$instance->__unset($name);
-		}
-
-		/**
 		 * Initializes a new object instance, this implements the 
 		 * singleton pattern and can be called from any context and 
 		 * the same object is returned

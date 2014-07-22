@@ -55,6 +55,28 @@
 	class Language extends Adapter implements Hooks\Cache, Hooks\VirtualDispatcher
 	{
 		/**
+		 * Datamanager name
+		 *
+		 * @var		string
+		 */
+		const DM_NAME			= 'language';
+
+		/**
+		 * Identifier name for the datamanager
+		 *
+		 * @var		string
+		 */
+		const ID_NAME			= 'id';
+
+		/**
+		 * Table name for the datamanager
+		 *
+		 * @var		string
+		 */
+		const TABLE_NAME		= 'languages';
+
+
+		/**
 		 * Fields for validation of languages
 		 *
 		 * @var		array
@@ -104,10 +126,6 @@
 		 */
 		public function __construct(Registry $registry, $identifier = NULL, $options = parent::OPT_DEFAULT, Adapter $parent = NULL)
 		{
-			$this->dmname		= 'language';
-			$this->tablename	= \TUXXEDO_PREFIX . 'languages';
-			$this->idname		= 'id';
-
 			if($identifier !== NULL)
 			{
 				$language = $registry->db->query('
@@ -143,16 +161,16 @@
 		 */
 		public static function isValidISOTitle(Adapter $dm, Registry $registry, $iso = NULL)
 		{
-			$len = strlen($iso);
+			$len = \strlen($iso);
 
 			if($len != 2 && $len != 5)
 			{
 				return(false);
 			}
 
-			foreach(str_split($iso) as $index => $char)
+			foreach(\str_split($iso) as $index => $char)
 			{
-				if(is_numeric($char) || ($len == 5 && $index == 2 && $char != '-'))
+				if(\is_numeric($char) || ($len == 5 && $index == 2 && $char != '-'))
 				{
 					return(false);
 				}
