@@ -721,7 +721,7 @@
 	$statistics				= new stdClass;
 	$statistics->no_docblock		= 0;
 	$statistics->no_docblock_list		= [];
-	$statistics->elements			= 0;
+	$statistics->elements			= $statistics->ignored = 0;
 	$statistics->counter			= new stdClass;
 	$statistics->counter->namespaces	= [];
 	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->reuses = 0; $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->traits = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
@@ -794,6 +794,8 @@
 
 					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
+						++$statistics->ignored;
+
 						continue;
 					}
 
@@ -889,6 +891,8 @@
 
 					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
+						++$statistics->ignored;
+
 						continue;
 					}
 
@@ -972,6 +976,8 @@
 
 					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
+						++$statistics->ignored;
+
 						continue;
 					}
 
@@ -1070,8 +1076,11 @@
 
 									continue;
 								}
-								elseif($matchcheck && $t == T_CONSTANT_ENCAPSED_STRING)
+								elseif($matchcheck)
 								{
+									$index 		= $index_copy;
+									$define_token	= $t;
+
 									goto process_define;
 								}
 								elseif($t == ',')
@@ -1090,15 +1099,21 @@
 					{
 						process_define:
 						{
-							if(($const = lexical_scan($tokens_copy, $index, T_CONSTANT_ENCAPSED_STRING)) == false)
+							if(($const = lexical_scan($tokens_copy, $index, (isset($define_token) ? $define_token : T_CONSTANT_ENCAPSED_STRING))) == false)
 							{
+								unset($define_token);
+
 								continue;
 							}
+
+							unset($define_token);
 
 							$docblock = lexical_docblock($tokens_copy, $context->last_docblock);
 
 							if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 							{
+								++$statistics->ignored;
+
 								continue;
 							}
 
@@ -1143,6 +1158,8 @@
 
 					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
+						++$statistics->ignored;
+
 						continue;
 					}
 
@@ -1216,6 +1233,8 @@
 
 					if(isset($docblock['tags']) && isset($docblock['tags']->ignore))
 					{
+						++$statistics->ignored;
+
 						continue;
 					}
 
@@ -1340,6 +1359,11 @@
 	}
 
 	IO::ul(IO::TAG_END);
+
+	if($statistics->ignored)
+	{
+		IO::li('Elements marked with ignore: ' . $statistics->ignored, IO::STYLE_BOLD);
+	}
 
 	if($statistics->no_docblock_list)
 	{

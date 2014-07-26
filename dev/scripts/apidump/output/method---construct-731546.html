@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Exception\Translated::__construct()</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.1.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedoexceptiontranslated-250957.html#methods">Method</a>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%" nowrap="nowrap">
+							library/Tuxxedo/Exception/Translated.php
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedoexception-461229.html">\Tuxxedo\Exception</a>
+	</td>
+</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedoexceptiontranslated-250957.html">\Tuxxedo\Exception\Translated</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Modifiers:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		public
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<fieldset>
+				<legend>Prototype</legend>
+				<table cellspacing="4" cellpadding="0" style="width: 100%;">
+					<tr>
+						<td class="value" style="width: 100%">
+							void __construct(string, string, mixed)
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+
+			<div class="infobox">
+				Constructs a new internalizationized exception, meaning that the
+contents of this exception may be formatted for internationalized
+usage.
+
+If the internationalization object is not instanciated, then the
+message is used as a raw translation, if the translation parameter
+is specified then its formatted using a sprintf-alike syntax,
+example:
+
+
+
+If the translation method is specified and the component is not loaded, then
+formatting will be applied internally.
+
+Now if the internationalization component is loaded, then the above
+would have outputted the same, however internally it would lookup the
+phrase name 'age_limit_x' within the internationalization object, and
+find its translation phrase and format it like regular phrases are
+formatted with the {1}, {2}, {N} syntax.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The untranslated message, in case of the internationalization library was not loaded
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The translation phrase
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
+	<legend><strong>mixed</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				Optionally translation phrase replacement or parameter 1, 2, N, ...
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>Example #1</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">try<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;</span><span style="color: #0000BB">Exception</span><span style="color: #007700">\</span><span style="color: #0000BB">Translated</span><span style="color: #007700">(</span><span style="color: #DD0000">'You&nbsp;are&nbsp;not&nbsp;old&nbsp;enough&nbsp;to&nbsp;view&nbsp;this&nbsp;content,&nbsp;you&nbsp;must&nbsp;be&nbsp;%d&nbsp;years&nbsp;old'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'age_limit_x'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">18</span><span style="color: #007700">);<br />}<br />catch(</span><span style="color: #0000BB">Exception</span><span style="color: #007700">\</span><span style="color: #0000BB">Translated&nbsp;$e</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$e</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getMessage</span><span style="color: #007700">();<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="class-tuxxedoexceptiontranslated-250957.html">\Tuxxedo\Exception\Translated</a></li>
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental). </em>
+		</p>
+	</body>
+</html>

@@ -412,7 +412,7 @@
 		 *
 		 * @since	1.2.0
 		 */
-		public function unload($list)
+		public function __unset($list)
 		{
 			if(!$list)
 			{
