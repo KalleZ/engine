@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Debug\TraceFrame</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedodebug-441961.html">\Tuxxedo\Debug</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Debug/TraceFrame.php
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Trace frame, this class is used together with the backtracing
+class, each frame returned is an instance of this class.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-callback-951440.html">FLAG_CALLBACK</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Callback?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-exception-147099.html">FLAG_EXCEPTION</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Exception?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-handler-881027.html">FLAG_HANDLER</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Handler?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-include-213716.html">FLAG_INCLUDE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Flag constant - Is Include?</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-call-351228.html">$call</a></td>
+	<td nowrap="nowrap" style="width: 100%">Call, including prototype (without arguments)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-callargs-800338.html">$callargs</a></td>
+	<td nowrap="nowrap" style="width: 100%">Call, including prototype and argument list</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-current-190010.html">$current</a></td>
+	<td nowrap="nowrap" style="width: 100%">Whether or not this is the 'current' frame (the one that triggered the error)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-file-180275.html">$file</a></td>
+	<td nowrap="nowrap" style="width: 100%">File path (full path)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-flags-462771.html">$flags</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Boolean flags</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-frame-124287.html">$frame</a></td>
+	<td nowrap="nowrap" style="width: 100%">Frame id (the number of the frame in the trace)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-line-647835.html">$line</a></td>
+	<td nowrap="nowrap" style="width: 100%">Line number</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-notes-343458.html">$notes</a></td>
+	<td nowrap="nowrap" style="width: 100%">Notes</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-reflection-call-025143.html">$reflection_call</a></td>
+	<td nowrap="nowrap" style="width: 100%">Reflection call, this is the 'call' version thats passed as the first parameter to each Reflection i...</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-reflection-class-822494.html">$reflection_class</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Reflection class to call when using the getReflection() method</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-499360.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getflags-144618.html">getFlags()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the boolean flags bitfield</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getreflection-702043.html">getReflection()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets a new reflection instance of this call</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-iscallback-121034.html">isCallback()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is a callback</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isexception-336760.html">isException()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is an exception</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-ishandler-273283.html">isHandler()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is a handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isinclude-082930.html">isInclude()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks whether or not this frame is an include</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental). </em>
+		</p>
+	</body>
+</html>

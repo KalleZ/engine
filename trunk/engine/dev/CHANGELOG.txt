@@ -134,6 +134,7 @@
 	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a different name (Kalle)
 	Fixed a bug in api_analyze.php so that properties declared with 'var' are considered 'public' (Kalle)
 	Fixed a bug in api_analyze.php so that docblock descriptions are correctly covered to UTF-8 (Kalle)
+	Fixed a bug in api_analyze.php so that constants declared with define() are parsed correctly (Kalle)
 	Fixed a styling issue on the Options DevTools page if the virtual 'orphan' category was present (Kalle)
 	Fixed a bug in the SQLite database driver, causing dublicate data to be allocated (Kalle)
 	Fixed a bug in the DevTools requirement check, causing a warning if an optional requirement is not present to mark it as a mandatory requirement was not met (Kalle)

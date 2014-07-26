@@ -10,7 +10,7 @@
 					<tr>
 						<td>Availability:</td>
 						<td class="value" style="width: 100%">
-							Engine {$since}
+							{$appname} {$since}
 						</td>
 					</tr>
 					<tr>

@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Exception\Xml</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedoexception-461229.html">\Tuxxedo\Exception</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Exception/Xml.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedoexceptionbasic-986315.html">\Tuxxedo\Exception\Basic</a>
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				XML Exception<br />Exception designed to carry error information from a failed
+XML parsing attempt.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-type-expat-128306.html">TYPE_EXPAT</a></td>
+	<td nowrap="nowrap" style="width: 100%">Exception type constant - EXPAT</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-type-libxml-291946.html">TYPE_LIBXML</a></td>
+	<td nowrap="nowrap" style="width: 100%">Exception type constant - LibXML (default)</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-parser-935900.html">$parser</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The XML parser that generated this exception</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-type-477271.html">$type</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The XML parser type (One of the TYPE_* constants)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-xml-error-470410.html">$xml_error</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The LibXML error information</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-586243.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new XML exception</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getcolumn-832673.html">getColumn()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the column of where the parsing error occured</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getlevel-738961.html">getLevel()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the level (depth) of where the parsing error occured</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getparser-600364.html">getParser()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the parser if any that generated this exception</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-gettype-879823.html">getType()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the backend library used for parsing for this parser</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getxmlline-995604.html">getXmlLine()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets the line of where the error occured</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2 (experimental). </em>
+		</p>
+	</body>
+</html>

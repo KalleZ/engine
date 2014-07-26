@@ -5,3 +5,10 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2
 	--------------------------------------------------
+
+
+	Make some options for api_analyze.php like api_indexer.php has
+
+	Test the __unset calls
+
+	1.1.0 does not have a tag (did we have any RCs that might not have been tagged either?)
