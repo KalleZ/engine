@@ -724,7 +724,7 @@
 	$statistics->elements			= $statistics->ignored = 0;
 	$statistics->counter			= new stdClass;
 	$statistics->counter->namespaces	= [];
-	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->reuses = 0; $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->traits = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
+	$statistics->counter->constants		= $statistics->counter->functions = $statistics->counter->aliases = $statistics->counter->reuses = $statistics->counter->classes = $statistics->counter->interfaces = $statistics->counter->traits = $statistics->counter->object_constants = $statistics->counter->properties = $statistics->counter->methods = 0;
 
 	IO::signature();
 	IO::headline('Lexical API analyze', 1);

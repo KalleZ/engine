@@ -455,7 +455,9 @@
 				{
 					$cache_buffer = [];
 
+					$registry->set('phrase', []);
 					$registry->intl->cache(self::$preloadables['phrasegroups'], $cache_buffer) or \tuxxedo_multi_error('Unable to load phrase groups', $cache_buffer);
+					$registry->intl->setPhraseRef($registry->phrase);
 
 					unset($cache_buffer);
 
