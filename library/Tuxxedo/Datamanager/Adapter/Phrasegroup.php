@@ -197,7 +197,7 @@
 
 			$id		= (isset($this->data['title']) ? $this->data['title'] : $this->identifier);
 			$languageid	= $this->data['languageid'];
-			$ptr 		= (isset($datastore[$languageid]) ? &$datastore[$languageid] : NULL);
+			$ptr 		= (isset($datastore[$languageid]) ? $datastore[$languageid] : NULL);
 
 			if($this->context == parent::CONTEXT_DELETE && $ptr && isset($ptr[$id]))
 			{

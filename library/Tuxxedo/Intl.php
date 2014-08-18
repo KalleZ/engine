@@ -88,6 +88,43 @@
 		}
 
 		/**
+		 * Unloads a phrasegroup from current memory
+		 *
+		 * @param	string|array			The name of the phrasegroup(s) to remove from the cache
+		 * @return	boolean				Returns true on success and false on error
+		 *
+		 * @since	1.2.0
+		 */
+		public function __unset($list)
+		{
+			if(!$list)
+			{
+				return(false);
+			}
+
+			if(\is_array($list))
+			{
+				foreach($list as $group)
+				{
+					if(isset($this->phrases[$group]))
+					{
+						unset($this->phrases[$group]);
+					}
+				}
+
+				return(true);
+			}
+			elseif(!isset($this->phrases[$list]))
+			{
+				return(false);
+			}
+
+			unset($this->phrases[$list]);
+
+			return(true);
+		}
+
+		/**
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
@@ -150,14 +187,15 @@
 		}
 
 		/**
-		 * Caches a phrase group, trying to cache an already loaded 
-		 * phrase group will recache it
+		 * Caches a phrase group or multiple
 		 *
 		 * @param	array				A list of phrase groups to load
 		 * @param	array				An array passed by reference, if one or more elements should happen not to be loaded, then this array will contain the names of those elements
 		 * @return	boolean				Returns true on success otherwise false
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an exception if the query should fail
+		 *
+		 * @changelog	1.2.0				This method no longer magically sets the global $phrase variable
 		 */
 		public function cache(Array $phrasegroups, Array &$error_buffer = NULL)
 		{
@@ -205,8 +243,6 @@
 				$this->phrases[$row['phrasegroup']][$row['title']] = $row['translation'];
 			}
 
-			$this->registry->set('phrase', $this->getPhrases());
-
 			return(true);
 		}
 
@@ -247,6 +283,17 @@
 			}
 
 			return(\array_keys($this->phrases));
+		}
+
+		/**
+		 * Sets a phrase variable reference
+		 *
+		 * @param	mixed				The variable to reference to
+		 * @return	void				No value is returned
+		 */
+		public function setPhraseRef(&$ptr)
+		{
+			$ptr = &$this->phrases;
 		}
 
 		/**
@@ -402,43 +449,6 @@
 			}
 
 			return($codes);
-		}
-
-		/**
-		 * Unloads a phrasegroup from current memory
-		 *
-		 * @param	string|array			The name of the phrasegroup(s) to remove from the cache
-		 * @return	boolean				Returns true on success and false on error
-		 *
-		 * @since	1.2.0
-		 */
-		public function __unset($list)
-		{
-			if(!$list)
-			{
-				return(false);
-			}
-
-			if(\is_array($list))
-			{
-				foreach($list as $group)
-				{
-					if(isset($this->phrases[$group]))
-					{
-						unset($this->phrases[$group]);
-					}
-				}
-
-				return(true);
-			}
-			elseif(!isset($this->phrases[$list]))
-			{
-				return(false);
-			}
-
-			unset($this->phrases[$list]);
-
-			return(true);
 		}
 
 		/**

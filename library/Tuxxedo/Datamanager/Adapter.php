@@ -449,7 +449,7 @@
 								SELECT 
 									`%s` 
 								FROM 
-									`%s`', static::ID_NAME, \TUXXEEDO_PREFIX . static::TABLE_NAME);
+									`%s`', static::ID_NAME, \TUXXEDO_PREFIX . static::TABLE_NAME);
 
 				if($query && $query->getNumRows())
 				{

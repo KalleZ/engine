@@ -882,6 +882,7 @@
 	$nodev	= IO::input('nodev');
 	$output	= IO::input('outputdir');
 	$tmpdir	= IO::input('templatedir');
+	$ext 	= IO::input('outputext');
 
 	$json 	= json_decode(file_get_contents(((($inputf = IO::input('inputfile')) !== false) ? $inputf : './apidump/engine_api.json')));
 
@@ -917,7 +918,7 @@
 
 
 	Template::$outputdir 	= $output;
-	Template::$outputext	= (empty($ext = IO::input('outputext')) ? 'html' : $ext);
+	Template::$outputext	= (empty($ext) ? 'html' : $ext);
 	Template::$templatedir	= $tmpdir;
 
 	if(($appname = IO::input('appname')) !== false)
@@ -925,6 +926,7 @@
 		Template::$appname = $appname;
 	}
 
+	$dottuxxedo		= false;
 	$hashreg		= new HashRegistry($output);
 	$constants 		= $functions = $classes = $interfaces = $traits = $namespaces = [];
 
@@ -946,6 +948,8 @@
 								'rendered'	=> time()
 								];
 			}
+
+			$dottuxxedo = true;
 
 			continue;
 		}
@@ -986,6 +990,14 @@
 				$namespaces[] = array_merge(['name' => $name, 'file' => $file, 'hash' => $hashreg->hash('namespace', array_merge((array) $meta, ['name' => $name]), $file), 'dev' => $isdev], (array) $meta);
 			}
 		}
+	}
+
+	if(!$dottuxxedo)
+	{
+		IO::ul(IO::TAG_END);
+
+		IO::text('Error: No meta information retrieved, invalid format');
+		exit;
 	}
 
 	$generated_tocs = [];

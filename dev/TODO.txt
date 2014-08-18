@@ -7,8 +7,12 @@
 	--------------------------------------------------
 
 
-	Make some options for api_analyze.php like api_indexer.php has
+	Change the \Tuxxedo\Intl::__unset() call back into \Tuxxedo\Intl::unload()
+		OR
+	Implement \Tuxxedo\Intl::__get() so that we can abstract \Tuxxedo\Intl::$phrases
 
-	Test the __unset calls
+	Add missing phrases from check_dm_phrases.php
+
+	Cleanse the working database
 
 	1.1.0 does not have a tag (did we have any RCs that might not have been tagged either?)
