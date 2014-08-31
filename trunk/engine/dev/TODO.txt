@@ -7,12 +7,6 @@
 	--------------------------------------------------
 
 
-	Change the \Tuxxedo\Intl::__unset() call back into \Tuxxedo\Intl::unload()
-		OR
-	Implement \Tuxxedo\Intl::__get() so that we can abstract \Tuxxedo\Intl::$phrases
-
-	Add missing phrases from check_dm_phrases.php
-
-	Cleanse the working database
+	Fix the HashRegistry so that it properly diffinates between ->hashes & ->hregistry
 
 	1.1.0 does not have a tag (did we have any RCs that might not have been tagged either?)
