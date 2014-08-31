@@ -238,7 +238,7 @@
 			$tests 		= [
 						'PHP 5.4.0'	=> new Test(Test::OPT_VERSION | Test::OPT_REQUIRED, ['5.4.0', PHP_VERSION]), 
 						'SPL'		=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, ['spl']), 
-						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_REQUIRED, ['filter']), 
+						'filter'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['filter']), 
 						'session'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['session']), 
 						'json'		=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['json']), 
 						'OpenSSL'	=> new Test(Test::OPT_EXTENSION | Test::OPT_OPTIONAL, ['openssl']), 

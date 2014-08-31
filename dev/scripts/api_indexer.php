@@ -257,6 +257,14 @@
 		protected $hashes;
 
 		/**
+		 * Checked hashes, used to diffinate between old and non existant entries 
+		 * and new ones
+		 *
+		 * @var		\stdClass
+		 */
+		protected $hregistry;
+
+		/**
 		 * Output directory
 		 *
 		 * @var		string
@@ -272,7 +280,8 @@
 		 */
 		public function __construct($outputdir)
 		{
-			$this->outputdir = $outputdir;
+			$this->outputdir 	= $outputdir;
+			$this->hregistry	= new stdClass;
 
 			if(is_file($outputdir . '/api_hashes.json') && ($json = json_decode(file_get_contents($outputdir . '/api_hashes.json'))) !== false)
 			{
@@ -291,7 +300,7 @@
 		{
 			if($this->hashes)
 			{
-				file_put_contents($this->outputdir . '/api_hashes.json', json_encode($this->hashes));
+				file_put_contents($this->outputdir . '/api_hashes.json', json_encode($this->hregistry));
 			}
 		}
 
@@ -314,10 +323,10 @@
 
 			if(!isset($this->hashes->{$hinfo['hash']}))
 			{
-				return($this->hashes->{$hinfo['hash']} = $hinfo['file']);
+				$this->hregistry->{$hinfo['hash']} = $hinfo['file'];
 			}
 
-			return($this->hashes->{$hinfo['hash']});
+			return($this->hregistry->{$hinfo['hash']});
 		}
 
 		/**
