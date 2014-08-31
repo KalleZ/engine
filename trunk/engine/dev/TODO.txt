@@ -8,5 +8,3 @@
 
 
 	Fix the HashRegistry so that it properly diffinates between ->hashes & ->hregistry
-
-	1.1.0 does not have a tag (did we have any RCs that might not have been tagged either?)
