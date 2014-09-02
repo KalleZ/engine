@@ -6,5 +6,4 @@
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2
 	--------------------------------------------------
 
-
-	Fix the HashRegistry so that it properly diffinates between ->hashes & ->hregistry
+	Investigate further the \Tuxxedo\Intl::__unset() method in the docs

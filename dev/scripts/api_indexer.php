@@ -260,37 +260,26 @@
 		 * Checked hashes, used to diffinate between old and non existant entries 
 		 * and new ones
 		 *
-		 * @var		\stdClass
+		 * @var		array
 		 */
-		protected $hregistry;
+		protected $hregistry		= [];
 
 		/**
 		 * Output directory
 		 *
 		 * @var		string
 		 */
-		protected $outputdir		= '';
+		public static $outputdir	= '';
 
 
 		/**
 		 * Constructor, this will attempt to see if the file 'api_hashes.json' 
 		 * exists within the output directory, and load it.
-		 *
-		 * @param	string			The output directory
 		 */
-		public function __construct($outputdir)
+		public function __construct()
 		{
-			$this->outputdir 	= $outputdir;
-			$this->hregistry	= new stdClass;
+			$this->hashes = (is_file(self::$outputdir . '/api_hashes.json') && ($json = json_decode(file_get_contents(self::$outputdir . '/api_hashes.json'))) !== false ? (object) $json : new stdClass);
 
-			if(is_file($outputdir . '/api_hashes.json') && ($json = json_decode(file_get_contents($outputdir . '/api_hashes.json'))) !== false)
-			{
-				$this->hashes = (object) $json;
-			}
-			else
-			{
-				$this->hashes = new stdClass;
-			}
 		}
 
 		/**
@@ -298,9 +287,19 @@
 		 */
 		public function __destruct()
 		{
+			$hashes = array_diff(array_keys((array) $this->hashes), array_keys($this->hregistry));
+
+			if($hashes)
+			{
+				foreach($hashes as $hash)
+				{
+					unset($this->hashes->{$hash});
+				}
+			}
+
 			if($this->hashes)
 			{
-				file_put_contents($this->outputdir . '/api_hashes.json', json_encode($this->hregistry));
+				file_put_contents(self::$outputdir . '/api_hashes.json', json_encode($this->hashes));
 			}
 		}
 
@@ -321,12 +320,14 @@
 				return(false);
 			}
 
+			$this->hregistry[$hinfo['hash']] = true;
+
 			if(!isset($this->hashes->{$hinfo['hash']}))
 			{
-				$this->hregistry->{$hinfo['hash']} = $hinfo['file'];
+				return($this->hashes->{$hinfo['hash']} = $hinfo['file']);
 			}
 
-			return($this->hregistry->{$hinfo['hash']});
+			return($this->hashes->{$hinfo['hash']});
 		}
 
 		/**
@@ -925,8 +926,7 @@
 	IO::ul();
 	IO::li('Reading API dump...');
 
-
-	Template::$outputdir 	= $output;
+	Template::$outputdir 	= HashRegistry::$outputdir = $output;
 	Template::$outputext	= (empty($ext) ? 'html' : $ext);
 	Template::$templatedir	= $tmpdir;
 
@@ -936,7 +936,7 @@
 	}
 
 	$dottuxxedo		= false;
-	$hashreg		= new HashRegistry($output);
+	$hashreg		= new HashRegistry;
 	$constants 		= $functions = $classes = $interfaces = $traits = $namespaces = [];
 
 	foreach($json as $file => $struct)
