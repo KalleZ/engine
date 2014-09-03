@@ -5,5 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2
 	--------------------------------------------------
-
-	Investigate further the \Tuxxedo\Intl::__unset() method in the docs

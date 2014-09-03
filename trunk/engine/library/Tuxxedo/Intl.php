@@ -88,43 +88,6 @@
 		}
 
 		/**
-		 * Unloads a phrasegroup from current memory
-		 *
-		 * @param	string|array			The name of the phrasegroup(s) to remove from the cache
-		 * @return	boolean				Returns true on success and false on error
-		 *
-		 * @since	1.2.0
-		 */
-		public function unload($list)
-		{
-			if(!$list)
-			{
-				return(false);
-			}
-
-			if(\is_array($list))
-			{
-				foreach($list as $group)
-				{
-					if(isset($this->phrases[$group]))
-					{
-						unset($this->phrases[$group]);
-					}
-				}
-
-				return(true);
-			}
-			elseif(!isset($this->phrases[$list]))
-			{
-				return(false);
-			}
-
-			unset($this->phrases[$list]);
-
-			return(true);
-		}
-
-		/**
 		 * Magic method called when creating a new instance of the 
 		 * object from the registry
 		 *
@@ -449,6 +412,43 @@
 			}
 
 			return($codes);
+		}
+
+		/**
+		 * Unloads a phrasegroup from current memory
+		 *
+		 * @param	string|array			The name of the phrasegroup(s) to remove from the cache
+		 * @return	boolean				Returns true on success and false on error
+		 *
+		 * @since	1.2.0
+		 */
+		public function unload($list)
+		{
+			if(!$list)
+			{
+				return(false);
+			}
+
+			if(\is_array($list))
+			{
+				foreach($list as $group)
+				{
+					if(isset($this->phrases[$group]))
+					{
+						unset($this->phrases[$group]);
+					}
+				}
+
+				return(true);
+			}
+			elseif(!isset($this->phrases[$list]))
+			{
+				return(false);
+			}
+
+			unset($this->phrases[$list]);
+
+			return(true);
 		}
 
 		/**
