@@ -593,7 +593,7 @@
 
 		foreach(['final', 'private', 'protected', 'static'] as $modifier)
 		{
-			if($meta['metadata']->{$modifier})
+			if(isset($meta['metadata']->{$modifier}) && $meta['metadata']->{$modifier})
 			{
 				$template	= new Template('tag');
 				$template->tag	= ucfirst($modifier);
