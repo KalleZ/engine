@@ -95,6 +95,16 @@
 		 */
 		protected $internal_parser		= self::PARSER_SIMPLEXML;
 
+		/**
+		 * Internal XML pointer reference
+		 *
+		 * @var		array
+		 */
+		protected $ref				= [
+								'ptr'	=> NULL, 
+								'type'	=> NULL
+								];
+
 
 		/**
 		 * Constructs a new XML parser, this will auto determine the parser to use 
@@ -123,15 +133,10 @@
 		 */
 		protected function factory()
 		{
-			static $ptr, $refs;
+			static $refs;
 
-			if(!\is_array($ptr))
+			if(!\is_array($refs))
 			{
-				$ptr 	= [
-						'instance'		=> NULL, 
-						'type'			=> NULL
-						];
-
 				$refs 	= [
 						self::PARSER_SIMPLEXML	=> 'Simplexml', 
 						self::PARSER_DOM	=> 'Dom'
@@ -143,13 +148,13 @@
 				throw new Exception\Basic('No XML parser defined');
 			}
 
-			if($ptr['type'] != $this->internal_parser)
+			if($this->ref['type'] != $this->internal_parser)
 			{
-				$ptr['instance']	= Parser::factory($refs[$this->internal_parser]);
-				$ptr['type']		= $this->internal_parser;
+				$this->ref['ptr']	= Parser::factory($refs[$this->internal_parser]);
+				$this->ref['type']	= $this->internal_parser;
 			}
 
-			return($ptr['instance']);
+			return($this->ref['ptr']);
 		}
 
 		/**
@@ -160,7 +165,7 @@
 		 */
 		public function setInternalParser($parser)
 		{
-			if($parser > -1 || $parser < 5)
+			if($parser > 0 && $parser < 3)
 			{
 				$this->internal_parser = (integer) $parser;
 			}
@@ -207,6 +212,11 @@
 				throw new Exception\Basic('Unable to fetch contents of the XML file');
 			}
 
+			if($this->ref['ptr'] && $this->ref['type'] == $this->internal_parser)
+			{
+				return($this->ref['ptr']->parse($xml));
+			}
+
 			return($this->factory()->parse($xml));
 		}
 
@@ -221,6 +231,11 @@
 		 */
 		public function parseString($string)
 		{
+			if($this->ref['ptr'] && $this->ref['type'] == $this->internal_parser)
+			{
+				return($this->ref['ptr']->parse($string));
+			}
+
 			return($this->factory()->parse($string));
 		}
 
@@ -250,6 +265,11 @@
 			while(!\feof($stream))
 			{
 				$xml .= \fread($stream, self::READ_BLOCK_SIZE);
+			}
+
+			if($this->ref['ptr'] && $this->ref['type'] == $this->internal_parser)
+			{
+				return($this->ref['ptr']->parse($xml));
 			}
 
 			return($this->factory()->parse($xml));
