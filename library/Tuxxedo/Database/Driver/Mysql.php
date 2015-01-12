@@ -143,7 +143,7 @@
 					$format = 'Database error: [%d] %s';
 				}
 
-				throw new Exception\Basic($format, mysql_errno(), mysql_error());
+				throw new Exception\Basic($format, \mysql_errno(), \mysql_error());
 			}
 
 			Registry::globals('error_reporting', true);
