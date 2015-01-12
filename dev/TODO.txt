@@ -9,7 +9,6 @@
 	* PostgreSQL driver
 	  - Implement connection interface
 	    - getInsertId()
-	    - escape()
 	    - query()
 	  - Implement result interface
 	  - Convert database files:

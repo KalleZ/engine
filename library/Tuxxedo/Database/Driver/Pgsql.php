@@ -252,12 +252,12 @@
 				$this->connect();
 			}
 
-			if(!($this->link instanceof \SQLite3))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return($this->link->escapeString($data));
+			return(@pg_escape_literal($this->link, $data));
 		}
 
 		/**
