@@ -258,7 +258,7 @@
 		 * connection until the first query call within the 
 		 * instance.
 		 */
-		'delay'		=> true, 
+		'delay'		=> false, 
 
 		/**
 		 * Persistent connection

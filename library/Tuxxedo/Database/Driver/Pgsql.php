@@ -117,7 +117,21 @@
 
 			Registry::globals('error_reporting', false);
 
-			$link = @pg_connect();	
+			$connect_function = ($configuration['persistent'] ? '\pg_pconnect' : '\pg_connect');
+
+			if(($link = $connect_function(($configuration['dsnprefix'] ? $configuration['dsnprefix'] : '') . ((string)(integer) $configuration['hostname']{0} === $configuration['hostname']{0} ? 'hostaddr' : 'host') . '=\'' . $configuration['hostname'] . '\'' . (!empty($configuration['port']) ? ' port=' . (integer) $configuration['port'] : '') . ' sslmode=\'' . ($configuration['ssl'] ? 'require' : 'disallow') . '\'' . ($configuration['timeout'] ? ' connect_timeout=' . (integer) $configuration['timeout'] : '') . (!empty($configuration['username']) ? ' user=\'' . $configuration['username'] . '\'' : '') . (empty($configuration['password']) ? ' password=\'' . $configuration['password'] . '\'': '') . (!empty($configuration['database']) ? ' dbname=\'' . $configuration['database'] . '\'' : '') . ($configuration['dsnsuffix'] ? $configuration['dsnsuffix'] : ''), \PGSQL_CONNECT_FORCE_NEW)) === false)
+			{
+				Registry::globals('error_reporting', true);
+
+				$format = 'Database error: failed to connect database';
+
+				if($this->debug)
+				{
+					$format = 'Database error: %s';
+				}
+
+				throw new Exception\Basic($format, -1, '');
+			}
 
 			Registry::globals('error_reporting', true);
 
