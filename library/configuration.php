@@ -141,10 +141,11 @@
 		 * mysqli	MySQL 4.1+
 		 * pdo		Any PDO extension (*)
 		 * sqlite	SQLite 3+
+		 * pgsql	PostgreSQL 8.0+
 		 *
 		 * Drivers marked with (*) requires a sub driver to be defined
 		 */
-		'driver' 	=> 'mysqli', 
+		'driver' 	=> 'pgsql', 
 
 		/**
 		 * Sub driver
@@ -154,6 +155,12 @@
 		 *
 		 * If you for example are using PDO and want to use MySQL as 
 		 * your backend, then this value have to be 'mysql'.
+		 *
+		 * For PDO, the following drivers have been tested and works:
+		 *
+		 * mysql
+		 * sqlite
+		 * pgsql
 		 */
 		'subdriver'	=> '', 
 
@@ -203,6 +210,7 @@
 		 *
 		 * mysql
 		 * mysqli
+		 * pgsql
 		 */
 		'ssl'		=> false, 
 
