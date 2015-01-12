@@ -138,9 +138,9 @@
 		 */
 		public function close()
 		{
-			if($this->link instanceof \SQLite3)
+			if(\is_resource($this->link))
 			{
-				$retval 	= (boolean) $this->link->close();
+				$retval 	= (boolean) @\pg_close($this->link);
 				$this->link 	= NULL;
 
 				return($retval);
@@ -156,7 +156,7 @@
 		 */
 		public function isConnected()
 		{
-			return($this->link instanceof \SQLite3);
+			return(\is_resource($this->link));
 		}
 
 		/**
@@ -168,7 +168,7 @@
 		 */
 		public function isLink($link)
 		{
-			return(\is_object($link) && $link instanceof \SQLite3);
+			return(\is_resource($link) && ($rsrc = \get_resource_type($link) == 'pgsql link' || $rsrc == 'pgsql link persistent'));
 		}
 
 		/**
@@ -178,7 +178,7 @@
 		 */
 		public function isPersistent()
 		{
-			return(false);
+			return($this->configuration['persistent']);
 		}
 
 		/**
@@ -190,7 +190,7 @@
 		 */
 		public function isResult($result)
 		{
-			return(\is_object($result) && $result instanceof \SQLite3Result);
+			return(\is_resource($result) && \get_resource_type($result) == 'pgsql result');
 		}
 
 		/**
@@ -201,27 +201,22 @@
 		 */
 		public function getError()
 		{
-			if(!($this->link instanceof \SQLite3))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return($this->link->lastErrorMsg());
+			return((string) @\pg_last_error($this->link));
 		}
 
 		/**
 		 * Get the error number from the last occured error
 		 *
-		 * @return	integer				The error number
+		 * @return	integer				The error number, this value is ALWAYS -1
 		 */
 		public function getErrno()
 		{
-			if(!($this->link instanceof \SQLite3))
-			{
-				return(false);
-			}
-
-			return($this->link->lastErrorCode());
+			return(-1);
 		}
 
 		/**
