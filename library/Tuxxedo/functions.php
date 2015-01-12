@@ -264,7 +264,7 @@
 		}
 		elseif($exception_sql)
 		{
-			$message = ($configuration['application']['debug'] ? str_replace(["\r", "\n"], '', $e->getMessage()) : 'An error occured while querying the database');
+			$message = ($configuration['application']['debug'] && ($err = $e->getMessage()) !== '' ? str_replace(["\r", "\n"], '', $err) : 'An error occured while querying the database');
 		}
 		elseif($utf8)
 		{
@@ -391,12 +391,18 @@
 					'<tr>' . PHP_EOL . 
 					'<td nowrap="nowrap">Database driver:</td>' . PHP_EOL . 
 					'<td class="value" style="width: 100%">' . $e->getDriver() . '</td>' . PHP_EOL . 
-					'</tr>' . PHP_EOL . 
-					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
-					'<td class="value" style="width: 100%">' . $e->getCode() . '</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL
 					);
+
+				if(($code = $e->getCode()) !== -1)
+				{
+					echo(
+						'<tr>' . PHP_EOL . 
+						'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
+						'<td class="value" style="width: 100%">' . $code . '</td>' . PHP_EOL . 
+						'</tr>' . PHP_EOL
+						);
+				}
 
 				if(($sqlstate = $e->getSQLState()) !== false)
 				{

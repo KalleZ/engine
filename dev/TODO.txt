@@ -13,5 +13,3 @@
 	    - tuxxedo_mysql.sql
 	    - tuxxedo_mysql_100_110.sql
 	    - tuxxedo_mysql_110_120.sql
-	  - Code base needs to support $db->getErrno() returning -1 (+ Exceptions)
-	  - Code base needs to support $db->getError() returning '' (+ Exceptions)
