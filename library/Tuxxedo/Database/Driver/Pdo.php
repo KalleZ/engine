@@ -298,6 +298,8 @@
 		 *
 		 * @param	mixed				The data to escape
 		 * @return	string				Escaped data
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if delayed connections are enabled and the connection attempt fails
 		 */
 		public function escape($data)
 		{
@@ -328,6 +330,7 @@
 		 * @param	mixed				Genetic parameter for formatting, if two or more parameters are passed to the method, the sql will be formatted using sprintf
 		 * @return	boolean|object			Returns a result object on SELECT statements, and boolean true otherwise if the statement was executed
 		 *
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if delayed connections are enabled and the connection attempt fails
 		 * @throws	\Tuxxedo\Exception\SQL		If the SQL should fail for whatever reason, an exception is thrown
 		 */
 		public function query($sql)
