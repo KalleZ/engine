@@ -412,7 +412,7 @@
 
 					$expr_value = \substr($src, $expr_start, $expr_end - $expr_start);
 
-					if(empty($expr_value) || ((string)(integer) $expr_value !== $expr_value) && $expr_value != 0)
+					if(((string)(integer) $expr_value !== $expr_value) && $expr_value != 0 || empty($expr_value))
 					{
 						throw new Exception\TemplateCompiler('Expressions may not be empty', $this->stack_data);
 					}
