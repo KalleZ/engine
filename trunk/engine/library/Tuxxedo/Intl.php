@@ -69,9 +69,9 @@
 		/**
 		 * Holds the current loaded phrases
 		 *
-		 * @var		Array
+		 * @var		\ArrayObject
 		 */
-		protected $phrases	= [];
+		protected $phrases;
 
 
 		/**
@@ -84,7 +84,8 @@
 			$this->registry		= Registry::init();
 			$this->information 	= $languageinfo;
 
-			$this->registry->set('phrase', []);
+			$this->registry->set('phrase', new \ArrayObject);
+			$this->setPhraseRef($this->registry->phrase);
 		}
 
 		/**
@@ -251,12 +252,12 @@
 		/**
 		 * Sets a phrase variable reference
 		 *
-		 * @param	mixed				The variable to reference to
+		 * @param	\ArrayObject			The ArrayObject to reference
 		 * @return	void				No value is returned
 		 */
-		public function setPhraseRef(&$ptr)
+		public function setPhraseRef(\ArrayObject $ptr)
 		{
-			$ptr = &$this->phrases;
+			$this->phrases = $ptr;
 		}
 
 		/**
