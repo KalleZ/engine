@@ -39,6 +39,9 @@
 	 * Exception designed to carry error information from a failed 
 	 * query call.
 	 *
+	 * Note that not all drivers support errno, in such case the value 
+	 * are -1.
+	 *
 	 * @author		Kalle Sommer Nielsen <kalle@tuxxedo.net>
 	 * @version		1.0
 	 * @package		Engine
@@ -71,12 +74,14 @@
 		 * @param	string			Optionally, an SQL state if the database driver supports it
 		 *
 		 * @changelog	1.1.0			Added the $driver parameter
+		 * @changelog	1.2.0			Changed the $error parameter to be optional and default to an empty string
+		 * @changelog	1.2.0			Changed the $errno parameter to be optional and default to -1
 		 */
-		public function __construct($sql, $driver, $error, $errno, $sqlstate = NULL)
+		public function __construct($sql, $driver, $error = '', $errno = -1, $sqlstate = NULL)
 		{
 			$this->sql		= $sql;
 			$this->driver		= $driver;
-			$this->message 		= $error;
+			$this->message 		= (string) $error;
 			$this->code		= (integer) $errno;
 			$this->sqlstate		= ($sqlstate ? $sqlstate : false);
 		}

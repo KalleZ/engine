@@ -301,7 +301,7 @@
 		 * Some databases, like SQLite, thats file based does 
 		 * not use a username.
 		 */
-		'username' 	=> 'root', 
+		'username' 	=> 'tuxxedo', 
 
 		/**
 		 * Password
@@ -315,7 +315,7 @@
 		 * database. Note that this does not work for SQLite when 
 		 * used inconjuction with PDO.
 		 */
-		'password'	=> '', 
+		'password'	=> 'test', 
 
 		/**
 		 * Table prefix
