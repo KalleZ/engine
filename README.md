@@ -10,7 +10,7 @@ authentication & authorisation management, along with a session manager.
 License
 =======
 
-Copyright 2006 Tuxxedo Software Development, CVR: 34663858, DK
+Copyright 2006 Tuxxedo Software Development, CVR: DK-34663858
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
