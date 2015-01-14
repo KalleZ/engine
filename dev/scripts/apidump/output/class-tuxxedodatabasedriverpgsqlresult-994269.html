@@ -7,7 +7,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Helper\Database</h1>
+<h1>\Tuxxedo\Database\Driver\Pgsql\Result</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -29,12 +29,17 @@
 					<tr>
 	<td nowrap="nowrap">Namespace:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		<a href="namespace-tuxxedohelper-016223.html">\Tuxxedo\Helper</a>
+		<a href="namespace-tuxxedodatabasedriverpgsql-426692.html">\Tuxxedo\Database\Driver\Pgsql</a>
 	</td>
 </tr><tr>
 	<td nowrap="nowrap">Declared in:</td>
 	<td class="value" style="width: 100%" nowrap="nowrap">
-		library/Tuxxedo/Helper/Database.php
+		library/Tuxxedo/Database/Driver/Pgsql/Result.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Extends:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="class-tuxxedodatabaseresult-766582.html">\Tuxxedo\Database\Result</a>
 	</td>
 </tr>
 				</table>
@@ -42,9 +47,9 @@
 		</div>
 		<div class="content">
 			<div class="infobox">
-				Database utilities helper<br />This helper assumes the 'db' key is registered to an instance of
-using the 'setInstance' method.<br />Note that some drivers may not be fully supported, in paticular
-SQLite is not supported by some of the table operational methods.
+				MySQL result class<br />This implements the result class for MySQL for Tuxxedo,
+this contains methods to fetch, count result rows and
+such for working with a resultset
 			</div>
 			<br />
 		</div>
@@ -73,11 +78,8 @@ SQLite is not supported by some of the table operational methods.
 		<td class="strong">Description</td>
 	</tr>
 	<tr class="row">
-	<td nowrap="nowrap"><a href="property-driver-014289.html">$driver</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database driver</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-instance-486346.html">$instance</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database instance</td>
+	<td nowrap="nowrap"><a href="property-result-990194.html">$result</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The result resource</td>
 </tr>
 </table><h3>
 	Methods
@@ -89,32 +91,29 @@ SQLite is not supported by some of the table operational methods.
 		<td class="strong">Description</td>
 	</tr>
 	<tr class="row">
-	<td nowrap="nowrap"><a href="method---construct-163307.html">__construct()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Constructs the database helper</td>
+	<td nowrap="nowrap"><a href="method---construct-598538.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new result object</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-count-135180.html">count()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Counts the number of rows in a table</td>
+	<td nowrap="nowrap"><a href="method-current-799020.html">current()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - current</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-getcolumns-736356.html">getColumns()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets all columns in from a table</td>
+	<td nowrap="nowrap"><a href="method-fetcharray-367680.html">fetchArray()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Fetch result with both associative and indexed indexes array</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-getdriver-294430.html">getDriver()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets the canonical driver name</td>
+	<td nowrap="nowrap"><a href="method-fetchassoc-506361.html">fetchAssoc()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Fetches the result and returns an associative array</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-gettables-923366.html">getTables()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Gets all tables within a database</td>
+	<td nowrap="nowrap"><a href="method-fetchobject-967897.html">fetchObject()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Fetches the result and returns an object, with overloaded</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-setinstance-435031.html">setInstance()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Sets a new instance of a database object</td>
+	<td nowrap="nowrap"><a href="method-fetchrow-518048.html">fetchRow()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Fetches the result and returns an indexed array</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-tableoptimize-018213.html">tableOptimize()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Table operation - optimize</td>
+	<td nowrap="nowrap"><a href="method-free-888230.html">free()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Frees the result from memory, and makes it unusable</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-tablerepair-229097.html">tableRepair()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Table operation - repair</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-truncate-550873.html">truncate()</a></td>
-	<td nowrap="nowrap" style="width: 100%">Truncates a database table</td>
+	<td nowrap="nowrap"><a href="method-getnumrows-983624.html">getNumRows()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Get the number of rows in the result</td>
 </tr>
 </table>
 	</div>
@@ -133,8 +132,8 @@ SQLite is not supported by some of the table operational methods.
 				<td class="strong">Note</td>
 			</tr>
 			<tr class="row">
-	<td nowrap="nowrap">1.2.0</td>
-	<td nowrap="nowrap" style="width: 100%">This class now escapes all input unlike before where only some were escaped</td>
+	<td nowrap="nowrap">1.1.0</td>
+	<td nowrap="nowrap" style="width: 100%">The casing of this class' namespace was changed to comply with the autoloader rules</td>
 </tr>
 		</table>
 	</div>
