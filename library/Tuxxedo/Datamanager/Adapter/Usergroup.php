@@ -131,9 +131,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'usergroups` 
+										"' . \TUXXEDO_PREFIX . 'usergroups" 
 									WHERE 
-										`id` = %d', $identifier);
+										"id" = %d', $identifier);
 
 				if(!$usergroup || !$usergroup->getNumRows())
 				{
@@ -172,11 +172,11 @@
 				$virtual	= $this->data;
 				$query 		= $this->registry->db->query('
 										SELECT 
-											COUNT(`id`) as \'count\' 
+											COUNT("id") as \'count\' 
 										FROM 
-											`' . \TUXXEDO_PREFIX . 'users` 
+											"' . \TUXXEDO_PREFIX . 'users" 
 										WHERE 
-											`usergroupid` = %d', $this->information['id']);
+											"usergroupid" = %d', $this->information['id']);
 
 				$virtual['users']		= ($query && $query->getNumRows() ? (integer) $query->fetchObject()->count : 0);
 				$usergroups[$this->information['id']] 	= $virtual;

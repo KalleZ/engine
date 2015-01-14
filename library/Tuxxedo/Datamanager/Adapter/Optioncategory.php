@@ -115,9 +115,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'optioncategories` 
+										"' . \TUXXEDO_PREFIX . 'optioncategories" 
 									WHERE 
-										`name` = \'%s\'', $identifier);
+										"name" = \'%s\'', $identifier);
 
 				if(!$category || !$category->getNumRows())
 				{
@@ -195,11 +195,11 @@
 			{
 				$options = $this->registry->db->equery('
 									SELECT 
-										`option` 
+										"option" 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'options` 
+										"' . \TUXXEDO_PREFIX . 'options" 
 									WHERE 
-										`category` = \'%s\'', $old_category);
+										"category" = \'%s\'', $old_category);
 
 				if($options && $options->getNumRows())
 				{

@@ -132,9 +132,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'languages` 
+										"' . \TUXXEDO_PREFIX . 'languages" 
 									WHERE 
-										`id` = %d
+										"id" = %d
 									LIMIT 1', $identifier);
 
 				if(!$language || !$language->getNumRows())
@@ -213,11 +213,11 @@
 				{
 					$query = $this->registry->db->query('
 										SELECT 
-											`id` 
+											"id" 
 										FROM 
-											`' . \TUXXEDO_PREFIX . $plural . '`
+											"' . \TUXXEDO_PREFIX . $plural . '"
 										WHERE 
-											`languageid` = %d', $this->data['id']);
+											"languageid" = %d', $this->data['id']);
 
 					if(!$query || !$query->getNumRows())
 					{
@@ -270,12 +270,12 @@
 
 			$phrasegroups = $this->registry->db->query('
 									SELECT 
-										`id`, 
-										`title`
+										"id", 
+										"title"
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'phrasegroups` 
+										"' . \TUXXEDO_PREFIX . 'phrasegroups" 
 									WHERE 
-										`languageid` = %d', $value);
+										"languageid" = %d', $value);
 
 			if(!$phrasegroups || !$phrasegroups->getNumRows())
 			{
@@ -294,13 +294,13 @@
 
 				$phrases = $this->registry->db->query('
 									SELECT 
-										`id` 
+										"id" 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'phrases` 
+										"' . \TUXXEDO_PREFIX . 'phrases" 
 									WHERE 
-											`languageid` = %d 
+											"languageid" = %d 
 										AND 
-											`phrasegroup` = \'%s\'', $value, $this->registry->db->escape($pgroup['title']));
+											"phrasegroup" = \'%s\'', $value, $this->registry->db->escape($pgroup['title']));
 
 				if(!$phrases || !$phrases->getNumRows())
 				{

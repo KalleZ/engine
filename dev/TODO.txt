@@ -6,7 +6,6 @@
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2
 	--------------------------------------------------
 
-	* Change ` to ' or " respectively for SQL queries
 	* PostgreSQL driver
 	  - REPLACE INTO needs fixing (\Tuxxedo\Datamanager\Adapter)
 	  - Helper

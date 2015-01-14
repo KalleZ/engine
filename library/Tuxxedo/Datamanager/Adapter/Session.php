@@ -142,9 +142,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'sessions` 
+										"' . \TUXXEDO_PREFIX . 'sessions" 
 									WHERE 
-										`sessionid` = \'%s\'', $identifier);
+										"sessionid" = \'%s\'', $identifier);
 
 				if($session && $session->getNumRows())
 				{

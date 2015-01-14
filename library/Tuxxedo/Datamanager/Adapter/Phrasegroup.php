@@ -122,9 +122,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'phrasegroups` 
+										"' . \TUXXEDO_PREFIX . 'phrasegroups" 
 									WHERE 
-										`id` = %d', $identifier);
+										"id" = %d', $identifier);
 
 				if(!$phrasegroup || !$phrasegroup->getNumRows())
 				{
@@ -168,13 +168,13 @@
 		{
 			$query = $registry->db->query('
 							SELECT 
-								`id`
+								"id"
 							FROM 
-								`' . \TUXXEDO_PREFIX . 'phrasegroups` 
+								"' . \TUXXEDO_PREFIX . 'phrasegroups" 
 							WHERE 
-									`languageid` = %d 
+									"languageid" = %d 
 								AND 
-									`title` = \'%s\' 
+									"title" = \'%s\' 
 							LIMIT 1', $dm->data['languageid'], $registry->db->escape($title));
 
 			return(!$query || !$query->getNumRows());
@@ -223,11 +223,11 @@
 
 				$query		= $this->registry->db->equery('
 										SELECT 
-											COUNT(`id`) as \'phrases\' 
+											COUNT("id") as \'phrases\' 
 										FROM 
-											`' . \TUXXEDO_PREFIX . 'phrases` 
+											"' . \TUXXEDO_PREFIX . 'phrases" 
 										WHERE 
-											`phrasegroup` = \'%s\'', $id);
+											"phrasegroup" = \'%s\'', $id);
 
 				$ptr[$id] 	= [
 							'id'		=> $id, 
@@ -241,13 +241,13 @@
 
 			$groups = $this->registry->db->equery('
 								SELECT 
-									`id` 
+									"id" 
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'phrases` 
+									"' . \TUXXEDO_PREFIX . 'phrases" 
 								WHERE 
-										`phrasegroup` = \'%s\'
+										"phrasegroup" = \'%s\'
 									AND 
-										`languageid` = %d', (isset($this->original_data['title']) ? $this->original_data['title'] : $id), $languageid);
+										"languageid" = %d', (isset($this->original_data['title']) ? $this->original_data['title'] : $id), $languageid);
 
 			if($groups && $groups->getNumRows())
 			{

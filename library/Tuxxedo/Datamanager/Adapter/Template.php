@@ -148,9 +148,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'templates` 
+										"' . \TUXXEDO_PREFIX . 'templates" 
 									WHERE 
-										`id` = %d
+										"id" = %d
 									LIMIT 1', $identifier);
 
 				if(!$template || !$template->getNumRows())
@@ -188,10 +188,10 @@
 			{
 				$titles = $registry->db->query('
 								SELECT 
-									`title`, 
-									`styleid`
+									"title", 
+									"styleid"
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'templates`');
+									"' . \TUXXEDO_PREFIX . 'templates"');
 
 				if(!$titles || !$titles->getNumRows())
 				{

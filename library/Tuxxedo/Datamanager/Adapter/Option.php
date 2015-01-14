@@ -138,9 +138,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'options` 
+										"' . \TUXXEDO_PREFIX . 'options" 
 									WHERE 
-										`option` = \'%s\'', $identifier);
+										"option" = \'%s\'', $identifier);
 
 				if(!$option || !$option->getNumRows())
 				{
@@ -232,9 +232,9 @@
 			{
 				$query = $registry->db->query('
 								SELECT 
-									`name`
+									"name"
 								FROM
-									`' . \TUXXEDO_PREFIX . 'optioncategories`');
+									"' . \TUXXEDO_PREFIX . 'optioncategories"');
 
 				if($query && $query->getNumRows())
 				{

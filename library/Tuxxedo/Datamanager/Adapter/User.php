@@ -188,9 +188,9 @@
 								SELECT 
 									* 
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'users` 
+									"' . \TUXXEDO_PREFIX . 'users" 
 								WHERE 
-									`id` = %d', $identifier);
+									"id" = %d', $identifier);
 
 				if(!$user || !$user->getNumRows())
 				{
@@ -368,11 +368,11 @@
 		{
 			$query = $registry->db->equery('
 							SELECT 
-								`id` 
+								"id" 
 							FROM 
-								`' . \TUXXEDO_PREFIX . 'users` 
+								"' . \TUXXEDO_PREFIX . 'users" 
 							WHERE 
-								`%s` = \'%s\' 
+								"%s" = \'%s\' 
 							LIMIT 1', $field, $value);
 
 			return(!($query && $query->getNumRows()));

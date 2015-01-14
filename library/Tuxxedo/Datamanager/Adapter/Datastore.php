@@ -119,9 +119,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'datastore` 
+										"' . \TUXXEDO_PREFIX . 'datastore" 
 									WHERE 
-										`name` = \'%s\'', $identifier);
+										"name" = \'%s\'', $identifier);
 
 				if($element && $element->getNumRows())
 				{

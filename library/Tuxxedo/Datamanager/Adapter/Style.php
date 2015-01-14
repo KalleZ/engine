@@ -135,9 +135,9 @@
 								SELECT 
 									* 
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'styles` 
+									"' . \TUXXEDO_PREFIX . 'styles" 
 								WHERE 
-									`id` = %d
+									"id" = %d
 								LIMIT 1', $identifier);
 
 				if(!$style || !$style->getNumRows())
@@ -192,13 +192,13 @@
 				$virtual['templateids']	= '';
 				$templates		= $this->registry->db->query('
 											SELECT 
-												`id` 
+												"id" 
 											FROM 
-												`' . \TUXXEDO_PREFIX . 'templates` 
+												"' . \TUXXEDO_PREFIX . 'templates" 
 											WHERE 
-												`styleid` = %d
+												"styleid" = %d
  											ORDER BY 
-												`id` 
+												"id" 
 											ASC', $this->data['id']);
 
 				if($templates && $templates->getNumRows())
