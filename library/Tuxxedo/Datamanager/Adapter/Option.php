@@ -268,9 +268,9 @@
 			if($this->context == parent::CONTEXT_SAVE)
 			{
 				$options[$this->information['option']] = [
-								'category'	=> $this->data['category'], 
-								'value'		=> $this->data['value']
-								];
+										'category'	=> $this->data['category'], 
+										'value'		=> $this->data['value']
+										];
 			}
 
 			return($this->registry->datastore->rebuild('options', $options));
