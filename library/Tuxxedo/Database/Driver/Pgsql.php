@@ -335,7 +335,9 @@
 
 			if(!\pg_num_rows($query))
 			{
-				return(true);
+				pg_free_result($query);
+
+				return(false);
 			}
 
 			return(new Pgsql\Result($this, $query));
