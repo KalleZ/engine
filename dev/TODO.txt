@@ -6,10 +6,8 @@
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2
 	--------------------------------------------------
 
+	* Change ` to ' or " respectively for SQL queries
 	* PostgreSQL driver
-	  - Implement connection interface
-	    - getInsertId()
-	    - query()
 	  - Implement result interface
 	  - Convert database files:
 	    - tuxxedo_mysql.sql
