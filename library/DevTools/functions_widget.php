@@ -43,9 +43,9 @@
 			$total_size	= 0;
 			$ds 		= $registry->db->query('
 								SELECT 
-									`data` 
+									"data" 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'datastore`');
+									"' . TUXXEDO_PREFIX . 'datastore"');
 
 			if($ds && $ds->getNumRows())
 			{
