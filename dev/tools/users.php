@@ -275,14 +275,14 @@
 
 						$query = $db->equery('
 									SELECT 
-										`id`, 
-										`username`, 
-										`usergroupid`, 
-										`permissions`
+										"id", 
+										"username", 
+										"usergroupid", 
+										"permissions"
 									FROM 
-										`' . TUXXEDO_PREFIX . 'users` 
+										"' . TUXXEDO_PREFIX . 'users" 
 									WHERE 
-										`%s` LIKE \'%s\'', $input->post('query_field'), $query);
+										"%s" LIKE \'%s\'', $input->post('query_field'), $query);
 
 
 						if(!$query || !$query->getNumRows())
@@ -491,14 +491,14 @@
 					$users = $usergroups = '';
 					$query = $db->query('
 								SELECT 
-									`id`, 
-									`username`
+									"id", 
+									"username"
 								FROM 
-									`' . TUXXEDO_PREFIX . 'users` 
+									"' . TUXXEDO_PREFIX . 'users" 
 								WHERE 
-									`permissions` & %d
+									"permissions" & %d
 								ORDER BY 
-									`id` 
+									"id" 
 								DESC', $dm['bits']);
 
 					if($query && $query->getNumRows())

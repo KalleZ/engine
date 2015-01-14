@@ -216,39 +216,39 @@
 						{
 							$squery = $db->equery('
 										SELECT 
-											`id`, 
-											`title`, 
-											`revision`, 
-											`changed`, 
-											`source`
+											"id", 
+											"title", 
+											"revision", 
+											"changed", 
+											"source"
 										FROM 
-											`' . TUXXEDO_PREFIX . 'templates` 
+											"' . TUXXEDO_PREFIX . 'templates" 
 										WHERE 
-											`source` 
+											"source" 
 										LIKE 
 											\'%s\'
 										AND 
-											`changed` = \'1\'
+											"changed" = \'1\'
 										AND 
-											`styleid` = %d', $query, $styleid);
+											"styleid" = %d', $query, $styleid);
 						}
 						else
 						{
 							$squery = $db->equery('
 										SELECT 
-											`id`, 
-											`title`, 
-											`revision`, 
-											`changed`, 
-											`source` 
+											"id", 
+											"title", 
+											"revision", 
+											"changed", 
+											"source" 
 										FROM 
-											`' . TUXXEDO_PREFIX . 'templates` 
+											"' . TUXXEDO_PREFIX . 'templates" 
 										WHERE 
-											`source` 
+											"source" 
 										LIKE 
 											\'%s\'
 										AND 
-											`styleid` = %d', $query, $styleid);
+											"styleid" = %d', $query, $styleid);
 						}
 
 						$table = '';

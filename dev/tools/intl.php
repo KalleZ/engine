@@ -228,14 +228,14 @@
 
 					$query = $db->equery('
 								SELECT 
-									`id`, 
-									`title` 
+									"id", 
+									"title" 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'phrases` 
+									"' . TUXXEDO_PREFIX . 'phrases" 
 								WHERE 
-										`languageid` = %d
+										"languageid" = %d
 									AND 
-										`phrasegroup` = \'%s\'', $languageid, $dm['title']);
+										"phrasegroup" = \'%s\'', $languageid, $dm['title']);
 
 					if($query && $query->getNumRows())
 					{
@@ -310,14 +310,14 @@
 
 					$query			= $db->equery('
 										SELECT 
-											`id`, 
-											`title`
+											"id", 
+											"title"
 										FROM 
-											`' . TUXXEDO_PREFIX . 'phrasegroups` 
+											"' . TUXXEDO_PREFIX . 'phrasegroups" 
 										WHERE 
-											`languageid` = %d
+											"languageid" = %d
 										ORDER BY 
-											`title` 
+											"title" 
 										ASC', $languageid);
 
 					if(!$query || !$query->getNumRows())
@@ -406,14 +406,14 @@
 
 						$query = $db->equery('
 									SELECT 
-										`id`, 
-										`title`, 
-										`changed`, 
-										`phrasegroup`
+										"id", 
+										"title", 
+										"changed", 
+										"phrasegroup"
 									FROM 
-										`' . TUXXEDO_PREFIX . 'phrases` 
+										"' . TUXXEDO_PREFIX . 'phrases" 
 									WHERE 
-										`%s` LIKE \'%s\'', $input->post('query_field'), $query);
+										"%s" LIKE \'%s\'', $input->post('query_field'), $query);
 
 
 						if(!$query || !$query->getNumRows())
@@ -445,16 +445,16 @@
 				{
 					$query = $db->equery('
 								SELECT 
-									`id`, 
-									`title`, 
-									`changed`, 
-									`phrasegroup`
+									"id", 
+									"title", 
+									"changed", 
+									"phrasegroup"
 								FROM 
-									`' . TUXXEDO_PREFIX . 'phrases` 
+									"' . TUXXEDO_PREFIX . 'phrases" 
 								WHERE 
-									`languageid` = %d
+									"languageid" = %d
 								ORDER BY 
-									`id`
+									"id"
 								ASC', $languageid);
 
 					if($query && $query->getNumRows())

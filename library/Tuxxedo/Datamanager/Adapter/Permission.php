@@ -119,9 +119,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'permissions` 
+										"' . \TUXXEDO_PREFIX . 'permissions" 
 									WHERE 
-										`name` = \'%s\'', $identifier);
+										"name" = \'%s\'', $identifier);
 
 				if(!$permission || !$permission->getNumRows())
 				{

@@ -109,11 +109,11 @@
 
 					$query = $db->equery('
 								SELECT 
-									`option` 
+									"option" 
 								FROM 
-									`' . TUXXEDO_PREFIX . 'options` 
+									"' . TUXXEDO_PREFIX . 'options" 
 								WHERE 
-									`category` = \'%s\'', $dm['name']);
+									"category" = \'%s\'', $dm['name']);
 
 					if($query && $query->getNumRows())
 					{
@@ -215,11 +215,11 @@
 					{
 						$query = $db->query('
 									SELECT 
-										`option`
+										"option"
 									FROM
-										`' . TUXXEDO_PREFIX . 'options` 
+										"' . TUXXEDO_PREFIX . 'options" 
 									ORDER BY 
-										`option` ASC');
+										"option" ASC');
 
 						if(!$query || !$query->getNumRows())
 						{
@@ -241,9 +241,9 @@
 								SELECT 
 									*
 								FROM
-									`' . TUXXEDO_PREFIX . 'options` 
+									"' . TUXXEDO_PREFIX . 'options" 
 								ORDER BY 
-									`option` ASC');
+									"option" ASC');
 
 					if(!$query || !$query->getNumRows())
 					{

@@ -69,9 +69,9 @@
 				SELECT 
 					* 
 				FROM 
-					`' . TUXXEDO_PREFIX . 'sessions` 
+					"' . TUXXEDO_PREFIX . 'sessions" 
 				ORDER BY 
-					`userid` 
+					"userid" 
 				ASC');
 
 	if(!$sessions || !$sessions->getNumRows())
@@ -95,9 +95,9 @@
 
 		$registry->db->query('
 					DELETE FROM 
-						`' . TUXXEDO_PREFIX . 'sessions` 
+						"' . TUXXEDO_PREFIX . 'sessions" 
 					WHERE 
-						`lastactivity` + %d < %d', $registry->options->cookie_expires, TIMENOW_UTC);
+						"lastactivity" + %d < %d', $registry->options->cookie_expires, TIMENOW_UTC);
 
 		if($affected_rows !== NULL)
 		{
@@ -114,7 +114,7 @@
 			{
 				case('single'):
 				{
-					if(($db->equery('UPDATE `' . TUXXEDO_PREFIX . 'sessions` SET `rehash` = 1 WHERE `sessionid` = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows())
+					if(($db->equery('UPDATE "' . TUXXEDO_PREFIX . 'sessions" SET "rehash" = 1 WHERE "sessionid" = \'%s\'', $input->get('id'))) !== false && $db->getAffectedRows())
 					{
 						Utilities::redirect('Marked session for rehashing', './sessions.php');
 					}
@@ -128,9 +128,9 @@
 
 					$db->query('
 							UPDATE 
-								`' . TUXXEDO_PREFIX . 'sessions` 
+								"' . TUXXEDO_PREFIX . 'sessions" 
 							SET 
-								`rehash` = 1');
+								"rehash" = 1');
 
 					Utilities::redirect('Cleaned up all expired sessions and marked active ones for rehashing', './sessions.php');
 				}

@@ -447,9 +447,9 @@
 			{
 				$query = $registry->db->query('
 								SELECT 
-									`%s` 
+									"%s" 
 								FROM 
-									`%s`', static::ID_NAME, \TUXXEDO_PREFIX . static::TABLE_NAME);
+									"%s"', static::ID_NAME, \TUXXEDO_PREFIX . static::TABLE_NAME);
 
 				if($query && $query->getNumRows())
 				{
@@ -788,7 +788,7 @@
 			}
 
 			$new_identifier = isset($this->data[static::ID_NAME]) && !$this->reidentify;
-			$sql		= ($new_identifier ? 'UPDATE `' . \TUXXEDO_PREFIX . static::TABLE_NAME . '` SET ' : (($this->options & self::OPT_LOAD_ONLY) ? 'INSERT INTO' : 'REPLACE INTO') . ' `' . \TUXXEDO_PREFIX . static::TABLE_NAME . '` (');
+			$sql		= ($new_identifier ? 'UPDATE "' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" SET ' : (($this->options & self::OPT_LOAD_ONLY) ? 'INSERT INTO' : 'REPLACE INTO') . ' "' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" (');
 
 			foreach($virtual as $field => $data)
 			{
@@ -804,18 +804,18 @@
 
 				if($new_identifier)
 				{
-					$sql .= '`' . $field . '` = ' . (\is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : (isset($this->fields[$field]['notnull']) && $this->fields[$field]['notnull'] ? '\'\'' : 'NULL')) : '\'' . $this->registry->db->escape($data) . '\'') . (--$n ? ', ' : '');
+					$sql .= '"' . $field . '" = ' . (\is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : (isset($this->fields[$field]['notnull']) && $this->fields[$field]['notnull'] ? '\'\'' : 'NULL')) : '\'' . $this->registry->db->escape($data) . '\'') . (--$n ? ', ' : '');
 				}
 				else
 				{
-					$sql 	.= '`' . $field . '`' . (--$n ? ', ' : '');
+					$sql 	.= '"' . $field . '"' . (--$n ? ', ' : '');
 					$values .= (\is_null($data) ? ($this->fields[$field]['validation'] == self::VALIDATE_NUMERIC || $this->fields[$field]['validation'] == self::VALIDATE_BOOLEAN ? '0' : (isset($this->fields[$field]['notnull']) && $this->fields[$field]['notnull'] ? '\'\'' : 'NULL')) : '\'' . $this->registry->db->escape($data) . '\'') . ($n ? ', ' : '');
 				}
 			}
 
 			if($new_identifier)
 			{
-				$sql .= ' WHERE `' . static::ID_NAME . '` = \'' . $this->registry->db->escape($this->identifier) . '\'';
+				$sql .= ' WHERE "' . static::ID_NAME . '" = \'' . $this->registry->db->escape($this->identifier) . '\'';
 			}
 			else
 			{
@@ -887,9 +887,9 @@
 
 			return($this->registry->db->equery('
 								DELETE FROM 
-									`' . \TUXXEDO_PREFIX . static::TABLE_NAME . '`
+									"' . \TUXXEDO_PREFIX . static::TABLE_NAME . '"
 								WHERE 
-									`' . static::ID_NAME . '` = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[static::ID_NAME] : $this->identifier)));
+									"' . static::ID_NAME . '" = \'%s\'', ($this->options & self::OPT_LOAD_ONLY ? $this->data[static::ID_NAME] : $this->identifier)));
 		}
 
 		/**
