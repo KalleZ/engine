@@ -69,8 +69,9 @@
 	Added \Tuxxedo\Helper\Database::getColumns() (Kalle)
 	Added the posibility for datamanager adapters to retain the original data if modified from the outside API internally (Kalle)
 	Added traits to the allowance of items being autoloadable (Kalle)
+	Added SQLite support in \Tuxxedo\Helper\Database::getTables() (Kalle)
 
-	Changed the codebase to be SQL standards compliant for quotations (Kalle)
+	Changed the codebase to be SQL standards compliant for quotations, this means MySQL requires 'sql_mode' to be set to 'ANSI' (Kalle)
 	Changed the code statistics tool to also ignore .dump, .txt & .tuxx (Kalle)
 	Changed \Tuxxedo\Intl\Phrasegroup to extend the InfoAccess pattern (Kalle)
 	Changed \Tuxxedo\Intl::getPhrases() to return an array rather than an instance of \ArrayObject and an empty array instead of false (Kalle)
@@ -115,6 +116,7 @@
 	 - \Tuxxedo\Datamanager\Adapter::$idname > \Tuxxedo\Datamanager\Adapter\*::ID_NAME
 	 - \Tuxxedo\Datamanager\Adapter::$tablename > \Tuxxedo\Datamanager\Adapter\*::TABLE_NAME
 	Changed the iteratable class to be an interface (Kalle)
+	Changed \Tuxxedo\Helper\Database::getTables() to return an array instead of a database result object (Kalle)
 
 	Fixed a possible off-by-one byte error in recursive_glob() (Kalle)
 	Fixed a wrong prototype causing setRouter() to only accept 'Uri' routers (Kalle)

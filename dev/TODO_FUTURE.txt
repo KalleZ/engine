@@ -7,7 +7,7 @@
 	Improve development tools
 	 - Implement usage of the pagination class in the DevTools (when Helper\Pagination is implemented)
 	 - Implement installation generators
-	 - Implement support for sqlite on the table status tool (if possible?)
+	 - Implement support for sqlite/pgsql on the table status tool (if possible?)
 	 - Other
 	   - Add the ability to export/import styles
 	   - Add the ability to export/import languages

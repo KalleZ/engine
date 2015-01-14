@@ -56,6 +56,7 @@
 	 * @subpackage		Library
 	 *
 	 * @changelog		1.2.0				This class now escapes all input unlike before where only some were escaped
+	 * @changelog		1.2.0				This class now supports PostgreSQL unless stated otherwise (per method)
 	 */
 	class Database
 	{
@@ -72,6 +73,30 @@
 		 * @var		string
 		 */
 		protected $driver;
+
+		/**
+		 * Database driver helper -- Is MySQL?
+		 *
+		 * @var		boolean
+		 * @since	1.2.0
+		 */
+		protected $driver_is_mysql		= false;
+
+		/**
+		 * Database driver helper -- Is PostgreSQL?
+		 *
+		 * @var		boolean
+		 * @since	1.2.0
+		 */
+		protected $driver_is_pgsql		= false;
+
+		/**
+		 * Database driver helper -- Is SQLite?
+		 *
+		 * @var		boolean
+		 * @since	1.2.0
+		 */
+		protected $driver_is_sqlite		= false;
 
 
 		/**
@@ -95,12 +120,27 @@
 		 */
 		public function setInstance(\Tuxxedo\Database $instance)
 		{
-			$this->instance = $instance;
-			$this->driver	= \strtolower($instance->cfg('driver'));
+			$this->instance 	= $instance;
+			$this->driver		= \strtolower($instance->cfg('driver'));
+
+			$this->driver_is_mysql	= $this->driver_is_pgsql = $this->driver_is_sqlite = false;
 
 			if($this->driver == 'pdo' && ($subdriver = \strtolower($instance->cfg('subdriver'))) != false)
 			{
 				$this->driver .= '_' . $subdriver;
+			}
+
+			if($this->driver == 'mysql' || $this->driver == 'mysqli' || $this->driver == 'pdo_mysql')
+			{
+				$this->driver_is_mysql = true;
+			}
+			elseif($this->driver == 'pgsql' || $this->driver == 'pdo_pgsql')
+			{
+				$this->driver_is_pgsql = true;
+			}
+			elseif($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			{
+				$this->driver_is_sqlite = true;
 			}
 		}
 
@@ -115,16 +155,54 @@
 		}
 
 		/**
+		 * Checks if the database instance is using a MySQL backend
+		 *
+		 * @return	boolean				Returns true if the backend is MySQL based, otherwise false
+		 *
+		 * @since	1.2.0
+		 */
+		public function isDriverMysql()
+		{
+			return($this->driver_is_mysql);
+		}
+
+		/**
+		 * Checks if the database instance is using a PostgreSQL backend
+		 *
+		 * @return	boolean				Returns true if the backend is PostgreSQL based, otherwise false
+		 *
+		 * @since	1.2.0
+		 */
+		public function isDriverPgsql()
+		{
+			return($this->driver_is_pgsql);
+		}
+
+		/**
+		 * Checks if the database instance is using a SQLite backend
+		 *
+		 * @return	boolean				Returns true if the backend is SQLite based, otherwise false
+		 *
+		 * @since	1.2.0
+		 */
+		public function isDriverSqlite()
+		{
+			return($this->driver_is_sqlite);
+		}
+
+		/**
 		 * Truncates a database table
 		 *
 		 * @param	string				The table to truncate
 		 * @return	boolean				Returns true on succes and false on error
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
+		 *
+		 * @changelog	1.2.0				This method now supports PostgreSQL
 		 */
 		public function truncate($table)
 		{
-			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			if($this->driver_is_sqlite)
 			{
 				$sql = 'DELETE FROM "' . \TUXXEDO_PREFIX . '%s"';
 			}
@@ -187,55 +265,94 @@
 		/**
 		 * Gets all tables within a database
 		 *
-		 * Unsupported drivers are:
-		 *  - sqlite
-		 *  - pdo_sqlite
+		 * Note, some database systems like SQLite, may return system tables like sqlite_sequence 
+		 * etc., so don't count on this being identical between two systems.
 		 *
 		 * @param	string				The database name, if differs from the current connection
-		 * @return	\Tuxxedo\Database\Result	Returns a database result object, and false if unsupported or if no tables exists
+		 * @return	array				Returns an array with a list of tables or false on error
+		 *
+		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
+		 *
+		 * @changelog	1.2.0				This method now supports PostgreSQL
+		 * @changelog	1.2.0				This method now supports SQLite
+		 * @changelog 	1.2.0				This method no longer returns a result object, but an array of tables for cross database compatibility
 		 */
 		public function getTables($database = NULL)
 		{
-			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			$retval = [];
+
+			if($this->driver_is_sqlite)
+			{
+				$field	= 'name';
+				$tables = $this->instance->query('
+									SELECT 
+										"name"
+									FROM 
+										"sqlite_master" 
+									WHERE 
+										"type" = \'table\' 
+									ORDER BY 
+										"name" ASC');
+			}
+			elseif($this->driver_is_mysql)
+			{
+				$field	= 'Name';
+				$tables = $this->instance->equery('
+									SHOW TABLE STATUS FROM 
+										"%s"', ($database === NULL ? $this->instance->cfg('database') : $database));
+			}
+			elseif($this->driver_is_pgsql)
+			{
+			}
+			else
 			{
 				return(false);
 			}
-
-			$tables = $this->instance->equery('SHOW TABLE STATUS FROM "%s"', ($database === NULL ? $this->instance->cfg('database') : $database));
 
 			if(!$tables || !$tables->getNumRows())
 			{
 				return(false);
 			}
 
-			return($tables);
+			while($row = $tables->fetchAssoc())
+			{
+				$retval[] = $row[$field];
+			}
+
+			return(($retval ? $retval : false));
 		}
 
 		/**
 		 * Table operation - optimize
 		 *
 		 * Unsupported drivers are:
+		 *  - pgsql
 		 *  - sqlite
+		 *  - pdo_pgsql
 		 *  - pdo_sqlite
 		 *
 		 * @param	string				The table name
 		 * @return	string				Returns the status, and false if unsupported
+		 *
+		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
 		 */
 		public function tableOptimize($table)
 		{
-			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			if($this->driver_is_mysql)
 			{
-				return(false);
+				return($this->instance->equery('OPTIMIZE TABLE "%s"', $table)->fetchObject()->Msg_text);
 			}
 
-			return($this->instance->equery('OPTIMIZE TABLE "%s"', $table)->fetchObject()->Msg_text);
+			return(false);
 		}
 
 		/**
 		 * Table operation - repair
 		 *
 		 * Unsupported drivers are:
+		 *  - pgsql
 		 *  - sqlite
+		 *  - pdo_pgsql
 		 *  - pdo_sqlite
 		 *
 		 * @param	string				The table name
@@ -243,33 +360,40 @@
 		 */
 		public function tableRepair($table)
 		{
-			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			if($this->driver_is_mysql)
 			{
-				return(false);
+				return($this->instance->equery('REPAIR TABLE "%s"', $table)->fetchObject()->Msg_text);
 			}
 
-			return($this->instance->equery('REPAIR TABLE "%s"', $table)->fetchObject()->Msg_text);
+			return(false);
 		}
 
 		/**
 		 * Gets all columns in from a table
 		 *
 		 * @param	string				The table name
-		 * @return	array				Returns an array with all the column names for that table
+		 * @return	array				Returns an array with all the column names for that table or false on error
 		 *
 		 * @since	1.2.0
 		 */
 		public function getColumns($table)
 		{
-			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
+			if($this->driver_is_sqlite)
 			{
 				$sql 	= 'PRAGMA table_info(' . $this->instance->escape($table) . ')';
 				$field	= 'name';
 			}
-			else
+			elseif($this->driver_is_mysql)
 			{
 				$sql 	= 'SHOW COLUMNS FROM "' . $this->instance->escape($table) . '"';
 				$field 	= 'Field';
+			}
+			elseif($this->driver_is_pgsql)
+			{
+			}
+			else
+			{
+				return(false);
 			}
 
 			$columns = $this->instance->query($sql);

@@ -87,8 +87,23 @@
 	<td nowrap="nowrap"><a href="method-count-135180.html">\Tuxxedo\Helper\Database::count()</a></td>
 	<td style="width: 100%">Added the $where parameter</td>
 </tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-gettables-923366.html">\Tuxxedo\Helper\Database::getTables()</a></td>
+	<td style="width: 100%">This method now supports PostgreSQL</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">&nbsp;</td>
+	<td style="width: 100%">This method now supports SQLite</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">&nbsp;</td>
+	<td style="width: 100%">This method no longer returns a result object, but an array of tables for cross database compatibility</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-truncate-550873.html">\Tuxxedo\Helper\Database::truncate()</a></td>
+	<td style="width: 100%">This method now supports PostgreSQL</td>
+</tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedohelperdatabase-947233.html">\Tuxxedo\Helper\Database</a></td>
 	<td style="width: 100%">This class now escapes all input unlike before where only some were escaped</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">&nbsp;</td>
+	<td style="width: 100%">This class now supports PostgreSQL unless stated otherwise (per method)</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-cache-908408.html">\Tuxxedo\Intl::cache()</a></td>
 	<td style="width: 100%">This method no longer magically sets the global $phrase variable</td>
@@ -183,9 +198,6 @@
 	<td style="width: 100%">This class now works flawlessly with SQLite</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="class-tuxxedodatabasedriverpdoresult-275413.html">\Tuxxedo\Database\Driver\Pdo\Result</a></td>
-	<td style="width: 100%">The casing of this class' namespace was changed to comply with the autoloader rules</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedodatabasedriverpgsqlresult-994269.html">\Tuxxedo\Database\Driver\Pgsql\Result</a></td>
 	<td style="width: 100%">The casing of this class' namespace was changed to comply with the autoloader rules</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-isfreed-236502.html">\Tuxxedo\Database\Result::isFreed()</a></td>

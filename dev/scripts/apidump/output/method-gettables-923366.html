@@ -59,7 +59,7 @@
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
 						<td class="value" style="width: 100%">
-							<a href="class-tuxxedodatabaseresult-766582.html">\Tuxxedo\Database\Result</a> getTables(string)
+							array getTables(string)
 						</td>
 					</tr>
 				</table>
@@ -69,7 +69,8 @@
 			<div class="infobox">
 				Gets all tables within a database
 
-Unsupported drivers are:
+Note, some database systems like SQLite, may return system tables like sqlite_sequence
+etc., so don't count on this being identical between two systems.
 			</div>
 			<br />
 		</div>
@@ -101,8 +102,24 @@ Unsupported drivers are:
 <div class="box edge-title">
 	<div class="inner">
 		<div class="infobox">
-			Returns a database result object, and false if unsupported or if no tables exists
+			Returns an array with a list of tables or false on error
 		</div>
+	</div>
+</div>
+
+<h2><span>Throws</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Exception</td>
+				<td class="strong">Condition</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedoexceptionsql-045571.html">\Tuxxedo\Exception\SQL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Throws an SQL exception if the database operation failed</td>
+</tr>
+		</table>
 	</div>
 </div>
 
@@ -110,9 +127,27 @@ Unsupported drivers are:
 
 
 
-
-
-
+<h2><span>Version history</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong center">Version</td>
+				<td class="strong">Note</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap">1.2.0</td>
+	<td nowrap="nowrap" style="width: 100%">This method now supports PostgreSQL</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">1.2.0</td>
+	<td nowrap="nowrap" style="width: 100%">This method now supports SQLite</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">1.2.0</td>
+	<td nowrap="nowrap" style="width: 100%">This method no longer returns a result object, but an array of tables for cross database compatibility</td>
+</tr>
+		</table>
+	</div>
+</div>
 
 <h2><span>See also</span></h2>
 <div class="box edge-title">

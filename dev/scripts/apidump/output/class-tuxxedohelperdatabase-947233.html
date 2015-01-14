@@ -76,6 +76,15 @@ SQLite is not supported by some of the table operational methods.
 	<td nowrap="nowrap"><a href="property-driver-014289.html">$driver</a></td>
 	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database driver</td>
 </tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-driver-is-mysql-346122.html">$driver_is_mysql</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database driver helper -- Is MySQL?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-driver-is-pgsql-253520.html">$driver_is_pgsql</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database driver helper -- Is PostgreSQL?</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-driver-is-sqlite-807110.html">$driver_is_sqlite</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database driver helper -- Is SQLite?</td>
+</tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-instance-486346.html">$instance</a></td>
 	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Database instance</td>
 </tr>
@@ -103,6 +112,15 @@ SQLite is not supported by some of the table operational methods.
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-gettables-923366.html">getTables()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Gets all tables within a database</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isdrivermysql-677856.html">isDriverMysql()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if the database instance is using a MySQL backend</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isdriverpgsql-575414.html">isDriverPgsql()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if the database instance is using a PostgreSQL backend</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-isdriversqlite-746459.html">isDriverSqlite()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Checks if the database instance is using a SQLite backend</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-setinstance-435031.html">setInstance()</a></td>
 	<td nowrap="nowrap" style="width: 100%">Sets a new instance of a database object</td>
@@ -135,6 +153,9 @@ SQLite is not supported by some of the table operational methods.
 			<tr class="row">
 	<td nowrap="nowrap">1.2.0</td>
 	<td nowrap="nowrap" style="width: 100%">This class now escapes all input unlike before where only some were escaped</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">1.2.0</td>
+	<td nowrap="nowrap" style="width: 100%">This class now supports PostgreSQL unless stated otherwise (per method)</td>
 </tr>
 		</table>
 	</div>

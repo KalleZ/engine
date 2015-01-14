@@ -10,8 +10,6 @@
 	  - pdo_pgsql
 	  - REPLACE INTO needs fixing (\Tuxxedo\Datamanager\Adapter)
 	  - Helper
-	    - tableRepair()
-	    - tableOptimize()
 	    - getTables()
 	    - getColumns()
 	  - Convert engine sql files:
