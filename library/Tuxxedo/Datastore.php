@@ -227,12 +227,12 @@
 
 			$result = $this->registry->db->query('
 								SELECT 
-									`name`, 
-									`data` 
+									"name", 
+									"data" 
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'datastore` 
+									"' . \TUXXEDO_PREFIX . 'datastore" 
 								WHERE 
-									`name` 
+									"name" 
 									IN
 									(
 										\'%s\'

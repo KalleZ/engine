@@ -87,14 +87,14 @@
 
 			$result = $this->registry->db->query('
 								SELECT 
-									`title`, 
-									`compiledsource` 
+									"title", 
+									"compiledsource" 
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'templates` 
+									"' . \TUXXEDO_PREFIX . 'templates" 
 								WHERE 
-										`styleid` = %d 
+										"styleid" = %d 
 									AND 
-										`title` IN (
+										"title" IN (
 											\'%s\'
 										);', 
 								$this->style['id'], \join('\', \'', \array_map([$this->registry->db, 'escape'], $templates)));

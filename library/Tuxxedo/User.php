@@ -178,9 +178,9 @@
 
 			$this->registry->db->query('
 							DELETE FROM 
-								`' . \TUXXEDO_PREFIX . 'sessions` 
+								"' . \TUXXEDO_PREFIX . 'sessions" 
 							WHERE 
-								`lastactivity` + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
+								"lastactivity" + %d < %d', $this->registry->options->cookie_expires, \TIMENOW_UTC);
 		}
 
 		/**
@@ -306,9 +306,9 @@
 										' . \TUXXEDO_PREFIX . 'sessions.*, 
 										' . \TUXXEDO_PREFIX . 'users.*
 									FROM
-										`' . \TUXXEDO_PREFIX . 'sessions` 
+										"' . \TUXXEDO_PREFIX . 'sessions" 
 									LEFT JOIN
-										`' . \TUXXEDO_PREFIX . 'users` 
+										"' . \TUXXEDO_PREFIX . 'users" 
 										ON 
 											' . \TUXXEDO_PREFIX . 'sessions.userid = ' . \TUXXEDO_PREFIX . 'users.id 
 										WHERE 
@@ -321,9 +321,9 @@
 									SELECT 
 										* 
 									FROM 
-										`' . \TUXXEDO_PREFIX . 'users` 
+										"' . \TUXXEDO_PREFIX . 'users" 
 									WHERE 
-										`%s` = \'%s\'
+										"%s" = \'%s\'
 									LIMIT 1', $identifier_field, $identifier);
 			}
 

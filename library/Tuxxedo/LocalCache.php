@@ -77,10 +77,10 @@
 	 * // name. By default it uses the same name as the table 
 	 * // for calls to LocalCache::find(), ...
 	 *
-	 * // Internally the following is executed
+	 * // Internally the following is executed (for MySQL)
 	 * //
-	 * //   1) SHOW COLUMNS FROM `books`
-	 * //   2) SELECT * FROM `books` WHERE `title` LIKE 'PHP%'
+	 * //   1) SHOW COLUMNS FROM "books"
+	 * //   2) SELECT * FROM "books" WHERE "title" LIKE 'PHP%'
 	 * $lcache->load('books', ['title' => 'PHP*']);
 	 *
 	 * // Find the number of records loaded into cache
@@ -195,7 +195,7 @@
 			}
 
 			$fields = $dbh->getColumns(\TUXXEDO_PREFIX . $table);
-			$sql 	= 'SELECT * FROM `' . \TUXXEDO_PREFIX . $table . '`';
+			$sql 	= 'SELECT * FROM "' . \TUXXEDO_PREFIX . $table . '"';
 
 			if($conditions)
 			{
@@ -218,7 +218,7 @@
 
 					$added = true;
 
-					$sql .= '`' . $column . '` LIKE \'' . \str_replace('*', '%', $this->db->escape($value)) . '\'';
+					$sql .= '"' . $column . '" LIKE \'' . \str_replace('*', '%', $this->db->escape($value)) . '\'';
 				}
 			}
 

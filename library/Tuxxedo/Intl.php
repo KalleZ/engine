@@ -170,15 +170,15 @@
 
 			$result = $this->registry->db->query('
 								SELECT 
-									`title`, 
-									`translation`, 
-									`phrasegroup`
+									"title", 
+									"translation", 
+									"phrasegroup"
 								FROM 
-									`' . \TUXXEDO_PREFIX . 'phrases` 
+									"' . \TUXXEDO_PREFIX . 'phrases" 
 								WHERE 
-										`languageid` = %d 
+										"languageid" = %d 
 									AND 
-										`phrasegroup` IN (
+										"phrasegroup" IN (
 											\'%s\'
 										);', 
 								$this->information['id'], join('\', \'', \array_map([$this->registry->db, 'escape'], $phrasegroups)));
