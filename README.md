@@ -3,8 +3,8 @@ Tuxxedo Engine
 
 Tuxxedo Engine is a component-based PHP5 library that aids in building and
 managing large web applications. It contains components for MVC applications,
-database connectivity, an ActiveRecord ORM, a query-builder and user
-authentication & authorisation management, along with a session manager.
+database connectivity, an ActiveRecord ORM, authentication & authorisation 
+management, along with a session manager.
 
 
 License
