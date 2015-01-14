@@ -267,7 +267,7 @@
 				return(false);
 			}
 
-			return(@\pg_escape_literal($this->link, $data));
+			return(@\pg_escape_string($this->link, $data));
 		}
 
 		/**
