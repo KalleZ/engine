@@ -126,11 +126,11 @@
 		{
 			if($this->driver == 'sqlite' || $this->driver == 'pdo_sqlite')
 			{
-				$sql = 'DELETE FROM `' . \TUXXEDO_PREFIX . '%s`';
+				$sql = 'DELETE FROM "' . \TUXXEDO_PREFIX . '%s"';
 			}
 			else
 			{
-				$sql = 'TRUNCATE TABLE `' . \TUXXEDO_PREFIX . '%s`';
+				$sql = 'TRUNCATE TABLE "' . \TUXXEDO_PREFIX . '%s"';
 			}
 
 			return($this->instance->equery($sql, $table));
@@ -152,16 +152,18 @@
 		{
 			if($index != '*')
 			{
-				$index = '`' . $this->instance->escape($index) . '`';
+				$index = '"' . $this->instance->escape($index) . '"';
 			}
 
-			$whereclaus = '';
+			$whereclause = '';
 
 			if($where)
 			{
+				$whereclause = 'WHERE ';
+
 				foreach($where as $field => $value)
 				{
-					$whereclause .= '`' . $field . '` = \'' . $this->instance->escape($value) . '\', ';
+					$whereclause .= '"' . $field . '" = \'' . $this->instance->escape($value) . '\', ';
 				}
 
 				$whereclause = rtrim($whereclause, ', ');
@@ -171,7 +173,7 @@
 								SELECT 
 									COUNT(%s) as \'total\' 
 								FROM 
-									`%s`
+									"%s"
 								%s', $index, $this->instance->escape($table), $whereclause);
 
 			if(!$query || !$query->getNumRows())
@@ -183,7 +185,7 @@
 		}
 
 		/**
-		 * Gets all table within a database
+		 * Gets all tables within a database
 		 *
 		 * Unsupported drivers are:
 		 *  - sqlite
@@ -199,7 +201,7 @@
 				return(false);
 			}
 
-			$tables = $this->instance->equery('SHOW TABLE STATUS FROM `%s`', ($database === NULL ? $this->instance->cfg('database') : $database));
+			$tables = $this->instance->equery('SHOW TABLE STATUS FROM "%s"', ($database === NULL ? $this->instance->cfg('database') : $database));
 
 			if(!$tables || !$tables->getNumRows())
 			{
@@ -226,7 +228,7 @@
 				return(false);
 			}
 
-			return($this->instance->equery('OPTIMIZE TABLE `%s`', $table)->fetchObject()->Msg_text);
+			return($this->instance->equery('OPTIMIZE TABLE "%s"', $table)->fetchObject()->Msg_text);
 		}
 
 		/**
@@ -246,7 +248,7 @@
 				return(false);
 			}
 
-			return($this->instance->equery('REPAIR TABLE `%s`', $table)->fetchObject()->Msg_text);
+			return($this->instance->equery('REPAIR TABLE "%s"', $table)->fetchObject()->Msg_text);
 		}
 
 		/**
@@ -266,7 +268,7 @@
 			}
 			else
 			{
-				$sql 	= 'SHOW COLUMNS FROM `' . $this->instance->escape($table) . '`';
+				$sql 	= 'SHOW COLUMNS FROM "' . $this->instance->escape($table) . '"';
 				$field 	= 'Field';
 			}
 
