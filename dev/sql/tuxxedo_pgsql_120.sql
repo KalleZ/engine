@@ -25,6 +25,19 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
+--
+-- Name: engine_option_type; Type: TYPE; Schema: public; Owner: tuxxedo
+--
+
+CREATE TYPE engine_option_type AS ENUM (
+    's',
+    'i',
+    'b'
+);
+
+
+ALTER TYPE engine_option_type OWNER TO tuxxedo;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -94,6 +107,33 @@ CREATE TABLE optioncategories (
 ALTER TABLE optioncategories OWNER TO tuxxedo;
 
 --
+-- Name: options; Type: TABLE; Schema: public; Owner: tuxxedo; Tablespace: 
+--
+
+CREATE TABLE options (
+    option character varying(128) NOT NULL,
+    value text NOT NULL,
+    defaultvalue text NOT NULL,
+    type engine_option_type NOT NULL,
+    category character varying(128) NOT NULL
+);
+
+
+ALTER TABLE options OWNER TO tuxxedo;
+
+--
+-- Name: permissions; Type: TABLE; Schema: public; Owner: tuxxedo; Tablespace: 
+--
+
+CREATE TABLE permissions (
+    name character varying(255) NOT NULL,
+    bits integer NOT NULL
+);
+
+
+ALTER TABLE permissions OWNER TO tuxxedo;
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: tuxxedo
 --
 
@@ -137,6 +177,35 @@ style
 
 
 --
+-- Data for Name: options; Type: TABLE DATA; Schema: public; Owner: tuxxedo
+--
+
+COPY options (option, value, defaultvalue, type, category) FROM stdin;
+style_id	1	1	i	style
+cookie_domain			s	session
+cookie_path			s	session
+cookie_expires	1800	1800	i	session
+cookie_prefix	tuxxedo_	tuxxedo_	s	session
+date_format	H:i:s, j/n - Y	H:i:s, j/n - Y	s	datetime
+date_timezone	UTC	UTC	s	datetime
+date_timezone_offset	0	0	i	datetime
+language_id	1	1	i	language
+style_storage	database	database	s	style
+cookie_secure	0	0	b	session
+language_autodetect	0	0	b	language
+\.
+
+
+--
+-- Data for Name: permissions; Type: TABLE DATA; Schema: public; Owner: tuxxedo
+--
+
+COPY permissions (name, bits) FROM stdin;
+administrator	1
+\.
+
+
+--
 -- Name: datastore_name_key; Type: CONSTRAINT; Schema: public; Owner: tuxxedo; Tablespace: 
 --
 
@@ -158,6 +227,22 @@ ALTER TABLE ONLY languages
 
 ALTER TABLE ONLY optioncategories
     ADD CONSTRAINT optioncategories_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: options_option_key; Type: CONSTRAINT; Schema: public; Owner: tuxxedo; Tablespace: 
+--
+
+ALTER TABLE ONLY options
+    ADD CONSTRAINT options_option_key UNIQUE (option);
+
+
+--
+-- Name: permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: tuxxedo; Tablespace: 
+--
+
+ALTER TABLE ONLY permissions
+    ADD CONSTRAINT permissions_pkey PRIMARY KEY (name);
 
 
 --

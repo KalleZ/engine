@@ -141,7 +141,7 @@
 		 * mysqli	MySQL 4.1+
 		 * pdo		Any PDO extension (*)
 		 * sqlite	SQLite 3+
-		 * pgsql	PostgreSQL 8.0+
+		 * pgsql	PostgreSQL 8.3+
 		 *
 		 * Drivers marked with (*) requires a sub driver to be defined
 		 */

@@ -13,8 +13,6 @@
 	    - getTables()
 	    - getColumns()
 	  - Convert engine sql files:
-	    - options
-	    - permissions
 	    - phrasegroups
 	    - phrases
 	    - sessions
