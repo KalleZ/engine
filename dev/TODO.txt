@@ -14,6 +14,7 @@
 	    - getTables()
 	    - getColumns()
 	  - Implement result interface
+	    - current()
 	  - Convert database files:
 	    - tuxxedo_mysql.sql
 	    - tuxxedo_mysql_100_110.sql

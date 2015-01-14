@@ -41,9 +41,9 @@
 
 
 	/**
-	 * MySQL result class
+	 * PostgreSQL result class
 	 *
-	 * This implements the result class for MySQL for Tuxxedo, 
+	 * This implements the result class for PostgreSQL for Tuxxedo, 
 	 * this contains methods to fetch, count result rows and 
 	 * such for working with a resultset
 	 *
@@ -51,8 +51,7 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
-	 * 
-	 * @changelog		1.1.0			The casing of this class' namespace was changed to comply with the autoloader rules
+	 * @since		1.2.0
 	 */
 	class Result extends Database\Result
 	{
@@ -72,8 +71,6 @@
 		 * @param	mixed				A database result, this must be delivered from the driver it was created from
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	If the result passed is from a different driver type, or if the result does not contain any results
-		 *
-		 * @since	1.1.0
 		 */
 		public function __construct(Database $instance, $result)
 		{
@@ -84,7 +81,7 @@
 
 			$this->instance		= $instance;
 			$this->result		= $result;
-			$this->cached_num_rows 	= (integer) \mysql_num_rows($result);
+			$this->cached_num_rows 	= (integer) \pg_num_rows($result);
 		}
 
 		/**
@@ -94,9 +91,9 @@
 		 */
 		public function free()
 		{
-			if(\is_resource($this->result))
+			if($this->result)
 			{
-				\mysql_free_result($this->result);
+				\pg_free_result($this->result);
 
 				$this->result = NULL;
 
@@ -113,7 +110,7 @@
 		 */
 		public function getNumRows()
 		{
-			if(!\is_resource($this->result))
+			if(!$this->result)
 			{
 				return(0);
 			}
@@ -133,7 +130,7 @@
 				return(false);
 			}
 
-			return(\mysql_fetch_array($this->result));
+			return(\pg_fetch_array($this->result));
 		}
 
 		/**
@@ -148,7 +145,7 @@
 				return(false);
 			}
 
-			return(\mysql_fetch_assoc($this->result));
+			return(\pg_fetch_assoc($this->result));
 		}
 
 		/**
@@ -163,7 +160,7 @@
 				return(false);
 			}
 
-			return(\mysql_fetch_row($this->result));
+			return(\pg_fetch_row($this->result));
 		}
 
 		/**
@@ -179,15 +176,13 @@
 				return(false);
 			}
 
-			return(\mysql_fetch_object($this->result));
+			return(\pg_fetch_object($this->result));
 		}
 
 		/**
 		 * Iterator method - current
 		 *
 		 * @return	mixed				Returns the current result
-		 *
-		 * @since	1.1.0
 		 */
 		public function current()
 		{
