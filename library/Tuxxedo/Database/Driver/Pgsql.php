@@ -33,7 +33,7 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Database;
-	use Tuxxedo\Database\Driver\Postgres;
+	use Tuxxedo\Database\Driver\Pgsql;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
@@ -73,6 +73,16 @@
 		 * @var		resource
 		 */
 		protected $link;
+
+		/**
+		 * The last inserted OID, this is stored here because 
+		 * the driver interface does not require the result 
+		 * object to be passed to getInsertId(), which the 
+		 * PostgreSQL API requires
+		 *
+		 * @var		integer
+		 */
+		protected $insert_id		= 0;
 
 
 		/**
@@ -226,12 +236,12 @@
 		 */
 		public function getInsertId()
 		{
-			if(!($this->link instanceof \SQLite3))
+			if(!\is_resource($this->link))
 			{
 				return(false);
 			}
 
-			return($this->link->lastInsertRowID());
+			return($this->insert_id);
 		}
 
 		/**
@@ -282,7 +292,7 @@
 				$this->connect();
 			}
 
-			if(empty($sql) || !($this->link instanceof \SQLite3))
+			if(empty($sql) || !\is_resource($this->link))
 			{
 				return(false);
 			}
@@ -297,22 +307,17 @@
 			}
 
 			Registry::globals('error_reporting', false);
-			$query = $this->link->prepare($sql);
+			$query = \pg_query($this->link, $sql);
 			Registry::globals('error_reporting', true);
 
-			if($query)
-			{
-				$query = $query->execute();
-			}
-
-			if(!$query)
+			if($query === false)
 			{
 				if($this->registry->trace)
 				{
 					$this->registry->trace->end();
 				}
 
-				throw new Exception\SQL($sql, self::DRIVER_NAME, $this->link->lastErrorMsg(), $this->link->lastErrorCode());
+				throw new Exception\SQL($sql, self::DRIVER_NAME, \pg_last_error($this->link), -1);
 			}
 
 			$sql = [
@@ -326,14 +331,14 @@
 			}
 
 			$this->queries[] 	= $sql;
-			$this->affected_rows 	= (integer) $this->link->changes();
+			$this->affected_rows 	= (integer) \pg_affected_rows($query);
 
-			if(!$query->numColumns())
+			if(!\pg_num_rows($query))
 			{
 				return(true);
 			}
 
-			return(new Sqlite\Result($this, $query));
+			return(new Pgsql\Result($this, $query));
 		}
 	}
 ?>
