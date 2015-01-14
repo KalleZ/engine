@@ -94,7 +94,7 @@
 		 */
 		public function free()
 		{
-			if(\is_resource($this->result))
+			if($this->result)
 			{
 				\mysql_free_result($this->result);
 
@@ -113,7 +113,7 @@
 		 */
 		public function getNumRows()
 		{
-			if(!\is_resource($this->result))
+			if(!$this->result)
 			{
 				return(0);
 			}
