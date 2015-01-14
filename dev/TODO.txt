@@ -8,6 +8,11 @@
 
 	* Change ` to ' or " respectively for SQL queries
 	* PostgreSQL driver
+	  - Helper
+	    - tableRepair()
+	    - tableOptimize()
+	    - getTables()
+	    - getColumns()
 	  - Implement result interface
 	  - Convert database files:
 	    - tuxxedo_mysql.sql
