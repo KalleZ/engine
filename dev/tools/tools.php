@@ -100,6 +100,7 @@
 
 			$ignored	= [
 						'json', 
+						'md', 
 						'png', 
 						'sqlite3', 
 						'txt', 
