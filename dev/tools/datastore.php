@@ -80,8 +80,8 @@
 						SELECT 
 							* 
 						FROM 
-							`' . TUXXEDO_PREFIX . 'datastore` 
-						ORDER BY `name` ASC');
+							"' . TUXXEDO_PREFIX . 'datastore" 
+						ORDER BY "name" ASC');
 
 			if(!$ds || !$ds->getNumRows())
 			{
@@ -144,9 +144,9 @@
 										SELECT 
 											* 
 										FROM 
-											`' . TUXXEDO_PREFIX . $tables[$element] . '` 
+											"' . TUXXEDO_PREFIX . $tables[$element] . '" 
 										ORDER BY 
-											`%s` 
+											"%s" 
 										ASC', $indices[$element]);
 
 							if(!$p || !$p->getNumRows())
@@ -175,11 +175,11 @@
 									{
 										$query			= $db->equery('
 															SELECT 
-																COUNT(`id`) as \'phrases\' 
+																COUNT("id") as \'phrases\' 
 															FROM 
-																`' . TUXXEDO_PREFIX . 'phrases` 
+																"' . TUXXEDO_PREFIX . 'phrases" 
 															WHERE 
-																`phrasegroup` = \'%s\'', $s['title']);
+																"phrasegroup" = \'%s\'', $s['title']);
 
 										if(!isset($current[$s['languageid']]))
 										{
@@ -198,11 +198,11 @@
 									{
 										$result = $db->query('
 													SELECT 
-														COUNT(`id`) as \'count\' 
+														COUNT("id") as \'count\' 
 													FROM 
-														`' . TUXXEDO_PREFIX . 'users` 
+														"' . TUXXEDO_PREFIX . 'users" 
 													WHERE 
-														`usergroupid` = %d', $s['id']);
+														"usergroupid" = %d', $s['id']);
 
 										$s['permissions'] 	= (integer) $s['permissions'];
 										$s['users']		= ($result && $result->getNumRows() ? (integer) $result->fetchObject()->count : 0);
@@ -233,13 +233,13 @@
 								$ids 	= [];
 								$p 	= $db->query('
 											SELECT 
-												`id` 
+												"id" 
 											FROM 
-												`' . TUXXEDO_PREFIX . 'templates` 
+												"' . TUXXEDO_PREFIX . 'templates" 
 											WHERE
-												`styleid` = %d 
+												"styleid" = %d 
 											ORDER BY 
-												`id`
+												"id"
 											ASC', $styleid);
 
 								if(!$p || !$p->getNumRows())
