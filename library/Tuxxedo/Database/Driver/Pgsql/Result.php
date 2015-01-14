@@ -186,12 +186,32 @@
 		 */
 		public function current()
 		{
-			if(!$this->result || !\mysql_data_seek($this->result, $this->position))
+			if(!$this->result)
 			{
 				return(false);
 			}
 
-			return($this->fetch());
+			switch($this->fetch_mode)
+			{
+				case(1):
+				{
+					return(\pg_fetch_array($this->result, $this->position));
+				}
+				case(2):
+				{
+					return(\pg_fetch_assoc($this->result, $this->position));
+				}
+				case(3):
+				{
+					return(\pg_fetch_row($this->result, $this->position));
+				}
+				case(4):
+				{
+					return(\pg_fetch_object($this->result, $this->position));
+				}
+			}
+
+			return(false);
 		}
 	}
 ?>
