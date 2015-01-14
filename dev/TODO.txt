@@ -7,13 +7,20 @@
 	--------------------------------------------------
 
 	* PostgreSQL driver
+	  - pdo_pgsql
 	  - REPLACE INTO needs fixing (\Tuxxedo\Datamanager\Adapter)
 	  - Helper
 	    - tableRepair()
 	    - tableOptimize()
 	    - getTables()
 	    - getColumns()
-	  - Convert database files:
-	    - tuxxedo_mysql.sql
-	    - tuxxedo_mysql_100_110.sql
-	    - tuxxedo_mysql_110_120.sql
+	  - Convert engine sql files:
+	    - options
+	    - permissions
+	    - phrasegroups
+	    - phrases
+	    - sessions
+	    - styles
+	    - templates
+	    - usergroups
+	    - users
