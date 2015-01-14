@@ -43,11 +43,11 @@
 						SELECT 
 							* 
 						FROM 
-							`' . TUXXEDO_PREFIX . 'templates` 
+							"' . TUXXEDO_PREFIX . 'templates" 
 						WHERE 
-							`styleid` = %d
+							"styleid" = %d
 						ORDER BY 
-							`title` 
+							"title" 
 						ASC', $datastore->options['style_id']);
 
 		if(!$templates)
