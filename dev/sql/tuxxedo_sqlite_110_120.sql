@@ -3,3 +3,5 @@ INSERT INTO 'options' ('option', 'value', 'defaultvalue', 'type', 'category') VA
 ALTER TABLE 'sessions' ADD 'rehash' BOOL NOT NULL DEFAULT '0';
 
 INSERT INTO `tuxxedo`.`phrases` (`id`, `title`, `translation`, `defaulttranslation`, `changed`, `languageid`, `phrasegroup`) VALUES (NULL, 'dm_phrase_changed', 'Phrase customization status', 'Phrase customization status', '0', '1', 'datamanagers'), (NULL, 'dm_phrase_defaulttranslation', 'Phrase default translation', 'Phrase default translation', '0', '1', 'datamanagers');
+
+DELETE FROM `tuxxedo`.`templates` WHERE `templates`.`id` = 3;

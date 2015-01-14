@@ -136,3 +136,5 @@ UPDATE `phrases` SET `defaulttranslation` = 'Phrase translation' WHERE `id` = 57
 UPDATE `phrases` SET `defaulttranslation` = 'Phrase language identifier' WHERE `id` = 58;
 UPDATE `phrases` SET `defaulttranslation` = 'Phrase phrasegroup' WHERE `id` = 59;
 UPDATE `phrases` SET `defaulttranslation` = 'Session rehashing attribute' WHERE `id` = 60;
+
+DELETE FROM `tuxxedo`.`templates` WHERE `templates`.`id` = 3;
