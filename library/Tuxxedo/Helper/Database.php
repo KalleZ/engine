@@ -390,16 +390,18 @@
 		{
 			if($this->driver_is_sqlite)
 			{
-				$sql 	= 'PRAGMA table_info(' . $this->instance->escape($table) . ')';
 				$field	= 'name';
+				$sql 	= 'PRAGMA table_info(' . $this->instance->escape($table) . ')';
 			}
 			elseif($this->driver_is_mysql)
 			{
-				$sql 	= 'SHOW COLUMNS FROM "' . $this->instance->escape($table) . '"';
 				$field 	= 'Field';
+				$sql 	= 'SHOW COLUMNS FROM "' . $this->instance->escape($table) . '"';
 			}
 			elseif($this->driver_is_pgsql)
 			{
+				$field	= 'column_name';
+				$sql	= 'SELECT "column_name" FROM information_schema.columns WHERE "table_name" = \'' . $this->instance->escape($table) . '\'';
 			}
 			else
 			{

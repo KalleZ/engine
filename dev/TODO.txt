@@ -5,8 +5,3 @@
 
 	Tuxxedo Engine 1.2.0 "Beloved" Release Candidate 2
 	--------------------------------------------------
-
-	* PostgreSQL driver
-	  - pdo_pgsql
-	  - Helper
-	    - getColumns()

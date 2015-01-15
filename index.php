@@ -35,18 +35,8 @@
 	 * Bootstraper
 	 */
 	require('./library/bootstrap.php');
-use Tuxxedo\Helper;
-$d = Helper::factory('database');
-$x = 0;
-foreach($d->getTables() as $table)
-{
-++$x;
-echo '<pre>';
-var_dump($table);
-echo '<hr>';
-}
-echo '<h2>' . $x . '</h2>';
-die;
+
+
 	/**
 	 * Just print the engine version to show that
 	 * the bootstraper was a success

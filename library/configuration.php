@@ -145,7 +145,7 @@
 		 *
 		 * Drivers marked with (*) requires a sub driver to be defined
 		 */
-		'driver' 	=> 'pgsql', 
+		'driver' 	=> 'pdo', 
 
 		/**
 		 * Sub driver
@@ -162,7 +162,7 @@
 		 * sqlite
 		 * pgsql
 		 */
-		'subdriver'	=> '', 
+		'subdriver'	=> 'pgsql', 
 
 		/**
 		 * DSN prefix
