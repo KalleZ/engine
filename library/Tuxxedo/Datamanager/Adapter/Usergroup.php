@@ -172,7 +172,7 @@
 				$virtual	= $this->data;
 				$query 		= $this->registry->db->query('
 										SELECT 
-											COUNT("id") as \'count\' 
+											COUNT("id") AS "count" 
 										FROM 
 											"' . \TUXXEDO_PREFIX . 'users" 
 										WHERE 

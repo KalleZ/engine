@@ -788,7 +788,7 @@
 			}
 
 			$new_identifier = isset($this->data[static::ID_NAME]) && !$this->reidentify;
-			$sql		= ($new_identifier ? 'UPDATE "' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" SET ' : (($this->options & self::OPT_LOAD_ONLY) ? 'INSERT INTO' : 'REPLACE INTO') . ' "' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" (');
+			$sql		= ($new_identifier ? 'UPDATE "' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" SET ' : 'INSERT INTO "' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" (');
 
 			foreach($virtual as $field => $data)
 			{
@@ -820,6 +820,15 @@
 			else
 			{
 				$sql .= ') VALUES (' . $values . ')';
+
+				if(!($this->options & self::OPT_LOAD_ONLY) && isset($this->data[static::ID_NAME]))
+				{
+					$this->registry->db->equery('
+									DELETE FROM 
+										"' . \TUXXEDO_PREFIX . static::TABLE_NAME . '" 
+									WHERE 
+										"' . static::ID_NAME . '" = \'%s\'', $this->data[static::ID_NAME]);
+				}
 			}
 
 			if(!$this->registry->db->query($sql))

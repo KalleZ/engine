@@ -8,7 +8,6 @@
 
 	* PostgreSQL driver
 	  - pdo_pgsql
-	  - REPLACE INTO needs fixing (\Tuxxedo\Datamanager\Adapter)
 	  - Helper
 	    - getTables()
 	    - getColumns()

@@ -249,7 +249,7 @@
 
 			$query = $this->instance->query('
 								SELECT 
-									COUNT(%s) as \'total\' 
+									COUNT(%s) AS "total" 
 								FROM 
 									"%s"
 								%s', $index, $this->instance->escape($table), $whereclause);

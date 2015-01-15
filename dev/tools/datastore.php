@@ -175,7 +175,7 @@
 									{
 										$query			= $db->equery('
 															SELECT 
-																COUNT("id") as \'phrases\' 
+																COUNT("id") AS "phrases" 
 															FROM 
 																"' . TUXXEDO_PREFIX . 'phrases" 
 															WHERE 
@@ -198,7 +198,7 @@
 									{
 										$result = $db->query('
 													SELECT 
-														COUNT("id") as \'count\' 
+														COUNT("id") AS "count" 
 													FROM 
 														"' . TUXXEDO_PREFIX . 'users" 
 													WHERE 

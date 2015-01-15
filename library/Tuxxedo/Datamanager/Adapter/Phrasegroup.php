@@ -223,7 +223,7 @@
 
 				$query		= $this->registry->db->equery('
 										SELECT 
-											COUNT("id") as \'phrases\' 
+											COUNT("id") AS "phrases" 
 										FROM 
 											"' . \TUXXEDO_PREFIX . 'phrases" 
 										WHERE 
