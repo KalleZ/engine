@@ -2,6 +2,13 @@
 
 
 
+	Tuxxedo Engine 1.2.1 "Beloved"
+	------------------------------------------------
+
+	Fixed a bug that would cause a notice when saving using some datamanagers where their fields did not have a validation specified (Kalle)
+
+
+
 	Tuxxedo Engine 1.2.0 "Beloved"
 	------------------------------------------------
 
