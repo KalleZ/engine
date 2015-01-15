@@ -112,7 +112,7 @@
 							'rehash'	=> [
 										'type'		=> parent::FIELD_OPTIONAL, 
 										'validation'	=> parent::VALIDATE_BOOLEAN, 
-										'default'	=> 0
+										'default'	=> false
 										]
 							];
 
