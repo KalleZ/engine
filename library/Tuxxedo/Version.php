@@ -126,7 +126,7 @@
 		 *
 		 * @var		boolean
 		 */
-		const PREVIEW			= true;
+		const PREVIEW			= false;
 
 		/**
 		 * Development preview type, this is set to the preview type, like 'Alpha', 
@@ -134,7 +134,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= 'Release Candidate';
+		const PREVIEW_TYPE		= '';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -142,7 +142,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 2;
+		const PREVIEW_NUMBER		= 0;
 
 		/**
 		 * Development codename, this value is always the same for each 
@@ -172,6 +172,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.0 "Beloved" Release Candidate 2 (experimental)';
+		const FULL			= '1.2.0 "Beloved"';
 	}
 ?>
