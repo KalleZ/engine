@@ -57,7 +57,7 @@
 		/**
 		 * Constructs a new data exception from
 		 *
-		 * @param	array			D to store as an array
+		 * @param	array			Data to store as an array
 		 * @param	string			The error message, in a printf-alike formatted string or just a normal string
 		 * @param	mixed			Optional argument #n for formatting
 		 */
