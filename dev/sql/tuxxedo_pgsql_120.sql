@@ -603,8 +603,21 @@ SELECT pg_catalog.setval('phrases_id_seq', 1, false);
 --
 
 COPY sessions (sessionid, userid, location, useragent, lastactivity, rehash) FROM stdin;
-k5msrp93dejajnpuc522mv9cq1	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421280560	f
 hk38l3p5jc64go7nkgvolj5g06	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421281832	t
+m6um0m5i7ef60h2qaa3cvnof87	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421281956	t
+tfrajrps29vj5jaas0vi5k3pf1	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282187	t
+omsu0acqu7npprp5te95rbfld0	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282328	t
+ngslioea8gg9lsv9ljlbt4hs21	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282346	t
+fsl1t6dmpt7odedqahvup7dul5	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282356	t
+nrtn4ilrqidqd3chdi370mp7a2	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282389	t
+th54gcc5cpirqvc2mktbto4355	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282390	t
+64ke4r6fve2s9nfq8hdpkuo963	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282432	t
+o37rstfbpu298uou19g2t61im0	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282687	t
+pl5lm5je1sot52gleh5o6h58f7	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282696	t
+nf1tiv665c38nrtoidpn60vqs0	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282722	t
+jet8r95dmb2hi4g7tca019hau1	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282751	t
+1dslkjk5nhs9gqoaoe2p9bsph0	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282778	t
+drk9cp1pebg0gbb25gearu49v4	0	/engine/index.php	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36 OPR/26.0.1656.60	1421282789	t
 \.
 
 
