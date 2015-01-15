@@ -145,7 +145,7 @@
 		 *
 		 * Drivers marked with (*) requires a sub driver to be defined
 		 */
-		'driver' 	=> 'pdo', 
+		'driver' 	=> 'mysqli', 
 
 		/**
 		 * Sub driver
@@ -162,7 +162,7 @@
 		 * sqlite
 		 * pgsql
 		 */
-		'subdriver'	=> 'pgsql', 
+		'subdriver'	=> '', 
 
 		/**
 		 * DSN prefix
@@ -301,7 +301,7 @@
 		 * Some databases, like SQLite, thats file based does 
 		 * not use a username.
 		 */
-		'username' 	=> 'tuxxedo', 
+		'username' 	=> 'root', 
 
 		/**
 		 * Password
@@ -315,7 +315,7 @@
 		 * database. Note that this does not work for SQLite when 
 		 * used inconjuction with PDO.
 		 */
-		'password'	=> 'test', 
+		'password'	=> '', 
 
 		/**
 		 * Table prefix
