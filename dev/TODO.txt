@@ -9,5 +9,4 @@
 	* PostgreSQL driver
 	  - pdo_pgsql
 	  - Helper
-	    - getTables()
 	    - getColumns()

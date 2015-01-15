@@ -303,6 +303,14 @@
 			}
 			elseif($this->driver_is_pgsql)
 			{
+				$field 	= 'table_name';
+				$tables = $this->instance->query('
+									SELECT 
+										"table_name" 
+									FROM 
+										information_schema.tables 
+									WHERE 
+										"table_schema" = \'public\'');
 			}
 			else
 			{
@@ -340,7 +348,9 @@
 		{
 			if($this->driver_is_mysql)
 			{
-				return($this->instance->equery('OPTIMIZE TABLE "%s"', $table)->fetchObject()->Msg_text);
+				return($this->instance->equery('
+								OPTIMIZE TABLE 
+									"%s"', $table)->fetchObject()->Msg_text);
 			}
 
 			return(false);
