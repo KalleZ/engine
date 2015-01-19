@@ -5,3 +5,5 @@
 
 	Tuxxedo Engine 1.2.1 "Beloved"
 	------------------------------
+
+	MySQL/MySQLi should set sql_mode to ANSI by default
