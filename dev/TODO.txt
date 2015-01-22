@@ -8,3 +8,5 @@
 
 	MySQL/MySQLi should set sql_mode to ANSI by default
 	Fix datamanager factory loading, remove the tolower call
+	Look at table status, may not be working after the recent changes to the database helper
+	Datastore dump data does not escape HTML
