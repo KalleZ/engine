@@ -11,3 +11,4 @@
 	Look at table status, may not be working after the recent changes to the database helper
 	Datastore dump data does not escape HTML
 	Datamanagers should have a field to check if data was changed or not to generate smaller queries
+	Fix E_STRICT in test_login() (::invoke call)
