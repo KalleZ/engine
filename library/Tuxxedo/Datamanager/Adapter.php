@@ -414,7 +414,15 @@
 
 			if(isset($this->information[$offset]) && $value != $this->information[$offset])
 			{
-				// @TODO for $this->changed_data
+				if(!isset($this->changed_data[$offset]))
+				{
+					$this->changed_data[$offset] = $this->information[$offset];
+				}
+
+				if($this->changed_data[$offset] == $value)
+				{
+					unset($this->changed_data[$offset]);
+				}
 			}
 
 			$this->information[$offset] = $value;
@@ -555,6 +563,35 @@
 			}
 
 			return($fields);
+		}
+
+		/**
+		 * Gets the changed data
+		 *
+		 * @param	boolean				Whether or not to return the original data (data loaded before it was changed)
+		 * @return	array				Returns all changed data
+		 *
+		 * @since	1.2.1
+		 */
+		public function getChangedData($populate_original = false)
+		{
+			if(!$this->changed_data)
+			{
+				return($this->data);
+			}
+			elseif($populate_original)
+			{
+				return($this->changed_data);
+			}
+
+			$retval = [];
+
+			foreach($this->changed_data as $key => $original)
+			{
+				$retval[$key] = $this->data[$key];
+			}
+
+			return($retval);
 		}
 
 		/**
@@ -781,7 +818,7 @@
 			}
 
 			$values		= '';
-			$virtual	= ($this->identifier !== NULL ? \array_merge([static::ID_NAME => $this->identifier], $this->data) : $this->data);
+			$virtual	= ($this->identifier !== NULL ? \array_merge([static::ID_NAME => $this->identifier], $this->getChangedData()) : $this->getChangedData());
 			$virtual_fields	= $this->getVirtualFields();
 			$n 		= \sizeof($virtual);
 

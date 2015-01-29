@@ -5,5 +5,3 @@
 
 	Tuxxedo Engine 1.2.1 "Beloved"
 	------------------------------
-
-	Datamanagers should have a field to check if data was changed or not to generate smaller queries

@@ -6,6 +6,10 @@
 	------------------------------------------------
 
 	Added the $only_table_name parameter (defaults to false) in \Tuxxedo\Helper\Database::getTables() (Kalle)
+	Added a check to datamanagers to make them only send out the needed SQL for the changed data, this have the following API changes: (Kalle)
+	 - Added \Tuxxedo\Datamanager\Adapter::$changed_data
+	 - Added \Tuxxedo\Datamanager\Adapter::getChangedData()
+	 - Removed \Tuxxedo\Datamanager\Adapter::$original_data
 
 	Changed mysql, mysqli & pdo_mysql to set sql_mode to 'ANSI' (Kalle)
 	Changed the 'Dump datastore' feature to escape HTML output (Kalle)
