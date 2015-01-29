@@ -360,7 +360,7 @@
 			$dbhelper = Helper::factory('database');
 			$dbdriver = $dbhelper->getDriver();
 
-			if($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite')
+			if($dbdriver == 'sqlite' || $dbdriver == 'pdo_sqlite' || $dbdriver == 'pgsql' || $dbdriver == 'pdo_pgsql')
 			{
 				throw new Exception('This tool is not available for SQLite');
 			}
