@@ -326,7 +326,7 @@
 
 			while($row = $tables->fetchAssoc())
 			{
-				$retval[] = ($only_field_name ? $row[$field] : $row);
+				$retval[] = ($only_table_name ? $row[$field] : $row);
 			}
 
 			return(($retval ? $retval : false));
