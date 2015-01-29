@@ -80,7 +80,7 @@
 		 * @var		boolean
 		 * @since	1.2.0
 		 */
-		protected $driver_is_mysql		= false;
+		protected $driver_is_mysql;
 
 		/**
 		 * Database driver helper -- Is PostgreSQL?
@@ -88,7 +88,7 @@
 		 * @var		boolean
 		 * @since	1.2.0
 		 */
-		protected $driver_is_pgsql		= false;
+		protected $driver_is_pgsql;
 
 		/**
 		 * Database driver helper -- Is SQLite?
@@ -96,7 +96,15 @@
 		 * @var		boolean
 		 * @since	1.2.0
 		 */
-		protected $driver_is_sqlite		= false;
+		protected $driver_is_sqlite;
+
+		/**
+		 * Database driver helper -- Is driver using PDO?
+		 *
+		 * @var		boolean
+		 * @since	1.2.1
+		 */
+		protected $driver_is_pdo;
 
 
 		/**
@@ -123,11 +131,12 @@
 			$this->instance 	= $instance;
 			$this->driver		= \strtolower($instance->cfg('driver'));
 
-			$this->driver_is_mysql	= $this->driver_is_pgsql = $this->driver_is_sqlite = false;
+			$this->driver_is_mysql	= $this->driver_is_pgsql = $this->driver_is_sqlite = $this->driver_is_pdo = false;
 
 			if($this->driver == 'pdo' && ($subdriver = \strtolower($instance->cfg('subdriver'))) != false)
 			{
-				$this->driver .= '_' . $subdriver;
+				$this->driver 		.= '_' . $subdriver;
+				$this->driver_is_pdo	= true;
 			}
 
 			if($this->driver == 'mysql' || $this->driver == 'mysqli' || $this->driver == 'pdo_mysql')
@@ -188,6 +197,18 @@
 		public function isDriverSqlite()
 		{
 			return($this->driver_is_sqlite);
+		}
+
+		/**
+		 * Checks if the database instance is using PDO together with a driver
+		 *
+		 * @return	boolean				Returns true if the backend is using PDO for abstraction, otherwise false
+		 *
+		 * @since	1.2.1
+		 */
+		public function isDriverPdo()
+		{
+			return($this->driver_is_pdo);
 		}
 
 		/**

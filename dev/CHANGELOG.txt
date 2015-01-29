@@ -10,6 +10,7 @@
 	 - Added \Tuxxedo\Datamanager\Adapter::$changed_data
 	 - Added \Tuxxedo\Datamanager\Adapter::getChangedData()
 	 - Removed \Tuxxedo\Datamanager\Adapter::$original_data
+	Added \Tuxxedo\Helper\Database::isDriverPdo() (Kalle)
 
 	Changed mysql, mysqli & pdo_mysql to set sql_mode to 'ANSI' (Kalle)
 	Changed the 'Dump datastore' feature to escape HTML output (Kalle)
