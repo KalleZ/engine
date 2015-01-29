@@ -269,15 +269,17 @@
 		 * etc., so don't count on this being identical between two systems.
 		 *
 		 * @param	string				The database name, if differs from the current connection
+		 * @param	boolean				Return only the table name for each row (defaults to off)
 		 * @return	array				Returns an array with a list of tables or false on error
 		 *
 		 * @throws	\Tuxxedo\Exception\SQL		Throws an SQL exception if the database operation failed
 		 *
+		 * @changelog	1.2.1				Added the $only_table_name parameter
 		 * @changelog	1.2.0				This method now supports PostgreSQL
 		 * @changelog	1.2.0				This method now supports SQLite
 		 * @changelog 	1.2.0				This method no longer returns a result object, but an array of tables for cross database compatibility
 		 */
-		public function getTables($database = NULL)
+		public function getTables($database = NULL, $only_table_name = false)
 		{
 			$retval = [];
 
@@ -324,7 +326,7 @@
 
 			while($row = $tables->fetchAssoc())
 			{
-				$retval[] = $row[$field];
+				$retval[] = ($only_field_name ? $row[$field] : $row);
 			}
 
 			return(($retval ? $retval : false));

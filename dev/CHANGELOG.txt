@@ -5,6 +5,8 @@
 	Tuxxedo Engine 1.2.1 "Beloved"
 	------------------------------------------------
 
+	Added the $only_table_name parameter (defaults to false) in \Tuxxedo\Helper\Database::getTables() (Kalle)
+
 	Changed mysql, mysqli & pdo_mysql to set sql_mode to 'ANSI' (Kalle)
 	Changed the 'Dump datastore' feature to escape HTML output (Kalle)
 	Changed the 'Table status' feature to show when used with PostgreSQL (Kalle)
