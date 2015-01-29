@@ -6,6 +6,7 @@
 	------------------------------------------------
 
 	Changed mysql, mysqli & pdo_mysql to set sql_mode to 'ANSI' (Kalle)
+	Changed the 'Dump datastore' feature to escape HTML output (Kalle)
 
 	Fixed a bug that would cause a notice when saving using some datamanagers where their fields did not have a validation specified (Kalle)
 	Fixed loading of datamanagers on case sensitive file systems when a custom one is used (Kalle)

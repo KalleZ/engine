@@ -99,7 +99,7 @@
 					ob_start();
 					var_dump($data);
 
-					$row->data = ob_get_clean();
+					$row->data = htmlspecialchars(ob_get_clean());
 				}
 
 				eval('$rows .= "' . $style->fetch('datastore_dump_itembit') . '";');
