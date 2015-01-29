@@ -492,7 +492,7 @@
 				}
 			}
 
-			$class	= (\strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . \ucfirst(\strtolower($datamanager));
+			$class	= (\strpos($datamanager, '\\') === false ? '\Tuxxedo\Datamanager\Adapter\\' : '') . \ucfirst($datamanager);
 			$dm 	= new $class($registry, $identifier, $options, $parent);
 
 			if(\in_array($datamanager, self::$loaded_datamanagers))
