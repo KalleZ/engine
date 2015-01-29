@@ -128,7 +128,12 @@
 				return(true);
 			}
 
-			$unix_socket = '';
+			$unix_socket 	= '';
+			$options	= [
+						\PDO::ATTR_ERRMODE	=> \PDO::ERRMODE_EXCEPTION, 
+						\PDO::ATTR_PERSISTENT 	=> $this->configuration['persistent'], 
+						\PDO::ATTR_TIMEOUT	=> $this->configuration['timeout']
+						];
 
 			switch($this->configuration['subdriver'] = \strtolower($this->configuration['subdriver']))
 			{
@@ -136,7 +141,8 @@
 				{
 					if($unix_socket = $this->configuration['socket'])
 					{
-						$unix_socket = \sprintf('unix_socket=%s;', $unix_socket);
+						$unix_socket 				= \sprintf('unix_socket=%s;', $unix_socket);
+						$options[\PDO::MYSQL_ATTR_INIT_COMMAND]	= 'SET GLOBAL sql_mode = \'ANSI\'';
 					}
 				}
 				break;
@@ -158,11 +164,7 @@
 
 			try
 			{
-				$link = new \PDO($dsn, $this->configuration['username'], $this->configuration['password'], [
-																\PDO::ATTR_ERRMODE	=> \PDO::ERRMODE_EXCEPTION, 
-																\PDO::ATTR_PERSISTENT 	=> $this->configuration['persistent'], 
-																\PDO::ATTR_TIMEOUT	=> $this->configuration['timeout']
-																]);
+				$link = new \PDO($dsn, $this->configuration['username'], $this->configuration['password'], $options);
 			}
 			catch(\PDOException $e)
 			{

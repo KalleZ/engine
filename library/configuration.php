@@ -144,8 +144,10 @@
 		 * pgsql	PostgreSQL 8.3+
 		 *
 		 * Drivers marked with (*) requires a sub driver to be defined
+		 *
+		 * When using MySQL with PDO, MySQL 4.1+ is required.
 		 */
-		'driver' 	=> 'mysqli', 
+		'driver' 	=> 'mysql', 
 
 		/**
 		 * Sub driver

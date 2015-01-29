@@ -127,6 +127,7 @@
 
 			$link = \mysqli_init();
 			$link->options(\MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
+			$link->options(\MYSQLI_INIT_COMMAND, 'SET GLOBAL sql_mode = \'ANSI\'');
 			$link->real_connect($hostname, $this->configuration['username'], $this->configuration['password'], $this->configuration['database'], (($port = $this->configuration['port']) ? $port : 3306), (($unix_socket = $this->configuration['socket']) ? $unix_socket : ''), ($this->configuration['ssl'] ? \MYSQLI_CLIENT_SSL : 0));
 
 			Registry::globals('error_reporting', true);

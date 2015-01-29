@@ -132,7 +132,7 @@
 
 			Registry::globals('error_reporting', false);
 
-			if(($link = $connect_function($hostname, $this->configuration['username'], $this->configuration['password'], false, ($this->configuration['ssl'] ? MYSQL_CLIENT_SSL : 0))) === false || !\mysql_select_db($this->configuration['database'], $link))
+			if(($link = $connect_function($hostname, $this->configuration['username'], $this->configuration['password'], false, ($this->configuration['ssl'] ? MYSQL_CLIENT_SSL : 0))) === false || !\mysql_select_db($this->configuration['database'], $link) || !\mysql_query('SET sql_mode = \'ANSI\''))
 			{
 				Registry::globals('error_reporting', true);
 
