@@ -586,7 +586,7 @@
 		 */
 		public function setShutdownHandler($handler, Array $arguments)
 		{
-			if(!is_callable($handler))
+			if(!\is_callable($handler))
 			{
 				return;
 			}
@@ -784,8 +784,6 @@
 			$virtual	= ($this->identifier !== NULL ? \array_merge([static::ID_NAME => $this->identifier], $this->data) : $this->data);
 			$virtual_fields	= $this->getVirtualFields();
 			$n 		= \sizeof($virtual);
-
-			// @TODO for $this->changed_data
 
 			if($virtual_fields)
 			{
