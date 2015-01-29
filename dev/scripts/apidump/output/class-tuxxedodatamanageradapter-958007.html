@@ -158,6 +158,9 @@ to instanciate a new datamanager instance.
 		<td class="strong">Description</td>
 	</tr>
 	<tr class="row">
+	<td nowrap="nowrap"><a href="property-changed-data-975384.html">$changed_data</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Changed data, this holds all data thats been changed since it was</td>
+</tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-context-965557.html">$context</a></td>
 	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Context for hooks, and adapters</td>
 </tr><tr class="row">
@@ -178,9 +181,6 @@ to instanciate a new datamanager instance.
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-loaded-datamanagers-819158.html">$loaded_datamanagers</a></td>
 	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;List of loaded datamanagers used for caching in the</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="property-original-data-741286.html">$original_data</a></td>
-	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The original data of each modified field, should it differ from $data</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="property-parent-614233.html">$parent</a></td>
 	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Whether this datamanager are called from another datamanager</td>
@@ -281,7 +281,24 @@ to instanciate a new datamanager instance.
 
 
 
-
+<h2><span>Version history</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong center">Version</td>
+				<td class="strong">Note</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap">1.2.1</td>
+	<td nowrap="nowrap" style="width: 100%">Added the $changed_data property</td>
+</tr><tr class="row">
+	<td nowrap="nowrap">1.2.1</td>
+	<td nowrap="nowrap" style="width: 100%">Removed the $original_data property</td>
+</tr>
+		</table>
+	</div>
+</div>
 
 <h2><span>See also</span></h2>
 <div class="box edge-title">

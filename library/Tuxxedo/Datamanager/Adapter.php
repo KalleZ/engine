@@ -56,6 +56,9 @@
 	 * @version		1.0
 	 * @package		Engine
 	 * @subpackage		Library
+	 *
+	 * @changelog		1.2.1		Added the $changed_data property
+	 * @changelog		1.2.1		Removed the $original_data property
 	 */
 	abstract class Adapter extends Design\InfoAccess implements \Iterator
 	{
@@ -266,12 +269,13 @@
 		protected $data				= [];
 
 		/**
-		 * The original data of each modified field, should it differ from $data
+		 * Changed data, this holds all data thats been changed since it was 
+		 * loaded
 		 *
 		 * @var		array
-		 * @since	1.2.0
+		 * @since	1.2.1
 		 */
-		protected $original_data		= [];
+		protected $changed_data			= [];
 
 		/**
 		 * Cache data if the identifier is gonna be validated
@@ -388,7 +392,6 @@
 				$this->information[$offset] = (isset($this->fields[$offset]) && isset($this->fields[$offset]['default']) ? $this->fields[$offset]['default'] : '');
 			}
 
-
 			return($this->information[$offset]);
 		}
 
@@ -411,7 +414,7 @@
 
 			if(isset($this->information[$offset]) && $value != $this->information[$offset])
 			{
-				$this->original_data[$offset] = $value;
+				// @TODO for $this->changed_data
 			}
 
 			$this->information[$offset] = $value;
@@ -781,6 +784,8 @@
 			$virtual	= ($this->identifier !== NULL ? \array_merge([static::ID_NAME => $this->identifier], $this->data) : $this->data);
 			$virtual_fields	= $this->getVirtualFields();
 			$n 		= \sizeof($virtual);
+
+			// @TODO for $this->changed_data
 
 			if($virtual_fields)
 			{

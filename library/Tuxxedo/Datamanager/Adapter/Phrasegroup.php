@@ -218,7 +218,7 @@
 				if(!isset($datastore[$languageid]))
 				{
 					$datastore[$languageid] = [];
-					$ptr			= &$datastore[$languageid];
+					$ptr			= $datastore[$languageid];
 				}
 
 				$query		= $this->registry->db->equery('
@@ -247,7 +247,7 @@
 								WHERE 
 										"phrasegroup" = \'%s\'
 									AND 
-										"languageid" = %d', (isset($this->original_data['title']) ? $this->original_data['title'] : $id), $languageid);
+										"languageid" = %d', (isset($this->data['title']) ? $this->data['title'] : $id), $languageid);
 
 			if($groups && $groups->getNumRows())
 			{
