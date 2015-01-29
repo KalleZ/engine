@@ -101,7 +101,7 @@
 	function test_login($identifier, $password, $identifier_field = 'username')
 	{
 		$registry 	= Registry::init();
-		$user		= ($registry->user ? $registry->user : Registry::invoke('\Tuxxedo\User'));
+		$user		= ($registry->user ? $registry->user : $registry->invoke('\Tuxxedo\User'));
 		$userinfo	= $user->getUserInfo($identifier, $identifier_field);
 
 		return($userinfo && User::isValidPassword($password, $userinfo->salt, $userinfo->password));

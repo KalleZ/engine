@@ -10,6 +10,7 @@
 
 	Fixed a bug that would cause a notice when saving using some datamanagers where their fields did not have a validation specified (Kalle)
 	Fixed loading of datamanagers on case sensitive file systems when a custom one is used (Kalle)
+	Fixed an E_STRICT notice when calling test_login() without having \Tuxxedo\User loaded (Kalle)
 
 
 
