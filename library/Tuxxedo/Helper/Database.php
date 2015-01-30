@@ -139,7 +139,7 @@
 				$this->driver_is_pdo	= true;
 			}
 
-			if($this->driver == 'mysql' || $this->driver == 'mysqli' || $this->driver == 'pdo_mysql')
+			if($this->driver == 'mysqli' || $this->driver == 'pdo_mysql')
 			{
 				$this->driver_is_mysql = true;
 			}

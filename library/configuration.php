@@ -137,7 +137,6 @@
 		 * By default Tuxxedo Engine comes with the following 
 		 * drivers:
 		 *
-		 * mysql 	MySQL 3.23+
 		 * mysqli	MySQL 4.1+
 		 * pdo		Any PDO extension (*)
 		 * sqlite	SQLite 3+
@@ -210,7 +209,6 @@
 		 *
 		 * The following database drivers support this feature:
 		 *
-		 * mysql
 		 * mysqli
 		 * pgsql
 		 */
