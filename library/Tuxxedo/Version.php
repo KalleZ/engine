@@ -81,7 +81,7 @@
 	 	 *
 		 * @var		string
 		 */
-		const SIMPLE			= '1.2.1';
+		const SIMPLE			= '1.3.0';
 
 		/**
 		 * Major version number
@@ -95,14 +95,14 @@
 		 *
 		 * @var		integer
 		 */
-		const MINOR			= 2;
+		const MINOR			= 3;
 
 		/**
 		 * Release version number
 		 *
 		 * @var		integer
 		 */
-		const RELEASE			= 1;
+		const RELEASE			= 0;
 
 		/**
 		 * Engine version ID, this contains the version id in the form 
@@ -118,7 +118,7 @@
 		 *
 		 * @var		integer
 		 */
-		const ID			= 10201;
+		const ID			= 10300;
 
 		/**
 		 * Development preview mode, this is set to true if this is a development 
@@ -126,7 +126,7 @@
 		 *
 		 * @var		boolean
 		 */
-		const PREVIEW			= false;
+		const PREVIEW			= true;
 
 		/**
 		 * Development preview type, this is set to the preview type, like 'Alpha', 
@@ -134,7 +134,7 @@
 		 *
 		 * @var		string
 		 */
-		const PREVIEW_TYPE		= '';
+		const PREVIEW_TYPE		= 'Alpha';
 
 		/**
 		 * Development preview number, this is set to the preview number for the 
@@ -142,7 +142,7 @@
 		 *
 		 * @var		integer
 		 */
-		const PREVIEW_NUMBER		= 0;
+		const PREVIEW_NUMBER		= 1;
 
 		/**
 		 * Development codename, this value is always the same for each 
@@ -152,7 +152,7 @@
 		 *
 		 * @var		string
 		 */
-		const CODENAME			= 'Beloved';
+		const CODENAME			= 'Intergalactic';
 
 		/**
 		 * Current version control system revision number
@@ -172,6 +172,6 @@
 		 *
 		 * @var		string
 		 */
-		const FULL			= '1.2.1 "Beloved"';
+		const FULL			= '1.3.0 "Intergalactic" Alpha 1 (experimental)';
 	}
 ?>
