@@ -147,7 +147,7 @@
 		 *
 		 * When using MySQL with PDO, MySQL 4.1+ is required.
 		 */
-		'driver' 	=> 'mysql', 
+		'driver' 	=> 'mysqli', 
 
 		/**
 		 * Sub driver
