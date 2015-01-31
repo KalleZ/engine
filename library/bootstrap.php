@@ -66,10 +66,4 @@
 	 * Bootstrap
 	 */
 	Bootstrap::init();
-
-	/**
-	 * Header and footer templates for the main site
-	 */
-	$header = new Template('header', true);
-	$footer = new Template('footer', true);
 ?>
