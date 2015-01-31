@@ -63,7 +63,6 @@
 		protected $result;
 
 
-
 		/**
 		 * Constructs a new result object
 		 *
