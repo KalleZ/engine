@@ -245,7 +245,14 @@
 		 */
 		public static function isValidUsergroup(Adapter $dm, Registry $registry, $id = NULL)
 		{
-			return(isset($registry->datastore->usergroups[$id]));
+			if(isset($registry->datastore->usergroups[$id]))
+			{
+				$dm->usergroupid = (integer) $id;
+
+				return(true);
+			}
+
+			return(false);
 		}
 
 		/**
