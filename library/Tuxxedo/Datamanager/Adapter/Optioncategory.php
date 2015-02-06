@@ -122,8 +122,6 @@
 				if(!$category || !$category->getNumRows())
 				{
 					throw new Exception('Invalid option category name passed to datamanager');
-
-					return;
 				}
 
 				$this->data 		= $category->fetchAssoc();

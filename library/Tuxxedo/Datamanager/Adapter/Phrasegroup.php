@@ -129,8 +129,6 @@
 				if(!$phrasegroup || !$phrasegroup->getNumRows())
 				{
 					throw new Exception('Invalid phrase group id passed to datamanager');
-
-					return;
 				}
 
 				$this->data 			= $phrasegroup->fetchAssoc();
