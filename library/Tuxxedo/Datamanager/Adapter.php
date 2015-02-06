@@ -880,7 +880,7 @@
 
 			if(($new_id = $this->registry->db->getInsertId()))
 			{
-				$this->data[static::ID_NAME] = $new_id;
+				$this->data[static::ID_NAME] = $this->identifier = $new_id;
 			}
 
 			if($execute_hooks)

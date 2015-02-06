@@ -5,6 +5,7 @@
 	Tuxxedo Engine 1.3.0 "Intergalactic"
 	------------------------------------------------
 
+	Fixed an error that would cause a mismatch when trying to delete a just created datamanager (Kalle)
 	Fixed validation of usergroups when adding a new user using the datamanager (Kalle)
 
 	Removed \Tuxxedo\Database\Driver\Mysql, Classic ext/mysql support -- Use mysqli instead (Kalle)
