@@ -35,7 +35,6 @@
 	 */
 	use Tuxxedo\Datamanager;
 	use Tuxxedo\Design;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
 

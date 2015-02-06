@@ -19,11 +19,9 @@
 	 * Aliasing rules
 	 */
 	use DevTools\Test;
-	use DevTools\User;
 	use DevTools\Utilities;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Helper;
-	use Tuxxedo\Input;
 	use Tuxxedo\Template\Compiler;
 
 	/**

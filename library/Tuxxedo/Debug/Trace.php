@@ -32,8 +32,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Design;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Helper;
 	use Tuxxedo\Registry;
 

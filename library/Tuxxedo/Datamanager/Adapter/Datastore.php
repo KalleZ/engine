@@ -33,7 +33,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datamanager\Adapter;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
 

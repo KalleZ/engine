@@ -29,12 +29,6 @@
 
 
 	/**
-	 * Aliasing rules
-	 */
-	use Tuxxedo\Registry;
-
-
-	/**
 	 * Include check
 	 */
 	\defined('\TUXXEDO_LIBRARY') or exit;

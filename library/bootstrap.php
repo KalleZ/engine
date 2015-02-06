@@ -19,7 +19,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Bootstrap;
-	use Tuxxedo\Template;
 
 
 	/**

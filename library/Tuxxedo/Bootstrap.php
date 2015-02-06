@@ -34,7 +34,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Datastore;
-	use Tuxxedo\LocalCache;
 	use Tuxxedo\Registry;
 
 

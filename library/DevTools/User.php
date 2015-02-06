@@ -31,7 +31,6 @@
 	/**
 	 * Aliasing rules
 	 */
-	use Tuxxedo\Datamanager;
 	use Tuxxedo\Registry;
 
 

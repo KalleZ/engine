@@ -34,7 +34,6 @@
 	 * Aliasing rules
 	 */
 	use Tuxxedo\Design;
-	use Tuxxedo\Exception;
 	use Tuxxedo\Registry;
 
 

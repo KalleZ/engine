@@ -36,7 +36,6 @@
 	use Tuxxedo\Database; 
 	use Tuxxedo\Database\Driver\Pdo;
 	use Tuxxedo\Exception;
-	use Tuxxedo\Registry;
 
 
 	/**
