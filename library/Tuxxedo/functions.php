@@ -543,9 +543,7 @@
 				'</div>' . PHP_EOL
 				);
 
-			$bt = new Debug\Backtrace($e);
-
-			if($bts = sizeof($bt))
+			if(($bt = new Debug\Backtrace($e)))
 			{
 				echo(
 					'<h2><span>Backtrace</span></h2>' . PHP_EOL . 
@@ -948,9 +946,7 @@
 					);
 			}
 
-			$bt = new Debug\Backtrace($e);
-
-			if($bts = sizeof($bt))
+			if(($bt = new Debug\Backtrace($e)))
 			{
 				echo(
 					PHP_EOL . 

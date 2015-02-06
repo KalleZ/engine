@@ -154,8 +154,7 @@
 				$bt = \array_merge($bt, $e->getTrace());
 			}
 
-			$x	= $lx = 0;
-			$bts 	= \sizeof($bt);
+			$x = $lx = 0;
 
 			foreach($bt as $n => $t)
 			{
@@ -170,8 +169,7 @@
 
 				if(isset($t['function']))
 				{
-					$lcfunction 	= \strtolower($t['function']);
-					$args		= true;
+					$lcfunction = \strtolower($t['function']);
 
 					if(isset($t['class']))
 					{
