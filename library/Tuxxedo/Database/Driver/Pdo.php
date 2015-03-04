@@ -114,6 +114,8 @@
 		 * @return	boolean				True if a successful connection was made
 	 	 *
 		 * @throws	\Tuxxedo\Exception\Basic	If a database connection fails
+		 *
+		 * @changelog	1.3.0				If this method is call while there is an active connection, it will reconnect
 		 */
 		public function connect(Array $configuration = NULL)
 		{
@@ -124,7 +126,7 @@
 
 			if(\is_object($this->link))
 			{
-				return(true);
+				$this->close();
 			}
 
 			$unix_socket 	= '';
