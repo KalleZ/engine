@@ -25,6 +25,25 @@
 
 
 	/**
+	 * Widget hook function - index
+	 *
+	 * @param	\DevTools\Style		The Devtools style object
+	 * @param	\Tuxxedo\Registry	The registry reference
+	 * @param	string			The template name of the widget
+	 * @return	string			Returns the compiled sidebar widget
+	 *
+	 * @since	1.3.0
+	 */
+	function widget_hook_index(Style $style, Registry $registry, $widget)
+	{
+		$have_apidocs = is_file('../scripts/apidump/output/index.html');
+
+		eval('$sidebar = "' . $style->fetch($widget) . '";');
+
+		return($sidebar);
+	}
+
+	/**
 	 * Widget hook function - datastore
 	 *
 	 * @param	\DevTools\Style		The Devtools style object

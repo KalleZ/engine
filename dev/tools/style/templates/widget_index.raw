@@ -13,3 +13,20 @@
 		<li>Christian Hoffbeck</li>
 	</ul>
 </div>
+
+<div class="box">
+	<h4>API reference</h4>
+	<p>
+		Tuxxedo Engine comes with an API reference in development 
+		builds, and can be found in:
+	</p>
+	<p>
+		<code>/dev/scripts/apidump/output</code>
+	</p>
+
+	<if expression="$have_apidocs">
+	<ul>
+		<li><a href="../scripts/apidump/output/" target="_new">View API reference</a></li>
+	</ul>
+	</if>
+</div>
