@@ -5,11 +5,3 @@
 
 	Tuxxedo Engine 1.3.0 "Intergalactic"
 	------------------------------------
-
-	Database:
-		MySQL seems to bug at first run because of a syntax error because sql_mode = ANSI (remember PDO)
-		Change internals of database drivers to not do is_[type] calls for connections but rely on their expression boolean value
-
-	DevTools:
-		Add API documentation generator to the menu so that DevTools can generate documentation using the web interface
-		Consider adding DevTools UI support for other scripts in /dev/tools
