@@ -53,8 +53,7 @@
 			$wildcard	= ($path{$pathlen - 1} == '*');
 			$path		= ($wildcard ? substr($path, 0, -1) : $path);
 			$glob		= ($wildcard ? 'recursive_glob' : 'glob');
-			$fullpath 	= $basepath . $path;
-			$templates 	= $glob($fullpath . '*.raw');
+			$templates 	= $glob($basepath . $path . '*.raw');
 
 			IO::headline('Compiling \'' . $app . '\'');
 
