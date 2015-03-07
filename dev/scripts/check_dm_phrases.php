@@ -69,11 +69,9 @@
 			$last 	= explode(DIRECTORY_SEPARATOR, realpath($file));
 			$last 	= substr($last[sizeof($last) - 1], 0, -4);
 
-			$fields = $dm_fields($last);
-
 			IO::li($last);
 
-			foreach($fields as $field)
+			foreach($dm_fields($last) as $field)
 			{
 				$phrase = 'dm_' . strtolower($last . '_' . $field);
 
