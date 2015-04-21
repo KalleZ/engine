@@ -113,7 +113,7 @@
 				$this->configuration = $configuration;
 			}
 
-			if(is_object($this->link))
+			if(\is_object($this->link))
 			{
 				$this->close();
 			}
