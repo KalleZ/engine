@@ -41,5 +41,7 @@
 	 * Just print the engine version to show that
 	 * the bootstraper was a success
 	 */
-	echo new Layout('index', ['version' => Version::FULL]);
+	echo new Layout('index', [
+					'version' => Version::FULL
+					]);
 ?>
