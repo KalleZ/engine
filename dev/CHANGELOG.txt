@@ -6,6 +6,7 @@
 	------------------------------------------------
 
 	Added a link to the API reference on the DevTools index (Kalle)
+	Added PHP7 support (Kalle)
 
 	Changed database driver connection methods to reconnect if called while a connection is already active (Kalle)
 

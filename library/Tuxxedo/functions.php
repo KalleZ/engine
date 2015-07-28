@@ -35,8 +35,9 @@
 	 * @return	void				No value is returned
 	 *
 	 * @changelog	1.2.0				This function is now CLI compatible
+	 * @changelog	1.3.0				This function is now PHP7 compatible
 	 */
-	function tuxxedo_exception_handler(\Exception $e)
+	function tuxxedo_exception_handler($e)
 	{
 		static $error_handler;
 
