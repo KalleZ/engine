@@ -168,7 +168,7 @@
 				}
 			}
 		}
-		elseif(isset($_POST['password']) && $input->post('password') == $configuration['devtools']['password'])
+		elseif(isset($_POST['password']) && $input->post('password') === $configuration['devtools']['password'])
 		{
 			$session['devtools_authenticated'] = true;
 
