@@ -219,7 +219,7 @@
 				{
 					$path = NULL;
 
-					if(strpos($name, $match) !== false && \call_user_func($callback, $name, $path))
+					if(\strpos($name, $match) !== false && \call_user_func($callback, $name, $path))
 					{
 						if($path !== NULL)
 						{
