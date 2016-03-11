@@ -73,7 +73,7 @@
 		 * Parses an XML string
 		 *
 		 * @param	string					The XML to parse
-		 * @reutrn	\Tuxxedo\Xml\Tree			Returns an XML tree of the parsed XML
+		 * @return	\Tuxxedo\Xml\Tree			Returns an XML tree of the parsed XML
 		 *
 		 * @throws	\Tuxxedo\Exception\Xml			Throws an XML exception if parsing fails for some reason
 		 */
