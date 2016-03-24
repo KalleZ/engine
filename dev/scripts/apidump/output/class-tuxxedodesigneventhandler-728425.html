@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Design\EventHandler</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedodesign-775579.html">\Tuxxedo\Design</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Design/EventHandler.php
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Event Handler class, this is the internal firing mechanism
+that works together with the EventCaller trait.<br />
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-event-callbacks-017866.html">$event_callbacks</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The registered callbacks for this event handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-events-759189.html">$events</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The registered events to this event handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-obj-ptr-505338.html">$obj_ptr</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;The object instance associated with this event</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-693029.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructs a new event handler object</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-fire-358509.html">fire()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Fires an event</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getcallbacks-285536.html">getCallbacks()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets all the callbacks for a specific event</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getevents-570559.html">getEvents()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Gets all the events valid for this event handler</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-register-872739.html">register()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Registers a new callback for an event</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-unregister-562304.html">unregister()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Unregisters all callbacks for a specific event</td>
+</tr>
+</table>
+	</div>
+</div>
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>Example #1</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Design</span><span style="color: #007700">;<br /><br />class&nbsp;</span><span style="color: #0000BB">Component<br /></span><span style="color: #007700">{<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Trait&nbsp;which&nbsp;implements&nbsp;the&nbsp;hooks&nbsp;for&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;//event&nbsp;registrations<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventCaller</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Holds&nbsp;the&nbsp;event&nbsp;handler&nbsp;instance<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">protected&nbsp;</span><span style="color: #0000BB">$event_handler</span><span style="color: #007700">;<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Constructor,&nbsp;this&nbsp;loads&nbsp;in&nbsp;the&nbsp;event&nbsp;handling&nbsp;sub<br />&nbsp;&nbsp;&nbsp;&nbsp;//system&nbsp;and&nbsp;registers&nbsp;the&nbsp;events<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">__construct</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setEventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventHandler</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">,&nbsp;[</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">]));<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Method&nbsp;test&nbsp;#1<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">test1</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fire</span><span style="color: #007700">(</span><span style="color: #DD0000">'test1'</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//Method&nbsp;test&nbsp;#2<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #007700">public&nbsp;function&nbsp;</span><span style="color: #0000BB">test2</span><span style="color: #007700">()<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event_handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fire</span><span style="color: #007700">(</span><span style="color: #DD0000">'test2'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">func_get_args</span><span style="color: #007700">());<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />}<br /><br /></span><span style="color: #FF8000">//Create&nbsp;the&nbsp;new&nbsp;component&nbsp;instance<br /></span><span style="color: #0000BB">$component&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">Component</span><span style="color: #007700">;<br /><br /></span><span style="color: #FF8000">//Register&nbsp;callbacks&nbsp;for&nbsp;the&nbsp;events<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">onTest1&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;called'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />};<br /><br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">onTest2&nbsp;</span><span style="color: #007700">=&nbsp;function(</span><span style="color: #0000BB">Design</span><span style="color: #007700">\</span><span style="color: #0000BB">EventContext&nbsp;$ctx</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Event&nbsp;'&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">event&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #DD0000">'&nbsp;called'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">'Additional&nbsp;arguments&nbsp;passed&nbsp;to&nbsp;this&nbsp;callback:'</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">PHP_EOL</span><span style="color: #007700">;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">var_dump</span><span style="color: #007700">(</span><span style="color: #0000BB">$ctx</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">args</span><span style="color: #007700">);<br />};<br /><br /></span><span style="color: #FF8000">//Execute<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">test1</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$component</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">test2</span><span style="color: #007700">(</span><span style="color: #DD0000">'Hello'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'World'</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.3.0 "Intergalactic" Alpha 1 (experimental). </em>
+		</p>
+	</body>
+</html>

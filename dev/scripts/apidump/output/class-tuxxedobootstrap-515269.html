@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Bootstrap</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.1.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-497002.html">\Tuxxedo</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Bootstrap.php
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Bootstraper, this class works as an encapsulated and easier way
+to write working bootstrapers while also not having to remember
+startup orders and other similar things that can cause confusion.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Constants
+	<a name="constants"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Constant</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-core-436062.html">FLAG_CORE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Core</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-database-635274.html">FLAG_DATABASE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Database</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-datastore-968309.html">FLAG_DATASTORE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Datastore</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-date-548968.html">FLAG_DATE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Date</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-intl-181342.html">FLAG_INTL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Internationalization</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-options-727641.html">FLAG_OPTIONS</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Options</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-style-556725.html">FLAG_STYLE</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - Style</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-flag-user-003780.html">FLAG_USER</a></td>
+	<td nowrap="nowrap" style="width: 100%">Loader flag - User</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-mode-custom-977883.html">MODE_CUSTOM</a></td>
+	<td nowrap="nowrap" style="width: 100%">Bootstrap mode - Custom</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-mode-minimal-250104.html">MODE_MINIMAL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Bootstrap mode - Minimal</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="constant-mode-normal-454499.html">MODE_NORMAL</a></td>
+	<td nowrap="nowrap" style="width: 100%">Bootstrap mode - Normal</td>
+</tr>
+</table><h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-flags-968282.html">$flags</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Holds the various flags supported</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-hooks-259849.html">$hooks</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Holds the registered hooks</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-loaded-865264.html">$loaded</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Holds which elements thats been loaded (flags)</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-preloadables-859085.html">$preloadables</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Holds the elements that should be preloaded</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method-init-910200.html">init()</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Initializes the bootstraper</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-sethook-129875.html">setHook()</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Hooks into the initilization code and runs a callback</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-setpreloadables-225196.html">setPreloadables()</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Static</span>&nbsp;Sets elements that should be preloaded by the next init call</td>
+</tr>
+</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.3.0 "Intergalactic" Alpha 1 (experimental). </em>
+		</p>
+	</body>
+</html>
