@@ -116,7 +116,7 @@
 		 * Additionally objects in the backtrace that supports 
 		 * the debugable interface, will display state variables.
 		 */
-		'detailed'	=> false
+		'detailed'	=> true
 	
 	/**
 	 * End debug configuration
