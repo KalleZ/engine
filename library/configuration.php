@@ -115,8 +115,11 @@
 		 * If this option is enabled, then all frames in the 
 		 * backtraces shown on error screens will have the full 
 		 * call line with arguments.
+		 *
+		 * Additionally objects in the backtrace that supports 
+		 * the debugable interface, will display state variables.
 		 */
-		'fullbacktrace'	=> false
+		'detailed'	=> false
 	
 	/**
 	 * End debug configuration

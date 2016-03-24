@@ -5,8 +5,9 @@
 	Tuxxedo Engine 1.3.0 "Intergalactic"
 	------------------------------------------------
 
-	Added a link to the API reference on the DevTools index (Kalle)
 	Added PHP7 support (Kalle)
+	Added the Debugable interface (and renamed the 'fullbacktrace' configuration option to 'detailed') (Kalle)
+	Added a link to the API reference on the DevTools index (Kalle)
 
 	Changed database driver connection methods to reconnect if called while a connection is already active (Kalle)
 

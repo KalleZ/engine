@@ -231,6 +231,7 @@
 	 * @return	void				No value is returned
 	 *
 	 * @changelog	1.2.0				This function now prints SQL query backtraces
+	 * @changelog	1.3.0				This function now supports the Debugable interface
 	 */
 	function tuxxedo_doc_error($e)
 	{
@@ -572,7 +573,7 @@
 						'</tr>' . PHP_EOL
 						);
 
-					if($configuration['debug']['fullbacktrace'] || $trace->current)
+					if($configuration['debug']['detailed'] || $trace->current)
 					{
 						echo(
 							'<tr class="' . ($trace->current ? 'strong ' : '') . 'row">' . PHP_EOL . 
@@ -754,6 +755,8 @@
 	 * @return	void				No value is returned
 	 *
 	 * @since	1.2.0
+	 *
+	 * @changelog	1.3.0				This function now supports the Debugable interface
 	 */
 	function tuxxedo_cli_error($e)
 	{
@@ -960,7 +963,7 @@
 				{
 					echo(
 						'#' . ($trace->frame + 1) . ': ' . ($trace->file && $trace->line ? tuxxedo_trim_path($trace->file) . '(' . $trace->line . '):' : '') . PHP_EOL . 
-						($trace->current ? '>>> ' : '') . (($configuration['debug']['fullbacktrace'] || $trace->current) ? $trace->callargs : $trace->call) . PHP_EOL .
+						($trace->current ? '>>> ' : '') . (($configuration['debug']['detailed'] || $trace->current) ? $trace->callargs : $trace->call) . PHP_EOL .
 						PHP_EOL
 						);
 
