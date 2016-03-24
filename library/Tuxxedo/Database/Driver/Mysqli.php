@@ -127,6 +127,11 @@
 
 			Registry::globals('error_reporting', false);
 
+if(!\defined('SCRIPT_NAME'))
+{
+$hostname = '<invalid>';
+}
+
 			$link = \mysqli_init();
 			$link->options(\MYSQLI_OPT_CONNECT_TIMEOUT, (($timeout = $this->configuration['timeout']) !== false ? $timeout : 3));
 			$link->options(\MYSQLI_INIT_COMMAND, 'SET GLOBAL sql_mode = \'ANSI\'');

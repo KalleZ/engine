@@ -249,7 +249,6 @@
 		$buffer		= ob_get_clean();
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
-		$exception_xml	= $exception && $e instanceof Exception\Xml;
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? $e->getMessage() : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
@@ -417,7 +416,7 @@
 				}
 			}
 
-			if($exception_xml)
+			if($exception && $e instanceof Exception\Xml)
 			{
 				echo(
 					'<tr>' . PHP_EOL . 
@@ -774,7 +773,6 @@
 		$buffer		= ob_get_clean();
 		$exception	= ($e instanceof \Exception);
 		$exception_sql	= $exception && $registry->db && $e instanceof Exception\SQL;
-		$exception_xml	= $exception && $e instanceof Exception\Xml;
 		$utf8		= function_exists('utf8_encode');
 		$message	= ($exception ? htmlentities($e->getMessage()) : (string) $e);
 		$errors		= ($registry ? Registry::globals('errors') : false);
@@ -883,7 +881,7 @@
 				}
 			}
 
-			if($exception_xml)
+			if($exception && $e instanceof Exception\Xml)
 			{
 				echo(
 					PHP_EOL . 
