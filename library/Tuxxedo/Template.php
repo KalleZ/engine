@@ -45,7 +45,7 @@
 
 	/**
 	 * Template class, this class serves as an object oriented way of creating 
-	 * templates, mainly designed for use with the MVC View class
+	 * templates
 	 *
 	 * @author		Kalle Sommer Nielsen	<kalle@tuxxedo.net>
 	 * @author		Ross Masters 		<ross@tuxxedo.net>

@@ -14,6 +14,7 @@
 	Fixed an error that would cause a mismatch when trying to delete a just created datamanager (Kalle)
 	Fixed validation of usergroups when adding a new user using the datamanager (Kalle)
 
+	Removed the MVC component as it was broken and horribly outdated (Kalle)
 	Removed \Tuxxedo\Database\Driver\Mysql, Classic ext/mysql support -- Use mysqli instead (Kalle)
 
 

@@ -58,9 +58,6 @@
 		 * These names are generally expected to be lower case and not have 
 		 * special characters and spaces. Underscores is an exclusion to 
 		 * this. The main reason for these is to have an autoloadable canonical
-		 * name.
-		 *
-		 * This can also be utilized by the MVC component for routing.
 		 */
 		'canonical'	=> '', 
 
