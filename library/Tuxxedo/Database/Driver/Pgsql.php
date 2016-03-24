@@ -113,7 +113,7 @@
 	 	 *
 		 * @throws	\Tuxxedo\Exception\Basic	If a database connection fails
 		 *
-		 * @changelog	1.3.0				If this method is call while there is an active connection, it will reconnect
+		 * @changelog	1.3.0				If this method is called while there is an active connection, it will reconnect
 		 */
 		public function connect(Array $configuration = NULL)
 		{

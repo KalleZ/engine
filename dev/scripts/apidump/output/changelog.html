@@ -28,16 +28,16 @@
 	<td style="width: 100%">This function is now PHP7 compatible</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-connect-693560.html">\Tuxxedo\Database\Driver\Mysqli::connect()</a></td>
-	<td style="width: 100%">If this method is call while there is an active connection, it will reconnect</td>
+	<td style="width: 100%">If this method is called while there is an active connection, it will reconnect</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-connect-634750.html">\Tuxxedo\Database\Driver\Pdo::connect()</a></td>
-	<td style="width: 100%">If this method is call while there is an active connection, it will reconnect</td>
+	<td style="width: 100%">If this method is called while there is an active connection, it will reconnect</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-connect-800092.html">\Tuxxedo\Database\Driver\Pgsql::connect()</a></td>
-	<td style="width: 100%">If this method is call while there is an active connection, it will reconnect</td>
+	<td style="width: 100%">If this method is called while there is an active connection, it will reconnect</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><a href="method-connect-983040.html">\Tuxxedo\Database\Driver\Sqlite::connect()</a></td>
-	<td style="width: 100%">If this method is call while there is an active connection, it will reconnect</td>
+	<td style="width: 100%">If this method is called while there is an active connection, it will reconnect</td>
 </tr>
 		</table>
 	</div>
@@ -178,24 +178,6 @@
 	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-routeasregex-207502.html">\Tuxxedo\Loader::routeAsRegex()</a></td>
 	<td style="width: 100%">This method now only supports defining one route at a time</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-dispatch-384443.html">\Tuxxedo\MVC\Controller::dispatch()</a></td>
-	<td style="width: 100%">Removed the 'final' modifier from this method</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-setlayout-087752.html">\Tuxxedo\MVC\Controller::setLayout()</a></td>
-	<td style="width: 100%">Removed the 'final' modifier from this method</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-setrouter-878169.html">\Tuxxedo\MVC\Controller::setRouter()</a></td>
-	<td style="width: 100%">Any router can be passed to this method, prior only 'Uri' could be passed</td>
-</tr><tr class="row">
-	<td nowrap="nowrap">&nbsp;</td>
-	<td style="width: 100%">Removed the 'final' modifier from this method</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method-setview-075741.html">\Tuxxedo\MVC\Controller::setView()</a></td>
-	<td style="width: 100%">Removed the 'final' modifier from this method</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method---construct-751368.html">\Tuxxedo\MVC\Router::__construct()</a></td>
-	<td style="width: 100%">The $prefix parameter can now be used to define a controller from another namespace</td>
-</tr><tr class="row">
 	<td nowrap="nowrap"><span class="tag">Static</span>&nbsp;<a href="method-invoke-839583.html">\Tuxxedo\Session::invoke()</a></td>
 	<td style="width: 100%">This method no longer requires the datastore to be loaded to function</td>
 </tr><tr class="row">
@@ -294,12 +276,6 @@
 	<td nowrap="nowrap"><a href="method-rebuild-825615.html">\Tuxxedo\Datastore::rebuild()</a></td>
 	<td style="width: 100%">This method now internally uses datamanagers to save</td>
 </tr><tr class="row">
-	<td nowrap="nowrap"><a href="method---construct-643091.html">\Tuxxedo\Exception\MVC\InvalidAction::__construct()</a></td>
-	<td style="width: 100%">This method now supports previous exceptions ($previous parameter)</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="method---construct-536189.html">\Tuxxedo\Exception\MVC\InvalidController::__construct()</a></td>
-	<td style="width: 100%">This method now supports previous exceptions ($previous parameter)</td>
-</tr><tr class="row">
 	<td nowrap="nowrap"><a href="method---construct-860645.html">\Tuxxedo\Exception\SQL::__construct()</a></td>
 	<td style="width: 100%">Added the $driver parameter</td>
 </tr><tr class="row">
@@ -317,9 +293,6 @@
 </tr><tr class="row">
 	<td nowrap="nowrap">&nbsp;</td>
 	<td style="width: 100%">The 'filter' PHP extension which previously was optional is now required</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedomvcview-782534.html">\Tuxxedo\MVC\View</a></td>
-	<td style="width: 100%">This is now an alias of \Tuxxedo\Template</td>
 </tr><tr class="row">
 	<td nowrap="nowrap"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;<a href="property-options-657128.html">\Tuxxedo\Session::$options</a></td>
 	<td style="width: 100%">Added 'secure' for HTTPS enforcement</td>
