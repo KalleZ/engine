@@ -43,13 +43,23 @@
 	 * @package		Engine
 	 * @subpackage		Library
 	 */
-	interface Debugable
+	trait Debugable
 	{
+		/**
+		 * Emulates a __debugInfo() for PHP 5.6+
+		 *
+		 * @return	array			Returns an associated array. Keys may differ per object and values are scalar
+		 */
+		public function __debugInfo()
+		{
+			return($this->getDebugState());
+		}
+
 		/**
 		 * Gets the current state of this object for debugging purposes
 		 *
 		 * @return	array			Returns an assosicated array. Keys may differ per object and values are scalar
 		 */
-		public function getDebugState();
+		abstract public function getDebugState();
 	}
 ?>
