@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Registry::register()</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.0.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedoregistry-257216.html#methods">Method</a>
+						</td>
+					</tr>
+					<tr>
+						<td nowrap="nowrap">Declared in:</td>
+						<td class="value" style="width: 100%" nowrap="nowrap">
+							library/Tuxxedo/Registry.php
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedo-384336.html">\Tuxxedo</a>
+	</td>
+</tr>
+					<tr>
+						<td>Object:</td>
+						<td class="value" style="width: 100%">
+							<a href="class-tuxxedoregistry-257216.html">\Tuxxedo\Registry</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Modifiers:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		public
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<fieldset>
+				<legend>Prototype</legend>
+				<table cellspacing="4" cellpadding="0" style="width: 100%;">
+					<tr>
+						<td class="value" style="width: 100%">
+							object register(string, string)
+						</td>
+					</tr>
+				</table>
+			</fieldset>
+			<br />
+
+			<div class="infobox">
+				Registers a new instance and makes it accessable through
+the name defined by the first parameter in the global scope
+like the example below:
+
+
+
+Note that the class must be a full path, and not an alias as
+the class is instanciated inside the registry, not the scope
+where custom aliasing rules may be defined.
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Parameters</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The name of this instance
+			</td>
+		</tr>
+	</table>
+</fieldset><br /><fieldset>
+	<legend><strong>string</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				The class to register, this supports the &#039;Invokable&#039; interface
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+<h2><span>Returns</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Returns a reference to the created instance
+		</div>
+	</div>
+</div>
+
+<h2><span>Throws</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<table style="width: 100%" cellspacing="2" cellpadding="0">
+			<tr class="head">
+				<td class="strong" nowrap="nowrap">Exception</td>
+				<td class="strong">Condition</td>
+			</tr>
+			<tr class="row">
+	<td nowrap="nowrap"><a href="class-tuxxedoexceptionbasic-492787.html">\Tuxxedo\Exception\Basic</a></td>
+	<td nowrap="nowrap" style="width: 100%">Throws a basic exception in case of failure</td>
+</tr>
+		</table>
+	</div>
+</div>
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>Example #1</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Registry</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$registry&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">Registry</span><span style="color: #007700">::</span><span style="color: #0000BB">init</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">$registry</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">register</span><span style="color: #007700">(</span><span style="color: #DD0000">'test'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'\Full\Class\Path'</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$test</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">Methodname</span><span style="color: #007700">();&nbsp;</span><span style="color: #FF8000">//&nbsp;or&nbsp;$registry-&gt;test-&gt;Methodname();<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="class-tuxxedoregistry-257216.html">\Tuxxedo\Registry</a></li>
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.3.0 "Intergalactic" Alpha 1 (experimental). </em>
+		</p>
+	</body>
+</html>

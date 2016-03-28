@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tuxxedo Engine API Documentation</title>
+
+		<link rel="stylesheet" href="./style.css" media="all" type="text/css" />
+	</head>
+	<body>
+
+<h1>\Tuxxedo\Debug\Backtrace</h1>
+<div class="box">
+	<div class="inner">
+		<div class="left-content">
+			<fieldset>
+				<legend><strong>Meta information</strong></legend>
+				<table cellspacing="4" cellpadding="0">
+					<tr>
+						<td>Availability:</td>
+						<td class="value" style="width: 100%">
+							Tuxxedo Engine 1.2.0
+						</td>
+					</tr>
+					<tr>
+						<td>Type:</td>
+						<td class="value" style="width: 100%">
+							<a href="./classes.html">Class</a>
+						</td>
+					</tr>
+					<tr>
+	<td nowrap="nowrap">Namespace:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="namespace-tuxxedodebug-301634.html">\Tuxxedo\Debug</a>
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Declared in:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		library/Tuxxedo/Debug/Backtrace.php
+	</td>
+</tr><tr>
+	<td nowrap="nowrap">Implements:</td>
+	<td class="value" style="width: 100%" nowrap="nowrap">
+		<a href="interface-tuxxedodesigniteratable-875822.html">\Tuxxedo\Design\Iteratable</a>
+	</td>
+</tr>
+				</table>
+			</fieldset>
+		</div>
+		<div class="content">
+			<div class="infobox">
+				Debug backtrace class, this is a redesign of the old and infamous
+tuxxedo_debug_backtrace() function. The class itself defines as an
+iterator.<br />This implementation implements some helper methods on each trace
+instance to ease debugging even further.<br />
+			</div>
+			<br />
+		</div>
+		<div style="clear: left;"></div>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>Contents</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<div class="infobox">
+			Table of contents
+		</div>
+
+		<h3>
+	Properties
+	<a name="properties"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Property</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="property-callbacks-445964.html">$callbacks</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Meta information - callbacks</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-frames-130101.html">$frames</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Stack frames</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-framesnum-719514.html">$framesnum</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Number of frames for iteration</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-includes-024546.html">$includes</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Meta information - includes</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="property-iterator-position-014063.html">$iterator_position</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Stack pointer position</td>
+</tr>
+</table><h3>
+	Methods
+	<a name="methods"></a>
+</h3>
+<table style="width: 100%" cellspacing="2" cellpadding="0">
+	<tr class="head">
+		<td class="strong" nowrap="nowrap" style="width: 20%;">Method</td>
+		<td class="strong">Description</td>
+	</tr>
+	<tr class="row">
+	<td nowrap="nowrap"><a href="method---construct-265927.html">__construct()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Constructor</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-count-749810.html">count()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - count</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-current-589001.html">current()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - current</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getargtypedata-115705.html">getArgTypeData()</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;Gets the argument type data</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-getcallvariants-149928.html">getCallVariants()</a></td>
+	<td nowrap="nowrap" style="width: 100%"><span class="tag">Protected</span>&nbsp;<span class="tag">Static</span>&nbsp;Gets callbackable variants for a trace frame</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-gettrace-825228.html">getTrace()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Compiles the trace structures into an iteratable array</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-key-705937.html">key()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - key</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-next-762881.html">next()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - next</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-rewind-106539.html">rewind()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - rewind</td>
+</tr><tr class="row">
+	<td nowrap="nowrap"><a href="method-valid-011041.html">valid()</a></td>
+	<td nowrap="nowrap" style="width: 100%">Iterator method - valid</td>
+</tr>
+</table>
+	</div>
+</div>
+
+<h2><span>Examples</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<fieldset>
+	<legend><strong>Example #1</strong></legend>
+	<table cellspacing="4" cellpadding="0" style="width: 100%;">
+		<tr> 
+			<td colspan="2" class="value" style="width: 100%">
+				<code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br /><br /></span><span style="color: #007700">use&nbsp;</span><span style="color: #0000BB">Tuxxedo</span><span style="color: #007700">\</span><span style="color: #0000BB">Debug</span><span style="color: #007700">;<br /><br />foreach(new&nbsp;</span><span style="color: #0000BB">Debug</span><span style="color: #007700">\</span><span style="color: #0000BB">Backtrace&nbsp;</span><span style="color: #007700">as&nbsp;</span><span style="color: #0000BB">$trace</span><span style="color: #007700">)<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;if(!</span><span style="color: #0000BB">$trace</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">isException</span><span style="color: #007700">())<br />&nbsp;&nbsp;&nbsp;&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;...<br />}<br /><br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code>
+			</td>
+		</tr>
+	</table>
+</fieldset>
+	</div>
+</div>
+
+
+
+
+
+<h2><span>See also</span></h2>
+<div class="box edge-title">
+	<div class="inner">
+		<ul>
+			
+			<li><a href="./classes.html">List of classes</a></li>
+			<li><a href="./index.html">Table of contents</a></li>
+		</ul>
+	</div>
+</div>
+
+		<p>
+			<em>Generated by Tuxxedo Engine 1.3.0 "Intergalactic" Alpha 1 (experimental). </em>
+		</p>
+	</body>
+</html>
