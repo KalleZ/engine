@@ -91,6 +91,8 @@
 		 * List of valid backends
 		 *
 		 * @var			array
+		 *
+		 * @changelog		1.3.0			The values of this array may now be populated by an instance to the upload backend instead of boolean true if its loaded
 		 */
 		protected static $valid_backends	= [
 								'post'		=> true, 
@@ -172,39 +174,6 @@
 		 */
 		public function upload()
 		{
-			static $factory;
-
-			if($factory === NULL)
-			{
-				$factory = function($backend)
-				{
-					static $handlers;
-
-					if($handlers === NULL)
-					{
-						$handlers = [];
-					}
-
-					$class = '\Tuxxedo\Upload\Backend\\' . \ucfirst(\strtolower($backend));
-
-					if(isset($handlers[$backend]))
-					{
-						return($handlers[$backend]);
-					}
-
-					$temp = new $class($this, $this->event_handler);
-
-					if(!($temp instanceof Upload\Backend))
-					{
-						throw new Exception\Basic('Corrupt upload backend, backend does not follow the interface specification');
-					}
-
-					return($handlers[$backend] = $temp);
-				};
-
-				$factory->bindTo($this);
-			}
-
 			if(!$this->queue)
 			{
 				return(false);
@@ -214,7 +183,7 @@
 
 			foreach($this->queue as $index => $obj)
 			{
-				$status[$index] = $factory($obj[0])->process($obj[1], $obj[2], $obj[3]);
+				$status[$index] = $this->factory($obj[0])->process($obj[1], $obj[2], $obj[3]);
 			}
 
 			return($status);
@@ -228,6 +197,40 @@
 		public function __invoke()
 		{
 			return($this->upload());
+		}
+
+		/**
+		 * Upload backend handler factory for internal loading
+		 *
+		 * @param	string				The upload backend to load
+		 * @return	\Tuxxedo\Upload\Backend		Returns an instance of an upload backend
+		 *
+		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if the upload backend could not be loaded
+		 *
+		 * @since 	1.3.0
+		 */
+		protected function factory($backend)
+		{
+			if(!isset($this->valid_backends[$backend]))
+			{
+				throw new Exception\Basic('Invalid upload backend supplied');
+			}
+
+			$class =  '\Tuxxedo\Upload\Backend\\' . \ucfirst(\strtolower($backend));
+
+			if($this->valid_backends[$backend] !== true)
+			{
+				return($this->valid_backends[$backend]);
+			}
+
+			$temp = new $class($this, $this->event_handler);
+
+			if(!($temp instanceof Upload\Backend))
+			{
+				throw new Exception\Basic('Corrupt upload backend, backend does not follow the interface specification');
+			}
+
+			return($this->valid_backends[$backend] = $temp);
 		}
 	}
 ?>
