@@ -16,6 +16,7 @@
 
 	Removed the MVC component as it was broken and horribly outdated (Kalle)
 	Removed \Tuxxedo\Database\Driver\Mysql, Classic ext/mysql support -- Use mysqli instead (Kalle)
+	Removed \Tuxxedo\LocalCache (Kalle)
 
 
 
