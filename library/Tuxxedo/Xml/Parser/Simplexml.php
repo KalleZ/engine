@@ -75,13 +75,13 @@
 		 */
 		public function parse($input)
 		{
-			libxml_use_internal_errors(true);
+			\libxml_use_internal_errors(true);
 
 			$sxe = @\simplexml_load_string($input);
 
 			if($sxe === false)
 			{
-				throw new Exception\Xml('simplexml');
+				throw new Exception\Xml('SimpleXML');
 			}
 
 			return($this->doConvertNode($sxe));

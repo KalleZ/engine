@@ -423,22 +423,9 @@
 					'<td colspan="2">&nbsp;</td>' . PHP_EOL . 
 					'</tr>' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
-					'<td nowrap="nowrap">Library:</td>' . PHP_EOL . 
-					'<td class="value" style="width: 100%">' . $e->getType(true) . '</td>' . PHP_EOL . 
-					'</tr>' . PHP_EOL
-					);
-
-				if(($parser = $e->getParser()) !== '')
-				{
-					echo(
-						'<tr>' . PHP_EOL . 
-						'<td nowrap="nowrap">XML parser:</td>' . PHP_EOL . 
-						'<td class="value" style="width: 100%">' . $parser . '</td>' . PHP_EOL . 
-						'</tr>' . PHP_EOL
-						);
-				}
-
-				echo(
+					'<td nowrap="nowrap">XML parser:</td>' . PHP_EOL . 
+					'<td class="value" style="width: 100%">' . $e->getParser() . '</td>' . PHP_EOL . 
+					'</tr>' . PHP_EOL . 
 					'<tr>' . PHP_EOL . 
 					'<td nowrap="nowrap">Error code:</td>' . PHP_EOL . 
 					'<td class="value" style="width: 100%">' . $e->getCode() . '</td>' . PHP_EOL . 
@@ -885,17 +872,7 @@
 			{
 				echo(
 					PHP_EOL . 
-					str_pad('Library: ', 20, ' ') . $e->getType(true) . PHP_EOL
-					);
-
-				if(($parser = $e->getParser()) !== false)
-				{
-					echo(
-						str_pad('XML parser: ', 20, ' ') . $parser . PHP_EOL
-						);
-				}
-
-				echo(
+					str_pad('XML parser: ', 20, ' ') . $e->getParser() . PHP_EOL . 
 					str_pad('Error code: ', 20, ' ') . $e->getCode() . PHP_EOL
 					);
 

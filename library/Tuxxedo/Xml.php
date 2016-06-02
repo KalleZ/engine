@@ -33,6 +33,7 @@
 	/**
 	 * Aliasing rules
 	 */
+	use Tuxxedo\Debug;
 	use Tuxxedo\Exception;
 	use Tuxxedo\Xml\Parser;
 
@@ -67,6 +68,12 @@
 	class Xml
 	{
 		/**
+		 * Debugable trait
+		 */
+		use Debug\Debugable;
+
+
+		/**
 		 * Parser constant - SimpleXML
 		 *
 	 	 * @var		integer
@@ -79,13 +86,6 @@
 		 * @var		integer
 		 */
 		const PARSER_DOM		= 2;
-
-		/**
-		 * Internal value for how many bytes to read at a time
-		 *
-		 * @var		integer
-		 */
-		const READ_BLOCK_SIZE		= 4096;
 
 
 		/**
@@ -119,8 +119,31 @@
 		{
 			if(!$disable_autocheck)
 			{
-				$this->setAutoInternalParser();
+				$this->setInternalParser();
 			}
+		}
+
+		/**
+		 * Gets the current state of this object for debugging purposes
+		 *
+		 * @return	array			Returns an assosicated array. Keys may differ per object and values are scalar
+		 */
+		public function getDebugState()
+		{
+			static $engines_table;
+
+			if(!$engines_table)
+			{
+				$engines_table = [
+							self::PARSER_SIMPLEXML	=> 'simplexml', 
+							self::PARSER_DOM	=> 'dom'
+							];
+			}
+
+			return([
+				'current_engine'	=> ($this->ref['type'] ? $this->ref['type'] : false), 
+				'internal_parser'	=> $engines_table[$this->internal_parser]
+				]);
 		}
 
 		/**
@@ -160,38 +183,39 @@
 		/**
 		 * Sets the internal parser
 		 *
-		 * @param	integer				The new parser to use
-		 * @return	void				No value is returned
-		 */
-		public function setInternalParser($parser)
-		{
-			if($parser > 0 && $parser < 3)
-			{
-				$this->internal_parser = (integer) $parser;
-			}
-		}
-
-		/**
-		 * Sets the internal parser to auto decide
-		 *
+		 * @param	integer				If no parameter is passed, then a new parser is auto detected, otherwise supply one of the PARSER_* class constants
 		 * @return	void				No value is returned
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if no parser could be found
 		 */
-		public function setAutoInternalParser()
+		public function setInternalParser($parser = NULL)
 		{
-			if(\extension_loaded('simplexml'))
+			if(!$parser)
 			{
-				$this->internal_parser = self::PARSER_SIMPLEXML;
-			}
-			elseif(\extension_loaded('dom'))
-			{
-				$this->internal_parser = self::PARSER_DOM;
-			}
-			else
-			{
+				if(\extension_loaded('simplexml'))
+				{
+					$this->internal_parser = self::PARSER_SIMPLEXML;
+
+					return;
+				}
+				elseif(\extension_loaded('dom'))
+				{
+					$this->internal_parser = self::PARSER_DOM;
+
+					return;
+				}
+
 				throw new Exception\Basic('Unable to find a suitable parser backend');
 			}
+
+			if($parser > 0 && $parser < 3)
+			{
+				$this->internal_parser = (integer) $parser;
+
+				return;
+			}
+
+			throw new Exception\Basic('Unable to set parser backend, invalid type passed');
 		}
 
 		/**
@@ -205,7 +229,7 @@
 		 */
 		public function parseFile($file)
 		{
-			$xml = @file_get_contents($file);
+			$xml = @\file_get_contents($file);
 
 			if(!$xml)
 			{
@@ -245,7 +269,7 @@
 		 * This will internally reset the internal file pointer to position 0 
 		 * and start reading from there.
 		 *
-		 * @param	string				The XML stream to parse
+		 * @param	resource			The XML stream to parse, this must be a stream compatible resource
 		 * @return	\Tuxxedo\Xml\Tree		Returns the parsed XML as a tree object
 		 *
 		 * @throws	\Tuxxedo\Exception\Basic	Throws a basic exception if no data could be read or if the stream is invalid or if the parser could not be created
@@ -264,7 +288,7 @@
 
 			while(!\feof($stream))
 			{
-				$xml .= \fread($stream, self::READ_BLOCK_SIZE);
+				$xml .= \fread($stream, 4096);
 			}
 
 			if($this->ref['ptr'] && $this->ref['type'] == $this->internal_parser)
