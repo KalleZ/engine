@@ -10,6 +10,10 @@
 	Added a link to the API reference on the DevTools index (Kalle)
 
 	Changed database driver connection methods to reconnect if called while a connection is already active (Kalle)
+	Changed the simplexml parser to report as 'SimpleXML' (was previously 'simplexml') (Kalle)
+	Changed \Tuxxedo\Xml::setInternalParser() to try auto detect an internal parser by not passing any parameters (Kalle)
+	Changed \Tuxxedo\Xml::setInternalParser() to throw exceptions on invalid parameters (Kalle)
+	Changed \Tuxxedo\Exception\Xml to always require the $parser parameter (Kalle)
 
 	Fixed an error that would cause a mismatch when trying to delete a just created datamanager (Kalle)
 	Fixed validation of usergroups when adding a new user using the datamanager (Kalle)
@@ -18,6 +22,12 @@
 	Removed the MVC component as it was broken and horribly outdated (Kalle)
 	Removed \Tuxxedo\Database\Driver\Mysql, Classic ext/mysql support -- Use mysqli instead (Kalle)
 	Removed \Tuxxedo\LocalCache (Kalle)
+	Removed \Tuxxedo\Xml::READ_BLOCK_SIZE -- This constant value is now baked in (Kalle)
+	Removed \Tuxxedo\Xml::setAutoInternalParser() (Kalle)
+	Removed EXPAT support from \Tuxxedo\Exception\Xml: (Kalle)
+	 - Removed \Tuxxedo\Exception\Xml::TYPE_LIBXML
+	 - Removed \Tuxxedo\Exception\Xml::TYPE_EXPAT
+	 - Removed \Tuxxedo\Exception\Xml::getType()
 
 
 
@@ -176,7 +186,7 @@
 	Fixed a bug in api_analyze.php so that namespaces using curly braces will be correctly picked up (Kalle)
 	Fixed a bug in api_analyze.php so that names are resolved correctly when aliases have a different name (Kalle)
 	Fixed a bug in api_analyze.php so that properties declared with 'var' are considered 'public' (Kalle)
-	Fixed a bug in api_analyze.php so that docblock descriptions are correctly covered to UTF-8 (Kalle)
+	Fixed a bug in api_analyze.php so that docblock descriptions are correctly converted to UTF-8 (Kalle)
 	Fixed a bug in api_analyze.php so that constants declared with define() are parsed correctly (Kalle)
 	Fixed a styling issue on the Options DevTools page if the virtual 'orphan' category was present (Kalle)
 	Fixed a bug in the SQLite database driver, causing dublicate data to be allocated (Kalle)
