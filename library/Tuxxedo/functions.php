@@ -288,7 +288,7 @@
 			'h1 { margin: 30px 0px -6px 0px; }' . PHP_EOL . 
 			'h1 sup { background-color: #3B7286; border-radius: 4px; color: #FFFFFF; font-size: 35%; padding: 1px 3px; }' . PHP_EOL . 
 			'h2 { margin: 20px 0px 0px 0px; }' . PHP_EOL . 
-			'h2 span { background-color: #C2EDFD; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: 0px; }' . PHP_EOL . 
+			'h2 span { background-color: #C2EDFD; border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 5px; padding-bottom: -1px; }' . PHP_EOL . 
 			'li, ul { margin: 0px; }' . PHP_EOL . 
 			'table tr td { border: 1px solid transparent; }' . PHP_EOL . 
 			'table tr.head td { background-color: #C2EDFD; padding: 5px; border-radius: 4px; }' . PHP_EOL . 

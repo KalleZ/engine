@@ -54,13 +54,6 @@
 		protected $parser		= '';
 
 		/**
-		 * The XML parser type (One of the TYPE_* constants)
-		 *
-		 * @var		integer
-		 */
-		protected $type;
-
-		/**
 		 * The LibXML error information
 		 *
 		 * @var		\LibXMLError
@@ -77,14 +70,12 @@
 		 */
 		public function __construct($parser)
 		{
-			$this->parser 		= $parser;
-			$this->xml_error 	= \libxml_get_last_error();
-
-			if(!$this->xml_error)
+			if(!($this->xml_error = \libxml_get_last_error()))
 			{
 				throw new Basic('LibXML did not return any error');
 			}
 
+			$this->parser 	= $parser;
 			$this->message	= &$this->xml_error->message;
 			$this->code	= &$this->xml_error->code;
 		}
