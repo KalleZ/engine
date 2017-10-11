@@ -7,7 +7,7 @@
 	</head>
 	<body>
 
-<h1>\Tuxxedo\Xml::parseStream()</h1>
+<h1>\Tuxxedo\Xml::getDebugState()</h1>
 <div class="box">
 	<div class="inner">
 		<div class="left-content">
@@ -59,7 +59,7 @@
 				<table cellspacing="4" cellpadding="0" style="width: 100%;">
 					<tr>
 						<td class="value" style="width: 100%">
-							<a href="class-tuxxedoxmltree-668963.html">\Tuxxedo\Xml\Tree</a> parseStream(resource)
+							array getDebugState()
 						</td>
 					</tr>
 				</table>
@@ -67,10 +67,7 @@
 			<br />
 
 			<div class="infobox">
-				Parses a stream
-
-This will internally reset the internal file pointer to position 0
-and start reading from there.
+				Gets the current state of this object for debugging purposes
 			</div>
 			<br />
 		</div>
@@ -82,49 +79,18 @@ and start reading from there.
 
 
 
-<h2><span>Parameters</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<fieldset>
-	<legend><strong>resource</strong></legend>
-	<table cellspacing="4" cellpadding="0" style="width: 100%;">
-		<tr> 
-			<td colspan="2" class="value" style="width: 100%">
-				The XML stream to parse, this must be a stream compatible resource
-			</td>
-		</tr>
-	</table>
-</fieldset>
-	</div>
-</div>
+
 
 <h2><span>Returns</span></h2>
 <div class="box edge-title">
 	<div class="inner">
 		<div class="infobox">
-			Returns the parsed XML as a tree object
+			Returns an assosicated array. Keys may differ per object and values are scalar
 		</div>
 	</div>
 </div>
 
-<h2><span>Throws</span></h2>
-<div class="box edge-title">
-	<div class="inner">
-		<table style="width: 100%" cellspacing="2" cellpadding="0">
-			<tr class="head">
-				<td class="strong" nowrap="nowrap">Exception</td>
-				<td class="strong">Condition</td>
-			</tr>
-			<tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedoexceptionbasic-492787.html">\Tuxxedo\Exception\Basic</a></td>
-	<td nowrap="nowrap" style="width: 100%">Throws a basic exception if no data could be read or if the stream is invalid or if the parser could not be created</td>
-</tr><tr class="row">
-	<td nowrap="nowrap"><a href="class-tuxxedoexceptionxml-926763.html">\Tuxxedo\Exception\Xml</a></td>
-	<td nowrap="nowrap" style="width: 100%">Throws an XML exception if XML parsing fails for some reason</td>
-</tr>
-		</table>
-	</div>
-</div>
+
 
 
 
