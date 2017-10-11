@@ -309,10 +309,10 @@
 
 				if(self::exists('\Tuxxedo\Exception\Basic'))
 				{
-					throw new Exception\Basic('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
+					throw new Exception\Basic('Object mismatch, class, interface or trait (\'%s\') not found within the resolved file (\'%s\')', $name, $path);
 				}
 
-				\tuxxedo_errorf('Object mismatch, class or interface (\'%s\') not found within the resolved file (\'%s\')', $name, \str_replace(['\\', '/'], \DIRECTORY_SEPARATOR, $path));
+				\tuxxedo_errorf('Object mismatch, class, interface or trait (\'%s\') not found within the resolved file (\'%s\')', $name, \str_replace(['\\', '/'], \DIRECTORY_SEPARATOR, $path));
 			}
 
 			return(true);
