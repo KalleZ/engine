@@ -591,7 +591,7 @@
 			}
 		}
 
-		foreach(['final', 'private', 'protected', 'static'] as $modifier)
+		foreach(['final', 'private', 'protected', 'static', 'abstract'] as $modifier)
 		{
 			if(isset($meta['metadata']->{$modifier}) && $meta['metadata']->{$modifier})
 			{
